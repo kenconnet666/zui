@@ -133,8 +133,8 @@ const cls = c.toString()    // → emotion className
 
 - [Vue 3](./recipes/vue.md) — `provide/inject` + `computed`
 - [React](./recipes/react.md) — `createContext` + `useMemo`
-
-Svelte / Solid 接入将在 0.2.0 提供。
+- [Svelte 5](./recipes/svelte.md) — `$state` + `$derived` + `getContext`
+- [SolidJS](./recipes/solid.md) — `createContext` + `createMemo`
 
 ---
 
