@@ -1,12 +1,15 @@
 import { Theme } from '../Theme'
-import { palette } from './palette'
+import { FLAT_PALETTE, palette } from './palette'
 import type { DefaultSchema } from './schema'
 
 /**
- * 内置深色主题（占位实现 — Phase 1 Day 1 会替换成 zui 旧仓库 `dark.ts` 的完整版本）。
+ * 内置深色主题（同 palette 242 色 + 11 语义色，语义色绑暗色 shade）。
  */
 export const defaultDark = new Theme<DefaultSchema>({
   color: {
+    // ─── palette 242 色 ───
+    ...FLAT_PALETTE,
+    // ─── 语义色（dark） ───
     primary: palette.blue500,
     primaryHover: palette.blue600,
     danger: palette.red500,

@@ -1,12 +1,16 @@
 import { Theme } from '../Theme'
-import { palette } from './palette'
+import { FLAT_PALETTE, palette } from './palette'
 import type { DefaultSchema } from './schema'
 
 /**
- * 内置浅色主题（占位实现 — Phase 1 Day 1 会替换成 zui 旧仓库 `light.ts` 的完整版本）。
+ * 内置浅色主题（完整 Tailwind palette 242 色 + 11 语义色）。
+ * 语义色 alias 到 palette 具体 shade（例如 `primary = palette.blue600 = blue-600`）。
  */
 export const defaultLight = new Theme<DefaultSchema>({
   color: {
+    // ─── palette 242 色 ───
+    ...FLAT_PALETTE,
+    // ─── 语义色（light） ───
     primary: palette.blue600,
     primaryHover: palette.blue500,
     danger: palette.red600,
@@ -15,7 +19,7 @@ export const defaultLight = new Theme<DefaultSchema>({
     info: palette.cyan500,
     text: palette.gray900,
     textMuted: palette.gray600,
-    bg: palette.white,
+    bg: '#ffffff',
     bgMuted: palette.gray50,
     border: palette.gray200,
   },
