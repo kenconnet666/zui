@@ -29,6 +29,44 @@ const CURSOR_KW = [
 const VISIBILITY_KW = ['visible', 'hidden', 'collapse'] as const
 const OVERFLOW_KW = ['visible', 'hidden', 'scroll', 'auto', 'clip'] as const
 
+// ─── P2.A 新增 ───
+
+const FLEX_DIRECTION_KW = ['row', 'rowReverse', 'column', 'columnReverse'] as const
+const FLEX_WRAP_KW = ['nowrap', 'wrap', 'wrapReverse'] as const
+const JUSTIFY_KW = [
+  'flexStart', 'flexEnd', 'center',
+  'spaceBetween', 'spaceAround', 'spaceEvenly',
+  'normal', 'stretch', 'start', 'end', 'left', 'right',
+] as const
+const ALIGN_KW = [
+  'flexStart', 'flexEnd', 'center', 'baseline', 'stretch',
+  'normal', 'start', 'end',
+] as const
+const FLEX_BASIS_KW = ['auto', 'fill', 'maxContent', 'minContent', 'fitContent', 'content'] as const
+const BORDER_STYLE_KW = [
+  'none', 'hidden', 'dotted', 'dashed', 'solid', 'double',
+  'groove', 'ridge', 'inset', 'outset',
+] as const
+const ANIMATION_DIRECTION_KW = ['normal', 'reverse', 'alternate', 'alternateReverse'] as const
+const ANIMATION_FILL_KW = ['none', 'forwards', 'backwards', 'both'] as const
+const ANIMATION_PLAY_KW = ['running', 'paused'] as const
+const OBJECT_FIT_KW = ['fill', 'contain', 'cover', 'none', 'scaleDown'] as const
+const TEXT_ALIGN_KW = ['left', 'right', 'center', 'justify', 'start', 'end'] as const
+const TEXT_DECO_LINE_KW = ['none', 'underline', 'overline', 'lineThrough'] as const
+const TEXT_DECO_STYLE_KW = ['solid', 'double', 'dotted', 'dashed', 'wavy'] as const
+const TEXT_TRANSFORM_KW = ['none', 'capitalize', 'uppercase', 'lowercase'] as const
+const TEXT_OVERFLOW_KW = ['clip', 'ellipsis'] as const
+const WHITE_SPACE_KW = ['normal', 'nowrap', 'pre', 'preWrap', 'preLine', 'breakSpaces'] as const
+const WORD_BREAK_KW = ['normal', 'breakAll', 'keepAll', 'breakWord'] as const
+const BG_SIZE_KW = ['auto', 'cover', 'contain'] as const
+const BG_REPEAT_KW = ['repeat', 'noRepeat', 'repeatX', 'repeatY', 'round', 'space'] as const
+const BG_CLIP_KW = ['borderBox', 'paddingBox', 'contentBox', 'text'] as const
+const USER_SELECT_KW = ['none', 'auto', 'text', 'all', 'contain'] as const
+const POINTER_EVENTS_KW = ['none', 'auto'] as const
+const RESIZE_KW = ['none', 'both', 'horizontal', 'vertical', 'block', 'inline'] as const
+const SCROLL_BEHAVIOR_KW = ['auto', 'smooth'] as const
+const GRID_AUTO_FLOW_KW = ['row', 'column', 'dense', 'rowDense', 'columnDense'] as const
+
 /**
  * 增强属性元数据 —— 类型 ↔ 运行时双向对齐的 **single source of truth**。
  *
@@ -108,8 +146,18 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   borderLeftWidth:   { tokenCat: 'borders', unitClass: 'length', keywords: null },
   outlineWidth:      { tokenCat: 'borders', unitClass: 'length', keywords: null },
 
+  // ─── 边框样式（无 token；BORDER_STYLE_KW） ───
+  borderStyle:       { tokenCat: null, unitClass: null, keywords: BORDER_STYLE_KW },
+  borderTopStyle:    { tokenCat: null, unitClass: null, keywords: BORDER_STYLE_KW },
+  borderRightStyle:  { tokenCat: null, unitClass: null, keywords: BORDER_STYLE_KW },
+  borderBottomStyle: { tokenCat: null, unitClass: null, keywords: BORDER_STYLE_KW },
+  borderLeftStyle:   { tokenCat: null, unitClass: null, keywords: BORDER_STYLE_KW },
+  outlineStyle:      { tokenCat: null, unitClass: null, keywords: BORDER_STYLE_KW },
+  outlineOffset:     { tokenCat: null, unitClass: 'length', keywords: null },
+
   // ─── 阴影 / 层级 / 透明度 / 长宽比 ───
   boxShadow:    { tokenCat: 'shadow',      unitClass: null, keywords: ['none'] },
+  textShadow:   { tokenCat: 'shadow',      unitClass: null, keywords: ['none'] },
   zIndex:       { tokenCat: 'zIndex',      unitClass: null, keywords: ['auto'] },
   opacity:      { tokenCat: 'opacity',     unitClass: null, keywords: null },
   aspectRatio:  { tokenCat: 'aspectRatio', unitClass: null, keywords: ['auto'] },
@@ -123,9 +171,74 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   overflowX:  { tokenCat: null,     unitClass: null, keywords: OVERFLOW_KW },
   overflowY:  { tokenCat: null,     unitClass: null, keywords: OVERFLOW_KW },
 
+  // ─── Flex 容器 ───
+  flexDirection:  { tokenCat: null, unitClass: null, keywords: FLEX_DIRECTION_KW },
+  flexWrap:       { tokenCat: null, unitClass: null, keywords: FLEX_WRAP_KW },
+  justifyContent: { tokenCat: null, unitClass: null, keywords: JUSTIFY_KW },
+  justifyItems:   { tokenCat: null, unitClass: null, keywords: JUSTIFY_KW },
+  justifySelf:    { tokenCat: null, unitClass: null, keywords: [...JUSTIFY_KW, 'auto'] },
+  alignItems:     { tokenCat: null, unitClass: null, keywords: ALIGN_KW },
+  alignContent:   { tokenCat: null, unitClass: null, keywords: [...ALIGN_KW, 'spaceBetween', 'spaceAround', 'spaceEvenly'] },
+  alignSelf:      { tokenCat: null, unitClass: null, keywords: [...ALIGN_KW, 'auto'] },
+
+  // ─── Flex 项目 ───
+  flexGrow:   { tokenCat: null, unitClass: null,     keywords: null },
+  flexShrink: { tokenCat: null, unitClass: null,     keywords: null },
+  flexBasis:  { tokenCat: 'sizes', unitClass: 'length', keywords: FLEX_BASIS_KW },
+  order:      { tokenCat: null, unitClass: null,     keywords: null },
+
+  // ─── Grid ───
+  gridAutoFlow: { tokenCat: null, unitClass: null, keywords: GRID_AUTO_FLOW_KW },
+  gridColumn:   { tokenCat: null, unitClass: null, keywords: ['auto'] },
+  gridRow:      { tokenCat: null, unitClass: null, keywords: ['auto'] },
+  gridArea:     { tokenCat: null, unitClass: null, keywords: ['auto'] },
+
   // ─── 过渡 / 动画 ───
   transitionDuration:       { tokenCat: 'duration',           unitClass: 'time', keywords: null },
   transitionTimingFunction: { tokenCat: 'easing',             unitClass: null,   keywords: null },
   transitionProperty:       { tokenCat: 'transitionProperty', unitClass: null,   keywords: null },
+  transitionDelay:          { tokenCat: 'duration',           unitClass: 'time', keywords: null },
   animationDuration:        { tokenCat: 'duration',           unitClass: 'time', keywords: null },
+  animationDelay:           { tokenCat: 'duration',           unitClass: 'time', keywords: null },
+  animationTimingFunction:  { tokenCat: 'easing',             unitClass: null,   keywords: null },
+  animationIterationCount:  { tokenCat: null,                 unitClass: null,   keywords: ['infinite'] },
+  animationName:            { tokenCat: null,                 unitClass: null,   keywords: ['none'] },
+  animationDirection:       { tokenCat: null,                 unitClass: null,   keywords: ANIMATION_DIRECTION_KW },
+  animationFillMode:        { tokenCat: null,                 unitClass: null,   keywords: ANIMATION_FILL_KW },
+  animationPlayState:       { tokenCat: null,                 unitClass: null,   keywords: ANIMATION_PLAY_KW },
+
+  // ─── Transform ───
+  transformOrigin: { tokenCat: null, unitClass: 'length', keywords: null },
+  rotate:          { tokenCat: null, unitClass: 'angle',  keywords: ['none'] },
+  scale:           { tokenCat: null, unitClass: null,     keywords: ['none'] },
+  translate:       { tokenCat: null, unitClass: 'length', keywords: ['none'] },
+  perspective:     { tokenCat: null, unitClass: 'length', keywords: ['none'] },
+
+  // ─── Object ───
+  objectFit:      { tokenCat: null, unitClass: null,     keywords: OBJECT_FIT_KW },
+  objectPosition: { tokenCat: null, unitClass: 'length', keywords: null },
+
+  // ─── 文字 ───
+  textAlign:              { tokenCat: null, unitClass: null,     keywords: TEXT_ALIGN_KW },
+  textDecorationLine:     { tokenCat: null, unitClass: null,     keywords: TEXT_DECO_LINE_KW },
+  textDecorationStyle:    { tokenCat: null, unitClass: null,     keywords: TEXT_DECO_STYLE_KW },
+  textDecorationThickness:{ tokenCat: null, unitClass: 'length', keywords: ['auto'] },
+  textTransform:          { tokenCat: null, unitClass: null,     keywords: TEXT_TRANSFORM_KW },
+  textOverflow:           { tokenCat: null, unitClass: null,     keywords: TEXT_OVERFLOW_KW },
+  textIndent:             { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  whiteSpace:             { tokenCat: null, unitClass: null,     keywords: WHITE_SPACE_KW },
+  wordBreak:              { tokenCat: null, unitClass: null,     keywords: WORD_BREAK_KW },
+  wordSpacing:            { tokenCat: null, unitClass: 'length', keywords: ['normal'] },
+
+  // ─── 背景 ───
+  backgroundPosition: { tokenCat: null, unitClass: 'length', keywords: null },
+  backgroundSize:     { tokenCat: null, unitClass: 'length', keywords: BG_SIZE_KW },
+  backgroundRepeat:   { tokenCat: null, unitClass: null,     keywords: BG_REPEAT_KW },
+  backgroundClip:     { tokenCat: null, unitClass: null,     keywords: BG_CLIP_KW },
+
+  // ─── 杂项交互 ───
+  userSelect:     { tokenCat: null, unitClass: null, keywords: USER_SELECT_KW },
+  pointerEvents:  { tokenCat: null, unitClass: null, keywords: POINTER_EVENTS_KW },
+  resize:         { tokenCat: null, unitClass: null, keywords: RESIZE_KW },
+  scrollBehavior: { tokenCat: null, unitClass: null, keywords: SCROLL_BEHAVIOR_KW },
 }

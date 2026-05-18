@@ -181,7 +181,18 @@ async function readEnhancedProps() {
           } else if (v.kind === ts.SyntaxKind.NullKeyword) {
             cfg[fieldName] = null
           } else if (ts.isArrayLiteralExpression(v)) {
-            cfg[fieldName] = v.elements.filter(ts.isStringLiteral).map(s => s.text)
+            // 支持混合内容：'auto' / IDENT / ...IDENT
+            const acc = []
+            for (const elem of v.elements) {
+              if (ts.isStringLiteral(elem)) {
+                acc.push(elem.text)
+              } else if (ts.isSpreadElement(elem) && ts.isIdentifier(elem.expression) && stringArrayConsts.has(elem.expression.text)) {
+                acc.push(...stringArrayConsts.get(elem.expression.text))
+              } else if (ts.isIdentifier(elem) && stringArrayConsts.has(elem.text)) {
+                acc.push(...stringArrayConsts.get(elem.text))
+              }
+            }
+            cfg[fieldName] = acc
           } else if (ts.isIdentifier(v) && stringArrayConsts.has(v.text)) {
             cfg[fieldName] = [...stringArrayConsts.get(v.text)]
           }
