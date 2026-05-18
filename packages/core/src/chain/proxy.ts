@@ -28,12 +28,13 @@ export function makeChainProxy<C extends Chain<never>>(chain: C): C {
       }
       if (INTERNAL_KEYS.has(prop)) {
         const v = Reflect.get(target, prop, receiver)
-        return typeof v === 'function' ? v.bind(target) : v
+        // 方法绑到 receiver（proxy）：让 this.xxx 走 Proxy 链路，fn(this) 才能传出 proxy
+        return typeof v === 'function' ? v.bind(receiver) : v
       }
       // 类原型上的方法（内建 _hover / _media / label / _truncate ...）
       const fromProto = Reflect.get(target, prop, receiver)
       if (typeof fromProto === 'function') {
-        return fromProto.bind(target)
+        return fromProto.bind(receiver)
       }
       // 其余视为 CSS 属性，走 carrier
       return getOrCreateCarrier(target as unknown as Chain<never>, prop)
