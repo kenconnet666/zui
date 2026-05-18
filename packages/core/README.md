@@ -219,6 +219,23 @@ node scripts/generate-properties.mjs
 
 更多设计文档见 [`Plan.md`](../../Plan.md)。
 
+## 发布流程（changesets）
+
+仓库用 [changesets](https://github.com/changesets/changesets) 管版本：
+
+```bash
+# 1. 改完代码后，记录一个 changeset（交互式选 patch/minor/major + 描述）
+pnpm changeset
+
+# 2. 准备发布时，让 changesets bump 版本 + 写 CHANGELOG
+pnpm changeset version
+
+# 3. 手动 publish（CI 不自动发，避免误发）
+pnpm --filter @kenconnet666/zui-core publish --access public
+```
+
+发包前 `prepublishOnly` 会自动跑 type-check + test + build。
+
 ---
 
 ## License

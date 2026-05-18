@@ -19,6 +19,7 @@
     "format": "prettier --write --experimental-cli ."
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^24.12.2",
     "@vitejs/plugin-vue": "^6.0.6",
