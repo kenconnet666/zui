@@ -952,39 +952,42 @@ export function icss<T extends ThemeSchema>(
 - **P1.C ✅ 测试补齐 + 修关键 bug**（commit `d5e521f`）：新增 chain-carrier (20) / chain-builtins (36) / parity (7) / types (13)，6 套 83 测试全绿；★ 关键修复：proxy.ts 方法 bind 改 `receiver`（原 `bind target` 导致 `_nest` / `_when` / `_apply` 内部 `fn(this)` 传出原始 chain，carrier 路径失效）
 - **P1.D ✅ 示例 + recipes + README**（本提交）：mergeTheme 改走 `deepMerge` + 加 2 个深合并测试；DefaultSchema 加 `blur` category（none/xs/sm/base/md/lg/xl/2xl/3xl）；`vanilla-button` 升级为独立 vite app（package.json + index.html + vite.config.ts，pnpm-workspace.yaml 注册 `packages/core/examples/*`）；vue.md + react.md 改成 30 行级可复制 ZThemeProvider + useIcss；README.md 重写（四态 / 自定义 schema / 59 内建方法表 / 限制说明）
 
-### Phase 2（待启动 → 0.2.0）—— 扩展 + 完整默认主题
-- **ENHANCED_PROPS 扩到 ~120 条**：补 gap/flex/grid/transition/transform/border-style/object-fit/filter 系列；同步类型派生
-- **DefaultSchema 扩到完整 Tailwind palette**：`flattenPalette(TAILWIND_PALETTE)` 接进 light/dark；schema 类型加 `PaletteToken`。如触发 TS2589 实例化深度爆，回退拆 `PaletteColorTokens` + `SemanticColorTokens`
-- **ColorTokenValue modifier 扩展**：`.darken(n)` `.lighten(n)` `.mix(_other, n)` `.saturate(n)` `.desaturate(n)`（基于 color2k）
-- **bench baseline**：vitest bench，记录"建链 + 出 className"耗时基线 + 对比原生 emotion css
-- **`recipes/svelte.md` / `recipes/solid.md`**（已占位为待办）
-- **`examples/vue-button/` + `examples/react-button/`**：vite app，消费 core
-- **CI workflow**：`pnpm generate && git diff --exit-code` + tests + typecheck
-- **changesets 接入**：`@changesets/cli` 装好，pnpm publish 仍手动
-- 发布 0.2.0
+### Phase 2 ✅ 已完成（0.2.0）
+- **P2.A ✅** ENHANCED_PROPS 扩到 **129 条**（commit `851bc52`）：flex 容器 8 / flex 项目 4 /
+  grid 4 / 边框样式 7 / 阴影 1 / 动画 7 / transform 5 / object 2 / 文字 10 / 背景 4 /
+  交互 4。generator 加 SpreadElement 支持。
+- **P2.B ✅** DefaultSchema 接完整 Tailwind palette **242 色 + 11 语义色 = 253 token**
+  （commit `eda78df`）：schema.ts 拆 `PaletteToken` + `SemanticColorTokens` 两 union
+  预防 TS2589；实测当前配置下不爆。+7 个 palette 专项测试。
+- **P2.C ✅** bench baseline（commit `1bda4a9`）：vitest bench 3 组场景；
+  baseline.md 记录 icss ~19k ops/s（~50μs/chain），~46× 慢于原生 emotion；
+  列 3 个 P3+ 优化候选（keymap 缓存到 Theme / carrier 工厂模块级 / token slot 冻结）
+- **P2.D ✅** recipes/svelte.md + solid.md（commit `4bba6df`）：Svelte 5 runes 风 +
+  Solid createMemo 风格 30 行级 ZThemeProvider + useIcss
+- **P2.E ✅** examples/vue-button + react-button（commit `873acc2`）：两个独立 vite app
+  演示主题切换 + Primary/Ghost/Danger 三种按钮，vite alias 直吃 core 源码
+- **P2.F ✅** GitHub Actions CI（commit `1a12986`）：generator drift check +
+  typecheck + test + build core + build 3 examples
+- **P2.G ✅** changesets 接入（commit `dd7f25d`）：`@changesets/cli` + config
+  access: public + ignore 3 examples；README 加发布流程章节；publish 仍手动
+- **P2.H ✅** ColorTokenValue 扩 5 个 modifier（commit `a3ffb34`）：
+  `darken / lighten / mix / saturate / desaturate`（基于 color2k）；
+  +5 个测试；types/carrier.ts ColorTokenValue 接口同步扩
 
-### Phase 3+（不在本 Plan 范围）
-- ui-vue 包启动（`packages/ui-vue/` 完整组件库）
+**Phase 2 数字**：
+- 测试：6 套 83 → 7 套 95（+ palette 专项 + 5 modifier）
+- ENHANCED_PROPS：72 → 129
+- 颜色 token：~10 → 253（242 palette + 11 语义）
+- 包大小：bundle 19.88kb / 4.91kb gzip（未变 —— 类型扩展不增运行时）
+- bench: icss ~19k ops/s
+
+### Phase 3+（待启动）
+- ui-vue 包（`packages/ui-vue/` 完整组件库）
 - docs 站（VitePress）
 - SSR / `createIcssInstance(emotion)` wrapper
 - 二级 carrier（`s.transform.rotate.deg(45)`）
-- ESLint plugin（不允许 chain 之外的 emotion css 直接调用）
-
-### Phase 2（3-4 天 → 0.2.0）—— 扩展 + 完整默认主题
-- **ENHANCED_PROPS 扩到 ~60 条**：补 padding/margin 系列（Top/Right/Bottom/Left）、gap 系列、border 系列、transition 系列、grid 相关；类型层 IcxPropMethods 同步扩
-- **PropFn 形态属性扩展**：把常用 ~50 个剩余 CSS 属性（cursor 类、animation 类、grid 模板、filter、transform 等）加进 `IcxPropMethods` 的 PropFn 字段（运行时 fallback 已能跑，类型补全只是 IDE 体验）
-- **DefaultSchema 扩到完整 Tailwind palette**：把 `flattenPalette(TAILWIND_PALETTE)` 接进 `defaults/light.ts` 和 `defaults/dark.ts`；schema 类型加 `PaletteToken`
-- **断点 token 简写**：`_media('_md', s => ...)` 自动从 `theme.breakpoint.md` 取值（从 zui-back7 移植 `resolveBreakpointQuery`）
-- **`recipes/svelte.md` / `recipes/solid.md`**
-- **`examples/vue-button/` + `examples/react-button/`**：消费 core，与 docs 集成
-- **性能 baseline**：vitest bench，记录"建链 + 出 className"耗时基线
-- 发布 0.2.0
-
-### Phase 3+（不在本 Plan 范围，留给 ui-vue 包）
-- alpha 简写最终方案（§十一 开放问题）
-- SSR / extractCritical wrapper
-- 二级 carrier（`s.transform.rotate.deg(45)`）
-- ESLint plugin（不允许 chain 之外的 emotion css 直接调用）
+- ESLint plugin
+- 性能优化（按 baseline.md 列的 3 候选）
 
 ---
 
@@ -1323,7 +1326,7 @@ pnpm docs:dev                                    # 启动文档站, 默认 http:
 | `README.md` | ✅ 四态 + 自定义 schema + 59 内建方法表 + 限制说明 + dev 命令 | — |
 | `pnpm-workspace.yaml` | ✅ 包含 `packages/*` + `packages/core/examples/*` | — |
 
-**结论**：Phase 1（0.1.0）全部完成。等用户审完后发 npm。
+**结论**：Phase 1（0.1.0）+ Phase 2（0.2.0）全部完成。等用户审完后发 npm。
 
 ### 13.1 0.1.0 ready 后的恢复指令（下次会话）
 
@@ -1368,3 +1371,17 @@ pnpm publish --access public        # 需先 npm login
 2. **DefaultSchema blur key `2xl`/`3xl`**：访问形式 `theme.blur['2xl']`，不是 `theme.blur._2xl`。Chain 上用 `_blur('_2xl')` 也不行（resolveBlurValue 去掉 `_` 后查 `blur['2xl']`，要 token 名带 `_` 时去 `_2xl`，但用户最自然写法是 `_blur('2xl')` 不带 `_` 直接命中）。功能 OK 但命名要在 README 标注。
 3. **mergeTheme 改成走 deepMerge**：与 zui-back7 实现等价（zui-back7 也是 2 层 spread）；测试覆盖了兄弟保留 + immutable。如 P2 加深嵌套 category（如 `motion.duration.fast`），deepMerge 已经能处理。
 4. **vanilla-button 用 vite alias 引 src**：dev 时直接吃 src（无需先 build），生产 build 出 33.85kb / 12.42kb gzip。
+
+### 14.2 Phase 2 新增决策
+
+| 时间 | 文件 / 范围 | 问题 | 决策 | 理由 / 参考 |
+|---|---|---|---|---|
+| 2026-05-18 | P1.E: scripts/generate-properties.mjs | tests typecheck 后 `padding(16)` 数字报错（csstype 默认 TLength=string\|0） | CssValueOf 用 `Properties<string\|number, string\|number>`，让 length/time 属性都接 number | emotion 收数字自动 px/ms，类型层与运行时对齐；不影响 color 等非长度属性 |
+| 2026-05-18 | P1.E: tests/chain-builtins.spec.ts | `interface X extends Omit<DefaultSchema, 'blur'>` 让 SpacingTokens 推断为 never | 改回 `interface X extends DefaultSchema { breakpoint: ... }`，不覆盖 blur，让 SchemaWithBreakpoint 继承默认 blur | TS 6.0.3 对 `extends mapped type` 处理不稳定；直接 extends DefaultSchema 信息保留完整 |
+| 2026-05-18 | P1.E: package.json | 是否在 `prepublishOnly` 串 typecheck + test + build | 是。`prepublishOnly: "pnpm run type-check && pnpm run test && pnpm run build"` | 兜底防止用户误发未通过验证的版本 |
+| 2026-05-18 | P2.A: scripts/generate-properties.mjs | `keywords: [...JUSTIFY_KW, 'auto']` spread 让 generator 漏掉 spread 部分 | AST parser 加 SpreadElement 处理：识别 spread + 解引用 const 数组 + 拼接 | parity 测试守护成功；以后允许 ENHANCED_PROPS 用 spread 复用 keyword 集 |
+| 2026-05-18 | P2.B: schema.ts | 完整 Tailwind palette 触发 TS2589 风险 | 拆 `PaletteToken` + `SemanticColorTokens` 两 union（预案），实测当前 TS 配置不爆 | 提前拆好让用户自定义 schema 用 `Pick<DefaultColorTokens, ...>` 时灵活 |
+| 2026-05-18 | P2.B: palette.ts | zui-back7 palette 命名是 kebab (`blue-600`)，P1 light/dark 引用驼峰 (`palette.blue600`) | 同时导出：嵌套 `TAILWIND_PALETTE` (kebab key) + 展平 `FLAT_PALETTE` (kebab token) + legacy `palette` (camelCase 兼容字段) | light/dark 不需要重写；用户既可用 `_blue600` 也可访问 `palette.blue600` |
+| 2026-05-18 | P2.C: bench | icss ~19k ops/s, ~46× 慢于原生 emotion（Plan §一 决策 15 预期 2-3×） | 不立即优化，记入 baseline.md + 列 3 个 P3+ 候选 | 实际应用感知（100 chain/render = 5ms）仍宽裕；过早优化反而牵动太多核心代码 |
+| 2026-05-18 | P2.D: svelte.md | Svelte 5 runes + setContext 模式不支持直接传 `$state` Ref，需要类包装 | 用 `class ThemeStore { current = $state(...) }` 暴露 store；getContext 拿 instance 而非 ref | 是 Svelte 5 当前推荐的"reactive state 跨组件传递"惯用法 |
+| 2026-05-18 | P2.G: .changeset/config.json | examples 不该参与版本管理 | ignore 3 个 example 包名 + access: public | example 包是 `private: true` 不会发包，但 ignore 防止 `changeset version` 误处理 |

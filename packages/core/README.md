@@ -21,10 +21,15 @@
   s.padding.px(16)               // ④ unit 方法 → '16px'
   ```
 
-- **alpha 简写**：颜色 token 命中后挂 `.alpha(n)`（0-100 百分比）：
+- **颜色 token modifier**：颜色 token 命中后挂 6 个 modifier（基于 color2k）：
 
   ```ts
-  s.backgroundColor._primary.alpha(20)   // rgba(37, 99, 235, 0.2)
+  s.backgroundColor._primary.alpha(20)        // rgba(37, 99, 235, 0.2)
+  s.color._primary.darken(15)                 // 加深 15%
+  s.borderColor._primary.lighten(30)          // 提亮 30%
+  s.color._danger.mix('#ffffff', 50)          // 与白色 50% 混合
+  s.color._primary.saturate(20)               // 饱和度 +20%
+  s.color._primary.desaturate(40)             // 饱和度 -40%
   ```
 
 - **59 个内建嵌套方法**：`_hover` / `_focus` / `_dark` / `_lineClamp(3)` / `_truncate()` /
