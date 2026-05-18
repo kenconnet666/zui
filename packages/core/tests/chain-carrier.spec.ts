@@ -121,6 +121,53 @@ describe('Chain — 四态 carrier', () => {
       helper.alpha(80)
       expect(c._node.color).toBe('rgba(37, 99, 235, 0.8)')
     })
+
+    it('darken: 加深颜色', () => {
+      const c = new Chain(defaultLight)
+      c.color._primary.darken(20)
+      expect(c._node.color).toMatch(/^#[0-9a-f]{6}$/)
+      expect(c._node.color).not.toBe('#2563eb')
+    })
+
+    it('lighten: 提亮颜色', () => {
+      const c = new Chain(defaultLight)
+      c.color._primary.lighten(20)
+      expect(c._node.color).toMatch(/^#[0-9a-f]{6}$/)
+      expect(c._node.color).not.toBe('#2563eb')
+    })
+
+    it('mix: 与另一颜色混合', () => {
+      const c = new Chain(defaultLight)
+      c.color._primary.mix('#ffffff', 50)
+      expect(c._node.color).toMatch(/^#[0-9a-f]{6}$/)
+      // 50% mix with white 应该偏淡
+      expect(c._node.color).not.toBe('#2563eb')
+    })
+
+    it('saturate / desaturate', () => {
+      const c1 = new Chain(defaultLight)
+      c1.color._primary.saturate(30)
+      expect(c1._node.color).toMatch(/^#[0-9a-f]{6}$/)
+
+      const c2 = new Chain(defaultLight)
+      c2.color._primary.desaturate(30)
+      expect(c2._node.color).toMatch(/^#[0-9a-f]{6}$/)
+      expect(c2._node.color).not.toBe(c1._node.color)
+    })
+
+    it('modifier 多次调用使用 token 原值（非累积）', () => {
+      const c = new Chain(defaultLight)
+      const helper = c.color._primary
+      const lighten10 = lightenOnce()
+      function lightenOnce() {
+        const c2 = new Chain(defaultLight)
+        c2.color._primary.lighten(10)
+        return c2._node.color
+      }
+      helper.lighten(10)
+      helper.lighten(10) // 二次仍是从原 token 算 +10
+      expect(c._node.color).toBe(lighten10)
+    })
   })
 
   describe('carrier 缓存', () => {

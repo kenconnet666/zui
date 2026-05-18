@@ -53,14 +53,25 @@ export type PropFn<TSelf, TValue> =
 
 /**
  * 颜色 token 命中后返回的 helper：
- *  - 进入 helper 时，CSS 属性已被立即写入真值（user 不需 `.alpha()` 也能拿到色值）
- *  - 调用 `.alpha(n)` 把已写入的颜色重写为 rgba（n 取 0-100，单位 %）
+ *  - 进入 helper 时，CSS 属性已被立即写入真值（user 不需 modifier 也能拿到色值）
+ *  - 所有 modifier 基于 **token 原值**计算并覆盖写入；不是基于上次 modifier 的结果累积
+ *  - n 取 0-100（百分比）；越界自动 clamp
  *
- * 不返回 chain（与 statement-only 风格一致）。
+ * 所有 modifier 不返回 chain（statement-only 风格）。
  */
 export interface ColorTokenValue<TSelf> {
-  /** 把当前已写入的颜色重写为带 alpha 的 rgba。n 取值 0-100（百分比）。 */
+  /** 重写为带 alpha 的 rgba。 */
   alpha(n: number): TSelf
+  /** HSL 亮度加深 n%。 */
+  darken(n: number): TSelf
+  /** HSL 亮度提亮 n%。 */
+  lighten(n: number): TSelf
+  /** 与 `other` 颜色混合 n%（0 = 原色，100 = 完全 other）。 */
+  mix(other: string, n: number): TSelf
+  /** HSL 饱和度提升 n%。 */
+  saturate(n: number): TSelf
+  /** HSL 饱和度降低 n%。 */
+  desaturate(n: number): TSelf
 }
 
 /**

@@ -1,5 +1,5 @@
 import type { Chain } from './Chain'
-import { setAlpha } from './color'
+import { darken, desaturate, lighten, mix, saturate, setAlpha } from './color'
 import { ENHANCED_PROPS } from './enhanced-props'
 import { KEYWORD_TO_CSS } from './keywords'
 import { withUnit, type UnitClass } from './units'
@@ -82,16 +82,45 @@ function buildCarrier(chain: Chain<never>, prop: string): unknown {
 }
 
 /**
- * 颜色 token 命中后返回的 helper —— 暴露 `.alpha(n)`。
+ * 颜色 token 命中后返回的 helper —— 暴露 alpha / darken / lighten / mix / saturate / desaturate。
  *
- * 闭包持有 `value`（token 原值）：用户后续若用 `.alpha(50)`，从原 token 算 rgba 覆盖；
- * 多次 `.alpha(...)` 累积无意义 —— 每次都用原 token 重新算（不基于上一次 rgba）。
+ * 闭包持有 `value`（token 原值）：所有 modifier 基于原值计算并覆盖写入，
+ * 多次调用同 modifier 不累积（每次都用原 token 重新算）。
  */
-function makeColorTokenValue(chain: Chain<never>, prop: string, value: string): { alpha: (n: number) => unknown } {
+interface ColorTokenValueRuntime {
+  alpha(n: number): unknown
+  darken(n: number): unknown
+  lighten(n: number): unknown
+  mix(other: string, n: number): unknown
+  saturate(n: number): unknown
+  desaturate(n: number): unknown
+}
+
+function makeColorTokenValue(chain: Chain<never>, prop: string, value: string): ColorTokenValueRuntime {
   const internal = chain as unknown as ChainInternal
   return {
     alpha(n: number) {
       internal._node[prop] = setAlpha(value, n / 100)
+      return chain
+    },
+    darken(n: number) {
+      internal._node[prop] = darken(value, n)
+      return chain
+    },
+    lighten(n: number) {
+      internal._node[prop] = lighten(value, n)
+      return chain
+    },
+    mix(other: string, n: number) {
+      internal._node[prop] = mix(value, other, n)
+      return chain
+    },
+    saturate(n: number) {
+      internal._node[prop] = saturate(value, n)
+      return chain
+    },
+    desaturate(n: number) {
+      internal._node[prop] = desaturate(value, n)
       return chain
     },
   }
