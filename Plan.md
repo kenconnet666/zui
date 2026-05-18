@@ -1385,3 +1385,4 @@ pnpm publish --access public        # 需先 npm login
 | 2026-05-18 | P2.C: bench | icss ~19k ops/s, ~46× 慢于原生 emotion（Plan §一 决策 15 预期 2-3×） | 不立即优化，记入 baseline.md + 列 3 个 P3+ 候选 | 实际应用感知（100 chain/render = 5ms）仍宽裕；过早优化反而牵动太多核心代码 |
 | 2026-05-18 | P2.D: svelte.md | Svelte 5 runes + setContext 模式不支持直接传 `$state` Ref，需要类包装 | 用 `class ThemeStore { current = $state(...) }` 暴露 store；getContext 拿 instance 而非 ref | 是 Svelte 5 当前推荐的"reactive state 跨组件传递"惯用法 |
 | 2026-05-18 | P2.G: .changeset/config.json | examples 不该参与版本管理 | ignore 3 个 example 包名 + access: public | example 包是 `private: true` 不会发包，但 ignore 防止 `changeset version` 误处理 |
+| 2026-05-18 | P2 post-release: toClassName.ts | `toClassName(chain: Chain<never>)` 让用户传 `Chain<DefaultSchema>` 时 TS2345（T 不变性，never 拒绝其它实例化） | 改 generic：`toClassName<T extends ThemeSchema>(chain: Chain<T>): string` | 0.2.1 hotfix；examples 没受影响（vite build 跳过严格 typecheck），但 IDEA TS service 报错 |
