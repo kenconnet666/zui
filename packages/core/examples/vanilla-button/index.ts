@@ -1,6 +1,7 @@
-import { Chain, defaultLight, icss } from '@kenconnet666/zui-core'
 
 // 长写法
+import { Chain, defaultLight, icss } from '../../src'
+
 const c = new Chain(defaultLight)
 c.color._primary
 c.padding._lg

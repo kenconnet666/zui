@@ -125,9 +125,34 @@ async function readCsstypeProperties() {
 
 // ─── 读 ENHANCED_PROPS 字面量（AST） ───
 
+/** 收集顶层 `const X = [...] as const` 之类的字符串数组常量，供 ENHANCED_PROPS 解引用。 */
+function collectStringArrayConsts(sf) {
+  const consts = new Map()
+  for (const stmt of sf.statements) {
+    if (!ts.isVariableStatement(stmt)) continue
+    for (const decl of stmt.declarationList.declarations) {
+      if (!ts.isIdentifier(decl.name)) continue
+      let init = decl.initializer
+      if (!init) continue
+      // 剥掉 `as const` / 类型断言
+      while (init && (ts.isAsExpression(init) || ts.isTypeAssertionExpression(init))) {
+        init = init.expression
+      }
+      if (!init || !ts.isArrayLiteralExpression(init)) continue
+      const arr = init.elements.filter(ts.isStringLiteral).map(s => s.text)
+      if (arr.length === init.elements.length) {
+        consts.set(decl.name.text, arr)
+      }
+    }
+  }
+  return consts
+}
+
 async function readEnhancedProps() {
   const src = await readFile(ENHANCED_PROPS_FILE, 'utf8')
   const sf = ts.createSourceFile(ENHANCED_PROPS_FILE, src, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
+  const stringArrayConsts = collectStringArrayConsts(sf)
+
   for (const stmt of sf.statements) {
     if (!ts.isVariableStatement(stmt)) continue
     for (const decl of stmt.declarationList.declarations) {
@@ -146,13 +171,19 @@ async function readEnhancedProps() {
         for (const entry of prop.initializer.properties) {
           if (!ts.isPropertyAssignment(entry) || !ts.isIdentifier(entry.name)) continue
           const fieldName = entry.name.text
-          const v = entry.initializer
+          let v = entry.initializer
+          // 剥 `as const`
+          while (v && (ts.isAsExpression(v) || ts.isTypeAssertionExpression(v))) {
+            v = v.expression
+          }
           if (ts.isStringLiteral(v)) {
             cfg[fieldName] = v.text
           } else if (v.kind === ts.SyntaxKind.NullKeyword) {
             cfg[fieldName] = null
           } else if (ts.isArrayLiteralExpression(v)) {
             cfg[fieldName] = v.elements.filter(ts.isStringLiteral).map(s => s.text)
+          } else if (ts.isIdentifier(v) && stringArrayConsts.has(v.text)) {
+            cfg[fieldName] = [...stringArrayConsts.get(v.text)]
           }
         }
         out.set(key, cfg)
