@@ -1,23 +1,43 @@
+import { Chain, defaultLight, icss } from '@kenconnet666/zui-core'
 
-// 长写法
-import { Chain, defaultLight, icss } from '../../src'
+// ─── 1. 长写法：手动 new Chain ───
+const long = new Chain(defaultLight)
+long.color.white
+long.backgroundColor._primary
+long.padding.px(12)
+long.borderRadius._md
+long.fontWeight._bold
+long._hover(h => { h.backgroundColor._primary.alpha(85) })
+const longCls = long.toString()
 
-const c = new Chain(defaultLight)
-c.color._primary
-c.padding._lg
-c.color.white
-const cls1 = c.toString()
-
-// 一行 shortcut
-const cls2 = icss(defaultLight, (s) => {
-  s.color._primary
-  s.padding.px(16)
-  s._hover((h) => {
-    h.opacity(0.9)
-  })
+// ─── 2. icss shortcut：一行 builder ───
+const dangerCls = icss(defaultLight, s => {
+  s.color.white
+  s.backgroundColor._danger
+  s.padding.px(12)
+  s.borderRadius._md
+  s.fontWeight._bold
+  s._hover(h => { h.backgroundColor._danger.alpha(85) })
 })
 
-document.body.innerHTML = `
-  <button class="${cls1}">primary 按钮（长写法）</button>
-  <button class="${cls2}">primary 按钮（icss）</button>
+// ─── 3. ghost：组合 token + alpha + 边框 ───
+const ghostCls = icss(defaultLight, s => {
+  s.color._primary
+  s.backgroundColor._primary.alpha(10)
+  s.padding.px(12)
+  s.borderRadius._md
+  s.fontWeight._bold
+  s.borderWidth.px(1)
+  s.borderStyle('solid')
+  s.borderColor._primary.alpha(30)
+  s._hover(h => { h.backgroundColor._primary.alpha(20) })
+})
+
+const app = document.getElementById('app')!
+app.innerHTML = `
+  <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+    <button class="${longCls}">Primary (long form)</button>
+    <button class="${dangerCls}">Danger (icss)</button>
+    <button class="${ghostCls}">Primary Ghost</button>
+  </div>
 `

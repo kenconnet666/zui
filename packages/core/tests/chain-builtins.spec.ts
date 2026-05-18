@@ -257,7 +257,9 @@ describe('Chain — 内建方法', () => {
     })
 
     it('找不到 blur token → 原字符串透传（让用户发现）', () => {
-      const c = new Chain(defaultLight) // no blur category
+      // 临时主题：故意不带 blur category
+      const bareTheme = new Theme({ color: { primary: '#000' } })
+      const c = new Chain(bareTheme)
       c._blur('_md')
       expect(c._node.filter).toBe('_md')
     })

@@ -943,47 +943,32 @@ export function icss<T extends ThemeSchema>(
 
 ## 八、实现节奏
 
-> **现状（2026-05）**：Phase 1 Day 1-3 骨架已完成 —— `packages/core/src` 下 Theme/Chain/Proxy/carrier/units/keywords/enhanced-props/icss/ikeyframes/cx/injectGlobal 全部存在。Phase 1 后半 + Phase 2 是剩余工作量。
+> **现状（2026-05-18）**：Phase 1 完成（0.1.0 ready）—— 内建方法 59 个 / carrier 缓存 + alpha 简写 / 6 套测试 83 个 case 全绿 / vanilla-button vite app / vue+react recipes / README 重写。Phase 2 待启动。
 
-### Phase 1 ✅ 已完成（骨架）
-- `theme/` 全套：`Theme.ts` / `ThemeSchema.ts` / `resolveTheme.ts` / `mergeTheme.ts` / `keymap.ts` / `defaults/{light,dark,palette,schema,index}.ts`
-- `chain/` 全套：`Chain.ts` / `proxy.ts` / `carrier.ts` / `units.ts` / `keywords.ts` / `enhanced-props.ts` / `builtins.ts` / `helpers.ts`
-- `types/` 全套：`carrier.ts` / `tokens.ts` / `properties.ts`（17 个增强属性 + 2 个 PropFn）
-- 顶层入口：`icss.ts` / `toClassName.ts` / `ikeyframes.ts` / `cx.ts` / `injectGlobal.ts` / `index.ts`
-- 测试：`tests/theme.spec.ts` / `tests/chain-fn.spec.ts`
-- vite/tsconfig/package.json 全部就绪
+### Phase 1 ✅ 全部完成
+- **骨架**（之前 session 已完成）：theme/ chain/ types/ 入口 icss/toClassName/ikeyframes/cx/injectGlobal + 2 个基础测试 + vite/tsconfig 就绪
+- **P1.A ✅ 内建方法移植**（commit `3cce92c`）：从 zui-back7 移植 53 个 `_xx` 方法到 `Chain.ts`（伪类 / 表单 / 伪元素 / 结构伪类 / group·peer / 选择器 / 条件 / at-rules / 媒体修饰符 / 工具组合 / filter / 逃生舱）；helpers 补 `deepClone` + `deepMergeInto`；proxy.ts INTERNAL_KEYS 加 `_carriers` / `_resolveBlurValue`
+- **P1.B ✅ carrier 缓存 + alpha 简写**（commit `9d680e4`）：装 `color2k ^2.0.3`；新增 `chain/color.ts`（`setAlpha`）；`carrier.ts` 加 `_carriers` Map 缓存 + 颜色 token 返回 `ColorTokenValue { alpha(n) }`；`_carriers` 字段在 Chain 构造时已初始化
+- **P1.C ✅ 测试补齐 + 修关键 bug**（commit `d5e521f`）：新增 chain-carrier (20) / chain-builtins (36) / parity (7) / types (13)，6 套 83 测试全绿；★ 关键修复：proxy.ts 方法 bind 改 `receiver`（原 `bind target` 导致 `_nest` / `_when` / `_apply` 内部 `fn(this)` 传出原始 chain，carrier 路径失效）
+- **P1.D ✅ 示例 + recipes + README**（本提交）：mergeTheme 改走 `deepMerge` + 加 2 个深合并测试；DefaultSchema 加 `blur` category（none/xs/sm/base/md/lg/xl/2xl/3xl）；`vanilla-button` 升级为独立 vite app（package.json + index.html + vite.config.ts，pnpm-workspace.yaml 注册 `packages/core/examples/*`）；vue.md + react.md 改成 30 行级可复制 ZThemeProvider + useIcss；README.md 重写（四态 / 自定义 schema / 59 内建方法表 / 限制说明）
 
-### Phase 1 剩余（2-3 天 → 0.1.0）
+### Phase 2（待启动 → 0.2.0）—— 扩展 + 完整默认主题
+- **ENHANCED_PROPS 扩到 ~120 条**：补 gap/flex/grid/transition/transform/border-style/object-fit/filter 系列；同步类型派生
+- **DefaultSchema 扩到完整 Tailwind palette**：`flattenPalette(TAILWIND_PALETTE)` 接进 light/dark；schema 类型加 `PaletteToken`。如触发 TS2589 实例化深度爆，回退拆 `PaletteColorTokens` + `SemanticColorTokens`
+- **ColorTokenValue modifier 扩展**：`.darken(n)` `.lighten(n)` `.mix(_other, n)` `.saturate(n)` `.desaturate(n)`（基于 color2k）
+- **bench baseline**：vitest bench，记录"建链 + 出 className"耗时基线 + 对比原生 emotion css
+- **`recipes/svelte.md` / `recipes/solid.md`**（已占位为待办）
+- **`examples/vue-button/` + `examples/react-button/`**：vite app，消费 core
+- **CI workflow**：`pnpm generate && git diff --exit-code` + tests + typecheck
+- **changesets 接入**：`@changesets/cli` 装好，pnpm publish 仍手动
+- 发布 0.2.0
 
-**P1.A — 内建方法移植完整**（0.5 天）
-- `chain/builtins.ts` 当前只是占位；从 `C:\code\zui-back7\packages\ui\src\emotion\chain.ts` 移植 §二 列出的 30+ 个内建方法到 `Chain` 原型上（注意 §3.5.1 闭包陷阱 + §9 try/finally）
-- 移植时要去掉旧版的 `resolveTokenValue` 字符串解析逻辑（新版 token 经由 carrier `_token` 路径访问）
-- 保留 `_use` / `_apply` / `_var` / `_prop` 作为逃生舱
-- `_blur` / `_backdropBlur` 需要 schema 有 `blur` category；DefaultSchema 不含 blur 时优雅降级（返回 chain 但不写入）
-
-**P1.B — carrier 缓存 + 闭包陷阱修复 + alpha 简写**（0.5 天）
-- Chain 加 `_carriers: Map<string, callable>` 字段
-- `getOrCreateCarrier` 优先查缓存
-- 校验：`_hover` 嵌套时 `chain.color._primary` 仍写入子节点（写 spec 复现 §3.5.1 场景）
-- 新增 `chain/color.ts`：`setAlpha(color: string, alpha: number): string`，依赖 `color2k.parseToRgba`
-- 更新 `carrier.ts`：token 命中分支，若 `tokenCat === 'color'` 且 value 是字符串，返回 `{ alpha(n) { ... } }`；否则返回 chain
-- 更新 `types/carrier.ts`：加 `ColorPropCarrier<TSelf, ...>` + `ColorTokenValue<TSelf>`；`color`/`backgroundColor`/`borderColor`/... 在 IcxPropMethods 用 `ColorPropCarrier`
-- `package.json` 加 `"color2k": "^2.0.3"` 到 dependencies
-- 加 spec：`chain.color._primary.alpha(50)` 出 `rgba(...)` className
-
-**P1.C — 测试补齐到 5 个文件**（0.5 天）
-- ✅ `theme.spec.ts`、✅ `chain-fn.spec.ts`
-- 新增 `chain-carrier.spec.ts`：四态全覆盖（fn / `_token` / keyword / `.px(n)`）
-- 新增 `chain-builtins.spec.ts`：`_hover` / `_media` / `_when` / `_truncate` / 嵌套写入正确性
-- 新增 `parity.spec.ts`：§六.1 的 ENHANCED_PROPS ↔ IcxPropMethods 守护
-- 新增 `types.spec.ts`：用 `expect-type` 做 IDE 补全验证（`_notExist` 应 `toBeNever`）
-
-**P1.D — 示例 + recipes + README**（0.5 天）
-- `examples/vanilla-button/`：纯 TS（无框架）按钮 demo
-- `recipes/vue.md` ✅ 已有占位；补完整 30 行 ZThemeProvider + useIcss
-- `recipes/react.md` ✅ 已有占位；同上
-- README 含完整四态访问 + 自定义主题（继承 / 实例化）+ 框架接入示例
-- 发布 0.1.0（`npm publish --access public`）
+### Phase 3+（不在本 Plan 范围）
+- ui-vue 包启动（`packages/ui-vue/` 完整组件库）
+- docs 站（VitePress）
+- SSR / `createIcssInstance(emotion)` wrapper
+- 二级 carrier（`s.transform.rotate.deg(45)`）
+- ESLint plugin（不允许 chain 之外的 emotion css 直接调用）
 
 ### Phase 2（3-4 天 → 0.2.0）—— 扩展 + 完整默认主题
 - **ENHANCED_PROPS 扩到 ~60 条**：补 padding/margin 系列（Top/Right/Bottom/Left）、gap 系列、border 系列、transition 系列、grid 相关；类型层 IcxPropMethods 同步扩
@@ -1310,51 +1295,76 @@ pnpm docs:dev                                    # 启动文档站, 默认 http:
 
 ## 十三、现状对照表（packages/core 已有 vs Plan 余量）
 
-| 文件 / 入口 | 现状 | Plan 要求 | 差距 |
-|---|---|---|---|
-| `theme/Theme.ts` | ✅ class + `resolve()` lazy cache + `merge()` + declaration merging `extends ResolvedTheme<T>` | 同 | — |
-| `theme/ThemeSchema.ts` | ✅ 转发 types | 同 | — |
-| `theme/types.ts` | ✅ ThemeSchema / ThemeValue / ResolvedTheme / DeepPartial | 同 | — |
-| `theme/resolveTheme.ts` | ✅ 两遍扫描，function token 求值 | 旧版用 Proxy 懒求值 + 环检测 | 可选优化：换成 Proxy 懒求值 + 环检测（参考 zui-back7） |
-| `theme/mergeTheme.ts` | ✅ deepMerge，浅一层 | partial 含嵌套对象时 spread 不够；要 deep | 改成递归（用 helpers.deepMerge） |
-| `theme/keymap.ts` | ✅ `toIdent` + `buildKeymap` | 同 | — |
-| `theme/defaults/light.ts` & `dark.ts` & `palette.ts` & `schema.ts` | ✅ 精简 DefaultSchema (7 category) | Phase 2 扩到完整 Tailwind palette | P2 任务 |
-| `chain/Chain.ts` | ✅ 类 + 构造返回 Proxy + 6 个内建方法 | 需补完 30+ 内建方法（§二） | P1.A |
-| `chain/proxy.ts` | ✅ get 分派 + INTERNAL_KEYS 白名单 | 同 | — |
-| `chain/carrier.ts` | ✅ 四态 callable Proxy，每次新建 | 加缓存（§3.5.2） | P1.B |
-| ~~`chain/builtins.ts`~~ | ✅ **已删**（2026-05 决策：内建方法直接放在 `Chain.ts` 原型上） | — | — |
-| `chain/color.ts` | ❌ 未建 | 新增：`setAlpha(color, n)`（基于 color2k.parseToRgba），供 carrier 颜色分支用 | P1.B |
-| `chain/enhanced-props.ts` | ✅ **72 条**（color×13 / spacing×22 / sizes×6 / 字体×5 / radius×5 / borders×6 / shadow+z+opacity+aspect×4 / 布局×7 / 过渡×4） | Phase 2 用户自行扩 | — |
-| `scripts/generate-properties.mjs` | ✅ **新增**：读 csstype + ENHANCED_PROPS 派生类型；857 属性 / 72 增强 | 同 | — |
-| `chain/keywords.ts` | ✅ KEYWORD_TO_CSS + GLOBAL_KEYWORDS | 同 | — |
-| `chain/units.ts` | ✅ LENGTH/TIME/ANGLE + withUnit | 同 | — |
-| `chain/helpers.ts` | ✅ isPlainObject + deepMerge | 同 | — |
-| `types/carrier.ts` | ✅ PropCarrier / PropFn / LengthUnits / TimeUnits / AngleUnits | 同 | — |
-| `types/tokens.ts` | ✅ ToIdent + 12 个 TokensXXX 工具类型 | 同 | — |
-| ~~`types/properties.ts`~~ → `types/properties.generated.ts` | ✅ **改造**：手写文件已删，generator 派生 857 属性 + 完整 csstype JSDoc | — | — |
-| `icss.ts` / `toClassName.ts` / `cx.ts` / `injectGlobal.ts` | ✅ 全部最小实现 | 同 | — |
-| `ikeyframes.ts` | ✅ builder.at/from/to | 已比旧版 frame map 更简洁 | — |
-| `index.ts` | ✅ 类型 + 值 + 默认主题导出齐全 | 同 | — |
-| `tests/theme.spec.ts` & `tests/chain-fn.spec.ts` | ✅ 2 个 | 5 个（+carrier/builtins/parity/types） | P1.C |
-| `examples/vanilla-button/index.ts` | ✅ 占位 | 完整 demo | P1.D |
-| `recipes/vue.md` & `recipes/react.md` | ✅ 占位 | 完整 30 行 provider + useIcss | P1.D |
-| `README.md` | ✅ 存在 | 四态 + 自定义主题 + 框架接入 | P1.D |
+| 文件 / 入口 | 现状 | 差距 |
+|---|---|---|
+| `theme/Theme.ts` | ✅ class + lazy resolve cache + merge + type intersection 注入 ResolvedTheme 字段 | — |
+| `theme/types.ts` | ✅ ThemeSchema / ThemeValue / ResolvedTheme / DeepPartial | — |
+| `theme/resolveTheme.ts` | ✅ 两遍扫描，function token 求值 | 0.1.0 决定不换 Proxy 懒求值（已 work）；环检测留 P2+ |
+| `theme/mergeTheme.ts` | ✅ 走 helpers.deepMerge（不可变深合并）+ 2 个新增测试覆盖兄弟保留与 immutable | — |
+| `theme/keymap.ts` | ✅ `toIdent` + `buildKeymap` | — |
+| `theme/defaults/light.ts` & `dark.ts` & `palette.ts` & `schema.ts` | ✅ 7 category + blur 9 token（Phase 1 末尾补） | P2 扩完整 Tailwind palette |
+| `chain/Chain.ts` | ✅ 59 个内建方法（伪类 / 表单 / 伪元素 / 结构 / group·peer / 选择器 / 条件 / at-rules / 媒体修饰符 / 工具组合 / filter / 逃生舱） | — |
+| `chain/proxy.ts` | ✅ INTERNAL_KEYS 含 `_carriers` / `_resolveBlurValue`；方法 bind 到 receiver（修复关键 bug） | — |
+| `chain/carrier.ts` | ✅ `_carriers` Map 缓存 + 颜色 token 返回 ColorTokenValue { alpha } | — |
+| `chain/color.ts` | ✅ `setAlpha(color, n)`（基于 color2k.parseToRgba） | — |
+| `chain/enhanced-props.ts` | ✅ 72 条 | P2 扩到 ~120 |
+| `scripts/generate-properties.mjs` | ✅ 读 csstype + ENHANCED_PROPS（含 Identifier 解引用）派生 857 属性 / 72 增强 | — |
+| `chain/keywords.ts` | ✅ KEYWORD_TO_CSS + GLOBAL_KEYWORDS | — |
+| `chain/units.ts` | ✅ LENGTH/TIME/ANGLE + withUnit | — |
+| `chain/helpers.ts` | ✅ isPlainObject + deepClone + deepMerge + deepMergeInto | — |
+| `types/carrier.ts` | ✅ PropCarrier / ColorPropCarrier / ColorTokenValue / PropFn / LengthUnits / TimeUnits / AngleUnits | — |
+| `types/tokens.ts` | ✅ ToIdent + 18 个 TokensXXX 工具类型 | — |
+| `types/properties.generated.ts` | ✅ generator 派生，含完整 csstype JSDoc + MDN 链接 + 兼容表 | — |
+| `icss.ts` / `toClassName.ts` / `cx.ts` / `injectGlobal.ts` / `ikeyframes.ts` | ✅ 全部最小实现 | — |
+| `index.ts` | ✅ 完整导出（含 ColorPropCarrier / ColorTokenValue / DefaultSchema） | — |
+| `tests/*.spec.ts` | ✅ 6 套 / 83 测试（theme 5 / chain-fn 2 / chain-carrier 20 / chain-builtins 36 / parity 7 / types 13） | — |
+| `examples/vanilla-button/` | ✅ 独立 vite app（package.json + index.html + vite.config.ts，3 种按钮 demo） | P2 加 vue/react examples |
+| `recipes/vue.md` & `recipes/react.md` | ✅ 完整 30 行 provider + useIcss + dark-mode toggle | P2 加 svelte/solid |
+| `README.md` | ✅ 四态 + 自定义 schema + 59 内建方法表 + 限制说明 + dev 命令 | — |
+| `pnpm-workspace.yaml` | ✅ 包含 `packages/*` + `packages/core/examples/*` | — |
 
-**结论**：骨架 ~80% 完成，剩余主要是「内建方法移植 + carrier 缓存 + 4 个测试 + 示例补全」，共 2-3 天到 0.1.0。
+**结论**：Phase 1（0.1.0）全部完成。等用户审完后发 npm。
 
-### 13.1 推荐起步指令（新会话）
+### 13.1 0.1.0 ready 后的恢复指令（下次会话）
 
 ```bash
-# 1. 进 core 包
-cd C:\code\zui\packages\core
+cd C:\code\zui
 
-# 2. 验证骨架可运行
-pnpm install          # 根目录已 install 过的话可跳过
-pnpm test             # 当前 2 个 spec 应该全绿
-pnpm type-check       # tsc --noEmit
+# 1. 验证当前状态
+pnpm --filter @kenconnet666/zui-core test          # 应 83/83 全绿
+pnpm --filter @kenconnet666/zui-core exec tsc --noEmit --project tsconfig.json
 
-# 3. P1.A 起步: 内建方法移植
-#    参考 C:\code\zui-back7\packages\ui\src\emotion\chain.ts (IcxRuntime 类)
-#    复制 _hover/_focus/_active/.../_truncate/_lineClamp 等到 src/chain/Chain.ts 的 class 体
-#    去掉 resolveTokenValue / resolveBreakpointQuery 字符串解析（新版用 carrier）
+# 2. 跑 vanilla-button demo（浏览器预览）
+pnpm --filter @kenconnet666/example-vanilla-button dev
+
+# 3. 改 ENHANCED_PROPS 后重生成
+node scripts/generate-properties.mjs
+
+# 4. 发 0.1.0（**手动**）
+cd packages/core
+pnpm publish --access public        # 需先 npm login
 ```
+
+---
+
+## 十四、自主决策日志（agent 自主推进时的边角决策）
+
+> agent 在用户离线期间遇到的非阻塞设计决策记录于此。每条都是"按 zui-back7 既有实现/最直接方式处理"风格，回来后可统一审。
+
+| 时间 | 文件 / 范围 | 问题 | 决策 | 理由 / 参考 |
+|---|---|---|---|---|
+| 2026-05-18 | P1.A: chain/Chain.ts `_truncate` | 是否保留旧 Chain.ts 的"`_truncate(lines = 1)` 多行 fallback" | **拆**：`_truncate()` 仅单行；多行用 `_lineClamp(n)` | 对齐 zui-back7（语义更清晰，符合 Tailwind 命名） |
+| 2026-05-18 | P1.A: chain/Chain.ts `_nest` | 嵌套 fn 内容 + 父节点同名 selector 已有内容时如何处理 | 复用 existing 对象，新写入 merge 进去；空 fn 不留空 selector | 与 zui-back7 `withNested` 行为一致；避免重复 selector 块 |
+| 2026-05-18 | P1.A: chain/helpers.ts | 既有 `deepMerge`（不可变）与 zui-back7 `deepMerge`（可变）同名 | 既有保留为不可变 `deepMerge`；新增 `deepMergeInto`（可变）；`Chain._use` 走可变 | 两份语义都有用：`mergeTheme` 需要返回新对象，`_use` 需要原地写 `_node` |
+| 2026-05-18 | P1.C: chain/proxy.ts ★ bug fix | 测试中 `_when(true, s => s.color._primary)` 抛 `Cannot read properties of undefined`：fn(this) 传出的是 target 不是 proxy | 修改两处 `.bind(target)` → `.bind(receiver)`，让方法内 `this === proxy`；carrier 仍闭包到 target 不受影响 | 实测后 36/36 内建测试全过；记入 §九陷阱表 |
+| 2026-05-18 | P1.D: theme/mergeTheme | Plan §十三 标注"浅一层，要 deep"。审后认为 ThemeSchema 实际只 2 层（Cat→key→leaf），现有实现已够 | 改写为统一走 `helpers.deepMerge`（行为不变，代码更短）+ 加 2 个 immutable / sibling-preserve 测试守护 | 函数对 ResolvedTheme 形状语义不变，代码更短更通用 |
+| 2026-05-18 | P1.D: defaults | DefaultSchema 加 blur category 时键名 `2xl` / `3xl` 与 schema interface 冲突（不是合法 ident） | 用 `'2xl': string` / `'3xl': string` 字符串字面量 key 声明 | TS 支持，访问时也只能用 `theme.blur['2xl']` 字符串形式（用户少用，可接受） |
+| 2026-05-18 | P1.D: chain-builtins 测试 | 加 blur 后"找不到 blur token → 原值透传"测试失败（因为 defaultLight 现在有 blur） | 改用 `new Theme({ color: ... })` 故意不带 blur 的临时主题 | 测试意图不变，仍守护无 blur 时的优雅降级 |
+| 2026-05-18 | P1.D: vanilla-button | pnpm-workspace.yaml 只含 `packages/*`，example 拿不到 workspace dep | 追加 `packages/core/examples/*` 到 workspace 列表 | 让 example 用 `workspace:*` 链 core 源码，dev 时直接吃 src（vite alias 配合） |
+
+### 14.1 复盘清单（回来审时关注）
+
+1. **proxy bind 改 receiver 的副作用**：所有内建方法的 `this` 现在是 proxy。访问 `this._node` 走 INTERNAL_KEYS 白名单（已配齐）；访问其他属性走 carrier 分支。如未来加新私有方法记得同步白名单。
+2. **DefaultSchema blur key `2xl`/`3xl`**：访问形式 `theme.blur['2xl']`，不是 `theme.blur._2xl`。Chain 上用 `_blur('_2xl')` 也不行（resolveBlurValue 去掉 `_` 后查 `blur['2xl']`，要 token 名带 `_` 时去 `_2xl`，但用户最自然写法是 `_blur('2xl')` 不带 `_` 直接命中）。功能 OK 但命名要在 README 标注。
+3. **mergeTheme 改成走 deepMerge**：与 zui-back7 实现等价（zui-back7 也是 2 层 spread）；测试覆盖了兄弟保留 + immutable。如 P2 加深嵌套 category（如 `motion.duration.fast`），deepMerge 已经能处理。
+4. **vanilla-button 用 vite alias 引 src**：dev 时直接吃 src（无需先 build），生产 build 出 33.85kb / 12.42kb gzip。

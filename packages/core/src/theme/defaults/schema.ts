@@ -48,4 +48,15 @@ export interface DefaultSchema extends ThemeSchema {
     md: string
     lg: string
   }
+  blur: {
+    none: string
+    xs: string
+    sm: string
+    base: string
+    md: string
+    lg: string
+    xl: string
+    '2xl': string
+    '3xl': string
+  }
 }

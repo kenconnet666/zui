@@ -49,4 +49,15 @@ export const defaultDark = new Theme<DefaultSchema>({
     md: '0 4px 6px -1px rgb(0 0 0 / 0.4)',
     lg: '0 10px 15px -3px rgb(0 0 0 / 0.4)',
   },
+  blur: {
+    none: '0',
+    xs: '2px',
+    sm: '4px',
+    base: '8px',
+    md: '12px',
+    lg: '16px',
+    xl: '24px',
+    '2xl': '40px',
+    '3xl': '64px',
+  },
 })
