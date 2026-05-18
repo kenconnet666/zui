@@ -981,13 +981,19 @@ export function icss<T extends ThemeSchema>(
 - 包大小：bundle 19.88kb / 4.91kb gzip（未变 —— 类型扩展不增运行时）
 - bench: icss ~19k ops/s
 
-### Phase 3+（待启动）
-- ui-vue 包（`packages/ui-vue/` 完整组件库）
-- docs 站（VitePress）
-- SSR / `createIcssInstance(emotion)` wrapper
-- 二级 carrier（`s.transform.rotate.deg(45)`）
-- ESLint plugin
-- 性能优化（按 baseline.md 列的 3 候选）
+### Phase 3+（待启动 —— 开工前请参考 [`AGENT.md`](./AGENT.md) §九 候选清单）
+
+| 候选 | 工作量 | 风险 | 价值 |
+|---|---|---|---|
+| **P3.A** 性能优化（keymap 缓存到 Theme，按 bench/baseline.md 三候选） | 0.5 天 | 中 | bench 19k → 40k+ ops/s |
+| **P3.B** SSR / `createIcssInstance(emotion)` wrapper | 1 天 | 中 | 解决 §十一.16-17 |
+| **P3.C** ui-vue 包启动（ZThemeProvider + 5 基础组件） | 2-3 天 | 高（API 设计） | 落地组件库 |
+| **P3.D** docs 站（VitePress） | 1-2 天 | 低 | 文档 + 在线 demo |
+| **P3.E** 二级 carrier（`s.transform.rotate.deg(45)`） | 1 天 | 中（DSL 设计） | 表达力升级 |
+| **P3.F** ESLint plugin（禁直接 emotion css） | 1 天 | 低 | 大型项目防错 |
+
+**推荐启动顺序**（agent 自主推进时）：D（docs） → B（SSR） → A（perf） → C（ui-vue） →
+E（二级 carrier） → F（ESLint plugin）。每条都属于 P3 决策点，开工前需用户确认范围。
 
 ---
 
@@ -1371,6 +1377,8 @@ pnpm publish --access public        # 需先 npm login
 2. **DefaultSchema blur key `2xl`/`3xl`**：访问形式 `theme.blur['2xl']`，不是 `theme.blur._2xl`。Chain 上用 `_blur('_2xl')` 也不行（resolveBlurValue 去掉 `_` 后查 `blur['2xl']`，要 token 名带 `_` 时去 `_2xl`，但用户最自然写法是 `_blur('2xl')` 不带 `_` 直接命中）。功能 OK 但命名要在 README 标注。
 3. **mergeTheme 改成走 deepMerge**：与 zui-back7 实现等价（zui-back7 也是 2 层 spread）；测试覆盖了兄弟保留 + immutable。如 P2 加深嵌套 category（如 `motion.duration.fast`），deepMerge 已经能处理。
 4. **vanilla-button 用 vite alias 引 src**：dev 时直接吃 src（无需先 build），生产 build 出 33.85kb / 12.42kb gzip。
+5. **★ 对外类型改动后必须 `pnpm build`**：dist gitignored 但被 IDEA / 其它消费者通过 node_modules symlink 读取；不重 build 会导致 IDE 误报旧签名错。加入了 AGENT.md §四.3 验证铁律。
+6. **examples tsconfig path mapping**：vue-button / react-button 现在通过 `paths` 直接走 src，让 IDE 与 vite 行为一致；vanilla-button 没 tsconfig（纯 vite），不影响。
 
 ### 14.2 Phase 2 新增决策
 
@@ -1386,3 +1394,6 @@ pnpm publish --access public        # 需先 npm login
 | 2026-05-18 | P2.D: svelte.md | Svelte 5 runes + setContext 模式不支持直接传 `$state` Ref，需要类包装 | 用 `class ThemeStore { current = $state(...) }` 暴露 store；getContext 拿 instance 而非 ref | 是 Svelte 5 当前推荐的"reactive state 跨组件传递"惯用法 |
 | 2026-05-18 | P2.G: .changeset/config.json | examples 不该参与版本管理 | ignore 3 个 example 包名 + access: public | example 包是 `private: true` 不会发包，但 ignore 防止 `changeset version` 误处理 |
 | 2026-05-18 | P2 post-release: toClassName.ts | `toClassName(chain: Chain<never>)` 让用户传 `Chain<DefaultSchema>` 时 TS2345（T 不变性，never 拒绝其它实例化） | 改 generic：`toClassName<T extends ThemeSchema>(chain: Chain<T>): string` | 0.2.1 hotfix；examples 没受影响（vite build 跳过严格 typecheck），但 IDEA TS service 报错 |
+| 2026-05-18 | P2 post-release: dist/index.d.ts | 改 src/toClassName.ts 后 commit + push，但用户 IDEA 仍报旧错。原因：上次 `pnpm test` 后没 `pnpm build`，dist 仍是 0.2.0 P2.H 时刻的产物；IDEA 通过 node_modules symlink → packages/core/dist/index.d.ts 读到旧签名 | 重新 `pnpm build` 同步 dist；并把"对外类型改动后必跑 build"写进 AGENT.md §四.3 验证铁律 | dist gitignored 不入库，但 IDEA 走 node_modules 解析；examples vite alias 仅影响 vite，不影响 IDE TS 服务 |
+| 2026-05-18 | P2 post-release: examples/{vue,react}-button/tsconfig.json | examples 没配 path mapping，IDEA TS 服务通过 node_modules 读 dist 而非 src | 加 `baseUrl + paths: "@kenconnet666/zui-core" → ../../src/index.ts` + `ignoreDeprecations: "6.0"` | 让 IDE 行为跟 vite.config.ts 的 resolve.alias 一致；dist 即使过期也不影响 dev 体验 |
+| 2026-05-18 | 会话末尾 | 经验沉淀给下次接手 agent | 新建 `C:\code\zui\AGENT.md`（operational guide，10 节），含坑速记 + 命令速记 + Phase 3 候选清单 | Plan.md 是 source of truth（设计 / 决策），AGENT.md 是 operational guide（工作流 / 陷阱）；二者职责分离 |
