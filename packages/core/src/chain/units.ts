@@ -1,7 +1,33 @@
-/** 长度单位（CSS 中和 `<length>` / `<percentage>` 适用的）。 */
+/**
+ * 长度单位（CSS 中和 `<length>` / `<percentage>` / `<flex>` 适用的）。
+ *
+ * 分组：
+ * - **绝对单位**: px / cm / mm / in / pt / pc
+ * - **相对字体**: rem / em / ch / ex
+ * - **小视口（svw/svh）**: 排除浏览器 UI 占用高度的视口
+ * - **大视口（lvw/lvh）**: 假设 UI 收起后的最大视口
+ * - **动态视口（dvw/dvh）**: 跟随 UI 动态变化（CSS Values 4）
+ * - **容器查询单位（cqw/cqh/cqi/cqb/cqmin/cqmax）**: 基于最近 container parent
+ * - **栅格分数**: fr
+ * - **百分比**: pct → '%'
+ */
 export const LENGTH_UNITS = [
-  'px', 'rem', 'em', 'ch', 'ex', 'vw', 'vh', 'vmin', 'vmax',
-  'pct', 'cm', 'mm', 'in', 'pt', 'pc', 'fr',
+  // 绝对
+  'px', 'cm', 'mm', 'in', 'pt', 'pc',
+  // 字体相对
+  'rem', 'em', 'ch', 'ex',
+  // 视口
+  'vw', 'vh', 'vmin', 'vmax',
+  // small / large / dynamic viewport（CSS Values 4）
+  'svw', 'svh', 'svmin', 'svmax',
+  'lvw', 'lvh', 'lvmin', 'lvmax',
+  'dvw', 'dvh', 'dvmin', 'dvmax',
+  // 容器查询单位（CSS Containment 3）
+  'cqw', 'cqh', 'cqi', 'cqb', 'cqmin', 'cqmax',
+  // 栅格
+  'fr',
+  // 百分比（特殊 ident → '%'）
+  'pct',
 ] as const
 
 /** 时间单位。 */

@@ -67,6 +67,48 @@ const RESIZE_KW = ['none', 'both', 'horizontal', 'vertical', 'block', 'inline'] 
 const SCROLL_BEHAVIOR_KW = ['auto', 'smooth'] as const
 const GRID_AUTO_FLOW_KW = ['row', 'column', 'dense', 'rowDense', 'columnDense'] as const
 
+// ─── W1.6' / W1.7 新增 ───
+const BLEND_MODE_KW = [
+  'normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten',
+  'colorDodge', 'colorBurn', 'hardLight', 'softLight',
+  'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity',
+  'plusDarker', 'plusLighter',
+] as const
+const BREAK_KW = [
+  'auto', 'avoid', 'always', 'all',
+  'avoidPage', 'page', 'leftPage', 'rightPage', 'recto', 'verso',
+  'avoidColumn', 'column',
+  'avoidRegion', 'region',
+] as const
+const TABLE_LAYOUT_KW = ['auto', 'fixed'] as const
+const BORDER_COLLAPSE_KW = ['collapse', 'separate'] as const
+const CAPTION_SIDE_KW = ['top', 'bottom', 'blockStart', 'blockEnd', 'inlineStart', 'inlineEnd'] as const
+const LIST_STYLE_TYPE_KW = ['disc', 'circle', 'square', 'decimal', 'decimalLeadingZero', 'lowerRoman', 'upperRoman', 'lowerAlpha', 'upperAlpha', 'none'] as const
+const LIST_STYLE_POSITION_KW = ['inside', 'outside'] as const
+const STROKE_LINECAP_KW = ['butt', 'round', 'square'] as const
+const STROKE_LINEJOIN_KW = ['miter', 'round', 'bevel'] as const
+const SCROLL_SNAP_TYPE_KW = ['none', 'x', 'y', 'block', 'inline', 'both', 'mandatory', 'proximity'] as const
+const SCROLL_SNAP_ALIGN_KW = ['none', 'start', 'end', 'center'] as const
+const SCROLL_SNAP_STOP_KW = ['normal', 'always'] as const
+const TOUCH_ACTION_KW = ['auto', 'none', 'panX', 'panY', 'panLeft', 'panRight', 'panUp', 'panDown', 'pinchZoom', 'manipulation'] as const
+const APPEARANCE_KW = ['none', 'auto', 'textfield', 'menulistButton'] as const
+const WILL_CHANGE_KW = ['auto', 'scrollPosition', 'contents'] as const
+const COLOR_SCHEME_KW = ['normal', 'light', 'dark', 'lightDark', 'only'] as const
+const BOX_SIZING_KW = ['borderBox', 'contentBox'] as const
+const BOX_DECORATION_BREAK_KW = ['slice', 'clone'] as const
+const FLOAT_KW = ['left', 'right', 'none', 'inlineStart', 'inlineEnd'] as const
+const CLEAR_KW = ['left', 'right', 'none', 'both', 'inlineStart', 'inlineEnd'] as const
+const ISOLATION_KW = ['auto', 'isolate'] as const
+const WRITING_MODE_KW = ['horizontalTb', 'verticalRl', 'verticalLr', 'sidewaysRl', 'sidewaysLr'] as const
+const DIRECTION_KW = ['ltr', 'rtl'] as const
+const TEXT_ORIENTATION_KW = ['mixed', 'upright', 'sideways'] as const
+const TEXT_WRAP_KW = ['wrap', 'nowrap', 'balance', 'pretty', 'stable'] as const
+const FIELD_SIZING_KW = ['content', 'fixed'] as const
+const INTERPOLATE_SIZE_KW = ['allowKeywords', 'numericOnly'] as const
+const OVERFLOW_ANCHOR_KW = ['auto', 'none'] as const
+const COLUMN_SPAN_KW = ['none', 'all'] as const
+const COLUMN_FILL_KW = ['auto', 'balance', 'balanceAll'] as const
+
 /**
  * 增强属性元数据 —— 类型 ↔ 运行时双向对齐的 **single source of truth**。
  *
@@ -241,4 +283,98 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   pointerEvents:  { tokenCat: null, unitClass: null, keywords: POINTER_EVENTS_KW },
   resize:         { tokenCat: null, unitClass: null, keywords: RESIZE_KW },
   scrollBehavior: { tokenCat: null, unitClass: null, keywords: SCROLL_BEHAVIOR_KW },
+
+  // ═════════════════════════════════════════════════════════════════════
+  // W1.6' / W1.7 补完（按 Tailwind v3/v4 高频度，~50 条）
+  // ═════════════════════════════════════════════════════════════════════
+
+  // ─── Filter / Backdrop（★ 必须，W1.4 helper 前置） ───
+  filter:         { tokenCat: null, unitClass: null, keywords: ['none'] },
+  backdropFilter: { tokenCat: null, unitClass: null, keywords: ['none'] },
+
+  // ─── 表格 ───
+  borderCollapse: { tokenCat: null, unitClass: null, keywords: BORDER_COLLAPSE_KW },
+  borderSpacing:  { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  tableLayout:    { tokenCat: null, unitClass: null, keywords: TABLE_LAYOUT_KW },
+  captionSide:    { tokenCat: null, unitClass: null, keywords: CAPTION_SIDE_KW },
+
+  // ─── 列表 ───
+  listStyleType:     { tokenCat: null, unitClass: null, keywords: LIST_STYLE_TYPE_KW },
+  listStylePosition: { tokenCat: null, unitClass: null, keywords: LIST_STYLE_POSITION_KW },
+  listStyleImage:    { tokenCat: null, unitClass: null, keywords: ['none'] },
+
+  // ─── SVG ───
+  strokeWidth:     { tokenCat: 'borders', unitClass: 'length', keywords: null },
+  strokeLinecap:   { tokenCat: null, unitClass: null, keywords: STROKE_LINECAP_KW },
+  strokeLinejoin:  { tokenCat: null, unitClass: null, keywords: STROKE_LINEJOIN_KW },
+  strokeDasharray: { tokenCat: null, unitClass: null, keywords: ['none'] },
+  strokeDashoffset:{ tokenCat: null, unitClass: 'length', keywords: null },
+
+  // ─── Scroll snap ───
+  scrollSnapType:    { tokenCat: null, unitClass: null, keywords: SCROLL_SNAP_TYPE_KW },
+  scrollSnapAlign:   { tokenCat: null, unitClass: null, keywords: SCROLL_SNAP_ALIGN_KW },
+  scrollSnapStop:    { tokenCat: null, unitClass: null, keywords: SCROLL_SNAP_STOP_KW },
+  scrollMargin:        { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollMarginTop:     { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollMarginRight:   { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollMarginBottom:  { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollMarginLeft:    { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollMarginBlock:   { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollMarginInline:  { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollPadding:       { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollPaddingTop:    { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollPaddingRight:  { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollPaddingBottom: { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollPaddingLeft:   { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollPaddingBlock:  { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  scrollPaddingInline: { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+
+  // ─── Pointer / 系统 ───
+  touchAction: { tokenCat: null, unitClass: null, keywords: TOUCH_ACTION_KW },
+  appearance:  { tokenCat: null, unitClass: null, keywords: APPEARANCE_KW },
+  willChange:  { tokenCat: null, unitClass: null, keywords: WILL_CHANGE_KW },
+  colorScheme: { tokenCat: null, unitClass: null, keywords: COLOR_SCHEME_KW },
+
+  // ─── Layout ───
+  boxSizing:           { tokenCat: null, unitClass: null, keywords: BOX_SIZING_KW },
+  boxDecorationBreak:  { tokenCat: null, unitClass: null, keywords: BOX_DECORATION_BREAK_KW },
+  float:               { tokenCat: null, unitClass: null, keywords: FLOAT_KW },
+  clear:               { tokenCat: null, unitClass: null, keywords: CLEAR_KW },
+  isolation:           { tokenCat: null, unitClass: null, keywords: ISOLATION_KW },
+
+  // ─── 混合模式 ───
+  mixBlendMode:        { tokenCat: null, unitClass: null, keywords: BLEND_MODE_KW },
+  backgroundBlendMode: { tokenCat: null, unitClass: null, keywords: BLEND_MODE_KW },
+
+  // ─── 书写方向 ───
+  writingMode:     { tokenCat: null, unitClass: null, keywords: WRITING_MODE_KW },
+  direction:       { tokenCat: null, unitClass: null, keywords: DIRECTION_KW },
+  textOrientation: { tokenCat: null, unitClass: null, keywords: TEXT_ORIENTATION_KW },
+
+  // ─── Columns（多栏） ───
+  columns:          { tokenCat: null, unitClass: 'length', keywords: ['auto'] },
+  columnCount:      { tokenCat: null, unitClass: null, keywords: ['auto'] },
+  columnWidth:      { tokenCat: null, unitClass: 'length', keywords: ['auto'] },
+  columnSpan:       { tokenCat: null, unitClass: null, keywords: COLUMN_SPAN_KW },
+  columnFill:       { tokenCat: null, unitClass: null, keywords: COLUMN_FILL_KW },
+  columnRuleWidth:  { tokenCat: 'borders', unitClass: 'length', keywords: null },
+  columnRuleStyle:  { tokenCat: null, unitClass: null, keywords: BORDER_STYLE_KW },
+  columnRuleColor:  { tokenCat: 'color', unitClass: null, keywords: COLOR_KW },
+  breakBefore:      { tokenCat: null, unitClass: null, keywords: BREAK_KW },
+  breakAfter:       { tokenCat: null, unitClass: null, keywords: BREAK_KW },
+  breakInside:      { tokenCat: null, unitClass: null, keywords: ['auto', 'avoid', 'avoidPage', 'avoidColumn', 'avoidRegion'] },
+
+  // ─── 现代 CSS 4 ───
+  textWrap:         { tokenCat: null, unitClass: null, keywords: TEXT_WRAP_KW },
+  fieldSizing:      { tokenCat: null, unitClass: null, keywords: FIELD_SIZING_KW },
+  interpolateSize:  { tokenCat: null, unitClass: null, keywords: INTERPOLATE_SIZE_KW },
+  overflowAnchor:   { tokenCat: null, unitClass: null, keywords: OVERFLOW_ANCHOR_KW },
+  anchorName:       { tokenCat: null, unitClass: null, keywords: ['none'] },
+  positionAnchor:   { tokenCat: null, unitClass: null, keywords: ['auto'] },
+
+  // ─── 内容生成（伪元素 ::before/::after 用） ───
+  content:          { tokenCat: null, unitClass: null, keywords: ['none', 'normal'] },
+  counterReset:     { tokenCat: null, unitClass: null, keywords: ['none'] },
+  counterIncrement: { tokenCat: null, unitClass: null, keywords: ['none'] },
+  counterSet:       { tokenCat: null, unitClass: null, keywords: ['none'] },
 }

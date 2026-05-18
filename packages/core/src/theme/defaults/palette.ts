@@ -166,31 +166,13 @@ export function flattenPalette(
 /** 已展平的默认调色板（242 色），直接 spread 进 `theme.color`。 */
 export const FLAT_PALETTE = flattenPalette()
 
-// ─── 兼容旧版（packages/core P1 用到的少量直接命名） ───
-// 保留 `palette.blue600` 等访问形式，避免改动 light.ts / dark.ts 时大量重写。
-
-type LegacyPaletteShape = {
-  white: string
-  black: string
-  transparent: string
-  current: string
-} & {
-  [K in `${PaletteName}${PaletteShade}`]: string
+/**
+ * 取调色板某 shade 的 hex 值。语义化、类型安全。
+ *
+ * @example
+ * tw('blue', '600')   // → '#2563eb'
+ * tw('red', '500')    // → '#ef4444'
+ */
+export function tw(name: PaletteName, shade: PaletteShade): string {
+  return TAILWIND_PALETTE[name][shade]
 }
-
-function buildLegacyPalette(): LegacyPaletteShape {
-  const legacy = {
-    white: '#ffffff',
-    black: '#000000',
-    transparent: 'transparent',
-    current: 'currentColor',
-  } as Record<string, string>
-  for (const name of PALETTE_NAMES) {
-    for (const shade of PALETTE_SHADES) {
-      legacy[`${name}${shade}`] = TAILWIND_PALETTE[name][shade]
-    }
-  }
-  return legacy as LegacyPaletteShape
-}
-
-export const palette = buildLegacyPalette()

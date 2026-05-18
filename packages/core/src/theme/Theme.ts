@@ -1,5 +1,6 @@
 import { resolveTheme } from './resolveTheme'
 import { mergeTheme } from './mergeTheme'
+import { buildKeymap } from './keymap'
 import type { DeepPartial, ResolvedTheme, ThemeSchema } from './types'
 
 /**
@@ -14,11 +15,18 @@ import type { DeepPartial, ResolvedTheme, ThemeSchema } from './types'
  *   - `new Theme(schema)` 构造
  *   - `class MyTheme extends Theme<MySchema>` 继承
  *   - `theme.color.primary` schema 字段强类型访问（通过 intersection）
- *   - `theme.resolve() / theme.merge()` 方法
+ *   - `theme.resolve() / theme.merge() / theme.getKeymap()` 方法
  */
 class _ThemeClass<T extends ThemeSchema> {
   /** 内部缓存：已解析的 ResolvedTheme，由 `resolve()` 懒构建。 */
   private _resolved: ResolvedTheme<T> | null = null
+  /**
+   * 内部缓存：ident → originalKey 映射表，由 `getKeymap()` 懒构建。
+   *
+   * Theme 实例级缓存，多个 Chain 共享同一份 keymap，避免每个 Chain 重建 O(n) 遍历
+   * 所有 token。修复 §十五.18 B3。
+   */
+  private _keymap: Map<string, Map<string, string>> | null = null
 
   constructor(public schema: T) {
     // 把 schema 各 category 直接挂到 this 上，配合 type intersection 即可强类型访问。
@@ -33,6 +41,14 @@ class _ThemeClass<T extends ThemeSchema> {
       this._resolved = resolveTheme(this.schema)
     }
     return this._resolved
+  }
+
+  /** 拿到 keymap（懒构建 + 缓存）。Chain 构造时优先调用此方法。 */
+  getKeymap(): Map<string, Map<string, string>> {
+    if (this._keymap === null) {
+      this._keymap = buildKeymap(this.resolve())
+    }
+    return this._keymap
   }
 
   /** 用 `partial` 局部覆盖父主题，返回一个新 Theme 实例。父主题不变。 */

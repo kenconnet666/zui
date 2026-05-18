@@ -1,7 +1,7 @@
 export { defaultLight } from './light'
 export { defaultDark } from './dark'
 export type { DefaultSchema } from './schema'
-export { palette } from './palette'
+export { tw, TAILWIND_PALETTE, FLAT_PALETTE, PALETTE_NAMES, PALETTE_SHADES, flattenPalette } from './palette'
 
 // 注：不再导出 `const DefaultSchema = defaultLight.schema`。
 // `DefaultSchema` 仅作类型存在，运行时入口是 `defaultLight` / `defaultDark`。

@@ -10,6 +10,40 @@ import { deepClone, deepMergeInto } from './helpers'
 
 // ─── 内部工具 ───
 
+/** _inspect 用：把 _node 渲染成嵌套 CSS 风字符串。 */
+function inspectCss(node: Record<string, unknown>, depth: number): string {
+  const indent = '  '.repeat(depth)
+  const lines: string[] = []
+  for (const key in node) {
+    const v = node[key]
+    if (v !== null && typeof v === 'object' && !Array.isArray(v)) {
+      lines.push(`${indent}${key} {`)
+      lines.push(inspectCss(v as Record<string, unknown>, depth + 1))
+      lines.push(`${indent}}`)
+    } else {
+      const cssKey = key.replace(/[A-Z]/g, m => '-' + m.toLowerCase())
+      lines.push(`${indent}${cssKey}: ${v as string};`)
+    }
+  }
+  return lines.join('\n')
+}
+
+/** _inspect 用：把 _node 渲染成树状字符串。 */
+function inspectTree(node: Record<string, unknown>, depth: number): string {
+  const indent = '  '.repeat(depth)
+  const lines: string[] = []
+  for (const key in node) {
+    const v = node[key]
+    if (v !== null && typeof v === 'object' && !Array.isArray(v)) {
+      lines.push(`${indent}${key}/`)
+      lines.push(inspectTree(v as Record<string, unknown>, depth + 1))
+    } else {
+      lines.push(`${indent}${key} = ${String(v)}`)
+    }
+  }
+  return lines.join('\n')
+}
+
 function normalizeSelector(selectorTail: string): string {
   const trimmed = selectorTail.trim()
   if (!trimmed) return '&'
@@ -47,6 +81,20 @@ function resolveBreakpointQuery(query: string, theme: ResolvedTheme<ThemeSchema>
  * Statement-only：fn 回调签名是 `(s: this) => void`，不要求返回 chain；嵌套上下文由
  * `_nest` 在 try/finally 内切换 `_node`。
  */
+/** Chain 构造可选项（W5.1 SSR / W3.2 debug 共享）。 */
+export interface ChainOptions {
+  /**
+   * 自定义 css 编译函数（用于 SSR / 多实例隔离场景）。
+   * 不传则用 `@emotion/css` 默认 instance 的 `css`。
+   */
+  cssFn?: (obj: CSSObject) => string
+  /**
+   * 开发态自动给 chain 加 label 前缀。生产构建（NODE_ENV === 'production'）下忽略。
+   * Plan §15.6 D7 opt-in。
+   */
+  debug?: boolean
+}
+
 export class Chain<T extends ThemeSchema = DefaultSchema> {
   /** 累计的 emotion `CSSObject`（含嵌套）。 */
   public _node: Record<string, unknown> = {}
@@ -54,10 +102,27 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   public _keymap: Map<string, Map<string, string>>
   /** carrier 缓存（避免 chain.color 多次访问反复建 Proxy）。 */
   public _carriers: Map<string, unknown> = new Map()
+  /** 自定义 css 编译函数（W5.1，SSR 用户传入；不传走默认 emotion css）。 */
+  public _cssFn: (obj: CSSObject) => string
 
-  constructor(theme: ResolvedTheme<T> | Theme<T>) {
-    this._theme = theme instanceof Theme ? theme.resolve() : theme
-    this._keymap = buildKeymap(this._theme)
+  constructor(theme: ResolvedTheme<T> | Theme<T>, options: ChainOptions = {}) {
+    if (theme instanceof Theme) {
+      this._theme = theme.resolve()
+      // ★ 复用 Theme 实例上的 keymap 缓存（W4.1 / 修 B3）
+      this._keymap = theme.getKeymap()
+    } else {
+      this._theme = theme
+      this._keymap = buildKeymap(this._theme)
+    }
+    this._cssFn = options.cssFn ?? css
+    if (options.debug && typeof process !== 'undefined' && process.env?.NODE_ENV !== 'production') {
+      // W3.2 简化：从 Error stack 抽取首个非 framework 调用点作为 label
+      const cs = new Error().stack ?? ''
+      const lines = cs.split('\n').slice(2, 6)
+      const callsite = lines.find(l => !l.includes('Chain.ts') && !l.includes('node_modules')) ?? ''
+      const m = callsite.match(/([\w.-]+):(\d+):(\d+)/)
+      if (m) this._node.label = `${m[1]!.replace(/\.\w+$/, '')}_${m[2]}`
+    }
     return makeChainProxy(this as unknown as Chain<never>) as unknown as Chain<T>
   }
 
@@ -180,6 +245,126 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     return this
   }
 
+  // ─── W2.1 通用属性选择器（Tailwind v4 风） ───
+
+  /**
+   * `&[data-<attr>]` / `&[data-<attr>="<value>"]`。
+   *
+   * @example
+   * s._data('state', 'open', open => { open.color._primary })   // &[data-state="open"]
+   * s._data('disabled', undefined, d => { d.opacity._50 })      // &[data-disabled]
+   */
+  _data(attr: string, value: string | undefined, fn: (s: this) => void): this {
+    const sel = value === undefined ? `&[data-${attr}]` : `&[data-${attr}="${value}"]`
+    return this._nest(sel, fn)
+  }
+
+  /** `&[aria-<attr>]` / `&[aria-<attr>="<value>"]`。 */
+  _aria(attr: string, value: string | undefined, fn: (s: this) => void): this {
+    const sel = value === undefined ? `&[aria-${attr}]` : `&[aria-${attr}="${value}"]`
+    return this._nest(sel, fn)
+  }
+
+  /** `&:has(<selector>)`。父级根据子级状态。 */
+  _has(selector: string, fn: (s: this) => void): this {
+    return this._nest(`&:has(${selector})`, fn)
+  }
+
+  /** `&:not(<selector>)`。 */
+  _not(selector: string, fn: (s: this) => void): this {
+    return this._nest(`&:not(${selector})`, fn)
+  }
+
+  /** `&:is(<selector-list>)`。 */
+  _is(selectorList: string, fn: (s: this) => void): this {
+    return this._nest(`&:is(${selectorList})`, fn)
+  }
+
+  /** `&:where(<selector-list>)`。零特异性版 `:is`。 */
+  _where(selectorList: string, fn: (s: this) => void): this {
+    return this._nest(`&:where(${selectorList})`, fn)
+  }
+
+  // ─── W2.2 状态属性 variant ───
+
+  /** `&[open], &[data-state="open"]`（details / dialog / popover 通用）。 */
+  _open(fn: (s: this) => void): this {
+    return this._nest('&[open], &[data-state="open"]', fn)
+  }
+
+  /** `&:not([open]), &[data-state="closed"]`。 */
+  _closed(fn: (s: this) => void): this {
+    return this._nest('&:not([open]), &[data-state="closed"]', fn)
+  }
+
+  /** `&[data-loading="true"]`。 */
+  _loading(fn: (s: this) => void): this {
+    return this._nest('&[data-loading="true"]', fn)
+  }
+
+  /** `&[inert]`。 */
+  _inert(fn: (s: this) => void): this {
+    return this._nest('&[inert]', fn)
+  }
+
+  /** `@media (forced-colors: active)`。Windows 高对比度模式。 */
+  _forcedColors(fn: (s: this) => void): this {
+    return this._nest('@media (forced-colors: active)', fn)
+  }
+
+  // ─── W2.3 @starting-style ───
+
+  /**
+   * `@starting-style { & { ... } }`。
+   *
+   * 配合 `interpolate-size: allow-keywords` 可实现 `height: 0 → height: auto` 动画。
+   */
+  _starting(fn: (s: this) => void): this {
+    return this._nest('@starting-style', s => s._nest('&', fn))
+  }
+
+  // ─── W2.4 Container query variant 简写 ───
+
+  /** `@container (min-width: theme.breakpoint.sm)`。 */
+  _containerSm(fn: (s: this) => void): this { return this._container('_sm', fn) }
+  _containerMd(fn: (s: this) => void): this { return this._container('_md', fn) }
+  _containerLg(fn: (s: this) => void): this { return this._container('_lg', fn) }
+  _containerXl(fn: (s: this) => void): this { return this._container('_xl', fn) }
+  _container2xl(fn: (s: this) => void): this { return this._container('_2xl', fn) }
+
+  // ─── W2.5 group / peer data 变种 ───
+
+  /** `:where(.group)[data-<attr>="<value>"] &`。 */
+  _groupData(attr: string, value: string | undefined, fn: (s: this) => void): this {
+    const matcher = value === undefined ? `[data-${attr}]` : `[data-${attr}="${value}"]`
+    return this._nest(`:where(.group)${matcher} &`, fn)
+  }
+
+  /** `:where(.peer)[data-<attr>="<value>"] ~ &`。 */
+  _peerData(attr: string, value: string | undefined, fn: (s: this) => void): this {
+    const matcher = value === undefined ? `[data-${attr}]` : `[data-${attr}="${value}"]`
+    return this._nest(`:where(.peer)${matcher} ~ &`, fn)
+  }
+
+  /** `:where(.group)[aria-<attr>="<value>"] &`。 */
+  _groupAria(attr: string, value: string | undefined, fn: (s: this) => void): this {
+    const matcher = value === undefined ? `[aria-${attr}]` : `[aria-${attr}="${value}"]`
+    return this._nest(`:where(.group)${matcher} &`, fn)
+  }
+
+  /** `:where(.peer)[aria-<attr>="<value>"] ~ &`。 */
+  _peerAria(attr: string, value: string | undefined, fn: (s: this) => void): this {
+    const matcher = value === undefined ? `[aria-${attr}]` : `[aria-${attr}="${value}"]`
+    return this._nest(`:where(.peer)${matcher} ~ &`, fn)
+  }
+
+  // ─── W8.2 @layer chain method ───
+
+  /** `@layer <name> { & { ... } }`。配合 W8.1 `injectLayerOrder` 控制级联优先级。 */
+  _layer(name: string, fn: (s: this) => void): this {
+    return this._nest(`@layer ${name}`, s => s._nest('&', fn))
+  }
+
   // ─── At 规则 ───
 
   /**
@@ -215,6 +400,142 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   _print(fn: (s: this) => void): this { return this._nest('@media print', fn) }
   _rtl(fn: (s: this) => void): this { return this._nest(':where([dir="rtl"]) &', fn) }
   _ltr(fn: (s: this) => void): this { return this._nest(':where([dir="ltr"]) &', fn) }
+
+  // ─── W7 Pattern 库（Panda / Chakra 风组合 helper） ───
+
+  /**
+   * Flex stack 布局简写。
+   *
+   * @example
+   * s._stack({ direction: 'row', gap: '_md', align: 'center', justify: 'spaceBetween' })
+   */
+  _stack(opts: {
+    direction?: 'row' | 'column' | 'rowReverse' | 'columnReverse'
+    gap?: string | number
+    align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'
+    justify?: 'start' | 'center' | 'end' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly'
+    inline?: boolean
+  } = {}): this {
+    this._node.display = opts.inline ? 'inline-flex' : 'flex'
+    const dirMap: Record<string, string> = { row: 'row', column: 'column', rowReverse: 'row-reverse', columnReverse: 'column-reverse' }
+    if (opts.direction) this._node.flexDirection = dirMap[opts.direction]
+    if (opts.gap !== undefined) {
+      const g = opts.gap
+      if (typeof g === 'string' && g.startsWith('_')) {
+        const name = g.slice(1)
+        const slot = (this._theme as Record<string, Record<string, string | number> | undefined>).spacing
+        const value = slot?.[name]
+        this._node.gap = value ?? g
+      } else {
+        this._node.gap = g
+      }
+    }
+    const alignMap: Record<string, string> = { start: 'flex-start', center: 'center', end: 'flex-end', stretch: 'stretch', baseline: 'baseline' }
+    const justifyMap: Record<string, string> = {
+      start: 'flex-start', center: 'center', end: 'flex-end',
+      spaceBetween: 'space-between', spaceAround: 'space-around', spaceEvenly: 'space-evenly',
+    }
+    if (opts.align) this._node.alignItems = alignMap[opts.align]
+    if (opts.justify) this._node.justifyContent = justifyMap[opts.justify]
+    return this
+  }
+
+  /**
+   * Grid 简写。
+   *
+   * @example
+   * s._grid({ cols: 3, gap: '_md' })          // 3 列等宽
+   * s._grid({ cols: 'auto 1fr auto' })        // 字面 template
+   */
+  _grid(opts: {
+    cols?: number | string
+    rows?: number | string
+    gap?: string | number
+    inline?: boolean
+  } = {}): this {
+    this._node.display = opts.inline ? 'inline-grid' : 'grid'
+    if (opts.cols !== undefined) {
+      this._node.gridTemplateColumns = typeof opts.cols === 'number' ? `repeat(${opts.cols}, minmax(0, 1fr))` : opts.cols
+    }
+    if (opts.rows !== undefined) {
+      this._node.gridTemplateRows = typeof opts.rows === 'number' ? `repeat(${opts.rows}, minmax(0, 1fr))` : opts.rows
+    }
+    if (opts.gap !== undefined) {
+      const g = opts.gap
+      if (typeof g === 'string' && g.startsWith('_')) {
+        const name = g.slice(1)
+        const slot = (this._theme as Record<string, Record<string, string | number> | undefined>).spacing
+        const value = slot?.[name]
+        this._node.gap = value ?? g
+      } else {
+        this._node.gap = g
+      }
+    }
+    return this
+  }
+
+  /** `aspect-ratio: 16 / 9`（video）。 */
+  _aspectVideo(): this { this._node.aspectRatio = '16 / 9'; return this }
+  /** `aspect-ratio: 1 / 1`（square）。 */
+  _aspectSquare(): this { this._node.aspectRatio = '1 / 1'; return this }
+  /** `aspect-ratio: 3 / 4`（portrait）。 */
+  _aspectPortrait(): this { this._node.aspectRatio = '3 / 4'; return this }
+  /** `aspect-ratio: 4 / 3`（landscape）。 */
+  _aspectLandscape(): this { this._node.aspectRatio = '4 / 3'; return this }
+
+  /**
+   * a11y 焦点环（`:focus-visible` 内设 outline）。
+   *
+   * @example
+   * s._focusRing({ color: '_primary', width: 2, offset: 2 })
+   */
+  _focusRing(opts: {
+    color?: string  // token (e.g. '_primary') 或字面 css color
+    width?: number
+    offset?: number
+    style?: 'solid' | 'dashed' | 'dotted' | 'double'
+  } = {}): this {
+    const width = opts.width ?? 2
+    const offset = opts.offset ?? 2
+    const style = opts.style ?? 'solid'
+    let color: string | number = 'currentColor'
+    if (opts.color) {
+      if (opts.color.startsWith('_')) {
+        const name = opts.color.slice(1)
+        const slot = (this._theme as Record<string, Record<string, string | number> | undefined>).color
+        color = slot?.[name] ?? opts.color
+      } else {
+        color = opts.color
+      }
+    }
+    return this._nest('&:focus-visible', s => {
+      s._node.outline = `${width}px ${style} ${color}`
+      s._node.outlineOffset = `${offset}px`
+    })
+  }
+
+  /**
+   * 视觉隐藏但屏读器可读（与 `_srOnly` 等价；语义化别名，修 C12）。
+   */
+  _visuallyHidden(): this { return this._srOnly() }
+
+  /** 绝对铺满父级（`position: absolute; inset: 0`）。 */
+  _fillParent(): this {
+    this._node.position = 'absolute'
+    this._node.inset = '0'
+    return this
+  }
+
+  /** 跳过链接（典型 a11y "skip to content"）。 */
+  _skipLink(): this {
+    this._node.position = 'absolute'
+    this._node.left = '-9999px'
+    this._node.zIndex = 999
+    return this._nest('&:focus', s => {
+      s._node.left = '50%'
+      s._node.translate = '-50% 0'
+    })
+  }
 
   // ─── 工具组合（Tailwind 招牌 "合并写法"） ───
 
@@ -257,16 +578,135 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     return this
   }
 
-  /** absolute 居中（top/left 50% + translate -50%）。 */
+  /**
+   * absolute 居中（top/left 50% + translate -50%）。
+   *
+   * 使用 CSS 标准 `translate` longhand（与 W1.3 Transform helpers 一致），不拼 transform shorthand。
+   */
   _absoluteCenter(): this {
     this._node.position = 'absolute'
     this._node.top = '50%'
     this._node.left = '50%'
-    this._node.transform = 'translate(-50%, -50%)'
+    this._node.translate = '-50% -50%'
     return this
   }
 
-  // ─── filter 简写 ───
+  // ─── W1.3 Transform longhand helpers（CSS Working Group / Tailwind v4 风） ───
+  //
+  // 设计：用 CSS 标准的 `translate` / `rotate` / `scale` longhand 独立属性，不拼 `transform` shorthand。
+  // 数值类参数支持 `number`（自动加 px / deg）或 `string`（直接用）。
+
+  /** `translate: <x> [<y>]`。number → px。 */
+  _translate(x: number | string, y?: number | string): this {
+    const xv = typeof x === 'number' ? `${x}px` : x
+    const yv = y === undefined ? '' : (typeof y === 'number' ? ` ${y}px` : ` ${y}`)
+    this._node.translate = `${xv}${yv}`
+    return this
+  }
+  _translateX(v: number | string): this {
+    this._node.translate = typeof v === 'number' ? `${v}px` : v
+    return this
+  }
+  _translateY(v: number | string): this {
+    const yv = typeof v === 'number' ? `${v}px` : v
+    this._node.translate = `0 ${yv}`
+    return this
+  }
+  _translateZ(v: number | string): this {
+    const zv = typeof v === 'number' ? `${v}px` : v
+    this._node.translate = `0 0 ${zv}`
+    return this
+  }
+
+  /** `rotate: <deg>deg`。 */
+  _rotate(deg: number | string): this {
+    this._node.rotate = typeof deg === 'number' ? `${deg}deg` : deg
+    return this
+  }
+  _rotateX(deg: number | string): this {
+    const d = typeof deg === 'number' ? `${deg}deg` : deg
+    this._node.rotate = `x ${d}`
+    return this
+  }
+  _rotateY(deg: number | string): this {
+    const d = typeof deg === 'number' ? `${deg}deg` : deg
+    this._node.rotate = `y ${d}`
+    return this
+  }
+  _rotateZ(deg: number | string): this {
+    const d = typeof deg === 'number' ? `${deg}deg` : deg
+    this._node.rotate = `z ${d}`
+    return this
+  }
+
+  /** `scale: <n> [<ny>]`。 */
+  _scale(n: number, ny?: number): this {
+    this._node.scale = ny === undefined ? `${n}` : `${n} ${ny}`
+    return this
+  }
+  _scaleX(n: number): this { this._node.scale = `${n} 1`; return this }
+  _scaleY(n: number): this { this._node.scale = `1 ${n}`; return this }
+  _scaleZ(n: number): this { this._node.scale = `1 1 ${n}`; return this }
+
+  /**
+   * `transform: skew(<x>deg [, <y>deg])`。
+   *
+   * CSS 没有 `skew` longhand，只能走 transform shorthand。
+   */
+  _skew(x: number, y?: number): this {
+    this._node.transform = y === undefined ? `skew(${x}deg)` : `skew(${x}deg, ${y}deg)`
+    return this
+  }
+
+  /** `perspective: <length>` 独立 property。 */
+  _perspective(v: number | string): this {
+    this._node.perspective = typeof v === 'number' ? `${v}px` : v
+    return this
+  }
+
+  /** `transform-origin: <value>` 独立 property。 */
+  _transformOrigin(v: string): this {
+    this._node.transformOrigin = v
+    return this
+  }
+
+  /** `transform-style: preserve-3d`（3D 嵌套场景必须）。 */
+  _preserve3d(): this {
+    this._node.transformStyle = 'preserve-3d'
+    return this
+  }
+
+  // ─── W1.4 Filter / Backdrop filter 二级 helpers ───
+  //
+  // CSS `filter` 没有 longhand 替代，本质上 = 函数 list 累加。多次调用按声明顺序拼接。
+
+  private _appendFilter(prop: 'filter' | 'backdropFilter', segment: string): this {
+    const existing = this._node[prop]
+    this._node[prop] = existing ? `${existing} ${segment}` : segment
+    return this
+  }
+
+  /** `filter: blur(<px>px)`。沿用 token 风格的 W1.4 helper。 */
+  _filterBlur(px: number): this { return this._appendFilter('filter', `blur(${px}px)`) }
+  _filterBrightness(pct: number): this { return this._appendFilter('filter', `brightness(${pct}%)`) }
+  _filterContrast(pct: number): this { return this._appendFilter('filter', `contrast(${pct}%)`) }
+  _filterGrayscale(pct: number): this { return this._appendFilter('filter', `grayscale(${pct}%)`) }
+  _filterHueRotate(deg: number): this { return this._appendFilter('filter', `hue-rotate(${deg}deg)`) }
+  _filterInvert(pct: number): this { return this._appendFilter('filter', `invert(${pct}%)`) }
+  _filterSaturate(pct: number): this { return this._appendFilter('filter', `saturate(${pct}%)`) }
+  _filterSepia(pct: number): this { return this._appendFilter('filter', `sepia(${pct}%)`) }
+  _filterDropShadow(spec: string): this { return this._appendFilter('filter', `drop-shadow(${spec})`) }
+
+  _backdropFilterBlur(px: number): this { return this._appendFilter('backdropFilter', `blur(${px}px)`) }
+  _backdropFilterBrightness(pct: number): this { return this._appendFilter('backdropFilter', `brightness(${pct}%)`) }
+  _backdropFilterContrast(pct: number): this { return this._appendFilter('backdropFilter', `contrast(${pct}%)`) }
+  _backdropFilterGrayscale(pct: number): this { return this._appendFilter('backdropFilter', `grayscale(${pct}%)`) }
+  _backdropFilterHueRotate(deg: number): this { return this._appendFilter('backdropFilter', `hue-rotate(${deg}deg)`) }
+  _backdropFilterInvert(pct: number): this { return this._appendFilter('backdropFilter', `invert(${pct}%)`) }
+  _backdropFilterSaturate(pct: number): this { return this._appendFilter('backdropFilter', `saturate(${pct}%)`) }
+  _backdropFilterSepia(pct: number): this { return this._appendFilter('backdropFilter', `sepia(${pct}%)`) }
+
+  // ─── 既有 _blur / _backdropBlur 保留（token 风的简写，比新增 _filterBlur 更高语义） ───
 
   /**
    * `filter: blur(<value>)`。token 名解析自 `theme.blur` 表；未找到则原字符串透传。
@@ -292,6 +732,30 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     return `blur(${value})`
   }
 
+  // ─── W1.5 Gradient helpers ───
+  //
+  // 设 `_node.backgroundImage = '<gradient>'`，不做 token 解析（stops 由用户提供 raw string）。
+
+  /** `background-image: linear-gradient(<angle>, <stops...>)`。 */
+  _linearGradient(angle: number | string, stops: string[]): this {
+    const a = typeof angle === 'number' ? `${angle}deg` : angle
+    this._node.backgroundImage = `linear-gradient(${a}, ${stops.join(', ')})`
+    return this
+  }
+
+  /** `background-image: radial-gradient(<shape>, <stops...>)`. */
+  _radialGradient(shape: string, stops: string[]): this {
+    this._node.backgroundImage = `radial-gradient(${shape}, ${stops.join(', ')})`
+    return this
+  }
+
+  /** `background-image: conic-gradient(from <angle>, <stops...>)`. */
+  _conicGradient(angle: number | string, stops: string[]): this {
+    const a = typeof angle === 'number' ? `from ${angle}deg` : `from ${angle}`
+    this._node.backgroundImage = `conic-gradient(${a}, ${stops.join(', ')})`
+    return this
+  }
+
   // ─── 输出 ───
 
   toCSSObject(): CSSObject {
@@ -299,7 +763,22 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   }
 
   toString(): string {
-    return css(this._node as CSSObject)
+    return this._cssFn(this._node as CSSObject)
+  }
+
+  /**
+   * W3.1 — debug 工具：把当前 `_node` 树打印为可读字符串。
+   *
+   * @example
+   * console.log(c._inspect())              // 默认 css 风
+   * console.log(c._inspect({ format: 'json' }))
+   * console.log(c._inspect({ format: 'tree' }))
+   */
+  _inspect(options: { format?: 'css' | 'json' | 'tree' } = {}): string {
+    const format = options.format ?? 'css'
+    if (format === 'json') return JSON.stringify(this._node, null, 2)
+    if (format === 'tree') return inspectTree(this._node, 0)
+    return inspectCss(this._node, 0)
   }
 
   // ─── 内部 ───

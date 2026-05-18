@@ -157,6 +157,133 @@ export const KEYWORD_TO_CSS: Record<string, string> = {
   horizontal: 'horizontal',
   vertical: 'vertical',
   smooth: 'smooth',
+
+  // ═════════════════════════════════════════════════════════════════════
+  // W1.6' / W1.7 补完（与 enhanced-props.ts 新增的 keyword 集对齐）
+  // ═════════════════════════════════════════════════════════════════════
+
+  // ─── logical sides ───
+  blockStart: 'block-start',
+  blockEnd: 'block-end',
+  inlineStart: 'inline-start',
+  inlineEnd: 'inline-end',
+
+  // ─── list-style-type ───
+  disc: 'disc',
+  circle: 'circle',
+  square: 'square',
+  decimal: 'decimal',
+  decimalLeadingZero: 'decimal-leading-zero',
+  lowerRoman: 'lower-roman',
+  upperRoman: 'upper-roman',
+  lowerAlpha: 'lower-alpha',
+  upperAlpha: 'upper-alpha',
+
+  // ─── SVG stroke ───
+  butt: 'butt',
+  miter: 'miter',
+  bevel: 'bevel',
+
+  // ─── scroll-snap ───
+  x: 'x',
+  y: 'y',
+  // block / inline / both 已在 display / animation-fill 区域定义，复用
+  mandatory: 'mandatory',
+  proximity: 'proximity',
+  always: 'always',
+
+  // ─── touch-action ───
+  panX: 'pan-x',
+  panY: 'pan-y',
+  panLeft: 'pan-left',
+  panRight: 'pan-right',
+  panUp: 'pan-up',
+  panDown: 'pan-down',
+  pinchZoom: 'pinch-zoom',
+  manipulation: 'manipulation',
+
+  // ─── appearance ───
+  textfield: 'textfield',
+  menulistButton: 'menulist-button',
+
+  // ─── will-change ───
+  scrollPosition: 'scroll-position',
+  // contents: 'contents'  // 已在 display 区有
+
+  // ─── color-scheme ───
+  lightDark: 'light dark',
+  only: 'only',
+
+  // ─── box-decoration-break ───
+  slice: 'slice',
+  clone: 'clone',
+
+  // ─── isolation ───
+  isolate: 'isolate',
+
+  // ─── writing-mode ───
+  horizontalTb: 'horizontal-tb',
+  verticalRl: 'vertical-rl',
+  verticalLr: 'vertical-lr',
+  sidewaysRl: 'sideways-rl',
+  sidewaysLr: 'sideways-lr',
+
+  // ─── direction ───
+  ltr: 'ltr',
+  rtl: 'rtl',
+
+  // ─── text-orientation ───
+  mixed: 'mixed',
+  upright: 'upright',
+  sideways: 'sideways',
+
+  // ─── text-wrap (CSS 4) ───
+  balance: 'balance',
+  pretty: 'pretty',
+  stable: 'stable',
+
+  // ─── field-sizing / interpolate-size / overflow-anchor ───
+  // 'fixed' 已在 position 区
+  allowKeywords: 'allow-keywords',
+  numericOnly: 'numeric-only',
+
+  // ─── blend-mode ───
+  multiply: 'multiply',
+  screen: 'screen',
+  overlay: 'overlay',
+  darken: 'darken',
+  lighten: 'lighten',
+  colorDodge: 'color-dodge',
+  colorBurn: 'color-burn',
+  hardLight: 'hard-light',
+  softLight: 'soft-light',
+  difference: 'difference',
+  exclusion: 'exclusion',
+  hue: 'hue',
+  saturation: 'saturation',
+  color: 'color',
+  luminosity: 'luminosity',
+  plusDarker: 'plus-darker',
+  plusLighter: 'plus-lighter',
+
+  // ─── break-before / break-after / break-inside ───
+  avoid: 'avoid',
+  avoidPage: 'avoid-page',
+  page: 'page',
+  leftPage: 'left',  // 复用 css 'left' for break value
+  rightPage: 'right',
+  recto: 'recto',
+  verso: 'verso',
+  avoidColumn: 'avoid-column',
+  // 'column': 已在 flex / grid 区
+  avoidRegion: 'avoid-region',
+  region: 'region',
+
+  // ─── border-collapse ───
+  separate: 'separate',
+
+  // ─── column-fill ───
+  balanceAll: 'balance-all',
 }
 
 export const GLOBAL_KEYWORDS = ['inherit', 'unset', 'initial', 'revert', 'revertLayer'] as const

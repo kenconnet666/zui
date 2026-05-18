@@ -33,5 +33,12 @@ export function resolveTheme<T extends ThemeSchema>(schema: T): ResolvedTheme<T>
     }
   }
 
+  // pass 3: freeze（V8 sealed-class 优化 + 防止用户误改）
+  // 仅 freeze 每个 category 的内部 record；顶层不冻结以便 mergeTheme 后能再 freeze 新对象。
+  for (const cat in ctx) {
+    const slot = ctx[cat]
+    if (slot) Object.freeze(slot)
+  }
+
   return ctx as ResolvedTheme<T>
 }

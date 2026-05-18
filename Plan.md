@@ -1397,3 +1397,722 @@ pnpm publish --access public        # 需先 npm login
 | 2026-05-18 | P2 post-release: dist/index.d.ts | 改 src/toClassName.ts 后 commit + push，但用户 IDEA 仍报旧错。原因：上次 `pnpm test` 后没 `pnpm build`，dist 仍是 0.2.0 P2.H 时刻的产物；IDEA 通过 node_modules symlink → packages/core/dist/index.d.ts 读到旧签名 | 重新 `pnpm build` 同步 dist；并把"对外类型改动后必跑 build"写进 AGENT.md §四.3 验证铁律 | dist gitignored 不入库，但 IDEA 走 node_modules 解析；examples vite alias 仅影响 vite，不影响 IDE TS 服务 |
 | 2026-05-18 | P2 post-release: examples/{vue,react}-button/tsconfig.json | examples 没配 path mapping，IDEA TS 服务通过 node_modules 读 dist 而非 src | 加 `baseUrl + paths: "@kenconnet666/zui-core" → ../../src/index.ts` + `ignoreDeprecations: "6.0"` | 让 IDE 行为跟 vite.config.ts 的 resolve.alias 一致；dist 即使过期也不影响 dev 体验 |
 | 2026-05-18 | 会话末尾 | 经验沉淀给下次接手 agent | 新建 `C:\code\zui\AGENT.md`（operational guide，10 节），含坑速记 + 命令速记 + Phase 3 候选清单 | Plan.md 是 source of truth（设计 / 决策），AGENT.md 是 operational guide（工作流 / 陷阱）；二者职责分离 |
+
+---
+
+## 十五、长线路线图（Phase 3+）— 无人值守路线
+
+> 本章是给"无人值守 agent"看的可执行路线。源自 2026-05-19 会话讨论（用户拍板 D6–D19）。
+> 与 §十四 决策日志的关系：本章规划"将要做"，§十四 记录"已做"。每个 W* 完成后，回填决策到 §十四。
+> AGENT.md §九 候选清单是这里的精简索引；本章是详细落地说明。
+
+### 15.0 设计原则（所有 W* 共享）
+
+1. **每个 W* 单独 commit**：信息密度高、便于审与回滚
+2. **每阶段末 push 一次**：见 §十五.15 STOP 节点
+3. **不破坏 statement-only 风格**：所有"组合写法"走 chain method（`_xxx()` 调用），不引入二级 carrier
+4. **不引入 CSS Variable 自动桥接**：维持 §一决策 #13；如未来要做（争议方向），先建独立 D-决策
+5. **不开放插件机制**（D9）：carrier / chain 保持封闭集合，扩展通过 declaration merging 而非 plugin registry
+6. **保持 core 框架无关**：所有"框架特定"代码（ConfigProvider / hooks）都在 recipes / 未来 ui-vue 包，不进 core
+7. **不发版本**：所有改动只 commit + push 到 main；npm publish 用户手动
+
+### 15.1 决策日志（Phase 3 拍板 D6–D19）
+
+| ID | 决策 | 选项 | 拍板 | 理由 |
+|---|---|---|---|---|
+| **D6** | Transform 用 shorthand 还是 longhand | shorthand / longhand / 双模式 | **longhand** | CSS Working Group 方向、Tailwind v4 风 |
+| **D7** | Dev label 自动注入 | auto / opt-in | **opt-in**（`new Chain(theme, { debug: true })`） | 避免影响 bench / 漏数据 |
+| **D8** | 做 SSR wrapper（`createIcssInstance`） | 做 / 不做 | **做** | 收口 §十一.16-17 |
+| **D9** | 开放插件接入点（`defineVariant`） | 做 / 不做 | **不做** | 破坏 chain 封闭性，等真有需求再开 |
+| **D10** | 做 keyframes 注册 + per-instance vs global | 做 + per | **做 + per-instance** | 与 W5.1 SSR 隔离一致 |
+| **D11** | `injectPreflight()` 风格 | 完整 / 仅 normalize / 不做 | **仅 normalize** | 不抢用户 CSS reset 选择权 |
+| **D12** | `@property` 注册 helper | 做 / 不做 | **做** | 配合 W1.3 transform 可做动画 |
+| **D13** | enhanced-props 拆分 + generator 接管 | a) 拆三份 + 生成 / b) 维持手写 | **a** | 减手写、自动跟 csstype |
+| **D14** | extra-keywords 扩展槽是否暴露给用户 | a) 仅 core 内部 / b) 用户 augment | **a 仅内部** | 避免接口过早冻结 |
+| **D15** | KEYWORD_TO_CSS 一并 generator 化 | a) 接管 / b) 保持手写 | **a** | 同一处来源，避免漂移 |
+| **D16** | Pattern 库（`_stack` / `_grid` 等） | 做 / 不做 | **做** | 高频，且仍是方法调用形态（符合现有规则） |
+| **D17** | StyleProps 类型工具 | 做 / 不做 | **做** | core 出工具，组件库消费，不违背边界 |
+| **D18** | strict mode（禁裸字符串） | 做 / 不做 | **不做** | 与四态 carrier 灵活定位冲突 |
+| **D19** | Babel/SWC 编译期插件 | 列路线 / 完全不做 | **列 v0.5+ 路线** | 远期价值高，0.3-0.4 不做 |
+
+### 15.2 关键字命名空间规则（D13 落地）
+
+| 来源 | 前缀 | 例 | 实现 |
+|---|---|---|---|
+| **CSS 标准 keyword**（csstype 已知） | 无 | `c.borderStyle.solid` / `c.display.block` | generator 从 csstype 派生 |
+| **主题 token** | `_` | `c.color._primary` / `c.padding._md` | `tokens.config.ts` + theme schema |
+| **zui 补 csstype 未跟新的关键字** | `_` | `c.textWrap._balance`（假设 csstype 漏） | `extra-keywords.config.ts` 扩展槽 |
+| **zui 自定义 utility 组合** | `_` + 方法调用 | `c._truncate()` / `c._stack({...})` | chain method（不变） |
+
+token 与 extra-keyword 共用 `_` 前缀，**generator 校验不重名**；运行时分派优先级 token > extra-keyword > csstype-keyword > global-keyword。
+
+### 15.3 阶段 0 — Generator 接管（前置基础）
+
+> ⚠️ 跨破坏面改动 —— 单独一个阶段，做完单独停一次让用户审。
+
+#### W6.1 拆分 enhanced-props 为三份 config + generator 派生
+[**1.5d**][无依赖][中风险]
+
+**目标**：把 `src/chain/enhanced-props.ts` 一份 244 行手写大表，拆成 3 份小 config + generator 派生的 `enhanced-props.generated.ts`。
+
+**新文件**：
+- `src/chain/config/tokens.config.ts`（~30 行）：`PROP_TOKEN_CAT = { color: 'color', padding: 'spacing', ... }`
+- `src/chain/config/units.config.ts`（~50 行）：`PROP_UNIT_CLASS = { padding: 'length', transitionDuration: 'time', rotate: 'angle', ... }`
+- `src/chain/config/extra-keywords.config.ts`（默认空）：`EXTRA_KEYWORDS: Record<string, readonly string[]> = {}`，所有项必须 `_` 前缀（generator 校验）
+- `src/chain/enhanced-props.generated.ts`（生成，入库）：合成 `ENHANCED_PROPS` 全表
+
+**Generator 改造**（`scripts/generate-properties.mjs`）：
+- 解析 csstype `Properties`，对每个属性递归展开 `DataType.*` 引用，收集字面量 keyword
+- 把字面量 keyword kebab→camelCase + 反向映射进 `chain/keyword-to-css.generated.ts`（一并接管 D15）
+- 合并 3 份手写 config + csstype keywords 生成 `enhanced-props.generated.ts`
+
+**兼容**：`src/chain/enhanced-props.ts` 改为 re-export `enhanced-props.generated` 的 `ENHANCED_PROPS`（不破坏现有 import）
+
+**验证**：
+- 旧 244 行手写表 与新 generated 行为一致 → parity test 守护
+- 跑 `pnpm test` 95/95 仍绿
+- 跑 `pnpm bench` 不退化
+
+#### W6.2 PropCarrier 类型扩第 5 元 TExtraKeywords
+[**0.5d**][依赖 W6.1][低风险]
+
+```ts
+export type PropCarrier<
+  TSelf, TValue,
+  TTokens extends string,
+  TKeywords extends string,
+  TUnits = unknown,
+  TExtraKeywords extends string = never
+> =
+  & ((value: TValue) => TSelf)
+  & { readonly [K in TTokens]: TSelf }
+  & { readonly [K in TKeywords]: TSelf }
+  & { readonly [K in TExtraKeywords]: TSelf }
+  & TUnits
+```
+
+Generator 同步派生 `ExtraKeywordsOf<'prop'>` 工具类型。
+
+#### W6.3 Generator 校验：token 与 extra-keyword 不重名
+[**0.5h**][依赖 W6.2][低风险]
+
+Generator 运行时检查：对每个属性，若 `tokens.config.ts` 给的 tokenCat 解析出的 ident 与 `extra-keywords.config.ts` 列的 keyword 重名 → throw + 列冲突属性 / token 名。
+
+**阶段 0 总计 2.5 天 / 4 commits**。
+
+### 15.4 阶段 1 — 核心补完
+
+#### W1.1 Palette 简化（删 legacy camelCase）
+[**0.5h**][无依赖][低风险]
+
+- 删 `palette.ts` 中：`palette` (camelCase legacy export)、`LegacyPaletteShape`、`buildLegacyPalette`
+- 保留：`TAILWIND_PALETTE`、`PALETTE_NAMES`、`PALETTE_SHADES`、`flattenPalette`、`FLAT_PALETTE`
+- 顺手加 `tw(name, shade)` 取值 helper
+- `light.ts` / `dark.ts` 把 13 处 `palette.blue600` 改为 `tw('blue', '600')`
+- §十四 加一条决策记录
+
+公开 API 影响：0（`palette` 没在 `index.ts` 导出过）。
+
+#### W1.2 ComponentTokenRegistry
+[**1d**][依赖 W1.1][低风险]
+
+新增 `src/types/components.ts`：
+
+```ts
+export interface ComponentTokenRegistry {}
+
+export type FlattenComponentTokens<R = ComponentTokenRegistry> = {
+  [C in keyof R]: R[C] extends Record<string, unknown>
+    ? { [K in keyof R[C]]: `${C & string}${Capitalize<K & string>}` }[keyof R[C]]
+    : never
+}[keyof R]
+
+export type ComponentTokenNames<C extends keyof ComponentTokenRegistry> =
+  ComponentTokenRegistry[C] extends Record<string, unknown>
+    ? `_${C & string}${Capitalize<keyof ComponentTokenRegistry[C] & string>}`
+    : never
+```
+
+修改 `theme/defaults/schema.ts` 让 `DefaultSchema['color']` 自动包含 `Record<FlattenComponentTokens, string>`（intersection）。
+
+新增 `src/theme/componentTokens.ts`：`withComponentTokens(theme, derivers, overrides)` 纯函数 helper。
+
+**约束**（按 D14）：仅 core 内部用；不在 README 写 augment 用法（暴露门面 `declare module '@kenconnet666/zui-core'` 仍工作，但不主推）。
+
+**验证**：3-5 个测试（registry augment / flatten / override / TS2589 守护）。
+
+#### W1.6' ENHANCED_PROPS 补 ~45 条（在新 config 文件里加）
+[**1d**][依赖 W6.1][低风险]
+
+按 §十五.14 ENHANCED_PROPS 补完清单完整落地。**重点**：补 `filter` + `backdropFilter`（W1.4 helper 前置）。
+
+#### W1.7 新关键字 + 容器查询单位
+[**0.5h**][无依赖][低风险]
+
+- 关键字补：`textWrap` / `fieldSizing` / `interpolateSize` / `overflowAnchor`（已在 W1.6' 清单中）
+- `LENGTH_UNITS` 补：`cqw` / `cqh` / `cqi` / `cqb` / `cqmin` / `cqmax`（容器查询单位）+ `svw` / `svh` / `lvw` / `lvh` / `dvw` / `dvh`（动态视口单位）
+
+#### W1.8 default token category 补 8 个 ★ 重要
+[**0.5d**][无依赖][低风险]
+
+`schema.ts` + `light.ts` + `dark.ts` 三处同步补：
+
+```ts
+duration: { fast: '150ms', normal: '300ms', slow: '500ms' }
+easing: {
+  default: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  linear: 'linear',
+  in: 'cubic-bezier(0.4, 0, 1, 1)',
+  out: 'cubic-bezier(0, 0, 0.2, 1)',
+  inOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+}
+breakpoint: { sm: '640px', md: '768px', lg: '1024px', xl: '1280px', '2xl': '1536px' }  // ★ 修 A3
+zIndex: {
+  auto: 'auto', '0': 0, '10': 10, '20': 20, '30': 30, '40': 40, '50': 50,
+  modal: 1000, popover: 1100, tooltip: 1200, toast: 1300,
+}
+opacity: { '0': 0, '5': 0.05, '10': 0.1, '20': 0.2, '25': 0.25, '30': 0.3, '40': 0.4,
+           '50': 0.5, '60': 0.6, '70': 0.7, '75': 0.75, '80': 0.8, '90': 0.9, '95': 0.95, '100': 1 }
+lineHeight: { none: 1, tight: 1.25, snug: 1.375, normal: 1.5, relaxed: 1.625, loose: 2 }
+letterSpacing: { tighter: '-0.05em', tight: '-0.025em', normal: '0', wide: '0.025em', wider: '0.05em', widest: '0.1em' }
+aspectRatio: { square: '1 / 1', video: '16 / 9', portrait: '3 / 4', landscape: '4 / 3' }
+```
+
+**影响**：`breakpoint` 加进 default 后，`_media('_md', ...)` 终于真正工作。同步：
+- README 示例 audit
+- recipes/{vue,react,svelte,solid}.md 示例 audit
+- examples 加一个 responsive demo
+
+#### W1.3 Transform longhand helpers（D6=longhand）
+[**0.5d**][依赖 W6.1][低风险]
+
+Chain 加：`_translate(x, y?)` / `_translateX(v)` / `_translateY(v)` / `_translateZ(v)` / `_rotate(deg)` / `_rotateX(deg)` / `_rotateY(deg)` / `_rotateZ(deg)` / `_scale(n, ny?)` / `_scaleX(n)` / `_scaleY(n)` / `_scaleZ(n)` / `_skew(x, y?)` / `_perspective(v)` / `_transformOrigin(v)` / `_preserve3d()`
+
+实现：直接写 `_node.translate` / `_node.rotate` / `_node.scale` 等 **longhand 字段**（v4 风），不拼 `transform` shorthand。
+
+#### W1.4 Filter / Backdrop helpers
+[**0.5d**][依赖 W1.6'][低风险]
+
+Chain 加：`_filterBlur(px)` / `_filterBrightness(pct)` / `_filterContrast(pct)` / `_filterGrayscale(pct)` / `_filterHueRotate(deg)` / `_filterInvert(pct)` / `_filterSaturate(pct)` / `_filterSepia(pct)` / `_filterDropShadow(spec)`；同上 `_backdropXxx` 系列。
+
+实现：累加到 `_node.filter` / `_node.backdropFilter`（filter 没 longhand 替代，必须拼字符串）。
+
+#### W1.5 Gradient helpers
+[**0.5d**][无依赖][低风险]
+
+- `_linearGradient(angle: number | string, stops: string[])` — `stops: ['#fff 0%', '#000 100%']`
+- `_radialGradient(shape, stops)`
+- `_conicGradient(angle, stops)`
+
+设 `_node.backgroundImage`。
+
+**阶段 1 总计 ~4 天 / 8 commits**。
+
+### 15.5 阶段 2 — Variant 通用化（Tailwind v4 对齐）
+
+#### W2.1 通用属性选择器
+[**0.5d**][无依赖][低风险]
+
+Chain 加：
+- `_data(attr, value?, fn)` → `&[data-${attr}]` / `&[data-${attr}="${value}"]`
+- `_aria(attr, value?, fn)` → `&[aria-${attr}]` / `&[aria-${attr}="${value}"]`
+- `_has(selector, fn)` → `&:has(${selector})`
+- `_not(selector, fn)` → `&:not(${selector})`
+- `_is(selectorList, fn)` → `&:is(${list})`
+- `_where(selectorList, fn)` → `&:where(${list})`
+
+#### W2.2 状态属性 variant
+[**0.5h**][无依赖][低风险]
+
+- `_open(fn)` → `&[open], &[data-state="open"]`
+- `_closed(fn)` → `&:not([open]), &[data-state="closed"]`
+- `_loading(fn)` → `&[data-loading="true"]`
+- `_inert(fn)` → `&[inert]`
+- `_forcedColors(fn)` → `@media (forced-colors: active)`
+
+#### W2.3 `@starting-style` 与 transition 衍生
+[**0.5h**][无依赖][低风险]
+
+- `_starting(fn)` → `@starting-style { & { ... } }`
+
+#### W2.4 Container query variant 简写
+[**0.5h**][依赖 W1.8 加 breakpoint][低风险]
+
+补 `_containerSm` / `_containerMd` / `_containerLg` / `_containerXl` / `_container2xl`。
+
+#### W2.5 group / peer data 变种
+[**0.5h**][依赖 W2.1][低风险]
+
+`_groupData(attr, value, fn)` / `_peerData(...)` / `_groupAria(...)` / `_peerAria(...)`。
+
+**阶段 2 总计 ~2 天 / 5 commits**。
+
+### 15.6 阶段 3 — DX / Debug
+
+#### W3.1 `c._inspect()`
+[**0.5d**][无依赖][低风险]
+
+```ts
+c._inspect()                              // 默认 'css' 格式
+c._inspect({ format: 'css' | 'tree' | 'json' })
+```
+
+返回带 selector 注释的字符串（`css` 格式）/ 树形结构 / JSON。便于 `console.log` debug。
+
+#### W3.2 Dev label 自动注入（D7 opt-in）
+[**0.5d**][无依赖][中风险]
+
+`new Chain(theme, { debug: true })` 时，从 `new Error().stack` 抽取调用 callsite，自动加 emotion label。`process.env.NODE_ENV === 'production'` 时即使设 `debug: true` 也降级 noop（避免线上栈泄露）。
+
+需要 `Chain` 构造签名加 `options?` 参数 —— 与 W5.1 `createIcssInstance` 协同。
+
+#### W3.3 `assertSchemaConsistency`
+[**0.5d**][无依赖][低风险]
+
+dev helper。检查：function token 引用闭环 / 重名 / palette 命名规范 / 必填语义色齐全。返回 issue 列表。
+
+```ts
+import { assertSchemaConsistency } from '@kenconnet666/zui-core/dev'
+const issues = assertSchemaConsistency(myTheme)  // string[]
+```
+
+**阶段 3 总计 ~1.5 天 / 3 commits**。
+
+### 15.7 阶段 4 — 性能
+
+#### W4.1 Keymap 缓存到 Theme（修 B3）
+[**0.5d**][无依赖][中风险]
+
+`Theme` 类加 `_keymap` 缓存字段：
+
+```ts
+class _ThemeClass<T> {
+  private _resolved: ResolvedTheme<T> | null = null
+  private _keymap: Map<string, Map<string, string>> | null = null
+
+  getKeymap(): Map<string, Map<string, string>> {
+    if (this._keymap == null) this._keymap = buildKeymap(this.resolve())
+    return this._keymap
+  }
+}
+```
+
+`Chain` 构造时优先用 `theme.getKeymap()`，无 Theme 实例（裸 `ResolvedTheme`）才 `buildKeymap`。
+
+**预期**：bench icss ~19k → 40k+ ops/s。
+
+#### W4.2 Carrier 工厂模块级共享（探索）
+[**1d**][依赖 W4.1][中风险]
+
+把 carrier proxy 工厂模块级化，避免每个 Chain instance 重建。**风险**：Proxy reuse + Chain GC 验证。**本任务可降级**：如不达预期收益（>2× 增益），回退。
+
+#### W4.3 `Object.freeze(theme)`
+[**0.5h**][无依赖][低风险]
+
+`resolveTheme` 末尾对 ctx 各 category `Object.freeze`。V8 sealed-class 优化（5-10% 提速预期）。
+
+**阶段 4 总计 ~1.5 天 / 3 commits**。
+
+### 15.8 阶段 5 — 架构性
+
+> ⚠️ W5.1 跨破坏面，单独停一次。
+
+#### W5.1 `createIcssInstance(emotion)` SSR wrapper（D8 落地）
+[**1d**][无依赖][中风险]
+
+```ts
+import { createInstance } from '@emotion/css/create-instance'
+
+export function createIcssInstance(emotion: ReturnType<typeof createInstance>) {
+  return {
+    Chain: class LocalChain<T> extends Chain<T> {
+      override toString(): string {
+        return emotion.css(this._node as CSSObject)
+      }
+    },
+    icss: <T>(theme, factory) => { /* 用 LocalChain */ },
+    cx: emotion.cx,
+    injectGlobal: emotion.injectGlobal,
+    ikeyframes: /* 包装 emotion.keyframes */,
+    extractCritical: emotion.flush,  // SSR
+    registerAnimation,                // 见 W5.3
+    registerCustomProperty,           // 见 W5.5
+  }
+}
+```
+
+收口 §十一 待决 16-17。
+
+#### W5.3 Keyframes & Animation 注册（D10 per-instance）
+[**1d**][依赖 W5.1][中风险]
+
+```ts
+const { registerAnimation } = createIcssInstance(emotion)
+const fadeIn = registerAnimation('fadeIn', {
+  '0%': { opacity: 0 },
+  '100%': { opacity: 1 },
+})
+// 之后 c.animationName._fadeIn 命中
+```
+
+per-instance：避免全局污染 + SSR 多 app 隔离。注册行为：把 keyframes 注入 emotion instance + 把 animation 名加进 `schema.animation`（如果有）或 `ComponentTokenRegistry` 的 animation namespace。
+
+#### W5.4 `injectPreflight()` 仅 normalize（D11）
+[**0.5d**][无依赖][低风险]
+
+```ts
+export function injectPreflight() {
+  injectGlobal({
+    '*, *::before, *::after': { boxSizing: 'border-box' },
+    body: { margin: 0, lineHeight: 1.5, WebkitFontSmoothing: 'antialiased' },
+    'h1,h2,h3,h4,h5,h6,p': { margin: 0 },
+    'button,input,textarea,select': { font: 'inherit', color: 'inherit' },
+    'img,svg,video,canvas,audio,iframe,embed,object': { display: 'block', maxWidth: '100%' },
+    'ul,ol': { listStyle: 'none', padding: 0, margin: 0 },
+  })
+}
+```
+
+**不**做完整 Tailwind preflight（避免抢用户 CSS reset 选择权）。
+
+#### W5.5 `@property` 注册 helper（D12）
+[**0.5d**][无依赖][低风险]
+
+```ts
+registerCustomProperty('--my-grad-angle', {
+  syntax: '<angle>',
+  inherits: false,
+  initialValue: '0deg',
+})
+// 注入到 injectGlobal：@property --my-grad-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+```
+
+让自定义属性可参与 CSS animation。
+
+**阶段 5 总计 ~3 天 / 4 commits**。
+
+### 15.9 阶段 7 — Pattern 库（D16）
+
+#### W7.1 `_stack({ direction, gap, align?, justify? })`
+[**0.5d**][依赖 W1.8][低风险]
+
+```ts
+c._stack({ direction: 'row', gap: '_md', align: 'center', justify: 'spaceBetween' })
+// → display: flex; flex-direction: row; gap: 16px; align-items: center; justify-content: space-between
+```
+
+#### W7.2 `_grid({ cols, rows?, gap? })`
+[**0.5d**][依赖 W1.8][低风险]
+
+```ts
+c._grid({ cols: 3, gap: '_md' })
+// → display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px
+```
+
+#### W7.3 比例简写
+[**0.5h**][依赖 W1.8][低风险]
+
+`_aspectVideo()` / `_aspectSquare()` / `_aspectPortrait()` / `_aspectLandscape()`
+
+#### W7.4 `_focusRing(opts)` a11y
+[**0.5h**][无依赖][低风险]
+
+```ts
+c._focusRing({ color: '_primary', width: 2, offset: 2 })
+// → &:focus-visible { outline: 2px solid <color>; outline-offset: 2px }
+```
+
+#### W7.5 a11y utilities
+[**0.5h**][无依赖][低风险]
+
+`_visuallyHidden()`（= 现有 `_srOnly()` 的别名 + 更明确命名）/ `_skipLink()`
+
+#### W7.6 定位组合
+[**0.5h**][无依赖][低风险]
+
+`_centerAbs()`（= 现有 `_absoluteCenter()` 的简写别名）/ `_fillParent()`（`position: absolute; inset: 0`）
+
+**阶段 7 总计 ~2 天 / 6 commits**。
+
+### 15.10 阶段 8 — @layer / @font-face
+
+#### W8.1 `injectLayer(name, factory)`
+[**0.5d**][依赖 W5.1][低风险]
+
+```ts
+injectLayer('components', () => {
+  injectGlobal({ '.btn': { padding: '8px 16px' } })
+})
+// → @layer components { .btn { ... } }
+```
+
+#### W8.2 `_layer(name, fn)` chain 方法
+[**0.5h**][依赖 W8.1][低风险]
+
+#### W8.4 `registerFont(family, sources)` `@font-face`
+[**0.5d**][依赖 W5.1][低风险]
+
+```ts
+registerFont('Inter', [
+  { src: 'url(/fonts/Inter.woff2)', format: 'woff2', weight: 400 },
+  { src: 'url(/fonts/Inter-Bold.woff2)', format: 'woff2', weight: 700 },
+])
+```
+
+**阶段 8 总计 ~1.5 天 / 3 commits**。
+
+### 15.11 阶段 9 — DX 类型工具（D17）
+
+#### W10.1 `StyleProps<T>`
+[**0.5d**][无依赖][低风险]
+
+```ts
+export type StyleProps<T extends ThemeSchema = DefaultSchema> = Partial<{
+  // 常用 short alias（参考 Theme UI / Chakra）
+  color: ColorTokens<T> | (string & {})
+  bg: ColorTokens<T> | (string & {})
+  p: SpacingTokens<T> | number
+  px: SpacingTokens<T> | number  // padding-inline
+  py: SpacingTokens<T> | number  // padding-block
+  m: SpacingTokens<T> | number
+  mx: SpacingTokens<T> | number
+  my: SpacingTokens<T> | number
+  rounded: RadiusTokens<T> | number
+  shadow: ShadowTokens<T> | string
+  fontSize: FontSizeTokens<T> | string | number
+  // ... ~30-50 个常用 prop alias
+}>
+
+/** 把 StyleProps 应用到 chain（组件库内部用）。 */
+export function applyStyleProps<T extends ThemeSchema>(chain: Chain<T>, props: StyleProps<T>): void
+```
+
+#### W10.2 `TokenOf<Cat, T>` 工具类型
+[**0.5h**][依赖 W10.1][低风险]
+
+```ts
+type ButtonProps = {
+  color: TokenOf<'color', DefaultSchema>      // = ColorTokens<DefaultSchema>
+  spacing: TokenOf<'spacing', DefaultSchema>  // = SpacingTokens<DefaultSchema>
+}
+```
+
+**修 C9**：顺手把 `BordersTokens` / `ZIndexTokens` 等所有 token 类型在 `index.ts` 导出。
+
+**阶段 9 总计 ~1 天 / 2 commits**。
+
+### 15.12 长线（不立即做）
+
+#### W11.1 Babel/SWC 编译期插件（D19，v0.5+）
+[**3-5d**][高风险][v0.5+]
+
+把 `icss(theme, s => { s.color._primary })` 编译为静态 className。参考 Linaria / Compiled / Panda。**v0.5+ 路线**，0.3-0.4 不做。
+
+### 15.13 阶段执行总顺序（无人值守按此跑）
+
+```
+阶段 0 (W6.x)         ── 2.5d ── 跨破坏面，做完停一次审 ──┐
+   ↓                                                       │
+阶段 1 (W1.x)         ── 4d   ── 顺手跑，纯加法            │
+   ↓                                                       │
+阶段 2 (W2.x)         ── 2d                                │
+   ↓                                                       │
+阶段 3 (W3.x)         ── 1.5d                              │
+   ↓                                                       │
+阶段 4 (W4.x)         ── 1.5d ── bench 验证                │
+   ↓                                                       │
+阶段 5 (W5.x)         ── 3d   ── W5.1 跨破坏面，做完停 ──┐
+   ↓                                                       │
+阶段 7 (W7.x)         ── 2d                                │
+   ↓                                                       │
+阶段 8 (W8.x)         ── 1.5d                              │
+   ↓                                                       │
+阶段 9 (W10.x)        ── 1d                                │
+                                                           │
+长线 W11.1              ── 不做 ──                         │
+```
+
+每阶段末 push 一次。总估时 **~19 工作日**，分 4-5 次会话跑完。
+
+### 15.14 ENHANCED_PROPS 补完清单（W1.6' 落地，按 Tailwind v3/v4 高频度排序）
+
+| 分类 | 属性 | 配置 |
+|---|---|---|
+| **Filter ★ 必须** | `filter` | keywords `['none']` |
+| **Filter ★ 必须** | `backdropFilter` | keywords `['none']` |
+| **Tables** | `borderCollapse` | keywords `['collapse', 'separate']` |
+| **Tables** | `borderSpacing` | tokenCat `'spacing'`, unitClass `'length'` |
+| **Tables** | `tableLayout` | keywords `['auto', 'fixed']` |
+| **Tables** | `captionSide` | keywords `['top', 'bottom', 'blockStart', 'blockEnd', 'inlineStart', 'inlineEnd']` |
+| **Lists** | `listStyleType` | keywords `['disc', 'decimal', 'none']` |
+| **Lists** | `listStylePosition` | keywords `['inside', 'outside']` |
+| **Lists** | `listStyleImage` | keywords `['none']` |
+| **SVG** | `strokeWidth` | tokenCat `'borders'`, unitClass `'length'` |
+| **SVG** | `strokeLinecap` | keywords `['butt', 'round', 'square']` |
+| **SVG** | `strokeLinejoin` | keywords `['miter', 'round', 'bevel']` |
+| **SVG** | `strokeDasharray` | （无 token, 用户自填字符串） |
+| **Scroll snap** | `scrollSnapType` | keywords `['none', 'x', 'y', 'block', 'inline', 'both', 'mandatory', 'proximity']` |
+| **Scroll snap** | `scrollSnapAlign` | keywords `['none', 'start', 'end', 'center']` |
+| **Scroll snap** | `scrollSnapStop` | keywords `['normal', 'always']` |
+| **Scroll snap** | `scrollMargin{Top,Right,Bottom,Left,Block,Inline}` | tokenCat `'spacing'`, unitClass `'length'` |
+| **Scroll snap** | `scrollPadding{Top,Right,Bottom,Left,Block,Inline}` | 同上 |
+| **Pointer / 系统** | `touchAction` | keywords `['auto','none','panX','panY','panLeft','panRight','panUp','panDown','pinchZoom','manipulation']` |
+| **Pointer / 系统** | `appearance` | keywords `['none','auto','textfield','menulistButton']` |
+| **Pointer / 系统** | `willChange` | keywords `['auto','scrollPosition','contents']` |
+| **Pointer / 系统** | `colorScheme` | keywords `['normal','light','dark','lightDark','only']` |
+| **Layout** | `boxSizing` | keywords `['borderBox','contentBox']` |
+| **Layout** | `boxDecorationBreak` | keywords `['slice','clone']` |
+| **Layout** | `float` | keywords `['left','right','none','inlineStart','inlineEnd']` |
+| **Layout** | `clear` | keywords `['left','right','none','both','inlineStart','inlineEnd']` |
+| **Layout** | `isolation` | keywords `['auto','isolate']` |
+| **Blend** | `mixBlendMode` | keywords `['normal','multiply','screen','overlay','darken','lighten','colorDodge','colorBurn','hardLight','softLight','difference','exclusion','hue','saturation','color','luminosity','plusDarker','plusLighter']` |
+| **Blend** | `backgroundBlendMode` | 同上 |
+| **Writing** | `writingMode` | keywords `['horizontalTb','verticalRl','verticalLr','sidewaysRl','sidewaysLr']` |
+| **Writing** | `direction` | keywords `['ltr','rtl']` |
+| **Writing** | `textOrientation` | keywords `['mixed','upright','sideways']` |
+| **Columns** | `columns` / `columnCount` / `columnWidth` | unitClass `'length'`，keywords `['auto']` |
+| **Columns** | `columnSpan` | keywords `['none','all']` |
+| **Columns** | `columnFill` | keywords `['auto','balance','balanceAll']` |
+| **Columns** | `columnRule{Width,Style,Color}` | width: borders/length, style: BORDER_STYLE_KW, color: tokenCat 'color' |
+| **Columns** | `breakBefore` / `breakAfter` / `breakInside` | keywords `['auto','avoid','always','all','avoidPage','page','left','right','recto','verso','avoidColumn','column','avoidRegion','region']` |
+| **现代 CSS 4** | `textWrap` | keywords `['wrap','nowrap','balance','pretty','stable']` |
+| **现代 CSS 4** | `fieldSizing` | keywords `['content','fixed']` |
+| **现代 CSS 4** | `interpolateSize` | keywords `['allowKeywords','numericOnly']` |
+| **现代 CSS 4** | `overflowAnchor` | keywords `['auto','none']` |
+| **现代 CSS 4** | `anchorName` / `positionAnchor` | keywords `['none']` |
+
+**合计 ~45 条**。
+
+**注意**：W6.1 generator 接管后，这些 keyword **不应**写进 `tokens.config.ts` —— 大部分会被 csstype 派生覆盖。需要手写的只有：
+- `tokens.config.ts`：上表中 tokenCat 不为 null 的（spacing / borders / color 三类，~14 条）
+- `units.config.ts`：上表中 unitClass 不为 null 的（length，~14 条）
+- csstype 已知的关键字：自动派生
+- csstype 未跟新的（如 v4 新关键字）：进 `extra-keywords.config.ts` 扩展槽
+
+### 15.15 STOP 节点（无人值守必停）
+
+按 AGENT.md §七.1 + 本次补充：
+
+1. **每个阶段末**（W6.x / W1.x / ... 全做完）→ 跑全量 test + type-check + build + bench → 推一次 → 停下让用户审
+2. **跨破坏面改动**：
+   - W6.1（generator 接管 enhanced-props）
+   - W6.2（PropCarrier 加第 5 元 slot）
+   - W5.1（SSR wrapper，引入 instance scope 概念）
+   - 各单独停一次
+3. **触发任何**：
+   - TS2589 / 任何 type-check 红
+   - test 红（含 parity 守护 / 95+ 测试任何一条）
+   - generator 输出 diff 超 30% 行数（多半是 csstype 升级带来意外）
+   - bench 退化 >20%
+4. **遇 §九 陷阱表 / §十一 待决问题** —— 不要自决，停下问
+5. **要发版本**（bump version + tag + push tag）—— 始终用户手动
+
+### 15.16 验证铁律（push 前必跑）
+
+```powershell
+# 全套
+pnpm --filter @kenconnet666/zui-core run type-check
+pnpm --filter @kenconnet666/zui-core test               # 应全绿
+pnpm --filter @kenconnet666/zui-core build              # ★ 更新 dist
+
+# 改 ENHANCED_PROPS / generator 后必须
+node scripts/generate-properties.mjs
+pnpm --filter @kenconnet666/zui-core test -- parity
+
+# 阶段末额外
+pnpm --filter @kenconnet666/zui-core bench
+```
+
+每个 W* commit message 模板：
+
+```
+W?.? <子任务标题>
+
+<2-4 行中文 body 描述改动与理由>
+
+验证：
+- type-check OK
+- test N/N 全绿
+- build 输出 ?kb / ?kb gzip
+- (如需要) bench 19k → XXk ops/s
+
+Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>
+```
+
+### 15.17 启动 checklist（agent 起手必读）
+
+1. ✅ 读 `AGENT.md` §四 工作流
+2. ✅ 读 `Plan.md` §十四 决策日志最新 + §十五 长线路线图
+3. ✅ 跑 `pnpm --filter @kenconnet666/zui-core test` 确认基线绿（当前应 95/95）
+4. ✅ 跑 `pnpm --filter @kenconnet666/zui-core run type-check` 确认 src + tests 干净
+5. ✅ `git log --oneline -10` 看最近 commit
+6. ✅ 查看 §十五.18 审计清单看是否有新发现
+7. ✅ 用 `TaskCreate` 把当前阶段所有 W* 拆出来 + 标依赖（参考 §十五.13 总顺序图）
+8. ✅ 按 W* 编号顺序执行，每个完成 → `TaskUpdate completed` → commit
+9. ✅ 阶段末跑全量验证 → push → 把决策追加进 §十四
+
+### 15.18 审计发现（2026-05-19）packages/core 现状缺口清单
+
+> 全面 audit 结论。按严重程度分。每条都标关联 W*（如不处理列为"未规划"）。
+
+#### 🔴 严重 / 架构性
+
+| ID | 文件 / 范围 | 问题 | 关联 W* |
+|---|---|---|---|
+| **A1** | `chain/enhanced-props.ts` | 手写 244 行，`keywords` 字段重复 csstype 已知信息；每条都得填三个字段 | **W6.1** |
+| **A2** | `theme/defaults/{light,dark}.ts` + `schema.ts` | ENHANCED_PROPS 引用 18 个 token category，default 只填 7 个；`c.transitionDuration._fast` 会 keymap miss 但静默不报 | **W1.8** |
+| **A3** | `theme/defaults/schema.ts` 缺 `breakpoint` | `_media('_md', ...)` 在 default schema 下无值；recipes 示例都假设有 | **W1.8** |
+| **A4** | `scripts/generate-properties.mjs` | csstype `Properties` 含 SVG 子集（`fillRule` / `mask` 等），可能让 IDE 补全噪音；当前生成 ~857 属性 | **W6.1 评估**（生成时按 namespace 分组或 opt-in 排除 SVG） |
+
+#### 🟠 中等 / 完整性
+
+| ID | 文件 / 范围 | 问题 | 关联 W* |
+|---|---|---|---|
+| **B1** | `chain/Chain.ts` 构造签名 | `new Chain(theme)` 没 options 参数；未来加 `{ debug, instance }` 要破坏签名 | **W3.2 / W5.1**（同时改） |
+| **B2** | `chain/proxy.ts` `INTERNAL_KEYS` | 白名单手写；新增内部方法易漏（如 W1.3 加 `_translate` 等） | （建议重构为 prototype 扫描） |
+| **B3** | `theme/keymap.ts` | 每个 Chain 重建 keymap，O(n) 浪费 | **W4.1** |
+| **B4** | `theme/mergeTheme.ts` | partial 含 function token 时不校验，覆盖后下游拿到 function 实例 | （dev 警告，**W3.3** 顺手加） |
+| **B5** | `chain/color.ts` | `darken/lighten` 后 `toHex()` 丢失 alpha 信息；原色含 alpha 时结果不带 alpha | （记 §九 陷阱表；改 toHex 为 toRgba） |
+| **B6** | csstype@3.2.3 停留 | 跟不上 v4 标准 keyword（如 `text-wrap: balance`）；升 csstype 6.0 时 vite-plugin-dts API Extractor 报 newer-than 警告 | **W1.7 部分缓解**（extra-keywords 扩展槽暂补） |
+
+#### 🟡 轻微 / 改进项
+
+| ID | 范围 | 问题 | 关联 |
+|---|---|---|---|
+| **C1** | `chain/keywords.ts` `KEYWORD_TO_CSS` | 手写 + 与 csstype 关键字重复 | **W6.1 (D15)** |
+| **C2** | `chain/Chain.ts` `label()` | 多次 label 互相覆盖（无 dedup） | （加 join：`label1.label2`） |
+| **C3** | `chain/Chain.ts` `_var` | 与 schema token 没桥接，无法 `_var('--my-x', '_primary')` | （未规划，escape hatch 合理） |
+| **C4** | `examples/` | 只有按钮，缺 form / layout / card / responsive | **W1.8 顺手加 responsive demo** |
+| **C5** | `recipes/` | 静态文档，没 e2e 跑过 | （未规划，靠 examples 兜底） |
+| **C6** | `bench/` | 只 3 场景，缺 carrier-only / token-resolve 单测 | **W4.2 配套** |
+| **C7** | `chain/Chain.ts` `_node` 不冻结 | 用户可直接改 `chain._node.color = 'red'` 绕过 carrier 类型 | （escape hatch 合理，不处理） |
+| **C8** | `chain/Chain.ts` `_focusVisible` | `:focus-visible` 浏览器兼容性（iOS Safari 14- 不支持）；recipes 未提示 | （README 兼容性章节加一条） |
+| **C9** | `index.ts` 未导出全部 token 类型 | 用户做 component prop 类型时拿不到 `BordersTokens` / `ZIndexTokens` 等 | **W10.2 顺手补** |
+| **C10** | `injectGlobal.ts` | 没去重；多次调同 styles 重复注入（emotion 自己 hash 兜底，但内存累加） | （记 §九） |
+| **C11** | `chain/proxy.ts` Symbol 访问 | `Reflect.get(target, Symbol)` 透传，Symbol-keyed 内部状态可能被外部访问 | （次要，不处理） |
+| **C12** | `chain/Chain.ts` `_srOnly` vs `_visuallyHidden` | 命名风格不一致；前者 Tailwind 风、后者 a11y 风 | **W7.5**（加 `_visuallyHidden` 别名） |
+| **C13** | `chain/Chain.ts` `_absoluteCenter` 用 transform shorthand | W1.3 改 longhand 后这里也要跟 | **W1.3 顺手改** |
+| **C14** | `csstype.Properties` 含 vendor prefix (`-webkit-*`) | generator 当前 skip kebab key，但 vendor prefix 属性如 `WebkitLineClamp` 已被自动收（合理） | （无 action） |
+| **C15** | `theme/Theme.ts` `Object.assign(this, schema)` | 把 schema 各 category 挂在 instance 上，含 function token 时 instance 上是函数；类型层标 `string \| number`（不一致） | （记 §九，已部分有但需补强 README 警示） |
+
+### 15.19 总工作量预估
+
+| 阶段 | 工作量 | 累计 | 主要 commit 数 |
+|---|---|---|---|
+| 阶段 0（W6.x） | 2.5d | 2.5d | 4 |
+| 阶段 1（W1.x） | 4d | 6.5d | 8 |
+| 阶段 2（W2.x） | 2d | 8.5d | 5 |
+| 阶段 3（W3.x） | 1.5d | 10d | 3 |
+| 阶段 4（W4.x） | 1.5d | 11.5d | 3 |
+| 阶段 5（W5.x） | 3d | 14.5d | 4 |
+| 阶段 7（W7.x） | 2d | 16.5d | 6 |
+| 阶段 8（W8.x） | 1.5d | 18d | 3 |
+| 阶段 9（W10.x） | 1d | 19d | 2 |
+| **总计** | **~19d** | — | **~38 commits** |
+| 长线 W11.1 | 不计 | — | — |
+
+每阶段末 push 一次（共 **8 次 push 节点**），其中 W6.1 / W6.2 / W5.1 各**单独**停一次审，共 **11 个 STOP 节点**。
+
+---
+
+**Plan 起草完毕（含 Phase 3+ 长线路线图）。** 下次 agent 接手时优先级：W6.1（generator 接管）→ W1.1 + W1.2（palette 简化 + ComponentTokenRegistry）→ 按阶段顺序推进。
