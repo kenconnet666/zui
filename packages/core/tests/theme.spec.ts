@@ -15,7 +15,8 @@ describe('Theme', () => {
     const r = resolveTheme({
       color: {
         primary: '#2563eb',
-        primaryHover: (ctx) => ctx.color!.primary,
+        // noUncheckedIndexedAccess 让 ctx.color!.primary 含 undefined；这里我们清楚它有值
+        primaryHover: (ctx) => ctx.color!.primary as string,
       },
     })
     expect(r.color!.primaryHover).toBe('#2563eb')

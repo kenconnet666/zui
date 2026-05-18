@@ -9,7 +9,8 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['@emotion/css', 'csstype'],
+      // peer 与 runtime dep 都不打进 bundle；用户装包时 pnpm 会自动拉 color2k / csstype
+      external: ['@emotion/css', '@emotion/css/create-instance', 'csstype', 'color2k'],
     },
     sourcemap: true,
     target: 'es2022',

@@ -226,6 +226,8 @@ const UNIT_CLASS_TO_TYPE = {
 }
 
 function renderTypeExpr(propName, enhanced) {
+  // 通过 csstype.Properties<TLength=string|number, TTime=string|number> 让 length / time 属性都接 number；
+  // emotion 收到数字会自动加 px，类型层和运行时这样对齐。
   const cssValue = `CssValueOf<'${propName}'>`
 
   if (!enhanced) {
@@ -295,8 +297,13 @@ function renderFile(properties, enhanced) {
     lines.push("} from './tokens'")
   }
   lines.push('')
-  lines.push('/** 取某个 CSS 属性的 csstype 值类型（剥掉 undefined）。 */')
-  lines.push("type CssValueOf<K extends keyof csstype.Properties> = NonNullable<csstype.Properties[K]>")
+  lines.push('/**')
+  lines.push(' * 取某个 CSS 属性的 csstype 值类型（剥掉 undefined）。')
+  lines.push(' *')
+  lines.push(' * 用 `Properties<string | number, string | number>` 让 length / time 等数值属性同时接受数字')
+  lines.push(' * （emotion 收到数字会自动加 px / ms）。')
+  lines.push(' */')
+  lines.push("type CssValueOf<K extends keyof csstype.Properties> = NonNullable<csstype.Properties<string | number, string | number>[K]>")
   lines.push('')
   lines.push('/**')
   lines.push(' * 自动生成：所有 csstype 已知 CSS 属性在 Chain 上的方法签名。')

@@ -4,13 +4,11 @@ import type { DefaultSchema } from '../src'
 
 interface SchemaWithBreakpoint extends DefaultSchema {
   breakpoint: { md: string; lg: string }
-  blur: { sm: string; md: string }
 }
 
 const themed = new Theme<SchemaWithBreakpoint>({
   ...defaultLight.schema,
   breakpoint: { md: '768px', lg: '1024px' },
-  blur: { sm: '4px', md: '12px' },
 })
 
 describe('Chain — 内建方法', () => {

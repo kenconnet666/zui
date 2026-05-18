@@ -33,8 +33,13 @@ import type {
   ZIndexTokens,
 } from './tokens'
 
-/** 取某个 CSS 属性的 csstype 值类型（剥掉 undefined）。 */
-type CssValueOf<K extends keyof csstype.Properties> = NonNullable<csstype.Properties[K]>
+/**
+ * 取某个 CSS 属性的 csstype 值类型（剥掉 undefined）。
+ *
+ * 用 `Properties<string | number, string | number>` 让 length / time 等数值属性同时接受数字
+ * （emotion 收到数字会自动加 px / ms）。
+ */
+type CssValueOf<K extends keyof csstype.Properties> = NonNullable<csstype.Properties<string | number, string | number>[K]>
 
 /**
  * 自动生成：所有 csstype 已知 CSS 属性在 Chain 上的方法签名。
