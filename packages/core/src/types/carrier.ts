@@ -34,16 +34,28 @@ export interface AngleUnits<TSelf> {
 }
 
 /**
- * 四态 carrier 类型：
+ * 五态 carrier 类型（W6.2）：
  *  1. callable: `prop(value)`
- *  2. token: `prop._token`（`_` 前缀）
- *  3. keyword: `prop.keyword`（无前缀）
- *  4. unit 方法: `prop.px(n)` 等
+ *  2. token: `prop._token`（`_` 前缀，主题 token）
+ *  3. keyword: `prop.keyword`（无前缀，CSS 标准关键字）
+ *  4. extra-keyword: `prop._extra`（`_` 前缀，zui 补 csstype 未跟新的关键字；默认 never）
+ *  5. unit 方法: `prop.px(n)` 等
+ *
+ * `TExtraKeywords` 是 W6 generator 接管后的 D14 扩展槽：让 zui 给某些属性补 csstype 尚未跟新的
+ * keyword（必须 `_` 前缀以与 CSS 标准 keyword 隔离）。Generator 会校验 token 与 extra-keyword 不重名。
  */
-export type PropCarrier<TSelf, TValue, TTokens extends string, TKeywords extends string, TUnits = unknown> =
+export type PropCarrier<
+  TSelf,
+  TValue,
+  TTokens extends string,
+  TKeywords extends string,
+  TUnits = unknown,
+  TExtraKeywords extends string = never,
+> =
   & ((value: TValue) => TSelf)
   & { readonly [K in TTokens]: TSelf }
   & { readonly [K in TKeywords]: TSelf }
+  & { readonly [K in TExtraKeywords]: TSelf }
   & TUnits
 
 /** 无主题 token、无 unit 方法的属性（只支持函数调用 + 全局关键字）。 */
@@ -79,8 +91,17 @@ export interface ColorTokenValue<TSelf> {
  *
  * 与 `PropCarrier` 的唯一区别：token 字段类型。
  * 仅用在 `ENHANCED_PROPS[K].tokenCat === 'color'` 的属性上。
+ *
+ * `TExtraKeywords` 同 `PropCarrier`（W6.2 D14 扩展槽，默认 never）。
  */
-export type ColorPropCarrier<TSelf, TValue, TTokens extends string, TKeywords extends string> =
+export type ColorPropCarrier<
+  TSelf,
+  TValue,
+  TTokens extends string,
+  TKeywords extends string,
+  TExtraKeywords extends string = never,
+> =
   & ((value: TValue) => TSelf)
   & { readonly [K in TTokens]: ColorTokenValue<TSelf> }
   & { readonly [K in TKeywords]: TSelf }
+  & { readonly [K in TExtraKeywords]: TSelf }

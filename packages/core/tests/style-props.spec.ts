@@ -71,9 +71,17 @@ describe('W10 — StyleProps + applyStyleProps', () => {
 
   it('忽略 null / undefined', () => {
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { p: undefined, bg: '_primary', color: undefined })
+    // exactOptionalPropertyTypes 下 partial 不允许 explicit undefined；
+    // 真实场景的"prop 没传"等同 prop 缺失，applyStyleProps 内 `value == null` 兼容 runtime null/undefined。
+    applyStyleProps(c, { bg: '_primary' })
     expect(c._node.padding).toBeUndefined()
     expect(c._node.backgroundColor).toBe('#2563eb')
+
+    // 运行时显式 null：兼容
+    const c2 = new Chain(defaultLight)
+    applyStyleProps(c2, { bg: '_primary', color: null as unknown as string })
+    expect(c2._node.color).toBeUndefined()
+    expect(c2._node.backgroundColor).toBe('#2563eb')
   })
 
   it('TokenOf<"color"> 类型工具', () => {

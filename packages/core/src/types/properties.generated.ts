@@ -64,7 +64,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/accent-color
      */
-  accentColor: ColorPropCarrier<TSelf, CssValueOf<'accentColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  accentColor: ColorPropCarrier<TSelf, CssValueOf<'accentColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -79,7 +79,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/align-content
      */
-  alignContent: PropCarrier<TSelf, CssValueOf<'alignContent'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | GlobalKw>
+  alignContent: PropCarrier<TSelf, CssValueOf<'alignContent'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -94,7 +94,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/align-items
      */
-  alignItems: PropCarrier<TSelf, CssValueOf<'alignItems'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | GlobalKw>
+  alignItems: PropCarrier<TSelf, CssValueOf<'alignItems'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -109,7 +109,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/align-self
      */
-  alignSelf: PropCarrier<TSelf, CssValueOf<'alignSelf'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | 'auto' | GlobalKw>
+  alignSelf: PropCarrier<TSelf, CssValueOf<'alignSelf'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | 'auto' | GlobalKw, unknown, never>
   /**
      * **Syntax**: `[ normal | <baseline-position> | <content-distribution> | <overflow-position>? <content-position> ]#`
      *
@@ -143,7 +143,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/anchor-name
      */
-  anchorName: PropCarrier<TSelf, CssValueOf<'anchorName'>, never, 'none' | GlobalKw>
+  anchorName: PropCarrier<TSelf, CssValueOf<'anchorName'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * **Syntax**: `none | all | <dashed-ident>#`
      *
@@ -182,7 +182,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-delay
      */
-  animationDelay: PropCarrier<TSelf, CssValueOf<'animationDelay'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>>
+  animationDelay: PropCarrier<TSelf, CssValueOf<'animationDelay'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -197,7 +197,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-direction
      */
-  animationDirection: PropCarrier<TSelf, CssValueOf<'animationDirection'>, never, 'normal' | 'reverse' | 'alternate' | 'alternateReverse' | GlobalKw>
+  animationDirection: PropCarrier<TSelf, CssValueOf<'animationDirection'>, never, 'normal' | 'reverse' | 'alternate' | 'alternateReverse' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -212,7 +212,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-duration
      */
-  animationDuration: PropCarrier<TSelf, CssValueOf<'animationDuration'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>>
+  animationDuration: PropCarrier<TSelf, CssValueOf<'animationDuration'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -227,7 +227,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-fill-mode
      */
-  animationFillMode: PropCarrier<TSelf, CssValueOf<'animationFillMode'>, never, 'none' | 'forwards' | 'backwards' | 'both' | GlobalKw>
+  animationFillMode: PropCarrier<TSelf, CssValueOf<'animationFillMode'>, never, 'none' | 'forwards' | 'backwards' | 'both' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -242,7 +242,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-iteration-count
      */
-  animationIterationCount: PropCarrier<TSelf, CssValueOf<'animationIterationCount'>, never, 'infinite' | GlobalKw>
+  animationIterationCount: PropCarrier<TSelf, CssValueOf<'animationIterationCount'>, never, 'infinite' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -257,7 +257,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-name
      */
-  animationName: PropCarrier<TSelf, CssValueOf<'animationName'>, never, 'none' | GlobalKw>
+  animationName: PropCarrier<TSelf, CssValueOf<'animationName'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -272,7 +272,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-play-state
      */
-  animationPlayState: PropCarrier<TSelf, CssValueOf<'animationPlayState'>, never, 'running' | 'paused' | GlobalKw>
+  animationPlayState: PropCarrier<TSelf, CssValueOf<'animationPlayState'>, never, 'running' | 'paused' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -329,7 +329,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-timing-function
      */
-  animationTimingFunction: PropCarrier<TSelf, CssValueOf<'animationTimingFunction'>, EasingTokens<T>, GlobalKw>
+  animationTimingFunction: PropCarrier<TSelf, CssValueOf<'animationTimingFunction'>, EasingTokens<T>, GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -344,7 +344,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/appearance
      */
-  appearance: PropCarrier<TSelf, CssValueOf<'appearance'>, never, 'none' | 'auto' | 'textfield' | 'menulistButton' | GlobalKw>
+  appearance: PropCarrier<TSelf, CssValueOf<'appearance'>, never, 'none' | 'auto' | 'textfield' | 'menulistButton' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -358,7 +358,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/aspect-ratio
      */
-  aspectRatio: PropCarrier<TSelf, CssValueOf<'aspectRatio'>, AspectRatioTokens<T>, 'auto' | GlobalKw>
+  aspectRatio: PropCarrier<TSelf, CssValueOf<'aspectRatio'>, AspectRatioTokens<T>, 'auto' | GlobalKw, unknown, never>
   /**
      * Since September 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -373,7 +373,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/backdrop-filter
      */
-  backdropFilter: PropCarrier<TSelf, CssValueOf<'backdropFilter'>, never, 'none' | GlobalKw>
+  backdropFilter: PropCarrier<TSelf, CssValueOf<'backdropFilter'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -416,7 +416,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-blend-mode
      */
-  backgroundBlendMode: PropCarrier<TSelf, CssValueOf<'backgroundBlendMode'>, never, 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'colorDodge' | 'colorBurn' | 'hardLight' | 'softLight' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity' | 'plusDarker' | 'plusLighter' | GlobalKw>
+  backgroundBlendMode: PropCarrier<TSelf, CssValueOf<'backgroundBlendMode'>, never, 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'colorDodge' | 'colorBurn' | 'hardLight' | 'softLight' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity' | 'plusDarker' | 'plusLighter' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -431,7 +431,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-clip
      */
-  backgroundClip: PropCarrier<TSelf, CssValueOf<'backgroundClip'>, never, 'borderBox' | 'paddingBox' | 'contentBox' | 'text' | GlobalKw>
+  backgroundClip: PropCarrier<TSelf, CssValueOf<'backgroundClip'>, never, 'borderBox' | 'paddingBox' | 'contentBox' | 'text' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -445,7 +445,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-color
      */
-  backgroundColor: ColorPropCarrier<TSelf, CssValueOf<'backgroundColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  backgroundColor: ColorPropCarrier<TSelf, CssValueOf<'backgroundColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -515,7 +515,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-repeat
      */
-  backgroundRepeat: PropCarrier<TSelf, CssValueOf<'backgroundRepeat'>, never, 'repeat' | 'noRepeat' | 'repeatX' | 'repeatY' | 'round' | 'space' | GlobalKw>
+  backgroundRepeat: PropCarrier<TSelf, CssValueOf<'backgroundRepeat'>, never, 'repeat' | 'noRepeat' | 'repeatX' | 'repeatY' | 'round' | 'space' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -530,7 +530,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-size
      */
-  backgroundSize: PropCarrier<TSelf, CssValueOf<'backgroundSize'>, never, 'auto' | 'cover' | 'contain' | GlobalKw, LengthUnits<TSelf>>
+  backgroundSize: PropCarrier<TSelf, CssValueOf<'backgroundSize'>, never, 'auto' | 'cover' | 'contain' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * **Syntax**: `<length-percentage> | sub | super | baseline`
      *
@@ -653,7 +653,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-color
      */
-  borderBottomColor: ColorPropCarrier<TSelf, CssValueOf<'borderBottomColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  borderBottomColor: ColorPropCarrier<TSelf, CssValueOf<'borderBottomColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -668,7 +668,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-left-radius
      */
-  borderBottomLeftRadius: PropCarrier<TSelf, CssValueOf<'borderBottomLeftRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  borderBottomLeftRadius: PropCarrier<TSelf, CssValueOf<'borderBottomLeftRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -683,7 +683,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-right-radius
      */
-  borderBottomRightRadius: PropCarrier<TSelf, CssValueOf<'borderBottomRightRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  borderBottomRightRadius: PropCarrier<TSelf, CssValueOf<'borderBottomRightRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -697,7 +697,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-style
      */
-  borderBottomStyle: PropCarrier<TSelf, CssValueOf<'borderBottomStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw>
+  borderBottomStyle: PropCarrier<TSelf, CssValueOf<'borderBottomStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -711,7 +711,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-width
      */
-  borderBottomWidth: PropCarrier<TSelf, CssValueOf<'borderBottomWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  borderBottomWidth: PropCarrier<TSelf, CssValueOf<'borderBottomWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -725,7 +725,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-collapse
      */
-  borderCollapse: PropCarrier<TSelf, CssValueOf<'borderCollapse'>, never, 'collapse' | 'separate' | GlobalKw>
+  borderCollapse: PropCarrier<TSelf, CssValueOf<'borderCollapse'>, never, 'collapse' | 'separate' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -926,7 +926,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left-color
      */
-  borderLeftColor: ColorPropCarrier<TSelf, CssValueOf<'borderLeftColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  borderLeftColor: ColorPropCarrier<TSelf, CssValueOf<'borderLeftColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -940,7 +940,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left-style
      */
-  borderLeftStyle: PropCarrier<TSelf, CssValueOf<'borderLeftStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw>
+  borderLeftStyle: PropCarrier<TSelf, CssValueOf<'borderLeftStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -954,7 +954,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left-width
      */
-  borderLeftWidth: PropCarrier<TSelf, CssValueOf<'borderLeftWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  borderLeftWidth: PropCarrier<TSelf, CssValueOf<'borderLeftWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -968,7 +968,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right-color
      */
-  borderRightColor: ColorPropCarrier<TSelf, CssValueOf<'borderRightColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  borderRightColor: ColorPropCarrier<TSelf, CssValueOf<'borderRightColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -982,7 +982,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right-style
      */
-  borderRightStyle: PropCarrier<TSelf, CssValueOf<'borderRightStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw>
+  borderRightStyle: PropCarrier<TSelf, CssValueOf<'borderRightStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -996,7 +996,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right-width
      */
-  borderRightWidth: PropCarrier<TSelf, CssValueOf<'borderRightWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  borderRightWidth: PropCarrier<TSelf, CssValueOf<'borderRightWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1010,7 +1010,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-spacing
      */
-  borderSpacing: PropCarrier<TSelf, CssValueOf<'borderSpacing'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  borderSpacing: PropCarrier<TSelf, CssValueOf<'borderSpacing'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -1052,7 +1052,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-color
      */
-  borderTopColor: ColorPropCarrier<TSelf, CssValueOf<'borderTopColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  borderTopColor: ColorPropCarrier<TSelf, CssValueOf<'borderTopColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1067,7 +1067,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-left-radius
      */
-  borderTopLeftRadius: PropCarrier<TSelf, CssValueOf<'borderTopLeftRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  borderTopLeftRadius: PropCarrier<TSelf, CssValueOf<'borderTopLeftRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1082,7 +1082,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-right-radius
      */
-  borderTopRightRadius: PropCarrier<TSelf, CssValueOf<'borderTopRightRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  borderTopRightRadius: PropCarrier<TSelf, CssValueOf<'borderTopRightRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1096,7 +1096,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-style
      */
-  borderTopStyle: PropCarrier<TSelf, CssValueOf<'borderTopStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw>
+  borderTopStyle: PropCarrier<TSelf, CssValueOf<'borderTopStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1110,7 +1110,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-width
      */
-  borderTopWidth: PropCarrier<TSelf, CssValueOf<'borderTopWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  borderTopWidth: PropCarrier<TSelf, CssValueOf<'borderTopWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1124,7 +1124,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/bottom
      */
-  bottom: PropCarrier<TSelf, CssValueOf<'bottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  bottom: PropCarrier<TSelf, CssValueOf<'bottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -1139,7 +1139,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/box-decoration-break
      */
-  boxDecorationBreak: PropCarrier<TSelf, CssValueOf<'boxDecorationBreak'>, never, 'slice' | 'clone' | GlobalKw>
+  boxDecorationBreak: PropCarrier<TSelf, CssValueOf<'boxDecorationBreak'>, never, 'slice' | 'clone' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1154,7 +1154,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/box-shadow
      */
-  boxShadow: PropCarrier<TSelf, CssValueOf<'boxShadow'>, ShadowTokens<T>, 'none' | GlobalKw>
+  boxShadow: PropCarrier<TSelf, CssValueOf<'boxShadow'>, ShadowTokens<T>, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1169,7 +1169,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/box-sizing
      */
-  boxSizing: PropCarrier<TSelf, CssValueOf<'boxSizing'>, never, 'borderBox' | 'contentBox' | GlobalKw>
+  boxSizing: PropCarrier<TSelf, CssValueOf<'boxSizing'>, never, 'borderBox' | 'contentBox' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2019.
      *
@@ -1183,7 +1183,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/break-after
      */
-  breakAfter: PropCarrier<TSelf, CssValueOf<'breakAfter'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'leftPage' | 'rightPage' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw>
+  breakAfter: PropCarrier<TSelf, CssValueOf<'breakAfter'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'leftPage' | 'rightPage' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2019.
      *
@@ -1197,7 +1197,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/break-before
      */
-  breakBefore: PropCarrier<TSelf, CssValueOf<'breakBefore'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'leftPage' | 'rightPage' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw>
+  breakBefore: PropCarrier<TSelf, CssValueOf<'breakBefore'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'leftPage' | 'rightPage' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2019.
      *
@@ -1211,7 +1211,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/break-inside
      */
-  breakInside: PropCarrier<TSelf, CssValueOf<'breakInside'>, never, 'auto' | 'avoid' | 'avoidPage' | 'avoidColumn' | 'avoidRegion' | GlobalKw>
+  breakInside: PropCarrier<TSelf, CssValueOf<'breakInside'>, never, 'auto' | 'avoid' | 'avoidPage' | 'avoidColumn' | 'avoidRegion' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1225,7 +1225,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/caption-side
      */
-  captionSide: PropCarrier<TSelf, CssValueOf<'captionSide'>, never, 'top' | 'bottom' | 'blockStart' | 'blockEnd' | 'inlineStart' | 'inlineEnd' | GlobalKw>
+  captionSide: PropCarrier<TSelf, CssValueOf<'captionSide'>, never, 'top' | 'bottom' | 'blockStart' | 'blockEnd' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -1239,7 +1239,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/caret-color
      */
-  caretColor: ColorPropCarrier<TSelf, CssValueOf<'caretColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  caretColor: ColorPropCarrier<TSelf, CssValueOf<'caretColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * **Syntax**: `auto | bar | block | underscore`
      *
@@ -1265,7 +1265,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/clear
      */
-  clear: PropCarrier<TSelf, CssValueOf<'clear'>, never, 'left' | 'right' | 'none' | 'both' | 'inlineStart' | 'inlineEnd' | GlobalKw>
+  clear: PropCarrier<TSelf, CssValueOf<'clear'>, never, 'left' | 'right' | 'none' | 'both' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -1308,7 +1308,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/color
      */
-  color: ColorPropCarrier<TSelf, CssValueOf<'color'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  color: ColorPropCarrier<TSelf, CssValueOf<'color'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * Since May 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -1351,7 +1351,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/color-scheme
      */
-  colorScheme: PropCarrier<TSelf, CssValueOf<'colorScheme'>, never, 'normal' | 'light' | 'dark' | 'lightDark' | 'only' | GlobalKw>
+  colorScheme: PropCarrier<TSelf, CssValueOf<'colorScheme'>, never, 'normal' | 'light' | 'dark' | 'lightDark' | 'only' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -1366,7 +1366,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-count
      */
-  columnCount: PropCarrier<TSelf, CssValueOf<'columnCount'>, never, 'auto' | GlobalKw>
+  columnCount: PropCarrier<TSelf, CssValueOf<'columnCount'>, never, 'auto' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -1381,7 +1381,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-fill
      */
-  columnFill: PropCarrier<TSelf, CssValueOf<'columnFill'>, never, 'auto' | 'balance' | 'balanceAll' | GlobalKw>
+  columnFill: PropCarrier<TSelf, CssValueOf<'columnFill'>, never, 'auto' | 'balance' | 'balanceAll' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1395,7 +1395,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-gap
      */
-  columnGap: PropCarrier<TSelf, CssValueOf<'columnGap'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  columnGap: PropCarrier<TSelf, CssValueOf<'columnGap'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -1410,7 +1410,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule-color
      */
-  columnRuleColor: ColorPropCarrier<TSelf, CssValueOf<'columnRuleColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  columnRuleColor: ColorPropCarrier<TSelf, CssValueOf<'columnRuleColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -1425,7 +1425,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule-style
      */
-  columnRuleStyle: PropCarrier<TSelf, CssValueOf<'columnRuleStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw>
+  columnRuleStyle: PropCarrier<TSelf, CssValueOf<'columnRuleStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -1440,7 +1440,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule-width
      */
-  columnRuleWidth: PropCarrier<TSelf, CssValueOf<'columnRuleWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  columnRuleWidth: PropCarrier<TSelf, CssValueOf<'columnRuleWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -1455,7 +1455,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-span
      */
-  columnSpan: PropCarrier<TSelf, CssValueOf<'columnSpan'>, never, 'none' | 'all' | GlobalKw>
+  columnSpan: PropCarrier<TSelf, CssValueOf<'columnSpan'>, never, 'none' | 'all' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2016.
      *
@@ -1470,7 +1470,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-width
      */
-  columnWidth: PropCarrier<TSelf, CssValueOf<'columnWidth'>, never, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  columnWidth: PropCarrier<TSelf, CssValueOf<'columnWidth'>, never, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -1582,7 +1582,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/content
      */
-  content: PropCarrier<TSelf, CssValueOf<'content'>, never, 'none' | 'normal' | GlobalKw>
+  content: PropCarrier<TSelf, CssValueOf<'content'>, never, 'none' | 'normal' | GlobalKw, unknown, never>
   /**
      * Since September 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -1610,7 +1610,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/counter-increment
      */
-  counterIncrement: PropCarrier<TSelf, CssValueOf<'counterIncrement'>, never, 'none' | GlobalKw>
+  counterIncrement: PropCarrier<TSelf, CssValueOf<'counterIncrement'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1624,7 +1624,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/counter-reset
      */
-  counterReset: PropCarrier<TSelf, CssValueOf<'counterReset'>, never, 'none' | GlobalKw>
+  counterReset: PropCarrier<TSelf, CssValueOf<'counterReset'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -1638,7 +1638,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/counter-set
      */
-  counterSet: PropCarrier<TSelf, CssValueOf<'counterSet'>, never, 'none' | GlobalKw>
+  counterSet: PropCarrier<TSelf, CssValueOf<'counterSet'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since December 2021.
      *
@@ -1652,7 +1652,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/cursor
      */
-  cursor: PropCarrier<TSelf, CssValueOf<'cursor'>, CursorTokens<T>, 'auto' | 'default' | 'pointer' | 'text' | 'wait' | 'move' | 'help' | 'notAllowed' | 'none' | 'grab' | 'grabbing' | GlobalKw>
+  cursor: PropCarrier<TSelf, CssValueOf<'cursor'>, CursorTokens<T>, 'auto' | 'default' | 'pointer' | 'text' | 'wait' | 'move' | 'help' | 'notAllowed' | 'none' | 'grab' | 'grabbing' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -1708,7 +1708,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/direction
      */
-  direction: PropCarrier<TSelf, CssValueOf<'direction'>, never, 'ltr' | 'rtl' | GlobalKw>
+  direction: PropCarrier<TSelf, CssValueOf<'direction'>, never, 'ltr' | 'rtl' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1722,7 +1722,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/display
      */
-  display: PropCarrier<TSelf, CssValueOf<'display'>, never, 'block' | 'inline' | 'inlineBlock' | 'flex' | 'inlineFlex' | 'grid' | 'inlineGrid' | 'none' | 'contents' | GlobalKw>
+  display: PropCarrier<TSelf, CssValueOf<'display'>, never, 'block' | 'inline' | 'inlineBlock' | 'flex' | 'inlineFlex' | 'grid' | 'inlineGrid' | 'none' | 'contents' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -1764,7 +1764,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/field-sizing
      */
-  fieldSizing: PropCarrier<TSelf, CssValueOf<'fieldSizing'>, never, 'content' | 'fixed' | GlobalKw>
+  fieldSizing: PropCarrier<TSelf, CssValueOf<'fieldSizing'>, never, 'content' | 'fixed' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -1778,7 +1778,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/fill
      */
-  fill: ColorPropCarrier<TSelf, CssValueOf<'fill'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  fill: ColorPropCarrier<TSelf, CssValueOf<'fill'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -1821,7 +1821,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/filter
      */
-  filter: PropCarrier<TSelf, CssValueOf<'filter'>, never, 'none' | GlobalKw>
+  filter: PropCarrier<TSelf, CssValueOf<'filter'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -1836,7 +1836,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-basis
      */
-  flexBasis: PropCarrier<TSelf, CssValueOf<'flexBasis'>, SizeTokens<T>, 'auto' | 'fill' | 'maxContent' | 'minContent' | 'fitContent' | 'content' | GlobalKw, LengthUnits<TSelf>>
+  flexBasis: PropCarrier<TSelf, CssValueOf<'flexBasis'>, SizeTokens<T>, 'auto' | 'fill' | 'maxContent' | 'minContent' | 'fitContent' | 'content' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -1851,7 +1851,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-direction
      */
-  flexDirection: PropCarrier<TSelf, CssValueOf<'flexDirection'>, never, 'row' | 'rowReverse' | 'column' | 'columnReverse' | GlobalKw>
+  flexDirection: PropCarrier<TSelf, CssValueOf<'flexDirection'>, never, 'row' | 'rowReverse' | 'column' | 'columnReverse' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -1866,7 +1866,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-grow
      */
-  flexGrow: PropCarrier<TSelf, CssValueOf<'flexGrow'>, never, GlobalKw>
+  flexGrow: PropCarrier<TSelf, CssValueOf<'flexGrow'>, never, GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -1881,7 +1881,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-shrink
      */
-  flexShrink: PropCarrier<TSelf, CssValueOf<'flexShrink'>, never, GlobalKw>
+  flexShrink: PropCarrier<TSelf, CssValueOf<'flexShrink'>, never, GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -1896,7 +1896,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-wrap
      */
-  flexWrap: PropCarrier<TSelf, CssValueOf<'flexWrap'>, never, 'nowrap' | 'wrap' | 'wrapReverse' | GlobalKw>
+  flexWrap: PropCarrier<TSelf, CssValueOf<'flexWrap'>, never, 'nowrap' | 'wrap' | 'wrapReverse' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1910,7 +1910,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/float
      */
-  float: PropCarrier<TSelf, CssValueOf<'float'>, never, 'left' | 'right' | 'none' | 'inlineStart' | 'inlineEnd' | GlobalKw>
+  float: PropCarrier<TSelf, CssValueOf<'float'>, never, 'left' | 'right' | 'none' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1952,7 +1952,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-family
      */
-  fontFamily: PropCarrier<TSelf, CssValueOf<'fontFamily'>, FontsTokens<T>, GlobalKw>
+  fontFamily: PropCarrier<TSelf, CssValueOf<'fontFamily'>, FontsTokens<T>, GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -2039,7 +2039,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-size
      */
-  fontSize: PropCarrier<TSelf, CssValueOf<'fontSize'>, FontSizeTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  fontSize: PropCarrier<TSelf, CssValueOf<'fontSize'>, FontSizeTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * Since July 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -2292,7 +2292,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-weight
      */
-  fontWeight: PropCarrier<TSelf, CssValueOf<'fontWeight'>, FontWeightTokens<T>, 'normal' | 'bold' | GlobalKw>
+  fontWeight: PropCarrier<TSelf, CssValueOf<'fontWeight'>, FontWeightTokens<T>, 'normal' | 'bold' | GlobalKw, unknown, never>
   /**
      * **Syntax**: `normal | <percentage [0,∞]> | ultra-condensed | extra-condensed | condensed | semi-condensed | semi-expanded | expanded | extra-expanded | ultra-expanded`
      *
@@ -2345,7 +2345,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-auto-flow
      */
-  gridAutoFlow: PropCarrier<TSelf, CssValueOf<'gridAutoFlow'>, never, 'row' | 'column' | 'dense' | 'rowDense' | 'columnDense' | GlobalKw>
+  gridAutoFlow: PropCarrier<TSelf, CssValueOf<'gridAutoFlow'>, never, 'row' | 'column' | 'dense' | 'rowDense' | 'columnDense' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -2485,7 +2485,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/height
      */
-  height: PropCarrier<TSelf, CssValueOf<'height'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>>
+  height: PropCarrier<TSelf, CssValueOf<'height'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -2670,7 +2670,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/interpolate-size
      */
-  interpolateSize: PropCarrier<TSelf, CssValueOf<'interpolateSize'>, never, 'allowKeywords' | 'numericOnly' | GlobalKw>
+  interpolateSize: PropCarrier<TSelf, CssValueOf<'interpolateSize'>, never, 'allowKeywords' | 'numericOnly' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2684,7 +2684,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/isolation
      */
-  isolation: PropCarrier<TSelf, CssValueOf<'isolation'>, never, 'auto' | 'isolate' | GlobalKw>
+  isolation: PropCarrier<TSelf, CssValueOf<'isolation'>, never, 'auto' | 'isolate' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -2699,7 +2699,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/justify-content
      */
-  justifyContent: PropCarrier<TSelf, CssValueOf<'justifyContent'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | GlobalKw>
+  justifyContent: PropCarrier<TSelf, CssValueOf<'justifyContent'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2016.
      *
@@ -2713,7 +2713,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/justify-items
      */
-  justifyItems: PropCarrier<TSelf, CssValueOf<'justifyItems'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | GlobalKw>
+  justifyItems: PropCarrier<TSelf, CssValueOf<'justifyItems'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -2727,7 +2727,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/justify-self
      */
-  justifySelf: PropCarrier<TSelf, CssValueOf<'justifySelf'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | 'auto' | GlobalKw>
+  justifySelf: PropCarrier<TSelf, CssValueOf<'justifySelf'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | 'auto' | GlobalKw, unknown, never>
   /**
      * **Syntax**: `[ normal | <content-distribution> | <overflow-position>? [ <content-position> | left | right ] ]#`
      *
@@ -2747,7 +2747,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/left
      */
-  left: PropCarrier<TSelf, CssValueOf<'left'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  left: PropCarrier<TSelf, CssValueOf<'left'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -2761,7 +2761,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/letter-spacing
      */
-  letterSpacing: PropCarrier<TSelf, CssValueOf<'letterSpacing'>, LetterSpacingTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>>
+  letterSpacing: PropCarrier<TSelf, CssValueOf<'letterSpacing'>, LetterSpacingTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -2804,7 +2804,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/line-height
      */
-  lineHeight: PropCarrier<TSelf, CssValueOf<'lineHeight'>, LineHeightTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>>
+  lineHeight: PropCarrier<TSelf, CssValueOf<'lineHeight'>, LineHeightTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * The **`line-height-step`** CSS property sets the step unit for line box heights. When the property is set, line box heights are rounded up to the closest multiple of the unit.
      *
@@ -2826,7 +2826,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style-image
      */
-  listStyleImage: PropCarrier<TSelf, CssValueOf<'listStyleImage'>, never, 'none' | GlobalKw>
+  listStyleImage: PropCarrier<TSelf, CssValueOf<'listStyleImage'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -2840,7 +2840,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style-position
      */
-  listStylePosition: PropCarrier<TSelf, CssValueOf<'listStylePosition'>, never, 'inside' | 'outside' | GlobalKw>
+  listStylePosition: PropCarrier<TSelf, CssValueOf<'listStylePosition'>, never, 'inside' | 'outside' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -2854,7 +2854,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style-type
      */
-  listStyleType: PropCarrier<TSelf, CssValueOf<'listStyleType'>, never, 'disc' | 'circle' | 'square' | 'decimal' | 'decimalLeadingZero' | 'lowerRoman' | 'upperRoman' | 'lowerAlpha' | 'upperAlpha' | 'none' | GlobalKw>
+  listStyleType: PropCarrier<TSelf, CssValueOf<'listStyleType'>, never, 'disc' | 'circle' | 'square' | 'decimal' | 'decimalLeadingZero' | 'lowerRoman' | 'upperRoman' | 'lowerAlpha' | 'upperAlpha' | 'none' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2896,7 +2896,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-bottom
      */
-  marginBottom: PropCarrier<TSelf, CssValueOf<'marginBottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  marginBottom: PropCarrier<TSelf, CssValueOf<'marginBottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2940,7 +2940,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-left
      */
-  marginLeft: PropCarrier<TSelf, CssValueOf<'marginLeft'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  marginLeft: PropCarrier<TSelf, CssValueOf<'marginLeft'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -2954,7 +2954,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-right
      */
-  marginRight: PropCarrier<TSelf, CssValueOf<'marginRight'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  marginRight: PropCarrier<TSelf, CssValueOf<'marginRight'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -2968,7 +2968,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-top
      */
-  marginTop: PropCarrier<TSelf, CssValueOf<'marginTop'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  marginTop: PropCarrier<TSelf, CssValueOf<'marginTop'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -3329,7 +3329,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-height
      */
-  maxHeight: PropCarrier<TSelf, CssValueOf<'maxHeight'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>>
+  maxHeight: PropCarrier<TSelf, CssValueOf<'maxHeight'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -3364,7 +3364,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-width
      */
-  maxWidth: PropCarrier<TSelf, CssValueOf<'maxWidth'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>>
+  maxWidth: PropCarrier<TSelf, CssValueOf<'maxWidth'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -3392,7 +3392,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-height
      */
-  minHeight: PropCarrier<TSelf, CssValueOf<'minHeight'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>>
+  minHeight: PropCarrier<TSelf, CssValueOf<'minHeight'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -3420,7 +3420,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-width
      */
-  minWidth: PropCarrier<TSelf, CssValueOf<'minWidth'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>>
+  minWidth: PropCarrier<TSelf, CssValueOf<'minWidth'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -3434,7 +3434,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mix-blend-mode
      */
-  mixBlendMode: PropCarrier<TSelf, CssValueOf<'mixBlendMode'>, never, 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'colorDodge' | 'colorBurn' | 'hardLight' | 'softLight' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity' | 'plusDarker' | 'plusLighter' | GlobalKw>
+  mixBlendMode: PropCarrier<TSelf, CssValueOf<'mixBlendMode'>, never, 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'colorDodge' | 'colorBurn' | 'hardLight' | 'softLight' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity' | 'plusDarker' | 'plusLighter' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -3493,7 +3493,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/object-fit
      */
-  objectFit: PropCarrier<TSelf, CssValueOf<'objectFit'>, never, 'fill' | 'contain' | 'cover' | 'none' | 'scaleDown' | GlobalKw>
+  objectFit: PropCarrier<TSelf, CssValueOf<'objectFit'>, never, 'fill' | 'contain' | 'cover' | 'none' | 'scaleDown' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -3507,7 +3507,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/object-position
      */
-  objectPosition: PropCarrier<TSelf, CssValueOf<'objectPosition'>, never, GlobalKw, LengthUnits<TSelf>>
+  objectPosition: PropCarrier<TSelf, CssValueOf<'objectPosition'>, never, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * **Syntax**: `none | <basic-shape-rect>`
      *
@@ -3621,7 +3621,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/opacity
      */
-  opacity: PropCarrier<TSelf, CssValueOf<'opacity'>, OpacityTokens<T>, GlobalKw>
+  opacity: PropCarrier<TSelf, CssValueOf<'opacity'>, OpacityTokens<T>, GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -3636,7 +3636,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/order
      */
-  order: PropCarrier<TSelf, CssValueOf<'order'>, never, GlobalKw>
+  order: PropCarrier<TSelf, CssValueOf<'order'>, never, GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -3664,7 +3664,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-color
      */
-  outlineColor: ColorPropCarrier<TSelf, CssValueOf<'outlineColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  outlineColor: ColorPropCarrier<TSelf, CssValueOf<'outlineColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -3678,7 +3678,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-offset
      */
-  outlineOffset: PropCarrier<TSelf, CssValueOf<'outlineOffset'>, never, GlobalKw, LengthUnits<TSelf>>
+  outlineOffset: PropCarrier<TSelf, CssValueOf<'outlineOffset'>, never, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -3692,7 +3692,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-style
      */
-  outlineStyle: PropCarrier<TSelf, CssValueOf<'outlineStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw>
+  outlineStyle: PropCarrier<TSelf, CssValueOf<'outlineStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -3706,7 +3706,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-width
      */
-  outlineWidth: PropCarrier<TSelf, CssValueOf<'outlineWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  outlineWidth: PropCarrier<TSelf, CssValueOf<'outlineWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -3720,7 +3720,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-anchor
      */
-  overflowAnchor: PropCarrier<TSelf, CssValueOf<'overflowAnchor'>, never, 'auto' | 'none' | GlobalKw>
+  overflowAnchor: PropCarrier<TSelf, CssValueOf<'overflowAnchor'>, never, 'auto' | 'none' | GlobalKw, unknown, never>
   /**
      * Since September 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -3797,7 +3797,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-x
      */
-  overflowX: PropCarrier<TSelf, CssValueOf<'overflowX'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw>
+  overflowX: PropCarrier<TSelf, CssValueOf<'overflowX'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -3811,7 +3811,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-y
      */
-  overflowY: PropCarrier<TSelf, CssValueOf<'overflowY'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw>
+  overflowY: PropCarrier<TSelf, CssValueOf<'overflowY'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -3923,7 +3923,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-bottom
      */
-  paddingBottom: PropCarrier<TSelf, CssValueOf<'paddingBottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  paddingBottom: PropCarrier<TSelf, CssValueOf<'paddingBottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -3967,7 +3967,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-left
      */
-  paddingLeft: PropCarrier<TSelf, CssValueOf<'paddingLeft'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  paddingLeft: PropCarrier<TSelf, CssValueOf<'paddingLeft'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -3981,7 +3981,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-right
      */
-  paddingRight: PropCarrier<TSelf, CssValueOf<'paddingRight'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  paddingRight: PropCarrier<TSelf, CssValueOf<'paddingRight'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -3995,7 +3995,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-top
      */
-  paddingTop: PropCarrier<TSelf, CssValueOf<'paddingTop'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  paddingTop: PropCarrier<TSelf, CssValueOf<'paddingTop'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since February 2023.
      *
@@ -4038,7 +4038,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/perspective
      */
-  perspective: PropCarrier<TSelf, CssValueOf<'perspective'>, never, 'none' | GlobalKw, LengthUnits<TSelf>>
+  perspective: PropCarrier<TSelf, CssValueOf<'perspective'>, never, 'none' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -4067,7 +4067,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/pointer-events
      */
-  pointerEvents: PropCarrier<TSelf, CssValueOf<'pointerEvents'>, never, 'none' | 'auto' | GlobalKw>
+  pointerEvents: PropCarrier<TSelf, CssValueOf<'pointerEvents'>, never, 'none' | 'auto' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -4081,7 +4081,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position
      */
-  position: PropCarrier<TSelf, CssValueOf<'position'>, never, 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky' | GlobalKw>
+  position: PropCarrier<TSelf, CssValueOf<'position'>, never, 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -4095,7 +4095,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-anchor
      */
-  positionAnchor: PropCarrier<TSelf, CssValueOf<'positionAnchor'>, never, 'auto' | GlobalKw>
+  positionAnchor: PropCarrier<TSelf, CssValueOf<'positionAnchor'>, never, 'auto' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -4208,7 +4208,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/resize
      */
-  resize: PropCarrier<TSelf, CssValueOf<'resize'>, never, 'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline' | GlobalKw>
+  resize: PropCarrier<TSelf, CssValueOf<'resize'>, never, 'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -4222,7 +4222,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/right
      */
-  right: PropCarrier<TSelf, CssValueOf<'right'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  right: PropCarrier<TSelf, CssValueOf<'right'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2022.
      *
@@ -4236,7 +4236,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/rotate
      */
-  rotate: PropCarrier<TSelf, CssValueOf<'rotate'>, never, 'none' | GlobalKw, AngleUnits<TSelf>>
+  rotate: PropCarrier<TSelf, CssValueOf<'rotate'>, never, 'none' | GlobalKw, AngleUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -4250,7 +4250,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/row-gap
      */
-  rowGap: PropCarrier<TSelf, CssValueOf<'rowGap'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  rowGap: PropCarrier<TSelf, CssValueOf<'rowGap'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -4339,7 +4339,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scale
      */
-  scale: PropCarrier<TSelf, CssValueOf<'scale'>, never, 'none' | GlobalKw>
+  scale: PropCarrier<TSelf, CssValueOf<'scale'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -4353,7 +4353,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-behavior
      */
-  scrollBehavior: PropCarrier<TSelf, CssValueOf<'scrollBehavior'>, never, 'auto' | 'smooth' | GlobalKw>
+  scrollBehavior: PropCarrier<TSelf, CssValueOf<'scrollBehavior'>, never, 'auto' | 'smooth' | GlobalKw, unknown, never>
   /**
      * **Syntax**: `none | nearest`
      *
@@ -4406,7 +4406,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-bottom
      */
-  scrollMarginBottom: PropCarrier<TSelf, CssValueOf<'scrollMarginBottom'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollMarginBottom: PropCarrier<TSelf, CssValueOf<'scrollMarginBottom'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -4449,7 +4449,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-left
      */
-  scrollMarginLeft: PropCarrier<TSelf, CssValueOf<'scrollMarginLeft'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollMarginLeft: PropCarrier<TSelf, CssValueOf<'scrollMarginLeft'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -4464,7 +4464,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-right
      */
-  scrollMarginRight: PropCarrier<TSelf, CssValueOf<'scrollMarginRight'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollMarginRight: PropCarrier<TSelf, CssValueOf<'scrollMarginRight'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -4479,7 +4479,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-top
      */
-  scrollMarginTop: PropCarrier<TSelf, CssValueOf<'scrollMarginTop'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollMarginTop: PropCarrier<TSelf, CssValueOf<'scrollMarginTop'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -4521,7 +4521,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-bottom
      */
-  scrollPaddingBottom: PropCarrier<TSelf, CssValueOf<'scrollPaddingBottom'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollPaddingBottom: PropCarrier<TSelf, CssValueOf<'scrollPaddingBottom'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -4563,7 +4563,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-left
      */
-  scrollPaddingLeft: PropCarrier<TSelf, CssValueOf<'scrollPaddingLeft'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollPaddingLeft: PropCarrier<TSelf, CssValueOf<'scrollPaddingLeft'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -4577,7 +4577,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-right
      */
-  scrollPaddingRight: PropCarrier<TSelf, CssValueOf<'scrollPaddingRight'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollPaddingRight: PropCarrier<TSelf, CssValueOf<'scrollPaddingRight'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -4591,7 +4591,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-top
      */
-  scrollPaddingTop: PropCarrier<TSelf, CssValueOf<'scrollPaddingTop'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollPaddingTop: PropCarrier<TSelf, CssValueOf<'scrollPaddingTop'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -4605,7 +4605,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-snap-align
      */
-  scrollSnapAlign: PropCarrier<TSelf, CssValueOf<'scrollSnapAlign'>, never, 'none' | 'start' | 'end' | 'center' | GlobalKw>
+  scrollSnapAlign: PropCarrier<TSelf, CssValueOf<'scrollSnapAlign'>, never, 'none' | 'start' | 'end' | 'center' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -4679,7 +4679,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-snap-stop
      */
-  scrollSnapStop: PropCarrier<TSelf, CssValueOf<'scrollSnapStop'>, never, 'normal' | 'always' | GlobalKw>
+  scrollSnapStop: PropCarrier<TSelf, CssValueOf<'scrollSnapStop'>, never, 'normal' | 'always' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2022.
      *
@@ -4694,7 +4694,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-snap-type
      */
-  scrollSnapType: PropCarrier<TSelf, CssValueOf<'scrollSnapType'>, never, 'none' | 'x' | 'y' | 'block' | 'inline' | 'both' | 'mandatory' | 'proximity' | GlobalKw>
+  scrollSnapType: PropCarrier<TSelf, CssValueOf<'scrollSnapType'>, never, 'none' | 'x' | 'y' | 'block' | 'inline' | 'both' | 'mandatory' | 'proximity' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -4872,7 +4872,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke
      */
-  stroke: ColorPropCarrier<TSelf, CssValueOf<'stroke'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  stroke: ColorPropCarrier<TSelf, CssValueOf<'stroke'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * **Syntax**: `<color>`
      *
@@ -4896,7 +4896,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-dasharray
      */
-  strokeDasharray: PropCarrier<TSelf, CssValueOf<'strokeDasharray'>, never, 'none' | GlobalKw>
+  strokeDasharray: PropCarrier<TSelf, CssValueOf<'strokeDasharray'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -4910,7 +4910,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-dashoffset
      */
-  strokeDashoffset: PropCarrier<TSelf, CssValueOf<'strokeDashoffset'>, never, GlobalKw, LengthUnits<TSelf>>
+  strokeDashoffset: PropCarrier<TSelf, CssValueOf<'strokeDashoffset'>, never, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -4924,7 +4924,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-linecap
      */
-  strokeLinecap: PropCarrier<TSelf, CssValueOf<'strokeLinecap'>, never, 'butt' | 'round' | 'square' | GlobalKw>
+  strokeLinecap: PropCarrier<TSelf, CssValueOf<'strokeLinecap'>, never, 'butt' | 'round' | 'square' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -4938,7 +4938,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-linejoin
      */
-  strokeLinejoin: PropCarrier<TSelf, CssValueOf<'strokeLinejoin'>, never, 'miter' | 'round' | 'bevel' | GlobalKw>
+  strokeLinejoin: PropCarrier<TSelf, CssValueOf<'strokeLinejoin'>, never, 'miter' | 'round' | 'bevel' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -4980,7 +4980,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-width
      */
-  strokeWidth: PropCarrier<TSelf, CssValueOf<'strokeWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  strokeWidth: PropCarrier<TSelf, CssValueOf<'strokeWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2021.
      *
@@ -5009,7 +5009,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/table-layout
      */
-  tableLayout: PropCarrier<TSelf, CssValueOf<'tableLayout'>, never, 'auto' | 'fixed' | GlobalKw>
+  tableLayout: PropCarrier<TSelf, CssValueOf<'tableLayout'>, never, 'auto' | 'fixed' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -5023,7 +5023,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-align
      */
-  textAlign: PropCarrier<TSelf, CssValueOf<'textAlign'>, never, 'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | GlobalKw>
+  textAlign: PropCarrier<TSelf, CssValueOf<'textAlign'>, never, 'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -5131,7 +5131,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-color
      */
-  textDecorationColor: ColorPropCarrier<TSelf, CssValueOf<'textDecorationColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  textDecorationColor: ColorPropCarrier<TSelf, CssValueOf<'textDecorationColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -5146,7 +5146,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-line
      */
-  textDecorationLine: PropCarrier<TSelf, CssValueOf<'textDecorationLine'>, never, 'none' | 'underline' | 'overline' | 'lineThrough' | GlobalKw>
+  textDecorationLine: PropCarrier<TSelf, CssValueOf<'textDecorationLine'>, never, 'none' | 'underline' | 'overline' | 'lineThrough' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -5190,7 +5190,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-style
      */
-  textDecorationStyle: PropCarrier<TSelf, CssValueOf<'textDecorationStyle'>, never, 'solid' | 'double' | 'dotted' | 'dashed' | 'wavy' | GlobalKw>
+  textDecorationStyle: PropCarrier<TSelf, CssValueOf<'textDecorationStyle'>, never, 'solid' | 'double' | 'dotted' | 'dashed' | 'wavy' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2021.
      *
@@ -5204,7 +5204,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-thickness
      */
-  textDecorationThickness: PropCarrier<TSelf, CssValueOf<'textDecorationThickness'>, never, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  textDecorationThickness: PropCarrier<TSelf, CssValueOf<'textDecorationThickness'>, never, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -5263,7 +5263,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-indent
      */
-  textIndent: PropCarrier<TSelf, CssValueOf<'textIndent'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  textIndent: PropCarrier<TSelf, CssValueOf<'textIndent'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -5292,7 +5292,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-orientation
      */
-  textOrientation: PropCarrier<TSelf, CssValueOf<'textOrientation'>, never, 'mixed' | 'upright' | 'sideways' | GlobalKw>
+  textOrientation: PropCarrier<TSelf, CssValueOf<'textOrientation'>, never, 'mixed' | 'upright' | 'sideways' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -5306,7 +5306,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-overflow
      */
-  textOverflow: PropCarrier<TSelf, CssValueOf<'textOverflow'>, never, 'clip' | 'ellipsis' | GlobalKw>
+  textOverflow: PropCarrier<TSelf, CssValueOf<'textOverflow'>, never, 'clip' | 'ellipsis' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -5334,7 +5334,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-shadow
      */
-  textShadow: PropCarrier<TSelf, CssValueOf<'textShadow'>, ShadowTokens<T>, 'none' | GlobalKw>
+  textShadow: PropCarrier<TSelf, CssValueOf<'textShadow'>, ShadowTokens<T>, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -5376,7 +5376,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-transform
      */
-  textTransform: PropCarrier<TSelf, CssValueOf<'textTransform'>, never, 'none' | 'capitalize' | 'uppercase' | 'lowercase' | GlobalKw>
+  textTransform: PropCarrier<TSelf, CssValueOf<'textTransform'>, never, 'none' | 'capitalize' | 'uppercase' | 'lowercase' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2020.
      *
@@ -5461,7 +5461,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/top
      */
-  top: PropCarrier<TSelf, CssValueOf<'top'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  top: PropCarrier<TSelf, CssValueOf<'top'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2019.
      *
@@ -5476,7 +5476,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/touch-action
      */
-  touchAction: PropCarrier<TSelf, CssValueOf<'touchAction'>, never, 'auto' | 'none' | 'panX' | 'panY' | 'panLeft' | 'panRight' | 'panUp' | 'panDown' | 'pinchZoom' | 'manipulation' | GlobalKw>
+  touchAction: PropCarrier<TSelf, CssValueOf<'touchAction'>, never, 'auto' | 'none' | 'panX' | 'panY' | 'panLeft' | 'panRight' | 'panUp' | 'panDown' | 'pinchZoom' | 'manipulation' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -5520,7 +5520,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform-origin
      */
-  transformOrigin: PropCarrier<TSelf, CssValueOf<'transformOrigin'>, never, GlobalKw, LengthUnits<TSelf>>
+  transformOrigin: PropCarrier<TSelf, CssValueOf<'transformOrigin'>, never, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -5564,7 +5564,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-delay
      */
-  transitionDelay: PropCarrier<TSelf, CssValueOf<'transitionDelay'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>>
+  transitionDelay: PropCarrier<TSelf, CssValueOf<'transitionDelay'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -5579,7 +5579,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-duration
      */
-  transitionDuration: PropCarrier<TSelf, CssValueOf<'transitionDuration'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>>
+  transitionDuration: PropCarrier<TSelf, CssValueOf<'transitionDuration'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -5594,7 +5594,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-property
      */
-  transitionProperty: PropCarrier<TSelf, CssValueOf<'transitionProperty'>, TransitionPropertyTokens<T>, GlobalKw>
+  transitionProperty: PropCarrier<TSelf, CssValueOf<'transitionProperty'>, TransitionPropertyTokens<T>, GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -5609,7 +5609,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-timing-function
      */
-  transitionTimingFunction: PropCarrier<TSelf, CssValueOf<'transitionTimingFunction'>, EasingTokens<T>, GlobalKw>
+  transitionTimingFunction: PropCarrier<TSelf, CssValueOf<'transitionTimingFunction'>, EasingTokens<T>, GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2022.
      *
@@ -5623,7 +5623,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/translate
      */
-  translate: PropCarrier<TSelf, CssValueOf<'translate'>, never, 'none' | GlobalKw, LengthUnits<TSelf>>
+  translate: PropCarrier<TSelf, CssValueOf<'translate'>, never, 'none' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -5652,7 +5652,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/user-select
      */
-  userSelect: PropCarrier<TSelf, CssValueOf<'userSelect'>, never, 'none' | 'auto' | 'text' | 'all' | 'contain' | GlobalKw>
+  userSelect: PropCarrier<TSelf, CssValueOf<'userSelect'>, never, 'none' | 'auto' | 'text' | 'all' | 'contain' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -5762,7 +5762,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/visibility
      */
-  visibility: PropCarrier<TSelf, CssValueOf<'visibility'>, never, 'visible' | 'hidden' | 'collapse' | GlobalKw>
+  visibility: PropCarrier<TSelf, CssValueOf<'visibility'>, never, 'visible' | 'hidden' | 'collapse' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -5776,7 +5776,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/white-space
      */
-  whiteSpace: PropCarrier<TSelf, CssValueOf<'whiteSpace'>, never, 'normal' | 'nowrap' | 'pre' | 'preWrap' | 'preLine' | 'breakSpaces' | GlobalKw>
+  whiteSpace: PropCarrier<TSelf, CssValueOf<'whiteSpace'>, never, 'normal' | 'nowrap' | 'pre' | 'preWrap' | 'preLine' | 'breakSpaces' | GlobalKw, unknown, never>
   /**
      * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -5818,7 +5818,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/width
      */
-  width: PropCarrier<TSelf, CssValueOf<'width'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>>
+  width: PropCarrier<TSelf, CssValueOf<'width'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -5832,7 +5832,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/will-change
      */
-  willChange: PropCarrier<TSelf, CssValueOf<'willChange'>, never, 'auto' | 'scrollPosition' | 'contents' | GlobalKw>
+  willChange: PropCarrier<TSelf, CssValueOf<'willChange'>, never, 'auto' | 'scrollPosition' | 'contents' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -5846,7 +5846,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/word-break
      */
-  wordBreak: PropCarrier<TSelf, CssValueOf<'wordBreak'>, never, 'normal' | 'breakAll' | 'keepAll' | 'breakWord' | GlobalKw>
+  wordBreak: PropCarrier<TSelf, CssValueOf<'wordBreak'>, never, 'normal' | 'breakAll' | 'keepAll' | 'breakWord' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -5860,7 +5860,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/word-spacing
      */
-  wordSpacing: PropCarrier<TSelf, CssValueOf<'wordSpacing'>, never, 'normal' | GlobalKw, LengthUnits<TSelf>>
+  wordSpacing: PropCarrier<TSelf, CssValueOf<'wordSpacing'>, never, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2018.
      *
@@ -5883,7 +5883,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/writing-mode
      */
-  writingMode: PropCarrier<TSelf, CssValueOf<'writingMode'>, never, 'horizontalTb' | 'verticalRl' | 'verticalLr' | 'sidewaysRl' | 'sidewaysLr' | GlobalKw>
+  writingMode: PropCarrier<TSelf, CssValueOf<'writingMode'>, never, 'horizontalTb' | 'verticalRl' | 'verticalLr' | 'sidewaysRl' | 'sidewaysLr' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -5925,7 +5925,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/z-index
      */
-  zIndex: PropCarrier<TSelf, CssValueOf<'zIndex'>, ZIndexTokens<T>, 'auto' | GlobalKw>
+  zIndex: PropCarrier<TSelf, CssValueOf<'zIndex'>, ZIndexTokens<T>, 'auto' | GlobalKw, unknown, never>
   /**
      * Since May 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -6004,7 +6004,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-position
      */
-  backgroundPosition: PropCarrier<TSelf, CssValueOf<'backgroundPosition'>, never, GlobalKw, LengthUnits<TSelf>>
+  backgroundPosition: PropCarrier<TSelf, CssValueOf<'backgroundPosition'>, never, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -6118,7 +6118,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-color
      */
-  borderColor: ColorPropCarrier<TSelf, CssValueOf<'borderColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw>
+  borderColor: ColorPropCarrier<TSelf, CssValueOf<'borderColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -6234,7 +6234,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-radius
      */
-  borderRadius: PropCarrier<TSelf, CssValueOf<'borderRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  borderRadius: PropCarrier<TSelf, CssValueOf<'borderRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -6258,7 +6258,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-style
      */
-  borderStyle: PropCarrier<TSelf, CssValueOf<'borderStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw>
+  borderStyle: PropCarrier<TSelf, CssValueOf<'borderStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -6282,7 +6282,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-width
      */
-  borderWidth: PropCarrier<TSelf, CssValueOf<'borderWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  borderWidth: PropCarrier<TSelf, CssValueOf<'borderWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /** **Syntax**: `<'caret-color'> || <'caret-shape'>` */
   caret: PropFn<TSelf, CssValueOf<'caret'>>
   /**
@@ -6310,7 +6310,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/columns
      */
-  columns: PropCarrier<TSelf, CssValueOf<'columns'>, never, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  columns: PropCarrier<TSelf, CssValueOf<'columns'>, never, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -6384,7 +6384,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/gap
      */
-  gap: PropCarrier<TSelf, CssValueOf<'gap'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  gap: PropCarrier<TSelf, CssValueOf<'gap'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -6408,7 +6408,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-area
      */
-  gridArea: PropCarrier<TSelf, CssValueOf<'gridArea'>, never, 'auto' | GlobalKw>
+  gridArea: PropCarrier<TSelf, CssValueOf<'gridArea'>, never, 'auto' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -6420,7 +6420,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-column
      */
-  gridColumn: PropCarrier<TSelf, CssValueOf<'gridColumn'>, never, 'auto' | GlobalKw>
+  gridColumn: PropCarrier<TSelf, CssValueOf<'gridColumn'>, never, 'auto' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -6432,7 +6432,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-row
      */
-  gridRow: PropCarrier<TSelf, CssValueOf<'gridRow'>, never, 'auto' | GlobalKw>
+  gridRow: PropCarrier<TSelf, CssValueOf<'gridRow'>, never, 'auto' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -6456,7 +6456,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset
      */
-  inset: PropCarrier<TSelf, CssValueOf<'inset'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  inset: PropCarrier<TSelf, CssValueOf<'inset'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -6519,7 +6519,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin
      */
-  margin: PropCarrier<TSelf, CssValueOf<'margin'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  margin: PropCarrier<TSelf, CssValueOf<'margin'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -6531,7 +6531,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-block
      */
-  marginBlock: PropCarrier<TSelf, CssValueOf<'marginBlock'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  marginBlock: PropCarrier<TSelf, CssValueOf<'marginBlock'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -6543,7 +6543,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-inline
      */
-  marginInline: PropCarrier<TSelf, CssValueOf<'marginInline'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  marginInline: PropCarrier<TSelf, CssValueOf<'marginInline'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -6621,7 +6621,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow
      */
-  overflow: PropCarrier<TSelf, CssValueOf<'overflow'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw>
+  overflow: PropCarrier<TSelf, CssValueOf<'overflow'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -6647,7 +6647,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding
      */
-  padding: PropCarrier<TSelf, CssValueOf<'padding'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  padding: PropCarrier<TSelf, CssValueOf<'padding'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -6659,7 +6659,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-block
      */
-  paddingBlock: PropCarrier<TSelf, CssValueOf<'paddingBlock'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  paddingBlock: PropCarrier<TSelf, CssValueOf<'paddingBlock'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -6671,7 +6671,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-inline
      */
-  paddingInline: PropCarrier<TSelf, CssValueOf<'paddingInline'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>>
+  paddingInline: PropCarrier<TSelf, CssValueOf<'paddingInline'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -6732,7 +6732,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin
      */
-  scrollMargin: PropCarrier<TSelf, CssValueOf<'scrollMargin'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollMargin: PropCarrier<TSelf, CssValueOf<'scrollMargin'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -6744,7 +6744,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-block
      */
-  scrollMarginBlock: PropCarrier<TSelf, CssValueOf<'scrollMarginBlock'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollMarginBlock: PropCarrier<TSelf, CssValueOf<'scrollMarginBlock'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -6756,7 +6756,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-inline
      */
-  scrollMarginInline: PropCarrier<TSelf, CssValueOf<'scrollMarginInline'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollMarginInline: PropCarrier<TSelf, CssValueOf<'scrollMarginInline'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -6768,7 +6768,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding
      */
-  scrollPadding: PropCarrier<TSelf, CssValueOf<'scrollPadding'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollPadding: PropCarrier<TSelf, CssValueOf<'scrollPadding'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -6780,7 +6780,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-block
      */
-  scrollPaddingBlock: PropCarrier<TSelf, CssValueOf<'scrollPaddingBlock'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollPaddingBlock: PropCarrier<TSelf, CssValueOf<'scrollPaddingBlock'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -6792,7 +6792,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-inline
      */
-  scrollPaddingInline: PropCarrier<TSelf, CssValueOf<'scrollPaddingInline'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>>
+  scrollPaddingInline: PropCarrier<TSelf, CssValueOf<'scrollPaddingInline'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2021.
      *
@@ -6856,7 +6856,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-wrap
      */
-  textWrap: PropCarrier<TSelf, CssValueOf<'textWrap'>, never, 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable' | GlobalKw>
+  textWrap: PropCarrier<TSelf, CssValueOf<'textWrap'>, never, 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *

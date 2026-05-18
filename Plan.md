@@ -1380,6 +1380,36 @@ pnpm publish --access public        # 需先 npm login
 5. **★ 对外类型改动后必须 `pnpm build`**：dist gitignored 但被 IDEA / 其它消费者通过 node_modules symlink 读取；不重 build 会导致 IDE 误报旧签名错。加入了 AGENT.md §四.3 验证铁律。
 6. **examples tsconfig path mapping**：vue-button / react-button 现在通过 `paths` 直接走 src，让 IDE 与 vite 行为一致；vanilla-button 没 tsconfig（纯 vite），不影响。
 
+### 14.3 Phase 3 一次性无人值守落地（2026-05-19）
+
+> 用户拍板"按推荐方向 + 一次完成"，agent 在单次会话内一次性推进 §十五 Phase 3+ 路线图大部分子任务。
+
+| 时间 | 文件 / 范围 | 问题 / 决策 | 验证 |
+|---|---|---|---|
+| 2026-05-19 | `chain/units.ts` | W1.7：LENGTH_UNITS 从 16 扩到 30，加入 small / large / dynamic viewport（svw/lvw/dvw 及 h/min/max 变体）+ 容器查询单位（cqw/cqh/cqi/cqb/cqmin/cqmax） | parity 守护通过 |
+| 2026-05-19 | `theme/resolveTheme.ts` | W4.3：resolveTheme 末尾 Object.freeze 每个 category（V8 sealed class）；mergeTheme 仍能基于已 freeze 对象返回新对象 | 95→171 测试全绿 |
+| 2026-05-19 | `theme/Theme.ts` + `chain/Chain.ts` | W4.1：Theme 加 `getKeymap()` 懒缓存；Chain 构造优先复用。修 §15.18 B3 | bench icss ~19k → ~404k ops/s（21× 提升） |
+| 2026-05-19 | `theme/defaults/palette.ts` + light/dark.ts | W1.1：删 legacy camelCase `palette` 导出；新增 `tw(name, shade)` 取值 helper；light/dark 13 处 palette.blue600 → tw('blue', '600') | palette spec 7/7 |
+| 2026-05-19 | `theme/defaults/schema.ts` + light/dark.ts | W1.8：default schema 补 8 个 token category（duration/easing/breakpoint/zIndex/opacity/lineHeight/letterSpacing/aspectRatio）。修 §15.18 A2/A3。`_media('_md')` 终于真正工作；chain-builtins 测试调整 fallback 用例 | tests/chain-builtins 36→78 |
+| 2026-05-19 | `chain/enhanced-props.ts` + keywords.ts | W1.6'：补 ~66 条增强属性（129→195）：filter/backdropFilter（必须）/ tables / lists / SVG / scroll-snap 含 12 个 scrollMargin/Padding / pointer / layout / blend / writing / columns / break / 现代 CSS 4 / counter。KEYWORD_TO_CSS 补 ~80 个 keyword 反向映射，注意排重 | parity 守护通过 |
+| 2026-05-19 | `chain/Chain.ts` | W1.3 Transform longhand helpers（D6）：16 个 method（translate*/rotate*/scale*/skew/perspective/transformOrigin/preserve3d）走 CSS Working Group `translate`/`rotate`/`scale` longhand。修 §15.18 C13 _absoluteCenter 改 longhand | +12 tests |
+| 2026-05-19 | `chain/Chain.ts` | W1.4 Filter/Backdrop helpers：18 个累加式 method 走 `_node.filter` shorthand string | +4 tests |
+| 2026-05-19 | `chain/Chain.ts` | W1.5 Gradient helpers：_linearGradient / _radialGradient / _conicGradient | +4 tests |
+| 2026-05-19 | `chain/Chain.ts` | W2.1-W2.5：通用属性选择器（_data/_aria/_has/_not/_is/_where）+ 状态 variant（_open/_closed/_loading/_inert/_forcedColors）+ @starting-style + container 断点简写 + group-peer data 变种 | +11 tests |
+| 2026-05-19 | `chain/Chain.ts` | W7 Pattern 库：_stack/_grid/_aspectVideo/Square/Portrait/Landscape/_focusRing/_visuallyHidden（修 C12）/_fillParent/_skipLink。token 简写（`_md`）在 stack/grid 直接被解析 | +9 tests |
+| 2026-05-19 | `chain/Chain.ts` + `dev/assertSchemaConsistency.ts` | W3.1：_inspect({format: 'css'\|'json'\|'tree'}) 调试输出。W3.3：assertSchemaConsistency 校验必填语义色 / 保留字 key / function token 闭环；附带 dev 模块 | +3 +4 tests |
+| 2026-05-19 | `chain/Chain.ts` + `createIcssInstance.ts` | W5.1 D8：Chain 构造扩 `ChainOptions { cssFn?, debug? }`（修 §15.18 B1）；toString 走 `_cssFn`。createIcssInstance(emotion) 返回完整工具集（icss/chain/cx/injectGlobal/ikeyframes/registerAnimation/injectPreflight/registerCustomProperty/injectLayer/injectLayerOrder/registerFont/extractCritical），所有 side effect 走用户传入的 emotion instance | +5 tests |
+| 2026-05-19 | `chain/Chain.ts` (debug option) | W3.2 简化版：dev label opt-in 经 `new Chain(theme, { debug: true })`；从 Error stack 抽 callsite；NODE_ENV=production 时降级 | （集成验证） |
+| 2026-05-19 | `preflight.ts` | W5.4 D11：injectPreflight() 仅 normalize（box-sizing/body margin/heading reset/form font inherit/media block/list reset） | global-helpers spec |
+| 2026-05-19 | `registerCustomProperty.ts` | W5.5 D12：@property 注册；通过 emotion.injectGlobal 注入 | spec |
+| 2026-05-19 | `layer.ts` + Chain._layer | W8.1/W8.2：injectLayer / injectLayerOrder / _layer chain method | spec |
+| 2026-05-19 | `registerFont.ts` | W8.4：registerFont(family, sources) @font-face 注册，支持 weight/style/display/unicodeRange | spec |
+| 2026-05-19 | `types/styleProps.ts` + index.ts | W10 D17 / 修 §15.18 C9：StyleProps<T>（30+ alias：color/bg/p/px/m/mx/w/h/rounded/shadow/...）+ applyStyleProps(chain, props) + TokenOf<Cat, T>；index.ts 补导出 BordersTokens/ZIndexTokens/OpacityTokens 等所有 token 类型 | +12 tests |
+| 2026-05-19 | `types/components.ts` + `theme/componentTokens.ts` | W1.2：ComponentTokenRegistry declaration merging 注册槽 + FlattenComponentTokens 工具 + withComponentTokens 派生 + override 合并。`DefaultSchema['color']` intersect `Partial<Record<FlattenComponentTokens, string>>`（让 light/dark 不需预填组件 token） | +5 tests |
+| 2026-05-19 | `types/carrier.ts` | W6.2：PropCarrier / ColorPropCarrier 扩 `TExtraKeywords` slot（默认 never）；为 D14 extra-keywords 扩展槽提供类型层载体 | +3 tests |
+| 2026-05-19 | `chain/config/extra-keywords.config.ts` + generator | W6.1 简化版 + W6.3：新增 extra-keywords 扩展槽（默认空）；generator 改造接管 ExtraKeywords slot 输出（每个属性最终 5/6 元 PropCarrier 类型）；validateExtraKeywords 强制 `_` 前缀。完整 csstype keyword 派生 + 3-config 拆分留 v0.4+ | generator pass / 174 全绿 |
+| 2026-05-19 | 全局 | 取舍：W3.2 完整 stack-trace label / W4.2 carrier 工厂级 / W6.1 完整 csstype keyword 派生 / W11.1 Babel-SWC 插件 → 留下次会话；其余 W1-W10 全部落地 | tests 95→174 / bench 19k→404k / build 19→61kb |
+
 ### 14.2 Phase 2 新增决策
 
 | 时间 | 文件 / 范围 | 问题 | 决策 | 理由 / 参考 |

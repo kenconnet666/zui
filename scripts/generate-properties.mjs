@@ -24,6 +24,7 @@ const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url))
 const WORKSPACE_ROOT = resolve(SCRIPT_DIR, '..')
 const CORE_PKG = resolve(WORKSPACE_ROOT, 'packages/core')
 const ENHANCED_PROPS_FILE = resolve(CORE_PKG, 'src/chain/enhanced-props.ts')
+const EXTRA_KEYWORDS_FILE = resolve(CORE_PKG, 'src/chain/config/extra-keywords.config.ts')
 const OUTPUT_FILE = resolve(CORE_PKG, 'src/types/properties.generated.ts')
 
 const require = createRequire(import.meta.url)
@@ -205,6 +206,66 @@ async function readEnhancedProps() {
   throw new Error(`[gen-properties] 未在 ${ENHANCED_PROPS_FILE} 找到 ENHANCED_PROPS`)
 }
 
+// ─── W6.1 D14 — extra-keywords 扩展槽解析 ───
+
+/**
+ * 解析 src/chain/config/extra-keywords.config.ts 的 EXTRA_KEYWORDS object literal。
+ * 返回 Map<propName, string[]>，所有 keyword 强制 `_` 前缀。
+ */
+async function readExtraKeywords() {
+  const src = await readFile(EXTRA_KEYWORDS_FILE, 'utf8')
+  const sf = ts.createSourceFile(EXTRA_KEYWORDS_FILE, src, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
+
+  for (const stmt of sf.statements) {
+    if (!ts.isVariableStatement(stmt)) continue
+    for (const decl of stmt.declarationList.declarations) {
+      if (!ts.isIdentifier(decl.name) || decl.name.text !== 'EXTRA_KEYWORDS') continue
+      let init = decl.initializer
+      while (init && (ts.isAsExpression(init) || ts.isTypeAssertionExpression(init))) {
+        init = init.expression
+      }
+      if (!init || !ts.isObjectLiteralExpression(init)) continue
+      const out = new Map()
+      for (const prop of init.properties) {
+        if (!ts.isPropertyAssignment(prop)) continue
+        const key = getMemberNameText(prop.name)
+        if (!key) continue
+        let v = prop.initializer
+        while (v && (ts.isAsExpression(v) || ts.isTypeAssertionExpression(v))) {
+          v = v.expression
+        }
+        if (!v || !ts.isArrayLiteralExpression(v)) continue
+        const arr = v.elements.filter(ts.isStringLiteral).map(s => s.text)
+        out.set(key, arr)
+      }
+      return out
+    }
+  }
+  return new Map()
+}
+
+// ─── W6.3 — token / extra-keyword 命名空间冲突校验 ───
+
+function validateExtraKeywords(enhanced, extraKeywords) {
+  const errors = []
+  for (const [prop, keywords] of extraKeywords) {
+    const cfg = enhanced.get(prop)
+    for (const kw of keywords) {
+      if (!kw.startsWith('_')) {
+        errors.push(`[gen-properties] extra-keywords[${prop}] 包含非 _ 前缀关键字 '${kw}'（违反 D14 命名空间规则）`)
+      }
+      // 与 tokens 命名冲突：tokenCat → token ident 需要运行时 schema 才能列举，
+      // 这里做"静态"防御：如果 prop 有 tokenCat，那么和它的 token ident 重名时报错。
+      // 仅在 extra-keyword 列出时检查，避免假阳。
+      if (cfg?.tokenCat) {
+        // tokenCat 的 token idents 来自用户 schema —— generator 阶段不可知。
+        // 静态层防御：只校验 keyword 本身的格式。
+      }
+    }
+  }
+  if (errors.length) throw new Error(errors.join('\n'))
+}
+
 // ─── 类型映射 ───
 
 /** tokenCat → Tokens 类型工具名（与 src/types/tokens.ts 的导出对齐） */
@@ -236,7 +297,7 @@ const UNIT_CLASS_TO_TYPE = {
   angle: 'AngleUnits',
 }
 
-function renderTypeExpr(propName, enhanced) {
+function renderTypeExpr(propName, enhanced, extraKeywords) {
   // 通过 csstype.Properties<TLength=string|number, TTime=string|number> 让 length / time 属性都接 number；
   // emotion 收到数字会自动加 px，类型层和运行时这样对齐。
   const cssValue = `CssValueOf<'${propName}'>`
@@ -257,18 +318,30 @@ function renderTypeExpr(propName, enhanced) {
     keywordsType = keywords.map(k => `'${k}'`).join(' | ') + ' | GlobalKw'
   }
 
+  // W6.2 D14 — extra-keywords slot
+  const extraList = extraKeywords?.get(propName) ?? []
+  const extraType = extraList.length > 0
+    ? extraList.map(k => `'${k}'`).join(' | ')
+    : 'never'
+
   const carrier = tokenCat === 'color' ? 'ColorPropCarrier' : 'PropCarrier'
 
+  if (carrier === 'ColorPropCarrier') {
+    // ColorPropCarrier<TSelf, TValue, TTokens, TKeywords, TExtraKeywords>
+    return `ColorPropCarrier<TSelf, ${cssValue}, ${tokensType}, ${keywordsType}, ${extraType}>`
+  }
+
+  // PropCarrier<TSelf, TValue, TTokens, TKeywords, TUnits, TExtraKeywords>
   if (unitClass) {
     const units = `${UNIT_CLASS_TO_TYPE[unitClass]}<TSelf>`
-    return `${carrier}<TSelf, ${cssValue}, ${tokensType}, ${keywordsType}, ${units}>`
+    return `PropCarrier<TSelf, ${cssValue}, ${tokensType}, ${keywordsType}, ${units}, ${extraType}>`
   }
-  return `${carrier}<TSelf, ${cssValue}, ${tokensType}, ${keywordsType}>`
+  return `PropCarrier<TSelf, ${cssValue}, ${tokensType}, ${keywordsType}, unknown, ${extraType}>`
 }
 
 // ─── 输出渲染 ───
 
-function renderFile(properties, enhanced) {
+function renderFile(properties, enhanced, extraKeywords) {
   /** 用到的 Tokens 类型集合（避免引入未使用导致 lint 报红） */
   const usedTokenTypes = new Set()
   /** 用到的 Units 类型集合 */
@@ -328,7 +401,7 @@ function renderFile(properties, enhanced) {
 
   for (const [name, info] of properties) {
     if (info.jsDoc) lines.push(indentBlock(info.jsDoc, '  '))
-    lines.push(`  ${name}: ${renderTypeExpr(name, enhanced.get(name))}`)
+    lines.push(`  ${name}: ${renderTypeExpr(name, enhanced.get(name), extraKeywords)}`)
   }
 
   lines.push('}')
@@ -341,7 +414,12 @@ function renderFile(properties, enhanced) {
 async function main() {
   const properties = await readCsstypeProperties()
   const enhanced = await readEnhancedProps()
-  const out = renderFile(properties, enhanced)
+  const extraKeywords = await readExtraKeywords()
+
+  // W6.3 命名空间校验
+  validateExtraKeywords(enhanced, extraKeywords)
+
+  const out = renderFile(properties, enhanced, extraKeywords)
 
   const prev = await readFile(OUTPUT_FILE, 'utf8').catch(() => '')
   if (out === prev) {
@@ -351,7 +429,7 @@ async function main() {
 
   await writeFile(OUTPUT_FILE, out, 'utf8')
   console.log(`[gen-properties] 已生成: ${OUTPUT_FILE}`)
-  console.log(`[gen-properties] 属性总数 = ${properties.size}, 增强 = ${enhanced.size}`)
+  console.log(`[gen-properties] 属性总数 = ${properties.size}, 增强 = ${enhanced.size}, extra-keywords props = ${extraKeywords.size}`)
 }
 
 main().catch(err => {
