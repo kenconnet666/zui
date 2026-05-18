@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # ──────── 守护 generator 漂移 ────────
+      # 如果有人改了 ENHANCED_PROPS / csstype 但忘了重跑 generator，
+      # 这一步会让 properties.generated.ts 与源对不上，diff 失败 → CI 红。
+      - name: Generator drift check
+        run: |
+          node scripts/generate-properties.mjs
+          git diff --exit-code packages/core/src/types/properties.generated.ts
+
+      - name: Type check
+        run: pnpm --filter @kenconnet666/zui-core run type-check
+
+      - name: Test
+        run: pnpm --filter @kenconnet666/zui-core test
+
+      - name: Build core
+        run: pnpm --filter @kenconnet666/zui-core build
+
+      - name: Build examples
+        run: |
+          pnpm --filter @kenconnet666/example-vanilla-button exec vite build
+          pnpm --filter @kenconnet666/example-vue-button exec vite build
+          pnpm --filter @kenconnet666/example-react-button exec vite build
