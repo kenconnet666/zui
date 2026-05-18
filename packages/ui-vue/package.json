@@ -1,0 +1,45 @@
+{
+  "name": "@kenconnet666/zui-vue",
+  "version": "0.0.1",
+  "description": "Vue 3 components & helpers built on @kenconnet666/zui-core.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css",
+    "./dist/index.js"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "test": "vitest run",
+    "type-check": "vue-tsc --noEmit -p tsconfig.json"
+  },
+  "peerDependencies": {
+    "@emotion/css": "^11.13.0",
+    "vue": "^3.5.0"
+  },
+  "dependencies": {
+    "@kenconnet666/zui-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@emotion/css": "^11.13.5",
+    "@vue/test-utils": "^2.4.6",
+    "happy-dom": "^15.11.7",
+    "vue": "^3.5.32"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

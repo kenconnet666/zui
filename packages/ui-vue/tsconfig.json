@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "declaration": true,
+    "declarationMap": true,
+    "composite": true,
+    "tsBuildInfoFile": "./.tsbuildinfo",
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["dist", "node_modules"],
+  "references": [{ "path": "../core" }]
+}

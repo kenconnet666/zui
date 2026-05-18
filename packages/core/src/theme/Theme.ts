@@ -1,0 +1,59 @@
+import { resolveTheme } from './resolveTheme'
+import { mergeTheme } from './mergeTheme'
+import type { DeepPartial, ResolvedTheme, ThemeSchema } from './types'
+
+/**
+ * 主题类的运行时实体（internal）。
+ *
+ * 用户不直接接触此 class —— 对外暴露的 `Theme` 是 `_ThemeClass<T> & ResolvedTheme<T>`
+ * 的 type alias（见文件底部）。
+ *
+ * 设计动机：`interface Theme<T> extends ResolvedTheme<T>` 在 `verbatimModuleSyntax` /
+ * 严格模式下不被允许（interface 不能 extend mapped type）。改用 type intersection +
+ * const 强转的方式同时保留：
+ *   - `new Theme(schema)` 构造
+ *   - `class MyTheme extends Theme<MySchema>` 继承
+ *   - `theme.color.primary` schema 字段强类型访问（通过 intersection）
+ *   - `theme.resolve() / theme.merge()` 方法
+ */
+class _ThemeClass<T extends ThemeSchema> {
+  /** 内部缓存：已解析的 ResolvedTheme，由 `resolve()` 懒构建。 */
+  private _resolved: ResolvedTheme<T> | null = null
+
+  constructor(public schema: T) {
+    // 把 schema 各 category 直接挂到 this 上，配合 type intersection 即可强类型访问。
+    // 注意：schema 含 function token 时，instance 上拿到的是函数（未求值）；
+    // 类型上是 string | number。访问真值请走 `theme.resolve()` 或 Chain 内部 `_theme`。
+    Object.assign(this, schema)
+  }
+
+  /** 把 schema（含 function token）求值成 `ResolvedTheme`，结果会被缓存。 */
+  resolve(): ResolvedTheme<T> {
+    if (this._resolved === null) {
+      this._resolved = resolveTheme(this.schema)
+    }
+    return this._resolved
+  }
+
+  /** 用 `partial` 局部覆盖父主题，返回一个新 Theme 实例。父主题不变。 */
+  merge<P extends DeepPartial<T>>(partial: P): Theme<T> {
+    const next = mergeTheme(this.resolve(), partial) as unknown as T
+    return new Theme(next) as Theme<T>
+  }
+}
+
+/** 主题类型（intersection 注入 schema 字段强类型）。 */
+export type Theme<T extends ThemeSchema> = _ThemeClass<T> & ResolvedTheme<T>
+
+/**
+ * 主题构造器（运行时值）。
+ *
+ * - `new Theme(schema)` 创建实例
+ * - `class MyTheme extends Theme<MySchema> { ... }` 继承扩展
+ *
+ * 类型签名通过 const 强转把 `_ThemeClass` 替换成 `Theme<T>`（含 ResolvedTheme<T> 字段）。
+ */
+export const Theme = _ThemeClass as unknown as {
+  new <T extends ThemeSchema>(schema: T): Theme<T>
+  readonly prototype: _ThemeClass<ThemeSchema>
+}
