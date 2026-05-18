@@ -1,23 +1,40 @@
 import type { Chain } from './Chain'
+import { setAlpha } from './color'
 import { ENHANCED_PROPS } from './enhanced-props'
 import { KEYWORD_TO_CSS } from './keywords'
 import { withUnit, type UnitClass } from './units'
 
 /**
- * 给一个属性名返回一个 callable Proxy（PropCarrier 形态）。
- * 形态四态：
- *   1. fn(value)           -> 直接 set
- *   2. _tokenIdent         -> 查 keymap → 取 theme 值
- *   3. cssKeyword          -> 查 KEYWORD_TO_CSS
- *   4. .px(n) / .rem(n)... -> withUnit
+ * 给一个属性名返回一个 callable Proxy（PropCarrier / ColorPropCarrier 形态）。
  *
- * Phase 1 Day 3 会替换为完整实现（含 carrier 实例缓存）。这里给一个能跑的最小版本。
+ * 形态：
+ *   1. fn(value)            -> 直接 set
+ *   2. _tokenIdent          -> 查 keymap → 取 theme 值（颜色 token 返回 ColorTokenValue
+ *      暴露 .alpha(n)；其它 token 返回 chain）
+ *   3. cssKeyword           -> 查 KEYWORD_TO_CSS（命中 ENHANCED_PROPS.keywords 白名单或
+ *      全局关键字才生效）
+ *   4. .px(n) / .rem(n) / .ms(n) / .deg(n)... -> withUnit
+ *
+ * 结果按 prop 缓存到 `chain._carriers`，避免重复建 Proxy。
+ *
+ * 闭包陷阱：carrier 内部所有对 `_node` 的读写都走 `chain._node`（不要在闭包里快照
+ * `_node` 引用，否则 `_hover` 嵌套切换后写到错位置）。
  */
 export function getOrCreateCarrier(chain: Chain<never>, prop: string): unknown {
+  const internal = chain as unknown as ChainInternal
+  const cached = internal._carriers.get(prop)
+  if (cached !== undefined) return cached
+
+  const carrier = buildCarrier(chain, prop)
+  internal._carriers.set(prop, carrier)
+  return carrier
+}
+
+function buildCarrier(chain: Chain<never>, prop: string): unknown {
   const cfg = ENHANCED_PROPS[prop]
   const internal = chain as unknown as ChainInternal
 
-  // callable: target 是函数
+  // callable: target 是函数（fn(value) 形态）
   const target = function (value: unknown) {
     internal._node[prop] = value
     return chain
@@ -27,7 +44,7 @@ export function getOrCreateCarrier(chain: Chain<never>, prop: string): unknown {
     get(_t, key) {
       if (typeof key !== 'string') return undefined
 
-      // unit 方法
+      // unit 方法（.px / .rem / .ms / .deg ...）
       if (cfg?.unitClass && isUnitMethod(key, cfg.unitClass)) {
         return (n: number) => {
           internal._node[prop] = withUnit(n, key)
@@ -35,14 +52,19 @@ export function getOrCreateCarrier(chain: Chain<never>, prop: string): unknown {
         }
       }
 
-      // 主题 token (_ 前缀)
+      // 主题 token（`_` 前缀）
       if (cfg?.tokenCat && key.startsWith('_')) {
-        const ident = key
         const catMap = internal._keymap.get(cfg.tokenCat)
-        const origKey = catMap?.get(ident)
+        const origKey = catMap?.get(key)
         if (origKey !== undefined) {
           const slot = (internal._theme as Record<string, Record<string, string | number>>)[cfg.tokenCat]
-          internal._node[prop] = slot?.[origKey]
+          const value = slot?.[origKey]
+          internal._node[prop] = value
+
+          // 颜色 token：返回 ColorTokenValue（含 .alpha(n)）；非颜色直接返回 chain
+          if (cfg.tokenCat === 'color' && typeof value === 'string') {
+            return makeColorTokenValue(chain, prop, value)
+          }
           return chain
         }
       }
@@ -57,6 +79,22 @@ export function getOrCreateCarrier(chain: Chain<never>, prop: string): unknown {
       return undefined
     },
   })
+}
+
+/**
+ * 颜色 token 命中后返回的 helper —— 暴露 `.alpha(n)`。
+ *
+ * 闭包持有 `value`（token 原值）：用户后续若用 `.alpha(50)`，从原 token 算 rgba 覆盖；
+ * 多次 `.alpha(...)` 累积无意义 —— 每次都用原 token 重新算（不基于上一次 rgba）。
+ */
+function makeColorTokenValue(chain: Chain<never>, prop: string, value: string): { alpha: (n: number) => unknown } {
+  const internal = chain as unknown as ChainInternal
+  return {
+    alpha(n: number) {
+      internal._node[prop] = setAlpha(value, n / 100)
+      return chain
+    },
+  }
 }
 
 function isUnitMethod(key: string, cls: UnitClass): boolean {
@@ -75,4 +113,5 @@ interface ChainInternal {
   _node: Record<string, unknown>
   _theme: Record<string, Record<string, string | number>>
   _keymap: Map<string, Map<string, string>>
+  _carriers: Map<string, unknown>
 }
