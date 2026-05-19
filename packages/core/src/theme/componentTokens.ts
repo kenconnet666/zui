@@ -62,7 +62,9 @@ export function componentTokensFor<C extends keyof ComponentTokenRegistry & stri
 ): Partial<ComponentTokenRegistry[C]> {
   const colorSlot = (theme as Record<string, Record<string, string | number> | undefined>).color
   if (!colorSlot) return {} as Partial<ComponentTokenRegistry[C]>
-  const prefix = component
+  // 显式 cast 成 string：ComponentTokenRegistry 用户没 augment 时 C 推断为 never，
+  // 直接走 .length 会让 dts plugin 报 'Property length does not exist on never'。
+  const prefix: string = component as string
   const result: Record<string, string | number> = {}
   for (const flatKey in colorSlot) {
     if (!flatKey.startsWith(prefix)) continue

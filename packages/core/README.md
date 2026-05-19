@@ -51,6 +51,48 @@ pnpm add @emotion/css
 
 ---
 
+## Subpath 入口（0.7.0+）
+
+主入口已 re-export 全部 API；**subpath 让 tree-shake 更精确**，组件库 / SSR 场景推荐：
+
+```ts
+// 主入口（默认）— 全部 API
+import { icss, defaultLight, Chain } from '@kenconnet666/zui-core'
+
+// 组件库 variants 系统
+import {
+  defineVariants,
+  defineParts,
+  composeVariants,
+  defineMixin,
+  type VariantPropsOf,
+} from '@kenconnet666/zui-core/variants'
+
+// 预设资源（动画 keyframes / preflight 样式）
+import { presetAnimations, PREFLIGHT_STYLES } from '@kenconnet666/zui-core/preset'
+
+// 开发态工具（仅 dev 模式 import，生产 bundle 自动剔除）
+import { assertSchemaConsistency, makeCallsiteLabel } from '@kenconnet666/zui-core/dev'
+```
+
+**dist 产物结构**（0.7.0 改造）：
+
+```
+dist/
+├── index.js              # 主入口（仅 re-exports，~2 kB）
+├── chain/                # Chain / carrier / proxy / units / keywords ...
+├── theme/                # Theme / resolveTheme / mergeTheme / defaults/ ...
+├── variants/             # defineVariants / defineParts / composeVariants / defineMixin
+├── preset/               # animations / animation-defs / preflightStyles
+├── dev/                  # assertSchemaConsistency / stackTrace
+├── types/                # 纯 .d.ts（carrier / tokens / components / properties.generated）
+└── 顶层 helper           # icss / cx / ikeyframes / injectGlobal / preflight / ...
+```
+
+每个文件**保留完整 JSDoc + 真实变量名**（未 minify），方便 `Ctrl+Click` 跳转阅读源码与 IDE 悬停提示。
+
+---
+
 ## 快速开始
 
 ### 1️⃣ 用内置 Tailwind 风 default theme
