@@ -136,7 +136,7 @@ describe('proxy bind receiver — _when / _apply 内 fn(this) 仍是 proxy', () 
 
   it('_unless 否定路径不执行', () => {
     const c = new Chain(defaultLight)
-    c._unless(true, s => { s.color.red })   // 不应执行
+    c._unless(true, s => { s.color('red') })   // 不应执行
     expect(c._node.color).toBeUndefined()
   })
 })
@@ -253,12 +253,12 @@ describe('空 schema / 空 partial', () => {
 describe('Chain.toString() 多次调用返回相同 className', () => {
   it('emotion hash by content', () => {
     const c1 = new Chain(defaultLight)
-    c1.color.red
+    c1.color('red')
     c1.padding.px(8)
     const cls1 = c1.toString()
 
     const c2 = new Chain(defaultLight)
-    c2.color.red
+    c2.color('red')
     c2.padding.px(8)
     const cls2 = c2.toString()
 

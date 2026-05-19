@@ -43,13 +43,6 @@ function getPrototypeKeys(target: object): Set<string> {
   return keys
 }
 
-/** 测试用：清空 prototype 键缓存（继承场景下让 stub 实例重新扫描）。 */
-export function _resetPrototypeKeysCache(): void {
-  // WeakMap 不支持 clear；用替换大法
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(prototypeKeysCache as any) = new WeakMap()
-}
-
 /**
  * Chain 实例构造完成后，包一层 Proxy：
  * - 内部字段、内建方法（`_hover`/`label`/`toString`...）直接走原对象
