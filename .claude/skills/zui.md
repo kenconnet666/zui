@@ -422,26 +422,38 @@ CI 步骤"Generator drift check"会跑 generator 再 `git diff --exit-code`。**
 ### 11.1 默认 schema 18 category
 `color` `spacing` `radius` `shadow` `fontSize` `fontWeight` `lineHeight` `letterSpacing` `fonts` `borders` `zIndex` `opacity` `duration` `easing` `aspectRatio` `size` `cursor` `transitionProperty` + `breakpoint`（响应式专用） + `blur`（含 `2xl` / `3xl` 字面量 key）
 
-### 11.2 默认 size 命名（语义化，0.6.0 改名 / 0.8.0 全面对齐 5 阶哲学）
+### 11.2 默认 size 命名（语义化，0.6.0 改名 / 0.8.0 + 0.9.0 全面对齐 5 阶哲学）
 
-**5 阶哲学**：所有 size-based token category 统一用 `tiny / small / middle / large / huge`，按需 + `none`（零态） + `full`（饱和态）。**不再用** xs/sm/md/lg/xl —— 与 breakpoint 名混淆。
+**5 阶哲学**：所有 token category 都用 `tiny / small / middle / large / huge`，按需 + `none`（零态） + `full`（饱和态）。**不再用** xs/sm/md/lg/xl（与 breakpoint 名混淆）；**也不再用** 数字 key `'0'..'100'`（非语义化）。
 
-| Category | 含 none | 含 full | 5 阶 |
-|---|---|---|---|
-| `spacing` | — | — | ✓ |
-| `radius` | ✓ | ✓ | ✓（7 key） |
-| `fontSize` | — | — | ✓ |
-| `shadow` | — | — | ✓ |
-| `blur` | ✓ | — | ✓（6 key） |
-| `breakpoint` | — | — | ✓ |
-| `duration` | ✓ | — | ✓（6 key；0.8.0 改名：旧 fast/normal/slow → small/middle/large + 新增 none/tiny/huge） |
-| `lineHeight` | ✓ | — | ✓（6 key；0.8.0 改名：tight/snug/normal/relaxed/loose → tiny/small/middle/large/huge） |
-| `letterSpacing` | — | — | ✓（5 key；0.8.0 改名：tighter/tight/normal/wide/wider → tiny/small/middle/large/huge，删 widest） |
+| Category | 含 none | 含 full | 5 阶 | 备注 |
+|---|---|---|---|---|
+| `spacing` | — | — | ✓ | |
+| `radius` | ✓ | ✓ | ✓ | 7 key |
+| `fontSize` | — | — | ✓ | |
+| `shadow` | — | — | ✓ | |
+| `blur` | ✓ | — | ✓ | 6 key |
+| `breakpoint` | — | — | ✓ | |
+| `duration` | ✓ | — | ✓ | 6 key；0.8.0 改名 fast/normal/slow → small/middle/large + 新增 none/tiny/huge |
+| `lineHeight` | ✓ | — | ✓ | 6 key；0.8.0 改名 tight/snug/normal/relaxed/loose → 5 阶 |
+| `letterSpacing` | — | — | ✓ | 5 key；0.8.0 改名 tighter/tight/normal/wide/wider → 5 阶，删 widest |
+| `fontWeight` | — | — | ✓ | **0.9.0** 改名 normal/medium/bold → tiny(300)/small(400)/middle(500)/large(600)/huge(700) |
+| `zIndex` | ✓ | — | ✓ | **0.9.0** 替换数字 key '0'..'50' → none(0)/tiny(10)/small(20)/middle(30)/large(40)/huge(50)；保留语义角色 modal/popover/tooltip/toast/auto |
+| `opacity` | ✓ | ✓ | ✓ | 7 key；**0.9.0** 替换 15 阶 Tailwind 数字 → none(0)/tiny(0.05)/small(0.25)/middle(0.5)/large(0.75)/huge(0.95)/full(1) |
 
-**保留非 5 阶**（非 size scale，不适用哲学）：`fontWeight` / `opacity` / `easing` / `zIndex` / `aspectRatio`。
+**保留非 size scale**（不适用 5 阶哲学）：`easing`（5 个 function 维度：default/linear/in/out/inOut）/ `aspectRatio`（4 个 role 维度：square/video/portrait/landscape）/ `cursor` / `transitionProperty` / `fonts` 等。
 
 duration 默认值：`none='0ms'` / `tiny='75ms'` / `small='150ms'` / `middle='300ms'` / `large='500ms'` / `huge='700ms'`。
 Chain `_transition({ duration: '_small' })` 自动解析。
+
+**0.9.0 BREAKING 迁移**（仅影响访问 token 的 `_X` 形态，CSS keyword fallback `fontWeight.bold` / `fontWeight.normal` / `zIndex.auto` 不变）：
+- `opacity._50` → `opacity._middle`（0.5，值同）
+- `opacity._100` → `opacity._full`（1，值同）
+- `opacity._0` → `opacity._none`（0，值同）
+- `opacity._70` → `opacity._large`（0.7 → 0.75，略变）
+- `fontWeight._bold` → `fontWeight._huge` 或 `fontWeight.bold`（keyword 路径）
+- `fontWeight._medium` → `fontWeight._middle`
+- `zIndex._50` → `zIndex._huge`
 
 ### 11.3 LENGTH_UNITS（30 个）
 `.px(n)` `.rem(n)` `.em(n)` `.ch(n)` `.ex(n)` `.percent(n)` `.vw(n)` `.vh(n)` `.vmin(n)` `.vmax(n)` `.svh/svw/lvh/lvw/dvh/dvw(n)`（小/大/动态视口）`.cm(n)` `.mm(n)` `.in(n)` `.pt(n)` `.pc(n)` `.q(n)` `.cqw/cqh/cqi/cqb/cqmin/cqmax(n)`（容器查询单位）`.fr(n)`
@@ -729,7 +741,7 @@ import { ZIcon as IconSingle } from '@kenconnet666/zui-vue/components/icon'   //
 interface ZIconProps<S extends ThemeSchema = ThemeSchema> {
   size?:  'tiny' | 'small' | 'middle' | 'large' | 'huge'                     // 5 阶 em（默认 middle）
   color?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info'  // 6 种语义（默认 default）
-  depth?: 'none' | '1' | '2' | '3' | '4' | '5'                               // 5 阶 + none opacity（默认 none）
+  depth?: 'none' | 'tiny' | 'small' | 'middle' | 'large' | 'huge'            // 5 阶 + none opacity（默认 none，0.9.0 改名 '1'..'5' → 5 阶语义）
   spin?:  boolean | 'tiny' | 'small' | 'middle' | 'large' | 'huge'           // 5 阶 + none/隐含 true≡middle
   css?:   (s: Chain<S>) => void                                              // ★ 二次精细覆盖逃生口
   component?: Component                                                       // 双模式：与 default slot 互斥（slot 优先）
@@ -746,8 +758,8 @@ interface ZIconTokens {
   sizeTiny / sizeSmall / sizeMiddle / sizeLarge / sizeHuge: string
   // 6 种 color
   defaultColor / primaryColor / successColor / warningColor / dangerColor / infoColor: string
-  // 5 阶 depth opacity
-  depth1Opacity / depth2Opacity / depth3Opacity / depth4Opacity / depth5Opacity: string
+  // 5 阶 depth opacity（语义化，tiny=0.8 最浅 → huge=0.2 最深淡化）
+  depthTinyOpacity / depthSmallOpacity / depthMiddleOpacity / depthLargeOpacity / depthHugeOpacity: string
   // 5 阶 spin duration（tiny 极快 0.3s → huge 极慢 3s）
   spinTinyDuration / spinSmallDuration / spinMiddleDuration / spinLargeDuration / spinHugeDuration: string
 }
@@ -759,7 +771,7 @@ interface ZIconTokens {
 - css factory 在 variants **之后**应用（`cx(variantsCls, cssCls)`），可覆盖 variants 任何属性
 
 **component token 流程**（重要陷阱）：`withComponentTokens` 把所有 token flatten 到 `theme.color` 命名空间：
-- `iconSizeMiddle` / `iconPrimaryColor` / `iconDepth1Opacity` / `iconSpinMiddleDuration` 等
+- `iconSizeMiddle` / `iconPrimaryColor` / `iconDepthMiddleOpacity` / `iconSpinMiddleDuration` 等
 - 由于 `width / opacity / animationDuration` carrier 的 tokenCat **不是** color，**无法** `_iconXxx` 命中
 - 解决：variants 工厂 `readIconTokens(theme)` 从 `theme.color.iconXxx` 直接读字面量，再以 string/number 喂给 chain method
 
@@ -795,7 +807,7 @@ const createIconExtVariants = (theme) =>
 />
 ```
 
-**测试覆盖**：29 tests in `tests/icon.spec.ts`（5 渲染 + 3 size + 3 color + 3 depth + 5 spin + 4 css factory + 2 a11y + 4 Provider 覆盖嵌套）。
+**测试覆盖**：30 tests in `tests/icon.spec.ts`（5 渲染 + 3 size + 3 color + 3 depth + 5 spin + 4 css factory + 2 a11y + 5 Provider 覆盖嵌套）。
 
 ### 13.11 SSR（Nuxt / Vue SSR）
 ```ts
