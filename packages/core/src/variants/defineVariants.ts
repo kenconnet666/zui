@@ -37,8 +37,13 @@ export type VariantOptions<S extends ThemeSchema> = Record<string, (s: Chain<S>)
 /** variants 总声明：维度名 → 选项映射。 */
 export type VariantMap<S extends ThemeSchema> = Record<string, VariantOptions<S>>
 
-/** 入参 props 类型：每个维度的可选 key（字符串字面量推断）。 */
-export type VariantProps<V extends VariantMap<ThemeSchema>> = {
+/**
+ * 入参 props 类型：每个维度的可选 key（字符串字面量推断）。
+ *
+ * 约束放宽到 `Record<string, Record<string, unknown>>` 而非 `VariantMap<ThemeSchema>`，
+ * 避免 `exactOptionalPropertyTypes` 严格模式下泛型 S 的协变冲突。
+ */
+export type VariantProps<V extends Record<string, Record<string, unknown>>> = {
   [K in keyof V]?: keyof V[K] & string
 }
 

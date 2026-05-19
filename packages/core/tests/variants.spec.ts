@@ -295,7 +295,7 @@ describe('defineVariants — 实际组件库场景', () => {
         },
         size: {
           sm: s => { s.padding.px(8);  s.fontSize._sm },
-          md: s => { s.padding.px(12); s.fontSize._base },
+          md: s => { s.padding.px(12); s.fontSize._md },
           lg: s => { s.padding.px(16); s.fontSize._lg },
         },
       },
