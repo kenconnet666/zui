@@ -62,8 +62,8 @@ export default defineConfig({
     include: ['tests/**/*.spec.ts'],
     benchmark: {
       include: ['bench/**/*.bench.ts'],
-      // S8: bench 用不到 DOM，node 环境启动快得多
-      environment: 'node',
+      // 注：vitest 4 的 BenchmarkUserOptions 移除了 environment 字段；
+      // bench 默认就是 node 环境（不走 test.environment 的 happy-dom），无需配置。
     },
   },
 })
