@@ -43,11 +43,11 @@ export {
   iconTokenDerivers,
   type ZIconTokens,
   type ZIconProps,
-  type ZIconIntent,
-  type ZIconDepth,
   type ZIconSize,
   type ZIconColor,
+  type ZIconDepth,
   type ZIconSpin,
+  type ZIconSpinPreset,
 } from './components'
 
 // ─── Locale ───

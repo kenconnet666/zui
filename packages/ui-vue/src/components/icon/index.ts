@@ -13,9 +13,9 @@ export { createIconVariants } from './variants'
 export { deriveIconTokens, iconTokenDerivers, type ZIconTokens } from './tokens'
 export type {
   ZIconProps,
-  ZIconIntent,
-  ZIconDepth,
   ZIconSize,
   ZIconColor,
+  ZIconDepth,
   ZIconSpin,
+  ZIconSpinPreset,
 } from './types'

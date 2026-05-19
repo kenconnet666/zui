@@ -1,87 +1,84 @@
 /**
  * `ZIcon` —— 类型定义。
  *
- * 设计哲学：
- * - **尺寸 / 颜色 / spin** 是连续 / 响应式维度 → 走 dynamic styles
- * - **intent / depth** 是离散语义维度 → 走 variants
- * - 与图标库解耦：内容通过 `slot` 或 `component` prop 注入（双模式）
+ * **设计哲学（v0.0.5）**：所有维度都是**离散枚举**，遵循 5 阶哲学（tiny/small/middle/large/huge），
+ * 必要时 + `none`。size / color / depth / spin **四个维度全是 variants**，无 dynamic styles。
+ * 复杂场景（hover / 媒体查询 / 任意属性覆盖）一律走 `:css` factory，用 zui-core chain 自由写。
  */
+import type { Chain, ThemeSchema } from '@kenconnet666/zui-core'
 import type { Component } from 'vue'
-import type { ResponsiveValue } from '@kenconnet666/zui-core'
 
 /**
- * intent —— 语义色阶（5 种 + default）。
- * `default` 表示不应用语义色，由 `color` prop 或 `currentColor` 决定。
+ * size —— 5 阶 em 单位（跟父字号缩放）。默认 `'middle'`。
+ *
+ * 通过 `icon.sizeXxx` token 控制具体值（默认 0.75em / 0.875em / 1em / 1.25em / 1.5em）。
  */
-export type ZIconIntent = 'default' | 'success' | 'warning' | 'danger' | 'info'
+export type ZIconSize = 'tiny' | 'small' | 'middle' | 'large' | 'huge'
 
 /**
- * depth —— 不透明度阶（5 阶 + none，遵循 5 阶哲学）。
+ * color —— 6 种语义色预设。默认 `'default'`（不修改 currentColor）。
  *
- * - `'none'`（默认）：不应用 opacity 修饰，由颜色本身决定
- * - `'1'`：最显著（opacity 1.0，primary 级文本）
- * - `'2'`：较显著（opacity 0.8，secondary）
- * - `'3'`：中等（opacity 0.6，tertiary）
- * - `'4'`：较弱（opacity 0.4，quaternary）
- * - `'5'`：最弱（opacity 0.2，placeholder 级）
+ * 命中 `icon.xxxColor` token；非 default 之外的 5 种语义色都从 `theme.color.<semantic>` 派生。
+ * 想要 palette 任意色 / 自定义色 → 走 `css` factory。
+ */
+export type ZIconColor = 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info'
+
+/**
+ * depth —— 5 阶 + none opacity。默认 `'none'`。
  *
- * 默认 token 值见 [[deriveIconTokens]]；可通过 ZConfigProvider componentTokens 覆盖。
+ * - `'none'` 不应用 opacity；颜色完整呈现
+ * - `'1'` → opacity 1.0（最显著）
+ * - `'5'` → opacity 0.2（最弱，placeholder 级）
  */
 export type ZIconDepth = 'none' | '1' | '2' | '3' | '4' | '5'
 
 /**
- * size —— 图标尺寸。可接：
- * - 数字：自动 `px` 单位（`24` → `'24px'`）
- * - 字符串：原样（`'1.5em'` / `'2rem'` / `'48px'`）
- * - `ResponsiveValue<...>`：`{ base: 16, _middle: 24, _large: 32 }`
+ * spin —— 旋转速度预设（5 阶 + none/隐含 boolean 兼容）。
  *
- * 未传时回落到 `icon.defaultSize` token（默认 `'1em'`）。
+ * - `false`（默认）→ 不旋转
+ * - `true` 等价于 `'middle'`（1s 周期）
+ * - 5 阶 `'tiny'..'huge'` 由慢到快"反"还是由快到慢？—— 与 size/duration 保持哲学一致：
+ *   `tiny` = 短周期 = 快；`huge` = 长周期 = 慢。
  */
-export type ZIconSize = ResponsiveValue<string | number>
-
-/**
- * color —— 图标颜色。可接：
- * - 任意 CSS color 字面量（`'#ff0000'` / `'red'` / `'rgb(...)'`）
- * - 主题 color token 名（带 `_` 前缀，如 `'_primary'` / `'_buttonBg'`）
- * - `ResponsiveValue<...>` 响应式
- *
- * 未传时回落到 `icon.defaultColor` token（默认 `'currentColor'`）。
- * 设置 `intent` 时 color prop 仍可覆盖（color 优先级 > intent）。
- */
-export type ZIconColor = ResponsiveValue<string>
-
-/**
- * spin —— 旋转动画。
- * - `false`（默认）：不旋转
- * - `true`：用 `icon.spinDuration` token 周期
- * - `number`：秒数
- * - `string`：CSS duration 字符串（`'1.5s'` / `'500ms'`）
- */
-export type ZIconSpin = boolean | number | string
+export type ZIconSpinPreset = 'tiny' | 'small' | 'middle' | 'large' | 'huge'
+export type ZIconSpin = boolean | ZIconSpinPreset
 
 /**
  * ZIcon props 完整签名。
- *
- * 内容注入两种方式（**双模式**）：
- * 1. default slot：`<ZIcon><HomeOutline /></ZIcon>`
- * 2. `component` prop：`<ZIcon :component="HomeOutline" />`
- *
- * 同时给时 slot 优先；推荐根据使用场景任选其一保持一致风格。
  */
-export interface ZIconProps {
+export interface ZIconProps<S extends ThemeSchema = ThemeSchema> {
   size?: ZIconSize
   color?: ZIconColor
-  intent?: ZIconIntent
   depth?: ZIconDepth
   spin?: ZIconSpin
+
+  /**
+   * 二次精细覆盖 —— 用 zui-core chain 自由写任意样式。
+   *
+   * 在 variants 之后应用，可覆盖 size / color / depth / spin 的任何属性，
+   * 也可写 `_hover` 等伪类、`_media(...)` 媒体查询、其它 chain 内建方法。
+   * 这是"任何不在四个枚举维度里的需求"的统一逃生口。
+   *
+   * @example
+   * <ZIcon
+   *   :component="HeartIcon"
+   *   :css="s => {
+   *     s.cursor.pointer
+   *     s._hover(h => { h.color._primary })
+   *     s._media('_middle', m => { m.fontSize._iconSizeLarge })
+   *   }"
+   * />
+   */
+  css?: (s: Chain<S>) => void
+
   /** 直接以图标组件作为 prop 传入（与 default slot 互斥；slot 优先）。 */
   component?: Component
   /** 根元素 tag，默认 `'i'`（Ionic / FontAwesome 习惯）。 */
   tag?: string
   /**
    * a11y 标签。
-   * - 传入字符串：自动生成 `aria-label={label}` + `role="img"`
-   * - 未传：默认 `aria-hidden="true"`（装饰性图标）
+   * - 传 → `aria-label={label}` + `role="img"`
+   * - 不传 → `aria-hidden="true"`
    */
   label?: string
 }

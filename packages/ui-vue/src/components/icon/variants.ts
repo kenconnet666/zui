@@ -1,33 +1,51 @@
 /**
- * `ZIcon` —— 离散维度 variants（intent × depth）。
+ * `ZIcon` —— 4 维度离散 variants（size × color × depth × spin）。
  *
- * 工厂模式：导出 `createIconVariants(theme)`，**不导出常量**。
- * ZConfigProvider 嵌套切主题时 useVariants 会重新调工厂、emotion 自动按内容 hash 复用类名。
+ * 全部维度都走 `defineVariants`，无 dynamic styles。所有连续 / 任意属性场景由用户走
+ * `props.css` factory 用 zui-core chain 自由写。
+ *
+ * **工厂模式**：导出 `createIconVariants(theme)`，**不导出常量**。
+ * ZConfigProvider 切主题时 useVariants 会重新调工厂、emotion 自动按内容 hash 复用类名。
  *
  * **token 读取**：`withComponentTokens` 把所有 component token flatten 到 `theme.color`
- * 命名空间（`iconDefaultSize` / `iconDepth1Opacity` 等）。本工厂从 `theme.color.iconXxx`
- * 直接读字面量值，再喂给对应 chain method —— 比走 `_iconXxx` token 访问跨 carrier 类别更稳。
+ * 命名空间（`iconSizeTiny` / `iconPrimaryColor` / `iconDepth1Opacity` / `iconSpinMiddleDuration` 等）。
+ * 由于 `width/height/fontSize/opacity/animationDuration` 等 carrier 的 tokenCat 不是 color，
+ * 本工厂直接从 `theme.color.iconXxx` 读字面量再喂 chain method（与 v1 同策略）。
  */
-import { defineVariants, type ResolvedTheme, type ThemeSchema } from '@kenconnet666/zui-core'
+import { defineVariants, presetAnimations, type ResolvedTheme, type ThemeSchema } from '@kenconnet666/zui-core'
 
-interface ReadIconTokensResult {
+interface IconTokenSnapshot {
+  // size em
+  sizeTiny: string
+  sizeSmall: string
+  sizeMiddle: string
+  sizeLarge: string
+  sizeHuge: string
+  // color
   defaultColor: string
-  defaultSize: string
+  primaryColor: string
+  successColor: string
+  warningColor: string
+  dangerColor: string
+  infoColor: string
+  // depth
   depth1: number
   depth2: number
   depth3: number
   depth4: number
   depth5: number
-  successColor: string
-  warningColor: string
-  dangerColor: string
-  infoColor: string
+  // spin
+  spinTiny: string
+  spinSmall: string
+  spinMiddle: string
+  spinLarge: string
+  spinHuge: string
 }
 
 /**
- * 从 `theme.color` 读出 11 项 icon token，缺失时用 deriveIconTokens 的硬编码 fallback。
+ * 从 `theme.color` slot 读 21 项 icon token，缺失项 fallback 到 deriveIconTokens 同样的硬编码。
  */
-function readIconTokens<S extends ThemeSchema>(theme: ResolvedTheme<S>): ReadIconTokensResult {
+function readIconTokens<S extends ThemeSchema>(theme: ResolvedTheme<S>): IconTokenSnapshot {
   const slot = (theme as unknown as { color?: Record<string, string | number> }).color ?? {}
   const read = (key: string, fallback: string): string => {
     const v = slot[key]
@@ -43,39 +61,56 @@ function readIconTokens<S extends ThemeSchema>(theme: ResolvedTheme<S>): ReadIco
     return fallback
   }
   return {
+    sizeTiny: read('iconSizeTiny', '0.75em'),
+    sizeSmall: read('iconSizeSmall', '0.875em'),
+    sizeMiddle: read('iconSizeMiddle', '1em'),
+    sizeLarge: read('iconSizeLarge', '1.25em'),
+    sizeHuge: read('iconSizeHuge', '1.5em'),
     defaultColor: read('iconDefaultColor', 'currentColor'),
-    defaultSize: read('iconDefaultSize', '1em'),
+    primaryColor: read('iconPrimaryColor', '#2563eb'),
+    successColor: read('iconSuccessColor', '#22c55e'),
+    warningColor: read('iconWarningColor', '#f59e0b'),
+    dangerColor: read('iconDangerColor', '#ef4444'),
+    infoColor: read('iconInfoColor', '#06b6d4'),
     depth1: readNum('iconDepth1Opacity', 1),
     depth2: readNum('iconDepth2Opacity', 0.8),
     depth3: readNum('iconDepth3Opacity', 0.6),
     depth4: readNum('iconDepth4Opacity', 0.4),
     depth5: readNum('iconDepth5Opacity', 0.2),
-    successColor: read('iconSuccessColor', '#22c55e'),
-    warningColor: read('iconWarningColor', '#f59e0b'),
-    dangerColor: read('iconDangerColor', '#ef4444'),
-    infoColor: read('iconInfoColor', '#06b6d4'),
+    spinTiny: read('iconSpinTinyDuration', '0.3s'),
+    spinSmall: read('iconSpinSmallDuration', '0.5s'),
+    spinMiddle: read('iconSpinMiddleDuration', '1s'),
+    spinLarge: read('iconSpinLargeDuration', '2s'),
+    spinHuge: read('iconSpinHugeDuration', '3s'),
   }
 }
 
 /**
- * 派生 ZIcon 的 variants 工厂。
+ * 派生 ZIcon 的 variants 工厂。**4 维度全离散**：
  *
- * 维度：
- * - `intent`: `default / success / warning / danger / info`
- *   - `default` 不应用语义色（由 `color` prop 或 `iconDefaultColor` 决定）
- * - `depth`: `none / '1' / '2' / '3' / '4' / '5'`（5 阶 + none）
- *   - `none` 不应用 opacity
+ * - `size`: 5 阶 tiny/small/middle/large/huge（em）
+ * - `color`: default + primary/success/warning/danger/info
+ * - `depth`: none + '1'..'5'（5 阶 opacity）
+ * - `spin`: none + 5 阶 tiny..huge（旋转周期，tiny 最快 huge 最慢）
  *
- * base 样式：
- * - `inline-flex` + 居中 —— 让图标在文本中自然对齐
- * - `flex-shrink: 0` —— 防止在弹性容器内被压扁
- * - `line-height: 1` —— 抵消 inherit 的行高
- * - 默认 color / size 由 token 注入（可被 Provider 覆盖）
- *
- * `size` / `color` / `spin` 是连续维度，**不在** variants 内处理，由 ZIcon.vue 的 dynamic styles 负责。
+ * base：inline-flex 居中 + 默认 color。size / spin / depth 通过 variants 注入。
  */
 export function createIconVariants<S extends ThemeSchema = ThemeSchema>(theme: ResolvedTheme<S>) {
   const t = readIconTokens(theme)
+  const spinKeyframe = presetAnimations.spin
+
+  const applySize = (px: string) => (s: import('@kenconnet666/zui-core').Chain<S>) => {
+    s.width(px)
+    s.height(px)
+    s.fontSize(px)
+  }
+  const applySpin = (dur: string) => (s: import('@kenconnet666/zui-core').Chain<S>) => {
+    s.animationName(spinKeyframe)
+    s.animationDuration(dur)
+    s.animationIterationCount('infinite')
+    s.animationTimingFunction('linear')
+  }
+
   return defineVariants(theme, {
     base: (s) => {
       s.display('inline-flex')
@@ -83,15 +118,21 @@ export function createIconVariants<S extends ThemeSchema = ThemeSchema>(theme: R
       s.justifyContent('center')
       s.flexShrink(0)
       s.lineHeight(1)
-      s.color(t.defaultColor)
-      s.width(t.defaultSize)
-      s.height(t.defaultSize)
-      s.fontSize(t.defaultSize)
     },
     variants: {
-      intent: {
-        default: () => {
-          /* 不应用语义色 */
+      size: {
+        tiny: applySize(t.sizeTiny),
+        small: applySize(t.sizeSmall),
+        middle: applySize(t.sizeMiddle),
+        large: applySize(t.sizeLarge),
+        huge: applySize(t.sizeHuge),
+      },
+      color: {
+        default: (s) => {
+          s.color(t.defaultColor)
+        },
+        primary: (s) => {
+          s.color(t.primaryColor)
         },
         success: (s) => {
           s.color(t.successColor)
@@ -126,7 +167,22 @@ export function createIconVariants<S extends ThemeSchema = ThemeSchema>(theme: R
           s.opacity(t.depth5)
         },
       },
+      spin: {
+        none: () => {
+          /* 不旋转 */
+        },
+        tiny: applySpin(t.spinTiny),
+        small: applySpin(t.spinSmall),
+        middle: applySpin(t.spinMiddle),
+        large: applySpin(t.spinLarge),
+        huge: applySpin(t.spinHuge),
+      },
     },
-    defaultVariants: { intent: 'default', depth: 'none' },
+    defaultVariants: {
+      size: 'middle',
+      color: 'default',
+      depth: 'none',
+      spin: 'none',
+    },
   })
 }
