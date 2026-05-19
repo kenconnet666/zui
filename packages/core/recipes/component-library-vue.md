@@ -1,7 +1,7 @@
 # 用 zui-core 构建 Vue 组件库（含 ConfigProvider 向下覆盖）
 
 > 完整示例：组件库作者用 `defineVariants` 定义 Button；用户在自己 app 里用 `ConfigProvider`
-> 多层向下覆盖：**外层换主题色 → 内层 5 档大小用自己的**。
+> 多层向下覆盖：**外层换主题色 → 内层 5 档大小（tiny / small / middle / large / huge）用自己的**。
 >
 > 关键 API：`defineVariants` + `extendVariants` + `provide/inject` + `computed`。
 
@@ -44,20 +44,20 @@ export function createBaseButtonVariants(theme: ResolvedTheme<MySchema>) {
         danger:  s => { s.backgroundColor._danger;  s.color.white },
         ghost:   s => { s.color._primary; s.backgroundColor.transparent },
       },
-      // ★ 组件库内置 5 档大小
+      // ★ 组件库内置 5 档大小（语义化命名，与 theme token sm/md/lg/xl 解耦）
       size: {
-        sm:   s => { s.padding.px(4);  s.fontSize._sm },
-        md:   s => { s.padding.px(8);  s.fontSize._md },
-        lg:   s => { s.padding.px(12); s.fontSize._lg },
-        xl:   s => { s.padding.px(16); s.fontSize._xl },
-        '2xl': s => { s.padding.px(20); s.fontSize._xl },
+        tiny:   s => { s.padding.px(4);  s.fontSize._xs },
+        small:  s => { s.padding.px(8);  s.fontSize._sm },
+        middle: s => { s.padding.px(12); s.fontSize._md },
+        large:  s => { s.padding.px(16); s.fontSize._lg },
+        huge:   s => { s.padding.px(20); s.fontSize._xl },
       },
       disabled: {
         true: s => { s.opacity._50; s.cursor.notAllowed; s.pointerEvents('none') },
         false: () => {},
       },
     },
-    defaultVariants: { intent: 'primary', size: 'md', disabled: false },
+    defaultVariants: { intent: 'primary', size: 'middle', disabled: false },
   })
 }
 
@@ -239,49 +239,49 @@ import { ConfigProvider, Button } from '@yourcompany/ui-vue'
     :button="{
       variants: {
         size: {
-          sm:   s => { s.padding.px(6);  s.fontSize._md },
-          md:   s => { s.padding.px(10); s.fontSize._lg },
-          lg:   s => { s.padding.px(14); s.fontSize._xl },
-          xl:   s => { s.padding.px(18); s.fontSize._xl },
-          '2xl': s => { s.padding.px(22); s.fontSize._xl },
+          tiny:   s => { s.padding.px(6);  s.fontSize._sm },
+          small:  s => { s.padding.px(10); s.fontSize._md },
+          middle: s => { s.padding.px(14); s.fontSize._lg },
+          large:  s => { s.padding.px(18); s.fontSize._xl },
+          huge:   s => { s.padding.px(22); s.fontSize._xl },
         },
       },
     }"
   >
-    <Button size="sm">小按钮（用户的 sm = padding 6）</Button>
-    <Button size="lg">大按钮（用户的 lg = padding 14）</Button>
-    <Button intent="danger" size="md">混合 variant</Button>
+    <Button size="tiny">极小按钮（用户的 tiny = padding 6）</Button>
+    <Button size="large">大按钮（用户的 large = padding 18）</Button>
+    <Button intent="danger" size="middle">混合 variant</Button>
   </ConfigProvider>
 </template>
 ```
 
 **效果**：
 - 主题主色变 `#7c3aed`（紫色）
-- 5 档大小全部走用户的（padding 6 / 10 / 14 / 18 / 22）
+- 5 档大小全部走用户的：tiny=6 / small=10 / middle=14 / large=18 / huge=22
 - `intent` / `disabled` 这两个 variant 没 override → 仍走组件库默认
 
 ### 3.2 嵌套 ConfigProvider（局部子树覆盖）
 
 ```vue
 <template>
-  <!-- 顶层：换品牌主色 + 全局 sm 档大小 -->
+  <!-- 顶层：换品牌主色 + 全局 tiny 档大小 -->
   <ConfigProvider
     :theme="{ color: { primary: '#brand' } }"
-    :button="{ variants: { size: { sm: s => { s.padding.px(6); s.fontSize._md } } } }"
+    :button="{ variants: { size: { tiny: s => { s.padding.px(6); s.fontSize._sm } } } }"
   >
     <Page>
       <Header>
-        <Button size="sm">顶部 sm（用户定义的 padding 6）</Button>
+        <Button size="tiny">顶部 tiny（用户定义的 padding 6）</Button>
       </Header>
 
       <Main>
-        <!-- 子树：局部再覆盖 md 档；sm 沿用上层；其它 lg/xl/2xl 沿用组件库 -->
+        <!-- 子树：局部再覆盖 small 档；tiny 沿用上层；其它 middle/large/huge 沿用组件库 -->
         <ConfigProvider
-          :button="{ variants: { size: { md: s => { s.padding.px(12); s.borderRadius._xl } } } }"
+          :button="{ variants: { size: { small: s => { s.padding.px(12); s.borderRadius._lg } } } }"
         >
-          <Button size="sm">仍用顶层 sm（padding 6）</Button>
-          <Button size="md">本层 md（padding 12 + 大圆角）</Button>
-          <Button size="lg">组件库默认 lg（padding 12）</Button>
+          <Button size="tiny">仍用顶层 tiny（padding 6）</Button>
+          <Button size="small">本层 small（padding 12 + 大圆角）</Button>
+          <Button size="middle">组件库默认 middle（padding 12）</Button>
         </ConfigProvider>
       </Main>
     </Page>
@@ -307,11 +307,11 @@ const buttonOverride = computed(() => compact.value
   ? {
       variants: {
         size: {
-          sm:   s => { s.padding.px(2); s.fontSize._xs },
-          md:   s => { s.padding.px(4); s.fontSize._sm },
-          lg:   s => { s.padding.px(6); s.fontSize._md },
-          xl:   s => { s.padding.px(8); s.fontSize._lg },
-          '2xl': s => { s.padding.px(10); s.fontSize._xl },
+          tiny:   s => { s.padding.px(2); s.fontSize._xs },
+          small:  s => { s.padding.px(4); s.fontSize._sm },
+          middle: s => { s.padding.px(6); s.fontSize._md },
+          large:  s => { s.padding.px(8); s.fontSize._lg },
+          huge:   s => { s.padding.px(10); s.fontSize._xl },
         },
       },
     }
@@ -327,7 +327,7 @@ const buttonOverride = computed(() => compact.value
     <label>
       <input type="checkbox" v-model="compact" /> Compact button sizes
     </label>
-    <Button size="md">Button</Button>
+    <Button size="middle">Button</Button>
   </ConfigProvider>
 </template>
 ```
@@ -388,9 +388,9 @@ mergeButtonOverrides(parent, child) {
 
 | 场景 | 父 override | 子 override | 结果 |
 |---|---|---|---|
-| 父全 5 档 / 子改 md | sm/md/lg/xl/2xl | md | sm/lg/xl/2xl 用父，md 用子 |
-| 父改 sm / 子改 lg | sm | lg | sm 用父，lg 用子，其它走组件库 base |
-| 子完全替换父 | sm/md | sm/md/lg/xl/2xl 全 | 子的 5 档全 |
+| 父全 5 档 / 子改 small | tiny/small/middle/large/huge | small | tiny/middle/large/huge 用父，small 用子 |
+| 父改 tiny / 子改 middle | tiny | middle | tiny 用父，middle 用子，其它走组件库 base |
+| 子完全替换父 | tiny/small | tiny/small/middle/large/huge 全 | 子的 5 档全 |
 
 ---
 
@@ -403,7 +403,7 @@ import type { VariantPropsOf } from '@kenconnet666/zui-core'
 export type ButtonProps = VariantPropsOf<ReturnType<typeof createBaseButtonVariants>>
 // = {
 //   intent?: 'primary' | 'danger' | 'ghost'
-//   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+//   size?: 'tiny' | 'small' | 'middle' | 'large' | 'huge'
 //   disabled?: boolean | 'true' | 'false'
 // }
 
@@ -460,18 +460,40 @@ provide(EMOTION_INSTANCE_KEY, { icss, chain, presetAnimations })
 
 ---
 
-## 八、回顾：实现"按钮 5 档大小用户向下覆盖"全链路
+## 八、回顾：实现"按钮 5 档（tiny / small / middle / large / huge）用户向下覆盖"全链路
 
 ```
-组件库（createBaseButtonVariants）          ← 声明 5 档默认
+组件库（createBaseButtonVariants）              ← 声明 5 档默认
        ↓ export
 用户 ConfigProvider props.button.variants.size  ← 用户的 5 档（部分或全部）
        ↓ provide
-Button 组件 inject + computed                ← reactive 重算
+Button 组件 inject + computed                   ← reactive 重算
        ↓ extendVariants(theme, base, override)
-emotion 出两个 className（base + override）   ← CSS cascade 后者覆盖前者
+emotion 出两个 className（base + override）     ← CSS cascade 后者覆盖前者
        ↓
-最终 DOM className                          ← 用户的 5 档样式生效，未 override 的走默认
+最终 DOM className                              ← 用户的 5 档样式生效，未 override 的走默认
 ```
 
-**核心**：`extendVariants` 让"部分覆盖"成为可能 —— 用户只写关心的 size，其它继承组件库。
+**核心**：`extendVariants` 让"部分覆盖"成为可能 —— 用户只写关心的 size（如只覆盖 `small` + `large`），其它（`tiny` / `middle` / `huge`）继承组件库默认。
+
+---
+
+## 九、命名约定说明
+
+| 维度 | 推荐命名 | 理由 |
+|---|---|---|
+| **组件 variant.size 五档** | `tiny` / `small` / `middle` / `large` / `huge` | 语义化、不被 tailwind 绑架、不与 theme token 命名冲突 |
+| **theme token（fontSize / spacing / radius）** | `xs` / `sm` / `md` / `lg` / `xl` | Tailwind 风约定，社区通用 |
+| **palette token** | `slate50` / `blue600` 等 | Tailwind palette 直接命名 |
+
+**关键**：组件 size variant key 与 theme token key **分两套**，避免混淆：
+
+```ts
+size: {
+  tiny:   s => { s.padding.px(4); s.fontSize._xs },   // variant=tiny 用 theme.fontSize.xs
+  small:  s => { s.padding.px(8); s.fontSize._sm },   // variant=small 用 theme.fontSize.sm
+  // ...
+}
+```
+
+variant key 是"组件库给用户的尺寸语义"，theme token 是"主题给样式的物理刻度"。**两者解耦**让用户既能覆盖 variant 整体样式（重写 small），也能只换 theme token 数值（改 theme.fontSize.sm 让全套组件跟着变）。
