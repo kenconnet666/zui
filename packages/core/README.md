@@ -145,6 +145,169 @@ const cls = c.toString() // → emotion className
 
 ---
 
+## 构建组件库（0.5.0+）
+
+zui-core 为组件库作者提供以下 API：
+
+### `defineVariants` — cva 风变体（单 className）
+
+```ts
+import { defineVariants, type VariantPropsOf } from '@kenconnet666/zui-core'
+
+const button = defineVariants(theme, {
+  base: s => { s.padding.px(12); s.borderRadius._md; s.fontWeight._bold },
+  variants: {
+    intent: {
+      primary: s => { s.backgroundColor._primary; s.color.white },
+      danger:  s => { s.backgroundColor._danger;  s.color.white },
+      ghost:   s => { s.color._primary; s.backgroundColor.transparent },
+    },
+    size: {
+      sm: s => { s.padding.px(8) },
+      md: s => { s.padding.px(12) },
+      lg: s => { s.padding.px(16) },
+    },
+    disabled: {                  // boolean variants 0.5.0+
+      true: s => { s.opacity._50; s.pointerEvents('none') },
+      false: () => {},
+    },
+  },
+  defaultVariants: { intent: 'primary', size: 'md', disabled: false },
+  compoundVariants: [
+    { when: { intent: 'ghost', size: 'sm' }, apply: s => { s.padding.px(6) } },
+  ],
+})
+
+// 用法
+button({ intent: 'danger', size: 'sm', disabled: true })
+
+// 类型推断
+type ButtonProps = VariantPropsOf<typeof button>
+// = { intent?: 'primary'|'danger'|'ghost'; size?: 'sm'|'md'|'lg'; disabled?: boolean | 'true' | 'false' }
+```
+
+### `defineParts` — 多 slot 组件（Dialog / Tabs / Select）
+
+```ts
+import { defineParts, type VariantPropsOfParts } from '@kenconnet666/zui-core'
+
+const dialog = defineParts(theme, {
+  slots: ['root', 'overlay', 'content', 'title'] as const,
+  base: {
+    root: s => { s.position.fixed; s.zIndex._modal },
+    overlay: s => { s.position.absolute; s.backgroundColor.black; s.opacity._50 },
+    content: s => { s.position.absolute; s.borderRadius._lg; s.padding._lg },
+    title: s => { s.fontWeight._bold; s.fontSize._xl },
+  },
+  variants: {
+    size: {
+      sm: { content: s => { s.maxWidth.px(400) } },
+      md: { content: s => { s.maxWidth.px(600) } },
+    },
+  },
+  defaultVariants: { size: 'md' },
+})
+
+// 用法（每个 slot 独立工厂）
+dialog.root({ size: 'sm' })
+dialog.content({ size: 'sm' })
+```
+
+### `composeVariants` — 复用通用变体
+
+```ts
+import { composeVariants, defineVariants } from '@kenconnet666/zui-core'
+
+const interactive = defineVariants(theme, {
+  variants: {
+    state: { idle: () => {}, loading: s => { s.opacity._70 } },
+  },
+})
+
+const button = composeVariants(interactive, buttonCore)
+// 类型推断自动合并 interactive + buttonCore 的 props union
+```
+
+### `defineMixin` — 可重用样式片段
+
+```ts
+import { defineMixin } from '@kenconnet666/zui-core'
+
+const focusRing = defineMixin<MySchema>(s => {
+  s._focusVisible(f => {
+    f.outlineColor._primary
+    f.outlineStyle('solid')
+    f.outlineWidth.px(2)
+  })
+})
+
+// 在 variants 内调用：
+defineVariants(theme, {
+  base: s => { focusRing(s) /* ... */ },
+  ...
+})
+```
+
+### `Chain._state` — 状态化样式
+
+```ts
+icss(theme, s => {
+  s.padding.px(12)
+  s._state(props, {
+    loading:  h => { h.opacity._70; h.pointerEvents('none') },
+    error:    h => { h.borderColor._danger },
+    disabled: h => { h.opacity._50 },
+  })
+})
+```
+
+### `applyResponsive` / `applyStyleProps` — 响应式 prop
+
+```ts
+import { applyStyleProps } from '@kenconnet666/zui-core'
+
+// (theme, props) 签名返回 className（0.5.0+）
+const cls = applyStyleProps(theme, {
+  p: { base: 4, md: 8, lg: 16 },     // 响应式
+  bg: '_primary',
+  rounded: '_md',
+})
+```
+
+### `componentTokensFor` — runtime token map
+
+```ts
+import { componentTokensFor, withComponentTokens } from '@kenconnet666/zui-core'
+
+declare module '@kenconnet666/zui-core' {
+  interface ComponentTokenRegistry {
+    button: { primary: string; primaryHover: string }
+  }
+}
+
+const themed = withComponentTokens(theme, {
+  button: t => ({ primary: t.color.primary, primaryHover: t.color.primaryHover }),
+})
+
+const tokens = componentTokensFor('button', themed)
+// → { primary: '#2563eb', primaryHover: '#1d4ed8' }
+```
+
+### SSR / 多 emotion 实例
+
+```ts
+import { createInstance } from '@emotion/css/create-instance'
+import { createIcssInstance } from '@kenconnet666/zui-core'
+
+const emotion = createInstance({ key: 'myapp' })
+const { icss, presetAnimations, injectPreflight } = createIcssInstance(emotion)
+
+// presetAnimations 注册到 myapp 这个 instance，SSR 隔离
+icss(theme, s => { s.animationName(presetAnimations.fadeIn) })
+```
+
+---
+
 ## 主题机制
 
 ### `Theme<T>`

@@ -37,6 +37,45 @@ export type ComponentTokenOverrides = {
   [C in keyof ComponentTokenRegistry]?: Partial<ComponentTokenRegistry[C]>
 }
 
+/**
+ * F6 — 拿到某 component namespace 下所有 token 的运行时映射。
+ *
+ * 与 `theme.color._buttonPrimary` 强类型字段访问不同，本 helper 返回**普通 object**
+ * 让组件库作者在 runtime 拿 namespace 下完整 token map（如传给 icon 颜色 / 派生其它逻辑）。
+ *
+ * 自动识别 flatten 命名（`buttonPrimary` / `buttonPrimaryHover`）反推出 `primary` / `primaryHover`。
+ *
+ * @example
+ * declare module '@kenconnet666/zui-core' {
+ *   interface ComponentTokenRegistry { button: { primary: string; primaryHover: string } }
+ * }
+ *
+ * const theme = withComponentTokens(defaultLight.resolve(), {
+ *   button: t => ({ primary: t.color.primary as string, primaryHover: t.color.primaryHover as string }),
+ * })
+ * const tokens = componentTokensFor('button', theme)
+ * // → { primary: '#2563eb', primaryHover: '#1d4ed8' }
+ */
+export function componentTokensFor<C extends keyof ComponentTokenRegistry & string, T extends ThemeSchema>(
+  component: C,
+  theme: ResolvedTheme<T>,
+): Partial<ComponentTokenRegistry[C]> {
+  const colorSlot = (theme as Record<string, Record<string, string | number> | undefined>).color
+  if (!colorSlot) return {} as Partial<ComponentTokenRegistry[C]>
+  const prefix = component
+  const result: Record<string, string | number> = {}
+  for (const flatKey in colorSlot) {
+    if (!flatKey.startsWith(prefix)) continue
+    const rest = flatKey.slice(prefix.length)
+    if (rest.length === 0) continue
+    // 反推 camelCase：buttonPrimary -> primary；buttonPrimaryHover -> primaryHover
+    const key = rest[0]!.toLowerCase() + rest.slice(1)
+    const value = colorSlot[flatKey]
+    if (value != null) result[key] = value
+  }
+  return result as Partial<ComponentTokenRegistry[C]>
+}
+
 export function withComponentTokens<T extends ThemeSchema>(
   theme: ResolvedTheme<T>,
   derivers: ComponentTokenDerivers<T>,

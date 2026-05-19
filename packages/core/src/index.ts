@@ -104,7 +104,7 @@ export type {
   FlattenComponentTokens,
   ComponentTokenNames,
 } from './types/components'
-export { withComponentTokens } from './theme/componentTokens'
+export { withComponentTokens, componentTokensFor } from './theme/componentTokens'
 export type {
   ComponentTokenDeriver,
   ComponentTokenDerivers,
