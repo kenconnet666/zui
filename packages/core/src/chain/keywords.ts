@@ -35,6 +35,10 @@ export const KEYWORD_TO_CSS: Record<string, string> = {
   auto: 'auto',
   normal: 'normal',
   bold: 'bold',
+  top: 'top',
+  bottom: 'bottom',
+  inside: 'inside',
+  outside: 'outside',
 
   // ─── size keywords ───
   minContent: 'min-content',
@@ -211,6 +215,8 @@ export const KEYWORD_TO_CSS: Record<string, string> = {
   // contents: 'contents'  // 已在 display 区有
 
   // ─── color-scheme ───
+  light: 'light',
+  dark: 'dark',
   lightDark: 'light dark',
   only: 'only',
 

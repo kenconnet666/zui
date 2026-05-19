@@ -63,6 +63,12 @@ export interface DefineVariantsConfig<S extends ThemeSchema, V extends VariantMa
   defaultVariants?: { [K in keyof V]?: keyof V[K] & string }
   /** 多变体组合时的额外样式（命中所有 when 字段才 apply）。 */
   compoundVariants?: Array<CompoundVariant<S, V>>
+  /**
+   * className 缓存上限（修 L5）。默认 256；超过后按 LRU 策略（最早插入）淘汰。
+   *
+   * 设 `Infinity` 关闭上限（不推荐 — 高频生成不同 props 时会持续累积）。
+   */
+  cacheLimit?: number
 }
 
 /**
@@ -76,13 +82,20 @@ export function defineVariants<S extends ThemeSchema, V extends VariantMap<S>>(
   config: DefineVariantsConfig<S, V>,
 ): (props?: VariantProps<V>) => string {
   // className 缓存：key 是 resolved props 的 stable JSON
+  // LRU 上限：超过 cacheLimit 后删除最早插入的 entry（Map 内置插入顺序）。
   const cache = new Map<string, string>()
+  const cacheLimit = config.cacheLimit ?? 256
 
   return function variantsFn(props): string {
     const resolved = resolvePropsWithDefaults(props, config.defaultVariants)
     const cacheKey = stableKey(resolved)
     const cached = cache.get(cacheKey)
-    if (cached !== undefined) return cached
+    if (cached !== undefined) {
+      // LRU 触摸：重新插入到 Map 尾部
+      cache.delete(cacheKey)
+      cache.set(cacheKey, cached)
+      return cached
+    }
 
     // 用 icss 跑完整 chain（base → variants → compoundVariants）
     const chain = new Chain<S>(theme as ResolvedTheme<S> | Theme<S>)
@@ -109,6 +122,11 @@ export function defineVariants<S extends ThemeSchema, V extends VariantMap<S>>(
 
     const className = chain.toString()
     cache.set(cacheKey, className)
+    // LRU 淘汰：超上限删 Map 中最早插入的 key
+    if (cache.size > cacheLimit) {
+      const oldest = cache.keys().next().value
+      if (oldest !== undefined) cache.delete(oldest)
+    }
     return className
   }
 }

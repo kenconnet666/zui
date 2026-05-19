@@ -25,6 +25,7 @@ const WORKSPACE_ROOT = resolve(SCRIPT_DIR, '..')
 const CORE_PKG = resolve(WORKSPACE_ROOT, 'packages/core')
 const ENHANCED_PROPS_FILE = resolve(CORE_PKG, 'src/chain/enhanced-props.ts')
 const EXTRA_KEYWORDS_FILE = resolve(CORE_PKG, 'src/chain/config/extra-keywords.config.ts')
+const KEYWORDS_FILE = resolve(CORE_PKG, 'src/chain/keywords.ts')
 const OUTPUT_FILE = resolve(CORE_PKG, 'src/types/properties.generated.ts')
 
 const require = createRequire(import.meta.url)
@@ -409,15 +410,70 @@ function renderFile(properties, enhanced, extraKeywords) {
   return lines.join('\n')
 }
 
+// ─── M3 — keywords.ts ↔ enhanced-props.ts 一致性校验 ───
+
+/** 读 keywords.ts 中 KEYWORD_TO_CSS 对象字面量的所有 key 名（一致性校验用）。 */
+async function readKeywordToCssKeys() {
+  const src = await readFile(KEYWORDS_FILE, 'utf8')
+  const sf = ts.createSourceFile(KEYWORDS_FILE, src, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
+  for (const stmt of sf.statements) {
+    if (!ts.isVariableStatement(stmt)) continue
+    for (const decl of stmt.declarationList.declarations) {
+      if (!ts.isIdentifier(decl.name) || decl.name.text !== 'KEYWORD_TO_CSS') continue
+      let init = decl.initializer
+      if (!init) continue
+      while (init && (ts.isAsExpression(init) || ts.isTypeAssertionExpression(init))) {
+        init = init.expression
+      }
+      if (!init || !ts.isObjectLiteralExpression(init)) continue
+      const keys = new Set()
+      for (const prop of init.properties) {
+        if (!ts.isPropertyAssignment(prop)) continue
+        const k = getMemberNameText(prop.name)
+        if (k) keys.add(k)
+      }
+      return keys
+    }
+  }
+  throw new Error(`[gen-properties] 未在 ${KEYWORDS_FILE} 找到 KEYWORD_TO_CSS`)
+}
+
+/**
+ * M3：校验 enhanced-props 引用的 keyword 都存在于 KEYWORD_TO_CSS 表中。
+ *
+ * 缺失会导致用户写 `s.prop.keyword` 时 carrier 静默不命中（看不出错），
+ * 提前在 generator 阶段抛错防止 bug 上线。
+ */
+function validateKeywordCoverage(enhanced, keywordToCss) {
+  const missing = []
+  for (const [prop, cfg] of enhanced) {
+    if (!cfg.keywords) continue
+    for (const kw of cfg.keywords) {
+      if (!keywordToCss.has(kw)) missing.push({ prop, keyword: kw })
+    }
+  }
+  if (missing.length > 0) {
+    const lines = missing.map(m => `  - "${m.keyword}" 在 ${m.prop} 的 keywords 里，但 KEYWORD_TO_CSS 没定义`)
+    throw new Error(
+      `[gen-properties] enhanced-props ↔ keywords.ts 不一致（${missing.length} 个 missing）：\n`
+      + lines.join('\n')
+      + '\n  修复：去 src/chain/keywords.ts 的 KEYWORD_TO_CSS 添加这些 keyword 的 camelCase → CSS 映射。',
+    )
+  }
+}
+
 // ─── main ───
 
 async function main() {
   const properties = await readCsstypeProperties()
   const enhanced = await readEnhancedProps()
   const extraKeywords = await readExtraKeywords()
+  const keywordToCssKeys = await readKeywordToCssKeys()
 
   // W6.3 命名空间校验
   validateExtraKeywords(enhanced, extraKeywords)
+  // M3 keywords.ts ↔ enhanced-props.ts 覆盖率校验
+  validateKeywordCoverage(enhanced, keywordToCssKeys)
 
   const out = renderFile(properties, enhanced, extraKeywords)
 

@@ -202,6 +202,10 @@ new Theme({
   `Object.assign(this, schema)` 把 schema 各 category 拷到 instance 上，函数原值会出现在 instance；
   字段类型签名是 `string | number`（与 ResolvedTheme 形状一致），不一致。**最佳实践**：始终用
   `theme.resolve()` 或 `icss(theme, ...)` 拿展开后的值，避免直接访问 `theme.color.x`。
+  0.4.0 起 dev 模式 `console.warn` 提醒。
+- **Token 命中后**：
+  - **颜色 token** 返回 `ColorTokenValue` helper（暴露 `.alpha(n)` / `.darken(n)` 等 6 modifier），**不要继续链式**：`c.color._primary.alpha(50)` ✅；`c.color._primary.padding.px(8)` ❌
+  - **非颜色 token**（如 `c.padding._md`）运行时返回 chain，**类型层也允许继续链**，但请**仍按 statement-only 风格写**（每条独立一行），避免依赖隐式链式行为。**未来可能改为不返回 chain**。
 - **`mergeTheme(parent, partial)` 的 partial 应为字面量**：0.4.0 起 dev 模式会 `console.warn` 警示
   partial 含 function token；生产构建静默。
 - **`:focus-visible` 浏览器兼容**：iOS Safari 14- 不支持（2021-2022 安装基数 < 5%）。

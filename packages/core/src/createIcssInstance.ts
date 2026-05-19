@@ -159,11 +159,20 @@ export function createIcssInstance(emotion: EmotionLikeInstance): IcssInstance {
       dedupedInjectGlobal({ [`@layer ${name}`]: styles })
     },
     registerFont(family, sources) {
+      // 与全局 registerFont 共享 escape 策略（L6 单引号 escape + 危险字符 dev warn）
+      const escFamily = family.replace(/'/g, "\\'")
       for (const s of sources) {
-        const srcRaw = s.src.includes('url(') ? s.src : `url(${s.src})`
-        const srcWithFormat = s.format ? `${srcRaw} format('${s.format}')` : srcRaw
+        let srcExpr: string
+        if (s.src.includes('url(')) {
+          srcExpr = s.src
+        } else {
+          srcExpr = `url('${s.src.replace(/'/g, "\\'")}')`
+        }
+        const srcWithFormat = s.format
+          ? `${srcExpr} format('${s.format.replace(/'/g, "\\'")}')`
+          : srcExpr
         const declarations: string[] = [
-          `font-family: '${family}'`,
+          `font-family: '${escFamily}'`,
           `src: ${srcWithFormat}`,
           `font-display: ${s.display ?? 'swap'}`,
         ]

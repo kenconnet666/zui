@@ -22,12 +22,40 @@ export interface FontFaceSource {
   unicodeRange?: string
 }
 
+/**
+ * 把字符串中的 `'` 转义为 `\'`，避免 url('...') / font-family 字符串拼接被破坏。
+ *
+ * **L6 防御**：原 `url('${s.src}')` 拼接对包含单引号的 url 会破坏 CSS。
+ * Dev 模式检测到危险字符同时发 warn。
+ */
+function escapeSingleQuotes(value: string): string {
+  return value.replace(/'/g, "\\'")
+}
+
+function isDevEnv(): boolean {
+  return typeof process !== 'undefined' && process.env?.NODE_ENV !== 'production'
+}
+
 export function registerFont(family: string, sources: FontFaceSource[]): void {
   for (const s of sources) {
-    const srcRaw = s.src.includes('url(') ? s.src : `url(${s.src})`
-    const srcWithFormat = s.format ? `${srcRaw} format('${s.format}')` : srcRaw
+    // url() 包裹：若用户已经写了 url(...) 就不再包；否则包成 url('escaped-src')
+    let srcExpr: string
+    if (s.src.includes('url(')) {
+      srcExpr = s.src
+      // 用户已自包 url(...)，无法插入额外 escape，dev 模式 warn
+      if (isDevEnv() && /[<>"]/.test(s.src)) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[zui-core/registerFont] sources[].src 含可疑字符（< > "），可能破坏 @font-face：${s.src}`,
+        )
+      }
+    } else {
+      srcExpr = `url('${escapeSingleQuotes(s.src)}')`
+    }
+    const srcWithFormat = s.format ? `${srcExpr} format('${escapeSingleQuotes(s.format)}')` : srcExpr
+    const escapedFamily = escapeSingleQuotes(family)
     const declarations: string[] = [
-      `font-family: '${family}'`,
+      `font-family: '${escapedFamily}'`,
       `src: ${srcWithFormat}`,
       `font-display: ${s.display ?? 'swap'}`,
     ]

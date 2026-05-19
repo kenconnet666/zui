@@ -281,7 +281,8 @@ describe('L3 — applyStyleProps 运行时分派', () => {
 
   it('undefined / null 值跳过', () => {
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { p: undefined, color: '_primary' } as StyleProps)
+    // exactOptionalPropertyTypes 不允许 undefined 显式赋值；用 unknown 绕开测试该路径
+    applyStyleProps(c, { p: undefined, color: '_primary' } as unknown as StyleProps)
     expect(c._node.padding).toBeUndefined()
     expect(c._node.color).toBeDefined()
   })
