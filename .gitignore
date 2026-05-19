@@ -21,6 +21,8 @@ coverage
 .claude/settings.local.json
 .claude/memory/
 .claude/**/*.local.*
+.claude/*.lock
+.claude/tasks/
 *.suo
 *.ntvs*
 *.njsproj
