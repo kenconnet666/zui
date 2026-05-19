@@ -128,9 +128,18 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
 
   // ─── 属性设置 / 逃生舱 ───
 
-  /** emotion `label`：给生成的 className 加语义后缀。 */
+  /**
+   * emotion `label`：给生成的 className 加语义后缀。
+   *
+   * **C2**：多次调用会 join 成 `a.b.c`（不再互相覆盖）。
+   * 空字符串入参被忽略。重复同名也保留（用户责任）。
+   */
   label(name: string): this {
-    this._node.label = name
+    if (!name) return this
+    const existing = this._node.label
+    this._node.label = typeof existing === 'string' && existing.length > 0
+      ? `${existing}.${name}`
+      : name
     return this
   }
 
