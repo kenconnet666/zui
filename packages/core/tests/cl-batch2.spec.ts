@@ -28,7 +28,7 @@ describe('E4 — applyResponsive 响应式值解析', () => {
     const c = new Chain(defaultLight)
     applyResponsive(c, { base: 8, md: 16 }, (s, v: number) => s.padding.px(v))
     expect(c._node.padding).toBe('8px')
-    // md 走 _media('_md', ...)
+    // md 走 _media('_middle', ...)
     const mediaKey = Object.keys(c._node).find(k => k.startsWith('@media'))
     expect(mediaKey).toBeDefined()
     const inner = c._node[mediaKey as string] as Record<string, unknown>
@@ -102,20 +102,20 @@ describe('isResponsiveValue 判断', () => {
 describe('F1 — applyStyleProps 双签名', () => {
   it('旧签名 (chain, props) 返回 void', () => {
     const c = new Chain(defaultLight)
-    const result = applyStyleProps(c, { p: '_md' })
+    const result = applyStyleProps(c, { p: '_middle' })
     expect(result).toBeUndefined()
     expect(c._node.padding).toBeDefined()
   })
 
   it('新签名 (theme, props) 返回 className', () => {
-    const cls = applyStyleProps(defaultLight, { p: '_md', color: '_primary' })
+    const cls = applyStyleProps(defaultLight, { p: '_middle', color: '_primary' })
     expect(typeof cls).toBe('string')
     expect((cls as string).length).toBeGreaterThan(0)
   })
 
   it('新签名同样 props 输出相同 className（emotion content hash）', () => {
-    const a = applyStyleProps(defaultLight, { p: '_md', bg: '_primary' })
-    const b = applyStyleProps(defaultLight, { p: '_md', bg: '_primary' })
+    const a = applyStyleProps(defaultLight, { p: '_middle', bg: '_primary' })
+    const b = applyStyleProps(defaultLight, { p: '_middle', bg: '_primary' })
     expect(a).toBe(b)
   })
 })
@@ -198,9 +198,9 @@ describe('F2 — defineVariants 接受 boolean / number', () => {
       variants: {
         elevation: {
           '0': s => { s.boxShadow('none') },
-          '1': s => { s.boxShadow._sm },
-          '2': s => { s.boxShadow._md },
-          '3': s => { s.boxShadow._lg },
+          '1': s => { s.boxShadow._small },
+          '2': s => { s.boxShadow._middle },
+          '3': s => { s.boxShadow._large },
         },
       },
     })

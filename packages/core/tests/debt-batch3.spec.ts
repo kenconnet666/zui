@@ -199,7 +199,7 @@ describe('M2 — README 已更新警告非颜色 token 不应链式', () => {
 
   it('非颜色 token 命中返回 chain-like（旧行为，README 警告不要链式）', () => {
     const c = new Chain(defaultLight)
-    const result = (c as unknown as { padding: Record<string, unknown> }).padding._md as Chain
+    const result = (c as unknown as { padding: Record<string, unknown> }).padding._middle as Chain
     // 当前行为：返回 chain（Proxy / 原 instance 不必是同一引用）；README 警告不要靠这个
     expect(typeof result.toString).toBe('function')
     expect(result._node).toBeDefined()

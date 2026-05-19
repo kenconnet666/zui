@@ -33,7 +33,7 @@
   ```
 
 - **59 个内建嵌套方法**：`_hover` / `_focus` / `_dark` / `_lineClamp(3)` / `_truncate()` /
-  `_groupHover` / `_media('_md', ...)` / `_blur('_md')` / 等等。
+  `_groupHover` / `_media('_middle', ...)` / `_blur('_middle')` / 等等。
 - **完全框架无关**：库不依赖 Vue / React / Svelte / Solid。框架接入由用户 30 行级 provider 拼装。
 - **`icss(theme, factory)` 一行 shortcut**：适合大多数场景，不用手动 `new Chain` + `toString`。
 
@@ -62,7 +62,7 @@ const cls = icss(defaultLight, (s) => {
   s.color.white
   s.backgroundColor._primary
   s.padding.px(12)
-  s.borderRadius._md
+  s.borderRadius._middle
   s.fontWeight._bold
   s._hover((h) => {
     h.backgroundColor._primary.alpha(85)
@@ -96,7 +96,7 @@ class BrandTheme extends Theme<BrandSchema> {
 const myTheme = new BrandTheme()
 const cls = icss(myTheme, (s) => {
   s.color._brand // ✅ 自家 token，IDE 补全
-  s.padding._lg // ✅
+  s.padding._large // ✅
   // s.color._notExist            // ❌ 编译期飘红
 })
 ```
@@ -109,7 +109,7 @@ import { Chain, defaultLight } from '@kenconnet666/zui-core'
 const c = new Chain(defaultLight)
 c.color._primary
 c.padding.px(16)
-c.fontSize._lg
+c.fontSize._large
 const cls = c.toString() // → emotion className
 ```
 
@@ -126,10 +126,10 @@ const cls = c.toString() // → emotion className
 | 结构伪类      | `_firstChild` `_lastChild` `_only` `_empty` `_nthChild(n, fn)` `_nthOfType(n, fn)`                   |
 | group / peer  | `_groupHover` `_groupFocus` `_groupActive` `_peerHover` `_peerFocus` `_peerChecked`                  |
 | 选择器 / 条件 | `_selector(sel, fn)` `_and(tail, fn)` `_when(cond, fn)` `_unless(cond, fn)`                          |
-| At 规则       | `_media('_md', fn)` `_supports('(...)' , fn)` `_container('_lg', fn)`                                |
+| At 规则       | `_media('_middle', fn)` `_supports('(...)' , fn)` `_container('_large', fn)`                                |
 | 媒体修饰符    | `_dark` `_light` `_motionSafe` `_motionReduce` `_print` `_rtl` `_ltr`                                |
 | 工具组合      | `_truncate()` `_lineClamp(n)` `_srOnly()` `_centered()` `_absoluteCenter()`                          |
-| filter        | `_blur('_md')` `_backdropBlur('_md')`                                                                |
+| filter        | `_blur('_middle')` `_backdropBlur('_middle')`                                                                |
 | 逃生舱        | `_prop(name, value)` `_var('--x', val)` `_use(cssObj)` `_apply(fn)` `label(name)`                    |
 
 ---
@@ -158,7 +158,7 @@ zui-core 为组件库作者提供以下 API：
 import { defineVariants, type VariantPropsOf } from '@kenconnet666/zui-core'
 
 const button = defineVariants(theme, {
-  base: s => { s.padding.px(12); s.borderRadius._md; s.fontWeight._bold },
+  base: s => { s.padding.px(12); s.borderRadius._middle; s.fontWeight._bold },
   variants: {
     intent: {
       primary: s => { s.backgroundColor._primary; s.color.white },
@@ -199,8 +199,8 @@ const dialog = defineParts(theme, {
   base: {
     root: s => { s.position.fixed; s.zIndex._modal },
     overlay: s => { s.position.absolute; s.backgroundColor.black; s.opacity._50 },
-    content: s => { s.position.absolute; s.borderRadius._lg; s.padding._lg },
-    title: s => { s.fontWeight._bold; s.fontSize._xl },
+    content: s => { s.position.absolute; s.borderRadius._large; s.padding._large },
+    title: s => { s.fontWeight._bold; s.fontSize._huge },
   },
   variants: {
     size: {
@@ -273,7 +273,7 @@ import { applyStyleProps } from '@kenconnet666/zui-core'
 const cls = applyStyleProps(theme, {
   p: { base: 4, md: 8, lg: 16 },     // 响应式
   bg: '_primary',
-  rounded: '_md',
+  rounded: '_middle',
 })
 ```
 
@@ -373,7 +373,7 @@ new Theme({
   0.4.0 起 dev 模式 `console.warn` 提醒。
 - **Token 命中后**：
   - **颜色 token** 返回 `ColorTokenValue` helper（暴露 `.alpha(n)` / `.darken(n)` 等 6 modifier），**不要继续链式**：`c.color._primary.alpha(50)` ✅；`c.color._primary.padding.px(8)` ❌
-  - **非颜色 token**（如 `c.padding._md`）运行时返回 chain，**类型层也允许继续链**，但请**仍按 statement-only 风格写**（每条独立一行），避免依赖隐式链式行为。**未来可能改为不返回 chain**。
+  - **非颜色 token**（如 `c.padding._middle`）运行时返回 chain，**类型层也允许继续链**，但请**仍按 statement-only 风格写**（每条独立一行），避免依赖隐式链式行为。**未来可能改为不返回 chain**。
 - **`mergeTheme(parent, partial)` 的 partial 应为字面量**：0.4.0 起 dev 模式会 `console.warn` 警示
   partial 含 function token；生产构建静默。
 - **`:focus-visible` 浏览器兼容**：iOS Safari 14- 不支持（2021-2022 安装基数 < 5%）。

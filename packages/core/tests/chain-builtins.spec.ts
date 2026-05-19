@@ -20,7 +20,7 @@ describe('Chain — 内建方法', () => {
       c._hover((h) => {
         h.color._primary
       })
-      c.padding._md
+      c.padding._middle
       expect(c._node).toMatchObject({
         color: '#dc2626',
         padding: '16px',
@@ -48,7 +48,7 @@ describe('Chain — 内建方法', () => {
         h.color._primary
       })
       c._hover((h) => {
-        h.padding._lg
+        h.padding._large
       })
       expect(c._node['&:hover']).toEqual({ color: '#2563eb', padding: '24px' })
     })
@@ -68,7 +68,7 @@ describe('Chain — 内建方法', () => {
           throw new Error('boom')
         })
       }).toThrow('boom')
-      c.padding._md
+      c.padding._middle
       expect(c._node.padding).toBe('16px')
     })
   })
@@ -129,27 +129,27 @@ describe('Chain — 内建方法', () => {
     it('_media 接原生查询', () => {
       const c = new Chain(defaultLight)
       c._media('(min-width: 600px)', (m) => {
-        m.padding._md
+        m.padding._middle
       })
       expect(c._node['@media (min-width: 600px)']).toEqual({ padding: '16px' })
     })
 
-    it('_media 接 _md token 时查 theme.breakpoint', () => {
+    it('_media 接 _small token 时查 theme.breakpoint（0.6.0 small=768px）', () => {
       const c = new Chain(themed)
-      c._media('_md', (m) => {
-        m.padding._md
+      c._media('_small', (m) => {
+        m.padding._middle
       })
       expect(c._node['@media (min-width: 768px)']).toEqual({ padding: '16px' })
     })
 
     it('_media 找不到 token 时原值透传', () => {
-      // W1.8 之后 defaultLight 含 breakpoint —— 用临时无 breakpoint 主题验证 fallback
-      const noBp = new Theme({ color: { primary: '#000' }, spacing: { md: '16px' } })
+      // 用临时无 breakpoint 主题验证 fallback；spacing 用 middle 对齐 0.6.0 命名
+      const noBp = new Theme({ color: { primary: '#000' }, spacing: { middle: '16px' } })
       const c = new Chain(noBp)
-      c._media('_md', (m) => {
-        m.padding._md
+      c._media('_middle', (m) => {
+        m.padding._middle
       })
-      expect(c._node['@media _md']).toEqual({ padding: '16px' })
+      expect(c._node['@media _middle']).toEqual({ padding: '16px' })
     })
 
     it('_supports', () => {
@@ -162,9 +162,10 @@ describe('Chain — 内建方法', () => {
 
     it('_container 接 token 简写', () => {
       const c = new Chain(themed)
-      c._container('_lg', (m) => {
-        m.padding._lg
+      c._container('_middle', (m) => {
+        m.padding._large
       })
+      // 0.6.0：breakpoint.middle = 1024px（旧 lg）
       expect(c._node['@container (min-width: 1024px)']).toEqual({ padding: '24px' })
     })
   })
@@ -218,10 +219,10 @@ describe('Chain — 内建方法', () => {
     it('_unless 条件为假时执行', () => {
       const c = new Chain(defaultLight)
       c._unless(false, (s) => {
-        s.padding._md
+        s.padding._middle
       })
       c._unless(true, (s) => {
-        s.padding._lg
+        s.padding._large
       })
       expect(c._node.padding).toBe('16px')
     })
@@ -301,28 +302,28 @@ describe('Chain — 内建方法', () => {
   describe('_blur / _backdropBlur', () => {
     it('_blur 查 theme.blur token', () => {
       const c = new Chain(themed)
-      c._blur('_md')
-      expect(c._node.filter).toBe('blur(12px)')
+      c._blur('_middle')
+      expect(c._node.filter).toBe('blur(16px)')
     })
 
     it('_blur 不带 _ 前缀也可', () => {
       const c = new Chain(themed)
-      c._blur('sm')
-      expect(c._node.filter).toBe('blur(4px)')
+      c._blur('small')
+      expect(c._node.filter).toBe('blur(8px)')
     })
 
     it('找不到 blur token → 原字符串透传（让用户发现）', () => {
       // 临时主题：故意不带 blur category
       const bareTheme = new Theme({ color: { primary: '#000' } })
       const c = new Chain(bareTheme)
-      c._blur('_md')
-      expect(c._node.filter).toBe('_md')
+      c._blur('_middle')
+      expect(c._node.filter).toBe('_middle')
     })
 
     it('_backdropBlur 同 _blur 但写 backdropFilter', () => {
       const c = new Chain(themed)
-      c._backdropBlur('_md')
-      expect(c._node.backdropFilter).toBe('blur(12px)')
+      c._backdropBlur('_middle')
+      expect(c._node.backdropFilter).toBe('blur(16px)')
     })
   })
 
@@ -354,7 +355,7 @@ describe('Chain — 内建方法', () => {
       const c = new Chain(defaultLight)
       const danger = (s: typeof c) => {
         s.color._danger
-        s.padding._sm
+        s.padding._small
       }
       c._apply(danger)
       expect(c._node).toEqual({ color: '#dc2626', padding: '8px' })
@@ -526,7 +527,7 @@ describe('Chain — 内建方法', () => {
     it('_has / _not / _is / _where', () => {
       const c = new Chain(defaultLight)
       c._has('img', (h) => {
-        h.padding._sm
+        h.padding._small
       })
       c._not('[disabled]', (n) => {
         n.cursor.pointer
@@ -592,10 +593,10 @@ describe('Chain — 内建方法', () => {
 
   // ─── W2.4 Container query simplified ───
   describe('W2.4 — Container query variant 简写', () => {
-    it('_containerMd 解析 theme.breakpoint.md', () => {
+    it('_containerSmall 解析 theme.breakpoint.small（0.6.0 small=768px）', () => {
       const c = new Chain(defaultLight) // 现在 default 有 breakpoint
-      c._containerMd((m) => {
-        m.padding._md
+      c._containerSmall((m) => {
+        m.padding._middle
       })
       expect(c._node['@container (min-width: 768px)']).toEqual({ padding: '16px' })
     })
@@ -632,7 +633,7 @@ describe('Chain — 内建方法', () => {
   describe('W7 — Pattern 库', () => {
     it('_stack 默认 flex 横排', () => {
       const c = new Chain(defaultLight)
-      c._stack({ direction: 'row', gap: '_md', align: 'center', justify: 'spaceBetween' })
+      c._stack({ direction: 'row', gap: '_middle', align: 'center', justify: 'spaceBetween' })
       expect(c._node).toMatchObject({
         display: 'flex',
         flexDirection: 'row',
@@ -650,7 +651,7 @@ describe('Chain — 内建方法', () => {
 
     it('_grid({cols: 3}) → repeat(3, minmax(0, 1fr))', () => {
       const c = new Chain(defaultLight)
-      c._grid({ cols: 3, gap: '_md' })
+      c._grid({ cols: 3, gap: '_middle' })
       expect(c._node).toMatchObject({
         display: 'grid',
         gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',

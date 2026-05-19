@@ -16,8 +16,8 @@ describe('Chain — 类型层四态', () => {
     expectTypeOf(c.color._primary.alpha).toBeCallableWith(50)
   })
 
-  it('s.padding._lg 返回 Chain（非颜色 token）', () => {
-    expectTypeOf(c.padding._lg).toEqualTypeOf<typeof c>()
+  it('s.padding._large 返回 Chain（非颜色 token）', () => {
+    expectTypeOf(c.padding._large).toEqualTypeOf<typeof c>()
   })
 
   it('s.color.white 返回 Chain（CSS keyword）', () => {
@@ -48,7 +48,7 @@ describe('Chain — 内建方法签名', () => {
 
   it('_media(query, fn) 接 string + factory', () => {
     expectTypeOf(c._media).toBeFunction()
-    expectTypeOf(c._media('_md', () => {})).toEqualTypeOf<typeof c>()
+    expectTypeOf(c._media('_middle', () => {})).toEqualTypeOf<typeof c>()
   })
 
   it('_nthChild 第一个参数是 number | string', () => {

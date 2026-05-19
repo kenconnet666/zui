@@ -36,7 +36,7 @@ describe('E5 — defineMixin 可重用样式片段', () => {
 
   it('mixin 在 defineVariants base 内调用', () => {
     const elevation = defineMixin<DefaultSchema>(s => {
-      s.boxShadow._md
+      s.boxShadow._middle
     })
 
     const button = defineVariants(defaultLight, {
@@ -54,7 +54,7 @@ describe('E5 — defineMixin 可重用样式片段', () => {
 
   it('多个 mixin 组合', () => {
     const m1 = defineMixin<DefaultSchema>(s => { s.padding.px(8) })
-    const m2 = defineMixin<DefaultSchema>(s => { s.borderRadius._md })
+    const m2 = defineMixin<DefaultSchema>(s => { s.borderRadius._middle })
     const c = new Chain(defaultLight)
     m1(c)
     m2(c)
@@ -94,7 +94,7 @@ describe('E7 — Chain._state(props, mapping)', () => {
     c._state({ x: 1, y: 'str', z: {} }, {
       x: s => { s.padding.px(8) },
       y: s => { s.margin.px(4) },
-      z: s => { s.borderRadius._md },
+      z: s => { s.borderRadius._middle },
     })
     expect(c._node.padding).toBe('8px')
     expect(c._node.margin).toBe('4px')
@@ -241,7 +241,7 @@ describe('E1 — defineParts 多 slot', () => {
     base: {
       root: s => { s.position.fixed; s.zIndex._modal },
       overlay: s => { s.position.fixed; s.backgroundColor.black; s.opacity._50 },
-      content: s => { s.position.fixed; s.borderRadius._lg },
+      content: s => { s.position.fixed; s.borderRadius._large },
       title: s => { s.fontWeight._bold },
     },
     variants: {
@@ -346,7 +346,7 @@ describe('E1 — defineParts 多 slot', () => {
 
 describe('extendVariants 变体继承', () => {
   const button = defineVariants(defaultLight, {
-    base: s => { s.padding.px(12); s.borderRadius._md },
+    base: s => { s.padding.px(12); s.borderRadius._middle },
     variants: {
       intent: {
         primary: s => { s.backgroundColor._primary; s.color.white },

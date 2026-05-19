@@ -84,7 +84,7 @@ export function MyButton({ children }: { children: React.ReactNode }) {
     s.color.white
     s.backgroundColor._primary
     s.padding.px(12)
-    s.borderRadius._md
+    s.borderRadius._middle
     s.fontWeight._bold
     s._hover((h) => {
       h.backgroundColor._primary.alpha(85)

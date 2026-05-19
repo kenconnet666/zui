@@ -21,8 +21,8 @@ describe('单条 className 产出', () => {
   bench('new Chain + toString（链式 + carrier 缓存）', () => {
     const c = new Chain(defaultLight)
     c.color._primary
-    c.padding._md
-    c.borderRadius._md
+    c.padding._middle
+    c.borderRadius._middle
     c.fontWeight._bold
     c.toString()
   })
@@ -30,8 +30,8 @@ describe('单条 className 产出', () => {
   bench('icss(theme, fn)（一行 shortcut）', () => {
     icss(defaultLight, (s) => {
       s.color._primary
-      s.padding._md
-      s.borderRadius._md
+      s.padding._middle
+      s.borderRadius._middle
       s.fontWeight._bold
     })
   })
@@ -55,7 +55,7 @@ describe('嵌套伪类 + 多属性（典型按钮）', () => {
       s.color.white
       s.backgroundColor._primary
       s.padding.px(12)
-      s.borderRadius._md
+      s.borderRadius._middle
       s.fontWeight._bold
       s._hover((h) => {
         h.backgroundColor._primary.alpha(85)

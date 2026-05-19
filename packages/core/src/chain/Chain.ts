@@ -438,23 +438,27 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     return this._nest('@starting-style', (s) => s._nest('&', fn))
   }
 
-  // ─── W2.4 Container query variant 简写 ───
+  // ─── W2.4 Container query variant 简写（0.6.0 改语义化命名） ───
 
-  /** `@container (min-width: theme.breakpoint.sm)`。 */
-  _containerSm(fn: (s: this) => void): this {
-    return this._container('_sm', fn)
+  /** `@container (min-width: theme.breakpoint.tiny)`。 */
+  _containerTiny(fn: (s: this) => void): this {
+    return this._container('_tiny', fn)
   }
-  _containerMd(fn: (s: this) => void): this {
-    return this._container('_md', fn)
+  /** `@container (min-width: theme.breakpoint.small)`。 */
+  _containerSmall(fn: (s: this) => void): this {
+    return this._container('_small', fn)
   }
-  _containerLg(fn: (s: this) => void): this {
-    return this._container('_lg', fn)
+  /** `@container (min-width: theme.breakpoint.middle)`。 */
+  _containerMiddle(fn: (s: this) => void): this {
+    return this._container('_middle', fn)
   }
-  _containerXl(fn: (s: this) => void): this {
-    return this._container('_xl', fn)
+  /** `@container (min-width: theme.breakpoint.large)`。 */
+  _containerLarge(fn: (s: this) => void): this {
+    return this._container('_large', fn)
   }
-  _container2xl(fn: (s: this) => void): this {
-    return this._container('_2xl', fn)
+  /** `@container (min-width: theme.breakpoint.huge)`。 */
+  _containerHuge(fn: (s: this) => void): this {
+    return this._container('_huge', fn)
   }
 
   // ─── W2.5 group / peer data 变种 ───

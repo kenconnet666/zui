@@ -114,7 +114,7 @@ describe('集成 — 完整 Button 组件流程', () => {
   const buttonCore = defineVariants(defaultLight, {
     base: s => {
       s.padding.px(12)
-      s.borderRadius._md
+      s.borderRadius._middle
       s.fontWeight._bold
       s.transitionProperty('all')
       s.transitionDuration._fast
@@ -127,9 +127,9 @@ describe('集成 — 完整 Button 组件流程', () => {
         ghost:   s => { s.color._primary; s.backgroundColor.transparent },
       },
       size: {
-        sm: s => { s.padding.px(8); s.fontSize._sm },
-        md: s => { s.padding.px(12); s.fontSize._md },
-        lg: s => { s.padding.px(16); s.fontSize._lg },
+        sm: s => { s.padding.px(8); s.fontSize._small },
+        md: s => { s.padding.px(12); s.fontSize._middle },
+        lg: s => { s.padding.px(16); s.fontSize._large },
       },
       block: {
         true: s => { s.display.block; s.width.pct(100) },
@@ -205,12 +205,12 @@ describe('集成 — Dialog 多 slot 组件', () => {
       },
       content: s => {
         s.position.absolute
-        s.borderRadius._lg
-        s.padding._lg
+        s.borderRadius._large
+        s.padding._large
         s.backgroundColor._bg
       },
-      title: s => { s.fontWeight._bold; s.fontSize._xl },
-      description: s => { s.color._textMuted; s.marginTop._sm },
+      title: s => { s.fontWeight._bold; s.fontSize._huge },
+      description: s => { s.color._textMuted; s.marginTop._small },
       close: s => {
         s.position.absolute
         s.top.px(8)
@@ -364,7 +364,7 @@ describe('集成 — applyStyleProps 实际组件用例', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       p: { base: 4, md: 8, lg: 16 } as any,
       bg: '_primary',
-      rounded: '_md',
+      rounded: '_middle',
       color: 'white',
     })
     expect(typeof cls).toBe('string')
@@ -375,14 +375,14 @@ describe('集成 — applyStyleProps 实际组件用例', () => {
     const cls = applyStyleProps(defaultLight, {
       display: 'flex',
       flexDirection: 'column',
-      gap: '_md',
+      gap: '_middle',
     })
     expect(typeof cls).toBe('string')
   })
 
   it('与 chain 联用：先 applyStyleProps 后追加 _hover', () => {
     const cls = icss(defaultLight, s => {
-      applyStyleProps(s, { p: '_md', bg: '_primary' })
+      applyStyleProps(s, { p: '_middle', bg: '_primary' })
       s._hover(h => { h.backgroundColor._primary.alpha(85) })
     })
     expect(typeof cls).toBe('string')

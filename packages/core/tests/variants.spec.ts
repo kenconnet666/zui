@@ -358,7 +358,7 @@ describe('defineVariants — 实际组件库场景', () => {
     const button = defineVariants(defaultLight, {
       base: (s) => {
         s.padding.px(12)
-        s.borderRadius._md
+        s.borderRadius._middle
         s.fontWeight._bold
       },
       variants: {
@@ -378,15 +378,15 @@ describe('defineVariants — 实际组件库场景', () => {
         size: {
           sm: (s) => {
             s.padding.px(8)
-            s.fontSize._sm
+            s.fontSize._small
           },
           md: (s) => {
             s.padding.px(12)
-            s.fontSize._md
+            s.fontSize._middle
           },
           lg: (s) => {
             s.padding.px(16)
-            s.fontSize._lg
+            s.fontSize._large
           },
         },
       },

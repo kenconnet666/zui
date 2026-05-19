@@ -78,23 +78,23 @@ describe('resolveTheme freeze immutable', () => {
   })
 })
 
-describe('blur key 2xl / 3xl 非合法 ident', () => {
-  it("用 defaultLight 主题访问 blur['2xl']", () => {
+describe('blur 6 档（0.6.0 重命名）', () => {
+  it('用 defaultLight 主题访问 blur.huge', () => {
     const blur = (defaultLight as unknown as { blur?: Record<string, string> }).blur
-    expect(blur?.['2xl']).toBeDefined()
+    expect(blur?.huge).toBeDefined()
   })
 
-  it("Chain._blur('2xl') 命中（不带 _ 前缀）", () => {
+  it("Chain._blur('huge') 命中（不带 _ 前缀）", () => {
     const c = new Chain(defaultLight)
-    c._blur('2xl')
+    c._blur('huge')
     // 已映射成 blur(<value>) 形式
     expect(typeof c._node.filter).toBe('string')
     expect((c._node.filter as string).startsWith('blur(')).toBe(true)
   })
 
-  it("Chain._blur('_2xl') 也命中（带 _ 前缀；resolveBlurValue 兼容）", () => {
+  it("Chain._blur('_huge') 也命中（带 _ 前缀；resolveBlurValue 兼容）", () => {
     const c = new Chain(defaultLight)
-    c._blur('_2xl')
+    c._blur('_huge')
     expect(typeof c._node.filter).toBe('string')
     expect((c._node.filter as string).startsWith('blur(')).toBe(true)
   })

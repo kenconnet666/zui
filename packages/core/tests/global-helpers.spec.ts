@@ -61,7 +61,7 @@ describe('W8.2 — Chain._layer', () => {
   it('包到 @layer <name> { & { ... } }', () => {
     const c = new Chain(defaultLight)
     c._layer('components', (l) => {
-      l.padding._md
+      l.padding._middle
     })
     expect(c._node['@layer components']).toEqual({ '&': { padding: '16px' } })
   })

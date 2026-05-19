@@ -208,7 +208,7 @@ describe('S9.5 — applyStyleProps 复合 alias 多 prop token 解析', () => {
   it('px: token → paddingLeft + paddingRight 都解析', async () => {
     const { Chain, defaultLight, applyStyleProps } = await import('../src')
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { px: '_md' })
+    applyStyleProps(c, { px: '_middle' })
     // default schema spacing.md = '16px'
     expect(c._node.paddingLeft).toBe('16px')
     expect(c._node.paddingRight).toBe('16px')
@@ -217,7 +217,7 @@ describe('S9.5 — applyStyleProps 复合 alias 多 prop token 解析', () => {
   it('my: token → marginTop + marginBottom 都解析', async () => {
     const { Chain, defaultLight, applyStyleProps } = await import('../src')
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { my: '_md' })
+    applyStyleProps(c, { my: '_middle' })
     expect(c._node.marginTop).toBe('16px')
     expect(c._node.marginBottom).toBe('16px')
   })

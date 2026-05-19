@@ -23,9 +23,9 @@ describe('Chain — 四态 carrier', () => {
       expect(c._node.color).toBe('#2563eb')
     })
 
-    it('s.padding._lg 写入 spacing.lg', () => {
+    it('s.padding._large 写入 spacing.lg', () => {
       const c = new Chain(defaultLight)
-      c.padding._lg
+      c.padding._large
       expect(c._node.padding).toBe('24px')
     })
 

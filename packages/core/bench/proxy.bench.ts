@@ -58,11 +58,11 @@ describe('内建方法调用密度', () => {
 
   bench('10 个并列 _media', () => {
     const c = new Chain(defaultLight)
-    c._media('_sm', () => {})
-    c._media('_md', () => {})
-    c._media('_lg', () => {})
-    c._media('_xl', () => {})
-    c._media('_2xl', () => {})
+    c._media('_small', () => {})
+    c._media('_middle', () => {})
+    c._media('_large', () => {})
+    c._media('_huge', () => {})
+    c._media('_huge', () => {})
     c._media('(prefers-color-scheme: dark)', () => {})
     c._media('print', () => {})
     c._media('(min-width: 100px)', () => {})

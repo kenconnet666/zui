@@ -226,13 +226,13 @@ describe('L1 — Chain._node readonly 兼容性', () => {
 describe('L3 — applyStyleProps 运行时分派', () => {
   it('alias 单 prop：p → padding', () => {
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { p: '_md' })
+    applyStyleProps(c, { p: '_middle' })
     expect(c._node.padding).toBeDefined()
   })
 
   it('alias 多 prop：px → paddingLeft + paddingRight', () => {
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { px: '_md' })
+    applyStyleProps(c, { px: '_middle' })
     expect(c._node.paddingLeft).toBeDefined()
     expect(c._node.paddingRight).toBeDefined()
   })
@@ -266,7 +266,7 @@ describe('L3 — applyStyleProps 运行时分派', () => {
     applyStyleProps(c, {
       color: '_primary',
       bg: '_bg',
-      p: '_md',
+      p: '_middle',
       rounded: 8,
     })
     expect(c._node.color).toBeDefined()
@@ -285,7 +285,7 @@ describe('L3 — applyStyleProps 运行时分派', () => {
 
   it('rounded → borderRadius', () => {
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { rounded: '_md' })
+    applyStyleProps(c, { rounded: '_middle' })
     expect(c._node.borderRadius).toBeDefined()
   })
 
@@ -320,7 +320,7 @@ describe('L3 — applyStyleProps 运行时分派', () => {
 
   it('gap token 解析', () => {
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { gap: '_md' })
+    applyStyleProps(c, { gap: '_middle' })
     expect(c._node.gap).toBeDefined()
   })
 })

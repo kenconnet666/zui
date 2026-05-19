@@ -5,7 +5,7 @@ import type { StyleProps, TokenOf } from '../src'
 describe('W10 — StyleProps + applyStyleProps', () => {
   it('p (padding) 接 token', () => {
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { p: '_md' })
+    applyStyleProps(c, { p: '_middle' })
     expect(c._node.padding).toBe('16px')
   })
 
@@ -17,7 +17,7 @@ describe('W10 — StyleProps + applyStyleProps', () => {
 
   it('px 同时设 paddingLeft / paddingRight', () => {
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { px: '_lg' })
+    applyStyleProps(c, { px: '_large' })
     expect(c._node.paddingLeft).toBe('24px')
     expect(c._node.paddingRight).toBe('24px')
   })
@@ -43,13 +43,13 @@ describe('W10 — StyleProps + applyStyleProps', () => {
 
   it('rounded → borderRadius', () => {
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { rounded: '_md' })
-    expect(c._node.borderRadius).toBe('8px')
+    applyStyleProps(c, { rounded: '_middle' })
+    expect(c._node.borderRadius).toBe('12px')
   })
 
   it('shadow → boxShadow', () => {
     const c = new Chain(defaultLight)
-    applyStyleProps(c, { shadow: '_md' })
+    applyStyleProps(c, { shadow: '_middle' })
     expect(c._node.boxShadow).toContain('0 4px 6px')
   })
 
@@ -58,14 +58,14 @@ describe('W10 — StyleProps + applyStyleProps', () => {
     applyStyleProps(c, {
       bg: '_primary',
       color: '_text',
-      p: '_md',
-      rounded: '_md',
+      p: '_middle',
+      rounded: '_middle',
     })
     expect(c._node).toMatchObject({
       backgroundColor: '#2563eb',
       color: '#111827',
       padding: '16px',
-      borderRadius: '8px',
+      borderRadius: '12px',
     })
   })
 
@@ -97,19 +97,19 @@ describe('W10 — StyleProps + applyStyleProps', () => {
     const props: StyleProps = {
       color: '_primary',
       bg: '_bg',
-      p: '_md',
-      m: '_sm',
-      px: '_lg',
-      py: '_xs',
-      rounded: '_md',
-      shadow: '_lg',
-      fontSize: '_md',
+      p: '_middle',
+      m: '_small',
+      px: '_large',
+      py: '_tiny',
+      rounded: '_middle',
+      shadow: '_large',
+      fontSize: '_middle',
       fontWeight: 700,
       display: 'flex',
       zIndex: 10,
       opacity: 0.8,
       flex: 1,
-      gap: '_md',
+      gap: '_middle',
     }
     expect(props.color).toBe('_primary')
   })

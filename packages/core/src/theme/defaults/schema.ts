@@ -40,55 +40,62 @@ export interface DefaultSchema extends ThemeSchema {
    * 组件 token。
    */
   color: Record<DefaultColorTokens, string> & Partial<Record<FlattenComponentTokens, string>>
+  /** spacing 5 档（语义化命名，0.6.0 BREAKING）。 */
   spacing: {
-    xs: string
-    sm: string
-    md: string
-    lg: string
-    xl: string
+    tiny: string
+    small: string
+    middle: string
+    large: string
+    huge: string
   }
+  /** radius 7 档：5 档 size + none + full（圆形按钮专用）。 */
   radius: {
-    sm: string
-    md: string
-    lg: string
+    none: string
+    tiny: string
+    small: string
+    middle: string
+    large: string
+    huge: string
     full: string
   }
+  /** fontSize 5 档。 */
   fontSize: {
-    xs: string
-    sm: string
-    md: string
-    lg: string
-    xl: string
+    tiny: string
+    small: string
+    middle: string
+    large: string
+    huge: string
   }
   fontWeight: {
     normal: string | number
     medium: string | number
     bold: string | number
   }
+  /** shadow 5 档（不含 none：要去阴影用 boxShadow('none')）。 */
   shadow: {
-    sm: string
-    md: string
-    lg: string
+    tiny: string
+    small: string
+    middle: string
+    large: string
+    huge: string
   }
+  /** blur 6 档：5 档 size + none。 */
   blur: {
     none: string
-    xs: string
-    sm: string
-    base: string
-    md: string
-    lg: string
-    xl: string
-    '2xl': string
-    '3xl': string
+    tiny: string
+    small: string
+    middle: string
+    large: string
+    huge: string
   }
   // ─── W1.8 补充：让 ENHANCED_PROPS 引用的 token category 在 default 主题里有值 ───
-  /** 过渡 / 动画时长 token。Tailwind 风。 */
+  /** 过渡 / 动画时长 token（已语义化，未改）。 */
   duration: {
     fast: string
     normal: string
     slow: string
   }
-  /** 缓动函数 token。 */
+  /** 缓动函数 token（不属 size，未改）。 */
   easing: {
     default: string
     linear: string
@@ -96,13 +103,13 @@ export interface DefaultSchema extends ThemeSchema {
     out: string
     inOut: string
   }
-  /** 媒体查询断点 token（`_media('_md', ...)` 等链上简写依赖）。 */
+  /** 媒体查询断点 5 档：`_media('_middle', ...)` 等链上简写依赖。 */
   breakpoint: {
-    sm: string
-    md: string
-    lg: string
-    xl: string
-    '2xl': string
+    tiny: string
+    small: string
+    middle: string
+    large: string
+    huge: string
   }
   /** z-index 语义 token。 */
   zIndex: {

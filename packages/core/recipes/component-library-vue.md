@@ -26,7 +26,7 @@ import type { MySchema } from '@/theme/schema'
 export function createBaseButtonVariants(theme: ResolvedTheme<MySchema>) {
   return defineVariants(theme, {
     base: s => {
-      s.borderRadius._md
+      s.borderRadius._middle
       s.fontWeight._bold
       s.cursor.pointer
       s.transitionProperty('all')
@@ -46,11 +46,11 @@ export function createBaseButtonVariants(theme: ResolvedTheme<MySchema>) {
       },
       // ★ 组件库内置 5 档大小（语义化命名，与 theme token sm/md/lg/xl 解耦）
       size: {
-        tiny:   s => { s.padding.px(4);  s.fontSize._xs },
-        small:  s => { s.padding.px(8);  s.fontSize._sm },
-        middle: s => { s.padding.px(12); s.fontSize._md },
-        large:  s => { s.padding.px(16); s.fontSize._lg },
-        huge:   s => { s.padding.px(20); s.fontSize._xl },
+        tiny:   s => { s.padding.px(4);  s.fontSize._tiny },
+        small:  s => { s.padding.px(8);  s.fontSize._small },
+        middle: s => { s.padding.px(12); s.fontSize._middle },
+        large:  s => { s.padding.px(16); s.fontSize._large },
+        huge:   s => { s.padding.px(20); s.fontSize._huge },
       },
       disabled: {
         true: s => { s.opacity._50; s.cursor.notAllowed; s.pointerEvents('none') },
@@ -239,11 +239,11 @@ import { ConfigProvider, Button } from '@yourcompany/ui-vue'
     :button="{
       variants: {
         size: {
-          tiny:   s => { s.padding.px(6);  s.fontSize._sm },
-          small:  s => { s.padding.px(10); s.fontSize._md },
-          middle: s => { s.padding.px(14); s.fontSize._lg },
-          large:  s => { s.padding.px(18); s.fontSize._xl },
-          huge:   s => { s.padding.px(22); s.fontSize._xl },
+          tiny:   s => { s.padding.px(6);  s.fontSize._small },
+          small:  s => { s.padding.px(10); s.fontSize._middle },
+          middle: s => { s.padding.px(14); s.fontSize._large },
+          large:  s => { s.padding.px(18); s.fontSize._huge },
+          huge:   s => { s.padding.px(22); s.fontSize._huge },
         },
       },
     }"
@@ -267,7 +267,7 @@ import { ConfigProvider, Button } from '@yourcompany/ui-vue'
   <!-- 顶层：换品牌主色 + 全局 tiny 档大小 -->
   <ConfigProvider
     :theme="{ color: { primary: '#brand' } }"
-    :button="{ variants: { size: { tiny: s => { s.padding.px(6); s.fontSize._sm } } } }"
+    :button="{ variants: { size: { tiny: s => { s.padding.px(6); s.fontSize._small } } } }"
   >
     <Page>
       <Header>
@@ -277,7 +277,7 @@ import { ConfigProvider, Button } from '@yourcompany/ui-vue'
       <Main>
         <!-- 子树：局部再覆盖 small 档；tiny 沿用上层；其它 middle/large/huge 沿用组件库 -->
         <ConfigProvider
-          :button="{ variants: { size: { small: s => { s.padding.px(12); s.borderRadius._lg } } } }"
+          :button="{ variants: { size: { small: s => { s.padding.px(12); s.borderRadius._large } } } }"
         >
           <Button size="tiny">仍用顶层 tiny（padding 6）</Button>
           <Button size="small">本层 small（padding 12 + 大圆角）</Button>
@@ -307,11 +307,11 @@ const buttonOverride = computed(() => compact.value
   ? {
       variants: {
         size: {
-          tiny:   s => { s.padding.px(2); s.fontSize._xs },
-          small:  s => { s.padding.px(4); s.fontSize._sm },
-          middle: s => { s.padding.px(6); s.fontSize._md },
-          large:  s => { s.padding.px(8); s.fontSize._lg },
-          huge:   s => { s.padding.px(10); s.fontSize._xl },
+          tiny:   s => { s.padding.px(2); s.fontSize._tiny },
+          small:  s => { s.padding.px(4); s.fontSize._small },
+          middle: s => { s.padding.px(6); s.fontSize._middle },
+          large:  s => { s.padding.px(8); s.fontSize._large },
+          huge:   s => { s.padding.px(10); s.fontSize._huge },
         },
       },
     }
@@ -490,8 +490,8 @@ emotion 出两个 className（base + override）     ← CSS cascade 后者覆�
 
 ```ts
 size: {
-  tiny:   s => { s.padding.px(4); s.fontSize._xs },   // variant=tiny 用 theme.fontSize.xs
-  small:  s => { s.padding.px(8); s.fontSize._sm },   // variant=small 用 theme.fontSize.sm
+  tiny:   s => { s.padding.px(4); s.fontSize._tiny },   // variant=tiny 用 theme.fontSize.xs
+  small:  s => { s.padding.px(8); s.fontSize._small },   // variant=small 用 theme.fontSize.sm
   // ...
 }
 ```
