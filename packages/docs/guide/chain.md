@@ -7,10 +7,10 @@ import { Chain, defaultLight } from '@kenconnet666/zui-core'
 
 const s = new Chain(defaultLight)
 
-s.color('red')        // 1. 函数调用（逃生舱，csstype 严格）
-s.color._primary      // 2. 主题 token（_ 前缀，IDE 推断自 schema）
-s.color.white         // 3. CSS keyword（无前缀，驼峰）
-s.padding.px(16)      // 4. unit 方法
+s.color('red') // 1. 函数调用（逃生舱，csstype 严格）
+s.color._primary // 2. 主题 token（_ 前缀，IDE 推断自 schema）
+s.color.white // 3. CSS keyword（无前缀，驼峰）
+s.padding.px(16) // 4. unit 方法
 ```
 
 内建嵌套方法全部以 `_` 前缀：

@@ -31,8 +31,8 @@ export function toIdent(key: string): string {
     if (isDevEnv()) {
       // eslint-disable-next-line no-console
       console.warn(
-        `[zui-core/toIdent] key "${key}" 含非法 ident 字符；keymap 转 "${'_' + stripped}" 可能让 carrier 无法命中。`
-        + '\n  推荐：token key 仅用 字母 / 数字 / `-` / `.`',
+        `[zui-core/toIdent] key "${key}" 含非法 ident 字符；keymap 转 "${'_' + stripped}" 可能让 carrier 无法命中。` +
+          '\n  推荐：token key 仅用 字母 / 数字 / `-` / `.`',
       )
     }
     // 兜底：移除非合法字符，让运行时仍能匹配到一个 ident（可能与其他 key 冲突，但不抛错）
@@ -62,8 +62,8 @@ export function buildKeymap<T extends ThemeSchema>(
       if (dev && inner.has(ident)) {
         // eslint-disable-next-line no-console
         console.warn(
-          `[zui-core/buildKeymap] ${cat} category 中 keys "${inner.get(ident)}" 与 "${key}" `
-          + `转 ident 后都是 "${ident}"，后者覆盖前者。请重命名其中一个。`,
+          `[zui-core/buildKeymap] ${cat} category 中 keys "${inner.get(ident)}" 与 "${key}" ` +
+            `转 ident 后都是 "${ident}"，后者覆盖前者。请重命名其中一个。`,
         )
       }
       inner.set(ident, key)

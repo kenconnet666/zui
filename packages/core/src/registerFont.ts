@@ -52,7 +52,9 @@ export function registerFont(family: string, sources: FontFaceSource[]): void {
     } else {
       srcExpr = `url('${escapeSingleQuotes(s.src)}')`
     }
-    const srcWithFormat = s.format ? `${srcExpr} format('${escapeSingleQuotes(s.format)}')` : srcExpr
+    const srcWithFormat = s.format
+      ? `${srcExpr} format('${escapeSingleQuotes(s.format)}')`
+      : srcExpr
     const escapedFamily = escapeSingleQuotes(family)
     const declarations: string[] = [
       `font-family: '${escapedFamily}'`,

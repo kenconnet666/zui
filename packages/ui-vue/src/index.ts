@@ -20,8 +20,4 @@ export {
   defaultDark,
 } from '@kenconnet666/zui-core'
 
-export type {
-  ThemeSchema,
-  ResolvedTheme,
-  DeepPartial,
-} from '@kenconnet666/zui-core'
+export type { ThemeSchema, ResolvedTheme, DeepPartial } from '@kenconnet666/zui-core'

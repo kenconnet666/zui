@@ -57,13 +57,13 @@ function resolveCsstypeEntry() {
 function getJSDocText(sourceText, node) {
   const docs = ts.getJSDocCommentsAndTags(node).filter(ts.isJSDoc)
   if (docs.length === 0) return null
-  return docs.map(d => sourceText.slice(d.pos, d.end).trim()).join('\n')
+  return docs.map((d) => sourceText.slice(d.pos, d.end).trim()).join('\n')
 }
 
 function indentBlock(text, indent) {
   return text
     .split('\n')
-    .map(line => `${indent}${line}`)
+    .map((line) => `${indent}${line}`)
     .join('\n')
 }
 
@@ -141,7 +141,7 @@ function collectStringArrayConsts(sf) {
         init = init.expression
       }
       if (!init || !ts.isArrayLiteralExpression(init)) continue
-      const arr = init.elements.filter(ts.isStringLiteral).map(s => s.text)
+      const arr = init.elements.filter(ts.isStringLiteral).map((s) => s.text)
       if (arr.length === init.elements.length) {
         consts.set(decl.name.text, arr)
       }
@@ -152,7 +152,13 @@ function collectStringArrayConsts(sf) {
 
 async function readEnhancedProps() {
   const src = await readFile(ENHANCED_PROPS_FILE, 'utf8')
-  const sf = ts.createSourceFile(ENHANCED_PROPS_FILE, src, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
+  const sf = ts.createSourceFile(
+    ENHANCED_PROPS_FILE,
+    src,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TS,
+  )
   const stringArrayConsts = collectStringArrayConsts(sf)
 
   for (const stmt of sf.statements) {
@@ -188,7 +194,11 @@ async function readEnhancedProps() {
             for (const elem of v.elements) {
               if (ts.isStringLiteral(elem)) {
                 acc.push(elem.text)
-              } else if (ts.isSpreadElement(elem) && ts.isIdentifier(elem.expression) && stringArrayConsts.has(elem.expression.text)) {
+              } else if (
+                ts.isSpreadElement(elem) &&
+                ts.isIdentifier(elem.expression) &&
+                stringArrayConsts.has(elem.expression.text)
+              ) {
                 acc.push(...stringArrayConsts.get(elem.expression.text))
               } else if (ts.isIdentifier(elem) && stringArrayConsts.has(elem.text)) {
                 acc.push(...stringArrayConsts.get(elem.text))
@@ -215,7 +225,13 @@ async function readEnhancedProps() {
  */
 async function readExtraKeywords() {
   const src = await readFile(EXTRA_KEYWORDS_FILE, 'utf8')
-  const sf = ts.createSourceFile(EXTRA_KEYWORDS_FILE, src, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
+  const sf = ts.createSourceFile(
+    EXTRA_KEYWORDS_FILE,
+    src,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TS,
+  )
 
   for (const stmt of sf.statements) {
     if (!ts.isVariableStatement(stmt)) continue
@@ -236,7 +252,7 @@ async function readExtraKeywords() {
           v = v.expression
         }
         if (!v || !ts.isArrayLiteralExpression(v)) continue
-        const arr = v.elements.filter(ts.isStringLiteral).map(s => s.text)
+        const arr = v.elements.filter(ts.isStringLiteral).map((s) => s.text)
         out.set(key, arr)
       }
       return out
@@ -253,7 +269,9 @@ function validateExtraKeywords(enhanced, extraKeywords) {
     const cfg = enhanced.get(prop)
     for (const kw of keywords) {
       if (!kw.startsWith('_')) {
-        errors.push(`[gen-properties] extra-keywords[${prop}] 包含非 _ 前缀关键字 '${kw}'（违反 D14 命名空间规则）`)
+        errors.push(
+          `[gen-properties] extra-keywords[${prop}] 包含非 _ 前缀关键字 '${kw}'（违反 D14 命名空间规则）`,
+        )
       }
       // 与 tokens 命名冲突：tokenCat → token ident 需要运行时 schema 才能列举，
       // 这里做"静态"防御：如果 prop 有 tokenCat，那么和它的 token ident 重名时报错。
@@ -316,14 +334,12 @@ function renderTypeExpr(propName, enhanced, extraKeywords) {
   } else if (Array.isArray(keywords) && keywords.length === 0) {
     keywordsType = 'GlobalKw'
   } else {
-    keywordsType = keywords.map(k => `'${k}'`).join(' | ') + ' | GlobalKw'
+    keywordsType = keywords.map((k) => `'${k}'`).join(' | ') + ' | GlobalKw'
   }
 
   // W6.2 D14 — extra-keywords slot
   const extraList = extraKeywords?.get(propName) ?? []
-  const extraType = extraList.length > 0
-    ? extraList.map(k => `'${k}'`).join(' | ')
-    : 'never'
+  const extraType = extraList.length > 0 ? extraList.map((k) => `'${k}'`).join(' | ') : 'never'
 
   const carrier = tokenCat === 'color' ? 'ColorPropCarrier' : 'PropCarrier'
 
@@ -385,18 +401,24 @@ function renderFile(properties, enhanced, extraKeywords) {
   lines.push('/**')
   lines.push(' * 取某个 CSS 属性的 csstype 值类型（剥掉 undefined）。')
   lines.push(' *')
-  lines.push(' * 用 `Properties<string | number, string | number>` 让 length / time 等数值属性同时接受数字')
+  lines.push(
+    ' * 用 `Properties<string | number, string | number>` 让 length / time 等数值属性同时接受数字',
+  )
   lines.push(' * （emotion 收到数字会自动加 px / ms）。')
   lines.push(' */')
-  lines.push("type CssValueOf<K extends keyof csstype.Properties> = NonNullable<csstype.Properties<string | number, string | number>[K]>")
+  lines.push(
+    'type CssValueOf<K extends keyof csstype.Properties> = NonNullable<csstype.Properties<string | number, string | number>[K]>',
+  )
   lines.push('')
   lines.push('/**')
   lines.push(' * 自动生成：所有 csstype 已知 CSS 属性在 Chain 上的方法签名。')
   lines.push(' *')
-  lines.push(" * - ENHANCED_PROPS 中的属性 → `PropCarrier` / `ColorPropCarrier`（四态）")
+  lines.push(' * - ENHANCED_PROPS 中的属性 → `PropCarrier` / `ColorPropCarrier`（四态）')
   lines.push(' * - 其余属性 → `PropFn`（函数态 + 全局关键字）')
   lines.push(' *')
-  lines.push(' * 通过 `interface Chain<T> extends IcxPropMethods<Chain<T>, T> {}` 注入到 Chain 实例类型。')
+  lines.push(
+    ' * 通过 `interface Chain<T> extends IcxPropMethods<Chain<T>, T> {}` 注入到 Chain 实例类型。',
+  )
   lines.push(' */')
   lines.push('export interface IcxPropMethods<TSelf, T extends ThemeSchema> {')
 
@@ -453,11 +475,13 @@ function validateKeywordCoverage(enhanced, keywordToCss) {
     }
   }
   if (missing.length > 0) {
-    const lines = missing.map(m => `  - "${m.keyword}" 在 ${m.prop} 的 keywords 里，但 KEYWORD_TO_CSS 没定义`)
+    const lines = missing.map(
+      (m) => `  - "${m.keyword}" 在 ${m.prop} 的 keywords 里，但 KEYWORD_TO_CSS 没定义`,
+    )
     throw new Error(
-      `[gen-properties] enhanced-props ↔ keywords.ts 不一致（${missing.length} 个 missing）：\n`
-      + lines.join('\n')
-      + '\n  修复：去 src/chain/keywords.ts 的 KEYWORD_TO_CSS 添加这些 keyword 的 camelCase → CSS 映射。',
+      `[gen-properties] enhanced-props ↔ keywords.ts 不一致（${missing.length} 个 missing）：\n` +
+        lines.join('\n') +
+        '\n  修复：去 src/chain/keywords.ts 的 KEYWORD_TO_CSS 添加这些 keyword 的 camelCase → CSS 映射。',
     )
   }
 }
@@ -485,10 +509,12 @@ async function main() {
 
   await writeFile(OUTPUT_FILE, out, 'utf8')
   console.log(`[gen-properties] 已生成: ${OUTPUT_FILE}`)
-  console.log(`[gen-properties] 属性总数 = ${properties.size}, 增强 = ${enhanced.size}, extra-keywords props = ${extraKeywords.size}`)
+  console.log(
+    `[gen-properties] 属性总数 = ${properties.size}, 增强 = ${enhanced.size}, extra-keywords props = ${extraKeywords.size}`,
+  )
 }
 
-main().catch(err => {
+main().catch((err) => {
   console.error(err)
   process.exit(1)
 })

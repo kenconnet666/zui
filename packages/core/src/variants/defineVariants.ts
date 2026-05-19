@@ -154,10 +154,7 @@ function resolvePropsWithDefaults(
 }
 
 /** 命中所有 `when` 字段才返回 true（部分匹配不算）。 */
-function matchesAll(
-  resolved: Record<string, string>,
-  when: Record<string, string>,
-): boolean {
+function matchesAll(resolved: Record<string, string>, when: Record<string, string>): boolean {
   for (const [k, v] of Object.entries(when)) {
     if (resolved[k] !== v) return false
   }

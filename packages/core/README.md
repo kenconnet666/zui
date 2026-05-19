@@ -15,21 +15,21 @@
 - **四态访问** —— 同一个属性入口支持四种用法：
 
   ```ts
-  s.color('red')                 // ① 函数调用：csstype 严格
-  s.color._primary               // ② 主题 token（_ 前缀）
-  s.color.white                  // ③ CSS keyword（无前缀）
-  s.padding.px(16)               // ④ unit 方法 → '16px'
+  s.color('red') // ① 函数调用：csstype 严格
+  s.color._primary // ② 主题 token（_ 前缀）
+  s.color.white // ③ CSS keyword（无前缀）
+  s.padding.px(16) // ④ unit 方法 → '16px'
   ```
 
 - **颜色 token modifier**：颜色 token 命中后挂 6 个 modifier（基于 color2k）：
 
   ```ts
-  s.backgroundColor._primary.alpha(20)        // rgba(37, 99, 235, 0.2)
-  s.color._primary.darken(15)                 // 加深 15%
-  s.borderColor._primary.lighten(30)          // 提亮 30%
-  s.color._danger.mix('#ffffff', 50)          // 与白色 50% 混合
-  s.color._primary.saturate(20)               // 饱和度 +20%
-  s.color._primary.desaturate(40)             // 饱和度 -40%
+  s.backgroundColor._primary.alpha(20) // rgba(37, 99, 235, 0.2)
+  s.color._primary.darken(15) // 加深 15%
+  s.borderColor._primary.lighten(30) // 提亮 30%
+  s.color._danger.mix('#ffffff', 50) // 与白色 50% 混合
+  s.color._primary.saturate(20) // 饱和度 +20%
+  s.color._primary.desaturate(40) // 饱和度 -40%
   ```
 
 - **59 个内建嵌套方法**：`_hover` / `_focus` / `_dark` / `_lineClamp(3)` / `_truncate()` /
@@ -58,13 +58,15 @@ pnpm add @emotion/css
 ```ts
 import { icss, defaultLight } from '@kenconnet666/zui-core'
 
-const cls = icss(defaultLight, s => {
+const cls = icss(defaultLight, (s) => {
   s.color.white
   s.backgroundColor._primary
   s.padding.px(12)
   s.borderRadius._md
   s.fontWeight._bold
-  s._hover(h => { h.backgroundColor._primary.alpha(85) })
+  s._hover((h) => {
+    h.backgroundColor._primary.alpha(85)
+  })
 })
 
 document.body.innerHTML = `<button class="${cls}">Click</button>`
@@ -84,17 +86,17 @@ interface BrandSchema extends ThemeSchema {
 class BrandTheme extends Theme<BrandSchema> {
   constructor() {
     super({
-      color:   { primary: '#2563eb', danger: '#dc2626', brand: '#7c3aed' },
+      color: { primary: '#2563eb', danger: '#dc2626', brand: '#7c3aed' },
       spacing: { xs: '4px', sm: '8px', md: '16px', lg: '24px' },
-      brand:   { logo: 80, accent: '#a78bfa' },
+      brand: { logo: 80, accent: '#a78bfa' },
     })
   }
 }
 
 const myTheme = new BrandTheme()
-const cls = icss(myTheme, s => {
-  s.color._brand                  // ✅ 自家 token，IDE 补全
-  s.padding._lg                   // ✅
+const cls = icss(myTheme, (s) => {
+  s.color._brand // ✅ 自家 token，IDE 补全
+  s.padding._lg // ✅
   // s.color._notExist            // ❌ 编译期飘红
 })
 ```
@@ -108,27 +110,27 @@ const c = new Chain(defaultLight)
 c.color._primary
 c.padding.px(16)
 c.fontSize._lg
-const cls = c.toString()    // → emotion className
+const cls = c.toString() // → emotion className
 ```
 
 ---
 
 ## 内建方法（59 个，按职责分组）
 
-| 组 | 方法 |
-|---|---|
-| 状态伪类 | `_hover` `_active` `_focus` `_focusVisible` `_focusWithin` `_disabled` `_checked` `_enabled` |
-| 表单伪类 | `_required` `_optional` `_valid` `_invalid` `_readOnly` `_placeholderShown` `_inRange` `_outOfRange` |
-| 链接 / 目标 | `_link` `_visited` `_target` `_dir(rtl/ltr, fn)` |
-| 伪元素 | `_before` `_after` `_placeholder` `_selection` `_marker` |
-| 结构伪类 | `_firstChild` `_lastChild` `_only` `_empty` `_nthChild(n, fn)` `_nthOfType(n, fn)` |
-| group / peer | `_groupHover` `_groupFocus` `_groupActive` `_peerHover` `_peerFocus` `_peerChecked` |
-| 选择器 / 条件 | `_selector(sel, fn)` `_and(tail, fn)` `_when(cond, fn)` `_unless(cond, fn)` |
-| At 规则 | `_media('_md', fn)` `_supports('(...)' , fn)` `_container('_lg', fn)` |
-| 媒体修饰符 | `_dark` `_light` `_motionSafe` `_motionReduce` `_print` `_rtl` `_ltr` |
-| 工具组合 | `_truncate()` `_lineClamp(n)` `_srOnly()` `_centered()` `_absoluteCenter()` |
-| filter | `_blur('_md')` `_backdropBlur('_md')` |
-| 逃生舱 | `_prop(name, value)` `_var('--x', val)` `_use(cssObj)` `_apply(fn)` `label(name)` |
+| 组            | 方法                                                                                                 |
+| ------------- | ---------------------------------------------------------------------------------------------------- |
+| 状态伪类      | `_hover` `_active` `_focus` `_focusVisible` `_focusWithin` `_disabled` `_checked` `_enabled`         |
+| 表单伪类      | `_required` `_optional` `_valid` `_invalid` `_readOnly` `_placeholderShown` `_inRange` `_outOfRange` |
+| 链接 / 目标   | `_link` `_visited` `_target` `_dir(rtl/ltr, fn)`                                                     |
+| 伪元素        | `_before` `_after` `_placeholder` `_selection` `_marker`                                             |
+| 结构伪类      | `_firstChild` `_lastChild` `_only` `_empty` `_nthChild(n, fn)` `_nthOfType(n, fn)`                   |
+| group / peer  | `_groupHover` `_groupFocus` `_groupActive` `_peerHover` `_peerFocus` `_peerChecked`                  |
+| 选择器 / 条件 | `_selector(sel, fn)` `_and(tail, fn)` `_when(cond, fn)` `_unless(cond, fn)`                          |
+| At 规则       | `_media('_md', fn)` `_supports('(...)' , fn)` `_container('_lg', fn)`                                |
+| 媒体修饰符    | `_dark` `_light` `_motionSafe` `_motionReduce` `_print` `_rtl` `_ltr`                                |
+| 工具组合      | `_truncate()` `_lineClamp(n)` `_srOnly()` `_centered()` `_absoluteCenter()`                          |
+| filter        | `_blur('_md')` `_backdropBlur('_md')`                                                                |
+| 逃生舱        | `_prop(name, value)` `_var('--x', val)` `_use(cssObj)` `_apply(fn)` `label(name)`                    |
 
 ---
 
@@ -151,7 +153,7 @@ const cls = c.toString()    // → emotion className
 class Theme<T extends ThemeSchema> {
   constructor(schema: T)
   schema: T
-  resolve(): ResolvedTheme<T>        // 展开 function token，结果缓存
+  resolve(): ResolvedTheme<T> // 展开 function token，结果缓存
   merge(partial: DeepPartial<T>): Theme<T>
 }
 
@@ -162,11 +164,11 @@ class Theme<T extends ThemeSchema> {
 
 ```ts
 interface ThemeSchema {
-  color?:      Record<string, ThemeValue>
-  spacing?:    Record<string, ThemeValue>
-  radius?:     Record<string, ThemeValue>
-  shadow?:     Record<string, ThemeValue>
-  fontSize?:   Record<string, ThemeValue>
+  color?: Record<string, ThemeValue>
+  spacing?: Record<string, ThemeValue>
+  radius?: Record<string, ThemeValue>
+  shadow?: Record<string, ThemeValue>
+  fontSize?: Record<string, ThemeValue>
   fontWeight?: Record<string, ThemeValue>
   // ... 等 18 个内置 category
   [customCategory: string]: Record<string, ThemeValue> | undefined
@@ -181,7 +183,7 @@ type ThemeValue = string | number | ((ctx: ResolvedThemeContext) => string | num
 new Theme({
   color: {
     primary: '#2563eb',
-    primaryHover: ctx => ctx.color!.primary,   // 派生
+    primaryHover: (ctx) => ctx.color!.primary, // 派生
   },
 })
 ```

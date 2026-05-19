@@ -22,7 +22,7 @@ function inspectCss(node: Record<string, unknown>, depth: number): string {
       lines.push(inspectCss(v as Record<string, unknown>, depth + 1))
       lines.push(`${indent}}`)
     } else {
-      const cssKey = key.replace(/[A-Z]/g, m => '-' + m.toLowerCase())
+      const cssKey = key.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase())
       lines.push(`${indent}${cssKey}: ${v as string};`)
     }
   }
@@ -141,9 +141,8 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   label(name: string): this {
     if (!name) return this
     const existing = this._node.label
-    this._node.label = typeof existing === 'string' && existing.length > 0
-      ? `${existing}.${name}`
-      : name
+    this._node.label =
+      typeof existing === 'string' && existing.length > 0 ? `${existing}.${name}` : name
     return this
   }
 
@@ -177,31 +176,69 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
 
   // ─── 伪类（状态） ───
 
-  _hover(fn: (s: this) => void): this { return this._nest('&:hover', fn) }
-  _active(fn: (s: this) => void): this { return this._nest('&:active', fn) }
-  _focus(fn: (s: this) => void): this { return this._nest('&:focus', fn) }
-  _focusVisible(fn: (s: this) => void): this { return this._nest('&:focus-visible', fn) }
-  _focusWithin(fn: (s: this) => void): this { return this._nest('&:focus-within', fn) }
-  _disabled(fn: (s: this) => void): this { return this._nest('&:disabled', fn) }
-  _checked(fn: (s: this) => void): this { return this._nest('&:checked', fn) }
-  _enabled(fn: (s: this) => void): this { return this._nest('&:enabled', fn) }
+  _hover(fn: (s: this) => void): this {
+    return this._nest('&:hover', fn)
+  }
+  _active(fn: (s: this) => void): this {
+    return this._nest('&:active', fn)
+  }
+  _focus(fn: (s: this) => void): this {
+    return this._nest('&:focus', fn)
+  }
+  _focusVisible(fn: (s: this) => void): this {
+    return this._nest('&:focus-visible', fn)
+  }
+  _focusWithin(fn: (s: this) => void): this {
+    return this._nest('&:focus-within', fn)
+  }
+  _disabled(fn: (s: this) => void): this {
+    return this._nest('&:disabled', fn)
+  }
+  _checked(fn: (s: this) => void): this {
+    return this._nest('&:checked', fn)
+  }
+  _enabled(fn: (s: this) => void): this {
+    return this._nest('&:enabled', fn)
+  }
 
   // ─── 伪类（表单状态） ───
 
-  _required(fn: (s: this) => void): this { return this._nest('&:required', fn) }
-  _optional(fn: (s: this) => void): this { return this._nest('&:optional', fn) }
-  _valid(fn: (s: this) => void): this { return this._nest('&:valid', fn) }
-  _invalid(fn: (s: this) => void): this { return this._nest('&:invalid', fn) }
-  _readOnly(fn: (s: this) => void): this { return this._nest('&:read-only', fn) }
-  _placeholderShown(fn: (s: this) => void): this { return this._nest('&:placeholder-shown', fn) }
-  _inRange(fn: (s: this) => void): this { return this._nest('&:in-range', fn) }
-  _outOfRange(fn: (s: this) => void): this { return this._nest('&:out-of-range', fn) }
+  _required(fn: (s: this) => void): this {
+    return this._nest('&:required', fn)
+  }
+  _optional(fn: (s: this) => void): this {
+    return this._nest('&:optional', fn)
+  }
+  _valid(fn: (s: this) => void): this {
+    return this._nest('&:valid', fn)
+  }
+  _invalid(fn: (s: this) => void): this {
+    return this._nest('&:invalid', fn)
+  }
+  _readOnly(fn: (s: this) => void): this {
+    return this._nest('&:read-only', fn)
+  }
+  _placeholderShown(fn: (s: this) => void): this {
+    return this._nest('&:placeholder-shown', fn)
+  }
+  _inRange(fn: (s: this) => void): this {
+    return this._nest('&:in-range', fn)
+  }
+  _outOfRange(fn: (s: this) => void): this {
+    return this._nest('&:out-of-range', fn)
+  }
 
   // ─── 伪类（链接 / 目标） ───
 
-  _link(fn: (s: this) => void): this { return this._nest('&:link', fn) }
-  _visited(fn: (s: this) => void): this { return this._nest('&:visited', fn) }
-  _target(fn: (s: this) => void): this { return this._nest('&:target', fn) }
+  _link(fn: (s: this) => void): this {
+    return this._nest('&:link', fn)
+  }
+  _visited(fn: (s: this) => void): this {
+    return this._nest('&:visited', fn)
+  }
+  _target(fn: (s: this) => void): this {
+    return this._nest('&:target', fn)
+  }
   /** CSS Selectors 4 `:dir(rtl)` / `:dir(ltr)`。 */
   _dir(direction: 'rtl' | 'ltr', fn: (s: this) => void): this {
     return this._nest(`&:dir(${direction})`, fn)
@@ -209,19 +246,37 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
 
   // ─── 伪元素 ───
 
-  _before(fn: (s: this) => void): this { return this._nest('&::before', fn) }
-  _after(fn: (s: this) => void): this { return this._nest('&::after', fn) }
-  _placeholder(fn: (s: this) => void): this { return this._nest('&::placeholder', fn) }
-  _selection(fn: (s: this) => void): this { return this._nest('&::selection', fn) }
+  _before(fn: (s: this) => void): this {
+    return this._nest('&::before', fn)
+  }
+  _after(fn: (s: this) => void): this {
+    return this._nest('&::after', fn)
+  }
+  _placeholder(fn: (s: this) => void): this {
+    return this._nest('&::placeholder', fn)
+  }
+  _selection(fn: (s: this) => void): this {
+    return this._nest('&::selection', fn)
+  }
   /** `::marker` 列表项 marker。 */
-  _marker(fn: (s: this) => void): this { return this._nest('&::marker', fn) }
+  _marker(fn: (s: this) => void): this {
+    return this._nest('&::marker', fn)
+  }
 
   // ─── 结构伪类 ───
 
-  _firstChild(fn: (s: this) => void): this { return this._nest('&:first-child', fn) }
-  _lastChild(fn: (s: this) => void): this { return this._nest('&:last-child', fn) }
-  _only(fn: (s: this) => void): this { return this._nest('&:only-child', fn) }
-  _empty(fn: (s: this) => void): this { return this._nest('&:empty', fn) }
+  _firstChild(fn: (s: this) => void): this {
+    return this._nest('&:first-child', fn)
+  }
+  _lastChild(fn: (s: this) => void): this {
+    return this._nest('&:last-child', fn)
+  }
+  _only(fn: (s: this) => void): this {
+    return this._nest('&:only-child', fn)
+  }
+  _empty(fn: (s: this) => void): this {
+    return this._nest('&:empty', fn)
+  }
   _nthChild(arg: number | string, fn: (s: this) => void): this {
     return this._nest(`&:nth-child(${arg})`, fn)
   }
@@ -232,13 +287,25 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   // ─── 组合选择器（Tailwind group / peer 风格） ───
 
   /** 父级带 `.group` class 且 hover 时（`:where(.group):hover &`）。 */
-  _groupHover(fn: (s: this) => void): this { return this._nest(':where(.group):hover &', fn) }
-  _groupFocus(fn: (s: this) => void): this { return this._nest(':where(.group):focus &', fn) }
-  _groupActive(fn: (s: this) => void): this { return this._nest(':where(.group):active &', fn) }
+  _groupHover(fn: (s: this) => void): this {
+    return this._nest(':where(.group):hover &', fn)
+  }
+  _groupFocus(fn: (s: this) => void): this {
+    return this._nest(':where(.group):focus &', fn)
+  }
+  _groupActive(fn: (s: this) => void): this {
+    return this._nest(':where(.group):active &', fn)
+  }
   /** 兄弟节点带 `.peer` 且 hover 时（`:where(.peer):hover ~ &`）。 */
-  _peerHover(fn: (s: this) => void): this { return this._nest(':where(.peer):hover ~ &', fn) }
-  _peerFocus(fn: (s: this) => void): this { return this._nest(':where(.peer):focus ~ &', fn) }
-  _peerChecked(fn: (s: this) => void): this { return this._nest(':where(.peer):checked ~ &', fn) }
+  _peerHover(fn: (s: this) => void): this {
+    return this._nest(':where(.peer):hover ~ &', fn)
+  }
+  _peerFocus(fn: (s: this) => void): this {
+    return this._nest(':where(.peer):focus ~ &', fn)
+  }
+  _peerChecked(fn: (s: this) => void): this {
+    return this._nest(':where(.peer):checked ~ &', fn)
+  }
 
   // ─── 选择器 / 条件 ───
 
@@ -333,17 +400,27 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
    * 配合 `interpolate-size: allow-keywords` 可实现 `height: 0 → height: auto` 动画。
    */
   _starting(fn: (s: this) => void): this {
-    return this._nest('@starting-style', s => s._nest('&', fn))
+    return this._nest('@starting-style', (s) => s._nest('&', fn))
   }
 
   // ─── W2.4 Container query variant 简写 ───
 
   /** `@container (min-width: theme.breakpoint.sm)`。 */
-  _containerSm(fn: (s: this) => void): this { return this._container('_sm', fn) }
-  _containerMd(fn: (s: this) => void): this { return this._container('_md', fn) }
-  _containerLg(fn: (s: this) => void): this { return this._container('_lg', fn) }
-  _containerXl(fn: (s: this) => void): this { return this._container('_xl', fn) }
-  _container2xl(fn: (s: this) => void): this { return this._container('_2xl', fn) }
+  _containerSm(fn: (s: this) => void): this {
+    return this._container('_sm', fn)
+  }
+  _containerMd(fn: (s: this) => void): this {
+    return this._container('_md', fn)
+  }
+  _containerLg(fn: (s: this) => void): this {
+    return this._container('_lg', fn)
+  }
+  _containerXl(fn: (s: this) => void): this {
+    return this._container('_xl', fn)
+  }
+  _container2xl(fn: (s: this) => void): this {
+    return this._container('_2xl', fn)
+  }
 
   // ─── W2.5 group / peer data 变种 ───
 
@@ -375,7 +452,7 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
 
   /** `@layer <name> { & { ... } }`。配合 W8.1 `injectLayerOrder` 控制级联优先级。 */
   _layer(name: string, fn: (s: this) => void): this {
-    return this._nest(`@layer ${name}`, s => s._nest('&', fn))
+    return this._nest(`@layer ${name}`, (s) => s._nest('&', fn))
   }
 
   // ─── At 规则 ───
@@ -402,17 +479,27 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
 
   // ─── 媒体修饰符简写 ───
 
-  _dark(fn: (s: this) => void): this { return this._nest('@media (prefers-color-scheme: dark)', fn) }
-  _light(fn: (s: this) => void): this { return this._nest('@media (prefers-color-scheme: light)', fn) }
+  _dark(fn: (s: this) => void): this {
+    return this._nest('@media (prefers-color-scheme: dark)', fn)
+  }
+  _light(fn: (s: this) => void): this {
+    return this._nest('@media (prefers-color-scheme: light)', fn)
+  }
   _motionSafe(fn: (s: this) => void): this {
     return this._nest('@media (prefers-reduced-motion: no-preference)', fn)
   }
   _motionReduce(fn: (s: this) => void): this {
     return this._nest('@media (prefers-reduced-motion: reduce)', fn)
   }
-  _print(fn: (s: this) => void): this { return this._nest('@media print', fn) }
-  _rtl(fn: (s: this) => void): this { return this._nest(':where([dir="rtl"]) &', fn) }
-  _ltr(fn: (s: this) => void): this { return this._nest(':where([dir="ltr"]) &', fn) }
+  _print(fn: (s: this) => void): this {
+    return this._nest('@media print', fn)
+  }
+  _rtl(fn: (s: this) => void): this {
+    return this._nest(':where([dir="rtl"]) &', fn)
+  }
+  _ltr(fn: (s: this) => void): this {
+    return this._nest(':where([dir="ltr"]) &', fn)
+  }
 
   // ─── W7 Pattern 库（Panda / Chakra 风组合 helper） ───
 
@@ -422,31 +509,49 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
    * @example
    * s._stack({ direction: 'row', gap: '_md', align: 'center', justify: 'spaceBetween' })
    */
-  _stack(opts: {
-    direction?: 'row' | 'column' | 'rowReverse' | 'columnReverse'
-    gap?: string | number
-    align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'
-    justify?: 'start' | 'center' | 'end' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly'
-    inline?: boolean
-  } = {}): this {
+  _stack(
+    opts: {
+      direction?: 'row' | 'column' | 'rowReverse' | 'columnReverse'
+      gap?: string | number
+      align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'
+      justify?: 'start' | 'center' | 'end' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly'
+      inline?: boolean
+    } = {},
+  ): this {
     this._node.display = opts.inline ? 'inline-flex' : 'flex'
-    const dirMap: Record<string, string> = { row: 'row', column: 'column', rowReverse: 'row-reverse', columnReverse: 'column-reverse' }
+    const dirMap: Record<string, string> = {
+      row: 'row',
+      column: 'column',
+      rowReverse: 'row-reverse',
+      columnReverse: 'column-reverse',
+    }
     if (opts.direction) this._node.flexDirection = dirMap[opts.direction]
     if (opts.gap !== undefined) {
       const g = opts.gap
       if (typeof g === 'string' && g.startsWith('_')) {
         const name = g.slice(1)
-        const slot = (this._theme as Record<string, Record<string, string | number> | undefined>).spacing
+        const slot = (this._theme as Record<string, Record<string, string | number> | undefined>)
+          .spacing
         const value = slot?.[name]
         this._node.gap = value ?? g
       } else {
         this._node.gap = g
       }
     }
-    const alignMap: Record<string, string> = { start: 'flex-start', center: 'center', end: 'flex-end', stretch: 'stretch', baseline: 'baseline' }
+    const alignMap: Record<string, string> = {
+      start: 'flex-start',
+      center: 'center',
+      end: 'flex-end',
+      stretch: 'stretch',
+      baseline: 'baseline',
+    }
     const justifyMap: Record<string, string> = {
-      start: 'flex-start', center: 'center', end: 'flex-end',
-      spaceBetween: 'space-between', spaceAround: 'space-around', spaceEvenly: 'space-evenly',
+      start: 'flex-start',
+      center: 'center',
+      end: 'flex-end',
+      spaceBetween: 'space-between',
+      spaceAround: 'space-around',
+      spaceEvenly: 'space-evenly',
     }
     if (opts.align) this._node.alignItems = alignMap[opts.align]
     if (opts.justify) this._node.justifyContent = justifyMap[opts.justify]
@@ -460,24 +565,29 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
    * s._grid({ cols: 3, gap: '_md' })          // 3 列等宽
    * s._grid({ cols: 'auto 1fr auto' })        // 字面 template
    */
-  _grid(opts: {
-    cols?: number | string
-    rows?: number | string
-    gap?: string | number
-    inline?: boolean
-  } = {}): this {
+  _grid(
+    opts: {
+      cols?: number | string
+      rows?: number | string
+      gap?: string | number
+      inline?: boolean
+    } = {},
+  ): this {
     this._node.display = opts.inline ? 'inline-grid' : 'grid'
     if (opts.cols !== undefined) {
-      this._node.gridTemplateColumns = typeof opts.cols === 'number' ? `repeat(${opts.cols}, minmax(0, 1fr))` : opts.cols
+      this._node.gridTemplateColumns =
+        typeof opts.cols === 'number' ? `repeat(${opts.cols}, minmax(0, 1fr))` : opts.cols
     }
     if (opts.rows !== undefined) {
-      this._node.gridTemplateRows = typeof opts.rows === 'number' ? `repeat(${opts.rows}, minmax(0, 1fr))` : opts.rows
+      this._node.gridTemplateRows =
+        typeof opts.rows === 'number' ? `repeat(${opts.rows}, minmax(0, 1fr))` : opts.rows
     }
     if (opts.gap !== undefined) {
       const g = opts.gap
       if (typeof g === 'string' && g.startsWith('_')) {
         const name = g.slice(1)
-        const slot = (this._theme as Record<string, Record<string, string | number> | undefined>).spacing
+        const slot = (this._theme as Record<string, Record<string, string | number> | undefined>)
+          .spacing
         const value = slot?.[name]
         this._node.gap = value ?? g
       } else {
@@ -488,13 +598,25 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   }
 
   /** `aspect-ratio: 16 / 9`（video）。 */
-  _aspectVideo(): this { this._node.aspectRatio = '16 / 9'; return this }
+  _aspectVideo(): this {
+    this._node.aspectRatio = '16 / 9'
+    return this
+  }
   /** `aspect-ratio: 1 / 1`（square）。 */
-  _aspectSquare(): this { this._node.aspectRatio = '1 / 1'; return this }
+  _aspectSquare(): this {
+    this._node.aspectRatio = '1 / 1'
+    return this
+  }
   /** `aspect-ratio: 3 / 4`（portrait）。 */
-  _aspectPortrait(): this { this._node.aspectRatio = '3 / 4'; return this }
+  _aspectPortrait(): this {
+    this._node.aspectRatio = '3 / 4'
+    return this
+  }
   /** `aspect-ratio: 4 / 3`（landscape）。 */
-  _aspectLandscape(): this { this._node.aspectRatio = '4 / 3'; return this }
+  _aspectLandscape(): this {
+    this._node.aspectRatio = '4 / 3'
+    return this
+  }
 
   /**
    * a11y 焦点环（`:focus-visible` 内设 outline）。
@@ -502,12 +624,14 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
    * @example
    * s._focusRing({ color: '_primary', width: 2, offset: 2 })
    */
-  _focusRing(opts: {
-    color?: string  // token (e.g. '_primary') 或字面 css color
-    width?: number
-    offset?: number
-    style?: 'solid' | 'dashed' | 'dotted' | 'double'
-  } = {}): this {
+  _focusRing(
+    opts: {
+      color?: string // token (e.g. '_primary') 或字面 css color
+      width?: number
+      offset?: number
+      style?: 'solid' | 'dashed' | 'dotted' | 'double'
+    } = {},
+  ): this {
     const width = opts.width ?? 2
     const offset = opts.offset ?? 2
     const style = opts.style ?? 'solid'
@@ -515,13 +639,14 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     if (opts.color) {
       if (opts.color.startsWith('_')) {
         const name = opts.color.slice(1)
-        const slot = (this._theme as Record<string, Record<string, string | number> | undefined>).color
+        const slot = (this._theme as Record<string, Record<string, string | number> | undefined>)
+          .color
         color = slot?.[name] ?? opts.color
       } else {
         color = opts.color
       }
     }
-    return this._nest('&:focus-visible', s => {
+    return this._nest('&:focus-visible', (s) => {
       s._node.outline = `${width}px ${style} ${color}`
       s._node.outlineOffset = `${offset}px`
     })
@@ -530,7 +655,9 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   /**
    * 视觉隐藏但屏读器可读（与 `_srOnly` 等价；语义化别名，修 C12）。
    */
-  _visuallyHidden(): this { return this._srOnly() }
+  _visuallyHidden(): this {
+    return this._srOnly()
+  }
 
   /** 绝对铺满父级（`position: absolute; inset: 0`）。 */
   _fillParent(): this {
@@ -544,7 +671,7 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     this._node.position = 'absolute'
     this._node.left = '-9999px'
     this._node.zIndex = 999
-    return this._nest('&:focus', s => {
+    return this._nest('&:focus', (s) => {
       s._node.left = '50%'
       s._node.translate = '-50% 0'
     })
@@ -612,7 +739,7 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   /** `translate: <x> [<y>]`。number → px。 */
   _translate(x: number | string, y?: number | string): this {
     const xv = typeof x === 'number' ? `${x}px` : x
-    const yv = y === undefined ? '' : (typeof y === 'number' ? ` ${y}px` : ` ${y}`)
+    const yv = y === undefined ? '' : typeof y === 'number' ? ` ${y}px` : ` ${y}`
     this._node.translate = `${xv}${yv}`
     return this
   }
@@ -657,9 +784,18 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     this._node.scale = ny === undefined ? `${n}` : `${n} ${ny}`
     return this
   }
-  _scaleX(n: number): this { this._node.scale = `${n} 1`; return this }
-  _scaleY(n: number): this { this._node.scale = `1 ${n}`; return this }
-  _scaleZ(n: number): this { this._node.scale = `1 1 ${n}`; return this }
+  _scaleX(n: number): this {
+    this._node.scale = `${n} 1`
+    return this
+  }
+  _scaleY(n: number): this {
+    this._node.scale = `1 ${n}`
+    return this
+  }
+  _scaleZ(n: number): this {
+    this._node.scale = `1 1 ${n}`
+    return this
+  }
 
   /**
    * `transform: skew(<x>deg [, <y>deg])`。
@@ -700,24 +836,58 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   }
 
   /** `filter: blur(<px>px)`。沿用 token 风格的 W1.4 helper。 */
-  _filterBlur(px: number): this { return this._appendFilter('filter', `blur(${px}px)`) }
-  _filterBrightness(pct: number): this { return this._appendFilter('filter', `brightness(${pct}%)`) }
-  _filterContrast(pct: number): this { return this._appendFilter('filter', `contrast(${pct}%)`) }
-  _filterGrayscale(pct: number): this { return this._appendFilter('filter', `grayscale(${pct}%)`) }
-  _filterHueRotate(deg: number): this { return this._appendFilter('filter', `hue-rotate(${deg}deg)`) }
-  _filterInvert(pct: number): this { return this._appendFilter('filter', `invert(${pct}%)`) }
-  _filterSaturate(pct: number): this { return this._appendFilter('filter', `saturate(${pct}%)`) }
-  _filterSepia(pct: number): this { return this._appendFilter('filter', `sepia(${pct}%)`) }
-  _filterDropShadow(spec: string): this { return this._appendFilter('filter', `drop-shadow(${spec})`) }
+  _filterBlur(px: number): this {
+    return this._appendFilter('filter', `blur(${px}px)`)
+  }
+  _filterBrightness(pct: number): this {
+    return this._appendFilter('filter', `brightness(${pct}%)`)
+  }
+  _filterContrast(pct: number): this {
+    return this._appendFilter('filter', `contrast(${pct}%)`)
+  }
+  _filterGrayscale(pct: number): this {
+    return this._appendFilter('filter', `grayscale(${pct}%)`)
+  }
+  _filterHueRotate(deg: number): this {
+    return this._appendFilter('filter', `hue-rotate(${deg}deg)`)
+  }
+  _filterInvert(pct: number): this {
+    return this._appendFilter('filter', `invert(${pct}%)`)
+  }
+  _filterSaturate(pct: number): this {
+    return this._appendFilter('filter', `saturate(${pct}%)`)
+  }
+  _filterSepia(pct: number): this {
+    return this._appendFilter('filter', `sepia(${pct}%)`)
+  }
+  _filterDropShadow(spec: string): this {
+    return this._appendFilter('filter', `drop-shadow(${spec})`)
+  }
 
-  _backdropFilterBlur(px: number): this { return this._appendFilter('backdropFilter', `blur(${px}px)`) }
-  _backdropFilterBrightness(pct: number): this { return this._appendFilter('backdropFilter', `brightness(${pct}%)`) }
-  _backdropFilterContrast(pct: number): this { return this._appendFilter('backdropFilter', `contrast(${pct}%)`) }
-  _backdropFilterGrayscale(pct: number): this { return this._appendFilter('backdropFilter', `grayscale(${pct}%)`) }
-  _backdropFilterHueRotate(deg: number): this { return this._appendFilter('backdropFilter', `hue-rotate(${deg}deg)`) }
-  _backdropFilterInvert(pct: number): this { return this._appendFilter('backdropFilter', `invert(${pct}%)`) }
-  _backdropFilterSaturate(pct: number): this { return this._appendFilter('backdropFilter', `saturate(${pct}%)`) }
-  _backdropFilterSepia(pct: number): this { return this._appendFilter('backdropFilter', `sepia(${pct}%)`) }
+  _backdropFilterBlur(px: number): this {
+    return this._appendFilter('backdropFilter', `blur(${px}px)`)
+  }
+  _backdropFilterBrightness(pct: number): this {
+    return this._appendFilter('backdropFilter', `brightness(${pct}%)`)
+  }
+  _backdropFilterContrast(pct: number): this {
+    return this._appendFilter('backdropFilter', `contrast(${pct}%)`)
+  }
+  _backdropFilterGrayscale(pct: number): this {
+    return this._appendFilter('backdropFilter', `grayscale(${pct}%)`)
+  }
+  _backdropFilterHueRotate(deg: number): this {
+    return this._appendFilter('backdropFilter', `hue-rotate(${deg}deg)`)
+  }
+  _backdropFilterInvert(pct: number): this {
+    return this._appendFilter('backdropFilter', `invert(${pct}%)`)
+  }
+  _backdropFilterSaturate(pct: number): this {
+    return this._appendFilter('backdropFilter', `saturate(${pct}%)`)
+  }
+  _backdropFilterSepia(pct: number): this {
+    return this._appendFilter('backdropFilter', `sepia(${pct}%)`)
+  }
 
   // ─── 既有 _blur / _backdropBlur 保留（token 风的简写，比新增 _filterBlur 更高语义） ───
 
@@ -804,7 +974,8 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     if (typeof value === 'number') return `${value}ms`
     if (value.startsWith('_')) {
       const name = value.slice(1)
-      const slot = (this._theme as Record<string, Record<string, string | number> | undefined>).duration
+      const slot = (this._theme as Record<string, Record<string, string | number> | undefined>)
+        .duration
       const v = slot?.[name]
       return v != null ? String(v) : value
     }
@@ -815,7 +986,8 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   private _resolveEasingToken(value: string): string {
     if (value.startsWith('_')) {
       const name = value.slice(1)
-      const slot = (this._theme as Record<string, Record<string, string | number> | undefined>).easing
+      const slot = (this._theme as Record<string, Record<string, string | number> | undefined>)
+        .easing
       const v = slot?.[name]
       return v != null ? String(v) : value
     }
@@ -885,10 +1057,7 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
    * s._overscroll('none', 'y')       // overscroll-behavior-y: none（仅纵向）
    * s._overscroll('auto', 'inline')  // overscroll-behavior-inline: auto
    */
-  _overscroll(
-    behavior: 'auto' | 'contain' | 'none',
-    axis?: 'x' | 'y' | 'inline' | 'block',
-  ): this {
+  _overscroll(behavior: 'auto' | 'contain' | 'none', axis?: 'x' | 'y' | 'inline' | 'block'): this {
     if (axis === undefined) {
       this._node.overscrollBehavior = behavior
     } else {
@@ -978,5 +1147,4 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
 
 // declaration merging: 把 IcxPropMethods 的所有 declare 字段拼进 Chain 实例类型
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface Chain<T extends ThemeSchema = DefaultSchema>
-  extends IcxPropMethods<Chain<T>, T> {}
+export interface Chain<T extends ThemeSchema = DefaultSchema> extends IcxPropMethods<Chain<T>, T> {}

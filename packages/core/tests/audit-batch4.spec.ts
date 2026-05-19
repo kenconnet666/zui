@@ -1,5 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { createIcssInstance, injectGlobal, injectLayer, injectLayerOrder, registerCustomProperty, registerFont } from '../src'
+import {
+  createIcssInstance,
+  injectGlobal,
+  injectLayer,
+  injectLayerOrder,
+  registerCustomProperty,
+  registerFont,
+} from '../src'
 import { _resetInjectGlobalCache } from '../src/injectGlobal'
 
 /**
@@ -14,7 +21,9 @@ function makeMockInstance() {
   const inst = createIcssInstance({
     css: () => 'mock',
     cx: (...a: unknown[]) => a.filter(Boolean).join(' '),
-    injectGlobal: (s) => { calls.push(s) },
+    injectGlobal: (s) => {
+      calls.push(s)
+    },
     keyframes: () => 'mock-kf',
   })
   return { inst, calls }
@@ -25,11 +34,13 @@ function makeMockInstance() {
 // ────────────────────────────────────────────────────────────────────────────
 
 describe('S9.1 — registerCustomProperty 生成 @property block', () => {
-  beforeEach(() => { _resetInjectGlobalCache() })
+  beforeEach(() => {
+    _resetInjectGlobalCache()
+  })
 
   it('基础 @property block 包含 syntax / inherits / initial-value', () => {
     const { inst, calls } = makeMockInstance()
-    inst.injectGlobal = () => {}  // 不影响其它测试
+    inst.injectGlobal = () => {} // 不影响其它测试
     inst.registerCustomProperty('--my-angle', {
       syntax: '<angle>',
       inherits: false,
@@ -83,20 +94,20 @@ describe('S9.1 — registerCustomProperty 生成 @property block', () => {
 // ────────────────────────────────────────────────────────────────────────────
 
 describe('S9.2 — registerFont 生成 @font-face block', () => {
-  beforeEach(() => { _resetInjectGlobalCache() })
+  beforeEach(() => {
+    _resetInjectGlobalCache()
+  })
 
   it('基础 @font-face 块', () => {
     const { inst, calls } = makeMockInstance()
-    inst.registerFont('Inter', [
-      { src: '/fonts/Inter.woff2', format: 'woff2', weight: 400 },
-    ])
+    inst.registerFont('Inter', [{ src: '/fonts/Inter.woff2', format: 'woff2', weight: 400 }])
     const block = String(calls[0])
     expect(block).toMatch(/@font-face\s*\{/)
     expect(block).toContain("font-family: 'Inter'")
     expect(block).toContain("url('/fonts/Inter.woff2')")
     expect(block).toContain("format('woff2')")
     expect(block).toContain('font-weight: 400')
-    expect(block).toContain('font-display: swap')   // 默认 swap
+    expect(block).toContain('font-display: swap') // 默认 swap
   })
 
   it('多 sources → 多个 @font-face block', () => {
@@ -119,9 +130,13 @@ describe('S9.2 — registerFont 生成 @font-face block', () => {
 
   it('font-style 与 unicodeRange', () => {
     const { inst, calls } = makeMockInstance()
-    inst.registerFont('Y', [{
-      src: '/y.woff2', style: 'italic', unicodeRange: 'U+0000-00FF',
-    }])
+    inst.registerFont('Y', [
+      {
+        src: '/y.woff2',
+        style: 'italic',
+        unicodeRange: 'U+0000-00FF',
+      },
+    ])
     const block = String(calls[0])
     expect(block).toContain('font-style: italic')
     expect(block).toContain('unicode-range: U+0000-00FF')
@@ -144,7 +159,9 @@ describe('S9.2 — registerFont 生成 @font-face block', () => {
 // ────────────────────────────────────────────────────────────────────────────
 
 describe('S9.3 — injectLayerOrder 生成 @layer 顺序声明', () => {
-  beforeEach(() => { _resetInjectGlobalCache() })
+  beforeEach(() => {
+    _resetInjectGlobalCache()
+  })
 
   it('@layer name, name, name; 形式', () => {
     const { inst, calls } = makeMockInstance()
@@ -166,7 +183,9 @@ describe('S9.3 — injectLayerOrder 生成 @layer 顺序声明', () => {
 })
 
 describe('S9.4 — injectLayer 生成 @layer name { ... } 形式', () => {
-  beforeEach(() => { _resetInjectGlobalCache() })
+  beforeEach(() => {
+    _resetInjectGlobalCache()
+  })
 
   it('@layer 包裹 styles 对象', () => {
     const { inst, calls } = makeMockInstance()
@@ -216,7 +235,10 @@ describe('工程化烟雾', () => {
 
   it('createIcssInstance 同时挂载 preflight / registerCustomProperty / 等', () => {
     const inst = createIcssInstance({
-      css: () => '', cx: () => '', injectGlobal: () => {}, keyframes: () => '',
+      css: () => '',
+      cx: () => '',
+      injectGlobal: () => {},
+      keyframes: () => '',
     })
     expect(typeof inst.injectPreflight).toBe('function')
     expect(typeof inst.registerCustomProperty).toBe('function')

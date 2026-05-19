@@ -135,8 +135,12 @@ export function createIcssInstance(emotion: EmotionLikeInstance): IcssInstance {
           stops[stop] = { ...(stops[stop] ?? {}), ...styles }
           return builder
         },
-        from(styles) { return builder.at('from', styles) },
-        to(styles) { return builder.at('to', styles) },
+        from(styles) {
+          return builder.at('from', styles)
+        },
+        to(styles) {
+          return builder.at('to', styles)
+        },
       }
       factory(builder)
       return emotion.keyframes(stops)
@@ -208,7 +212,9 @@ export function createIcssInstance(emotion: EmotionLikeInstance): IcssInstance {
  * 返回的对象用 Proxy/getter 模式：第一次访问 `pa.fadeIn` 时才走 `emotion.keyframes()`
  * 注册到 instance；后续访问命中缓存。**未访问任何字段则零开销**。
  */
-function createLazyPresetAnimations(emotion: EmotionLikeInstance): Record<PresetAnimationName, string> {
+function createLazyPresetAnimations(
+  emotion: EmotionLikeInstance,
+): Record<PresetAnimationName, string> {
   const cache: Partial<Record<PresetAnimationName, string>> = {}
   return new Proxy({} as Record<PresetAnimationName, string>, {
     get(_, key: string): string | undefined {
@@ -239,11 +245,13 @@ function createLazyPresetAnimations(emotion: EmotionLikeInstance): Record<Preset
 }
 
 function renderKeyframes(name: string, stops: Record<string, CSSObject>): string {
-  const blocks = Object.entries(stops).map(([stop, styles]) => {
-    const declarations = Object.entries(styles)
-      .map(([k, v]) => `  ${k.replace(/[A-Z]/g, m => '-' + m.toLowerCase())}: ${v as string};`)
-      .join('\n')
-    return `${stop} {\n${declarations}\n}`
-  }).join('\n')
+  const blocks = Object.entries(stops)
+    .map(([stop, styles]) => {
+      const declarations = Object.entries(styles)
+        .map(([k, v]) => `  ${k.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase())}: ${v as string};`)
+        .join('\n')
+      return `${stop} {\n${declarations}\n}`
+    })
+    .join('\n')
   return `@keyframes ${name} {\n${blocks}\n}`
 }

@@ -1,9 +1,13 @@
 import type { ThemeSchema } from '../theme/types'
 
 /** 把字符串中所有 `-` 去掉。 */
-export type RemoveHyphen<S extends string> = S extends `${infer A}-${infer B}` ? `${A}${RemoveHyphen<B>}` : S
+export type RemoveHyphen<S extends string> = S extends `${infer A}-${infer B}`
+  ? `${A}${RemoveHyphen<B>}`
+  : S
 /** 把字符串中所有 `.` 替换为 `_`。 */
-export type DotToUnderscore<S extends string> = S extends `${infer A}.${infer B}` ? `${A}_${DotToUnderscore<B>}` : S
+export type DotToUnderscore<S extends string> = S extends `${infer A}.${infer B}`
+  ? `${A}_${DotToUnderscore<B>}`
+  : S
 
 /** token key → 安全标识符（`'blue-600'` → `'_blue600'`）。 */
 export type ToIdent<K extends string> = `_${RemoveHyphen<DotToUnderscore<K>>}`

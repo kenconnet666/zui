@@ -12,25 +12,25 @@
 
 ### 单条 className 产出（同样 4 个属性）
 
-| Case | hz (ops/s) | mean (μs) | 相对原生 |
-|---|---:|---:|---:|
-| `emotion css()` 原生（baseline） | **918,584** | 1.1 | 1.00× |
-| `new Chain + toString`（链式 + carrier 缓存） | ~404,000 | 2.5 | 2.27× 慢 |
-| `icss(theme, fn)` shortcut | ~404,000 | 2.5 | 2.27× 慢 |
+| Case                                          |  hz (ops/s) | mean (μs) | 相对原生 |
+| --------------------------------------------- | ----------: | --------: | -------: |
+| `emotion css()` 原生（baseline）              | **918,584** |       1.1 |    1.00× |
+| `new Chain + toString`（链式 + carrier 缓存） |    ~404,000 |       2.5 | 2.27× 慢 |
+| `icss(theme, fn)` shortcut                    |    ~404,000 |       2.5 | 2.27× 慢 |
 
 ### 嵌套伪类 + 多属性（典型按钮场景）
 
-| Case | hz (ops/s) | mean (μs) | 相对原生 |
-|---|---:|---:|---:|
-| `emotion css()` 嵌套 baseline | **566,996** | 1.8 | 1.00× |
-| icss 嵌套（5 属性 + `_hover` + `_focusVisible`） | （待跑） | — | — |
+| Case                                             |  hz (ops/s) | mean (μs) | 相对原生 |
+| ------------------------------------------------ | ----------: | --------: | -------: |
+| `emotion css()` 嵌套 baseline                    | **566,996** |       1.8 |    1.00× |
+| icss 嵌套（5 属性 + `_hover` + `_focusVisible`） |    （待跑） |         — |        — |
 
 ### Chain 实例化开销
 
-| Case | hz (ops/s) | mean (μs) |
-|---|---:|---:|
-| `new Chain(theme)` 仅构造 | （待跑） | — |
-| `Chain.color._primary` 单 carrier 访问 | （待跑） | — |
+| Case                                   | hz (ops/s) | mean (μs) |
+| -------------------------------------- | ---------: | --------: |
+| `new Chain(theme)` 仅构造              |   （待跑） |         — |
+| `Chain.color._primary` 单 carrier 访问 |   （待跑） |         — |
 
 ---
 
@@ -43,16 +43,16 @@
 
 ### 场景
 
-| 组 | Case |
-|---|---|
-| **Carrier 访问开销** | `chain.color` 首访 / 重访 / 100 次同名 / 100 次不同 |
-| **Token 解析** | `_primary` token 命中 / `white` keyword 命中 / 函数态 / unit 方法 |
-| **Theme.getKeymap() 缓存** | Theme 实例（缓存命中） vs 裸 ResolvedTheme（每次重建） |
+| 组                         | Case                                                              |
+| -------------------------- | ----------------------------------------------------------------- |
+| **Carrier 访问开销**       | `chain.color` 首访 / 重访 / 100 次同名 / 100 次不同               |
+| **Token 解析**             | `_primary` token 命中 / `white` keyword 命中 / 函数态 / unit 方法 |
+| **Theme.getKeymap() 缓存** | Theme 实例（缓存命中） vs 裸 ResolvedTheme（每次重建）            |
 
 ### 预期模式
 
 - Carrier 首访 < 重访 1.5×（Proxy + Map.set 一次）
-- 100 次同名 / 不同应展示 _carriers Map 的命中率差异
+- 100 次同名 / 不同应展示 \_carriers Map 的命中率差异
 - Theme 实例传入 vs 裸 ResolvedTheme：差距应该 = `buildKeymap()` 的成本
 
 ---
@@ -65,10 +65,10 @@
 
 ### 场景
 
-| 组 | Case |
-|---|---|
-| **Proxy 拦截开销** | `toString()` / `_node` / `label('x')` / `_hover(noop)` vs plain object baseline |
-| **内建方法调用密度** | 5 个 `_hover` 嵌套 / 10 个并列 `_media` |
+| 组                   | Case                                                                            |
+| -------------------- | ------------------------------------------------------------------------------- |
+| **Proxy 拦截开销**   | `toString()` / `_node` / `label('x')` / `_hover(noop)` vs plain object baseline |
+| **内建方法调用密度** | 5 个 `_hover` 嵌套 / 10 个并列 `_media`                                         |
 
 ### 预期
 
@@ -89,11 +89,11 @@ vitest bench 默认输出 hz / mean / margin。三个 bench 文件并行跑，�
 
 ## 性能退化阈值
 
-| 阈值 | 行动 |
-|---|---|
-| 总体 ops/s 退化 > 10% | 跑 carrier.bench + proxy.bench 定位 |
-| 退化 > 20% | 立即 STOP，检查最近改动 |
-| 任何 bench 失败 / 抛错 | 立即 STOP |
+| 阈值                   | 行动                                |
+| ---------------------- | ----------------------------------- |
+| 总体 ops/s 退化 > 10%  | 跑 carrier.bench + proxy.bench 定位 |
+| 退化 > 20%             | 立即 STOP，检查最近改动             |
+| 任何 bench 失败 / 抛错 | 立即 STOP                           |
 
 ---
 

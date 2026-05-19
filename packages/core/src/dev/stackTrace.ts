@@ -13,9 +13,22 @@
  * 输出形如 `App_42` / `Button_15`（去掉扩展名 + 路径 + 拼下划线）。
  */
 
-const FRAMEWORK_HINTS = ['Chain.ts', 'Chain.js', 'proxy.ts', 'proxy.js', 'carrier.ts', 'carrier.js',
-  'createIcssInstance', 'icss.ts', 'icss.js', 'stackTrace.ts', 'stackTrace.js', 'node_modules',
-  '@kenconnet666/zui-core', 'zui-core/dist'] as const
+const FRAMEWORK_HINTS = [
+  'Chain.ts',
+  'Chain.js',
+  'proxy.ts',
+  'proxy.js',
+  'carrier.ts',
+  'carrier.js',
+  'createIcssInstance',
+  'icss.ts',
+  'icss.js',
+  'stackTrace.ts',
+  'stackTrace.js',
+  'node_modules',
+  '@kenconnet666/zui-core',
+  'zui-core/dist',
+] as const
 
 /** 单行 stack 解析结果。 */
 export interface StackFrame {
@@ -63,7 +76,7 @@ export function parseStackLine(line: string): StackFrame | null {
  */
 export function findUserCallsite(stackLines: string[]): StackFrame | null {
   for (const line of stackLines) {
-    const isFramework = FRAMEWORK_HINTS.some(hint => line.includes(hint))
+    const isFramework = FRAMEWORK_HINTS.some((hint) => line.includes(hint))
     if (isFramework) continue
     const frame = parseStackLine(line)
     if (frame) return frame

@@ -13,17 +13,42 @@
  */
 export const LENGTH_UNITS = [
   // 绝对
-  'px', 'cm', 'mm', 'in', 'pt', 'pc',
+  'px',
+  'cm',
+  'mm',
+  'in',
+  'pt',
+  'pc',
   // 字体相对
-  'rem', 'em', 'ch', 'ex',
+  'rem',
+  'em',
+  'ch',
+  'ex',
   // 视口
-  'vw', 'vh', 'vmin', 'vmax',
+  'vw',
+  'vh',
+  'vmin',
+  'vmax',
   // small / large / dynamic viewport（CSS Values 4）
-  'svw', 'svh', 'svmin', 'svmax',
-  'lvw', 'lvh', 'lvmin', 'lvmax',
-  'dvw', 'dvh', 'dvmin', 'dvmax',
+  'svw',
+  'svh',
+  'svmin',
+  'svmax',
+  'lvw',
+  'lvh',
+  'lvmin',
+  'lvmax',
+  'dvw',
+  'dvh',
+  'dvmin',
+  'dvmax',
   // 容器查询单位（CSS Containment 3）
-  'cqw', 'cqh', 'cqi', 'cqb', 'cqmin', 'cqmax',
+  'cqw',
+  'cqh',
+  'cqi',
+  'cqb',
+  'cqmin',
+  'cqmax',
   // 栅格
   'fr',
   // 百分比（特殊 ident → '%'）
@@ -48,9 +73,12 @@ export type UnitClass = 'length' | 'time' | 'angle'
 
 export function getUnitList(cls: UnitClass): readonly string[] {
   switch (cls) {
-    case 'length': return LENGTH_UNITS
-    case 'time': return TIME_UNITS
-    case 'angle': return ANGLE_UNITS
+    case 'length':
+      return LENGTH_UNITS
+    case 'time':
+      return TIME_UNITS
+    case 'angle':
+      return ANGLE_UNITS
   }
 }
 

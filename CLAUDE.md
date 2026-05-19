@@ -21,14 +21,14 @@
 
 ## 当前状态（速览）
 
-| 项 | 值 |
-|---|---|
-| npm 主包 | `@kenconnet666/zui-core@0.3.0`（2026-05-19 发布）；本地 src 已是 0.4.0 候选 |
-| 测试 | **17 套 / 281 全绿** |
-| build | 61.30 kB / gzip 15.12 kB |
-| bench | icss ~404k ops/s（W4.1 keymap 缓存提速 21×） |
-| 内建方法 | **89+ 个**（含 _safeArea / _scrollSnap / _overscroll / _field） |
-| 未启动子包 | `ui-vue`（0.0.2 空壳） / `docs`（VitePress 脚手架） |
+| 项         | 值                                                                          |
+| ---------- | --------------------------------------------------------------------------- |
+| npm 主包   | `@kenconnet666/zui-core@0.3.0`（2026-05-19 发布）；本地 src 已是 0.4.0 候选 |
+| 测试       | **17 套 / 281 全绿**                                                        |
+| build      | 61.30 kB / gzip 15.12 kB                                                    |
+| bench      | icss ~404k ops/s（W4.1 keymap 缓存提速 21×）                                |
+| 内建方法   | **89+ 个**（含 \_safeArea / \_scrollSnap / \_overscroll / \_field）         |
+| 未启动子包 | `ui-vue`（0.0.2 空壳） / `docs`（VitePress 脚手架）                         |
 
 ---
 

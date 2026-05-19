@@ -1,12 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import {
-  Chain,
-  Theme,
-  defaultLight,
-  icss,
-  mergeTheme,
-  resolveTheme,
-} from '../src'
+import { Chain, Theme, defaultLight, icss, mergeTheme, resolveTheme } from '../src'
 
 /**
  * Edge case 集中地（Batch 5）。
@@ -26,7 +19,7 @@ import {
 describe('function token: 求值顺序', () => {
   it('function token 引用同 category 字面量', () => {
     const r = resolveTheme({
-      color: { primary: '#2563eb', primaryHover: ctx => ctx.color!.primary as string },
+      color: { primary: '#2563eb', primaryHover: (ctx) => ctx.color!.primary as string },
     })
     expect(r.color!.primaryHover).toBe('#2563eb')
   })
@@ -34,7 +27,7 @@ describe('function token: 求值顺序', () => {
   it('function token 引用跨 category 字面量', () => {
     const r = resolveTheme({
       color: { brand: '#7c3aed' },
-      shadow: { brandGlow: ctx => `0 0 10px ${ctx.color!.brand}` },
+      shadow: { brandGlow: (ctx) => `0 0 10px ${ctx.color!.brand}` },
     })
     expect(r.shadow!.brandGlow).toBe('0 0 10px #7c3aed')
   })
@@ -44,7 +37,7 @@ describe('function token: 求值顺序', () => {
     // 这里只保证不抛错 + 结果可预测
     const r = resolveTheme({
       color: {
-        a: ctx => (ctx.color!.b as string | undefined) ?? '#000',
+        a: (ctx) => (ctx.color!.b as string | undefined) ?? '#000',
         b: '#fff',
       },
     })
@@ -86,12 +79,12 @@ describe('resolveTheme freeze immutable', () => {
 })
 
 describe('blur key 2xl / 3xl 非合法 ident', () => {
-  it('用 defaultLight 主题访问 blur[\'2xl\']', () => {
+  it("用 defaultLight 主题访问 blur['2xl']", () => {
     const blur = (defaultLight as unknown as { blur?: Record<string, string> }).blur
     expect(blur?.['2xl']).toBeDefined()
   })
 
-  it('Chain._blur(\'2xl\') 命中（不带 _ 前缀）', () => {
+  it("Chain._blur('2xl') 命中（不带 _ 前缀）", () => {
     const c = new Chain(defaultLight)
     c._blur('2xl')
     // 已映射成 blur(<value>) 形式
@@ -99,7 +92,7 @@ describe('blur key 2xl / 3xl 非合法 ident', () => {
     expect((c._node.filter as string).startsWith('blur(')).toBe(true)
   })
 
-  it('Chain._blur(\'_2xl\') 也命中（带 _ 前缀；resolveBlurValue 兼容）', () => {
+  it("Chain._blur('_2xl') 也命中（带 _ 前缀；resolveBlurValue 兼容）", () => {
     const c = new Chain(defaultLight)
     c._blur('_2xl')
     expect(typeof c._node.filter).toBe('string')
@@ -116,8 +109,8 @@ describe('blur key 2xl / 3xl 非合法 ident', () => {
 describe('proxy bind receiver — _when / _apply 内 fn(this) 仍是 proxy', () => {
   it('_when 内回调可继续走 carrier', () => {
     const c = new Chain(defaultLight)
-    c._when(true, s => {
-      s.color._primary    // 必须能命中 token
+    c._when(true, (s) => {
+      s.color._primary // 必须能命中 token
       s.padding.px(8)
     })
     expect(c._node.color).toBeDefined()
@@ -126,9 +119,9 @@ describe('proxy bind receiver — _when / _apply 内 fn(this) 仍是 proxy', () 
 
   it('_apply 同上', () => {
     const c = new Chain(defaultLight)
-    c._apply(s => {
+    c._apply((s) => {
       s.fontWeight._bold
-      s._hover(h => h.color.white)
+      s._hover((h) => h.color.white)
     })
     expect(c._node.fontWeight).toBeDefined()
     expect((c._node['&:hover'] as Record<string, unknown>).color).toBe('white')
@@ -136,7 +129,9 @@ describe('proxy bind receiver — _when / _apply 内 fn(this) 仍是 proxy', () 
 
   it('_unless 否定路径不执行', () => {
     const c = new Chain(defaultLight)
-    c._unless(true, s => { s.color('red') })   // 不应执行
+    c._unless(true, (s) => {
+      s.color('red')
+    }) // 不应执行
     expect(c._node.color).toBeUndefined()
   })
 })
@@ -191,7 +186,7 @@ describe('alpha clamp 边界', () => {
 })
 
 describe('保留属性名容错', () => {
-  it('schema 起名 \'label\' 不会破坏 Chain（用户自己负责）', () => {
+  it("schema 起名 'label' 不会破坏 Chain（用户自己负责）", () => {
     // 我们不强制 Exclude，只在 README 警告；运行时不崩
     expect(() => {
       const t = new Theme({
@@ -212,21 +207,27 @@ describe('保留属性名容错', () => {
 
 describe('icss 接受 Theme / ResolvedTheme 两种形式', () => {
   it('Theme 实例', () => {
-    const cls = icss(defaultLight, s => { s.color._primary })
+    const cls = icss(defaultLight, (s) => {
+      s.color._primary
+    })
     expect(typeof cls).toBe('string')
     expect(cls.length).toBeGreaterThan(0)
   })
 
   it('裸 ResolvedTheme（无 Theme.getKeymap 缓存）', () => {
     const r = defaultLight.resolve()
-    const cls = icss(r, s => { s.color._primary })
+    const cls = icss(r, (s) => {
+      s.color._primary
+    })
     expect(typeof cls).toBe('string')
   })
 
   it('factory 内嵌套 _hover', () => {
-    const cls = icss(defaultLight, s => {
+    const cls = icss(defaultLight, (s) => {
       s.color.white
-      s._hover(h => { h.color._primary })
+      s._hover((h) => {
+        h.color._primary
+      })
     })
     expect(typeof cls).toBe('string')
   })
@@ -282,8 +283,12 @@ describe('_nest try/finally 还原 _node', () => {
 
   it('_nest 同名 selector 多次进入合并而非覆盖', () => {
     const c = new Chain(defaultLight)
-    c._hover(h => { h.color._primary })
-    c._hover(h => { h.padding.px(8) })
+    c._hover((h) => {
+      h.color._primary
+    })
+    c._hover((h) => {
+      h.padding.px(8)
+    })
     const hov = c._node['&:hover'] as Record<string, unknown>
     expect(hov.color).toBeDefined()
     expect(hov.padding).toBe('8px')

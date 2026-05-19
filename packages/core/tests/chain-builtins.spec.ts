@@ -8,14 +8,16 @@ describe('Chain — 内建方法', () => {
   describe('伪类嵌套（_nest 行为）', () => {
     it('_hover 写入 &:hover 子节点', () => {
       const c = new Chain(defaultLight)
-      c._hover(h => { h.color._primary })
+      c._hover((h) => {
+        h.color._primary
+      })
       expect(c._node['&:hover']).toEqual({ color: '#2563eb' })
     })
 
     it('嵌套 fn 内部走子节点；fn 退出后父节点 _node 还原', () => {
       const c = new Chain(defaultLight)
       c.color._danger
-      c._hover(h => {
+      c._hover((h) => {
         h.color._primary
       })
       c.padding._md
@@ -28,9 +30,11 @@ describe('Chain — 内建方法', () => {
 
     it('双层嵌套（_focus 内含 _hover）', () => {
       const c = new Chain(defaultLight)
-      c._focus(f => {
+      c._focus((f) => {
         f.color._primary
-        f._hover(h => { h.opacity(0.8) })
+        f._hover((h) => {
+          h.opacity(0.8)
+        })
       })
       expect(c._node['&:focus']).toMatchObject({
         color: '#2563eb',
@@ -40,21 +44,29 @@ describe('Chain — 内建方法', () => {
 
     it('同名 selector 二次嵌套时合并而非覆盖', () => {
       const c = new Chain(defaultLight)
-      c._hover(h => { h.color._primary })
-      c._hover(h => { h.padding._lg })
+      c._hover((h) => {
+        h.color._primary
+      })
+      c._hover((h) => {
+        h.padding._lg
+      })
       expect(c._node['&:hover']).toEqual({ color: '#2563eb', padding: '24px' })
     })
 
     it('空 fn 不留下空 selector 节点', () => {
       const c = new Chain(defaultLight)
-      c._hover(() => { /* noop */ })
+      c._hover(() => {
+        /* noop */
+      })
       expect(c._node['&:hover']).toBeUndefined()
     })
 
     it('fn 抛错后 _node 引用仍正确还原', () => {
       const c = new Chain(defaultLight)
       expect(() => {
-        c._hover(() => { throw new Error('boom') })
+        c._hover(() => {
+          throw new Error('boom')
+        })
       }).toThrow('boom')
       c.padding._md
       expect(c._node.padding).toBe('16px')
@@ -64,9 +76,15 @@ describe('Chain — 内建方法', () => {
   describe('伪元素 / 结构伪类 / 链接', () => {
     it('_before / _after / _placeholder', () => {
       const c = new Chain(defaultLight)
-      c._before(b => { b.color._primary })
-      c._after(a => { a.color._danger })
-      c._placeholder(p => { p.color._textMuted })
+      c._before((b) => {
+        b.color._primary
+      })
+      c._after((a) => {
+        a.color._danger
+      })
+      c._placeholder((p) => {
+        p.color._textMuted
+      })
       expect(c._node['&::before']).toEqual({ color: '#2563eb' })
       expect(c._node['&::after']).toEqual({ color: '#dc2626' })
       expect(c._node['&::placeholder']).toEqual({ color: '#4b5563' })
@@ -74,15 +92,21 @@ describe('Chain — 内建方法', () => {
 
     it('_nthChild / _nthOfType 拼参数', () => {
       const c = new Chain(defaultLight)
-      c._nthChild(2, n => { n.color._primary })
-      c._nthOfType('odd', n => { n.color._danger })
+      c._nthChild(2, (n) => {
+        n.color._primary
+      })
+      c._nthOfType('odd', (n) => {
+        n.color._danger
+      })
       expect(c._node['&:nth-child(2)']).toEqual({ color: '#2563eb' })
       expect(c._node['&:nth-of-type(odd)']).toEqual({ color: '#dc2626' })
     })
 
     it('_dir(rtl/ltr) 拼方向', () => {
       const c = new Chain(defaultLight)
-      c._dir('rtl', r => { r.color._primary })
+      c._dir('rtl', (r) => {
+        r.color._primary
+      })
       expect(c._node['&:dir(rtl)']).toEqual({ color: '#2563eb' })
     })
   })
@@ -90,8 +114,12 @@ describe('Chain — 内建方法', () => {
   describe('group / peer', () => {
     it('_groupHover / _peerChecked 拼选择器', () => {
       const c = new Chain(defaultLight)
-      c._groupHover(g => { g.color._primary })
-      c._peerChecked(p => { p.color._danger })
+      c._groupHover((g) => {
+        g.color._primary
+      })
+      c._peerChecked((p) => {
+        p.color._danger
+      })
       expect(c._node[':where(.group):hover &']).toEqual({ color: '#2563eb' })
       expect(c._node[':where(.peer):checked ~ &']).toEqual({ color: '#dc2626' })
     })
@@ -100,13 +128,17 @@ describe('Chain — 内建方法', () => {
   describe('At 规则 + token 简写', () => {
     it('_media 接原生查询', () => {
       const c = new Chain(defaultLight)
-      c._media('(min-width: 600px)', m => { m.padding._md })
+      c._media('(min-width: 600px)', (m) => {
+        m.padding._md
+      })
       expect(c._node['@media (min-width: 600px)']).toEqual({ padding: '16px' })
     })
 
     it('_media 接 _md token 时查 theme.breakpoint', () => {
       const c = new Chain(themed)
-      c._media('_md', m => { m.padding._md })
+      c._media('_md', (m) => {
+        m.padding._md
+      })
       expect(c._node['@media (min-width: 768px)']).toEqual({ padding: '16px' })
     })
 
@@ -114,19 +146,25 @@ describe('Chain — 内建方法', () => {
       // W1.8 之后 defaultLight 含 breakpoint —— 用临时无 breakpoint 主题验证 fallback
       const noBp = new Theme({ color: { primary: '#000' }, spacing: { md: '16px' } })
       const c = new Chain(noBp)
-      c._media('_md', m => { m.padding._md })
+      c._media('_md', (m) => {
+        m.padding._md
+      })
       expect(c._node['@media _md']).toEqual({ padding: '16px' })
     })
 
     it('_supports', () => {
       const c = new Chain(defaultLight)
-      c._supports('(display: grid)', s => { s.display.grid })
+      c._supports('(display: grid)', (s) => {
+        s.display.grid
+      })
       expect(c._node['@supports (display: grid)']).toEqual({ display: 'grid' })
     })
 
     it('_container 接 token 简写', () => {
       const c = new Chain(themed)
-      c._container('_lg', m => { m.padding._lg })
+      c._container('_lg', (m) => {
+        m.padding._lg
+      })
       expect(c._node['@container (min-width: 1024px)']).toEqual({ padding: '24px' })
     })
   })
@@ -134,10 +172,18 @@ describe('Chain — 内建方法', () => {
   describe('媒体修饰符简写', () => {
     it('_dark / _light / _motionReduce / _print', () => {
       const c = new Chain(defaultLight)
-      c._dark(d => { d.color._textMuted })
-      c._light(l => { l.color._text })
-      c._motionReduce(m => { m.opacity(0) })
-      c._print(p => { p.color._text })
+      c._dark((d) => {
+        d.color._textMuted
+      })
+      c._light((l) => {
+        l.color._text
+      })
+      c._motionReduce((m) => {
+        m.opacity(0)
+      })
+      c._print((p) => {
+        p.color._text
+      })
       expect(c._node['@media (prefers-color-scheme: dark)']).toEqual({ color: '#4b5563' })
       expect(c._node['@media (prefers-color-scheme: light)']).toEqual({ color: '#111827' })
       expect(c._node['@media (prefers-reduced-motion: reduce)']).toEqual({ opacity: 0 })
@@ -146,8 +192,12 @@ describe('Chain — 内建方法', () => {
 
     it('_rtl / _ltr', () => {
       const c = new Chain(defaultLight)
-      c._rtl(r => { r.color._primary })
-      c._ltr(l => { l.color._danger })
+      c._rtl((r) => {
+        r.color._primary
+      })
+      c._ltr((l) => {
+        l.color._danger
+      })
       expect(c._node[':where([dir="rtl"]) &']).toEqual({ color: '#2563eb' })
       expect(c._node[':where([dir="ltr"]) &']).toEqual({ color: '#dc2626' })
     })
@@ -156,27 +206,39 @@ describe('Chain — 内建方法', () => {
   describe('条件 / 选择器组合', () => {
     it('_when 条件为真时执行', () => {
       const c = new Chain(defaultLight)
-      c._when(true, s => { s.color._primary })
-      c._when(false, s => { s.color._danger })
+      c._when(true, (s) => {
+        s.color._primary
+      })
+      c._when(false, (s) => {
+        s.color._danger
+      })
       expect(c._node.color).toBe('#2563eb')
     })
 
     it('_unless 条件为假时执行', () => {
       const c = new Chain(defaultLight)
-      c._unless(false, s => { s.padding._md })
-      c._unless(true, s => { s.padding._lg })
+      c._unless(false, (s) => {
+        s.padding._md
+      })
+      c._unless(true, (s) => {
+        s.padding._lg
+      })
       expect(c._node.padding).toBe('16px')
     })
 
     it('_and 自动补 & 前缀', () => {
       const c = new Chain(defaultLight)
-      c._and('.icon', a => { a.color._primary })
+      c._and('.icon', (a) => {
+        a.color._primary
+      })
       expect(c._node['&.icon']).toEqual({ color: '#2563eb' })
     })
 
     it('_selector 原样使用', () => {
       const c = new Chain(defaultLight)
-      c._selector('> svg', s => { s.color._danger })
+      c._selector('> svg', (s) => {
+        s.color._danger
+      })
       expect(c._node['> svg']).toEqual({ color: '#dc2626' })
     })
   })
@@ -290,7 +352,10 @@ describe('Chain — 内建方法', () => {
 
     it('_apply 复用样式片段', () => {
       const c = new Chain(defaultLight)
-      const danger = (s: typeof c) => { s.color._danger; s.padding._sm }
+      const danger = (s: typeof c) => {
+        s.color._danger
+        s.padding._sm
+      }
       c._apply(danger)
       expect(c._node).toEqual({ color: '#dc2626', padding: '8px' })
     })
@@ -306,7 +371,9 @@ describe('Chain — 内建方法', () => {
     it('简单链可生成 className', () => {
       const c = new Chain(defaultLight)
       c.color._primary
-      c._hover(h => { h.color._primaryHover })
+      c._hover((h) => {
+        h.color._primaryHover
+      })
       const cls = c.toString()
       expect(typeof cls).toBe('string')
       expect(cls.length).toBeGreaterThan(0)
@@ -434,28 +501,42 @@ describe('Chain — 内建方法', () => {
   describe('W2.1 — 通用属性选择器', () => {
     it('_data 含 value', () => {
       const c = new Chain(defaultLight)
-      c._data('state', 'open', s => { s.color._primary })
+      c._data('state', 'open', (s) => {
+        s.color._primary
+      })
       expect(c._node['&[data-state="open"]']).toEqual({ color: '#2563eb' })
     })
 
     it('_data 不含 value', () => {
       const c = new Chain(defaultLight)
-      c._data('loading', undefined, s => { s.opacity(0.5) })
+      c._data('loading', undefined, (s) => {
+        s.opacity(0.5)
+      })
       expect(c._node['&[data-loading]']).toEqual({ opacity: 0.5 })
     })
 
     it('_aria', () => {
       const c = new Chain(defaultLight)
-      c._aria('expanded', 'true', s => { s.color._primary })
+      c._aria('expanded', 'true', (s) => {
+        s.color._primary
+      })
       expect(c._node['&[aria-expanded="true"]']).toEqual({ color: '#2563eb' })
     })
 
     it('_has / _not / _is / _where', () => {
       const c = new Chain(defaultLight)
-      c._has('img', h => { h.padding._sm })
-      c._not('[disabled]', n => { n.cursor.pointer })
-      c._is('h1, h2', i => { i.fontWeight._bold })
-      c._where('.foo, .bar', w => { w.color._danger })
+      c._has('img', (h) => {
+        h.padding._sm
+      })
+      c._not('[disabled]', (n) => {
+        n.cursor.pointer
+      })
+      c._is('h1, h2', (i) => {
+        i.fontWeight._bold
+      })
+      c._where('.foo, .bar', (w) => {
+        w.color._danger
+      })
       expect(c._node['&:has(img)']).toEqual({ padding: '8px' })
       expect(c._node['&:not([disabled])']).toEqual({ cursor: 'pointer' })
       expect(c._node['&:is(h1, h2)']).toEqual({ fontWeight: 700 })
@@ -467,23 +548,33 @@ describe('Chain — 内建方法', () => {
   describe('W2.2 — 状态属性 variant', () => {
     it('_open / _closed', () => {
       const c = new Chain(defaultLight)
-      c._open(o => { o.opacity(1) })
-      c._closed(cl => { cl.opacity(0) })
+      c._open((o) => {
+        o.opacity(1)
+      })
+      c._closed((cl) => {
+        cl.opacity(0)
+      })
       expect(c._node['&[open], &[data-state="open"]']).toEqual({ opacity: 1 })
       expect(c._node['&:not([open]), &[data-state="closed"]']).toEqual({ opacity: 0 })
     })
 
     it('_loading / _inert', () => {
       const c = new Chain(defaultLight)
-      c._loading(l => { l.cursor.wait })
-      c._inert(i => { i.opacity(0.4) })
+      c._loading((l) => {
+        l.cursor.wait
+      })
+      c._inert((i) => {
+        i.opacity(0.4)
+      })
       expect(c._node['&[data-loading="true"]']).toEqual({ cursor: 'wait' })
       expect(c._node['&[inert]']).toEqual({ opacity: 0.4 })
     })
 
     it('_forcedColors', () => {
       const c = new Chain(defaultLight)
-      c._forcedColors(f => { f.color._text })
+      c._forcedColors((f) => {
+        f.color._text
+      })
       expect(c._node['@media (forced-colors: active)']).toEqual({ color: '#111827' })
     })
   })
@@ -492,7 +583,9 @@ describe('Chain — 内建方法', () => {
   describe('W2.3 — @starting-style', () => {
     it('_starting 包到 @starting-style → &', () => {
       const c = new Chain(defaultLight)
-      c._starting(s => { s.opacity(0) })
+      c._starting((s) => {
+        s.opacity(0)
+      })
       expect(c._node['@starting-style']).toEqual({ '&': { opacity: 0 } })
     })
   })
@@ -501,7 +594,9 @@ describe('Chain — 内建方法', () => {
   describe('W2.4 — Container query variant 简写', () => {
     it('_containerMd 解析 theme.breakpoint.md', () => {
       const c = new Chain(defaultLight) // 现在 default 有 breakpoint
-      c._containerMd(m => { m.padding._md })
+      c._containerMd((m) => {
+        m.padding._md
+      })
       expect(c._node['@container (min-width: 768px)']).toEqual({ padding: '16px' })
     })
   })
@@ -510,16 +605,24 @@ describe('Chain — 内建方法', () => {
   describe('W2.5 — group / peer data 变种', () => {
     it('_groupData / _peerData', () => {
       const c = new Chain(defaultLight)
-      c._groupData('state', 'active', g => { g.color._primary })
-      c._peerData('checked', undefined, p => { p.color._success })
+      c._groupData('state', 'active', (g) => {
+        g.color._primary
+      })
+      c._peerData('checked', undefined, (p) => {
+        p.color._success
+      })
       expect(c._node[':where(.group)[data-state="active"] &']).toEqual({ color: '#2563eb' })
       expect(c._node[':where(.peer)[data-checked] ~ &']).toEqual({ color: '#22c55e' })
     })
 
     it('_groupAria / _peerAria', () => {
       const c = new Chain(defaultLight)
-      c._groupAria('expanded', 'true', g => { g.color._primary })
-      c._peerAria('selected', undefined, p => { p.color._success })
+      c._groupAria('expanded', 'true', (g) => {
+        g.color._primary
+      })
+      c._peerAria('selected', undefined, (p) => {
+        p.color._success
+      })
       expect(c._node[':where(.group)[aria-expanded="true"] &']).toEqual({ color: '#2563eb' })
       expect(c._node[':where(.peer)[aria-selected] ~ &']).toEqual({ color: '#22c55e' })
     })
@@ -562,8 +665,10 @@ describe('Chain — 内建方法', () => {
     })
 
     it('_aspectVideo / _aspectSquare', () => {
-      const c1 = new Chain(defaultLight); c1._aspectVideo()
-      const c2 = new Chain(defaultLight); c2._aspectSquare()
+      const c1 = new Chain(defaultLight)
+      c1._aspectVideo()
+      const c2 = new Chain(defaultLight)
+      c2._aspectSquare()
       expect(c1._node.aspectRatio).toBe('16 / 9')
       expect(c2._node.aspectRatio).toBe('1 / 1')
     })
@@ -595,7 +700,9 @@ describe('Chain — 内建方法', () => {
     it('css 格式（默认）', () => {
       const c = new Chain(defaultLight)
       c.color._primary
-      c._hover(h => { h.opacity(0.8) })
+      c._hover((h) => {
+        h.opacity(0.8)
+      })
       const out = c._inspect()
       expect(out).toContain('color: #2563eb;')
       expect(out).toContain('&:hover {')
@@ -612,7 +719,9 @@ describe('Chain — 内建方法', () => {
     it('tree 格式', () => {
       const c = new Chain(defaultLight)
       c.color._primary
-      c._hover(h => { h.opacity(0.8) })
+      c._hover((h) => {
+        h.opacity(0.8)
+      })
       const out = c._inspect({ format: 'tree' })
       expect(out).toContain('color = #2563eb')
       expect(out).toContain('&:hover/')

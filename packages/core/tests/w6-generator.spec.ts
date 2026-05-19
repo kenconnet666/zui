@@ -30,7 +30,9 @@ describe('W6 — generator + PropCarrier extension slot', () => {
       'utf8',
     )
     // 抽样：padding 应该是 PropCarrier<..., LengthUnits<TSelf>, never>
-    expect(generated).toMatch(/padding: PropCarrier<TSelf, [^,]+, SpacingTokens<T>, [^,]+, LengthUnits<TSelf>, never>/)
+    expect(generated).toMatch(
+      /padding: PropCarrier<TSelf, [^,]+, SpacingTokens<T>, [^,]+, LengthUnits<TSelf>, never>/,
+    )
     // color 应该是 ColorPropCarrier<..., ColorTokens<T>, ..., never>
     expect(generated).toMatch(/color: ColorPropCarrier<TSelf, [^,]+, ColorTokens<T>, [^,]+, never>/)
   })

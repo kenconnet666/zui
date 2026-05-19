@@ -31,7 +31,12 @@ describe('Proxy 拦截开销', () => {
   })
 
   bench('plain object 同等字段访问（baseline，无 Proxy）', () => {
-    const obj = { _node: {}, toString() { return '' } }
+    const obj = {
+      _node: {},
+      toString() {
+        return ''
+      },
+    }
     void obj._node
     obj.toString()
   })
@@ -40,10 +45,10 @@ describe('Proxy 拦截开销', () => {
 describe('内建方法调用密度', () => {
   bench('5 个 _hover 嵌套', () => {
     const c = new Chain(defaultLight)
-    c._hover(h => {
-      h._focus(f => {
-        f._active(a => {
-          a._disabled(d => {
+    c._hover((h) => {
+      h._focus((f) => {
+        f._active((a) => {
+          a._disabled((d) => {
             d._checked(() => {})
           })
         })

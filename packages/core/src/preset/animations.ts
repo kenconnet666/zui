@@ -27,7 +27,9 @@ type PresetAnimationsMap = Record<PresetAnimationName, string>
 /** 把 PRESET_ANIMATION_DEFS 一次性注册到全局 emotion，返回 name 映射。 */
 function registerAllPresetAnimations(): PresetAnimationsMap {
   const out = {} as PresetAnimationsMap
-  for (const [name, stops] of Object.entries(PRESET_ANIMATION_DEFS) as Array<[PresetAnimationName, Record<string, object>]>) {
+  for (const [name, stops] of Object.entries(PRESET_ANIMATION_DEFS) as Array<
+    [PresetAnimationName, Record<string, object>]
+  >) {
     out[name] = keyframes(stops as never)
   }
   return out

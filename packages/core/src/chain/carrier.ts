@@ -57,7 +57,9 @@ function buildCarrier(chain: Chain<never>, prop: string): unknown {
         const catMap = internal._keymap.get(cfg.tokenCat)
         const origKey = catMap?.get(key)
         if (origKey !== undefined) {
-          const slot = (internal._theme as Record<string, Record<string, string | number>>)[cfg.tokenCat]
+          const slot = (internal._theme as Record<string, Record<string, string | number>>)[
+            cfg.tokenCat
+          ]
           const value = slot?.[origKey]
           internal._node[prop] = value
 
@@ -71,7 +73,10 @@ function buildCarrier(chain: Chain<never>, prop: string): unknown {
 
       // CSS keyword
       const cssValue = KEYWORD_TO_CSS[key]
-      if (cssValue !== undefined && (cfg?.keywords === null || cfg?.keywords?.includes(key) || isGlobalKeyword(key))) {
+      if (
+        cssValue !== undefined &&
+        (cfg?.keywords === null || cfg?.keywords?.includes(key) || isGlobalKeyword(key))
+      ) {
         internal._node[prop] = cssValue
         return chain
       }
@@ -96,7 +101,11 @@ interface ColorTokenValueRuntime {
   desaturate(n: number): unknown
 }
 
-function makeColorTokenValue(chain: Chain<never>, prop: string, value: string): ColorTokenValueRuntime {
+function makeColorTokenValue(
+  chain: Chain<never>,
+  prop: string,
+  value: string,
+): ColorTokenValueRuntime {
   const internal = chain as unknown as ChainInternal
   return {
     alpha(n: number) {

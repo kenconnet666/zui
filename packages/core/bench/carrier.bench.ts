@@ -30,8 +30,18 @@ describe('Carrier 访问开销', () => {
 
   bench('100 次不同 carrier 访问（建 100 个 callable Proxy）', () => {
     const c = new Chain(defaultLight)
-    const props = ['color', 'backgroundColor', 'padding', 'margin', 'borderRadius',
-      'fontWeight', 'fontSize', 'lineHeight', 'borderColor', 'borderWidth']
+    const props = [
+      'color',
+      'backgroundColor',
+      'padding',
+      'margin',
+      'borderRadius',
+      'fontWeight',
+      'fontSize',
+      'lineHeight',
+      'borderColor',
+      'borderWidth',
+    ]
     for (let i = 0; i < 10; i++) {
       for (const p of props) void (c as unknown as Record<string, unknown>)[p]
     }
@@ -62,7 +72,7 @@ describe('Token 解析（keymap 查找）', () => {
 
 describe('Theme.getKeymap() 缓存（W4.1）', () => {
   bench('Theme 实例 + Chain 构造（getKeymap 缓存命中）', () => {
-    const t = defaultLight   // 单例，keymap 已缓存
+    const t = defaultLight // 单例，keymap 已缓存
     new Chain(t)
   })
 

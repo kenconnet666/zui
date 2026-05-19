@@ -143,10 +143,17 @@ export function applyStyleProps<T extends ThemeSchema>(
  * type ButtonColor = TokenOf<'color', DefaultSchema>  // '_primary' | '_danger' | ...
  * type ButtonGap = TokenOf<'spacing', DefaultSchema>  // '_xs' | '_sm' | '_md' | ...
  */
-export type TokenOf<Cat extends keyof ThemeSchema, T extends ThemeSchema = DefaultSchema> =
-  Cat extends 'color' ? ColorTokens<T> :
-  Cat extends 'spacing' ? SpacingTokens<T> :
-  Cat extends 'radius' ? RadiusTokens<T> :
-  Cat extends 'shadow' ? ShadowTokens<T> :
-  Cat extends 'fontSize' ? FontSizeTokens<T> :
-  string
+export type TokenOf<
+  Cat extends keyof ThemeSchema,
+  T extends ThemeSchema = DefaultSchema,
+> = Cat extends 'color'
+  ? ColorTokens<T>
+  : Cat extends 'spacing'
+    ? SpacingTokens<T>
+    : Cat extends 'radius'
+      ? RadiusTokens<T>
+      : Cat extends 'shadow'
+        ? ShadowTokens<T>
+        : Cat extends 'fontSize'
+          ? FontSizeTokens<T>
+          : string

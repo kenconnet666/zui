@@ -26,10 +26,7 @@ export interface ThemeSchema {
 }
 
 /** Theme 单格值：字面量或 function token（function token 可访问其它已解析值）。 */
-export type ThemeValue =
-  | string
-  | number
-  | ((ctx: ResolvedThemeContext) => string | number)
+export type ThemeValue = string | number | ((ctx: ResolvedThemeContext) => string | number)
 
 /** function token 求值时拿到的上下文（已解析的其它 category）。 */
 export type ResolvedThemeContext = Record<string, Record<string, string | number>>

@@ -12,7 +12,7 @@ describe('assertSchemaConsistency', () => {
       color: { primary: '#000' }, // 缺 danger / text / bg / border
     })
     const issues = assertSchemaConsistency(t)
-    const keys = issues.map(i => i.key)
+    const keys = issues.map((i) => i.key)
     expect(keys).toContain('danger')
     expect(keys).toContain('text')
     expect(keys).toContain('bg')
@@ -24,7 +24,7 @@ describe('assertSchemaConsistency', () => {
       color: { primary: '#000', toString: '#fff' as never },
     })
     const issues = assertSchemaConsistency(t)
-    const err = issues.find(i => i.key === 'toString')
+    const err = issues.find((i) => i.key === 'toString')
     expect(err?.level).toBe('error')
   })
 
@@ -36,11 +36,12 @@ describe('assertSchemaConsistency', () => {
         text: '#000',
         bg: '#fff',
         border: '#ddd',
-        derived: (ctx) => (ctx as Record<string, Record<string, string | number>>).nonexistent?.foo ?? '#fff',
+        derived: (ctx) =>
+          (ctx as Record<string, Record<string, string | number>>).nonexistent?.foo ?? '#fff',
       },
     })
     const issues = assertSchemaConsistency(t)
-    const refIssue = issues.find(i => i.message.includes('未定义路径'))
+    const refIssue = issues.find((i) => i.message.includes('未定义路径'))
     expect(refIssue).toBeDefined()
   })
 })

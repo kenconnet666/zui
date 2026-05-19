@@ -1,10 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import {
-  injectLayer,
-  injectLayerOrder,
-  registerCustomProperty,
-  registerFont,
-} from '../src'
+import { injectLayer, injectLayerOrder, registerCustomProperty, registerFont } from '../src'
 import { _resetInjectGlobalCache } from '../src/injectGlobal'
 import { PREFLIGHT_STYLES } from '../src/preset/preflightStyles'
 
@@ -86,11 +81,13 @@ describe('S2 — registerCustomProperty 防御', () => {
   })
 
   it('合法 syntax 不抛错不警告', () => {
-    expect(() => registerCustomProperty('--zui-color-ok', {
-      syntax: '<color>',
-      inherits: true,
-      initialValue: '#ffffff',
-    })).not.toThrow()
+    expect(() =>
+      registerCustomProperty('--zui-color-ok', {
+        syntax: '<color>',
+        inherits: true,
+        initialValue: '#ffffff',
+      }),
+    ).not.toThrow()
     expect(warnSpy).not.toHaveBeenCalled()
   })
 
@@ -126,11 +123,13 @@ describe('S2 — registerCustomProperty 防御', () => {
 
   it('含单引号的 syntax 自动 escape，不破坏 @property block', () => {
     // 不抛错就算通过（@property 输出含 \' 而非 '）
-    expect(() => registerCustomProperty('--with-quote', {
-      syntax: "<color>'unused",
-      inherits: false,
-      initialValue: 'red',
-    })).not.toThrow()
+    expect(() =>
+      registerCustomProperty('--with-quote', {
+        syntax: "<color>'unused",
+        inherits: false,
+        initialValue: 'red',
+      }),
+    ).not.toThrow()
   })
 
   it('production 模式不警告', () => {
@@ -164,7 +163,9 @@ describe('S5 — PREFLIGHT_STYLES 深 freeze 防外部 mutation', () => {
   })
 
   it('嵌套 * 选择器内的对象 frozen', () => {
-    const sel = (PREFLIGHT_STYLES as Record<string, Record<string, unknown>>)['*, *::before, *::after']
+    const sel = (PREFLIGHT_STYLES as Record<string, Record<string, unknown>>)[
+      '*, *::before, *::after'
+    ]
     expect(Object.isFrozen(sel)).toBe(true)
   })
 

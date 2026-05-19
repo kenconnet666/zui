@@ -24,19 +24,23 @@ describe('W5.4 — injectPreflight', () => {
 
 describe('W5.5 — registerCustomProperty', () => {
   it('注册 angle 类型不抛错', () => {
-    expect(() => registerCustomProperty('--zui-test-angle', {
-      syntax: '<angle>',
-      inherits: false,
-      initialValue: '0deg',
-    })).not.toThrow()
+    expect(() =>
+      registerCustomProperty('--zui-test-angle', {
+        syntax: '<angle>',
+        inherits: false,
+        initialValue: '0deg',
+      }),
+    ).not.toThrow()
   })
 
   it('注册 color 类型不抛错', () => {
-    expect(() => registerCustomProperty('--zui-test-color', {
-      syntax: '<color>',
-      inherits: true,
-      initialValue: '#ffffff',
-    })).not.toThrow()
+    expect(() =>
+      registerCustomProperty('--zui-test-color', {
+        syntax: '<color>',
+        inherits: true,
+        initialValue: '#ffffff',
+      }),
+    ).not.toThrow()
   })
 })
 
@@ -56,22 +60,32 @@ describe('W8.1 — injectLayer / injectLayerOrder', () => {
 describe('W8.2 — Chain._layer', () => {
   it('包到 @layer <name> { & { ... } }', () => {
     const c = new Chain(defaultLight)
-    c._layer('components', l => { l.padding._md })
+    c._layer('components', (l) => {
+      l.padding._md
+    })
     expect(c._node['@layer components']).toEqual({ '&': { padding: '16px' } })
   })
 })
 
 describe('W8.4 — registerFont', () => {
   it('单 source 不抛错', () => {
-    expect(() => registerFont('TestFont', [
-      { src: '/fonts/test.woff2', format: 'woff2', weight: 400 },
-    ])).not.toThrow()
+    expect(() =>
+      registerFont('TestFont', [{ src: '/fonts/test.woff2', format: 'woff2', weight: 400 }]),
+    ).not.toThrow()
   })
 
   it('多 source + 全选项', () => {
-    expect(() => registerFont('TestFont', [
-      { src: 'url(/a.woff2)', format: 'woff2', weight: 400, style: 'normal', display: 'swap' },
-      { src: '/b.woff2', format: 'woff2', weight: 700, style: 'italic', unicodeRange: 'U+0000-00FF' },
-    ])).not.toThrow()
+    expect(() =>
+      registerFont('TestFont', [
+        { src: 'url(/a.woff2)', format: 'woff2', weight: 400, style: 'normal', display: 'swap' },
+        {
+          src: '/b.woff2',
+          format: 'woff2',
+          weight: 700,
+          style: 'italic',
+          unicodeRange: 'U+0000-00FF',
+        },
+      ]),
+    ).not.toThrow()
   })
 })

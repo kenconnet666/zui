@@ -30,7 +30,9 @@ describe('B2 — proxy 自动扫描 prototype 内建方法', () => {
   it('内建方法 _hover / _media / label / _truncate 仍然走 Proxy 拦截', () => {
     const c = new Chain(defaultLight)
     c.label('test-label')
-    c._hover(h => { h.color.white })
+    c._hover((h) => {
+      h.color.white
+    })
     expect(c._node.label).toBe('test-label')
     expect(c._node['&:hover']).toEqual({ color: 'white' })
   })
@@ -45,7 +47,7 @@ describe('B2 — proxy 自动扫描 prototype 内建方法', () => {
 
   it('未识别的 CSS 属性名走 carrier 分派（不会走原型方法）', () => {
     const c = new Chain(defaultLight)
-    c.color('red')   // 函数态
+    c.color('red') // 函数态
     expect(c._node.color).toBe('red')
   })
 })
@@ -180,7 +182,7 @@ describe('B4 — mergeTheme partial 含 function token 警告', () => {
     const parent = resolveTheme({ color: { primary: '#000' } })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const merged = mergeTheme(parent, { color: { primary: (() => '#fff') as any } })
-    expect(typeof merged.color!.primary).toBe('function')   // 仍然写入（行为不变，只警告）
+    expect(typeof merged.color!.primary).toBe('function') // 仍然写入（行为不变，只警告）
   })
 })
 

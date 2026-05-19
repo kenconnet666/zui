@@ -25,8 +25,12 @@ export interface SchemaIssue {
 const RECOMMENDED_SEMANTIC_COLORS = ['primary', 'danger', 'text', 'bg', 'border'] as const
 
 const RESERVED_KEYS = new Set([
-  'constructor', 'prototype', '__proto__',
-  'toString', 'toJSON', 'valueOf',
+  'constructor',
+  'prototype',
+  '__proto__',
+  'toString',
+  'toJSON',
+  'valueOf',
 ])
 
 export function assertSchemaConsistency<T extends ThemeSchema>(
@@ -35,10 +39,7 @@ export function assertSchemaConsistency<T extends ThemeSchema>(
   const issues: SchemaIssue[] = []
 
   // 拿到 schema：Theme 实例 → schema 字段；plain object → 当 schema 用
-  const schema =
-    theme instanceof Theme
-      ? (theme.schema as T)
-      : (theme as T | ResolvedTheme<T>)
+  const schema = theme instanceof Theme ? (theme.schema as T) : (theme as T | ResolvedTheme<T>)
 
   // 1. 必填语义色齐全
   const colorSlot = (schema as Record<string, unknown>).color as
@@ -128,7 +129,9 @@ export function assertSchemaConsistency<T extends ThemeSchema>(
  * **S6 修复**：之前不存在的 category 只 push 半路径（如 `'spacing'`，丢失 `.md`）；
  * 现在内层 Proxy 也记录完整路径（`'spacing.md'`）。
  */
-function makeReferenceProbe<T extends ThemeSchema>(schema: T): {
+function makeReferenceProbe<T extends ThemeSchema>(
+  schema: T,
+): {
   ctx: Record<string, Record<string, string | number>>
   refs: string[]
 } {
@@ -138,12 +141,15 @@ function makeReferenceProbe<T extends ThemeSchema>(schema: T): {
       const slot = (schema as Record<string, unknown>)[cat]
       if (!slot || typeof slot !== 'object') {
         // 不存在的 category：返回 inner Proxy 也记录访问的 key，凑出完整路径
-        return new Proxy({}, {
-          get(_inner, key: string) {
-            if (typeof key === 'string') refs.push(`${cat}.${key}`)
-            return ''
+        return new Proxy(
+          {},
+          {
+            get(_inner, key: string) {
+              if (typeof key === 'string') refs.push(`${cat}.${key}`)
+              return ''
+            },
           },
-        })
+        )
       }
       return new Proxy(slot as Record<string, ThemeValue>, {
         get(target, key: string) {

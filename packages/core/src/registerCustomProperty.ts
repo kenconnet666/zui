@@ -36,26 +36,37 @@ function escapeSingleQuotes(value: string): string {
 /** 已知合法 syntax token（粗略，不完整）— dev 模式可疑值 warn 用。 */
 const KNOWN_SYNTAX_TOKENS = new Set([
   '*',
-  '<angle>', '<color>', '<custom-ident>', '<image>', '<integer>',
-  '<length>', '<length-percentage>', '<number>', '<percentage>',
-  '<resolution>', '<string>', '<time>', '<transform-function>',
-  '<transform-list>', '<url>',
+  '<angle>',
+  '<color>',
+  '<custom-ident>',
+  '<image>',
+  '<integer>',
+  '<length>',
+  '<length-percentage>',
+  '<number>',
+  '<percentage>',
+  '<resolution>',
+  '<string>',
+  '<time>',
+  '<transform-function>',
+  '<transform-list>',
+  '<url>',
 ])
 
-export function registerCustomProperty(
-  name: `--${string}`,
-  options: CustomPropertyOptions,
-): void {
+export function registerCustomProperty(name: `--${string}`, options: CustomPropertyOptions): void {
   // S2 防御：检测可疑字符（合法 CSS Syntax 永远不含 ; { }）
   if (isDevEnv()) {
     if (/[;{}]/.test(options.syntax)) {
       // eslint-disable-next-line no-console
       console.warn(
-        `[zui-core/registerCustomProperty] syntax 含可疑字符（; { }）："${options.syntax}"。`
-        + `\n  常见合法值：'<color>' / '<length>' / '<angle>' / '<percentage>' / '<integer>' / '<number>' / '*'`,
+        `[zui-core/registerCustomProperty] syntax 含可疑字符（; { }）："${options.syntax}"。` +
+          `\n  常见合法值：'<color>' / '<length>' / '<angle>' / '<percentage>' / '<integer>' / '<number>' / '*'`,
       )
-    } else if (options.syntax.trim() !== '*' && !KNOWN_SYNTAX_TOKENS.has(options.syntax.trim())
-               && !/^<[^>]+>(\s*\|\s*<[^>]+>)*$/.test(options.syntax.trim())) {
+    } else if (
+      options.syntax.trim() !== '*' &&
+      !KNOWN_SYNTAX_TOKENS.has(options.syntax.trim()) &&
+      !/^<[^>]+>(\s*\|\s*<[^>]+>)*$/.test(options.syntax.trim())
+    ) {
       // 非已知 token + 不符合 <xxx>(|<yyy>)* 模式 → warn 但不阻塞
       // eslint-disable-next-line no-console
       console.warn(
@@ -71,9 +82,10 @@ export function registerCustomProperty(
   }
 
   const escSyntax = escapeSingleQuotes(options.syntax)
-  const escInitial = typeof options.initialValue === 'string'
-    ? escapeSingleQuotes(options.initialValue)
-    : options.initialValue
+  const escInitial =
+    typeof options.initialValue === 'string'
+      ? escapeSingleQuotes(options.initialValue)
+      : options.initialValue
   const block = `@property ${name} {
   syntax: '${escSyntax}';
   inherits: ${options.inherits};

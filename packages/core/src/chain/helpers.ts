@@ -21,7 +21,7 @@ export function isPlainObject(value: unknown): value is Record<string, unknown> 
  */
 export function deepClone<T>(value: T): T {
   if (Array.isArray(value)) {
-    return value.map(item => deepClone(item)) as T
+    return value.map((item) => deepClone(item)) as T
   }
   if (isPlainObject(value)) {
     const out: Record<string, unknown> = {}

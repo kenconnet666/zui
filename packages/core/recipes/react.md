@@ -44,10 +44,7 @@ export function ZThemeProvider({
   children: ReactNode
 }) {
   const parent = useContext(ThemeCtx)
-  const merged = useMemo(
-    () => (theme ? mergeTheme(parent, theme) : parent),
-    [parent, theme],
-  )
+  const merged = useMemo(() => (theme ? mergeTheme(parent, theme) : parent), [parent, theme])
   return <ThemeCtx.Provider value={merged}>{children}</ThemeCtx.Provider>
 }
 
@@ -83,14 +80,16 @@ export function useIcss(factory: (s: Chain<MySchema>) => void, deps: unknown[] =
 import { useIcss } from '../hooks/useIcss'
 
 export function MyButton({ children }: { children: React.ReactNode }) {
-  const cls = useIcss(s => {
+  const cls = useIcss((s) => {
     s.color.white
     s.backgroundColor._primary
     s.padding.px(12)
     s.borderRadius._md
     s.fontWeight._bold
-    s._hover(h => { h.backgroundColor._primary.alpha(85) })
-    s._focusVisible(f => {
+    s._hover((h) => {
+      h.backgroundColor._primary.alpha(85)
+    })
+    s._focusVisible((f) => {
       f.outlineColor._primary
       f.outlineStyle('solid')
       f.outlineWidth.px(2)
@@ -115,7 +114,7 @@ export function App() {
   )
   return (
     <ZThemeProvider theme={themeOverride}>
-      <button onClick={() => setDark(d => !d)}>Toggle dark</button>
+      <button onClick={() => setDark((d) => !d)}>Toggle dark</button>
       <MyButton>Click me</MyButton>
     </ZThemeProvider>
   )

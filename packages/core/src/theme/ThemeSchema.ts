@@ -1,1 +1,7 @@
-export type { ThemeSchema, ThemeValue, ResolvedTheme, ResolvedThemeContext, DeepPartial } from './types'
+export type {
+  ThemeSchema,
+  ThemeValue,
+  ResolvedTheme,
+  ResolvedThemeContext,
+  DeepPartial,
+} from './types'

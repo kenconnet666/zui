@@ -78,12 +78,12 @@ function warnFunctionTokensOnInstance(schema: unknown): void {
       if (typeof v === 'function') {
         // eslint-disable-next-line no-console
         console.warn(
-          `[zui-core/Theme] schema 含 function token "${cat}.${key}"。`
-          + `\n  通过 instance 直接访问（theme.${cat}.${key}）会拿到 function 引用而非值；`
-          + `\n  类型签名是 string | number 但运行时是 function，不一致。`
-          + `\n  建议：用 theme.resolve() / icss(theme, ...) / new Chain(theme) 获取展开后的真值。`,
+          `[zui-core/Theme] schema 含 function token "${cat}.${key}"。` +
+            `\n  通过 instance 直接访问（theme.${cat}.${key}）会拿到 function 引用而非值；` +
+            `\n  类型签名是 string | number 但运行时是 function，不一致。` +
+            `\n  建议：用 theme.resolve() / icss(theme, ...) / new Chain(theme) 获取展开后的真值。`,
         )
-        return  // 只警告一次，避免多 token 时刷屏
+        return // 只警告一次，避免多 token 时刷屏
       }
     }
   }

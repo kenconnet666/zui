@@ -20,7 +20,7 @@ describe('W1.2 — ComponentTokenRegistry', () => {
 
   it('withComponentTokens 把 button.primary → buttonPrimary 进 theme.color', () => {
     const themed = withComponentTokens(resolved, {
-      button: t => ({
+      button: (t) => ({
         primary: t.color.primary as string,
         primaryHover: t.color.primaryHover as string,
         bg: t.color.bg as string,
@@ -35,7 +35,7 @@ describe('W1.2 — ComponentTokenRegistry', () => {
   it('override 覆盖 deriver 输出', () => {
     const themed = withComponentTokens(
       resolved,
-      { button: t => ({ primary: t.color.primary as string, bg: t.color.bg as string }) },
+      { button: (t) => ({ primary: t.color.primary as string, bg: t.color.bg as string }) },
       { button: { primary: '#ff0000' } },
     )
     const themedColor = (themed as Record<string, Record<string, string | number>>).color!
@@ -45,7 +45,7 @@ describe('W1.2 — ComponentTokenRegistry', () => {
 
   it('Chain 可访问 _buttonPrimary（运行时 carrier 命中）', () => {
     const themed = withComponentTokens(resolved, {
-      button: t => ({
+      button: (t) => ({
         primary: t.color.primary as string,
         primaryHover: t.color.primaryHover as string,
         bg: t.color.bg as string,
@@ -59,12 +59,12 @@ describe('W1.2 — ComponentTokenRegistry', () => {
 
   it('多组件 namespace 合并不互相覆盖', () => {
     const themed = withComponentTokens(resolved, {
-      button: t => ({
+      button: (t) => ({
         primary: t.color.primary as string,
         primaryHover: t.color.primary as string,
         bg: t.color.bg as string,
       }),
-      input: t => ({ borderFocus: t.color.primary as string }),
+      input: (t) => ({ borderFocus: t.color.primary as string }),
     })
     const themedColor = (themed as Record<string, Record<string, string | number>>).color!
     expect(themedColor.buttonPrimary).toBeDefined()

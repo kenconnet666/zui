@@ -12,14 +12,16 @@ import type { VariantProps } from '../src'
 describe('defineVariants — base only', () => {
   it('仅 base 无 variants，返回稳定 className', () => {
     const f = defineVariants(defaultLight, {
-      base: s => { s.padding.px(12) },
+      base: (s) => {
+        s.padding.px(12)
+      },
       variants: {},
     })
     const cls1 = f()
     const cls2 = f()
     expect(typeof cls1).toBe('string')
     expect(cls1.length).toBeGreaterThan(0)
-    expect(cls1).toBe(cls2)  // 缓存命中
+    expect(cls1).toBe(cls2) // 缓存命中
   })
 
   it('无 base 无 variants，返回空 chain className', () => {
@@ -31,11 +33,17 @@ describe('defineVariants — base only', () => {
 
 describe('defineVariants — 单 variant', () => {
   const button = defineVariants(defaultLight, {
-    base: s => { s.padding.px(12) },
+    base: (s) => {
+      s.padding.px(12)
+    },
     variants: {
       intent: {
-        primary: s => { s.backgroundColor._primary },
-        danger:  s => { s.backgroundColor._danger },
+        primary: (s) => {
+          s.backgroundColor._primary
+        },
+        danger: (s) => {
+          s.backgroundColor._danger
+        },
       },
     },
     defaultVariants: { intent: 'primary' },
@@ -68,13 +76,23 @@ describe('defineVariants — 多 variant 组合', () => {
   const button = defineVariants(defaultLight, {
     variants: {
       intent: {
-        primary: s => { s.backgroundColor._primary },
-        danger:  s => { s.backgroundColor._danger },
+        primary: (s) => {
+          s.backgroundColor._primary
+        },
+        danger: (s) => {
+          s.backgroundColor._danger
+        },
       },
       size: {
-        sm: s => { s.padding.px(8) },
-        md: s => { s.padding.px(12) },
-        lg: s => { s.padding.px(16) },
+        sm: (s) => {
+          s.padding.px(8)
+        },
+        md: (s) => {
+          s.padding.px(12)
+        },
+        lg: (s) => {
+          s.padding.px(16)
+        },
       },
     },
     defaultVariants: { intent: 'primary', size: 'md' },
@@ -86,7 +104,7 @@ describe('defineVariants — 多 variant 组合', () => {
   })
 
   it('单维度未传走 defaults', () => {
-    const cls = button({ intent: 'danger' })   // size 走 'md'
+    const cls = button({ intent: 'danger' }) // size 走 'md'
     const full = button({ intent: 'danger', size: 'md' })
     expect(cls).toBe(full)
   })
@@ -94,31 +112,46 @@ describe('defineVariants — 多 variant 组合', () => {
 
 describe('defineVariants — compoundVariants', () => {
   const button = defineVariants(defaultLight, {
-    base: s => { s.padding.px(12) },
+    base: (s) => {
+      s.padding.px(12)
+    },
     variants: {
       intent: {
-        primary: s => { s.backgroundColor._primary },
-        ghost:   s => { s.color._primary },
+        primary: (s) => {
+          s.backgroundColor._primary
+        },
+        ghost: (s) => {
+          s.color._primary
+        },
       },
       size: {
-        sm: s => { s.padding.px(8) },
-        md: s => { s.padding.px(12) },
+        sm: (s) => {
+          s.padding.px(8)
+        },
+        md: (s) => {
+          s.padding.px(12)
+        },
       },
     },
     defaultVariants: { intent: 'primary', size: 'md' },
     compoundVariants: [
-      { when: { intent: 'ghost', size: 'sm' }, apply: s => { s.padding.px(6) } },
+      {
+        when: { intent: 'ghost', size: 'sm' },
+        apply: (s) => {
+          s.padding.px(6)
+        },
+      },
     ],
   })
 
   it('compound 命中：ghost + sm', () => {
     const a = button({ intent: 'ghost', size: 'sm' })
-    const b = button({ intent: 'ghost', size: 'md' })   // 不命中 compound
+    const b = button({ intent: 'ghost', size: 'md' }) // 不命中 compound
     expect(a).not.toBe(b)
   })
 
   it('compound 未命中：单匹配不算', () => {
-    const a = button({ intent: 'ghost', size: 'md' })   // size 不对
+    const a = button({ intent: 'ghost', size: 'md' }) // size 不对
     const b = button({ intent: 'primary', size: 'sm' }) // intent 不对
     expect(a).not.toBe(b)
   })
@@ -131,8 +164,18 @@ describe('defineVariants — compoundVariants', () => {
       },
       defaultVariants: { a: 'x', b: 'x' },
       compoundVariants: [
-        { when: { a: 'x', b: 'x' }, apply: s => { s._node.zIndex = 1 } },
-        { when: { a: 'x', b: 'x' }, apply: s => { s._node.zIndex = 2 } },   // 覆盖
+        {
+          when: { a: 'x', b: 'x' },
+          apply: (s) => {
+            s._node.zIndex = 1
+          },
+        },
+        {
+          when: { a: 'x', b: 'x' },
+          apply: (s) => {
+            s._node.zIndex = 2
+          },
+        }, // 覆盖
       ],
     })
     // 验证 zIndex = 2（后者胜出）— 通过 chain inspect
@@ -147,13 +190,17 @@ describe('defineVariants — 缓存', () => {
   it('相同 props 命中缓存（同一引用 className）', () => {
     const f = defineVariants(defaultLight, {
       variants: {
-        intent: { primary: s => { s.color._primary } },
+        intent: {
+          primary: (s) => {
+            s.color._primary
+          },
+        },
       },
       defaultVariants: { intent: 'primary' },
     })
     const a = f({ intent: 'primary' })
     const b = f({ intent: 'primary' })
-    const c = f()   // defaults
+    const c = f() // defaults
     expect(a).toBe(b)
     expect(a).toBe(c)
   })
@@ -162,8 +209,12 @@ describe('defineVariants — 缓存', () => {
     const f = defineVariants(defaultLight, {
       variants: {
         intent: {
-          primary: s => { s.color._primary },
-          danger:  s => { s.color._danger },
+          primary: (s) => {
+            s.color._primary
+          },
+          danger: (s) => {
+            s.color._danger
+          },
         },
       },
     })
@@ -190,10 +241,14 @@ describe('defineVariants — 嵌套 _hover / 内建方法', () => {
     const f = defineVariants(defaultLight, {
       variants: {
         intent: {
-          primary: s => {
+          primary: (s) => {
             s.backgroundColor._primary
-            s._hover(h => { h.backgroundColor._primary.alpha(85) })
-            s._focusVisible(f => { f.outlineColor._primary })
+            s._hover((h) => {
+              h.backgroundColor._primary.alpha(85)
+            })
+            s._focusVisible((f) => {
+              f.outlineColor._primary
+            })
           },
         },
       },
@@ -206,9 +261,11 @@ describe('defineVariants — 嵌套 _hover / 内建方法', () => {
 
   it('base 内也可用嵌套方法', () => {
     const f = defineVariants(defaultLight, {
-      base: s => {
+      base: (s) => {
         s.padding.px(12)
-        s._hover(h => { h.cursor.pointer })
+        s._hover((h) => {
+          h.cursor.pointer
+        })
       },
       variants: {},
     })
@@ -228,7 +285,13 @@ describe('defineVariants — 边界 / 健壮性', () => {
 
   it('传入不存在的 variant key 静默忽略', () => {
     const f = defineVariants(defaultLight, {
-      variants: { intent: { primary: s => { s.color._primary } } },
+      variants: {
+        intent: {
+          primary: (s) => {
+            s.color._primary
+          },
+        },
+      },
     })
     // 类型层会飘红，但运行时不抛
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -238,12 +301,20 @@ describe('defineVariants — 边界 / 健壮性', () => {
 
   it('未传 props 且无 defaults，仅应用 base', () => {
     const f = defineVariants(defaultLight, {
-      base: s => { s.padding.px(8) },
-      variants: { intent: { primary: s => { s.color._primary } } },
+      base: (s) => {
+        s.padding.px(8)
+      },
+      variants: {
+        intent: {
+          primary: (s) => {
+            s.color._primary
+          },
+        },
+      },
     })
     const noProps = f()
     const withProps = f({ intent: 'primary' })
-    expect(noProps).not.toBe(withProps)   // 没默认时 intent 不应用
+    expect(noProps).not.toBe(withProps) // 没默认时 intent 不应用
   })
 })
 
@@ -253,7 +324,7 @@ describe('defineVariants — 类型推断', () => {
       variants: {
         intent: {
           primary: () => {},
-          danger:  () => {},
+          danger: () => {},
         },
         size: {
           sm: () => {},
@@ -264,10 +335,13 @@ describe('defineVariants — 类型推断', () => {
 
     type ButtonProps = Parameters<typeof button>[0]
 
-    expectTypeOf<ButtonProps>().toExtend<{
-      intent?: 'primary' | 'danger'
-      size?: 'sm' | 'md'
-    } | undefined>()
+    expectTypeOf<ButtonProps>().toExtend<
+      | {
+          intent?: 'primary' | 'danger'
+          size?: 'sm' | 'md'
+        }
+      | undefined
+    >()
   })
 
   it('VariantProps<V> 工具类型可独立用', () => {
@@ -282,26 +356,48 @@ describe('defineVariants — 类型推断', () => {
 describe('defineVariants — 实际组件库场景', () => {
   it('Button 组件三态完整 demo', () => {
     const button = defineVariants(defaultLight, {
-      base: s => {
+      base: (s) => {
         s.padding.px(12)
         s.borderRadius._md
         s.fontWeight._bold
       },
       variants: {
         intent: {
-          primary: s => { s.backgroundColor._primary; s.color.white },
-          danger:  s => { s.backgroundColor._danger;  s.color.white },
-          ghost:   s => { s.color._primary },
+          primary: (s) => {
+            s.backgroundColor._primary
+            s.color.white
+          },
+          danger: (s) => {
+            s.backgroundColor._danger
+            s.color.white
+          },
+          ghost: (s) => {
+            s.color._primary
+          },
         },
         size: {
-          sm: s => { s.padding.px(8);  s.fontSize._sm },
-          md: s => { s.padding.px(12); s.fontSize._md },
-          lg: s => { s.padding.px(16); s.fontSize._lg },
+          sm: (s) => {
+            s.padding.px(8)
+            s.fontSize._sm
+          },
+          md: (s) => {
+            s.padding.px(12)
+            s.fontSize._md
+          },
+          lg: (s) => {
+            s.padding.px(16)
+            s.fontSize._lg
+          },
         },
       },
       defaultVariants: { intent: 'primary', size: 'md' },
       compoundVariants: [
-        { when: { intent: 'ghost', size: 'sm' }, apply: s => { s.padding.px(6) } },
+        {
+          when: { intent: 'ghost', size: 'sm' },
+          apply: (s) => {
+            s.padding.px(6)
+          },
+        },
       ],
     })
 
@@ -310,12 +406,12 @@ describe('defineVariants — 实际组件库场景', () => {
       { intent: 'primary', size: 'sm' },
       { intent: 'primary', size: 'md' },
       { intent: 'primary', size: 'lg' },
-      { intent: 'danger',  size: 'sm' },
-      { intent: 'danger',  size: 'md' },
-      { intent: 'danger',  size: 'lg' },
-      { intent: 'ghost',   size: 'sm' },
-      { intent: 'ghost',   size: 'md' },
-      { intent: 'ghost',   size: 'lg' },
+      { intent: 'danger', size: 'sm' },
+      { intent: 'danger', size: 'md' },
+      { intent: 'danger', size: 'lg' },
+      { intent: 'ghost', size: 'sm' },
+      { intent: 'ghost', size: 'md' },
+      { intent: 'ghost', size: 'lg' },
     ]
     for (const combo of combos) {
       const cls = button(combo)
@@ -325,7 +421,7 @@ describe('defineVariants — 实际组件库场景', () => {
 
     // 不同组合输出不同 className
     const a = button({ intent: 'primary', size: 'sm' })
-    const b = button({ intent: 'danger',  size: 'lg' })
+    const b = button({ intent: 'danger', size: 'lg' })
     expect(a).not.toBe(b)
   })
 })

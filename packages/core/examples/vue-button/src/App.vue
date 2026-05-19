@@ -18,8 +18,10 @@ const primaryCls = computed(() => {
   c.borderStyle('none')
   c.transitionDuration.ms(150)
   c.transitionProperty('background-color')
-  c._hover(h => { h.backgroundColor._primary.alpha(85) })
-  c._focusVisible(f => {
+  c._hover((h) => {
+    h.backgroundColor._primary.alpha(85)
+  })
+  c._focusVisible((f) => {
     f.outlineColor._primary
     f.outlineStyle.solid
     f.outlineWidth.px(2)
@@ -39,7 +41,9 @@ const ghostCls = computed(() => {
   c.borderWidth.px(1)
   c.borderStyle.solid
   c.borderColor._primary.alpha(30)
-  c._hover(h => { h.backgroundColor._primary.alpha(20) })
+  c._hover((h) => {
+    h.backgroundColor._primary.alpha(20)
+  })
   return toClassName(c)
 })
 
@@ -52,7 +56,9 @@ const dangerCls = computed(() => {
   c.borderRadius._md
   c.fontWeight._bold
   c.borderStyle.none
-  c._hover(h => { h.backgroundColor._danger.alpha(85) })
+  c._hover((h) => {
+    h.backgroundColor._danger.alpha(85)
+  })
   return toClassName(c)
 })
 </script>
@@ -61,11 +67,9 @@ const dangerCls = computed(() => {
   <h1>zui-core · Vue 3 button demo</h1>
   <p>主题切换演示：computed 包 chain → className 自动响应主题切换。</p>
 
-  <button @click="dark = !dark">
-    Toggle {{ dark ? 'light' : 'dark' }} mode
-  </button>
+  <button @click="dark = !dark">Toggle {{ dark ? 'light' : 'dark' }} mode</button>
 
-  <div style="display: flex; gap: 12px;">
+  <div style="display: flex; gap: 12px">
     <button :class="primaryCls">Primary</button>
     <button :class="ghostCls">Ghost</button>
     <button :class="dangerCls">Danger</button>

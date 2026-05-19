@@ -63,9 +63,7 @@ import type { MySchema } from './mySchema'
 
 const props = defineProps<{ theme?: DeepPartial<MySchema> }>()
 const parent = getThemeRef()
-const merged = computed(() =>
-  props.theme ? mergeTheme(parent.value, props.theme) : parent.value,
-)
+const merged = computed(() => (props.theme ? mergeTheme(parent.value, props.theme) : parent.value))
 provideTheme(merged)
 </script>
 <template><slot /></template>
@@ -97,14 +95,16 @@ export function useIcss(factory: (s: Chain<MySchema>) => void): ComputedRef<stri
 <script setup lang="ts">
 import { useIcss } from '@/composables/useIcss'
 
-const cls = useIcss(s => {
+const cls = useIcss((s) => {
   s.color.white
   s.backgroundColor._primary
   s.padding.px(12)
   s.borderRadius._md
   s.fontWeight._bold
-  s._hover(h => { h.backgroundColor._primary.alpha(85) })
-  s._focusVisible(f => {
+  s._hover((h) => {
+    h.backgroundColor._primary.alpha(85)
+  })
+  s._focusVisible((f) => {
     f.outlineColor._primary
     f.outlineStyle('solid')
     f.outlineWidth.px(2)
@@ -123,9 +123,7 @@ const cls = useIcss(s => {
 import { ref, computed } from 'vue'
 
 const dark = ref(false)
-const themeOverride = computed(() =>
-  dark.value ? { color: { primary: '#60a5fa' } } : undefined,
-)
+const themeOverride = computed(() => (dark.value ? { color: { primary: '#60a5fa' } } : undefined))
 </script>
 <template>
   <ZThemeProvider :theme="themeOverride">

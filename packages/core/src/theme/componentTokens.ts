@@ -25,10 +25,9 @@ import type { ComponentTokenRegistry } from '../types/components'
  * c.color._buttonHover    // → theme.color.primaryHover（deriver 派生）
  */
 
-export type ComponentTokenDeriver<
-  C extends keyof ComponentTokenRegistry,
-  T extends ThemeSchema
-> = (theme: ResolvedTheme<T>) => Partial<ComponentTokenRegistry[C]>
+export type ComponentTokenDeriver<C extends keyof ComponentTokenRegistry, T extends ThemeSchema> = (
+  theme: ResolvedTheme<T>,
+) => Partial<ComponentTokenRegistry[C]>
 
 export type ComponentTokenDerivers<T extends ThemeSchema> = {
   [C in keyof ComponentTokenRegistry]?: ComponentTokenDeriver<C, T>
@@ -48,7 +47,10 @@ export function withComponentTokens<T extends ThemeSchema>(
     const fn = derivers[compName as keyof ComponentTokenRegistry]
     if (!fn) continue
     const derived = (fn as ComponentTokenDeriver<never, T>)(theme) as Record<string, string>
-    const ov = (overrides?.[compName as keyof ComponentTokenRegistry] ?? {}) as Record<string, string>
+    const ov = (overrides?.[compName as keyof ComponentTokenRegistry] ?? {}) as Record<
+      string,
+      string
+    >
     // override 覆盖 derived，未声明的 key 沿用 derived
     const merged = { ...derived, ...ov }
     for (const k in merged) {
@@ -60,6 +62,9 @@ export function withComponentTokens<T extends ThemeSchema>(
   // 因为 W4.3 把 theme.color 给 Object.freeze 了，必须建新对象
   return {
     ...theme,
-    color: { ...(theme as Record<string, Record<string, string | number>>).color, ...derivedColors },
+    color: {
+      ...(theme as Record<string, Record<string, string | number>>).color,
+      ...derivedColors,
+    },
   } as ResolvedTheme<T>
 }

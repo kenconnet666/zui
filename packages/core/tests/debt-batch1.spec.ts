@@ -1,10 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import {
-  Chain,
-  createIcssInstance,
-  defaultLight,
-  injectPreflight,
-} from '../src'
+import { Chain, createIcssInstance, defaultLight, injectPreflight } from '../src'
 import { GLOBAL_KEYWORDS } from '../src/chain/keywords'
 import { LENGTH_UNITS, TIME_UNITS, ANGLE_UNITS } from '../src/chain/units'
 import { PREFLIGHT_STYLES } from '../src/preset/preflightStyles'
@@ -195,7 +190,9 @@ describe('R3 — createIcssInstance instance 级 injectGlobal dedupe', () => {
       calls,
       css: () => 'mock-css',
       cx: (...args: unknown[]) => args.filter(Boolean).join(' '),
-      injectGlobal: (s: unknown) => { calls.push(s) },
+      injectGlobal: (s: unknown) => {
+        calls.push(s)
+      },
       keyframes: () => 'mock-kf',
       flush: () => {},
     }
@@ -284,7 +281,9 @@ describe('R4 — preflight 全局版与 instance 版共享 single source', () =>
     const inst = createIcssInstance({
       css: () => 'x',
       cx: () => 'x',
-      injectGlobal: (s) => { calls.push(s) },
+      injectGlobal: (s) => {
+        calls.push(s)
+      },
       keyframes: () => 'kf',
     })
     inst.injectPreflight()

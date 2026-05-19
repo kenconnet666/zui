@@ -90,17 +90,12 @@ export type PropCarrier<
   TKeywords extends string,
   TUnits = unknown,
   TExtraKeywords extends string = never,
-> =
-  & ((value: TValue) => TSelf)
-  & { readonly [K in TTokens]: TSelf }
-  & { readonly [K in TKeywords]: TSelf }
-  & { readonly [K in TExtraKeywords]: TSelf }
-  & TUnits
+> = ((value: TValue) => TSelf) & { readonly [K in TTokens]: TSelf } & {
+  readonly [K in TKeywords]: TSelf
+} & { readonly [K in TExtraKeywords]: TSelf } & TUnits
 
 /** 无主题 token、无 unit 方法的属性（只支持函数调用 + 全局关键字）。 */
-export type PropFn<TSelf, TValue> =
-  & ((value: TValue) => TSelf)
-  & { readonly [K in GlobalKw]: TSelf }
+export type PropFn<TSelf, TValue> = ((value: TValue) => TSelf) & { readonly [K in GlobalKw]: TSelf }
 
 /**
  * 颜色 token 命中后返回的 helper：
@@ -139,8 +134,6 @@ export type ColorPropCarrier<
   TTokens extends string,
   TKeywords extends string,
   TExtraKeywords extends string = never,
-> =
-  & ((value: TValue) => TSelf)
-  & { readonly [K in TTokens]: ColorTokenValue<TSelf> }
-  & { readonly [K in TKeywords]: TSelf }
-  & { readonly [K in TExtraKeywords]: TSelf }
+> = ((value: TValue) => TSelf) & { readonly [K in TTokens]: ColorTokenValue<TSelf> } & {
+  readonly [K in TKeywords]: TSelf
+} & { readonly [K in TExtraKeywords]: TSelf }

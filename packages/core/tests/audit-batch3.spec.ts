@@ -103,7 +103,9 @@ describe('S4 — createIcssInstance.presetAnimations', () => {
 
 describe('全局 presetAnimations 仍正常工作（向后兼容）', () => {
   it('全部 15 个字段是非空字符串', () => {
-    for (const key of Object.keys(PRESET_ANIMATION_DEFS) as Array<keyof typeof PRESET_ANIMATION_DEFS>) {
+    for (const key of Object.keys(PRESET_ANIMATION_DEFS) as Array<
+      keyof typeof PRESET_ANIMATION_DEFS
+    >) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const val = (presetAnimations as any)[key]
       expect(typeof val).toBe('string')

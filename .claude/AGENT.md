@@ -52,16 +52,16 @@ zui/                              # workspace root
 
 ## 三、用户偏好
 
-| 项 | 偏好 |
-|---|---|
-| 沟通语言 | 中文回复；代码 / 命令 / 错误信息保持英文 |
-| 决策风格 | "讨论 → 列选项 → 用户拍板" 而非 "agent 直接做"；多用 D1 / D2 / W1.x 编号 |
-| 默认策略 | 用户常说 "按推荐"，agent 给的推荐应可执行、风险低 |
-| 离线推进 | 用户明确授权后会离开，agent 自主跑完 phase 才停 |
-| 发布定义 | **推送到远程 git 即视为代码层面发布**；**`npm publish` 始终用户手动** |
-| 验证强制度 | `mcp__jetbrain__get_file_problems` 每改完文件必跑；大改后 typecheck + test 必跑 |
-| commit 节奏 | 每个 P*.X / W*.X 子任务一次 commit；message 中文 + body 详细 + Co-Authored-By |
-| 设计 idiom | `s.xx.xx`（carrier 四态）/ `s._xx('opt', (h) => h.xx)`（option + factory） |
+| 项          | 偏好                                                                            |
+| ----------- | ------------------------------------------------------------------------------- |
+| 沟通语言    | 中文回复；代码 / 命令 / 错误信息保持英文                                        |
+| 决策风格    | "讨论 → 列选项 → 用户拍板" 而非 "agent 直接做"；多用 D1 / D2 / W1.x 编号        |
+| 默认策略    | 用户常说 "按推荐"，agent 给的推荐应可执行、风险低                               |
+| 离线推进    | 用户明确授权后会离开，agent 自主跑完 phase 才停                                 |
+| 发布定义    | **推送到远程 git 即视为代码层面发布**；**`npm publish` 始终用户手动**           |
+| 验证强制度  | `mcp__jetbrain__get_file_problems` 每改完文件必跑；大改后 typecheck + test 必跑 |
+| commit 节奏 | 每个 P*.X / W*.X 子任务一次 commit；message 中文 + body 详细 + Co-Authored-By   |
+| 设计 idiom  | `s.xx.xx`（carrier 四态）/ `s._xx('opt', (h) => h.xx)`（option + factory）      |
 
 ---
 

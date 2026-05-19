@@ -6,7 +6,9 @@ describe('W5.1 — createIcssInstance', () => {
   it('icss 输出走自定义 instance 的 css', () => {
     const emotion = createEmotion({ key: 'zuit' })
     const { icss } = createIcssInstance(emotion)
-    const cls = icss(defaultLight, s => { s.color._primary })
+    const cls = icss(defaultLight, (s) => {
+      s.color._primary
+    })
     // emotion key 'zuit' → className 前缀
     expect(cls).toMatch(/^zuit-/)
   })
@@ -22,7 +24,7 @@ describe('W5.1 — createIcssInstance', () => {
   it('ikeyframes 用 instance.keyframes', () => {
     const emotion = createEmotion({ key: 'kf' })
     const { ikeyframes } = createIcssInstance(emotion)
-    const name = ikeyframes(k => {
+    const name = ikeyframes((k) => {
       k.from({ opacity: 0 })
       k.to({ opacity: 1 })
     })
@@ -36,7 +38,11 @@ describe('W5.1 — createIcssInstance', () => {
     expect(() => {
       inst.registerAnimation('fadeIn', { '0%': { opacity: 0 }, '100%': { opacity: 1 } })
       inst.injectPreflight()
-      inst.registerCustomProperty('--my-x', { syntax: '<length>', inherits: false, initialValue: '0px' })
+      inst.registerCustomProperty('--my-x', {
+        syntax: '<length>',
+        inherits: false,
+        initialValue: '0px',
+      })
       inst.injectLayerOrder(['a', 'b'])
       inst.injectLayer('b', { '.foo': { color: 'red' } })
       inst.registerFont('Inter', [{ src: '/i.woff2', format: 'woff2', weight: 400 }])

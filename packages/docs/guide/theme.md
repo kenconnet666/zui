@@ -18,5 +18,5 @@ class MyTheme extends Theme<MySchema> {
 }
 
 const myTheme = new MyTheme()
-myTheme.color.brand   // ✅ '#7c3aed'，IDE 补全
+myTheme.color.brand // ✅ '#7c3aed'，IDE 补全
 ```

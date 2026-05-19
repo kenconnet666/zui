@@ -26,13 +26,24 @@ export type { FontFaceSource } from './registerFont'
 // ─── 默认主题 ───
 export { defaultLight, defaultDark } from './theme/defaults'
 export type { DefaultSchema } from './theme/defaults/schema'
-export { tw, TAILWIND_PALETTE, FLAT_PALETTE, PALETTE_NAMES, PALETTE_SHADES } from './theme/defaults/palette'
+export {
+  tw,
+  TAILWIND_PALETTE,
+  FLAT_PALETTE,
+  PALETTE_NAMES,
+  PALETTE_SHADES,
+} from './theme/defaults/palette'
 export type { PaletteName, PaletteShade, PaletteToken } from './theme/defaults/palette'
 
 // ─── 开发态工具（dev-only helpers） ───
 export { assertSchemaConsistency } from './dev/assertSchemaConsistency'
 export type { SchemaIssue } from './dev/assertSchemaConsistency'
-export { makeCallsiteLabel, parseStackLine, findUserCallsite, isProductionEnv } from './dev/stackTrace'
+export {
+  makeCallsiteLabel,
+  parseStackLine,
+  findUserCallsite,
+  isProductionEnv,
+} from './dev/stackTrace'
 export type { StackFrame } from './dev/stackTrace'
 
 // ─── 类型 ───

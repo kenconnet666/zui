@@ -30,24 +30,23 @@ export const defaultTheme = new Theme<MySchema>({
 
 ```tsx
 // theme/ZThemeProvider.tsx
-import { createContext, createMemo, useContext, type Accessor, type JSX, type ParentProps } from 'solid-js'
+import {
+  createContext,
+  createMemo,
+  useContext,
+  type Accessor,
+  type JSX,
+  type ParentProps,
+} from 'solid-js'
 import { mergeTheme, type DeepPartial, type ResolvedTheme } from '@kenconnet666/zui-core'
 import { defaultTheme, type MySchema } from './mySchema'
 
 const ThemeCtx = createContext<Accessor<ResolvedTheme<MySchema>>>(() => defaultTheme.resolve())
 
-export function ZThemeProvider(
-  props: ParentProps<{ theme?: DeepPartial<MySchema> }>,
-): JSX.Element {
+export function ZThemeProvider(props: ParentProps<{ theme?: DeepPartial<MySchema> }>): JSX.Element {
   const parent = useContext(ThemeCtx)
-  const merged = createMemo(() =>
-    props.theme ? mergeTheme(parent(), props.theme) : parent(),
-  )
-  return (
-    <ThemeCtx.Provider value={merged}>
-      {props.children}
-    </ThemeCtx.Provider>
-  )
+  const merged = createMemo(() => (props.theme ? mergeTheme(parent(), props.theme) : parent()))
+  return <ThemeCtx.Provider value={merged}>{props.children}</ThemeCtx.Provider>
 }
 
 export function useTheme(): Accessor<ResolvedTheme<MySchema>> {
@@ -82,14 +81,16 @@ import type { JSX } from 'solid-js'
 import { useIcss } from '../hooks/useIcss'
 
 export function MyButton(props: { children: JSX.Element }) {
-  const cls = useIcss(s => {
+  const cls = useIcss((s) => {
     s.color.white
     s.backgroundColor._primary
     s.padding.px(12)
     s.borderRadius._md
     s.fontWeight._bold
-    s._hover(h => { h.backgroundColor._primary.alpha(85) })
-    s._focusVisible(f => {
+    s._hover((h) => {
+      h.backgroundColor._primary.alpha(85)
+    })
+    s._focusVisible((f) => {
       f.outlineColor._primary
       f.outlineStyle('solid')
       f.outlineWidth.px(2)
@@ -108,12 +109,10 @@ import { MyButton } from './MyButton'
 
 export function App() {
   const [dark, setDark] = createSignal(false)
-  const themeOverride = createMemo(() =>
-    dark() ? { color: { primary: '#60a5fa' } } : undefined,
-  )
+  const themeOverride = createMemo(() => (dark() ? { color: { primary: '#60a5fa' } } : undefined))
   return (
     <ZThemeProvider theme={themeOverride()}>
-      <button onClick={() => setDark(d => !d)}>Toggle dark</button>
+      <button onClick={() => setDark((d) => !d)}>Toggle dark</button>
       <MyButton>Click me</MyButton>
     </ZThemeProvider>
   )
