@@ -33,6 +33,7 @@ class _ThemeClass<T extends ThemeSchema> {
     // 注意：schema 含 function token 时，instance 上拿到的是函数（未求值）；
     // 类型上是 string | number。访问真值请走 `theme.resolve()` 或 Chain 内部 `_theme`。
     Object.assign(this, schema)
+    if (isDevEnv()) warnFunctionTokensOnInstance(schema)
   }
 
   /** 把 schema（含 function token）求值成 `ResolvedTheme`，结果会被缓存。 */
@@ -55,6 +56,36 @@ class _ThemeClass<T extends ThemeSchema> {
   merge<P extends DeepPartial<T>>(partial: P): Theme<T> {
     const next = mergeTheme(this.resolve(), partial) as unknown as T
     return new Theme(next) as Theme<T>
+  }
+}
+
+function isDevEnv(): boolean {
+  return typeof process !== 'undefined' && process.env?.NODE_ENV !== 'production'
+}
+
+/**
+ * Dev 警告（修 M4）：schema 含 function token 时 `Object.assign(this, schema)` 把函数
+ * 也挂到 instance 上，访问 `theme.color.primary` 会拿到 function 而不是值；类型签名却是
+ * `string | number`。提醒用户通过 `theme.resolve()` / `icss(theme, ...)` 获取真值。
+ */
+function warnFunctionTokensOnInstance(schema: unknown): void {
+  if (schema == null || typeof schema !== 'object') return
+  for (const cat in schema as Record<string, unknown>) {
+    const slot = (schema as Record<string, unknown>)[cat]
+    if (slot == null || typeof slot !== 'object') continue
+    for (const key in slot as Record<string, unknown>) {
+      const v = (slot as Record<string, unknown>)[key]
+      if (typeof v === 'function') {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[zui-core/Theme] schema 含 function token "${cat}.${key}"。`
+          + `\n  通过 instance 直接访问（theme.${cat}.${key}）会拿到 function 引用而非值；`
+          + `\n  类型签名是 string | number 但运行时是 function，不一致。`
+          + `\n  建议：用 theme.resolve() / icss(theme, ...) / new Chain(theme) 获取展开后的真值。`,
+        )
+        return  // 只警告一次，避免多 token 时刷屏
+      }
+    }
   }
 }
 

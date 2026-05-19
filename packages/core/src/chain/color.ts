@@ -18,8 +18,14 @@ import {
   toHex,
 } from 'color2k'
 
-/** 把 0-100 (%) 入参 clamp 成 0-1。 */
+/**
+ * 把 0-1（或 0-100 调用方先 / 100 后传入）clamp 成 0-1。
+ *
+ * **NaN 防御（修 M8）**：`NaN` / `Infinity` / `-Infinity` 等非有限数返回 0，
+ * 避免下游输出 `rgba(r,g,b,NaN)` 这种破坏 CSS 的字符串。
+ */
 function clamp01(n: number): number {
+  if (!Number.isFinite(n)) return 0
   return Math.max(0, Math.min(1, n))
 }
 

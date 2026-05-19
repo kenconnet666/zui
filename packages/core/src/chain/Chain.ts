@@ -97,14 +97,20 @@ export interface ChainOptions {
 }
 
 export class Chain<T extends ThemeSchema = DefaultSchema> {
-  /** 累计的 emotion `CSSObject`（含嵌套）。 */
-  public _node: Record<string, unknown> = {}
-  public _theme: ResolvedTheme<T>
-  public _keymap: Map<string, Map<string, string>>
+  /**
+   * 累计的 emotion `CSSObject`（含嵌套）。
+   *
+   * **L1**：标 `readonly` 让 TypeScript 标记直接重赋值（`chain._node = {}`）为错。
+   * 内部 `_nest()` 通过 `as Chain<T>` cast 走 mutation；用户**仍可**通过
+   * `chain._node.color = 'red'`（mutation）绕过类型 — 这是 escape hatch，不阻止。
+   */
+  public readonly _node: Record<string, unknown> = {}
+  public readonly _theme: ResolvedTheme<T>
+  public readonly _keymap: Map<string, Map<string, string>>
   /** carrier 缓存（避免 chain.color 多次访问反复建 Proxy）。 */
-  public _carriers: Map<string, unknown> = new Map()
+  public readonly _carriers: Map<string, unknown> = new Map()
   /** 自定义 css 编译函数（W5.1，SSR 用户传入；不传走默认 emotion css）。 */
-  public _cssFn: (obj: CSSObject) => string
+  public readonly _cssFn: (obj: CSSObject) => string
 
   constructor(theme: ResolvedTheme<T> | Theme<T>, options: ChainOptions = {}) {
     if (theme instanceof Theme) {
@@ -951,11 +957,14 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
       existing && typeof existing === 'object' && existing !== null
         ? (existing as Record<string, unknown>)
         : {}
-    this._node = child
+    // 内部强转：_node 是 readonly（L1）阻止用户重赋值，但 _nest 需要在 try/finally
+    // 切换 _node 引用实现嵌套上下文。这是 escape hatch 的"已知用法"，集中此处。
+    const mut = this as unknown as { _node: Record<string, unknown> }
+    mut._node = child
     try {
       fn(this)
     } finally {
-      this._node = prev
+      mut._node = prev
     }
     // fn 内部什么都没写时，不把空对象留在父节点上
     if (Object.keys(child).length === 0) {

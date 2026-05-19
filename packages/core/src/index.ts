@@ -12,6 +12,7 @@ export { icss } from './icss'
 export { toClassName } from './toClassName'
 export { ikeyframes } from './ikeyframes'
 export { cx } from './cx'
+export type { ClassInput } from './cx'
 export { injectGlobal } from './injectGlobal'
 
 // ─── W5.4 / W5.5 / W8 全局副作用工具 ───

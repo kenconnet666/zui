@@ -1,24 +1,63 @@
 /** CSS 全局关键字。 */
 export type GlobalKw = 'inherit' | 'unset' | 'initial' | 'revert' | 'revertLayer'
 
-/** 长度类 unit 方法集。 */
+/**
+ * 长度类 unit 方法集。**与 `chain/units.ts` 的 `LENGTH_UNITS` 严格对齐**：
+ *
+ * - 绝对：px / cm / mm / in / pt / pc
+ * - 字体相对：rem / em / ch / ex
+ * - 视口：vw / vh / vmin / vmax
+ * - 小 / 大 / 动态视口（CSS Values 4）：svw / svh / svmin / svmax / lvw / lvh / lvmin / lvmax / dvw / dvh / dvmin / dvmax
+ * - 容器查询（CSS Containment 3）：cqw / cqh / cqi / cqb / cqmin / cqmax
+ * - 栅格：fr
+ * - 百分比：pct → `'%'`
+ *
+ * 合计 34 个（修 R1 类型层漂移）。
+ */
 export interface LengthUnits<TSelf> {
+  // ─── 绝对 ───
   px(n: number): TSelf
-  rem(n: number): TSelf
-  em(n: number): TSelf
-  ch(n: number): TSelf
-  ex(n: number): TSelf
-  vw(n: number): TSelf
-  vh(n: number): TSelf
-  vmin(n: number): TSelf
-  vmax(n: number): TSelf
-  pct(n: number): TSelf
   cm(n: number): TSelf
   mm(n: number): TSelf
   in(n: number): TSelf
   pt(n: number): TSelf
   pc(n: number): TSelf
+  // ─── 字体相对 ───
+  rem(n: number): TSelf
+  em(n: number): TSelf
+  ch(n: number): TSelf
+  ex(n: number): TSelf
+  // ─── 视口 ───
+  vw(n: number): TSelf
+  vh(n: number): TSelf
+  vmin(n: number): TSelf
+  vmax(n: number): TSelf
+  // ─── 小视口（小于 vw/vh，UI 占用后） ───
+  svw(n: number): TSelf
+  svh(n: number): TSelf
+  svmin(n: number): TSelf
+  svmax(n: number): TSelf
+  // ─── 大视口（UI 收起后的最大） ───
+  lvw(n: number): TSelf
+  lvh(n: number): TSelf
+  lvmin(n: number): TSelf
+  lvmax(n: number): TSelf
+  // ─── 动态视口（跟随 UI 实时变化） ───
+  dvw(n: number): TSelf
+  dvh(n: number): TSelf
+  dvmin(n: number): TSelf
+  dvmax(n: number): TSelf
+  // ─── 容器查询 ───
+  cqw(n: number): TSelf
+  cqh(n: number): TSelf
+  cqi(n: number): TSelf
+  cqb(n: number): TSelf
+  cqmin(n: number): TSelf
+  cqmax(n: number): TSelf
+  // ─── 栅格 ───
   fr(n: number): TSelf
+  // ─── 百分比（特殊 ident → '%'） ───
+  pct(n: number): TSelf
 }
 
 export interface TimeUnits<TSelf> {
