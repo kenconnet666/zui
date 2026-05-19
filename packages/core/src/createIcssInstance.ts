@@ -2,6 +2,7 @@ import type { CSSObject } from '@emotion/css/create-instance'
 import { Chain } from './chain/Chain'
 import { Theme } from './theme/Theme'
 import type { ResolvedTheme, ThemeSchema } from './theme/types'
+import { PREFLIGHT_STYLES } from './preset/preflightStyles'
 
 /**
  * W5.1 — SSR / 多实例 wrapper（D8 落地）。
@@ -41,13 +42,13 @@ export interface IcssInstance {
   chain<T extends ThemeSchema>(theme: ResolvedTheme<T> | Theme<T>): Chain<T>
   /** 透传 instance.cx。 */
   cx: EmotionLikeInstance['cx']
-  /** 透传 instance.injectGlobal。 */
+  /** 透传 instance.injectGlobal（内置 instance 级内存去重，修 R3）。 */
   injectGlobal: (styles: CSSObject | string) => void
   /** 按 stops 注册 keyframes，返回 animation name。 */
   ikeyframes(factory: (k: KeyframesBuilder) => void): string
   /** W5.3 — 注册命名 keyframes 进 instance；返回该 animation name（同 ikeyframes，命名版本）。 */
   registerAnimation(name: string, stops: Record<string, CSSObject>): string
-  /** W5.4 — 注入 normalize 风 preflight 到 instance。 */
+  /** W5.4 — 注入 normalize 风 preflight 到 instance（与全局 preflight 共享 single source）。 */
   injectPreflight(): void
   /** W5.5 — 在 instance 上注册 @property。 */
   registerCustomProperty(name: `--${string}`, options: CustomPropertyOptions): void
@@ -59,6 +60,8 @@ export interface IcssInstance {
   registerFont(family: string, sources: FontFaceSource[]): void
   /** emotion 11 SSR flush（如果 instance 提供）。 */
   extractCritical(): void
+  /** 测试 / SSR 重置用：清空本 instance 的 injectGlobal 去重缓存（不撤销已注入的样式）。 */
+  _resetInjectGlobalCache(): void
 }
 
 export interface KeyframesBuilder {
@@ -83,6 +86,27 @@ export interface FontFaceSource {
 }
 
 export function createIcssInstance(emotion: EmotionLikeInstance): IcssInstance {
+  // instance 级内存去重（修 R3）：与全局 injectGlobal.ts 平行，但每个 instance 独立
+  // 一份，避免多实例隔离环境下相互污染。
+  const injectedHashes = new Set<string>()
+
+  function fingerprint(styles: CSSObject | string): string {
+    if (typeof styles === 'string') return `s:${styles}`
+    try {
+      return `o:${JSON.stringify(styles)}`
+    } catch {
+      // 含循环引用 / Symbol 等不可序列化值；退回原样不去重
+      return `_${Math.random()}`
+    }
+  }
+
+  function dedupedInjectGlobal(styles: CSSObject | string): void {
+    const key = fingerprint(styles)
+    if (injectedHashes.has(key)) return
+    injectedHashes.add(key)
+    emotion.injectGlobal(styles as never)
+  }
+
   return {
     icss(theme, factory) {
       const c = new Chain(theme, { cssFn: emotion.css })
@@ -94,7 +118,7 @@ export function createIcssInstance(emotion: EmotionLikeInstance): IcssInstance {
     },
     cx: emotion.cx,
     injectGlobal(styles) {
-      emotion.injectGlobal(styles as never)
+      dedupedInjectGlobal(styles)
     },
     ikeyframes(factory) {
       const stops: Record<string, CSSObject> = {}
@@ -112,20 +136,12 @@ export function createIcssInstance(emotion: EmotionLikeInstance): IcssInstance {
     registerAnimation(name, stops) {
       // emotion.keyframes 返回 anonymous animation name；用 injectGlobal 注册命名 @keyframes
       const block = renderKeyframes(name, stops)
-      emotion.injectGlobal(block as never)
+      dedupedInjectGlobal(block)
       return name
     },
     injectPreflight() {
-      emotion.injectGlobal({
-        '*, *::before, *::after': { boxSizing: 'border-box' },
-        body: { margin: 0, lineHeight: 1.5, WebkitFontSmoothing: 'antialiased' },
-        'h1, h2, h3, h4, h5, h6, p, blockquote, dl, dd, figure, pre': { margin: 0 },
-        'button, input, textarea, select, optgroup': { font: 'inherit', color: 'inherit', margin: 0 },
-        'button, [role="button"]': { cursor: 'pointer' },
-        'img, svg, video, canvas, audio, iframe, embed, object': { display: 'block', maxWidth: '100%' },
-        'ul, ol': { listStyle: 'none', padding: 0, margin: 0 },
-        a: { color: 'inherit', textDecoration: 'inherit' },
-      } as never)
+      // 用 single source PREFLIGHT_STYLES（修 R4：避免与全局 preflight 漂移）
+      dedupedInjectGlobal(PREFLIGHT_STYLES)
     },
     registerCustomProperty(name, options) {
       const block = `@property ${name} {
@@ -133,14 +149,14 @@ export function createIcssInstance(emotion: EmotionLikeInstance): IcssInstance {
   inherits: ${options.inherits};
   initial-value: ${options.initialValue};
 }`
-      emotion.injectGlobal(block as never)
+      dedupedInjectGlobal(block)
     },
     injectLayerOrder(layers) {
       if (layers.length === 0) return
-      emotion.injectGlobal(`@layer ${layers.join(', ')};` as never)
+      dedupedInjectGlobal(`@layer ${layers.join(', ')};`)
     },
     injectLayer(name, styles) {
-      emotion.injectGlobal({ [`@layer ${name}`]: styles } as never)
+      dedupedInjectGlobal({ [`@layer ${name}`]: styles })
     },
     registerFont(family, sources) {
       for (const s of sources) {
@@ -155,11 +171,14 @@ export function createIcssInstance(emotion: EmotionLikeInstance): IcssInstance {
         if (s.style !== undefined) declarations.push(`font-style: ${s.style}`)
         if (s.unicodeRange) declarations.push(`unicode-range: ${s.unicodeRange}`)
         const block = `@font-face {\n  ${declarations.join(';\n  ')};\n}`
-        emotion.injectGlobal(block as never)
+        dedupedInjectGlobal(block)
       }
     },
     extractCritical() {
       emotion.flush?.()
+    },
+    _resetInjectGlobalCache() {
+      injectedHashes.clear()
     },
   }
 }

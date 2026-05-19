@@ -76,7 +76,7 @@ const BLEND_MODE_KW = [
 ] as const
 const BREAK_KW = [
   'auto', 'avoid', 'always', 'all',
-  'avoidPage', 'page', 'leftPage', 'rightPage', 'recto', 'verso',
+  'avoidPage', 'page', 'left', 'right', 'recto', 'verso',
   'avoidColumn', 'column',
   'avoidRegion', 'region',
 ] as const

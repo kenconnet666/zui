@@ -1,8 +1,8 @@
 import type { Chain } from './Chain'
 import { darken, desaturate, lighten, mix, saturate, setAlpha } from './color'
 import { ENHANCED_PROPS } from './enhanced-props'
-import { KEYWORD_TO_CSS } from './keywords'
-import { withUnit, type UnitClass } from './units'
+import { GLOBAL_KEYWORDS, KEYWORD_TO_CSS } from './keywords'
+import { getUnitList, withUnit, type UnitClass } from './units'
 
 /**
  * 给一个属性名返回一个 callable Proxy（PropCarrier / ColorPropCarrier 形态）。
@@ -126,16 +126,24 @@ function makeColorTokenValue(chain: Chain<never>, prop: string, value: string): 
   }
 }
 
+/**
+ * 判断 `key` 是否是 `cls` 单位族里的有效 unit 方法。
+ *
+ * 直接走 `units.ts` 的 single source（LENGTH_UNITS / TIME_UNITS / ANGLE_UNITS），
+ * 避免硬编码漂移。修 R1：之前手写 16 个长度单位，漏掉 W1.7 补的 14 个现代单位
+ * （svw/lvw/dvw/cqw/cqi/... 等）导致 `s.padding.cqw(10)` 运行时静默失败。
+ */
 function isUnitMethod(key: string, cls: UnitClass): boolean {
-  if (cls === 'length') {
-    return ['px', 'rem', 'em', 'ch', 'ex', 'vw', 'vh', 'vmin', 'vmax', 'pct', 'cm', 'mm', 'in', 'pt', 'pc', 'fr'].includes(key)
-  }
-  if (cls === 'time') return key === 'ms' || key === 's'
-  return ['deg', 'rad', 'grad', 'turn'].includes(key)
+  return (getUnitList(cls) as readonly string[]).includes(key)
 }
 
+/**
+ * 全局 CSS 关键字（inherit / unset / initial / revert / revertLayer）。
+ *
+ * 走 `keywords.ts` 的 `GLOBAL_KEYWORDS` single source（修 R2：避免与硬编码漂移）。
+ */
 function isGlobalKeyword(key: string): boolean {
-  return key === 'inherit' || key === 'unset' || key === 'initial' || key === 'revert' || key === 'revertLayer'
+  return (GLOBAL_KEYWORDS as readonly string[]).includes(key)
 }
 
 interface ChainInternal {

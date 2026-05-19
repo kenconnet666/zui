@@ -267,11 +267,11 @@ export const KEYWORD_TO_CSS: Record<string, string> = {
   plusLighter: 'plus-lighter',
 
   // ─── break-before / break-after / break-inside ───
+  // 注：CSS spec 的 `break-before: left / right` 直接复用 keywords 区已有的 `left` / `right`，
+  // 不重复定义 `leftPage` / `rightPage`（修 R5：删除歧义条目）。
   avoid: 'avoid',
   avoidPage: 'avoid-page',
   page: 'page',
-  leftPage: 'left',  // 复用 css 'left' for break value
-  rightPage: 'right',
   recto: 'recto',
   verso: 'verso',
   avoidColumn: 'avoid-column',

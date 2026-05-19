@@ -1183,7 +1183,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/break-after
      */
-  breakAfter: PropCarrier<TSelf, CssValueOf<'breakAfter'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'leftPage' | 'rightPage' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
+  breakAfter: PropCarrier<TSelf, CssValueOf<'breakAfter'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'left' | 'right' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2019.
      *
@@ -1197,7 +1197,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/break-before
      */
-  breakBefore: PropCarrier<TSelf, CssValueOf<'breakBefore'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'leftPage' | 'rightPage' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
+  breakBefore: PropCarrier<TSelf, CssValueOf<'breakBefore'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'left' | 'right' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2019.
      *
