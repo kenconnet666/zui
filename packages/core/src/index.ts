@@ -92,7 +92,11 @@ export type { IcxPropMethods } from './types/properties.generated'
 
 // ─── W10 类型工具 + 应用 helper ───
 export { applyStyleProps } from './types/styleProps'
-export type { StyleProps, TokenOf } from './types/styleProps'
+export type { StyleProps, ResponsiveStyleProps, TokenOf } from './types/styleProps'
+
+// ─── CL Batch 2 — 响应式 prop 解析 ───
+export { applyResponsive, isResponsiveValue } from './responsive'
+export type { ResponsiveValue, ResponsiveObject } from './responsive'
 
 // ─── W1.2 ComponentTokenRegistry ───
 export type {

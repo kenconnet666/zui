@@ -5,9 +5,11 @@ import type {
   ShadowTokens,
   FontSizeTokens,
 } from './tokens'
-import type { ThemeSchema } from '../theme/types'
-import type { Chain } from '../chain/Chain'
+import type { ResolvedTheme, ThemeSchema } from '../theme/types'
+import { Chain } from '../chain/Chain'
+import { Theme } from '../theme/Theme'
 import type { DefaultSchema } from '../theme/defaults/schema'
+import { applyResponsive, isResponsiveValue, type ResponsiveValue } from '../responsive'
 
 /**
  * W10.1 — 组件 props 风格的 style alias 类型集合（Theme UI / Chakra 风）。
@@ -99,20 +101,41 @@ const ALIAS_MAP: Record<string, string | string[]> = {
 }
 
 /**
- * 把 StyleProps 应用到 chain（组件库内部用）。
+ * 把 StyleProps 应用到 chain（组件库内部用，chain 在前的旧签名）。
  *
  * 对每个 prop：
  *  - alias 形（p / px / mx / ...）→ 查 ALIAS_MAP 转 1-2 个真 CSS prop
  *  - 值是 `_xxx` token 形 → 走 chain 的 carrier token 路径
+ *  - 值是响应式对象 `{ base, md, lg }` → 自动 `_media('_md', ...)` 嵌套（E4）
  *  - 否则字面值 → 走 fn(value)
  *
  * @example
  * applyStyleProps(chain, { p: '_md', bg: '_primary', rounded: 8 })
+ *
+ * @example
+ * applyStyleProps(chain, { p: { base: 4, md: 8, lg: 16 } })
+ *
+ * **F1 等价 API**：`applyStyleProps(theme, props)` 返回 className 字符串（推荐用法，与
+ * icss / defineVariants 参数顺序一致）。两个 overload 共存。
  */
 export function applyStyleProps<T extends ThemeSchema>(
   chain: Chain<T>,
-  props: StyleProps<T>,
-): void {
+  props: ResponsiveStyleProps<T>,
+): void
+export function applyStyleProps<T extends ThemeSchema>(
+  theme: ResolvedTheme<T> | Theme<T>,
+  props: ResponsiveStyleProps<T>,
+): string
+export function applyStyleProps<T extends ThemeSchema>(
+  chainOrTheme: Chain<T> | ResolvedTheme<T> | Theme<T>,
+  props: ResponsiveStyleProps<T>,
+): void | string {
+  // F1: 判断第一个参数是 chain 还是 theme
+  const isChain = chainOrTheme instanceof Chain
+  const chain = isChain
+    ? (chainOrTheme as Chain<T>)
+    : new Chain<T>(chainOrTheme as ResolvedTheme<T> | Theme<T>)
+
   const propsRecord = props as Record<string, unknown>
   for (const key in propsRecord) {
     const value = propsRecord[key]
@@ -120,20 +143,49 @@ export function applyStyleProps<T extends ThemeSchema>(
     const targets = ALIAS_MAP[key] ?? key
     const propNames = Array.isArray(targets) ? targets : [targets]
 
+    // E4 — 响应式对象：每个断点应用一次
+    if (isResponsiveValue<unknown>(value)) {
+      applyResponsive(chain, value as ResponsiveValue<unknown>, (s, v) => {
+        for (const cssProp of propNames) {
+          applyOneProp(s, cssProp, v)
+        }
+      })
+      continue
+    }
+
     for (const cssProp of propNames) {
-      // 通过 carrier 走完整四态分派（token / keyword / fn）
-      const carrier = (chain as unknown as Record<string, unknown>)[cssProp]
-      if (typeof value === 'string' && value.startsWith('_')) {
-        // token 路径：访问 _xxx 字段触发 token 命中
-        ;(carrier as Record<string, unknown>)[value]
-      } else if (typeof carrier === 'function') {
-        ;(carrier as (v: unknown) => unknown)(value)
-      } else {
-        // 兜底：直接写 _node
-        ;(chain as unknown as { _node: Record<string, unknown> })._node[cssProp] = value
-      }
+      applyOneProp(chain, cssProp, value)
     }
   }
+
+  // F1: theme 入口返回 className；chain 入口仍 void
+  if (!isChain) return chain.toString()
+  return
+}
+
+/** 内部：把单个值应用到 chain 的某个 CSS prop。 */
+function applyOneProp<T extends ThemeSchema>(
+  chain: Chain<T>,
+  cssProp: string,
+  value: unknown,
+): void {
+  const carrier = (chain as unknown as Record<string, unknown>)[cssProp]
+  if (typeof value === 'string' && value.startsWith('_')) {
+    // token 路径
+    ;(carrier as Record<string, unknown>)[value]
+  } else if (typeof carrier === 'function') {
+    ;(carrier as (v: unknown) => unknown)(value)
+  } else {
+    // 兜底：直接写 _node
+    ;(chain as unknown as { _node: Record<string, unknown> })._node[cssProp] = value
+  }
+}
+
+/**
+ * StyleProps 的响应式版本：每个字段可传普通值，也可传响应式对象 `{ base, md, lg, ... }`。
+ */
+export type ResponsiveStyleProps<T extends ThemeSchema = DefaultSchema> = {
+  [K in keyof StyleProps<T>]: ResponsiveValue<StyleProps<T>[K]>
 }
 
 /**

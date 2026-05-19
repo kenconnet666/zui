@@ -42,10 +42,21 @@ export type VariantMap<S extends ThemeSchema> = Record<string, VariantOptions<S>
  *
  * 约束放宽到 `Record<string, Record<string, unknown>>` 而非 `VariantMap<ThemeSchema>`，
  * 避免 `exactOptionalPropertyTypes` 严格模式下泛型 S 的协变冲突。
+ *
+ * **F2 boolean variants 支持**：若维度的 keys 是 `'true' | 'false'`，自动接受 `boolean`
+ * （`disabled?: boolean`）；若 keys 是数字字符串 `'4' | '8'`，自动接受 `number`。
  */
 export type VariantProps<V extends Record<string, Record<string, unknown>>> = {
-  [K in keyof V]?: keyof V[K] & string
+  [K in keyof V]?: BoolFriendly<keyof V[K] & string>
 }
+
+/**
+ * 把 'true' | 'false' 暴露成 boolean；纯数字字符串字面量暴露成 number；其它保留 string。
+ */
+export type BoolFriendly<K extends string> =
+  | K
+  | (Extract<K, 'true' | 'false'> extends never ? never : boolean)
+  | (Extract<K, `${number}`> extends never ? never : number)
 
 /** Compound variant 命中条件 + apply factory。 */
 export interface CompoundVariant<S extends ThemeSchema, V extends VariantMap<S>> {
@@ -133,10 +144,15 @@ export function defineVariants<S extends ThemeSchema, V extends VariantMap<S>>(
 
 /**
  * 合并 `defaults` 与 `props`，props 中明确赋值的覆盖 defaults。
- * `null` / `undefined` 不算 props（沿用 defaults）。
+ *
+ * - `null` / `undefined` 不算 props（沿用 defaults）。
+ * - **F2 boolean variants**：`true` / `false` 自动转 `'true'` / `'false'`，
+ *   让 `variants: { disabled: { true: ..., false: ... } }` 配合 `f({ disabled: true })`
+ *   工作。
+ * - 数字也转字符串（`size: 4` → `'4'`）兼容 `variants: { size: { '4': ..., '8': ... } }`。
  */
 function resolvePropsWithDefaults(
-  props: Record<string, string | undefined> | undefined,
+  props: Record<string, string | boolean | number | undefined> | undefined,
   defaults: Record<string, string | undefined> | undefined,
 ): Record<string, string> {
   const out: Record<string, string> = {}
@@ -147,7 +163,10 @@ function resolvePropsWithDefaults(
   }
   if (props) {
     for (const [k, v] of Object.entries(props)) {
-      if (v != null) out[k] = v
+      if (v == null) continue
+      if (typeof v === 'boolean') out[k] = v ? 'true' : 'false'
+      else if (typeof v === 'number') out[k] = String(v)
+      else out[k] = v
     }
   }
   return out
