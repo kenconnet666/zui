@@ -171,7 +171,7 @@ describe('F2 — defineVariants 接受 boolean / number', () => {
       base: s => { s.padding.px(8) },
       variants: {
         disabled: {
-          true: s => { s.opacity._50; s.pointerEvents('none') },
+          true: s => { s.opacity._middle; s.pointerEvents('none') },
           false: () => {},
         },
       },
@@ -184,7 +184,7 @@ describe('F2 — defineVariants 接受 boolean / number', () => {
   it('boolean 默认值', () => {
     const tooltip = defineVariants(defaultLight, {
       variants: {
-        open: { true: s => { s.opacity._100 }, false: s => { s.opacity._0 } },
+        open: { true: s => { s.opacity._full }, false: s => { s.opacity._none } },
       },
       defaultVariants: { open: 'false' },
     })
@@ -217,7 +217,7 @@ describe('F2 — defineVariants 接受 boolean / number', () => {
           danger: s => { s.backgroundColor._danger },
         },
         disabled: {
-          true: s => { s.opacity._50 },
+          true: s => { s.opacity._middle },
           false: () => {},
         },
       },

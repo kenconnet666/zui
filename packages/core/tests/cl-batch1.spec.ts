@@ -71,10 +71,10 @@ describe('E7 — Chain._state(props, mapping)', () => {
   it('truthy 状态对应 factory 应用', () => {
     const c = new Chain(defaultLight)
     c._state({ loading: true, error: false }, {
-      loading: s => { s.opacity._70 },
+      loading: s => { s.opacity._large },
       error:   s => { s.borderColor._danger },
     })
-    expect(c._node.opacity).toBe(0.7)
+    expect(c._node.opacity).toBe(0.75)
     expect(c._node.borderColor).toBeUndefined()
   })
 
@@ -104,7 +104,7 @@ describe('E7 — Chain._state(props, mapping)', () => {
   it('mapping 中没声明的 key 不应用（即使 props 有）', () => {
     const c = new Chain(defaultLight)
     c._state({ loading: true, extra: true }, {
-      loading: s => { s.opacity._50 },
+      loading: s => { s.opacity._middle },
       // extra 没声明
     })
     expect(c._node.opacity).toBe(0.5)
@@ -137,8 +137,8 @@ describe('E2 — composeVariants 变体复合', () => {
     variants: {
       state: {
         idle: () => {},
-        loading: s => { s.opacity._70 },
-        disabled: s => { s.opacity._50 },
+        loading: s => { s.opacity._large },
+        disabled: s => { s.opacity._middle },
       },
     },
     defaultVariants: { state: 'idle' },
@@ -240,9 +240,9 @@ describe('E1 — defineParts 多 slot', () => {
     slots: ['root', 'overlay', 'content', 'title'] as const,
     base: {
       root: s => { s.position.fixed; s.zIndex._modal },
-      overlay: s => { s.position.fixed; s.backgroundColor.black; s.opacity._50 },
+      overlay: s => { s.position.fixed; s.backgroundColor.black; s.opacity._middle },
       content: s => { s.position.fixed; s.borderRadius._large },
-      title: s => { s.fontWeight._bold },
+      title: s => { s.fontWeight._huge },
     },
     variants: {
       size: {

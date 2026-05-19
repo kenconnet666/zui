@@ -5,7 +5,7 @@
  * 1. 双模式渲染（slot / component prop）
  * 2. size 5 阶 → em 单位
  * 3. color 6 种 → 各应用对应语义色
- * 4. depth 5 阶 + none → opacity
+ * 4. depth none + tiny/small/middle/large/huge → opacity
  * 5. spin none + boolean + 5 阶
  * 6. css factory：基础 + 伪类 + 覆盖 variants
  * 7. a11y label
@@ -105,20 +105,20 @@ describe('ZIcon — color 6 种', () => {
 })
 
 describe('ZIcon — depth 5 阶 + none', () => {
-  it('depth="2" → opacity 0.8', () => {
-    mount(ZIcon, { props: { component: DummyIcon, depth: '2' } })
+  it('depth="tiny" → opacity 0.8', () => {
+    mount(ZIcon, { props: { component: DummyIcon, depth: 'tiny' } })
     expect(getInjectedCss()).toMatch(/opacity:0\.8/)
   })
 
-  it('depth="5" → opacity 0.2', () => {
-    mount(ZIcon, { props: { component: DummyIcon, depth: '5' } })
+  it('depth="huge" → opacity 0.2', () => {
+    mount(ZIcon, { props: { component: DummyIcon, depth: 'huge' } })
     expect(getInjectedCss()).toMatch(/opacity:0\.2/)
   })
 
-  it('depth="none" → className 与 depth="2" 不同（无 opacity rule）', () => {
+  it('depth="none" → className 与 depth="tiny" 不同（无 opacity rule）', () => {
     const wNone = mount(ZIcon, { props: { component: DummyIcon, depth: 'none' } })
-    const wTwo = mount(ZIcon, { props: { component: DummyIcon, depth: '2' } })
-    expect(wNone.classes().join(' ')).not.toBe(wTwo.classes().join(' '))
+    const wTiny = mount(ZIcon, { props: { component: DummyIcon, depth: 'tiny' } })
+    expect(wNone.classes().join(' ')).not.toBe(wTiny.classes().join(' '))
   })
 })
 
@@ -241,6 +241,25 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
     })
     mount(Wrap)
     expect(getInjectedCss().toLowerCase()).toContain('#abcdef')
+  })
+
+  it('改 icon.depthMiddleOpacity → depth="middle" 跟随新值', () => {
+    const Wrap = defineComponent({
+      components: { ZConfigProvider, ZIcon },
+      data: () => ({
+        overrides: { icon: { depthMiddleOpacity: '0.33' } },
+      }),
+      template: `
+        <ZConfigProvider :component-tokens="overrides">
+          <ZIcon :component="DummyIcon" depth="middle" />
+        </ZConfigProvider>
+      `,
+      setup() {
+        return { DummyIcon }
+      },
+    })
+    mount(Wrap)
+    expect(getInjectedCss()).toMatch(/opacity:0\.33/)
   })
 
   it('改 icon.sizeLarge → size="large" 跟随', () => {

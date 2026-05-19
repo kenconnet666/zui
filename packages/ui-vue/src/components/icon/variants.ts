@@ -8,7 +8,7 @@
  * ZConfigProvider 切主题时 useVariants 会重新调工厂、emotion 自动按内容 hash 复用类名。
  *
  * **token 读取**：`withComponentTokens` 把所有 component token flatten 到 `theme.color`
- * 命名空间（`iconSizeTiny` / `iconPrimaryColor` / `iconDepth1Opacity` / `iconSpinMiddleDuration` 等）。
+ * 命名空间（`iconSizeTiny` / `iconPrimaryColor` / `iconDepthMiddleOpacity` / `iconSpinMiddleDuration` 等）。
  * 由于 `width/height/fontSize/opacity/animationDuration` 等 carrier 的 tokenCat 不是 color，
  * 本工厂直接从 `theme.color.iconXxx` 读字面量再喂 chain method（与 v1 同策略）。
  */
@@ -28,12 +28,12 @@ interface IconTokenSnapshot {
   warningColor: string
   dangerColor: string
   infoColor: string
-  // depth
-  depth1: number
-  depth2: number
-  depth3: number
-  depth4: number
-  depth5: number
+  // depth opacity（5 阶语义）
+  depthTiny: number
+  depthSmall: number
+  depthMiddle: number
+  depthLarge: number
+  depthHuge: number
   // spin
   spinTiny: string
   spinSmall: string
@@ -72,11 +72,11 @@ function readIconTokens<S extends ThemeSchema>(theme: ResolvedTheme<S>): IconTok
     warningColor: read('iconWarningColor', '#f59e0b'),
     dangerColor: read('iconDangerColor', '#ef4444'),
     infoColor: read('iconInfoColor', '#06b6d4'),
-    depth1: readNum('iconDepth1Opacity', 1),
-    depth2: readNum('iconDepth2Opacity', 0.8),
-    depth3: readNum('iconDepth3Opacity', 0.6),
-    depth4: readNum('iconDepth4Opacity', 0.4),
-    depth5: readNum('iconDepth5Opacity', 0.2),
+    depthTiny: readNum('iconDepthTinyOpacity', 0.8),
+    depthSmall: readNum('iconDepthSmallOpacity', 0.6),
+    depthMiddle: readNum('iconDepthMiddleOpacity', 0.4),
+    depthLarge: readNum('iconDepthLargeOpacity', 0.3),
+    depthHuge: readNum('iconDepthHugeOpacity', 0.2),
     spinTiny: read('iconSpinTinyDuration', '0.3s'),
     spinSmall: read('iconSpinSmallDuration', '0.5s'),
     spinMiddle: read('iconSpinMiddleDuration', '1s'),
@@ -90,7 +90,7 @@ function readIconTokens<S extends ThemeSchema>(theme: ResolvedTheme<S>): IconTok
  *
  * - `size`: 5 阶 tiny/small/middle/large/huge（em）
  * - `color`: default + primary/success/warning/danger/info
- * - `depth`: none + '1'..'5'（5 阶 opacity）
+ * - `depth`: none + tiny/small/middle/large/huge（5 阶 opacity，递减淡化）
  * - `spin`: none + 5 阶 tiny..huge（旋转周期，tiny 最快 huge 最慢）
  *
  * base：inline-flex 居中 + 默认 color。size / spin / depth 通过 variants 注入。
@@ -151,20 +151,20 @@ export function createIconVariants<S extends ThemeSchema = ThemeSchema>(theme: R
         none: () => {
           /* 不应用 opacity */
         },
-        '1': (s) => {
-          s.opacity(t.depth1)
+        tiny: (s) => {
+          s.opacity(t.depthTiny)
         },
-        '2': (s) => {
-          s.opacity(t.depth2)
+        small: (s) => {
+          s.opacity(t.depthSmall)
         },
-        '3': (s) => {
-          s.opacity(t.depth3)
+        middle: (s) => {
+          s.opacity(t.depthMiddle)
         },
-        '4': (s) => {
-          s.opacity(t.depth4)
+        large: (s) => {
+          s.opacity(t.depthLarge)
         },
-        '5': (s) => {
-          s.opacity(t.depth5)
+        huge: (s) => {
+          s.opacity(t.depthHuge)
         },
       },
       spin: {

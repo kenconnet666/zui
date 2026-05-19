@@ -23,7 +23,7 @@ describe('单条 className 产出', () => {
     c.color._primary
     c.padding._middle
     c.borderRadius._middle
-    c.fontWeight._bold
+    c.fontWeight._huge
     c.toString()
   })
 
@@ -32,7 +32,7 @@ describe('单条 className 产出', () => {
       s.color._primary
       s.padding._middle
       s.borderRadius._middle
-      s.fontWeight._bold
+      s.fontWeight._huge
     })
   })
 })
@@ -56,7 +56,7 @@ describe('嵌套伪类 + 多属性（典型按钮）', () => {
       s.backgroundColor._primary
       s.padding.px(12)
       s.borderRadius._middle
-      s.fontWeight._bold
+      s.fontWeight._huge
       s._hover((h) => {
         h.backgroundColor._primary.alpha(85)
       })

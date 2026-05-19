@@ -359,7 +359,7 @@ describe('defineVariants — 实际组件库场景', () => {
       base: (s) => {
         s.padding.px(12)
         s.borderRadius._middle
-        s.fontWeight._bold
+        s.fontWeight._huge
       },
       variants: {
         intent: {

@@ -11,7 +11,7 @@ export function App() {
     c.backgroundColor._primary
     c.padding.px(12)
     c.borderRadius._middle
-    c.fontWeight._bold
+    c.fontWeight._huge
     c.borderStyle.none
     c.transitionDuration.ms(150)
     c.transitionProperty('background-color')
@@ -33,7 +33,7 @@ export function App() {
     c.backgroundColor._primary.alpha(10)
     c.padding.px(12)
     c.borderRadius._middle
-    c.fontWeight._bold
+    c.fontWeight._huge
     c.borderWidth.px(1)
     c.borderStyle.solid
     c.borderColor._primary.alpha(30)
@@ -49,7 +49,7 @@ export function App() {
     c.backgroundColor._danger
     c.padding.px(12)
     c.borderRadius._middle
-    c.fontWeight._bold
+    c.fontWeight._huge
     c.borderStyle.none
     c._hover((h) => {
       h.backgroundColor._danger.alpha(85)

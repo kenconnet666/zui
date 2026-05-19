@@ -34,8 +34,8 @@ export type VariantPropsOf<F> = F extends (props?: infer P) => string ? P : neve
  *   variants: {
  *     state: {
  *       idle: () => {},
- *       loading: s => { s.opacity._70; s.pointerEvents('none') },
- *       disabled: s => { s.opacity._50 },
+ *       loading: s => { s.opacity._large; s.pointerEvents('none') },
+ *       disabled: s => { s.opacity._middle },
  *     },
  *   },
  * })

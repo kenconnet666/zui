@@ -4,7 +4,7 @@
  * **21 项 token**，遵循 5 阶哲学：
  * - 5 × `sizeXxx`（em，跟父字号缩放）
  * - 6 × `xxxColor`（default + 5 种语义色）
- * - 5 × `depthNOpacity`（5 阶不透明度，1.0 → 0.2）
+ * - 5 × `depth<size>Opacity`（5 阶不透明度，tiny=0.8 → huge=0.2）
  * - 5 × `spinXxxDuration`（5 阶旋转周期，0.3s → 3s）
  *
  * 全部经 `withComponentTokens` flatten 到 `theme.color` namespace
@@ -33,12 +33,12 @@ export interface ZIconTokens {
   dangerColor: string
   infoColor: string
 
-  // ─── 5 阶 depth opacity ───
-  depth1Opacity: string
-  depth2Opacity: string
-  depth3Opacity: string
-  depth4Opacity: string
-  depth5Opacity: string
+  // ─── 5 阶 depth opacity（语义化命名，tiny=最浅 / huge=最深淡化） ───
+  depthTinyOpacity: string
+  depthSmallOpacity: string
+  depthMiddleOpacity: string
+  depthLargeOpacity: string
+  depthHugeOpacity: string
 
   // ─── 5 阶 spin duration（tiny=快/短周期；huge=慢/长周期） ───
   spinTinyDuration: string
@@ -59,7 +59,7 @@ declare module '@kenconnet666/zui-core' {
  * 派生默认 ZIcon tokens：
  * - size 用 em（响应父字号）
  * - color 从 theme.color 读 5 种语义色（缺失时 fallback 硬编码）
- * - depth 5 阶等差 opacity（1.0 / 0.8 / 0.6 / 0.4 / 0.2）
+ * - depth 5 阶语义 opacity（tiny 0.8 / small 0.6 / middle 0.4 / large 0.3 / huge 0.2）
  * - spin 5 阶时长（tiny=0.3s 极快 → huge=3s 极慢）
  */
 export function deriveIconTokens<S extends ThemeSchema>(
@@ -86,12 +86,12 @@ export function deriveIconTokens<S extends ThemeSchema>(
     dangerColor: read('danger', '#ef4444'),
     infoColor: read('info', '#06b6d4'),
 
-    // depth opacity
-    depth1Opacity: '1',
-    depth2Opacity: '0.8',
-    depth3Opacity: '0.6',
-    depth4Opacity: '0.4',
-    depth5Opacity: '0.2',
+    // depth opacity（语义化 5 阶，越大越淡）
+    depthTinyOpacity: '0.8',
+    depthSmallOpacity: '0.6',
+    depthMiddleOpacity: '0.4',
+    depthLargeOpacity: '0.3',
+    depthHugeOpacity: '0.2',
 
     // spin duration（5 阶：快 → 慢）
     spinTinyDuration: '0.3s',

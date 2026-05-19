@@ -26,7 +26,7 @@ import {
 
 const sizes: ZIconSize[] = ['tiny', 'small', 'middle', 'large', 'huge']
 const colors: ZIconColor[] = ['default', 'primary', 'success', 'warning', 'danger', 'info']
-const depths: ZIconDepth[] = ['none', '1', '2', '3', '4', '5']
+const depths: ZIconDepth[] = ['none', 'tiny', 'small', 'middle', 'large', 'huge']
 const spinPresets: ZIconSpinPreset[] = ['tiny', 'small', 'middle', 'large', 'huge']
 
 // ─── interactive controls ───
@@ -79,14 +79,14 @@ const currentCss = computed(() => cssExamples[cssExampleKey.value])
 const overridePrimaryColor = ref<string>('#ff00aa')
 const overrideSizeLarge = ref<string>('64px')
 const overrideSpinMiddle = ref<string>('2.5s')
-const overrideDepth1 = ref<string>('1')
+const overrideDepthMiddle = ref<string>('0.5')
 
 const componentTokens = computed(() => ({
   icon: {
     primaryColor: overridePrimaryColor.value,
     sizeLarge: overrideSizeLarge.value,
     spinMiddleDuration: overrideSpinMiddle.value,
-    depth1Opacity: overrideDepth1.value,
+    depthMiddleOpacity: overrideDepthMiddle.value,
   },
 }))
 
@@ -267,7 +267,7 @@ watchEffect(() => {
       <p>
         外层全局 <code>defaultLight</code>；内层 Provider 改 4 个 icon token：
         <code>primaryColor</code> / <code>sizeLarge</code> /
-        <code>spinMiddleDuration</code> / <code>depth1Opacity</code>。两侧同步对比。
+        <code>spinMiddleDuration</code> / <code>depthMiddleOpacity</code>。两侧同步对比。
       </p>
 
       <div class="controls">
@@ -284,8 +284,8 @@ watchEffect(() => {
           <input type="text" v-model="overrideSpinMiddle" placeholder="2.5s" />
         </label>
         <label>
-          depth1Opacity
-          <input type="number" step="0.1" min="0" max="1" v-model="overrideDepth1" />
+          depthMiddleOpacity
+          <input type="number" step="0.1" min="0" max="1" v-model="overrideDepthMiddle" />
         </label>
       </div>
 
@@ -295,8 +295,8 @@ watchEffect(() => {
           <div class="demo-grid">
             <ZIcon :component="HeartOutline" color="primary" size="large" />
             <ZIcon :component="Reload" spin size="large" />
-            <ZIcon :component="StarOutline" depth="1" size="large" />
-            <ZIcon :component="StarOutline" depth="5" size="large" />
+            <ZIcon :component="StarOutline" depth="middle" size="large" />
+            <ZIcon :component="StarOutline" depth="huge" size="large" />
           </div>
         </div>
         <div class="cell">
@@ -305,8 +305,8 @@ watchEffect(() => {
             <div class="demo-grid">
               <ZIcon :component="HeartOutline" color="primary" size="large" />
               <ZIcon :component="Reload" spin size="large" />
-              <ZIcon :component="StarOutline" depth="1" size="large" />
-              <ZIcon :component="StarOutline" depth="5" size="large" />
+              <ZIcon :component="StarOutline" depth="middle" size="large" />
+              <ZIcon :component="StarOutline" depth="huge" size="large" />
             </div>
           </ZConfigProvider>
         </div>

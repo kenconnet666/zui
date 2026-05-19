@@ -24,13 +24,16 @@ export type ZIconSize = 'tiny' | 'small' | 'middle' | 'large' | 'huge'
 export type ZIconColor = 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info'
 
 /**
- * depth —— 5 阶 + none opacity。默认 `'none'`。
+ * depth —— 5 阶 + none opacity（语义化命名，遵循 5 阶哲学）。默认 `'none'`。
  *
- * - `'none'` 不应用 opacity；颜色完整呈现
- * - `'1'` → opacity 1.0（最显著）
- * - `'5'` → opacity 0.2（最弱，placeholder 级）
+ * - `'none'` 不应用 opacity，颜色完整呈现（与 `'tiny'` 略淡相邻）
+ * - `'tiny'` → opacity 0.8（轻微淡化）
+ * - `'small'` → opacity 0.6
+ * - `'middle'` → opacity 0.4
+ * - `'large'` → opacity 0.3
+ * - `'huge'` → opacity 0.2（placeholder 级，最弱）
  */
-export type ZIconDepth = 'none' | '1' | '2' | '3' | '4' | '5'
+export type ZIconDepth = 'none' | 'tiny' | 'small' | 'middle' | 'large' | 'huge'
 
 /**
  * spin —— 旋转速度预设（5 阶 + none/隐含 boolean 兼容）。

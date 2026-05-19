@@ -66,10 +66,17 @@ export interface DefaultSchema extends ThemeSchema {
     large: string
     huge: string
   }
+  /**
+   * fontWeight 5 阶（语义化，遵循 5 阶哲学）。
+   * 0.9.0 BREAKING：`normal / medium / bold` 重命名为 `tiny / small / middle / large / huge`
+   * 对应 300 / 400 / 500 / 600 / 700。CSS keyword `fontWeight.normal` / `fontWeight.bold` 仍可用（不带下划线 = 走 keyword 路径）。
+   */
   fontWeight: {
-    normal: string | number
-    medium: string | number
-    bold: string | number
+    tiny: string | number
+    small: string | number
+    middle: string | number
+    large: string | number
+    huge: string | number
   }
   /** shadow 5 档（不含 none：要去阴影用 boxShadow('none')）。 */
   shadow: {
@@ -117,37 +124,35 @@ export interface DefaultSchema extends ThemeSchema {
     large: string
     huge: string
   }
-  /** z-index 语义 token。 */
+  /**
+   * z-index token：5 阶（none + tiny/small/middle/large/huge，0/10/20/30/40/50） + 4 个 UI 语义角色 + `auto`。
+   * 0.9.0 BREAKING：`'0'..'50'` 数字 key 移除，统一用 5 阶语义 key；`modal/popover/tooltip/toast/auto` 保留。
+   */
   zIndex: {
     auto: string | number
-    '0': number
-    '10': number
-    '20': number
-    '30': number
-    '40': number
-    '50': number
+    none: number
+    tiny: number
+    small: number
+    middle: number
+    large: number
+    huge: number
     modal: number
     popover: number
     tooltip: number
     toast: number
   }
-  /** 透明度 token（0-100 21 阶）。 */
+  /**
+   * 透明度 token（5 阶 + none + full，遵循 5 阶哲学）。
+   * 0.9.0 BREAKING：旧 15 阶 Tailwind 数字 key 重命名 → `none(0) / tiny(0.05) / small(0.25) / middle(0.5) / large(0.75) / huge(0.95) / full(1)`。
+   */
   opacity: {
-    '0': number
-    '5': number
-    '10': number
-    '20': number
-    '25': number
-    '30': number
-    '40': number
-    '50': number
-    '60': number
-    '70': number
-    '75': number
-    '80': number
-    '90': number
-    '95': number
-    '100': number
+    none: number
+    tiny: number
+    small: number
+    middle: number
+    large: number
+    huge: number
+    full: number
   }
   /**
    * 行高 token（5 阶 + none，遵循 5 阶哲学）。

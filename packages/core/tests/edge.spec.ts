@@ -120,7 +120,7 @@ describe('proxy bind receiver — _when / _apply 内 fn(this) 仍是 proxy', () 
   it('_apply 同上', () => {
     const c = new Chain(defaultLight)
     c._apply((s) => {
-      s.fontWeight._bold
+      s.fontWeight._huge
       s._hover((h) => h.color.white)
     })
     expect(c._node.fontWeight).toBeDefined()

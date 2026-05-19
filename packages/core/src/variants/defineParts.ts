@@ -12,7 +12,7 @@
  *     root: s => { s.position.fixed; s.inset(0); s.zIndex._modal },
  *     overlay: s => { s.position.fixed; s.inset(0); s.backgroundColor._black.alpha(50) },
  *     content: s => { s.position.fixed; s.borderRadius._lg; s.padding._lg },
- *     title: s => { s.fontWeight._bold; s.fontSize._lg },
+ *     title: s => { s.fontWeight._huge; s.fontSize._huge },
  *   },
  *   variants: {
  *     size: {
