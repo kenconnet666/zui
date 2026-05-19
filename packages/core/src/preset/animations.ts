@@ -1,8 +1,13 @@
 /**
- * `presetAnimations` — 15 个组件库常用 keyframes 预设。
+ * `presetAnimations` — 15 个组件库常用 keyframes 预设（全局 emotion 注册版本）。
  *
- * 每个名字通过 `ikeyframes` 注册到 emotion，返回 emotion 内部的 animation-name 字符串。
- * emotion 按内容 hash，多次注册同样 keyframes 不会重复注入 DOM。
+ * **S4 重构**：keyframes stops 定义抽到 `animation-defs.ts`；本模块仅"用全局 emotion
+ * 注册"。多实例 SSR 场景请用 `createIcssInstance(emotion).presetAnimations`
+ * （那个版本会注册到该 instance 的 emotion）。
+ *
+ * **副作用警示**：import 这个模块（或从主入口 import `presetAnimations`）会触发
+ * 15 个 keyframes 注册到全局 emotion。如果不用预设动画，请勿 import。
+ * `package.json` sideEffects 已精确标注本文件为 side-effectful，bundler 不会误裁。
  *
  * @example
  * import { presetAnimations, icss, defaultLight } from '@kenconnet666/zui-core'
@@ -14,120 +19,28 @@
  * })
  */
 
-import { ikeyframes } from '../ikeyframes'
+import { keyframes } from '@emotion/css'
+import { PRESET_ANIMATION_DEFS, type PresetAnimationName } from './animation-defs'
 
-// ── Fade ────────────────────────────────────────────────────────────────
+type PresetAnimationsMap = Record<PresetAnimationName, string>
 
-const fadeIn = ikeyframes(k => {
-  k.from({ opacity: 0 })
-  k.to({ opacity: 1 })
-})
-
-const fadeOut = ikeyframes(k => {
-  k.from({ opacity: 1 })
-  k.to({ opacity: 0 })
-})
-
-// ── Slide ───────────────────────────────────────────────────────────────
-
-const slideInUp = ikeyframes(k => {
-  k.from({ transform: 'translateY(100%)', opacity: 0 })
-  k.to({ transform: 'translateY(0)', opacity: 1 })
-})
-
-const slideInDown = ikeyframes(k => {
-  k.from({ transform: 'translateY(-100%)', opacity: 0 })
-  k.to({ transform: 'translateY(0)', opacity: 1 })
-})
-
-const slideInLeft = ikeyframes(k => {
-  k.from({ transform: 'translateX(-100%)', opacity: 0 })
-  k.to({ transform: 'translateX(0)', opacity: 1 })
-})
-
-const slideInRight = ikeyframes(k => {
-  k.from({ transform: 'translateX(100%)', opacity: 0 })
-  k.to({ transform: 'translateX(0)', opacity: 1 })
-})
-
-const slideOutDown = ikeyframes(k => {
-  k.from({ transform: 'translateY(0)', opacity: 1 })
-  k.to({ transform: 'translateY(100%)', opacity: 0 })
-})
-
-// ── Scale / Zoom ────────────────────────────────────────────────────────
-
-const scaleIn = ikeyframes(k => {
-  k.from({ transform: 'scale(0.95)', opacity: 0 })
-  k.to({ transform: 'scale(1)', opacity: 1 })
-})
-
-const scaleOut = ikeyframes(k => {
-  k.from({ transform: 'scale(1)', opacity: 1 })
-  k.to({ transform: 'scale(0.95)', opacity: 0 })
-})
-
-const zoomIn = ikeyframes(k => {
-  k.from({ transform: 'scale(0)', opacity: 0 })
-  k.to({ transform: 'scale(1)', opacity: 1 })
-})
-
-// ── 强调 / 循环 ─────────────────────────────────────────────────────────
-
-const spin = ikeyframes(k => {
-  k.from({ transform: 'rotate(0deg)' })
-  k.to({ transform: 'rotate(360deg)' })
-})
-
-const pulse = ikeyframes(k => {
-  k.at('0%', { opacity: 1 })
-  k.at('50%', { opacity: 0.5 })
-  k.at('100%', { opacity: 1 })
-})
-
-const bounce = ikeyframes(k => {
-  k.at('0%', { transform: 'translateY(0)' })
-  k.at('25%', { transform: 'translateY(-25%)' })
-  k.at('50%', { transform: 'translateY(0)' })
-  k.at('75%', { transform: 'translateY(-12%)' })
-  k.at('100%', { transform: 'translateY(0)' })
-})
-
-const ping = ikeyframes(k => {
-  k.at('75%, 100%', { transform: 'scale(2)', opacity: 0 })
-})
-
-const shake = ikeyframes(k => {
-  k.at('0%, 100%', { transform: 'translateX(0)' })
-  k.at('10%, 30%, 50%, 70%, 90%', { transform: 'translateX(-4px)' })
-  k.at('20%, 40%, 60%, 80%', { transform: 'translateX(4px)' })
-})
+/** 把 PRESET_ANIMATION_DEFS 一次性注册到全局 emotion，返回 name 映射。 */
+function registerAllPresetAnimations(): PresetAnimationsMap {
+  const out = {} as PresetAnimationsMap
+  for (const [name, stops] of Object.entries(PRESET_ANIMATION_DEFS) as Array<[PresetAnimationName, Record<string, object>]>) {
+    out[name] = keyframes(stops as never)
+  }
+  return out
+}
 
 /**
- * 15 个组件库常用动画预设。每个值是 emotion 注册后的 animation-name 字符串，
- * 直接传给 `s.animationName(...)` 使用。
+ * 15 个组件库常用动画预设（注册到**全局** emotion）。
+ *
+ * 每个值是 emotion 注册后的 animation-name 字符串，直接传给 `s.animationName(...)`。
+ *
+ * 多实例 SSR 隔离：用 `createIcssInstance(emotion).presetAnimations` 获取注册到该
+ * instance 的版本。
  */
-export const presetAnimations = {
-  // Fade
-  fadeIn,
-  fadeOut,
-  // Slide
-  slideInUp,
-  slideInDown,
-  slideInLeft,
-  slideInRight,
-  slideOutDown,
-  // Scale / Zoom
-  scaleIn,
-  scaleOut,
-  zoomIn,
-  // 强调 / 循环
-  spin,
-  pulse,
-  bounce,
-  ping,
-  shake,
-} as const
+export const presetAnimations: PresetAnimationsMap = registerAllPresetAnimations()
 
-/** 预设动画名称的字符串字面量 union（用于类型层约束）。 */
-export type PresetAnimationName = keyof typeof presetAnimations
+export type { PresetAnimationName }

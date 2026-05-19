@@ -18,7 +18,10 @@
     "README.md",
     "LICENSE"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "**/preset/animations.js",
+    "**/preset/animations.mjs"
+  ],
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",

@@ -3,6 +3,7 @@ import { Chain } from './chain/Chain'
 import { Theme } from './theme/Theme'
 import type { ResolvedTheme, ThemeSchema } from './theme/types'
 import { PREFLIGHT_STYLES } from './preset/preflightStyles'
+import { PRESET_ANIMATION_DEFS, type PresetAnimationName } from './preset/animation-defs'
 
 /**
  * W5.1 — SSR / 多实例 wrapper（D8 落地）。
@@ -62,6 +63,13 @@ export interface IcssInstance {
   extractCritical(): void
   /** 测试 / SSR 重置用：清空本 instance 的 injectGlobal 去重缓存（不撤销已注入的样式）。 */
   _resetInjectGlobalCache(): void
+  /**
+   * S4 — 本 instance 独立注册的 15 个预设动画（参考全局 `presetAnimations`，但
+   * keyframes 注册在该 instance 的 emotion 中，SSR 隔离）。
+   *
+   * 懒加载：第一次访问任一字段时才注册到该 instance；不访问时无副作用。
+   */
+  readonly presetAnimations: Record<PresetAnimationName, string>
 }
 
 export interface KeyframesBuilder {
@@ -189,7 +197,45 @@ export function createIcssInstance(emotion: EmotionLikeInstance): IcssInstance {
     _resetInjectGlobalCache() {
       injectedHashes.clear()
     },
+    // S4: lazy 注册预设动画到本 instance
+    presetAnimations: createLazyPresetAnimations(emotion),
   }
+}
+
+/**
+ * 懒注册预设动画到指定 emotion instance。
+ *
+ * 返回的对象用 Proxy/getter 模式：第一次访问 `pa.fadeIn` 时才走 `emotion.keyframes()`
+ * 注册到 instance；后续访问命中缓存。**未访问任何字段则零开销**。
+ */
+function createLazyPresetAnimations(emotion: EmotionLikeInstance): Record<PresetAnimationName, string> {
+  const cache: Partial<Record<PresetAnimationName, string>> = {}
+  return new Proxy({} as Record<PresetAnimationName, string>, {
+    get(_, key: string): string | undefined {
+      if (!(key in PRESET_ANIMATION_DEFS)) return undefined
+      const k = key as PresetAnimationName
+      const cached = cache[k]
+      if (cached !== undefined) return cached
+      const stops = PRESET_ANIMATION_DEFS[k]
+      const name = emotion.keyframes(stops as never)
+      cache[k] = name
+      return name
+    },
+    has(_, key: string): boolean {
+      return key in PRESET_ANIMATION_DEFS
+    },
+    ownKeys(): string[] {
+      return Object.keys(PRESET_ANIMATION_DEFS)
+    },
+    getOwnPropertyDescriptor(_, key: string): PropertyDescriptor | undefined {
+      if (!(key in PRESET_ANIMATION_DEFS)) return undefined
+      return {
+        enumerable: true,
+        configurable: true,
+        value: cache[key as PresetAnimationName],
+      }
+    },
+  })
 }
 
 function renderKeyframes(name: string, stops: Record<string, CSSObject>): string {
