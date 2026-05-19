@@ -763,6 +763,103 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     return this
   }
 
+  // ─── Batch 4 — 现代 CSS 4 helper（实用主义筛选，跳过实验性 anchor）───
+
+  /**
+   * 写 safe area inset（iOS notch / home indicator / Android nav bar 留白）。
+   *
+   * 默认写 padding，第二参可改 `margin` / `inset`。`'all'` 一次写 4 边。
+   *
+   * @example
+   * s._safeArea('bottom')          // padding-bottom: env(safe-area-inset-bottom)
+   * s._safeArea('all')             // padding-{top,right,bottom,left}
+   * s._safeArea('top', 'margin')   // margin-top: env(safe-area-inset-top)
+   * s._safeArea('all', 'inset')    // inset-block-start/end + inset-inline-start/end
+   */
+  _safeArea(
+    side: 'top' | 'right' | 'bottom' | 'left' | 'all' = 'all',
+    property: 'padding' | 'margin' | 'inset' = 'padding',
+  ): this {
+    const sides = side === 'all' ? (['top', 'right', 'bottom', 'left'] as const) : [side]
+    for (const s of sides) {
+      const cssKey = property === 'inset' ? `inset-${s}` : `${property}-${s}`
+      // camelCase
+      const camel = cssKey.replace(/-([a-z])/g, (_, c) => (c as string).toUpperCase())
+      this._node[camel] = `env(safe-area-inset-${s})`
+    }
+    return this
+  }
+
+  /**
+   * 滚动捕捉简写。CSS Scroll Snap Level 1。
+   *
+   * - `type` 写到当前元素的 `scroll-snap-type`（容器侧）
+   * - `align` / `stop` 写到当前元素的 `scroll-snap-align` / `scroll-snap-stop`（子项侧）
+   * - 实际用法：父容器用 `type` + `strictness`，子项用 `align` + `stop`，按需取舍
+   *
+   * @example
+   * // 容器
+   * s._scrollSnap({ type: 'y', strictness: 'mandatory' })
+   * // 子项
+   * s._scrollSnap({ align: 'center', stop: 'always' })
+   */
+  _scrollSnap(opts: {
+    type?: 'x' | 'y' | 'both' | 'block' | 'inline' | 'none'
+    strictness?: 'mandatory' | 'proximity'
+    align?: 'start' | 'end' | 'center' | 'none'
+    stop?: 'normal' | 'always'
+  }): this {
+    if (opts.type !== undefined) {
+      const strict = opts.strictness ? ` ${opts.strictness}` : ''
+      this._node.scrollSnapType = `${opts.type}${strict}`
+    }
+    if (opts.align !== undefined) this._node.scrollSnapAlign = opts.align
+    if (opts.stop !== undefined) this._node.scrollSnapStop = opts.stop
+    return this
+  }
+
+  /**
+   * 设置 overscroll-behavior。控制滚动到边界时是否传播给父级 / 触发刷新等。
+   *
+   * @example
+   * s._overscroll('contain')         // overscroll-behavior: contain（防止页面下拉刷新）
+   * s._overscroll('none', 'y')       // overscroll-behavior-y: none（仅纵向）
+   * s._overscroll('auto', 'inline')  // overscroll-behavior-inline: auto
+   */
+  _overscroll(
+    behavior: 'auto' | 'contain' | 'none',
+    axis?: 'x' | 'y' | 'inline' | 'block',
+  ): this {
+    if (axis === undefined) {
+      this._node.overscrollBehavior = behavior
+    } else {
+      const key = `overscrollBehavior${axis.charAt(0).toUpperCase()}${axis.slice(1)}` as
+        | 'overscrollBehaviorX'
+        | 'overscrollBehaviorY'
+        | 'overscrollBehaviorInline'
+        | 'overscrollBehaviorBlock'
+      this._node[key] = behavior
+    }
+    return this
+  }
+
+  /**
+   * Field sizing — 让 `<input>` / `<textarea>` / `<select>` 按内容自适应尺寸。
+   *
+   * - `'content'` → 元素跟随内容长度自动伸缩
+   * - `'fixed'`（默认浏览器行为）→ 元素保持固定尺寸
+   *
+   * CSS Working Group 草案，2024+ Chromium / Firefox 实现中。
+   *
+   * @example
+   * s._field('content')   // field-sizing: content
+   * s._field('fixed')     // field-sizing: fixed
+   */
+  _field(sizing: 'content' | 'fixed'): this {
+    this._node.fieldSizing = sizing
+    return this
+  }
+
   // ─── 输出 ───
 
   toCSSObject(): CSSObject {
