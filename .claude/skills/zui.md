@@ -478,106 +478,209 @@ partial 应基于已解析的字面量。dev 模式扫到 function 会 warn，�
 
 ---
 
-## 十三、ui-vue 开发约定（启动前预设）
+## 十三、ui-vue 开发约定
 
-### 13.1 顶层 ZConfigProvider 模式
-```vue
-<!-- ZConfigProvider.vue -->
-<script setup lang="ts" generic="S extends ThemeSchema">
-import { computed, provide, inject } from 'vue'
-import {
-  mergeTheme,
-  mergeComponentTokenOverrides,        // ★ 0.7.0+
-  type DeepPartial,
-  type ResolvedTheme,
-  type ComponentTokenOverrides,
-} from '@kenconnet666/zui-core'
+> **状态**：Provider 层 + composables + locale 已实施（0.0.4+，2026-05）。基础组件 Button/Input/Dialog/... 尚未实现，按 13.6 / 13.7 模板逐个加。
 
-const props = defineProps<{
-  theme?: DeepPartial<S>
-  componentTokens?: ComponentTokenOverrides
-}>()
+### 13.1 包结构与 subpath 入口
 
-const parentTheme = inject<Ref<ResolvedTheme<S>>>(THEME_KEY, /* globalDefault */)
-const parentOverrides = inject<Ref<ComponentTokenOverrides>>(OVERRIDES_KEY, ref({}))
-
-// 主题：父 + 子 partial 深合并
-const mergedTheme = computed(() =>
-  props.theme ? mergeTheme(parentTheme.value, props.theme) : parentTheme.value,
-)
-
-// component token overrides：父 + 子合并（key 级浅合并）
-const mergedOverrides = computed(() =>
-  mergeComponentTokenOverrides(parentOverrides.value, props.componentTokens),
-)
-
-provide(THEME_KEY, mergedTheme)
-provide(OVERRIDES_KEY, mergedOverrides)
-</script>
-<template><slot /></template>
+```
+packages/ui-vue/src/
+├── provider/          # ZConfigProvider + 4 composables + injection keys
+├── locale/            # ZLocale types + zhCN / enUS + mergeLocale
+├── composables/       # useStyles / useDynamicStyles / useVariants / useParts / useResponsive / useBreakpoints
+├── shared/            # 内部工具（floating-ui wrapper、domId、...）
+├── components/        # 基础组件（每组件一目录）
+└── index.ts           # 顶层 barrel（聚合 + 部分 core re-export）
 ```
 
-### 13.2 useStyles composable（ui-vue 内部，不入 core）
-```ts
-import { computed, type ComputedRef } from 'vue'
-import { Chain, toClassName, type ResolvedTheme, type ThemeSchema } from '@kenconnet666/zui-core'
+**subpath exports**：
+- `@kenconnet666/zui-vue` —— 主入口
+- `@kenconnet666/zui-vue/provider`
+- `@kenconnet666/zui-vue/composables`
+- `@kenconnet666/zui-vue/locale`
 
-export function useStyles<S extends ThemeSchema>(
-  theme: Ref<ResolvedTheme<S>>,
-  factory: (s: Chain<S>) => void,
-): ComputedRef<string> {
-  return computed(() => {
-    const c = new Chain<S>(theme.value)
-    factory(c)
-    return c.toString()
-  })
+打包仿 core：`preserveModules` + 关 minify + dts `rollupTypes:false`（保留源结构，IDE go-to-def 看得到注释）。
+
+### 13.2 peer / dev 依赖矩阵
+
+```jsonc
+"peerDependencies": {
+  "@emotion/css": "^11.13.5",
+  "@emotion/unitless": "^0.10.0",
+  "@floating-ui/vue": "^1.1.11",
+  "@vicons/ionicons5": "^0.13.0",         // optional
+  "@vueuse/core": "^14.3.0",
+  "@vueuse/integrations": "^14.3.0",
+  "async-validator": "^4.2.5",
+  "color2k": "^2.0.3",
+  "date-fns": "^4.1.0",
+  "date-fns-tz": "^3.2.0",
+  "vue": "^3.5.0"
+},
+"peerDependenciesMeta": {
+  "@vicons/ionicons5": { "optional": true }   // 图标走"插槽优先 + 默认 SVG"，不强制
 }
 ```
-**为什么不入 core**：core 框架无关是根本原则。
 
-### 13.3 响应式 prop 解析
-组件库内部，把 `theme.breakpoint` 的 keys 派生成 `breakpoints` 数组，传给 `isResponsiveValue(value, breakpoints)` 启用严格模式：
+工作区根 devDeps 还装了语言服务器（统一版本）：`@vue/language-core` / `@vue/language-server` / `@vue/typescript-plugin` / `vue-tsc`（~3.2）、`svelte-language-server`、`typescript-language-server`、`typescript` (~6.0)。
+
+### 13.3 ZConfigProvider —— 实际签名
+
 ```ts
-const breakpoints = Object.keys(theme.value.breakpoint ?? {})
-const isResp = isResponsiveValue(propValue, breakpoints)
+// @kenconnet666/zui-vue/provider
+import { ZConfigProvider } from '@kenconnet666/zui-vue/provider'
+import type { Theme, DeepPartial, ComponentTokenOverrides } from '@kenconnet666/zui-core'
+import type { ZLocale, ZLocalePartial, ZDateConfig } from '@kenconnet666/zui-vue/provider'
+import type { Locale as DateFnsLocale } from 'date-fns'
+
+interface Props<S extends ThemeSchema = ThemeSchema> {
+  theme?: Theme<S>                          // 完整主题（顶层推荐）
+  themePatch?: DeepPartial<S>               // 局部 patch（嵌套推荐，与 theme 同时给时先 theme 再 patch）
+  componentTokens?: ComponentTokenOverrides // 与父浅合并
+  locale?: ZLocale                          // 完整替换
+  localePatch?: ZLocalePartial              // namespace 级 + 字段级浅合并
+  timezone?: string                         // IANA 时区，未传继承父；根未传 → 'UTC'
+  dateLocale?: DateFnsLocale                // date-fns Locale，未传继承父
+}
 ```
 
-### 13.4 组件 variants 工厂导出为函数
-**不要导出**常量 `const button = defineVariants(...)`（绑定单一 theme）。  
-**导出工厂**：`function createButtonVariants(theme) { return defineVariants(theme, ...) }`，让 ConfigProvider 主题切换时重新调用，emotion 自动按内容 hash 复用 CSS。
+合并策略一栏：
 
-### 13.5 多 slot 组件用 defineParts
-Dialog / Tabs / Select / Menu / Popover / DropdownMenu 等多内部元素的组件用 `defineParts`。嵌套 ZConfigProvider 覆盖某个 slot 用 `extendParts(theme, parent, partialConfig)`。
+| context | 顶层 fallback | 嵌套合并方式 |
+|---|---|---|
+| theme | `defaultLight.resolve()`（dev warn） | `mergeTheme` 深合并 |
+| componentTokens | `{}` | `mergeComponentTokenOverrides` namespace 浅合并 |
+| locale | `zhCN` | `mergeLocale` namespace+字段两级浅合并；数组整体替换 |
+| timezone | `'UTC'` | 子覆盖父 |
+| dateLocale | `undefined` | 子覆盖父 |
 
-### 13.6 component token 路径（推荐）
+Inject keys（symbol）：`Z_THEME_KEY` / `Z_OVERRIDES_KEY` / `Z_LOCALE_KEY` / `Z_DATE_KEY`，全部 `InjectionKey<Ref<...>>`。`Z_THEME_KEY` 退化到 `ResolvedTheme<any>`（Vue InjectionKey 不支持泛型），子组件 `useZTheme<S>()` cast 回。
+
+`<ZConfigProvider v-slot="{ theme, locale }">` 暴露 unwrapped 值；不需要时直接 `<slot />`。
+
+### 13.4 4 个 composable —— 实际签名
+
 ```ts
-// 1. 用户声明 token 形状
+// 树外调用：dev warn + 回落 defaultLight / zhCN / UTC
+useZTheme<S>(): Ref<ResolvedTheme<S>>
+
+useZComponentTokens(): Ref<ComponentTokenOverrides>
+useZComponentTokenSlice<C extends keyof ComponentTokenRegistry>(name: C): ComputedRef<ComponentTokenOverrides[C]>
+
+useZLocale(): Ref<ZLocale>
+useZLocale<NS extends keyof ZLocaleRegistry>(ns: NS): ComputedRef<ZLocaleRegistry[NS]>
+
+useZDate(): {
+  timezone: ComputedRef<string>
+  locale: ComputedRef<DateFnsLocale | undefined>
+  format(date, fmt): string         // formatInTimeZone(date, tz, fmt, { locale })
+  toZoned(date): Date               // toZonedTime(date, tz)
+  fromZoned(date): Date             // fromZonedTime(date, tz)
+}
+```
+
+### 13.5 useStyles / useVariants / useResponsive
+
+```ts
+// 静态工厂（factory 闭包不动）
+useStyles<S>(factory: (s: Chain<S>) => void): ComputedRef<string>
+
+// 动态工厂（factory 依赖响应式 source）
+useDynamicStyles<S>(factoryGetter: MaybeRefOrGetter<(s: Chain<S>) => void>): ComputedRef<string>
+
+// variants 工厂模式（13.6 详述）
+useVariants<S, P>(
+  factory: (theme: ResolvedTheme<S>) => (props: P) => string,
+  propsGetter: () => P,
+): ComputedRef<string>
+
+useParts<S, P, Slot>(
+  factory: (theme: ResolvedTheme<S>) => Record<Slot, (props: P) => string>,
+  propsGetter: () => P,
+): ComputedRef<Record<Slot, string>>
+
+// 响应式 prop 归一化
+useBreakpoints<S>(): ComputedRef<string[]>      // theme.breakpoint 的 keys
+useResponsive<T, S>(
+  valueGetter: () => ResponsiveValue<T> | undefined,
+): ComputedRef<{ base?: T; [bp: string]: T | undefined } | undefined>
+```
+
+### 13.6 组件 variants 工厂导出为函数
+
+**不要**导出常量 `const button = defineVariants(theme, ...)`（绑定单一 theme，ConfigProvider 切主题时不会重算）。
+
+**正确**：
+
+```ts
+// components/button/variants.ts
+export const createButtonVariants = <S extends ThemeSchema>(theme: ResolvedTheme<S>) =>
+  defineVariants(theme, {
+    base: s => { ... },
+    variants: { size: { sm: ..., md: ..., lg: ... }, intent: { primary: ..., danger: ... } },
+  })
+
+// components/button/Button.vue
+const cls = useVariants(createButtonVariants, () => ({ size: props.size, intent: props.intent }))
+```
+
+emotion 内部按 css 内容 hash 复用 className，没有性能损失。
+
+### 13.7 多 slot 组件用 defineParts
+
+Dialog / Tabs / Select / Menu / Popover / DropdownMenu 等。`useParts(createXxxParts, propsGetter)` 返回各 slot className。嵌套 ZConfigProvider 内通过 `extendParts(theme, parent, partialConfig)` 局部覆盖。
+
+### 13.8 component token 路径
+
+```ts
+// 1. 用户在 root.d.ts 声明 token 形状
 declare module '@kenconnet666/zui-core' {
   interface ComponentTokenRegistry {
     button: { primary: string; primaryHover: string; bg: string }
   }
 }
 
-// 2. 组件库内部 deriver（从主题色派生）
-const themed = withComponentTokens(
-  theme,
-  { button: (t) => ({ primary: t.color.primary, primaryHover: t.color.primaryHover, bg: t.color.bg }) },
-  userOverrides,    // 来自 ZConfigProvider
+// 2. 组件 setup() 内 deriver 派生 + 用户 override 喂入
+const theme = useZTheme<MySchema>()
+const overrides = useZComponentTokens()
+const themed = computed(() =>
+  withComponentTokens(
+    theme.value,
+    { button: t => ({ primary: t.color.primary, primaryHover: t.color.primaryHover, bg: t.color.bg }) },
+    overrides.value,
+  ),
 )
 
-// 3. 组件用 _buttonPrimary 访问
-s.backgroundColor._buttonPrimary
+// 3. Chain 内访问 flatten 后的 token：_buttonPrimary / _buttonPrimaryHover / _buttonBg
+const cls = computed(() => icss(themed.value, s => {
+  s.backgroundColor._buttonPrimary
+  s._hover(h => { h.backgroundColor._buttonPrimaryHover })
+}))
 ```
 
-### 13.7 SSR（Nuxt / Vue SSR）
+### 13.9 ZLocale 字典与扩展
+
+内建 namespace：`common / button / input / select / dialog / pagination / form / datePicker`。用户自定义组件扩展自家 namespace：
+
+```ts
+declare module '@kenconnet666/zui-vue' {
+  interface ZLocaleRegistry {
+    myWidget: { title: string; ok: string }
+  }
+}
+```
+
+`mergeLocale(parent, partial)`：namespace 级浅合并；同 namespace 内字段级浅合并；数组（`weekdaysShort` / `monthsShort`）整体替换。
+
+### 13.10 SSR（Nuxt / Vue SSR）
 ```ts
 import { createIcssInstance } from '@kenconnet666/zui-core'
 import createCache from '@emotion/cache'
-import { CacheProvider, getCacheProvider } from '@emotion/server'
 
 // 服务器侧创建独立 emotion instance（隔离请求）
 const cache = createCache({ key: 'zui' })
-const { icss, cx, ... } = createIcssInstance(cache)
+const { icss, cx /* ... */ } = createIcssInstance(cache)
 // 渲染完后 cache.flush() 拿 critical CSS
 ```
 

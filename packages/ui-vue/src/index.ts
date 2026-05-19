@@ -1,14 +1,60 @@
 /**
- * @kenconnet666/zui-vue — Vue 3 集成层。
+ * `@kenconnet666/zui-vue` —— Vue 3 集成层。
  *
- * Phase 1-2 主战场在 `@kenconnet666/zui-core`，此包先空置。
- * Phase 3 起将加入：
- *   - `ZThemeProvider.vue` — 主题注入组件
- *   - `useIcss()` — composable
- *   - 基础 Vue 组件（Btn 等）
- *
- * 暂时只做 re-export，避免空包发布时下游消费报错。
+ * 主入口聚合 Provider、composables、locale，并 re-export 一部分 core API。
+ * 精细 tree-shake 走 subpath：
+ * - `@kenconnet666/zui-vue/provider`
+ * - `@kenconnet666/zui-vue/composables`
+ * - `@kenconnet666/zui-vue/locale`
  */
+
+// ─── Provider ───
+export {
+  ZConfigProvider,
+  Z_THEME_KEY,
+  Z_OVERRIDES_KEY,
+  Z_LOCALE_KEY,
+  Z_DATE_KEY,
+  useZTheme,
+  useZComponentTokens,
+  useZComponentTokenSlice,
+  useZLocale,
+  useZDate,
+  type ZDateConfig,
+  type UseZDateReturn,
+} from './provider'
+
+// ─── Composables ───
+export {
+  useStyles,
+  useDynamicStyles,
+  chainOf,
+  useVariants,
+  useParts,
+  useBreakpoints,
+  useResponsive,
+} from './composables'
+
+// ─── Locale ───
+export {
+  zhCN,
+  enUS,
+  mergeLocale,
+  type ZLocale,
+  type ZLocalePartial,
+  type ZLocaleRegistry,
+  type ZLocaleCommon,
+  type ZLocaleButton,
+  type ZLocaleInput,
+  type ZLocaleSelect,
+  type ZLocaleDialog,
+  type ZLocalePagination,
+  type ZLocaleForm,
+  type ZLocaleDatePicker,
+  type DeepPartialLocale,
+} from './locale'
+
+// ─── Core re-export（便利） ───
 export {
   Theme,
   Chain,
@@ -20,4 +66,9 @@ export {
   defaultDark,
 } from '@kenconnet666/zui-core'
 
-export type { ThemeSchema, ResolvedTheme, DeepPartial } from '@kenconnet666/zui-core'
+export type {
+  ThemeSchema,
+  ResolvedTheme,
+  DeepPartial,
+  ComponentTokenOverrides,
+} from '@kenconnet666/zui-core'

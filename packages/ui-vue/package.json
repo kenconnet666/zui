@@ -1,7 +1,7 @@
 {
   "name": "@kenconnet666/zui-vue",
   "version": "0.0.4",
-  "description": "Vue 3 components & helpers built on @kenconnet666/zui-core.",
+  "description": "Vue 3 components & helpers built on @kenconnet666/zui-core. ZConfigProvider for nested theme / componentTokens / locale / timezone, plus headless composables.",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -11,31 +11,92 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./style.css": "./dist/style.css"
+    "./provider": {
+      "types": "./dist/provider/index.d.ts",
+      "import": "./dist/provider/index.js"
+    },
+    "./locale": {
+      "types": "./dist/locale/index.d.ts",
+      "import": "./dist/locale/index.js"
+    },
+    "./composables": {
+      "types": "./dist/composables/index.d.ts",
+      "import": "./dist/composables/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
-  "sideEffects": [
-    "**/*.css",
-    "./dist/index.js"
-  ],
+  "sideEffects": false,
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
     "test": "vitest run",
-    "type-check": "vue-tsc --noEmit -p tsconfig.json"
+    "test:watch": "vitest",
+    "type-check": "vue-tsc --noEmit -p tsconfig.json",
+    "prepublishOnly": "pnpm run type-check && pnpm run test && pnpm run build"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "components",
+    "css-in-js",
+    "emotion",
+    "design-system",
+    "i18n",
+    "timezone",
+    "type-safe"
+  ],
+  "author": "kenconnet666 <kenconnet@foxmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/kenconnet666/zui#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenconnet666/zui.git",
+    "directory": "packages/ui-vue"
+  },
+  "bugs": {
+    "url": "https://github.com/kenconnet666/zui/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "peerDependencies": {
-    "@emotion/css": "^11.13.0",
+    "@emotion/css": "^11.13.5",
+    "@emotion/unitless": "^0.10.0",
+    "@floating-ui/vue": "^1.1.11",
+    "@vicons/ionicons5": "^0.13.0",
+    "@vueuse/core": "^14.3.0",
+    "@vueuse/integrations": "^14.3.0",
+    "async-validator": "^4.2.5",
+    "color2k": "^2.0.3",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
     "vue": "^3.5.0"
+  },
+  "peerDependenciesMeta": {
+    "@vicons/ionicons5": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@kenconnet666/zui-core": "workspace:*"
   },
   "devDependencies": {
     "@emotion/css": "^11.13.5",
+    "@emotion/unitless": "^0.10.0",
+    "@floating-ui/vue": "^1.1.11",
+    "@vicons/ionicons5": "^0.13.0",
     "@vue/test-utils": "^2.4.6",
+    "@vueuse/core": "^14.3.0",
+    "@vueuse/integrations": "^14.3.0",
+    "async-validator": "^4.2.5",
+    "color2k": "^2.0.3",
+    "date-fns": "^4.2.1",
+    "date-fns-tz": "^3.2.0",
     "happy-dom": "^15.11.7",
     "vue": "^3.5.32"
   },

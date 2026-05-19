@@ -1,0 +1,71 @@
+import type { ZLocale } from './types'
+
+/**
+ * 简体中文 locale。
+ */
+export const zhCN: ZLocale = {
+  name: 'zh-CN',
+  common: {
+    ok: '确定',
+    cancel: '取消',
+    confirm: '确认',
+    close: '关闭',
+    clear: '清空',
+    reset: '重置',
+    search: '搜索',
+    loading: '加载中',
+    noData: '暂无数据',
+    empty: '暂无内容',
+    prev: '上一页',
+    next: '下一页',
+    back: '返回',
+    more: '更多',
+    retry: '重试',
+  },
+  button: {
+    loading: '加载中',
+  },
+  input: {
+    placeholder: '请输入',
+    clear: '清空',
+  },
+  select: {
+    placeholder: '请选择',
+    noOptions: '无可选项',
+  },
+  dialog: {
+    title: '提示',
+    ok: '确定',
+    cancel: '取消',
+  },
+  pagination: {
+    prev: '上一页',
+    next: '下一页',
+    page: '页',
+    of: '共',
+    total: '总数',
+    jumpTo: '跳至',
+    goto: '前往',
+    pageSize: '每页',
+  },
+  form: {
+    required: '此项为必填项',
+    invalid: '输入格式不正确',
+  },
+  datePicker: {
+    placeholder: '请选择日期',
+    today: '今天',
+    now: '此刻',
+    clear: '清空',
+    confirm: '确认',
+    weekdaysShort: ['日', '一', '二', '三', '四', '五', '六'],
+    monthsShort: [
+      '1月', '2月', '3月', '4月', '5月', '6月',
+      '7月', '8月', '9月', '10月', '11月', '12月',
+    ],
+    months: [
+      '一月', '二月', '三月', '四月', '五月', '六月',
+      '七月', '八月', '九月', '十月', '十一月', '十二月',
+    ],
+  },
+}

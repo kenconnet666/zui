@@ -1,0 +1,71 @@
+import type { ZLocale } from './types'
+
+/**
+ * English (United States) locale.
+ */
+export const enUS: ZLocale = {
+  name: 'en-US',
+  common: {
+    ok: 'OK',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    close: 'Close',
+    clear: 'Clear',
+    reset: 'Reset',
+    search: 'Search',
+    loading: 'Loading',
+    noData: 'No data',
+    empty: 'Empty',
+    prev: 'Previous',
+    next: 'Next',
+    back: 'Back',
+    more: 'More',
+    retry: 'Retry',
+  },
+  button: {
+    loading: 'Loading',
+  },
+  input: {
+    placeholder: 'Please enter',
+    clear: 'Clear',
+  },
+  select: {
+    placeholder: 'Please select',
+    noOptions: 'No options',
+  },
+  dialog: {
+    title: 'Notice',
+    ok: 'OK',
+    cancel: 'Cancel',
+  },
+  pagination: {
+    prev: 'Previous',
+    next: 'Next',
+    page: 'Page',
+    of: 'of',
+    total: 'Total',
+    jumpTo: 'Jump to',
+    goto: 'Go to',
+    pageSize: 'Page size',
+  },
+  form: {
+    required: 'This field is required',
+    invalid: 'Invalid format',
+  },
+  datePicker: {
+    placeholder: 'Select date',
+    today: 'Today',
+    now: 'Now',
+    clear: 'Clear',
+    confirm: 'Confirm',
+    weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    monthsShort: [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    ],
+    months: [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December',
+    ],
+  },
+}
