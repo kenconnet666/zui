@@ -31,6 +31,8 @@ export type { PaletteName, PaletteShade, PaletteToken } from './theme/defaults/p
 // ─── 开发态工具（dev-only helpers） ───
 export { assertSchemaConsistency } from './dev/assertSchemaConsistency'
 export type { SchemaIssue } from './dev/assertSchemaConsistency'
+export { makeCallsiteLabel, parseStackLine, findUserCallsite, isProductionEnv } from './dev/stackTrace'
+export type { StackFrame } from './dev/stackTrace'
 
 // ─── 类型 ───
 export type {

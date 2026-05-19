@@ -7,6 +7,7 @@ import type { DefaultSchema } from '../theme/defaults/schema'
 import type { IcxPropMethods } from '../types/properties.generated'
 import { makeChainProxy } from './proxy'
 import { deepClone, deepMergeInto } from './helpers'
+import { isProductionEnv, makeCallsiteLabel } from '../dev/stackTrace'
 
 // ─── 内部工具 ───
 
@@ -115,13 +116,10 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
       this._keymap = buildKeymap(this._theme)
     }
     this._cssFn = options.cssFn ?? css
-    if (options.debug && typeof process !== 'undefined' && process.env?.NODE_ENV !== 'production') {
-      // W3.2 简化：从 Error stack 抽取首个非 framework 调用点作为 label
-      const cs = new Error().stack ?? ''
-      const lines = cs.split('\n').slice(2, 6)
-      const callsite = lines.find(l => !l.includes('Chain.ts') && !l.includes('node_modules')) ?? ''
-      const m = callsite.match(/([\w.-]+):(\d+):(\d+)/)
-      if (m) this._node.label = `${m[1]!.replace(/\.\w+$/, '')}_${m[2]}`
+    if (options.debug && !isProductionEnv()) {
+      // W3.2 完整版：跨 runtime 抽 callsite（dev/stackTrace.ts）
+      const label = makeCallsiteLabel(new Error().stack)
+      if (label != null) this._node.label = label
     }
     return makeChainProxy(this as unknown as Chain<never>) as unknown as Chain<T>
   }
