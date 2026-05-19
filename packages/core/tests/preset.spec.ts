@@ -118,27 +118,45 @@ describe('_transition — 基础', () => {
 })
 
 describe('_transition — token 解析', () => {
-  it('_normal duration 解析（default schema duration.normal = 300ms）', () => {
+  it('_middle duration 解析（default schema duration.middle = 300ms）', () => {
     const c = new Chain(defaultLight)
-    c._transition({ duration: '_normal' })
+    c._transition({ duration: '_middle' })
     expect(c._node.transition).toBe('all 300ms')
   })
 
-  it('_fast duration', () => {
+  it('_small duration', () => {
     const c = new Chain(defaultLight)
-    c._transition({ duration: '_fast' })
+    c._transition({ duration: '_small' })
     expect(c._node.transition).toBe('all 150ms')
   })
 
-  it('_slow duration', () => {
+  it('_large duration', () => {
     const c = new Chain(defaultLight)
-    c._transition({ duration: '_slow' })
+    c._transition({ duration: '_large' })
     expect(c._node.transition).toBe('all 500ms')
+  })
+
+  it('_tiny duration（5 阶最小）', () => {
+    const c = new Chain(defaultLight)
+    c._transition({ duration: '_tiny' })
+    expect(c._node.transition).toBe('all 75ms')
+  })
+
+  it('_huge duration（5 阶最大）', () => {
+    const c = new Chain(defaultLight)
+    c._transition({ duration: '_huge' })
+    expect(c._node.transition).toBe('all 700ms')
+  })
+
+  it('_none duration（瞬时）', () => {
+    const c = new Chain(defaultLight)
+    c._transition({ duration: '_none' })
+    expect(c._node.transition).toBe('all 0ms')
   })
 
   it('_inOut easing 解析（default schema easing.inOut = cubic-bezier(...)）', () => {
     const c = new Chain(defaultLight)
-    c._transition({ duration: '_normal', easing: '_inOut' })
+    c._transition({ duration: '_middle', easing: '_inOut' })
     expect(c._node.transition).toContain('cubic-bezier')
   })
 
@@ -150,13 +168,13 @@ describe('_transition — token 解析', () => {
 
   it('_linear easing 解析（default schema easing.linear = linear）', () => {
     const c = new Chain(defaultLight)
-    c._transition({ duration: '_fast', easing: '_linear' })
+    c._transition({ duration: '_small', easing: '_linear' })
     expect(c._node.transition).toBe('all 150ms linear')
   })
 
   it('delay 也支持 token', () => {
     const c = new Chain(defaultLight)
-    c._transition({ duration: 200, delay: '_fast' })
+    c._transition({ duration: 200, delay: '_small' })
     expect(c._node.transition).toBe('all 200ms 150ms')
   })
 })
@@ -184,7 +202,7 @@ describe('_transition — 链式与 statement-only 协调', () => {
   it('与其它 chain method 联用', () => {
     const c = new Chain(defaultLight)
     c.padding.px(12)
-    c._transition({ property: 'all', duration: '_normal', easing: '_inOut' })
+    c._transition({ property: 'all', duration: '_middle', easing: '_inOut' })
     c.color._primary
     expect(c._node.padding).toBe('12px')
     expect(c._node.transition).toContain('300ms')
@@ -193,7 +211,7 @@ describe('_transition — 链式与 statement-only 协调', () => {
   it('在 _hover 嵌套内可用', () => {
     const c = new Chain(defaultLight)
     c._hover((h) => {
-      h._transition({ duration: '_fast', easing: '_out' })
+      h._transition({ duration: '_small', easing: '_out' })
       h.backgroundColor._primary
     })
     const hov = c._node['&:hover'] as Record<string, unknown>
@@ -207,7 +225,7 @@ describe('Batch C 实际场景', () => {
       icss(defaultLight, (s) => {
         s.padding.px(12)
         s.backgroundColor._primary
-        s._transition({ property: 'all', duration: '_fast', easing: '_inOut' })
+        s._transition({ property: 'all', duration: '_small', easing: '_inOut' })
         s._hover((h) => {
           h.backgroundColor._primary.alpha(85)
         })

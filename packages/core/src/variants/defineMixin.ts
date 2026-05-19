@@ -19,10 +19,10 @@ import type { ThemeSchema } from '../theme/types'
  * })
  *
  * const elevation = defineMixin<DefaultSchema>(s => {
- *   s.boxShadow._md
+ *   s.boxShadow._middle
  *   s.transitionProperty('box-shadow')
- *   s.transitionDuration._fast
- *   s._hover(h => { h.boxShadow._lg })
+ *   s.transitionDuration._small
+ *   s._hover(h => { h.boxShadow._large })
  * })
  *
  * // 在 variants 里直接调用：

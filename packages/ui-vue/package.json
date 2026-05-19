@@ -23,6 +23,14 @@
       "types": "./dist/composables/index.d.ts",
       "import": "./dist/composables/index.js"
     },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js"
+    },
+    "./components/icon": {
+      "types": "./dist/components/icon/index.d.ts",
+      "import": "./dist/components/icon/index.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [

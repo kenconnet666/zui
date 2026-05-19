@@ -1,0 +1,218 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - heading "zui docs" [level=1] [ref=e5]
+    - navigation [ref=e6]:
+      - link "Home" [ref=e7] [cursor=pointer]:
+        - /url: "#/"
+      - link "ZIcon" [ref=e8] [cursor=pointer]:
+        - /url: "#/icon"
+  - main [ref=e9]:
+    - article [ref=e10]:
+      - heading "ZIcon" [level=1] [ref=e11]
+      - paragraph [ref=e12]:
+        - text: 框架无关图标容器 —— 通过
+        - code [ref=e13]: default slot
+        - text: 或
+        - code [ref=e14]: :component
+        - text: prop 接入任意图标库； 离散维度（intent / depth）走 variants，连续维度（size / color / spin）走 dynamic styles； 所有外观（默认色、5 阶 depth opacity、4 种 intent 色、spin 时长）都是 component token，
+        - strong [ref=e15]: ZConfigProvider 可全量覆盖
+        - text: 。
+      - generic [ref=e16]:
+        - heading "1. 双模式接入（slot vs :component prop）" [level=2] [ref=e17]:
+          - text: 1. 双模式接入（slot vs
+          - code [ref=e18]: :component
+          - text: prop）
+        - generic [ref=e19]:
+          - generic [ref=e20]:
+            - heading "slot 模式" [level=3] [ref=e21]
+            - code [ref=e23]: <ZIcon size="32"><HomeOutline /></ZIcon>
+            - img [ref=e25]
+          - generic [ref=e29]:
+            - heading "component prop 模式" [level=3] [ref=e30]
+            - code [ref=e32]: <ZIcon :component="HomeOutline" size="32" />
+            - img [ref=e34]
+      - generic [ref=e38]:
+        - heading "2. intent（5 种语义色）" [level=2] [ref=e39]:
+          - text: "2."
+          - code [ref=e40]: intent
+          - text: （5 种语义色）
+        - generic [ref=e41]:
+          - generic [ref=e42]:
+            - img [ref=e44]
+            - code [ref=e46]: default
+          - generic [ref=e47]:
+            - img [ref=e49]
+            - code [ref=e51]: success
+          - generic [ref=e52]:
+            - img [ref=e54]
+            - code [ref=e56]: warning
+          - generic [ref=e57]:
+            - img [ref=e59]
+            - code [ref=e61]: danger
+          - generic [ref=e62]:
+            - img [ref=e64]
+            - code [ref=e66]: info
+      - generic [ref=e67]:
+        - heading "3. depth（5 阶 + none，遵循 5 阶哲学）" [level=2] [ref=e68]:
+          - text: "3."
+          - code [ref=e69]: depth
+          - text: （5 阶 + none，遵循 5 阶哲学）
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - img [ref=e73]
+            - code [ref=e75]: none
+          - generic [ref=e76]:
+            - img [ref=e78]
+            - code [ref=e80]: "1"
+          - generic [ref=e81]:
+            - img [ref=e83]
+            - code [ref=e85]: "2"
+          - generic [ref=e86]:
+            - img [ref=e88]
+            - code [ref=e90]: "3"
+          - generic [ref=e91]:
+            - img [ref=e93]
+            - code [ref=e95]: "4"
+          - generic [ref=e96]:
+            - img [ref=e98]
+            - code [ref=e100]: "5"
+      - generic [ref=e101]:
+        - heading "4. size 数字 / 字符串 / 响应式" [level=2] [ref=e102]:
+          - text: "4."
+          - code [ref=e103]: size
+          - text: 数字 / 字符串 / 响应式
+        - generic [ref=e104]:
+          - generic [ref=e105]:
+            - img [ref=e107]
+            - code [ref=e111]: "16"
+          - generic [ref=e112]:
+            - img [ref=e114]
+            - code [ref=e118]: "32"
+          - generic [ref=e119]:
+            - img [ref=e121]
+            - code [ref=e125]: "'3rem'"
+          - generic [ref=e126]:
+            - img [ref=e128]
+            - code [ref=e132]: "{ base: 16, _middle: 32, _huge: 48 }（缩窗口看变化）"
+      - generic [ref=e133]:
+        - heading "5. spin loading" [level=2] [ref=e134]:
+          - text: "5."
+          - code [ref=e135]: spin
+          - text: loading
+        - generic [ref=e136]:
+          - generic [ref=e137]:
+            - img [ref=e139]
+            - code [ref=e142]: spin
+          - generic [ref=e143]:
+            - img [ref=e145]
+            - code [ref=e148]: :spin="2"（2s）
+          - generic [ref=e149]:
+            - img [ref=e151]
+            - code [ref=e154]: spin="500ms"
+      - generic [ref=e155]:
+        - heading "6. 实时操控" [level=2] [ref=e156]
+        - generic [ref=e157]:
+          - generic [ref=e158]:
+            - text: icon
+            - combobox "icon" [ref=e159]:
+              - option "HomeOutline" [selected]
+              - option "HeartOutline"
+              - option "Trash"
+              - option "Reload"
+              - option "CheckmarkCircle"
+              - option "WarningOutline"
+              - option "CloseCircle"
+              - option "InformationCircleOutline"
+              - option "StarOutline"
+          - generic [ref=e160]:
+            - text: size
+            - slider "size 24px" [ref=e161]: "24"
+            - text: 24px
+          - generic [ref=e162]:
+            - text: intent
+            - combobox "intent" [ref=e163]:
+              - option "default" [selected]
+              - option "success"
+              - option "warning"
+              - option "danger"
+              - option "info"
+          - generic [ref=e164]:
+            - text: depth
+            - combobox "depth" [ref=e165]:
+              - option "none" [selected]
+              - option "1"
+              - option "2"
+              - option "3"
+              - option "4"
+              - option "5"
+          - generic [ref=e166]:
+            - text: color
+            - textbox "color" [ref=e167]:
+              - /placeholder: "留空 / #f00 / _primary"
+          - generic [ref=e168]:
+            - text: spin
+            - checkbox "spin" [ref=e169]
+        - img [ref=e172]
+      - generic [ref=e176]:
+        - heading "7. ZConfigProvider componentTokens 嵌套覆盖" [level=2] [ref=e177]:
+          - text: "7."
+          - code [ref=e178]: ZConfigProvider
+          - text: componentTokens 嵌套覆盖
+        - paragraph [ref=e179]:
+          - text: 外层全局
+          - code [ref=e180]: defaultLight
+          - text: ；内层 Provider 改 4 个 icon token：
+          - code [ref=e181]: dangerColor
+          - text: /
+          - code [ref=e182]: spinDuration
+          - text: /
+          - code [ref=e183]: depth1Opacity
+          - text: /
+          - code [ref=e184]: depth5Opacity
+          - text: 。两侧同步对比。
+        - generic [ref=e185]:
+          - generic [ref=e186]:
+            - text: dangerColor
+            - textbox "dangerColor" [ref=e187]: "#ff00aa"
+          - generic [ref=e188]:
+            - text: spinDuration
+            - textbox "spinDuration" [ref=e189]:
+              - /placeholder: 2.5s
+              - text: 2.5s
+          - generic [ref=e190]:
+            - text: depth1Opacity
+            - spinbutton "depth1Opacity" [ref=e191]: "1"
+          - generic [ref=e192]:
+            - text: depth5Opacity
+            - spinbutton "depth5Opacity" [ref=e193]: "0.1"
+        - generic [ref=e194]:
+          - generic [ref=e195]:
+            - heading "外层（默认 token）" [level=3] [ref=e196]
+            - generic [ref=e197]:
+              - img [ref=e199]
+              - img [ref=e202]
+              - img [ref=e206]
+              - img [ref=e209]
+          - generic [ref=e211]:
+            - heading "内层 :component-tokens 覆盖" [level=3] [ref=e212]:
+              - text: 内层
+              - code [ref=e213]: :component-tokens
+              - text: 覆盖
+            - generic [ref=e214]:
+              - img [ref=e216]
+              - img [ref=e219]
+              - img [ref=e223]
+              - img [ref=e226]
+      - generic [ref=e228]:
+        - heading "8. a11y — label prop" [level=2] [ref=e229]:
+          - text: 8. a11y —
+          - code [ref=e230]: label
+          - text: prop
+        - generic [ref=e231]:
+          - generic [ref=e232]:
+            - img [ref=e234]
+            - code [ref=e237]: 无 label → aria-hidden="true"（装饰性）
+          - generic [ref=e238]:
+            - img "删除" [ref=e239]:
+              - img [ref=e240]
+            - code [ref=e243]: 有 label → aria-label + role="img"

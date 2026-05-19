@@ -1,0 +1,24 @@
+{
+  "name": "@kenconnet666/docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "zui 文档与组件演示站点。SPA（vite + vue-router），不发布。",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@kenconnet666/zui-core": "workspace:*",
+    "@kenconnet666/zui-vue": "workspace:*",
+    "@vicons/ionicons5": "^0.13.0",
+    "vue": "^3.5.32",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.6",
+    "vite": "^8.0.8"
+  }
+}

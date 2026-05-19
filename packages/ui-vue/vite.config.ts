@@ -21,6 +21,8 @@ export default defineConfig({
         'provider/index': 'src/provider/index.ts',
         'locale/index': 'src/locale/index.ts',
         'composables/index': 'src/composables/index.ts',
+        'components/index': 'src/components/index.ts',
+        'components/icon/index': 'src/components/icon/index.ts',
       },
       formats: ['es'],
     },

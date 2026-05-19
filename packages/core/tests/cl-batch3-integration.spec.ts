@@ -117,7 +117,7 @@ describe('集成 — 完整 Button 组件流程', () => {
       s.borderRadius._middle
       s.fontWeight._bold
       s.transitionProperty('all')
-      s.transitionDuration._fast
+      s.transitionDuration._small
       focusRing(s)
     },
     variants: {
@@ -397,7 +397,7 @@ describe('集成 — 预设动画在组件中用', () => {
   it('Spinner: spin 动画', () => {
     const cls = icss(defaultLight, s => {
       s.animationName(presetAnimations.spin)
-      s.animationDuration._slow
+      s.animationDuration._large
       s.animationIterationCount('infinite')
       s.animationTimingFunction('linear')
     })
@@ -407,12 +407,12 @@ describe('集成 — 预设动画在组件中用', () => {
   it('Toast: slideInUp + fadeOut', () => {
     const enter = icss(defaultLight, s => {
       s.animationName(presetAnimations.slideInUp)
-      s.animationDuration._normal
+      s.animationDuration._middle
       s.animationFillMode('both')
     })
     const exit = icss(defaultLight, s => {
       s.animationName(presetAnimations.fadeOut)
-      s.animationDuration._fast
+      s.animationDuration._small
     })
     expect(enter).not.toBe(exit)
   })

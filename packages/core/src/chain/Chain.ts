@@ -981,17 +981,17 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   // ─── Batch C — Transition 简写 helper ───
 
   /**
-   * Transition 简写。token 名（`_normal` / `_inOut` 等）自动解析到 `theme.duration` /
+   * Transition 简写。token 名（`_middle` / `_inOut` 等）自动解析到 `theme.duration` /
    * `theme.easing`；字面量字符串 / 数字（视为 ms）原样透传。
    *
    * @example
-   * s._transition({ property: 'all', duration: '_normal', easing: '_inOut' })
+   * s._transition({ property: 'all', duration: '_middle', easing: '_inOut' })
    * // → transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1)
    *
    * s._transition({ property: 'opacity', duration: 200, easing: 'ease-out' })
    * // → transition: opacity 200ms ease-out
    *
-   * s._transition({ duration: '_fast' })
+   * s._transition({ duration: '_small' })
    * // → transition: all 150ms
    */
   _transition(opts: {
@@ -1008,7 +1008,7 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     return this
   }
 
-  /** `_normal` → `theme.duration.normal`；数字 → `${n}ms`；其它原样。 */
+  /** `_middle` → `theme.duration.middle`；数字 → `${n}ms`；其它原样。 */
   private _resolveDurationToken(value: string | number): string {
     if (typeof value === 'number') return `${value}ms`
     if (value.startsWith('_')) {

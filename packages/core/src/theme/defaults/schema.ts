@@ -89,13 +89,19 @@ export interface DefaultSchema extends ThemeSchema {
     huge: string
   }
   // ─── W1.8 补充：让 ENHANCED_PROPS 引用的 token category 在 default 主题里有值 ───
-  /** 过渡 / 动画时长 token（已语义化，未改）。 */
+  /**
+   * 过渡 / 动画时长 token（5 阶 + none，遵循 5 阶哲学）。
+   * 0.8.0 BREAKING：旧 `fast / normal / slow` 重命名为 `small / middle / large`，新增 `none / tiny / huge` 拉满 5 阶。
+   */
   duration: {
-    fast: string
-    normal: string
-    slow: string
+    none: string
+    tiny: string
+    small: string
+    middle: string
+    large: string
+    huge: string
   }
-  /** 缓动函数 token（不属 size，未改）。 */
+  /** 缓动函数 token（function 维度，非 size scale，保留原 5 个 key）。 */
   easing: {
     default: string
     linear: string
@@ -143,23 +149,29 @@ export interface DefaultSchema extends ThemeSchema {
     '95': number
     '100': number
   }
-  /** 行高 token。 */
+  /**
+   * 行高 token（5 阶 + none，遵循 5 阶哲学）。
+   * 0.8.0 BREAKING：`tight / snug / normal / relaxed / loose` 重命名为 `tiny / small / middle / large / huge`。
+   */
   lineHeight: {
     none: number
-    tight: number
-    snug: number
-    normal: number
-    relaxed: number
-    loose: number
+    tiny: number
+    small: number
+    middle: number
+    large: number
+    huge: number
   }
-  /** 字符间距 token。 */
+  /**
+   * 字符间距 token（5 阶，遵循 5 阶哲学）。
+   * 0.8.0 BREAKING：`tighter / tight / normal / wide / wider` 重命名为 `tiny / small / middle / large / huge`，
+   * `widest` 移除（CSS 字距上没有"满"语义，超大需求建议 inline `letterSpacing('0.1em')`）。
+   */
   letterSpacing: {
-    tighter: string
-    tight: string
-    normal: string
-    wide: string
-    wider: string
-    widest: string
+    tiny: string
+    small: string
+    middle: string
+    large: string
+    huge: string
   }
   /** 长宽比 token。 */
   aspectRatio: {

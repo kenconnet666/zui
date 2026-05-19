@@ -54,11 +54,20 @@ zui/
 │   │   │   ├── createIcssInstance.ts        # SSR / 多 emotion 实例
 │   │   │   ├── preflight.ts / layer.ts / registerFont.ts / registerCustomProperty.ts
 │   │   │   └── responsive.ts
-│   │   ├── tests/                           # 30 套 / 566 测试（截 2026-05）
+│   │   ├── tests/                           # 30 套 / 569 测试（截 2026-05）
 │   │   ├── bench/
 │   │   ├── examples/                        # vanilla-button / vue-button / react-button
 │   │   └── CHANGELOG.md
-│   └── ui-vue/                              # @kenconnet666/zui-vue（开发中）
+│   ├── ui-vue/                              # @kenconnet666/zui-vue（开发中）
+│   │   ├── src/
+│   │   │   ├── provider/                    # ZConfigProvider + 4 composables + keys
+│   │   │   ├── locale/                      # zh-CN / en-US / merge / types
+│   │   │   ├── composables/                 # useStyles / useVariants / useResponsive
+│   │   │   ├── components/
+│   │   │   │   └── icon/                    # ZIcon.vue / variants / tokens / types
+│   │   │   └── index.ts
+│   │   └── tests/                           # provider (10) + icon (23) = 33 tests
+│   └── docs/                                # @kenconnet666/docs（演示站，private，不发布）
 ├── scripts/
 │   └── generate-properties.mjs              # ★ ENHANCED_PROPS + csstype → properties.generated.ts
 ├── .changeset/                              # @changesets/cli（access:public）
@@ -413,9 +422,26 @@ CI 步骤"Generator drift check"会跑 generator 再 `git diff --exit-code`。**
 ### 11.1 默认 schema 18 category
 `color` `spacing` `radius` `shadow` `fontSize` `fontWeight` `lineHeight` `letterSpacing` `fonts` `borders` `zIndex` `opacity` `duration` `easing` `aspectRatio` `size` `cursor` `transitionProperty` + `breakpoint`（响应式专用） + `blur`（含 `2xl` / `3xl` 字面量 key）
 
-### 11.2 默认 size 命名（语义化，0.6.0 改名）
-- `tiny` / `small` / `middle` / `large` / `huge` —— 用于 spacing / fontSize / 组件 size variant
-- **不再用** xs/sm/md/lg/xl —— 与 breakpoint 名混淆
+### 11.2 默认 size 命名（语义化，0.6.0 改名 / 0.8.0 全面对齐 5 阶哲学）
+
+**5 阶哲学**：所有 size-based token category 统一用 `tiny / small / middle / large / huge`，按需 + `none`（零态） + `full`（饱和态）。**不再用** xs/sm/md/lg/xl —— 与 breakpoint 名混淆。
+
+| Category | 含 none | 含 full | 5 阶 |
+|---|---|---|---|
+| `spacing` | — | — | ✓ |
+| `radius` | ✓ | ✓ | ✓（7 key） |
+| `fontSize` | — | — | ✓ |
+| `shadow` | — | — | ✓ |
+| `blur` | ✓ | — | ✓（6 key） |
+| `breakpoint` | — | — | ✓ |
+| `duration` | ✓ | — | ✓（6 key；0.8.0 改名：旧 fast/normal/slow → small/middle/large + 新增 none/tiny/huge） |
+| `lineHeight` | ✓ | — | ✓（6 key；0.8.0 改名：tight/snug/normal/relaxed/loose → tiny/small/middle/large/huge） |
+| `letterSpacing` | — | — | ✓（5 key；0.8.0 改名：tighter/tight/normal/wide/wider → tiny/small/middle/large/huge，删 widest） |
+
+**保留非 5 阶**（非 size scale，不适用哲学）：`fontWeight` / `opacity` / `easing` / `zIndex` / `aspectRatio`。
+
+duration 默认值：`none='0ms'` / `tiny='75ms'` / `small='150ms'` / `middle='300ms'` / `large='500ms'` / `huge='700ms'`。
+Chain `_transition({ duration: '_small' })` 自动解析。
 
 ### 11.3 LENGTH_UNITS（30 个）
 `.px(n)` `.rem(n)` `.em(n)` `.ch(n)` `.ex(n)` `.percent(n)` `.vw(n)` `.vh(n)` `.vmin(n)` `.vmax(n)` `.svh/svw/lvh/lvw/dvh/dvw(n)`（小/大/动态视口）`.cm(n)` `.mm(n)` `.in(n)` `.pt(n)` `.pc(n)` `.q(n)` `.cqw/cqh/cqi/cqb/cqmin/cqmax(n)`（容器查询单位）`.fr(n)`
@@ -499,6 +525,8 @@ packages/ui-vue/src/
 - `@kenconnet666/zui-vue/provider`
 - `@kenconnet666/zui-vue/composables`
 - `@kenconnet666/zui-vue/locale`
+- `@kenconnet666/zui-vue/components`
+- `@kenconnet666/zui-vue/components/icon`（每个基础组件都开独立 subpath）
 
 打包仿 core：`preserveModules` + 关 minify + dts `rollupTypes:false`（保留源结构，IDE go-to-def 看得到注释）。
 
@@ -690,7 +718,72 @@ declare module '@kenconnet666/zui-vue' {
 
 `mergeLocale(parent, partial)`：namespace 级浅合并；同 namespace 内字段级浅合并；数组（`weekdaysShort` / `monthsShort`）整体替换。
 
-### 13.10 SSR（Nuxt / Vue SSR）
+### 13.10 ZIcon —— 首个基础组件（参考实现）
+
+**完整签名 + token 矩阵 + variants 拆分模板。后续 Button / Input / 等照此画。**
+
+```ts
+import { ZIcon } from '@kenconnet666/zui-vue'
+import { ZIcon as IconSingle } from '@kenconnet666/zui-vue/components/icon'   // 单组件 import
+
+// props
+interface ZIconProps {
+  size?:      ResponsiveValue<string | number>      // 数字 → px；'1.5em'；响应式
+  color?:     ResponsiveValue<string>               // 字面量 / '_primary' token 引用 / 响应式
+  intent?:    'default' | 'success' | 'warning' | 'danger' | 'info'   // 离散语义色
+  depth?:     'none' | '1' | '2' | '3' | '4' | '5'  // 5 阶 + none opacity
+  spin?:      boolean | number | string             // true 走 token；number 秒；string 原样
+  component?: Component                             // 双模式：与 default slot 互斥（slot 优先）
+  tag?:       string                                // 根元素，默认 'i'
+  label?:     string                                // a11y：传 → aria-label + role="img"；不传 → aria-hidden
+}
+```
+
+**ZIconTokens（12 项 — 全可被 `ZConfigProvider :component-tokens` 覆盖）**：
+
+```ts
+interface ZIconTokens {
+  defaultColor:   string   // 'currentColor'
+  defaultSize:    string   // '1em'
+  spinDuration:   string   // '1s'
+  depth1Opacity:  string   // '1'   ← depth='1' 用
+  depth2Opacity:  string   // '0.8'
+  depth3Opacity:  string   // '0.6'
+  depth4Opacity:  string   // '0.4'
+  depth5Opacity:  string   // '0.2'
+  successColor:   string   // theme.color.success
+  warningColor:   string   // theme.color.warning
+  dangerColor:    string   // theme.color.danger
+  infoColor:      string   // theme.color.info
+}
+```
+
+**离散 × 连续维度拆分（模板）**：
+- 离散（intent / depth）→ `createIconVariants(theme)` 用 `defineVariants`
+- 连续（size / color / spin）→ ZIcon.vue 内 `computed` + `Chain<S>` + `applyResponsive`
+- ZIcon **不**走 `useVariants` —— `useVariants` 用原始 `useZTheme()`，**绕过 withComponentTokens**；
+  必须 `computed(() => createIconVariants(themed.value)({ intent, depth }))` 才能让 Provider override 生效。
+
+**component token 流程**（重要陷阱）：`withComponentTokens` 把所有 token flatten 到 `theme.color` 命名空间：
+- `iconDefaultColor` / `iconDepth1Opacity` / `iconSpinDuration` 等
+- color carrier 可走 `_iconSuccessColor` token 命中
+- **但** `opacity` / `width` / `animationDuration` 的 carrier tokenCat **不是** color，无法 `_iconDepthNOpacity` 命中
+- 解决：variants 工厂在 `theme.color` slot **直接读字面量**，再以 string/number 喂给 chain（见 `variants.ts:readIconTokens`）
+
+**继承扩展**：用户自定义 IconExt 想加 `spin` variants？走：
+```ts
+import { extendVariants } from '@kenconnet666/zui-core'
+import { createIconVariants } from '@kenconnet666/zui-vue'
+
+const createIconExtVariants = (theme) =>
+  extendVariants(theme, createIconVariants(theme), {
+    variants: { mySize: { xl: s => { s.width.px(64); s.height.px(64) } } },
+  })
+```
+
+**测试覆盖**：23 tests in `tests/icon.spec.ts`（双模式 / size / color / intent / depth / spin / a11y / Provider 覆盖 / 嵌套合并）。
+
+### 13.11 SSR（Nuxt / Vue SSR）
 ```ts
 import { createIcssInstance } from '@kenconnet666/zui-core'
 import createCache from '@emotion/cache'
@@ -721,6 +814,12 @@ pnpm --filter @kenconnet666/zui-core test -- parity
 pnpm --filter @kenconnet666/example-vanilla-button dev
 pnpm --filter @kenconnet666/example-vue-button dev
 pnpm --filter @kenconnet666/example-react-button dev
+
+# ─── docs 演示站 ───
+pnpm --filter @kenconnet666/docs dev           # vite dev server，默认 :5174（hash 路由）
+pnpm --filter @kenconnet666/docs build         # 静态 SPA → packages/docs/dist
+pnpm --filter @kenconnet666/docs preview       # 预览 build 产物
+# docs 通过 vite alias 直接读 zui-core / zui-vue 的 src，改组件即时热更
 
 # ─── 发版（changesets 流程） ───
 pnpm changeset                                       # 交互选 patch / minor / major + 写 summary

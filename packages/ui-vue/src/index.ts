@@ -35,6 +35,21 @@ export {
   useResponsive,
 } from './composables'
 
+// ─── Components ───
+export {
+  ZIcon,
+  createIconVariants,
+  deriveIconTokens,
+  iconTokenDerivers,
+  type ZIconTokens,
+  type ZIconProps,
+  type ZIconIntent,
+  type ZIconDepth,
+  type ZIconSize,
+  type ZIconColor,
+  type ZIconSpin,
+} from './components'
+
 // ─── Locale ───
 export {
   zhCN,
