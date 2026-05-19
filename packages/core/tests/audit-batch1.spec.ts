@@ -178,17 +178,19 @@ describe('S5 — PREFLIGHT_STYLES 深 freeze 防外部 mutation', () => {
   })
 
   it('试图修改 body.margin 静默失败', () => {
+    const body = (PREFLIGHT_STYLES as Record<string, Record<string, unknown> | undefined>).body!
     try {
-      ;(PREFLIGHT_STYLES as Record<string, Record<string, unknown>>).body.margin = 999
+      body.margin = 999
     } catch {
       // 期望路径
     }
-    expect((PREFLIGHT_STYLES as Record<string, Record<string, unknown>>).body.margin).toBe(0)
+    expect(body.margin).toBe(0)
   })
 
   it('外部 deepClone 后修改不会影响原值', () => {
     const copy = JSON.parse(JSON.stringify(PREFLIGHT_STYLES))
     copy.body.margin = 999
-    expect((PREFLIGHT_STYLES as Record<string, Record<string, unknown>>).body.margin).toBe(0)
+    const body = (PREFLIGHT_STYLES as Record<string, Record<string, unknown> | undefined>).body!
+    expect(body.margin).toBe(0)
   })
 })

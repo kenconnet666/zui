@@ -7,6 +7,7 @@
     "declarationMap": true,
     "composite": true,
     "tsBuildInfoFile": "./.tsbuildinfo",
+    "noEmitOnError": true,
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],

@@ -26,6 +26,8 @@ export default defineConfig({
     include: ['tests/**/*.spec.ts'],
     benchmark: {
       include: ['bench/**/*.bench.ts'],
+      // S8: bench 用不到 DOM，node 环境启动快得多
+      environment: 'node',
     },
   },
 })

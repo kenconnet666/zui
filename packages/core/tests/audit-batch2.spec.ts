@@ -73,7 +73,7 @@ describe('S3 — toIdent 非法字符防御', () => {
     })
     buildKeymap(r)
     // 应警告 ident 撞车
-    const ok = warnSpy.mock.calls.some(args =>
+    const ok = warnSpy.mock.calls.some((args: unknown[]) =>
       typeof args[0] === 'string' && (args[0] as string).includes('转 ident 后都是'),
     )
     expect(ok).toBe(true)
