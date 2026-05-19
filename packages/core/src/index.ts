@@ -104,7 +104,11 @@ export type {
   FlattenComponentTokens,
   ComponentTokenNames,
 } from './types/components'
-export { withComponentTokens, componentTokensFor } from './theme/componentTokens'
+export {
+  withComponentTokens,
+  componentTokensFor,
+  mergeComponentTokenOverrides,
+} from './theme/componentTokens'
 export type {
   ComponentTokenDeriver,
   ComponentTokenDerivers,
@@ -136,7 +140,7 @@ export type {
 export { defineMixin } from './variants/defineMixin'
 export { composeVariants, extendVariants } from './variants/composeVariants'
 export type { VariantPropsOf } from './variants/composeVariants'
-export { defineParts } from './variants/defineParts'
+export { defineParts, extendParts } from './variants/defineParts'
 export type {
   SlotFactory,
   PartsBase,

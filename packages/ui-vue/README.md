@@ -1,6 +1,15 @@
 # @kenconnet666/zui-vue
 
-Vue 3 集成层（含 Provider 组件、`useIcss` composable、基础组件库）。
+> Vue 3 集成层 + 组件库，构建于 [`@kenconnet666/zui-core`](../core) 之上。
 
-**当前状态：占位**。请优先实现 [`@kenconnet666/zui-core`](../core)（Phase 1-2）。
-本包将在 Phase 3 起步，参考 [`recipes/vue.md`](../core/recipes/vue.md) 落地。
+**当前状态**：开发中。
+
+## 计划
+
+- `ZConfigProvider` —— 主题 + component token overrides 嵌套覆盖
+- `useStyles` / `useVariants` —— Vue composable
+- 基础组件：Button / Input / Select / Dialog / Tabs / Menu / Popover / Toast / 等
+
+## License
+
+MIT

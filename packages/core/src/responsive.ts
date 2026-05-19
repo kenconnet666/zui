@@ -33,22 +33,33 @@ export interface ResponsiveObject<T> {
 /**
  * 判断是否是响应式对象（plain object with `base` / 断点 key）。
  *
- * 检查规则：
- * - 必须是 plain object（非 null / 非数组 / 非 function / 非其它类）
- * - 至少有一个 key 是 'base' 或常见断点（'sm' / 'md' / 'lg' / 'xl' / '2xl' / 自定义）
+ * 两种模式：
+ * - **严格模式**（推荐，传 `breakpoints`）：仅当 **所有** key ∈ `['base', ...breakpoints]` 才返回 true。
+ *   组件库应从 `theme.breakpoint` keys 派生 breakpoints 数组传入，避免误判。
+ * - **启发模式**（默认）：plain object + 全部 key 是 letter-prefixed ident（兜底兼容旧用法）。
+ *
+ * @example
+ * isResponsiveValue({ base: 4, md: 8 }, ['sm', 'md', 'lg'])   // true
+ * isResponsiveValue({ name: 'x' }, ['sm', 'md', 'lg'])        // false（严格）
+ * isResponsiveValue({ name: 'x' })                            // true（启发，已知误判）
  */
-export function isResponsiveValue<T>(value: unknown): value is ResponsiveObject<T> {
+export function isResponsiveValue<T>(
+  value: unknown,
+  breakpoints?: readonly string[],
+): value is ResponsiveObject<T> {
   if (value == null) return false
   if (typeof value !== 'object') return false
   if (Array.isArray(value)) return false
   const proto = Object.getPrototypeOf(value)
   if (proto !== Object.prototype && proto !== null) return false
-  // 简单启发：含 'base' 或不是空对象（认为是响应式 mapping）
   const keys = Object.keys(value)
   if (keys.length === 0) return false
-  // 排除 schema-like object（如 emotion CSS object 含 selector key）
-  // 响应式对象的 key 通常是 breakpoint 名（'base' / 'sm' / 'md' / ...）
-  // 简单粗粒：全部 key 都不是 ${X}px / ${X}rem / 不含特殊字符
+  if (breakpoints !== undefined) {
+    // 严格模式：所有 key 必须是 base 或 breakpoints 之一
+    const allowed = new Set<string>(['base', ...breakpoints])
+    return keys.every(k => allowed.has(k))
+  }
+  // 启发模式（向后兼容）：letter-prefixed ident
   return keys.every(k => /^[a-zA-Z][\w-]*$/.test(k) || k === '2xl' || /^\d+xl$/.test(k))
 }
 

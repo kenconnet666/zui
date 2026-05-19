@@ -78,6 +78,37 @@ export function componentTokensFor<C extends keyof ComponentTokenRegistry & stri
   return result as Partial<ComponentTokenRegistry[C]>
 }
 
+/**
+ * 把多层 `ComponentTokenOverrides` 浅合并成一份（per-component namespace 内部 key 合并）。
+ *
+ * 用于嵌套 `ZConfigProvider` 的多层 override 协同：
+ * 父层和子层同时给 `button` namespace 写了不同 key 时，要把两层 key 合到同一个对象再传
+ * `withComponentTokens`，否则后传的会**整体替换**前传的同 namespace。
+ *
+ * @example
+ * const merged = mergeComponentTokenOverrides(
+ *   { button: { primary: '#f00' } },          // 父
+ *   { button: { primaryHover: '#900' } },     // 子
+ * )
+ * // → { button: { primary: '#f00', primaryHover: '#900' } }
+ */
+export function mergeComponentTokenOverrides(
+  ...layers: Array<ComponentTokenOverrides | undefined | null>
+): ComponentTokenOverrides {
+  const out: ComponentTokenOverrides = {}
+  for (const layer of layers) {
+    if (!layer) continue
+    for (const comp in layer) {
+      const c = comp as keyof ComponentTokenRegistry
+      const incoming = layer[c]
+      if (!incoming) continue
+      const existing = (out[c] ?? {}) as Record<string, unknown>
+      out[c] = { ...existing, ...(incoming as Record<string, unknown>) } as never
+    }
+  }
+  return out
+}
+
 export function withComponentTokens<T extends ThemeSchema>(
   theme: ResolvedTheme<T>,
   derivers: ComponentTokenDerivers<T>,

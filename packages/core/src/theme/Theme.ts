@@ -57,6 +57,18 @@ class _ThemeClass<T extends ThemeSchema> {
     const next = mergeTheme(this.resolve(), partial) as unknown as T
     return new Theme(next) as Theme<T>
   }
+
+  /**
+   * `fork()` — `merge()` 的别名（推荐入口）。
+   *
+   * 语义"派生子主题"比"合并"更贴合 ZConfigProvider 嵌套覆盖场景：
+   *
+   * @example
+   * const dark = light.fork({ color: { background: '#000', text: '#fff' } })
+   */
+  fork<P extends DeepPartial<T>>(partial: P): Theme<T> {
+    return this.merge(partial)
+  }
 }
 
 function isDevEnv(): boolean {

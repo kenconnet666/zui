@@ -212,3 +212,70 @@ function stableKey(resolved: Record<string, string>): string {
   const entries = Object.entries(resolved).sort(([a], [b]) => a.localeCompare(b))
   return JSON.stringify(entries)
 }
+
+/**
+ * `extendParts` — `defineParts` 版的继承（与 `extendVariants` 对偶）。
+ *
+ * 复用 parent 的全 slot 工厂，并把 childConfig 在同 slot 上合并：先跑 parent，再跑
+ * child（与 `extendVariants` / `composeVariants` 一致：后者通过 chain mutation 覆盖前者）。
+ *
+ * **同 key 覆盖**：parent 的 `size.sm` 与 child 的 `size.sm` 同时存在时，child 后跑覆盖前者。
+ * **新 slot / 新 variant**：child 可以补 parent 未声明的 variant 维度；slot 列表沿用 parent。
+ *
+ * @example
+ * const dialog = defineParts(theme, {
+ *   slots: ['root', 'content'] as const,
+ *   base: { content: s => { s.padding._md } },
+ *   variants: { size: { sm: { content: ... }, lg: { content: ... } } },
+ * })
+ *
+ * const compactDialog = extendParts(theme, dialog, {
+ *   base: { content: s => { s.padding._sm } },
+ *   variants: { size: { md: { content: s => { s.maxWidth.px(500) } } } },
+ * })
+ */
+export function extendParts<
+  S extends ThemeSchema,
+  Slot extends string,
+  V1 extends Record<string, Record<string, unknown>>,
+  V2 extends PartsVariantMap<S, Slot>,
+>(
+  theme: ResolvedTheme<S> | Theme<S>,
+  parent: PartsResult<Slot, V1>,
+  childConfig: Partial<Omit<DefinePartsConfig<S, Slot, V2>, 'slots'>> & {
+    slots?: readonly Slot[]
+  },
+): PartsResult<Slot, V1 & V2> {
+  const slots = childConfig.slots ?? (Object.keys(parent) as unknown as readonly Slot[])
+  const child = defineParts<S, Slot, V2>(theme, {
+    slots,
+    ...(childConfig.base !== undefined ? { base: childConfig.base } : {}),
+    variants: (childConfig.variants ?? ({} as V2)),
+    ...(childConfig.defaultVariants !== undefined
+      ? { defaultVariants: childConfig.defaultVariants }
+      : {}),
+    ...(childConfig.compoundVariants !== undefined
+      ? { compoundVariants: childConfig.compoundVariants }
+      : {}),
+    ...(childConfig.cacheLimit !== undefined ? { cacheLimit: childConfig.cacheLimit } : {}),
+  })
+
+  const out = {} as PartsResult<Slot, V1 & V2>
+  for (const slot of slots) {
+    const parentFactory = parent[slot]
+    const childFactory = child[slot]
+    const composed: PartFactory<V1 & V2> = (props =>
+      joinCls(
+        parentFactory(props as never),
+        childFactory(props as never),
+      )) as PartFactory<V1 & V2>
+    out[slot] = composed
+  }
+  return out
+}
+
+function joinCls(a: string, b: string): string {
+  if (!a) return b
+  if (!b) return a
+  return `${a} ${b}`
+}

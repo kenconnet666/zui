@@ -37,7 +37,7 @@ export { defineMixin } from './defineMixin'
 export { composeVariants, extendVariants } from './composeVariants'
 export type { VariantPropsOf } from './composeVariants'
 
-export { defineParts } from './defineParts'
+export { defineParts, extendParts } from './defineParts'
 export type {
   SlotFactory,
   PartsBase,
