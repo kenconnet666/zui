@@ -124,6 +124,9 @@ export function assertSchemaConsistency<T extends ThemeSchema>(
 
 /**
  * 给 function token 投放一个 Proxy 探针 ctx，记录所有访问路径并校验对应 schema 字段存在。
+ *
+ * **S6 修复**：之前不存在的 category 只 push 半路径（如 `'spacing'`，丢失 `.md`）；
+ * 现在内层 Proxy 也记录完整路径（`'spacing.md'`）。
  */
 function makeReferenceProbe<T extends ThemeSchema>(schema: T): {
   ctx: Record<string, Record<string, string | number>>
@@ -133,12 +136,18 @@ function makeReferenceProbe<T extends ThemeSchema>(schema: T): {
   const probe = new Proxy({} as Record<string, Record<string, string | number>>, {
     get(_, cat: string) {
       const slot = (schema as Record<string, unknown>)[cat]
-      if (!slot) {
-        refs.push(cat)
-        return new Proxy({}, { get: () => '' })
+      if (!slot || typeof slot !== 'object') {
+        // 不存在的 category：返回 inner Proxy 也记录访问的 key，凑出完整路径
+        return new Proxy({}, {
+          get(_inner, key: string) {
+            if (typeof key === 'string') refs.push(`${cat}.${key}`)
+            return ''
+          },
+        })
       }
       return new Proxy(slot as Record<string, ThemeValue>, {
         get(target, key: string) {
+          if (typeof key !== 'string') return ''
           if (!(key in target)) refs.push(`${cat}.${key}`)
           const v = target[key]
           return typeof v === 'function' ? '0' : (v ?? '')
