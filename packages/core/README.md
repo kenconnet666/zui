@@ -198,8 +198,17 @@ new Theme({
 - **TS 实例化深度**：单个 category 包含 200+ token 时（如完整 Tailwind palette）可能触发
   "Type instantiation is excessively deep"。0.2.0 计划用 `PaletteColorTokens`/`SemanticColorTokens`
   拆分缓解。
-- **SSR**：当前不提供 emotion 实例隔离 wrapper，0.3.0 计划提供
-  `createIcssInstance(emotion)` 工厂。
+- **`schema` 上挂 function token 但通过 `theme.color.primary` 字段直接访问**：
+  `Object.assign(this, schema)` 把 schema 各 category 拷到 instance 上，函数原值会出现在 instance；
+  字段类型签名是 `string | number`（与 ResolvedTheme 形状一致），不一致。**最佳实践**：始终用
+  `theme.resolve()` 或 `icss(theme, ...)` 拿展开后的值，避免直接访问 `theme.color.x`。
+- **`mergeTheme(parent, partial)` 的 partial 应为字面量**：0.4.0 起 dev 模式会 `console.warn` 警示
+  partial 含 function token；生产构建静默。
+- **`:focus-visible` 浏览器兼容**：iOS Safari 14- 不支持（2021-2022 安装基数 < 5%）。
+  `Chain._focusVisible(fn)` 会原样输出 `&:focus-visible { ... }`，在不支持的浏览器上整段失效。
+  若需要兜底，配合 `_focus(fn)` 写一份。
+- **SSR / 多 emotion 实例**：0.3.0 起提供 `createIcssInstance(emotion)` 工厂，创建本地版 `icss` /
+  `chain` / `cx` / `injectGlobal` / `ikeyframes` 等，避免全局 emotion cache 污染。
 
 ---
 
@@ -211,8 +220,8 @@ cd zui
 pnpm install
 
 # 在 packages/core 下：
-pnpm test              # vitest run，6 个 spec 合计 83 测试
-pnpm type-check        # tsc --noEmit
+pnpm test              # vitest run，17 个 spec / 281 测试
+pnpm type-check        # tsc -p tsconfig.typecheck.json
 pnpm build             # vite lib mode 出 ESM + .d.ts
 
 # 跑 vanilla-button demo：
@@ -222,7 +231,7 @@ pnpm --filter @kenconnet666/example-vanilla-button dev
 node scripts/generate-properties.mjs
 ```
 
-更多设计文档见 [`Plan.md`](../../Plan.md)。
+更多设计文档见 [`.claude/Plan.md`](../../.claude/Plan.md) 与 [`.claude/AGENT.md`](../../.claude/AGENT.md)。
 
 ## 发布流程（changesets）
 

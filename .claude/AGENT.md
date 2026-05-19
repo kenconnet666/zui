@@ -156,6 +156,23 @@ vite-plugin-dts API Extractor 提示 "newer than bundled compiler engine"。**�
 
 `.gitignore` 必须 ignore `.claude/settings.local.json`（不要 ignore 整个 `.claude/`，否则项目级 settings.json 也入不了 git）。
 
+### 5.12 schema 上 function token 通过 `theme.<cat>.<key>` 直接访问，类型与运行时不一致
+
+`Object.assign(this, schema)` 把 schema 各 category 拷到 instance 上 —— 函数原值会出现在 instance；
+但字段类型签名是 `string | number`（与 ResolvedTheme 形状一致）。  
+**修复**：永远走 `theme.resolve()` 或 `icss(theme, ...)` / `new Chain(theme)`（Chain 构造内部走 `theme.resolve()`）拿值，**不要**直接读 `theme.color.x` 当展开后的真值用。
+
+### 5.13 token / keyword 命中后不返回 chain（statement-only 决策）
+
+`c.color._primary` 命中 token 后返回 `ColorTokenValue`（暴露 `.alpha(n)` 等 modifier），**不是 chain**。
+`c.color.red` 命中 keyword 后语义是 statement，**用户不应**继续链式（`.red.padding.px(8)` 是错的）。
+chain 风格：每条独立一行。
+
+### 5.14 vitest agent 环境跑不通 pnpm
+
+JetBrains MCP 内嵌 Node 没把 pnpm 放进 PATH，PowerShell 工具直接调用也会找不到。
+解决：用 `mcp__jetbrain__execute_terminal_command` + `cmd.exe /c "pnpm ..."` 包一层 cmd.exe，能跑通。
+
 ---
 
 ## 六、工具使用优先级

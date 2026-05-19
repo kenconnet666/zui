@@ -253,19 +253,19 @@ class _ThemeClass<T> {
 
 ---
 
-## 五、当前状态（0.3.0 ready，已发 npm）
+## 五、当前状态（0.4.0 准备中，0.3.0 已发 npm）
 
 | 项 | 现状 |
 |---|---|
-| npm 版本 | **0.3.0**（2026-05-19 发布） |
-| 测试 | 13 套 / **174 测试** 全绿 |
+| npm 版本 | **0.3.0**（2026-05-19 发布）；本地 src 已是 0.4.0 候选 |
+| 测试 | **17 套 / 281 测试** 全绿（Batch 1-5 新增 +107） |
 | build | 61.30 kB / gzip 15.12 kB |
-| bench | icss ~404k ops/s |
+| bench | icss ~404k ops/s；N7 拆 carrier / proxy 专项 bench |
 | ENHANCED_PROPS | 195 条 |
 | CSS 属性总数 | ~857（含 vendor prefix） |
-| 内建方法 | 85+ 个 |
-| Token category | 18 个（默认 schema 全填了 8 个新增：duration / easing / breakpoint / zIndex / opacity / lineHeight / letterSpacing / aspectRatio） |
-| LENGTH_UNITS | 30 个（含 cqw/cqh / svw/lvw/dvw 等现代单位） |
+| 内建方法 | **89+ 个**（Batch 4 新增 _safeArea / _scrollSnap / _overscroll / _field） |
+| Token category | 18 个（默认 schema 全填了 8 个：duration / easing / breakpoint / zIndex / opacity / lineHeight / letterSpacing / aspectRatio） |
+| LENGTH_UNITS | 30 个 |
 | Tailwind palette | 完整 242 色 + 11 语义色 |
 | examples | vanilla-button / vue-button / react-button |
 | recipes | vue / react / svelte / solid |
@@ -274,19 +274,23 @@ class _ThemeClass<T> {
 
 ## 六、未做的尾巴（按值/工作量排序）
 
-| ID | 内容 | 工作量 | 风险 | 价值 |
-|---|---|---|---|---|
-| **B2** | INTERNAL_KEYS 手写 → Chain.prototype 扫描 | 0.5d | 低 | ★★ 防 bug（5.1 / proxy bind 已踩过相关坑） |
-| **C2** | `label()` 多次调用 join（当前互覆盖） | 0.5h | 低 | ★ 调试友好 |
-| **B5** | `color.ts` darken/lighten 后 toHex 丢 alpha | 1h | 低 | ★ 语义正确性 |
-| **B4** | `mergeTheme` partial 含 function token dev 警告 | 1h | 低 | ★ 边缘 case 防错 |
-| **C10** | `injectGlobal` 去重（emotion hash 兜底，内存累加） | 1h | 低 | ★ |
-| **W3.2** | 完整 stack-trace label（dev 体验，opt-in） | 0.5d | 中 | dev 体验 |
-| **W4.2** | carrier 工厂模块级共享 | 1d | 中 | bench 404k 之上空间；先 N7 找证据 |
-| **N7** | bench 场景扩展（carrier-only / token-resolve / proxy-overhead） | 0.5d | 低 | W4.2 前置 |
-| **W6.1 完整** | csstype DataType.* 递归 + KEYWORD_TO_CSS generator 化 | 1.5d | 中 | 删 ~100 行手写 |
-| **N8** | build size 审计（19→61kb 涨 3×；可视化膨胀） | 0.5d | 低 | ★ 树摇验证 |
-| **W11.1** | Babel/SWC 编译期插件 | 3-5d | 高 | v0.5+ 长线 |
+> Batch 1-5 已完成：B2 / C2 / B5 / B4 / C10 / W3.2 / N7 / 现代 CSS 4 helper / edge case 测试 全部落地。
+
+| ID | 内容 | 工作量 | 风险 | 价值 | 状态 |
+|---|---|---|---|---|---|
+| ~~B2~~ | INTERNAL_KEYS → prototype 扫描 | 0.5d | 低 | ★★ | ✅ Batch 1 |
+| ~~C2~~ | `label()` join | 0.5h | 低 | ★ | ✅ Batch 1 |
+| ~~B5~~ | color modifier 保 alpha | 1h | 低 | ★ | ✅ Batch 1 |
+| ~~B4~~ | mergeTheme function token 警告 | 1h | 低 | ★ | ✅ Batch 1 |
+| ~~C10~~ | injectGlobal 内存去重 | 1h | 低 | ★ | ✅ Batch 1 |
+| ~~N7~~ | bench 场景拆细 | 0.5d | 低 | ★ | ✅ Batch 2 |
+| ~~W3.2~~ | 完整 stack-trace label | 0.5d | 中 | ★★ dev | ✅ Batch 3 |
+| ~~CSS4~~ | _safeArea / _scrollSnap / _overscroll / _field | 0.3d | 低 | ★★ | ✅ Batch 4 |
+| ~~edge~~ | edge case 测试集中（+33 测试） | 0.3d | 零 | ★★ 回归防护 | ✅ Batch 5 |
+| **W4.2** | carrier 工厂模块级共享 | 1d | 中 | 用 N7 bench 实测决定；初步判断不做（404k 远超需求） | **不做** |
+| **W6.1 完整** | csstype DataType.* 递归 generator | 1.5d | 中 | 用户透明，不做 | **不做** |
+| **N8** | build size 审计 | 0.5d | 低 | 用户无感，不做 | **不做** |
+| **W11.1** | Babel/SWC 编译期插件 | 3-5d | 高 | v0.5+ 长线 | 不立即 |
 
 ---
 
@@ -308,18 +312,18 @@ class _ThemeClass<T> {
 
 | ID | 问题 | 关联 |
 |---|---|---|
-| **B2** | INTERNAL_KEYS 手写白名单；加新方法易漏 | 待做 |
-| **B5** | `color.ts` darken/lighten 丢 alpha | 待做 |
-| **B6** | csstype@3.2.3；vite-plugin-dts API Extractor 升级 | 待评估 |
+| ~~B2~~ | INTERNAL_KEYS 手写白名单 | ✅ Batch 1 修复（prototype 扫描） |
+| ~~B5~~ | `color.ts` darken/lighten 丢 alpha | ✅ Batch 1 修复 |
+| **B6** | csstype@3.2.3；vite-plugin-dts API Extractor 升级 | 待评估（不阻塞） |
 
 🟡 **轻微 / 改进项**
 
 | ID | 范围 | 问题 |
 |---|---|---|
-| **C2** | `label()` 多次互覆盖（无 join） | 待做 |
-| **C3** | `_var` 与 schema token 没桥接（escape hatch 合理，不处理） | — |
+| ~~C2~~ | `label()` 多次互覆盖 | ✅ Batch 1 修复（join 成 a.b.c） |
+| **C3** | `_var` 与 schema token 没桥接 | escape hatch 合理，不处理 |
 | **C7** | `_node` 不冻结（用户可绕过 carrier 类型） | escape hatch 合理 |
-| **C10** | `injectGlobal` 没去重 | 待做 |
+| ~~C10~~ | `injectGlobal` 没去重 | ✅ Batch 1 修复（内存指纹） |
 
 ---
 
@@ -339,8 +343,14 @@ class _ThemeClass<T> {
 | ★ 对外类型改动后必须 `pnpm build` | dist gitignored，被 IDEA / examples 通过 node_modules symlink 读 | 不 build 会 IDE 误报旧签名错 |
 | W4.1 Theme.getKeymap() 懒缓存 | bench 19k → 404k ops/s（21×） | 显著提速，零破坏 |
 | W4.3 `resolveTheme` 末尾 `Object.freeze` | V8 sealed class 优化 5-10% | 零成本 |
-| W6.1 简化版接管 extra-keywords slot（非完整 csstype 派生） | 当下需求 + 校验 `_` 前缀 | 完整 csstype 递归留 v0.4+ |
-| W3.2 simplified（opt-in callsite，无完整 stack 抽取） | dev label 基础落地 + production 降级 noop | 完整 stack-trace 留 v0.4+ |
+| W6.1 简化版接管 extra-keywords slot（非完整 csstype 派生） | 当下需求 + 校验 `_` 前缀 | 完整 csstype 递归不做（用户无感、generator 复杂度激增） |
+| W3.2 完整版（Batch 3） | 抽到 `dev/stackTrace.ts` 独立模块 + 跨 runtime stack 解析 + framework frame 过滤 + production 降级 | 实用 + 可测试 + 与 C2 label join 协作 |
+| B2（Batch 1） | INTERNAL_KEYS 改 `Chain.prototype` 自动扫描 + WeakMap 缓存 | 防 bug 永久解决（继承 Chain 加方法也工作） |
+| B5（Batch 1）— color modifier 含 alpha 时输出 rgba 保 alpha | `preserveAlpha(orig, processed)` 在 hex 与 rgba 间取舍 | 不破坏现有 hex 输出习惯（alpha=1 时仍 hex） |
+| W4.2 不做（Batch 2 决策） | bench 已 404k ops/s，过度优化 | 100 chain/render = 0.25ms，远低于一帧 16ms |
+| W6.1 完整版不做 | 用户透明 + generator 复杂度激增 | extra-keywords slot 足够覆盖 csstype 漏的 keyword |
+| Batch 4 现代 CSS 4 helper | 只选 4 个实用方向（_safeArea / _scrollSnap / _overscroll / _field） | 跳过 _anchor 实验性 — 浏览器支持 < 30%，API 易变 |
+| Batch 5 edge.spec.ts | 33 个 edge case 集中放一个文件 | 防回归 + 单文件易索引 |
 
 ---
 

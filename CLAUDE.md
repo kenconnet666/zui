@@ -23,10 +23,11 @@
 
 | 项 | 值 |
 |---|---|
-| npm 主包 | `@kenconnet666/zui-core@0.3.0`（2026-05-19 发布） |
-| 测试 | 13 套 / **174 全绿** |
+| npm 主包 | `@kenconnet666/zui-core@0.3.0`（2026-05-19 发布）；本地 src 已是 0.4.0 候选 |
+| 测试 | **17 套 / 281 全绿** |
 | build | 61.30 kB / gzip 15.12 kB |
 | bench | icss ~404k ops/s（W4.1 keymap 缓存提速 21×） |
+| 内建方法 | **89+ 个**（含 _safeArea / _scrollSnap / _overscroll / _field） |
 | 未启动子包 | `ui-vue`（0.0.2 空壳） / `docs`（VitePress 脚手架） |
 
 ---
@@ -63,11 +64,12 @@ git log --oneline -10                                # 看最近 commit 节奏
 
 ---
 
-## 下一步候选（按推荐顺序）
+## 下一步候选
 
-1. **B 类小修 batch**（INTERNAL_KEYS prototype 扫描 / label join / color alpha / mergeTheme 警告 / injectGlobal 去重）
-2. **N7 bench 场景扩展**（W4.2 前置）
-3. **W3.2 完整 stack-trace label**
-4. **W6.1 完整 csstype keyword 派生**
+短期（已无大量必做项）：
 
-完整路线见 `.claude/Plan.md` §六、§七。
+1. **发版 0.4.0** — Batch 1-6 累积，用户手动 `pnpm publish` 即可
+2. **ui-vue 启动**（ZThemeProvider + 基础组件）— 长线
+3. **docs 站填充**（VitePress 内容）— 长线
+
+完整路线见 `.claude/Plan.md` §六、§七。已确定**不做**：W4.2 / W6.1 完整版 / N8 / ESLint plugin（理由见 Plan §六）。
