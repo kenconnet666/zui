@@ -523,7 +523,24 @@ packages/ui-vue/src/
 }
 ```
 
-工作区根 devDeps 还装了语言服务器（统一版本）：`@vue/language-core` / `@vue/language-server` / `@vue/typescript-plugin` / `vue-tsc`（~3.2）、`svelte-language-server`、`typescript-language-server`、`typescript` (~6.0)。
+工作区根 devDeps 还装了语言服务器（统一版本，2026-05 拍板锁 minor）：
+
+| 包 | 版本 |
+|---|---|
+| `typescript` | `~6.0.3` |
+| `vue-tsc` | `~3.3.0` |
+| `@vue/language-core` | `~3.3.0` |
+| `@vue/language-server` | `~3.3.0` |
+| `@vue/typescript-plugin` | `~3.3.0` |
+| `@vue/tsconfig` | `^0.9.1` |
+| `@vue/eslint-config-typescript` | `^14.7.0` |
+| `eslint-plugin-vue` | `~10.9.0` |
+| `svelte-language-server` | `^0.18.0` |
+| `typescript-language-server` | `^5.2.0` |
+| `@vitejs/plugin-vue` | `^6.0.6` |
+| `@vitejs/plugin-vue-jsx` | `^5.1.5` |
+
+`vue-tsc` 与 `@vue/language-*` 必须保持同 minor（同步发版），用 `~` 锁住 minor。
 
 ### 13.3 ZConfigProvider —— 实际签名
 
