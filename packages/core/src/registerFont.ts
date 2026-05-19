@@ -1,4 +1,4 @@
-import { injectGlobal as emotionInjectGlobal } from '@emotion/css'
+import { injectGlobal } from './injectGlobal'
 
 /**
  * W8.4 — `@font-face` 注册 helper。
@@ -64,6 +64,6 @@ export function registerFont(family: string, sources: FontFaceSource[]): void {
     if (s.unicodeRange) declarations.push(`unicode-range: ${s.unicodeRange}`)
 
     const block = `@font-face {\n  ${declarations.join(';\n  ')};\n}`
-    emotionInjectGlobal(block as never)
+    injectGlobal(block)
   }
 }

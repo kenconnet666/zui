@@ -11,7 +11,23 @@ import type { CSSObject } from '@emotion/css/create-instance'
  * - 只覆盖"几乎所有项目都需要"的零争议条目
  * - 不参数化，1 行调用就 OK
  */
-export const PREFLIGHT_STYLES: CSSObject = {
+/**
+ * 深 freeze：让 `PREFLIGHT_STYLES` 及其所有嵌套 CSSObject 都不可被外部 mutation（S5）。
+ *
+ * 用户可能拿到引用并改 `PREFLIGHT_STYLES.body.margin = 10`，会污染后续 inject 结果。
+ * 深 freeze 后任何写入静默失败（严格模式抛 TypeError）。
+ */
+function deepFreeze<T>(value: T): T {
+  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
+    for (const v of Object.values(value)) {
+      if (v && typeof v === 'object') deepFreeze(v)
+    }
+    Object.freeze(value)
+  }
+  return value
+}
+
+export const PREFLIGHT_STYLES: CSSObject = deepFreeze({
   '*, *::before, *::after': { boxSizing: 'border-box' },
   body: {
     margin: 0,
@@ -33,4 +49,4 @@ export const PREFLIGHT_STYLES: CSSObject = {
   },
   'ul, ol': { listStyle: 'none', padding: 0, margin: 0 },
   a: { color: 'inherit', textDecoration: 'inherit' },
-}
+})
