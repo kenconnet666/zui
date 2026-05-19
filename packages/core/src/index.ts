@@ -105,3 +105,13 @@ export type {
 
 // ─── Chain 构造可选项 ───
 export type { ChainOptions } from './chain/Chain'
+
+// ─── Batch A — defineVariants 变体抽象（cva / tv 风格 + zui 协调） ───
+export { defineVariants } from './variants/defineVariants'
+export type {
+  VariantOptions,
+  VariantMap,
+  VariantProps,
+  CompoundVariant,
+  DefineVariantsConfig,
+} from './variants/defineVariants'
