@@ -128,6 +128,23 @@ export type {
   DefineVariantsConfig,
 } from './variants/defineVariants'
 
+// ─── CL Batch 1 — 组件库核心：parts / compose / extends / mixin / VariantPropsOf ───
+export { defineMixin } from './variants/defineMixin'
+export { composeVariants, extendVariants } from './variants/composeVariants'
+export type { VariantPropsOf } from './variants/composeVariants'
+export { defineParts } from './variants/defineParts'
+export type {
+  SlotFactory,
+  PartsBase,
+  PartsVariantValue,
+  PartsVariantMap,
+  PartsCompoundVariant,
+  DefinePartsConfig,
+  PartFactory,
+  PartsResult,
+  VariantPropsOfParts,
+} from './variants/defineParts'
+
 // ─── Batch C — 预设资源（动画 keyframes 等） ───
 export { presetAnimations } from './preset'
 export type { PresetAnimationName } from './preset'

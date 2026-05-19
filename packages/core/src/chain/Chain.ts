@@ -174,6 +174,41 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     return this
   }
 
+  /**
+   * E7 — 状态化样式：根据 props 对象的字段 truthy 分派 factory。
+   *
+   * 把 if 链替换成声明式 mapping，常见于组件库 loading / error / disabled 等。
+   *
+   * @example
+   * s._state(props, {
+   *   loading: h => { h.opacity._70; h.pointerEvents('none') },
+   *   error:   h => { h.borderColor._danger },
+   *   disabled: h => { h.opacity._50; h.cursor.notAllowed },
+   * })
+   *
+   * @example
+   * // 与 cn 配合：根据 props 加多个状态样式
+   * const cls = icss(theme, s => {
+   *   s.padding.px(12)
+   *   s._state({ loading, error }, {
+   *     loading: h => { h.animationName(presetAnimations.pulse) },
+   *     error:   h => { h.color._danger },
+   *   })
+   * })
+   */
+  _state(
+    props: Record<string, unknown>,
+    mapping: Record<string, (s: this) => void>,
+  ): this {
+    for (const key of Object.keys(mapping)) {
+      if (props[key]) {
+        const fn = mapping[key]
+        if (fn) fn(this)
+      }
+    }
+    return this
+  }
+
   // ─── 伪类（状态） ───
 
   _hover(fn: (s: this) => void): this {
