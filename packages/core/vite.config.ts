@@ -1,4 +1,7 @@
-import { defineConfig } from 'vite'
+// 用 vitest/config 的 defineConfig：它合并了 vite + vitest 的类型，
+// 让本配置文件里同时含 `build` / `plugins` / `test` / `benchmark` 字段时
+// TypeScript 不报 TS2769（vite 自己的 defineConfig 不识别 test 字段）。
+import { defineConfig } from 'vitest/config'
 import dts from 'vite-plugin-dts'
 
 /**
