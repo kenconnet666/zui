@@ -143,6 +143,9 @@ const cls = c.toString() // → emotion className
 - [Svelte 5](./recipes/svelte.md) — `$state` + `$derived` + `getContext`
 - [SolidJS](./recipes/solid.md) — `createContext` + `createMemo`
 
+**构建组件库**：
+- [Vue 3 — 含 ConfigProvider 向下覆盖](./recipes/component-library-vue.md)（theme + variants 多层 override）
+
 ---
 
 ## 构建组件库（0.5.0+）

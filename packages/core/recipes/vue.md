@@ -4,6 +4,9 @@
 >
 > 关键点：`Theme` 是普通类，无需特殊适配；`Chain` 在每次构建样式时实例化；用 `computed` 包住
 > `toClassName(chain)` 即可让 className 在主题切换时响应式更新。
+>
+> **构建组件库**：见 [`component-library-vue.md`](./component-library-vue.md) —— 含 `ConfigProvider`
+> 多层向下覆盖（theme + variants 局部覆盖）的完整 Button 示例。
 
 ---
 
