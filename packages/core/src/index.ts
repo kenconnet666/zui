@@ -115,3 +115,7 @@ export type {
   CompoundVariant,
   DefineVariantsConfig,
 } from './variants/defineVariants'
+
+// ─── Batch C — 预设资源（动画 keyframes 等） ───
+export { presetAnimations } from './preset'
+export type { PresetAnimationName } from './preset'

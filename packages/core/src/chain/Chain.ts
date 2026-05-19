@@ -763,6 +763,59 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
     return this
   }
 
+  // ─── Batch C — Transition 简写 helper ───
+
+  /**
+   * Transition 简写。token 名（`_normal` / `_inOut` 等）自动解析到 `theme.duration` /
+   * `theme.easing`；字面量字符串 / 数字（视为 ms）原样透传。
+   *
+   * @example
+   * s._transition({ property: 'all', duration: '_normal', easing: '_inOut' })
+   * // → transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1)
+   *
+   * s._transition({ property: 'opacity', duration: 200, easing: 'ease-out' })
+   * // → transition: opacity 200ms ease-out
+   *
+   * s._transition({ duration: '_fast' })
+   * // → transition: all 150ms
+   */
+  _transition(opts: {
+    property?: string
+    duration?: `_${string}` | string | number
+    easing?: `_${string}` | string
+    delay?: `_${string}` | string | number
+  }): this {
+    const parts: string[] = [opts.property ?? 'all']
+    if (opts.duration !== undefined) parts.push(this._resolveDurationToken(opts.duration))
+    if (opts.easing !== undefined) parts.push(this._resolveEasingToken(opts.easing))
+    if (opts.delay !== undefined) parts.push(this._resolveDurationToken(opts.delay))
+    this._node.transition = parts.join(' ')
+    return this
+  }
+
+  /** `_normal` → `theme.duration.normal`；数字 → `${n}ms`；其它原样。 */
+  private _resolveDurationToken(value: string | number): string {
+    if (typeof value === 'number') return `${value}ms`
+    if (value.startsWith('_')) {
+      const name = value.slice(1)
+      const slot = (this._theme as Record<string, Record<string, string | number> | undefined>).duration
+      const v = slot?.[name]
+      return v != null ? String(v) : value
+    }
+    return value
+  }
+
+  /** `_inOut` → `theme.easing.inOut`；其它原样。 */
+  private _resolveEasingToken(value: string): string {
+    if (value.startsWith('_')) {
+      const name = value.slice(1)
+      const slot = (this._theme as Record<string, Record<string, string | number> | undefined>).easing
+      const v = slot?.[name]
+      return v != null ? String(v) : value
+    }
+    return value
+  }
+
   // ─── Batch 4 — 现代 CSS 4 helper（实用主义筛选，跳过实验性 anchor）───
 
   /**
