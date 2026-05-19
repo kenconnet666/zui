@@ -1,6 +1,6 @@
 {
   "name": "@kenconnet666/zui-vue",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Vue 3 components & helpers built on @kenconnet666/zui-core.",
   "type": "module",
   "main": "./dist/index.js",

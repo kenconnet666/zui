@@ -1,5 +1,17 @@
 # @kenconnet666/zui-vue
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [b1ac0ff]
+- Updated dependencies [65282d9]
+- Updated dependencies [f8f880c]
+- Updated dependencies [7bcbdad]
+- Updated dependencies [d00dcd0]
+- Updated dependencies [c94cf87]
+  - @kenconnet666/zui-core@0.5.0
+
 ## 0.0.3
 
 ### Patch Changes

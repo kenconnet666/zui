@@ -1,5 +1,274 @@
 # @kenconnet666/zui-core
 
+## 0.5.0
+
+### Minor Changes
+
+- b1ac0ff: 第二轮审计 — Audit Batch 1-3 全部落地
+
+  ### Audit Batch 1：全局 helper 接入 dedupe + escape + freeze
+  - **S1** 一致性：`registerCustomProperty` / `registerFont` / `injectLayer` / `injectLayerOrder` 全部改走 `./injectGlobal`（享受内存级去重）。与 `createIcssInstance` instance 版行为对齐。
+  - **S2** `registerCustomProperty` 加单引号 escape + dev 模式可疑 syntax / initialValue 警告。
+  - **S5** `PREFLIGHT_STYLES` 深 freeze 防外部 mutation 污染全局。
+
+  ### Audit Batch 2：toIdent + assertSchemaConsistency 防御
+  - **S3** `toIdent` 检测非法 JS ident 字符（空格 / 特殊符号 / emoji）→ dev warn + 兜底 sanitize。`buildKeymap` 配套：同 category 内 ident 撞车 dev warn。
+  - **S6** `assertSchemaConsistency.makeReferenceProbe` 不存在 category 的内层 Proxy 也记录访问路径 → ref 含完整 `cat.key` 而非只 `cat`。
+
+  ### Audit Batch 3：preset instance 工厂 + sideEffects 精确化
+  - **S4** ★ 抽 `src/preset/animation-defs.ts`（15 个动画的 stops 数据 + `PresetAnimationName` 类型）。
+    - 全局 `presetAnimations` 仍 eager 注册到全局 emotion（向后兼容）
+    - `createIcssInstance` 加 `presetAnimations` 字段：**lazy 注册到 instance 的 emotion**（多实例 SSR 隔离）
+    - lazy 实现用 Proxy + 内部 cache，未访问任何字段则零开销
+  - **S7** `package.json` `sideEffects: false` → `["**/preset/animations.js", "**/preset/animations.mjs"]` 精确告知 bundler 哪个文件有副作用。
+
+  ### Audit Batch 4：工程化 + 测试覆盖
+  - **S8** `vite.config.ts` bench 加 `environment: 'node'`，bench 启动加速。
+  - **S10** `tsconfig.json` 加 `noEmitOnError: true` 双保险（type-check 错时不出 dist）。
+  - **S9** `register*` 测试断言生成的 `@property` / `@font-face` / `@layer` 字符串内容（之前只测调用不抛错）。
+
+  ### 新增测试
+
+  54 个测试（共 420 → 474）。
+  build 增量：68.26 kB → 72.05 kB（+3.79 kB，主要是 instance 版 presetAnimations + escape 代码）。
+
+- 65282d9: Batch A — `defineVariants` 变体抽象
+
+  新增 `defineVariants(theme, config)` 工厂函数，参考 cva / tv 风格但完全适配 zui-core 的
+  statement-only chain。让组件库作者声明式定义 base / variants / defaults / compoundVariants：
+
+  ```ts
+  const button = defineVariants(defaultLight, {
+    base: (s) => {
+      s.padding.px(12)
+      s.borderRadius._md
+    },
+    variants: {
+      intent: {
+        primary: (s) => {
+          s.backgroundColor._primary
+          s.color.white
+        },
+        danger: (s) => {
+          s.backgroundColor._danger
+          s.color.white
+        },
+        ghost: (s) => {
+          s.color._primary
+        },
+      },
+      size: {
+        sm: (s) => {
+          s.padding.px(8)
+        },
+        md: (s) => {
+          s.padding.px(12)
+        },
+        lg: (s) => {
+          s.padding.px(16)
+        },
+      },
+    },
+    defaultVariants: { intent: 'primary', size: 'md' },
+    compoundVariants: [
+      {
+        when: { intent: 'ghost', size: 'sm' },
+        apply: (s) => {
+          s.padding.px(6)
+        },
+      },
+    ],
+  })
+
+  button({ intent: 'danger', size: 'sm' }) // → className
+  button() // 全 defaults
+  ```
+
+  特性：
+  - **类型完整**：`Parameters<typeof button>[0]` 推出 `{ intent?: 'primary'|'danger'|'ghost'; size?: 'sm'|'md'|'lg' }`
+  - **内置缓存**：相同 props 输入命中缓存（stable JSON key，props 顺序无关）
+  - **statement-only 兼容**：variant 内可用 `_hover` / `_focusVisible` / 等所有内建嵌套方法
+  - **声明顺序优先**：compound 多条按声明顺序 apply，后者覆盖前者
+
+  新增导出：
+  - `defineVariants` 主函数
+  - `VariantOptions<S>` / `VariantMap<S>` / `VariantProps<V>` / `CompoundVariant<S, V>` / `DefineVariantsConfig<S, V>` 类型工具
+
+  新增 22 测试（共 303 / 281 → 303）。
+
+- f8f880c: Batch C — 预设动画 + `_transition` 简写
+
+  ### `presetAnimations` 模块
+
+  15 个组件库常用 keyframes 预设（参考 tailwindcss-animate）：
+
+  | 类别         | 名称                                                                          |
+  | ------------ | ----------------------------------------------------------------------------- |
+  | Fade         | `fadeIn` / `fadeOut`                                                          |
+  | Slide        | `slideInUp` / `slideInDown` / `slideInLeft` / `slideInRight` / `slideOutDown` |
+  | Scale / Zoom | `scaleIn` / `scaleOut` / `zoomIn`                                             |
+  | 强调 / 循环  | `spin` / `pulse` / `bounce` / `ping` / `shake`                                |
+
+  每个值是 emotion 注册后的 `animation-name` 字符串，直接传给 `s.animationName(...)` 使用：
+
+  ```ts
+  import { presetAnimations, icss, defaultLight } from '@kenconnet666/zui-core'
+
+  const cls = icss(defaultLight, (s) => {
+    s.animationName(presetAnimations.fadeIn)
+    s.animationDuration('300ms')
+    s.animationFillMode('both')
+  })
+  ```
+
+  ### `_transition` 链式简写
+
+  新 Chain method，token 名（`_normal` / `_inOut`）自动解析自 `theme.duration` / `theme.easing`：
+
+  ```ts
+  s._transition({ property: 'all', duration: '_normal', easing: '_inOut' })
+  // → transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1)
+
+  s._transition({ property: 'opacity', duration: 200, easing: 'ease-out' })
+  // → transition: opacity 200ms ease-out
+  ```
+
+  特性：
+  - 数字 `duration` 自动加 `ms` 单位
+  - token 不存在时原样透传（不抛错）
+  - `delay` 也支持 token / 数字
+  - 与 `_hover` 等嵌套方法协调
+
+  新增导出：
+  - `presetAnimations` 主对象
+  - `PresetAnimationName` 字面量 union 类型
+  - `Chain._transition(opts)` method
+
+  新增 38 测试（共 341 / 303 → 341）。
+
+- d00dcd0: Debt Batch 2 — 中等改进 6 项
+
+  ### M5 `cx` 支持 tailwind / clsx 风多形态入参
+
+  ```ts
+  cx('foo', false && 'bar', { active: true, disabled: false }) // 'foo active'
+  cx(['a', 'b', { c: cond }], 'd') // 嵌套递归
+  ```
+
+  支持：string / number / falsy 跳过 / object `{ k: truthy }` / 数组嵌套。新增 `ClassInput` 类型导出。
+
+  ### M4 `Theme` 构造对 function token 发 dev 警告
+
+  `Object.assign(this, schema)` 把 function token 挂到 instance 上 → 类型签名是 `string | number` 但运行时是 function。dev 模式现在 `console.warn` 提醒用户走 `theme.resolve()`。production 静默。**只警告一次**（防止多 token 时刷屏）。
+
+  ### M7 `deepClone` JSDoc 文档化 undefined 跳过行为
+
+  JSDoc 现在明确：`undefined` 字段跳过（与 JS 一般约定一致），`null` 字段保留。
+
+  ### M8 `color.ts` clamp NaN / Infinity 防御
+
+  `setAlpha(c, NaN)` 之前输出 `rgba(r,g,b,NaN)` 破坏 CSS。现在 `clamp01` 内 `if (!Number.isFinite(n)) return 0`，所有 modifier（darken / lighten / mix / saturate / desaturate）安全。
+
+  ### L1 `Chain._node` / `_theme` / `_keymap` / `_carriers` / `_cssFn` 改 `readonly`
+
+  TypeScript 现在标记 `chain._node = {}` reassign 为错。**mutation（`chain._node.color = 'x'`）仍允许** —— escape hatch 保留。
+  `_nest()` 内部通过 cast 切换 `_node` 引用（集中此处，唯一已知 reassign 用法）。
+
+  ### 类型层 R1 收尾：`LengthUnits` 接口补 18 个现代单位
+
+  接 Debt Batch 1 的 R1 修复（运行时 carrier），`types/carrier.ts` 的 `LengthUnits<TSelf>` 也补完 svw/svh/svmin/svmax/lvw/lvh/lvmin/lvmax/dvw/dvh/dvmin/dvmax/cqw/cqh/cqi/cqb/cqmin/cqmax 共 18 个新单位。**与 LENGTH_UNITS（34 个）严格对齐**。
+  类型层 + 运行时全闭环。
+
+  ### L3 `applyStyleProps` 运行时测试补完
+
+  之前只有类型层测试，现在加 14 个运行时测试覆盖 alias 映射、token / keyword / 函数态、undefined 跳过、混合 props 等。
+
+  ### 新增测试
+
+  39 个测试（共 363 → 402）。
+
+- c94cf87: Debt Batch 3 — 完整性 4 项
+
+  ### L5 `defineVariants` LRU 缓存上限
+
+  新增 `cacheLimit` 配置（默认 256），超过后按 LRU 淘汰最早插入的 entry。LRU touch：访问已缓存项会重新插入到尾部，避免被淘汰。
+
+  ```ts
+  const button = defineVariants(theme, {
+    variants: {
+      /* ... */
+    },
+    cacheLimit: 100, // 限制 100 个 className 缓存
+    // 或 Infinity 关闭上限（不推荐）
+  })
+  ```
+
+  ### L6 `registerFont` URL escape + dev warn
+
+  之前 `font-family: '${family}'` / `url('${src}')` 拼接对包含单引号的字符串会破坏 CSS。
+  现在 `escapeSingleQuotes(value)` 把 `'` 转 `\'`；dev 模式检测到 `<` / `>` / `"` 等可疑字符时 warn。`createIcssInstance` 内的 `registerFont` 同步获益。
+
+  ### M2 README 加非颜色 token 不应链式警告
+
+  明确标注：
+  - 颜色 token 命中返回 `ColorTokenValue` helper（**不返回 chain**）→ 不能继续链式
+  - 非颜色 token 命中**当前**返回 chain，**类型层也允许**继续链 — 但请按 statement-only 风格写
+
+  ### M3 ★ Generator 启动时校验 KEYWORD_TO_CSS 覆盖 enhanced-props
+
+  `scripts/generate-properties.mjs` 新增 `validateKeywordCoverage()`：扫描 ENHANCED_PROPS 所有 `keywords` 数组引用的 keyword，校验都存在于 `keywords.ts` 的 `KEYWORD_TO_CSS` 表中；缺失则抛错。
+
+  **立刻发现 6 个隐藏 bug**：
+  - `top` / `bottom`（captionSide）
+  - `inside` / `outside`（listStylePosition）
+  - `light` / `dark`（colorScheme）
+
+  之前用户写 `s.captionSide.top` 等 carrier 静默不命中。已补 6 个 keyword 到 `KEYWORD_TO_CSS`。
+
+  ### 新增测试
+
+  15 个测试（共 402 → 417）：
+  - L5 LRU 淘汰 / touch / cacheLimit Infinity
+  - L6 URL escape / dev warn
+  - M3 补全的 6 个 keyword 在 KEYWORD_TO_CSS 且 carrier 命中
+  - M2 文档化的 token 命中行为守护
+
+### Patch Changes
+
+- 7bcbdad: Debt Batch 1 — 5 个严重 bug / 一致性修复
+
+  ### R1 ★ 修复：现代 CSS 单位完全不工作
+
+  `chain/carrier.ts` 的 `isUnitMethod` 硬编码 16 个 length unit，**遗漏 W1.7 落地的 18 个现代单位**（svw / svh / lvw / lvh / dvw / dvh / dvmin / dvmax / cqw / cqh / cqi / cqb / cqmin / cqmax 等）。导致 `s.padding.cqw(10)` / `s.width.svh(100)` 等运行时静默失败。
+
+  修复：carrier 改用 `getUnitList(cls)` 从 `units.ts` 取，避免硬编码漂移。
+
+  ### R2 GLOBAL_KEYWORDS single source
+
+  `isGlobalKeyword` 硬编码 5 个值，与 `keywords.ts` 的 `GLOBAL_KEYWORDS` 常量重复。修复：import 常量。
+
+  ### R3 createIcssInstance 内 injectGlobal 加 instance 级 dedupe
+
+  `createIcssInstance` 直接调 `emotion.injectGlobal`，多实例 SSR 环境下反复 `injectPreflight()` / `registerCustomProperty()` 等都重复走 emotion serializer。修复：每个 instance 独立 `injectedHashes: Set<string>` 内存去重；新增 `_resetInjectGlobalCache()` API。
+
+  ### R4 preflight single source
+
+  `preflight.ts`（全局版）与 `createIcssInstance.injectPreflight`（instance 版）两份独立实现，已漂移（全局版多 `MozOsxFontSmoothing` / `textRendering`）。修复：抽 `src/preset/preflightStyles.ts` 作为 single source，两份实现都引用。
+
+  ### R5 删 keywords.ts `leftPage` / `rightPage` 歧义条目
+
+  `leftPage: 'left'` / `rightPage: 'right'` 与 `left: 'left'` / `right: 'right'` 重复，且 break-before 直接用 css `left` / `right` 命中已可。修复：删除两条歧义条目；`enhanced-props.ts` 的 `BREAK_KW` 改用 `'left'` / `'right'`；重跑 generator 更新 properties.generated.ts。
+
+  ### 新增测试
+
+  22 个测试（共 341 → 363）覆盖：
+  - 34 个 length unit 全部可用
+  - TIME_UNITS / ANGLE_UNITS 回归
+  - GLOBAL_KEYWORDS 全部命中
+  - instance dedupe + SSR 隔离 + \_resetCache
+  - PREFLIGHT_STYLES 内容稳定
+  - break-before: left / right 仍工作
+
 ## 0.4.0
 
 ### Minor Changes
