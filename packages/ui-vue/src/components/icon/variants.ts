@@ -15,7 +15,31 @@
  * **预设值固定单位**：5 阶 size = em、depth = 0..1 浮点字符串、spin = s/ms 时长。
  * 用户不通过 props 传任意值（用 css factory 兜底）；缺省走 `??` fallback。
  */
-import { defineVariants, presetAnimations, type ResolvedTheme, type ThemeSchema } from '@kenconnet666/zui-core'
+import {
+  defineVariants,
+  presetAnimations,
+  type ResolvedTheme,
+  type ThemeSchema,
+} from '@kenconnet666/zui-core'
+import type { ZIconTokens } from './tokens'
+
+/**
+ * `IconSlot` —— flatten 后的 icon namespace token 视图。
+ *
+ * `withComponentTokens` 把 `ZIconTokens` 各字段以 `icon${PascalCase}` 形式注入到
+ * `theme.color` 上；这里用 template literal 直接从 `keyof ZIconTokens` 派生出
+ * **完整 21 项 key union**（`iconSizeTiny | iconPrimaryColor | ...`），让下面
+ * `slot.iconXxx ?? ...` 的访问享受：
+ *
+ * - typos 编译期即报错（`slot.iconSizeTynyy` → TS2339）
+ * - `ZIconTokens` 增删字段时这里同步收紧
+ * - IDE 输入 `slot.icon` 即列出 21 个键
+ *
+ * 不走 `FlattenComponentTokens<{ icon: ZIconTokens }>` —— 后者约束 `R[C] extends
+ * Record<string, unknown>`，而 `interface ZIconTokens` 无 index signature 会落到 `never`。
+ */
+type IconSlotKey = `icon${Capitalize<keyof ZIconTokens & string>}`
+type IconSlot = Partial<Record<IconSlotKey, string>>
 
 /**
  * 派生 ZIcon 的 variants 工厂。**4 维度全离散**：
@@ -26,7 +50,7 @@ import { defineVariants, presetAnimations, type ResolvedTheme, type ThemeSchema 
  * - `spin`: none + 5 阶 tiny..huge（tiny 最快 / huge 最慢）
  */
 export function createIconVariants(theme: ResolvedTheme<ThemeSchema>) {
-  const slot = (theme as unknown as { color?: Record<string, string> }).color ?? {}
+  const slot: IconSlot = (theme as { color?: IconSlot }).color ?? {}
 
   // 21 项 token —— `theme.color.iconXxx`（withComponentTokens flatten 后）+ 字面量 fallback。
   // 全部 string：chain method 接受 string；opacity 走 '0.4' 这样的 CSS 字符串值。
