@@ -70,7 +70,28 @@ export {
 } from './locale'
 
 // ─── 主题（zui 设计系统） ───
-export { zuiLight, zuiDark, type ZuiSchema, type SemanticColorTokens } from './theme'
+export {
+  zuiLight,
+  zuiDark,
+  type ZuiSchema,
+  type SemanticColorTokens,
+  // 用户扩展锚点 —— 用户工程 `declare module '@kenconnet666/zui-vue' { interface UserColorExt {...} }`
+  type UserColorExt,
+  type UserSpacingExt,
+  type UserRadiusExt,
+  type UserFontSizeExt,
+  type UserFontWeightExt,
+  type UserShadowExt,
+  type UserBlurExt,
+  type UserDurationExt,
+  type UserEasingExt,
+  type UserBreakpointExt,
+  type UserZIndexExt,
+  type UserOpacityExt,
+  type UserLineHeightExt,
+  type UserLetterSpacingExt,
+  type UserAspectRatioExt,
+} from './theme'
 
 // ─── Core re-export（便利） ───
 export {

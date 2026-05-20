@@ -394,9 +394,9 @@ watchEffect(() => {
       </div>
     </section>
 
-    <!-- ─── 10. 三层架构 + 用户扩展模式 ─── -->
+    <!-- ─── 10. 用户扩展 token：augmentation + extend() 真正零样板 ─── -->
     <section class="extension">
-      <h2>10. 三层 schema 架构 —— core / ui-vue / user 各司其职</h2>
+      <h2>10. 用户扩自家 token —— 真正的零样板隐式推导</h2>
       <p>
         zui 的 token 体系是<strong>三层 schema 继承</strong>：
       </p>
@@ -404,69 +404,71 @@ watchEffect(() => {
       <pre><code>core      BaseSchema  // 仅 Tailwind palette 242 色（CSS 原语）
             ▲ extends
 ui-vue    ZuiSchema   // + 11 语义色 + 5 阶 size scale + fontWeight / easing / ...
-            ▲ extends
-user      MySchema    // + brand 色 / 自家自定义 scale</code></pre>
+                       // 每个 category & Partial&lt;UserXxxExt&gt; 留扩展锚点
+            ▲ augmentation
+user      用户在 zui.d.ts 一次 augmentation</code></pre>
 
-      <h3>已默认拥有：通过 <code>zuiLight</code> 注入</h3>
-      <p>
-        docs 站当前用 <code>&lt;ZConfigProvider :theme="zuiLight"&gt;</code> 注入完整
-        <code>ZuiSchema</code>，所以 <code>:css</code> 回调里直接可以：
-      </p>
-      <pre><code>// IDE 实时补全
-&lt;ZIcon :css="s =&gt; {
-  s.color._primary             // ZuiSchema 语义色
-  s.padding._middle             // ZuiSchema spacing
-  s.borderRadius._large         // ZuiSchema radius
-  s.fontSize._small             // ZuiSchema fontSize
-  s.fontWeight._bold            // ZuiSchema fontWeight
-  s.color._blue500              // core palette（继承自 BaseSchema）
+      <h3>已默认拥有 —— <code>zuiLight</code> 注入即享</h3>
+      <pre><code>// 任意组件，IDE 实时补全
+&lt;ZIcon :css="(s) =&gt; {
+  s.color._primary       // ZuiSchema 语义色
+  s.padding._middle       // ZuiSchema spacing
+  s.borderRadius._large   // ZuiSchema radius
+  s.fontSize._small       // ZuiSchema fontSize
+  s.fontWeight._bold      // ZuiSchema fontWeight
+  s.color._blue500        // core palette（继承自 BaseSchema）
 }" /&gt;</code></pre>
 
-      <h3>用户扩自家 brand：<code>extends ZuiSchema</code></h3>
-      <pre><code>// user/zui-schema.ts —— 类型层
-import type { ZuiSchema } from '@kenconnet666/zui-vue'
-
-export interface MySchema extends ZuiSchema {
-  color: ZuiSchema['color'] &amp; {
+      <h3>用户扩 brand 色 —— 两步走</h3>
+      <pre><code>// 步骤 1: user/zui.d.ts —— 类型层一次 augmentation
+declare module '@kenconnet666/zui-vue' {
+  interface UserColorExt {
     brandRoyal: string
     brandSunset: string
     brandForest: string
   }
+  // 也可同时扩 UserSpacingExt / UserRadiusExt / ...
 }
 
-// user/theme.ts —— 运行时
-import { Theme, zuiLight } from '@kenconnet666/zui-vue'
-import type { MySchema } from './zui-schema'
+// 步骤 2: App.vue —— 运行时 extend() 喂入值
+import { ZConfigProvider, zuiLight } from '@kenconnet666/zui-vue'
 
-export const myLight = new Theme&lt;MySchema&gt;({
-  ...zuiLight.schema,
+const myLight = zuiLight.extend({
   color: {
-    ...zuiLight.schema.color,
     brandRoyal: '#1a3a8f',
     brandSunset: '#ff7849',
     brandForest: '#1f7a3c',
   },
 })
 
-// App.vue
-&lt;ZConfigProvider :theme="myLight"&gt;&lt;App /&gt;&lt;/ZConfigProvider&gt;
+&lt;ZConfigProvider :theme="myLight"&gt;&lt;App /&gt;&lt;/ZConfigProvider&gt;</code></pre>
 
-// 使用处：Chain&lt;MySchema&gt; 上 _brandRoyal / _primary / _blue500 全部补全
-&lt;ZIcon :css="(s: Chain&lt;MySchema&gt;) =&gt; { s.color._brandRoyal }" /&gt;</code></pre>
+      <h3>使用处 —— <strong>零类型注解，隐式推导直接生效</strong> ✨</h3>
+      <pre><code>&lt;ZIcon :css="(s) =&gt; {
+  s.color._brandRoyal    // ← 来自 UserColorExt augmentation
+  s.color._primary        // ← ZuiSchema 内置
+  s.color._blue500        // ← BaseSchema palette
+  s._hover((h) =&gt; { h.color._brandRoyal.shade(20) })
+}" /&gt;</code></pre>
 
-      <h3>brand 色字面量运行预览</h3>
+      <h3>本 docs 站实际效果</h3>
+      <p class="note">
+        docs 工程 `src/zui.d.ts` 已做 augmentation；App.vue 已用 <code>zuiLight.extend(...)</code>
+        注入 3 个 brand 色。下面 3 个图标直接走 <code>s.color._brandRoyal / _brandSunset / _brandForest</code>
+        token 访问，**无任何类型注解**：
+      </p>
       <div class="row">
         <div class="cell-mini">
-          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color('#1a3a8f') }" />
-          <code>brandRoyal</code>
+          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color._brandRoyal }" />
+          <code>s.color._brandRoyal</code>
         </div>
         <div class="cell-mini">
-          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color('#ff7849') }" />
-          <code>brandSunset</code>
+          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color._brandSunset }" />
+          <code>s.color._brandSunset</code>
         </div>
         <div class="cell-mini">
-          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color('#1f7a3c') }" />
-          <code>brandForest</code>
+          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color._brandForest }" />
+          <code>s.color._brandForest</code>
         </div>
       </div>
     </section>

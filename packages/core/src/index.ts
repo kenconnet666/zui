@@ -54,6 +54,8 @@ export type {
   ResolvedTheme,
   ResolvedThemeContext,
   DeepPartial,
+  DeepMergeSchema,
+  SchemaOf,
 } from './theme/types'
 
 export type {

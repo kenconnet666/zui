@@ -1,12 +1,42 @@
 import { useMemo, useState } from 'react'
-import { Chain, defaultLight, defaultDark, toClassName } from '@kenconnet666/zui-core'
+import { Chain, FLAT_PALETTE, Theme, toClassName, tw } from '@kenconnet666/zui-core'
+import type { BaseSchema } from '@kenconnet666/zui-core'
+
+// ─── 自定义主题（含 light / dark 两套语义色） ───
+// core 只暴露 palette；语义色由用户自家组合。
+// 真实业务请用 `zuiLight`（来自 @kenconnet666/zui-vue）。
+interface MySchema extends BaseSchema {
+  color: BaseSchema['color'] & {
+    primary: string
+    danger: string
+  }
+  spacing: { middle: string }
+  radius: { middle: string }
+  fontWeight: { bold: number }
+}
+
+const sharedScales = {
+  spacing: { middle: '16px' },
+  radius: { middle: '12px' },
+  fontWeight: { bold: 700 },
+}
+
+const myLight = new Theme<MySchema>({
+  color: { ...FLAT_PALETTE, primary: tw('blue', '600'), danger: tw('red', '600') },
+  ...sharedScales,
+})
+
+const myDark = new Theme<MySchema>({
+  color: { ...FLAT_PALETTE, primary: tw('blue', '500'), danger: tw('red', '500') },
+  ...sharedScales,
+})
 
 export function App() {
   const [dark, setDark] = useState(false)
-  const theme = dark ? defaultDark : defaultLight
+  const theme = dark ? myDark : myLight
 
   const primaryCls = useMemo(() => {
-    const c = new Chain(theme)
+    const c = new Chain<MySchema>(theme)
     c.color.white
     c.backgroundColor._primary
     c.padding.px(12)
@@ -28,7 +58,7 @@ export function App() {
   }, [theme])
 
   const ghostCls = useMemo(() => {
-    const c = new Chain(theme)
+    const c = new Chain<MySchema>(theme)
     c.color._primary
     c.backgroundColor._primary.alpha(10)
     c.padding.px(12)
@@ -44,7 +74,7 @@ export function App() {
   }, [theme])
 
   const dangerCls = useMemo(() => {
-    const c = new Chain(theme)
+    const c = new Chain<MySchema>(theme)
     c.color.white
     c.backgroundColor._danger
     c.padding.px(12)

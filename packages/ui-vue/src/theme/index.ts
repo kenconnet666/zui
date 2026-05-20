@@ -9,3 +9,22 @@
 export { zuiLight } from './zui-light'
 export { zuiDark } from './zui-dark'
 export type { ZuiSchema, SemanticColorTokens } from './schema'
+
+// 用户扩展锚点（13 个）—— 用户在自家 zui.d.ts `declare module` augmentation 即扩展 ZuiSchema
+export type {
+  UserColorExt,
+  UserSpacingExt,
+  UserRadiusExt,
+  UserFontSizeExt,
+  UserFontWeightExt,
+  UserShadowExt,
+  UserBlurExt,
+  UserDurationExt,
+  UserEasingExt,
+  UserBreakpointExt,
+  UserZIndexExt,
+  UserOpacityExt,
+  UserLineHeightExt,
+  UserLetterSpacingExt,
+  UserAspectRatioExt,
+} from './schema'

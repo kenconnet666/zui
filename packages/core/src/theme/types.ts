@@ -56,3 +56,55 @@ export type ResolvedTheme<T extends ThemeSchema> = {
 export type DeepPartial<T> = {
   [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K]
 }
+
+/**
+ * 深合并两个 schema 的类型 —— `Theme.extend()` 的返回类型计算。
+ *
+ * **规则**：
+ * - 同 key 在 A 和 B 都是对象 → 两者的 intersection（B 新字段叠加到 A 上）
+ * - 同 key 在 B 是非对象 → 用 B 的类型（覆盖）
+ * - A 独有的 key → 沿用 A
+ * - B 独有的 key → 沿用 B
+ *
+ * 与 `DeepPartial` / `mergeTheme` 不同：DeepPartial 用于"改值不改类型"的 merge；
+ * DeepMergeSchema 用于"加新 token 扩展类型"的 extend。
+ *
+ * @example
+ * type A = { color: { primary: string }; spacing: { tiny: string } }
+ * type B = { color: { brandRoyal: string }; radius: { full: string } }
+ * type C = DeepMergeSchema<A, B>
+ * // = {
+ * //   color: { primary: string; brandRoyal: string }   // 同 key 对象 intersection
+ * //   spacing: { tiny: string }                          // A 独有保留
+ * //   radius: { full: string }                           // B 独有保留
+ * // }
+ */
+export type DeepMergeSchema<A, B> = {
+  [K in keyof A | keyof B]: K extends keyof B
+    ? K extends keyof A
+      ? A[K] extends object
+        ? B[K] extends object
+          ? A[K] & B[K]
+          : B[K]
+        : B[K]
+      : B[K]
+    : K extends keyof A
+      ? A[K]
+      : never
+}
+
+/**
+ * 从 `Theme<T>` 反推 schema 类型 T。
+ *
+ * 用户调用 `Theme.extend()` 后，类型自动推断为 `Theme<推断的 schema>`；
+ * 业务侧消费时用 `SchemaOf<typeof myLight>` 拿到 schema 类型，传给 `Chain<S>` 等。
+ *
+ * @example
+ * const myLight = zuiLight.extend({ color: { brandRoyal: '#1a3a8f' } })
+ * type MySchema = SchemaOf<typeof myLight>
+ * // → ZuiSchema & { color: { brandRoyal: string } }
+ *
+ * const c = new Chain<MySchema>(myLight)
+ * c.color._brandRoyal  // ✓
+ */
+export type SchemaOf<TH> = TH extends { schema: infer S } ? S : never
