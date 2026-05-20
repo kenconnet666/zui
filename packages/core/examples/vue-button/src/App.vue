@@ -14,7 +14,7 @@ const primaryCls = computed(() => {
   c.backgroundColor._primary
   c.padding.px(12)
   c.borderRadius._middle
-  c.fontWeight._huge
+  c.fontWeight._bold
   c.borderStyle('none')
   c.transitionDuration.ms(150)
   c.transitionProperty('background-color')
@@ -37,7 +37,7 @@ const ghostCls = computed(() => {
   c.backgroundColor._primary.alpha(10)
   c.padding.px(12)
   c.borderRadius._middle
-  c.fontWeight._huge
+  c.fontWeight._bold
   c.borderWidth.px(1)
   c.borderStyle.solid
   c.borderColor._primary.alpha(30)
@@ -54,7 +54,7 @@ const dangerCls = computed(() => {
   c.backgroundColor._danger
   c.padding.px(12)
   c.borderRadius._middle
-  c.fontWeight._huge
+  c.fontWeight._bold
   c.borderStyle.none
   c._hover((h) => {
     h.backgroundColor._danger.alpha(85)

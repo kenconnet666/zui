@@ -5,7 +5,7 @@
  * 1. 双模式渲染（slot / component prop）
  * 2. size 5 阶 → em 单位
  * 3. color 6 种 → 各应用对应语义色
- * 4. depth none + tiny/small/middle/large/huge → opacity
+ * 4. depth none + subtle/muted/dim/faded/ghost → opacity
  * 5. spin none + boolean + 5 阶
  * 6. css factory：基础 + 伪类 + 覆盖 variants
  * 7. a11y label
@@ -104,21 +104,21 @@ describe('ZIcon — color 6 种', () => {
   })
 })
 
-describe('ZIcon — depth 5 阶 + none', () => {
-  it('depth="tiny" → opacity 0.8', () => {
-    mount(ZIcon, { props: { component: DummyIcon, depth: 'tiny' } })
+describe('ZIcon — depth 5 阶 + none（领域词）', () => {
+  it('depth="subtle" → opacity 0.8', () => {
+    mount(ZIcon, { props: { component: DummyIcon, depth: 'subtle' } })
     expect(getInjectedCss()).toMatch(/opacity:0\.8/)
   })
 
-  it('depth="huge" → opacity 0.2', () => {
-    mount(ZIcon, { props: { component: DummyIcon, depth: 'huge' } })
-    expect(getInjectedCss()).toMatch(/opacity:0\.2/)
+  it('depth="ghost" → opacity 0.15', () => {
+    mount(ZIcon, { props: { component: DummyIcon, depth: 'ghost' } })
+    expect(getInjectedCss()).toMatch(/opacity:0\.15/)
   })
 
-  it('depth="none" → className 与 depth="tiny" 不同（无 opacity rule）', () => {
+  it('depth="none" → className 与 depth="subtle" 不同（无 opacity rule）', () => {
     const wNone = mount(ZIcon, { props: { component: DummyIcon, depth: 'none' } })
-    const wTiny = mount(ZIcon, { props: { component: DummyIcon, depth: 'tiny' } })
-    expect(wNone.classes().join(' ')).not.toBe(wTiny.classes().join(' '))
+    const wSubtle = mount(ZIcon, { props: { component: DummyIcon, depth: 'subtle' } })
+    expect(wNone.classes().join(' ')).not.toBe(wSubtle.classes().join(' '))
   })
 })
 
@@ -243,15 +243,15 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
     expect(getInjectedCss().toLowerCase()).toContain('#abcdef')
   })
 
-  it('改 icon.depthMiddleOpacity → depth="middle" 跟随新值', () => {
+  it('改 icon.depthDimOpacity → depth="dim" 跟随新值', () => {
     const Wrap = defineComponent({
       components: { ZConfigProvider, ZIcon },
       data: () => ({
-        overrides: { icon: { depthMiddleOpacity: '0.33' } },
+        overrides: { icon: { depthDimOpacity: '0.33' } },
       }),
       template: `
         <ZConfigProvider :component-tokens="overrides">
-          <ZIcon :component="DummyIcon" depth="middle" />
+          <ZIcon :component="DummyIcon" depth="dim" />
         </ZConfigProvider>
       `,
       setup() {

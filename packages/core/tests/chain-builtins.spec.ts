@@ -533,7 +533,7 @@ describe('Chain — 内建方法', () => {
         n.cursor.pointer
       })
       c._is('h1, h2', (i) => {
-        i.fontWeight._huge
+        i.fontWeight._bold
       })
       c._where('.foo, .bar', (w) => {
         w.color._danger

@@ -8,7 +8,7 @@
  * ZConfigProvider 切主题时 useVariants 会重新调工厂、emotion 自动按内容 hash 复用类名。
  *
  * **token 读取**：`withComponentTokens` 把所有 component token flatten 到 `theme.color`
- * 命名空间（`iconSizeTiny` / `iconPrimaryColor` / `iconDepthMiddleOpacity` / `iconSpinMiddleDuration` 等）。
+ * 命名空间（`iconSizeTiny` / `iconPrimaryColor` / `iconDepthDimOpacity` / `iconSpinMiddleDuration` 等）。
  * 由于 `width/height/fontSize/opacity/animationDuration` 等 carrier 的 tokenCat 不是 color，
  * 本工厂直接从 `theme.color.iconXxx` 读字面量再喂 chain method（与 v1 同策略）。
  */
@@ -28,12 +28,12 @@ interface IconTokenSnapshot {
   warningColor: string
   dangerColor: string
   infoColor: string
-  // depth opacity（5 阶语义）
-  depthTiny: number
-  depthSmall: number
-  depthMiddle: number
-  depthLarge: number
-  depthHuge: number
+  // depth opacity（5 阶领域词）
+  depthSubtle: number
+  depthMuted: number
+  depthDim: number
+  depthFaded: number
+  depthGhost: number
   // spin
   spinTiny: string
   spinSmall: string
@@ -72,11 +72,11 @@ function readIconTokens<S extends ThemeSchema>(theme: ResolvedTheme<S>): IconTok
     warningColor: read('iconWarningColor', '#f59e0b'),
     dangerColor: read('iconDangerColor', '#ef4444'),
     infoColor: read('iconInfoColor', '#06b6d4'),
-    depthTiny: readNum('iconDepthTinyOpacity', 0.8),
-    depthSmall: readNum('iconDepthSmallOpacity', 0.6),
-    depthMiddle: readNum('iconDepthMiddleOpacity', 0.4),
-    depthLarge: readNum('iconDepthLargeOpacity', 0.3),
-    depthHuge: readNum('iconDepthHugeOpacity', 0.2),
+    depthSubtle: readNum('iconDepthSubtleOpacity', 0.8),
+    depthMuted: readNum('iconDepthMutedOpacity', 0.6),
+    depthDim: readNum('iconDepthDimOpacity', 0.4),
+    depthFaded: readNum('iconDepthFadedOpacity', 0.25),
+    depthGhost: readNum('iconDepthGhostOpacity', 0.15),
     spinTiny: read('iconSpinTinyDuration', '0.3s'),
     spinSmall: read('iconSpinSmallDuration', '0.5s'),
     spinMiddle: read('iconSpinMiddleDuration', '1s'),
@@ -90,7 +90,7 @@ function readIconTokens<S extends ThemeSchema>(theme: ResolvedTheme<S>): IconTok
  *
  * - `size`: 5 阶 tiny/small/middle/large/huge（em）
  * - `color`: default + primary/success/warning/danger/info
- * - `depth`: none + tiny/small/middle/large/huge（5 阶 opacity，递减淡化）
+ * - `depth`: none + subtle/muted/dim/faded/ghost（5 阶淡化，由略淡到几乎消失）
  * - `spin`: none + 5 阶 tiny..huge（旋转周期，tiny 最快 huge 最慢）
  *
  * base：inline-flex 居中 + 默认 color。size / spin / depth 通过 variants 注入。
@@ -151,20 +151,20 @@ export function createIconVariants<S extends ThemeSchema = ThemeSchema>(theme: R
         none: () => {
           /* 不应用 opacity */
         },
-        tiny: (s) => {
-          s.opacity(t.depthTiny)
+        subtle: (s) => {
+          s.opacity(t.depthSubtle)
         },
-        small: (s) => {
-          s.opacity(t.depthSmall)
+        muted: (s) => {
+          s.opacity(t.depthMuted)
         },
-        middle: (s) => {
-          s.opacity(t.depthMiddle)
+        dim: (s) => {
+          s.opacity(t.depthDim)
         },
-        large: (s) => {
-          s.opacity(t.depthLarge)
+        faded: (s) => {
+          s.opacity(t.depthFaded)
         },
-        huge: (s) => {
-          s.opacity(t.depthHuge)
+        ghost: (s) => {
+          s.opacity(t.depthGhost)
         },
       },
       spin: {

@@ -103,8 +103,8 @@ describe('集成 — 完整 Button 组件流程', () => {
     variants: {
       state: {
         idle: () => {},
-        loading: s => { s.opacity._large; s.cursor.wait },
-        disabled: s => { s.opacity._middle; s.cursor.notAllowed; s.pointerEvents('none') },
+        loading: s => { s.opacity._strong; s.cursor.wait },
+        disabled: s => { s.opacity._half; s.cursor.notAllowed; s.pointerEvents('none') },
       },
     },
     defaultVariants: { state: 'idle' },
@@ -115,7 +115,7 @@ describe('集成 — 完整 Button 组件流程', () => {
     base: s => {
       s.padding.px(12)
       s.borderRadius._middle
-      s.fontWeight._huge
+      s.fontWeight._bold
       s.transitionProperty('all')
       s.transitionDuration._small
       focusRing(s)
@@ -201,7 +201,7 @@ describe('集成 — Dialog 多 slot 组件', () => {
         s.position.absolute
         s.inset(0)
         s.backgroundColor.black
-        s.opacity._middle
+        s.opacity._half
       },
       content: s => {
         s.position.absolute
@@ -209,7 +209,7 @@ describe('集成 — Dialog 多 slot 组件', () => {
         s.padding._large
         s.backgroundColor._bg
       },
-      title: s => { s.fontWeight._huge; s.fontSize._huge },
+      title: s => { s.fontWeight._bold; s.fontSize._huge },
       description: s => { s.color._textMuted; s.marginTop._small },
       close: s => {
         s.position.absolute

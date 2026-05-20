@@ -67,16 +67,20 @@ export interface DefaultSchema extends ThemeSchema {
     huge: string
   }
   /**
-   * fontWeight 5 阶（语义化，遵循 5 阶哲学）。
-   * 0.9.0 BREAKING：`normal / medium / bold` 重命名为 `tiny / small / middle / large / huge`
-   * 对应 300 / 400 / 500 / 600 / 700。CSS keyword `fontWeight.normal` / `fontWeight.bold` 仍可用（不带下划线 = 走 keyword 路径）。
+   * fontWeight 9 阶（CSS 标准命名，特例 9 档；本身按粗细顺序自带大小关系）。
+   * 0.9.0：thin(100) / extralight(200) / light(300) / normal(400) / medium(500) / semibold(600) / bold(700) / extrabold(800) / black(900)。
+   * `normal` / `bold` 同时是 CSS keyword，token 与 keyword 双命中。
    */
   fontWeight: {
-    tiny: string | number
-    small: string | number
-    middle: string | number
-    large: string | number
-    huge: string | number
+    thin: string | number
+    extralight: string | number
+    light: string | number
+    normal: string | number
+    medium: string | number
+    semibold: string | number
+    bold: string | number
+    extrabold: string | number
+    black: string | number
   }
   /** shadow 5 档（不含 none：要去阴影用 boxShadow('none')）。 */
   shadow: {
@@ -142,41 +146,42 @@ export interface DefaultSchema extends ThemeSchema {
     toast: number
   }
   /**
-   * 透明度 token（5 阶 + none + full，遵循 5 阶哲学）。
-   * 0.9.0 BREAKING：旧 15 阶 Tailwind 数字 key 重命名 → `none(0) / tiny(0.05) / small(0.25) / middle(0.5) / large(0.75) / huge(0.95) / full(1)`。
+   * 透明度 token（5 阶 + none + full = 7 阶；领域词按透明度从低到高排列，自带大小关系）。
+   * 0.9.0 BREAKING：旧 15 阶 Tailwind 数字 key → `none(0) / faint(0.05) / dim(0.25) / half(0.5) / strong(0.75) / solid(0.95) / full(1)`。
    */
   opacity: {
     none: number
-    tiny: number
-    small: number
-    middle: number
-    large: number
-    huge: number
+    faint: number
+    dim: number
+    half: number
+    strong: number
+    solid: number
     full: number
   }
   /**
-   * 行高 token（5 阶 + none，遵循 5 阶哲学）。
-   * 0.8.0 BREAKING：`tight / snug / normal / relaxed / loose` 重命名为 `tiny / small / middle / large / huge`。
+   * 行高 token（5 阶 + none = 6 阶；领域词表达紧密度，由紧到松）。
+   * 0.9.0：回 Tailwind 标准词 `none(1) / tight(1.25) / snug(1.375) / normal(1.5) / relaxed(1.625) / loose(2)`。
+   * `normal` 同时是 CSS keyword（token 与 keyword 双命中）。
    */
   lineHeight: {
     none: number
-    tiny: number
-    small: number
-    middle: number
-    large: number
-    huge: number
+    tight: number
+    snug: number
+    normal: number
+    relaxed: number
+    loose: number
   }
   /**
-   * 字符间距 token（5 阶，遵循 5 阶哲学）。
-   * 0.8.0 BREAKING：`tighter / tight / normal / wide / wider` 重命名为 `tiny / small / middle / large / huge`，
-   * `widest` 移除（CSS 字距上没有"满"语义，超大需求建议 inline `letterSpacing('0.1em')`）。
+   * 字符间距 token（5 阶；领域词表达字距松紧）。
+   * 0.9.0：回 Tailwind 标准词 `tighter(-0.05em) / tight(-0.025em) / normal(0) / wide(0.025em) / wider(0.05em)`。
+   * `normal` 同时是 CSS keyword（token 与 keyword 双命中）。
    */
   letterSpacing: {
-    tiny: string
-    small: string
-    middle: string
-    large: string
-    huge: string
+    tighter: string
+    tight: string
+    normal: string
+    wide: string
+    wider: string
   }
   /** 长宽比 token。 */
   aspectRatio: {

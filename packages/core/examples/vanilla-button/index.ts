@@ -6,7 +6,7 @@ long.color.white
 long.backgroundColor._primary
 long.padding.px(12)
 long.borderRadius._middle
-long.fontWeight._huge
+long.fontWeight._bold
 long._hover((h) => {
   h.backgroundColor._primary.alpha(85)
 })
@@ -18,7 +18,7 @@ const dangerCls = icss(defaultLight, (s) => {
   s.backgroundColor._danger
   s.padding.px(12)
   s.borderRadius._middle
-  s.fontWeight._huge
+  s.fontWeight._bold
   s._hover((h) => {
     h.backgroundColor._danger.alpha(85)
   })
@@ -30,7 +30,7 @@ const ghostCls = icss(defaultLight, (s) => {
   s.backgroundColor._primary.alpha(10)
   s.padding.px(12)
   s.borderRadius._middle
-  s.fontWeight._huge
+  s.fontWeight._bold
   s.borderWidth.px(1)
   s.borderStyle('solid')
   s.borderColor._primary.alpha(30)

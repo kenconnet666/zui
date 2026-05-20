@@ -171,7 +171,7 @@ describe('F2 — defineVariants 接受 boolean / number', () => {
       base: s => { s.padding.px(8) },
       variants: {
         disabled: {
-          true: s => { s.opacity._middle; s.pointerEvents('none') },
+          true: s => { s.opacity._half; s.pointerEvents('none') },
           false: () => {},
         },
       },
@@ -217,7 +217,7 @@ describe('F2 — defineVariants 接受 boolean / number', () => {
           danger: s => { s.backgroundColor._danger },
         },
         disabled: {
-          true: s => { s.opacity._middle },
+          true: s => { s.opacity._half },
           false: () => {},
         },
       },

@@ -181,9 +181,9 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
    *
    * @example
    * s._state(props, {
-   *   loading: h => { h.opacity._large; h.pointerEvents('none') },
+   *   loading: h => { h.opacity._strong; h.pointerEvents('none') },
    *   error:   h => { h.borderColor._danger },
-   *   disabled: h => { h.opacity._middle; h.cursor.notAllowed },
+   *   disabled: h => { h.opacity._half; h.cursor.notAllowed },
    * })
    *
    * @example
@@ -367,7 +367,7 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
    *
    * @example
    * s._data('state', 'open', open => { open.color._primary })   // &[data-state="open"]
-   * s._data('disabled', undefined, d => { d.opacity._middle })  // &[data-disabled]
+   * s._data('disabled', undefined, d => { d.opacity._half })  // &[data-disabled]
    */
   _data(attr: string, value: string | undefined, fn: (s: this) => void): this {
     const sel = value === undefined ? `&[data-${attr}]` : `&[data-${attr}="${value}"]`
