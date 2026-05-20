@@ -19,6 +19,10 @@
  *   }
  * }
  */
+// 故意保留空 interface —— 这是 declaration merging 的 anchor，让用户工程通过
+// `declare module '@kenconnet666/zui-core' { interface ComponentTokenRegistry { ... } }`
+// 注入自家组件 token namespace。改成 `Record<string, never>` 或 `type` 别名会破坏 merging。
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ComponentTokenRegistry {}
 
 /**
