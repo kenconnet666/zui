@@ -14,7 +14,7 @@ import { applyResponsive, isResponsiveValue, type ResponsiveValue } from '../res
 /**
  * W10.1 — 组件 props 风格的 style alias 类型集合（Theme UI / Chakra 风）。
  *
- * 给组件库做 `<Box mt={4} p="md" color="_primary">` 类 prop API 用。
+ * 给组件库做 `<Box mt={4} p="_middle" color="_primary">` 类 prop API 用。
  * 配合 `applyStyleProps` 把 props 应用到 chain。
  *
  * 所有 alias 都接受 token（如 `'_primary'` / `'_middle'`）或字面值（string / number）。

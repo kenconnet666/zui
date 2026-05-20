@@ -16,22 +16,22 @@
  *   },
  *   variants: {
  *     size: {
- *       sm: { content: s => { s.maxWidth.px(400) } },
- *       md: { content: s => { s.maxWidth.px(600) } },
- *       lg: { content: s => { s.maxWidth.px(900) } },
+ *       small:  { content: s => { s.maxWidth.px(400) } },
+ *       middle: { content: s => { s.maxWidth.px(600) } },
+ *       large:  { content: s => { s.maxWidth.px(900) } },
  *     },
  *   },
- *   defaultVariants: { size: 'md' },
+ *   defaultVariants: { size: 'middle' },
  * })
  *
  * // 用：
- * dialog.root()                    // root className (用 default size)
- * dialog.content({ size: 'lg' })   // content className
- * dialog.title()                   // title className
+ * dialog.root()                      // root className (用 default size)
+ * dialog.content({ size: 'large' })  // content className
+ * dialog.title()                     // title className
  *
  * // 类型推断：
  * type DialogProps = VariantPropsOfParts<typeof dialog>
- * // = { size?: 'sm' | 'md' | 'lg' }
+ * // = { size?: 'small' | 'middle' | 'large' }
  */
 
 import { Chain } from '../chain/Chain'
@@ -106,9 +106,9 @@ export type PartsResult<
  * 从 `defineParts` 返回值推 props 类型。
  *
  * @example
- * const dialog = defineParts(theme, { slots: ['root'], variants: { size: { sm: ..., lg: ... } } })
+ * const dialog = defineParts(theme, { slots: ['root'], variants: { size: { small: ..., large: ... } } })
  * type DialogProps = VariantPropsOfParts<typeof dialog>
- * // = { size?: 'sm' | 'lg' }
+ * // = { size?: 'small' | 'large' }
  */
 export type VariantPropsOfParts<P> =
   P extends { [k: string]: (props?: infer Props) => string }
@@ -219,7 +219,7 @@ function stableKey(resolved: Record<string, string>): string {
  * 复用 parent 的全 slot 工厂，并把 childConfig 在同 slot 上合并：先跑 parent，再跑
  * child（与 `extendVariants` / `composeVariants` 一致：后者通过 chain mutation 覆盖前者）。
  *
- * **同 key 覆盖**：parent 的 `size.sm` 与 child 的 `size.sm` 同时存在时，child 后跑覆盖前者。
+ * **同 key 覆盖**：parent 的 `size.small` 与 child 的 `size.small` 同时存在时，child 后跑覆盖前者。
  * **新 slot / 新 variant**：child 可以补 parent 未声明的 variant 维度；slot 列表沿用 parent。
  *
  * @example

@@ -11,12 +11,12 @@ import { defineVariants, type DefineVariantsConfig, type VariantMap, type Varian
  * const button = defineVariants(theme, {
  *   variants: {
  *     intent: { primary: ..., danger: ... },
- *     size: { sm: ..., lg: ... },
+ *     size: { small: ..., large: ... },
  *   },
  * })
  *
  * type ButtonProps = VariantPropsOf<typeof button>
- * // = { intent?: 'primary' | 'danger'; size?: 'sm' | 'lg' } | undefined
+ * // = { intent?: 'primary' | 'danger'; size?: 'small' | 'large' } | undefined
  *
  * function Button(props: ButtonProps & { children: React.ReactNode }) {
  *   const cls = button(props)
@@ -44,16 +44,16 @@ export type VariantPropsOf<F> = F extends (props?: infer P) => string ? P : neve
  *   base: s => { s.padding.px(12); s.borderRadius._middle },
  *   variants: {
  *     intent: { primary: ..., danger: ... },
- *     size: { sm: ..., lg: ... },
+ *     size: { small: ..., large: ... },
  *   },
  * })
  *
  * const button = composeVariants(interactive, buttonCore)
- * button({ intent: 'danger', size: 'sm', state: 'loading' })
+ * button({ intent: 'danger', size: 'small', state: 'loading' })
  * //   ^ 三个 variant 同时生效
  *
  * type ButtonProps = VariantPropsOf<typeof button>
- * // = { state?: 'idle'|'loading'|'disabled'; intent?: 'primary'|'danger'; size?: 'sm'|'lg' }
+ * // = { state?: 'idle'|'loading'|'disabled'; intent?: 'primary'|'danger'; size?: 'small'|'large' }
  */
 export function composeVariants<
   F1 extends (props?: Record<string, string | undefined>) => string,

@@ -343,8 +343,9 @@ JetBrains MCP 内嵌 Node 没把 pnpm 放进 PATH，直接 PowerShell 调用会�
 ### 8.7 vitest happy-dom 下 `import.meta.url` 不可用
 报"URL must be of scheme file"。用 `process.cwd()` 代替（vitest 工作目录就是 packages/core）。
 
-### 8.8 blur key `2xl` / `3xl` 不是合法 ident
-Schema interface 用字面量字符串：`'2xl': string`。访问：`theme.blur['2xl']`。Chain 上 `_blur('2xl')` 不带 `_` 直接命中。
+### 8.8 自定义 schema 用数字 / 特殊字符 key 非合法 ident
+内置 token 全语义化（`tiny/small/middle/large/huge`，可加 `none/full`），无此问题。  
+但用户扩展时若用 `'2xl'` / `'4xl'` 等数字开头 key —— Schema interface 用字面量字符串：`'2xl': string`。访问：`theme.blur['2xl']`。Chain 上 `_blur('2xl')` 不带 `_` 直接命中（toIdent 函数会把它转成 `_2xl` 形 carrier token）。
 
 ### 8.9 schema 上 function token 通过 `theme.<cat>.<key>` 读 — 类型与运行时不一致
 `Object.assign(this, schema)` 把 function 原值挂到 instance；类型签名是 `string | number` 但运行时是 function。  
