@@ -329,7 +329,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-timing-function
      */
-  animationTimingFunction: PropCarrier<TSelf, CssValueOf<'animationTimingFunction'>, EasingTokens<T>, GlobalKw, unknown, never>
+  animationTimingFunction: PropCarrier<TSelf, CssValueOf<'animationTimingFunction'>, EasingTokens<T>, 'linear' | 'ease' | 'easeIn' | 'easeOut' | 'easeInOut' | 'stepStart' | 'stepEnd' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -711,7 +711,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-width
      */
-  borderBottomWidth: PropCarrier<TSelf, CssValueOf<'borderBottomWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  borderBottomWidth: PropCarrier<TSelf, CssValueOf<'borderBottomWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -954,7 +954,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left-width
      */
-  borderLeftWidth: PropCarrier<TSelf, CssValueOf<'borderLeftWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  borderLeftWidth: PropCarrier<TSelf, CssValueOf<'borderLeftWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -996,7 +996,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right-width
      */
-  borderRightWidth: PropCarrier<TSelf, CssValueOf<'borderRightWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  borderRightWidth: PropCarrier<TSelf, CssValueOf<'borderRightWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1110,7 +1110,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-width
      */
-  borderTopWidth: PropCarrier<TSelf, CssValueOf<'borderTopWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  borderTopWidth: PropCarrier<TSelf, CssValueOf<'borderTopWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1395,7 +1395,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-gap
      */
-  columnGap: PropCarrier<TSelf, CssValueOf<'columnGap'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  columnGap: PropCarrier<TSelf, CssValueOf<'columnGap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -1952,7 +1952,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-family
      */
-  fontFamily: PropCarrier<TSelf, CssValueOf<'fontFamily'>, FontsTokens<T>, GlobalKw, unknown, never>
+  fontFamily: PropCarrier<TSelf, CssValueOf<'fontFamily'>, FontsTokens<T>, 'serif' | 'sansSerif' | 'monospace' | 'cursive' | 'fantasy' | 'systemUi' | 'uiSerif' | 'uiSansSerif' | 'uiMonospace' | 'uiRounded' | 'emoji' | 'math' | 'fangsong' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -2039,7 +2039,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-size
      */
-  fontSize: PropCarrier<TSelf, CssValueOf<'fontSize'>, FontSizeTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  fontSize: PropCarrier<TSelf, CssValueOf<'fontSize'>, FontSizeTokens<T>, 'xxSmall' | 'xSmall' | 'small' | 'medium' | 'large' | 'xLarge' | 'xxLarge' | 'xxxLarge' | 'smaller' | 'larger' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * Since July 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -2292,7 +2292,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-weight
      */
-  fontWeight: PropCarrier<TSelf, CssValueOf<'fontWeight'>, FontWeightTokens<T>, 'normal' | 'bold' | GlobalKw, unknown, never>
+  fontWeight: PropCarrier<TSelf, CssValueOf<'fontWeight'>, FontWeightTokens<T>, 'normal' | 'bold' | 'lighter' | 'bolder' | GlobalKw, unknown, never>
   /**
      * **Syntax**: `normal | <percentage [0,∞]> | ultra-condensed | extra-condensed | condensed | semi-condensed | semi-expanded | expanded | extra-expanded | ultra-expanded`
      *
@@ -3507,7 +3507,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/object-position
      */
-  objectPosition: PropCarrier<TSelf, CssValueOf<'objectPosition'>, never, GlobalKw, LengthUnits<TSelf>, never>
+  objectPosition: PropCarrier<TSelf, CssValueOf<'objectPosition'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * **Syntax**: `none | <basic-shape-rect>`
      *
@@ -3706,7 +3706,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-width
      */
-  outlineWidth: PropCarrier<TSelf, CssValueOf<'outlineWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  outlineWidth: PropCarrier<TSelf, CssValueOf<'outlineWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -4250,7 +4250,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/row-gap
      */
-  rowGap: PropCarrier<TSelf, CssValueOf<'rowGap'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  rowGap: PropCarrier<TSelf, CssValueOf<'rowGap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -5520,7 +5520,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform-origin
      */
-  transformOrigin: PropCarrier<TSelf, CssValueOf<'transformOrigin'>, never, GlobalKw, LengthUnits<TSelf>, never>
+  transformOrigin: PropCarrier<TSelf, CssValueOf<'transformOrigin'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -5594,7 +5594,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-property
      */
-  transitionProperty: PropCarrier<TSelf, CssValueOf<'transitionProperty'>, TransitionPropertyTokens<T>, GlobalKw, unknown, never>
+  transitionProperty: PropCarrier<TSelf, CssValueOf<'transitionProperty'>, TransitionPropertyTokens<T>, 'none' | 'all' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -5609,7 +5609,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-timing-function
      */
-  transitionTimingFunction: PropCarrier<TSelf, CssValueOf<'transitionTimingFunction'>, EasingTokens<T>, GlobalKw, unknown, never>
+  transitionTimingFunction: PropCarrier<TSelf, CssValueOf<'transitionTimingFunction'>, EasingTokens<T>, 'linear' | 'ease' | 'easeIn' | 'easeOut' | 'easeInOut' | 'stepStart' | 'stepEnd' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2022.
      *
@@ -6004,7 +6004,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-position
      */
-  backgroundPosition: PropCarrier<TSelf, CssValueOf<'backgroundPosition'>, never, GlobalKw, LengthUnits<TSelf>, never>
+  backgroundPosition: PropCarrier<TSelf, CssValueOf<'backgroundPosition'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -6282,7 +6282,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-width
      */
-  borderWidth: PropCarrier<TSelf, CssValueOf<'borderWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  borderWidth: PropCarrier<TSelf, CssValueOf<'borderWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
   /** **Syntax**: `<'caret-color'> || <'caret-shape'>` */
   caret: PropFn<TSelf, CssValueOf<'caret'>>
   /**
@@ -6384,7 +6384,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/gap
      */
-  gap: PropCarrier<TSelf, CssValueOf<'gap'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  gap: PropCarrier<TSelf, CssValueOf<'gap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *

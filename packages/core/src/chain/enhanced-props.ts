@@ -214,6 +214,59 @@ const OVERFLOW_ANCHOR_KW = ['auto', 'none'] as const
 const COLUMN_SPAN_KW = ['none', 'all'] as const
 const COLUMN_FILL_KW = ['auto', 'balance', 'balanceAll'] as const
 
+// ─── P0/P1/P2 补完 ───
+
+/** transition/animation timing function 的 CSS 标准 keyword（不含贝塞尔函数 / steps()）。 */
+const TIMING_FUNCTION_KW = [
+  'linear',
+  'ease',
+  'easeIn',
+  'easeOut',
+  'easeInOut',
+  'stepStart',
+  'stepEnd',
+] as const
+
+/** font-weight 关键字（含相对值 lighter/bolder）。 */
+const FONT_WEIGHT_KW = ['normal', 'bold', 'lighter', 'bolder'] as const
+
+/** font-size 关键字：8 阶 absolute + 2 个 relative。 */
+const FONT_SIZE_KW = [
+  'xxSmall',
+  'xSmall',
+  'small',
+  'medium',
+  'large',
+  'xLarge',
+  'xxLarge',
+  'xxxLarge',
+  'smaller',
+  'larger',
+] as const
+
+/** font-family generic family + ui-* 现代系列。 */
+const FONT_FAMILY_KW = [
+  'serif',
+  'sansSerif',
+  'monospace',
+  'cursive',
+  'fantasy',
+  'systemUi',
+  'uiSerif',
+  'uiSansSerif',
+  'uiMonospace',
+  'uiRounded',
+  'emoji',
+  'math',
+  'fangsong',
+] as const
+
+/** border-width / outline-width / column-rule-width 用 thin/medium/thick。 */
+const BORDER_WIDTH_KW = ['thin', 'medium', 'thick'] as const
+
+/** background-position / object-position / transform-origin 的方位关键字。 */
+const POSITION_VALUES_KW = ['top', 'bottom', 'left', 'right', 'center'] as const
+
 /**
  * 增强属性元数据 —— 类型 ↔ 运行时双向对齐的 **single source of truth**。
  *
@@ -254,9 +307,9 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   marginLeft: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
   marginBlock: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
   marginInline: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
-  gap: { tokenCat: 'spacing', unitClass: 'length', keywords: null },
-  rowGap: { tokenCat: 'spacing', unitClass: 'length', keywords: null },
-  columnGap: { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  gap: { tokenCat: 'spacing', unitClass: 'length', keywords: ['normal'] },
+  rowGap: { tokenCat: 'spacing', unitClass: 'length', keywords: ['normal'] },
+  columnGap: { tokenCat: 'spacing', unitClass: 'length', keywords: ['normal'] },
   inset: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
   top: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
   right: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
@@ -272,11 +325,11 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   maxHeight: { tokenCat: 'sizes', unitClass: 'length', keywords: SIZE_KW },
 
   // ─── 字体 ───
-  fontSize: { tokenCat: 'fontSize', unitClass: 'length', keywords: null },
-  fontWeight: { tokenCat: 'fontWeight', unitClass: null, keywords: ['normal', 'bold'] },
+  fontSize: { tokenCat: 'fontSize', unitClass: 'length', keywords: FONT_SIZE_KW },
+  fontWeight: { tokenCat: 'fontWeight', unitClass: null, keywords: FONT_WEIGHT_KW },
   lineHeight: { tokenCat: 'lineHeight', unitClass: 'length', keywords: ['normal'] },
   letterSpacing: { tokenCat: 'letterSpacing', unitClass: 'length', keywords: ['normal'] },
-  fontFamily: { tokenCat: 'fonts', unitClass: null, keywords: null },
+  fontFamily: { tokenCat: 'fonts', unitClass: null, keywords: FONT_FAMILY_KW },
 
   // ─── 圆角（radius；LengthUnits） ───
   borderRadius: { tokenCat: 'radius', unitClass: 'length', keywords: null },
@@ -285,13 +338,13 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   borderBottomLeftRadius: { tokenCat: 'radius', unitClass: 'length', keywords: null },
   borderBottomRightRadius: { tokenCat: 'radius', unitClass: 'length', keywords: null },
 
-  // ─── 边框宽度（borders；LengthUnits） ───
-  borderWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
-  borderTopWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
-  borderRightWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
-  borderBottomWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
-  borderLeftWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
-  outlineWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
+  // ─── 边框宽度（borders；LengthUnits + thin/medium/thick） ───
+  borderWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
+  borderTopWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
+  borderRightWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
+  borderBottomWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
+  borderLeftWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
+  outlineWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
 
   // ─── 边框样式（无 token；BORDER_STYLE_KW） ───
   borderStyle: { tokenCat: null, unitClass: null, keywords: BORDER_STYLE_KW },
@@ -346,12 +399,12 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
 
   // ─── 过渡 / 动画 ───
   transitionDuration: { tokenCat: 'duration', unitClass: 'time', keywords: null },
-  transitionTimingFunction: { tokenCat: 'easing', unitClass: null, keywords: null },
-  transitionProperty: { tokenCat: 'transitionProperty', unitClass: null, keywords: null },
+  transitionTimingFunction: { tokenCat: 'easing', unitClass: null, keywords: TIMING_FUNCTION_KW },
+  transitionProperty: { tokenCat: 'transitionProperty', unitClass: null, keywords: ['none', 'all'] },
   transitionDelay: { tokenCat: 'duration', unitClass: 'time', keywords: null },
   animationDuration: { tokenCat: 'duration', unitClass: 'time', keywords: null },
   animationDelay: { tokenCat: 'duration', unitClass: 'time', keywords: null },
-  animationTimingFunction: { tokenCat: 'easing', unitClass: null, keywords: null },
+  animationTimingFunction: { tokenCat: 'easing', unitClass: null, keywords: TIMING_FUNCTION_KW },
   animationIterationCount: { tokenCat: null, unitClass: null, keywords: ['infinite'] },
   animationName: { tokenCat: null, unitClass: null, keywords: ['none'] },
   animationDirection: { tokenCat: null, unitClass: null, keywords: ANIMATION_DIRECTION_KW },
@@ -359,7 +412,7 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   animationPlayState: { tokenCat: null, unitClass: null, keywords: ANIMATION_PLAY_KW },
 
   // ─── Transform ───
-  transformOrigin: { tokenCat: null, unitClass: 'length', keywords: null },
+  transformOrigin: { tokenCat: null, unitClass: 'length', keywords: POSITION_VALUES_KW },
   rotate: { tokenCat: null, unitClass: 'angle', keywords: ['none'] },
   scale: { tokenCat: null, unitClass: null, keywords: ['none'] },
   translate: { tokenCat: null, unitClass: 'length', keywords: ['none'] },
@@ -367,7 +420,7 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
 
   // ─── Object ───
   objectFit: { tokenCat: null, unitClass: null, keywords: OBJECT_FIT_KW },
-  objectPosition: { tokenCat: null, unitClass: 'length', keywords: null },
+  objectPosition: { tokenCat: null, unitClass: 'length', keywords: POSITION_VALUES_KW },
 
   // ─── 文字 ───
   textAlign: { tokenCat: null, unitClass: null, keywords: TEXT_ALIGN_KW },
@@ -382,7 +435,7 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   wordSpacing: { tokenCat: null, unitClass: 'length', keywords: ['normal'] },
 
   // ─── 背景 ───
-  backgroundPosition: { tokenCat: null, unitClass: 'length', keywords: null },
+  backgroundPosition: { tokenCat: null, unitClass: 'length', keywords: POSITION_VALUES_KW },
   backgroundSize: { tokenCat: null, unitClass: 'length', keywords: BG_SIZE_KW },
   backgroundRepeat: { tokenCat: null, unitClass: null, keywords: BG_REPEAT_KW },
   backgroundClip: { tokenCat: null, unitClass: null, keywords: BG_CLIP_KW },

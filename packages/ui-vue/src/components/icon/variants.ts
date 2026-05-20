@@ -98,8 +98,7 @@ export function createIconVariants(theme: ResolvedTheme<ThemeSchema>) {
     s.animationName(spinKeyframe)
     s.animationDuration.s(dur)
     s.animationIterationCount.infinite
-    // animationTimingFunction.keywords = null（只接受 globalKw + easing token）→ 走函数形式
-    s.animationTimingFunction('linear')
+    s.animationTimingFunction.linear
   }
 
   return defineVariants(theme, {

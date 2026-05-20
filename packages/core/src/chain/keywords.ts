@@ -290,6 +290,57 @@ export const KEYWORD_TO_CSS: Record<string, string> = {
 
   // ─── column-fill ───
   balanceAll: 'balance-all',
+
+  // ═════════════════════════════════════════════════════════════════════
+  // P0/P1/P2 补完 —— timing function / font / border-width / position
+  // 这一批让 transitionTimingFunction.linear / fontWeight.lighter /
+  // borderWidth.thin / backgroundPosition.center 等 keyword-style 链式写法
+  // 在所有 Chain<T> 上可用（不依赖 schema TTokens 解析）
+  // ═════════════════════════════════════════════════════════════════════
+
+  // ─── timing function（transition/animationTimingFunction） ───
+  linear: 'linear',
+  ease: 'ease',
+  easeIn: 'ease-in',
+  easeOut: 'ease-out',
+  easeInOut: 'ease-in-out',
+  stepStart: 'step-start',
+  stepEnd: 'step-end',
+
+  // ─── font-weight 相对值 ───
+  lighter: 'lighter',
+  bolder: 'bolder',
+
+  // ─── font-size absolute + relative ───
+  xxSmall: 'xx-small',
+  xSmall: 'x-small',
+  small: 'small',
+  medium: 'medium',
+  large: 'large',
+  xLarge: 'x-large',
+  xxLarge: 'xx-large',
+  xxxLarge: 'xxx-large',
+  smaller: 'smaller',
+  larger: 'larger',
+
+  // ─── font-family generic + ui-* 系列 ───
+  serif: 'serif',
+  sansSerif: 'sans-serif',
+  monospace: 'monospace',
+  cursive: 'cursive',
+  fantasy: 'fantasy',
+  systemUi: 'system-ui',
+  uiSerif: 'ui-serif',
+  uiSansSerif: 'ui-sans-serif',
+  uiMonospace: 'ui-monospace',
+  uiRounded: 'ui-rounded',
+  emoji: 'emoji',
+  math: 'math',
+  fangsong: 'fangsong',
+
+  // ─── border-width / outline-width / column-rule-width（medium 与 fontSize 复用） ───
+  thin: 'thin',
+  thick: 'thick',
 }
 
 export const GLOBAL_KEYWORDS = ['inherit', 'unset', 'initial', 'revert', 'revertLayer'] as const
