@@ -48,8 +48,11 @@ export type ZIconSpin = boolean | ZIconSpinPreset
 
 /**
  * ZIcon props 完整签名。
+ *
+ * `css` 回调里的 `Chain<ThemeSchema>` 通过 module augmentation 即可获得用户扩展 token
+ * 的 IDE 补全 —— 不再向上层穿透 generic。
  */
-export interface ZIconProps<S extends ThemeSchema = ThemeSchema> {
+export interface ZIconProps {
   size?: ZIconSize
   color?: ZIconColor
   depth?: ZIconDepth
@@ -72,7 +75,7 @@ export interface ZIconProps<S extends ThemeSchema = ThemeSchema> {
    *   }"
    * />
    */
-  css?: (s: Chain<S>) => void
+  css?: (s: Chain<ThemeSchema>) => void
 
   /** 直接以图标组件作为 prop 传入（与 default slot 互斥；slot 优先）。 */
   component?: Component

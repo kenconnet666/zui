@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="S extends ThemeSchema = ThemeSchema">
+<script setup lang="ts">
 /**
  * `ZIcon` —— 框架无关图标容器。**v2.1 极简版**。
  *
@@ -14,6 +14,9 @@
  * **a11y**：
  * - 传 `label` → `aria-label` + `role="img"`
  * - 不传 → `aria-hidden="true"`
+ *
+ * **类型注**：组件层不再穿透 `<S>` 泛型。用户工程通过 module augmentation 扩
+ * `ThemeSchema` 即可让 `:css` 回调里的 `Chain<ThemeSchema>` 获得自定义 token 的 IDE 补全。
  */
 import { computed, type Component } from 'vue'
 import {
@@ -35,7 +38,7 @@ const props = withDefaults(
     color?: ZIconColor
     depth?: ZIconDepth
     spin?: ZIconSpin
-    css?: (s: Chain<S>) => void
+    css?: (s: Chain<ThemeSchema>) => void
     component?: Component
     tag?: string
     label?: string
@@ -54,10 +57,10 @@ defineSlots<{
 }>()
 
 // ─── 主题 + componentTokens 覆盖派生 ───
-const theme = useZTheme<S>()
+const theme = useZTheme()
 const overrides = useZComponentTokens()
-const themed = computed<ResolvedTheme<S>>(() =>
-  withComponentTokens(theme.value, iconTokenDerivers, overrides.value) as ResolvedTheme<S>,
+const themed = computed<ResolvedTheme<ThemeSchema>>(() =>
+  withComponentTokens(theme.value, iconTokenDerivers, overrides.value) as ResolvedTheme<ThemeSchema>,
 )
 
 // ─── spin 归一化：false → 'none'；true → 'middle'；string 原样 ───
@@ -71,7 +74,7 @@ const spinKey = computed<'none' | ZIconSpinPreset>(() => {
 // ─── 离散 variants（4 维度全离散）───
 // 注：**不**走 `useVariants` —— 那个 composable 内部用 raw `useZTheme()`，绕过 Provider 覆盖。
 const variantsCls = computed(() =>
-  createIconVariants<S>(themed.value)({
+  createIconVariants(themed.value)({
     size: props.size,
     color: props.color,
     depth: props.depth,
@@ -82,7 +85,7 @@ const variantsCls = computed(() =>
 // ─── 用户精细覆盖：用 zui-core chain 自由写 ───
 const cssCls = computed(() => {
   if (!props.css) return ''
-  const c = new Chain<S>(themed.value)
+  const c = new Chain<ThemeSchema>(themed.value)
   props.css(c)
   return toClassName(c)
 })

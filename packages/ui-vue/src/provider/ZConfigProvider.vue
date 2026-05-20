@@ -1,17 +1,20 @@
-<script setup lang="ts" generic="S extends ThemeSchema = ThemeSchema">
+<script setup lang="ts">
 /**
  * `ZConfigProvider` —— ui-vue 顶层/嵌套配置注入器。
  *
  * 同时承载 4 类上下文，并允许嵌套时只覆盖部分维度：
  *
- *   1. theme           —— 完整 `Theme<S>` 实例（替换父）
- *   2. themePatch      —— `DeepPartial<S>` 局部补丁（合并到父；与 theme 互斥取先 theme 后 patch）
+ *   1. theme           —— 完整 `Theme<ThemeSchema>` 实例（替换父）
+ *   2. themePatch      —— `DeepPartial<ThemeSchema>` 局部补丁（合并到父；与 theme 互斥取先 theme 后 patch）
  *   3. componentTokens —— `ComponentTokenOverrides`，与父层"key 级浅合并"
  *   4. locale          —— 完整 `ZLocale`（替换父）；或 localePatch（合并）
  *   5. timezone        —— IANA 时区，未传继承父
  *   6. dateLocale      —— date-fns Locale，未传继承父
  *
  * **根 Provider** 没传 `theme` 时回落 `defaultLight.resolve()` 并 dev warn。
+ *
+ * 用户工程通过 module augmentation 扩 `ThemeSchema` 即可让所有 token 访问获得补全；
+ * 不在组件 / composable 上穿透 `<S>` 泛型，降低 .vue 文件心智负担。
  */
 import { computed, inject, provide, type Ref } from 'vue'
 import {
@@ -38,10 +41,10 @@ import type { ZLocale, ZLocalePartial } from '../locale/types'
 
 const props = withDefaults(
   defineProps<{
-    /** 完整主题（顶层推荐）。`Theme<S>` 实例。 */
-    theme?: Theme<S>
+    /** 完整主题（顶层推荐）。`Theme<ThemeSchema>` 实例。 */
+    theme?: Theme<ThemeSchema>
     /** 主题局部补丁（嵌套推荐）。 */
-    themePatch?: DeepPartial<S>
+    themePatch?: DeepPartial<ThemeSchema>
     /** 组件 token override（嵌套时与父浅合并）。 */
     componentTokens?: ComponentTokenOverrides
     /** 完整 locale（替换父）。 */
@@ -57,29 +60,29 @@ const props = withDefaults(
 )
 
 defineSlots<{
-  default(props: { theme: ResolvedTheme<S>; locale: ZLocale }): unknown
+  default(props: { theme: ResolvedTheme<ThemeSchema>; locale: ZLocale }): unknown
 }>()
 
 // ─── 父层 inject（可能不存在 → 用 fallback） ───
-const parentTheme = inject<Ref<ResolvedTheme<S>> | null>(Z_THEME_KEY, null)
+const parentTheme = inject<Ref<ResolvedTheme<ThemeSchema>> | null>(Z_THEME_KEY, null)
 const parentOverrides = inject<Ref<ComponentTokenOverrides> | null>(Z_OVERRIDES_KEY, null)
 const parentLocale = inject<Ref<ZLocale> | null>(Z_LOCALE_KEY, null)
 const parentDate = inject<Ref<ZDateConfig> | null>(Z_DATE_KEY, null)
 
 // ─── theme 合并（顶层 fallback defaultLight） ───
-const mergedTheme = computed<ResolvedTheme<S>>(() => {
+const mergedTheme = computed<ResolvedTheme<ThemeSchema>>(() => {
   // ① 优先用 props.theme（完整替换）
   if (props.theme) {
-    const base = props.theme.resolve() as ResolvedTheme<S>
+    const base = props.theme.resolve() as ResolvedTheme<ThemeSchema>
     if (props.themePatch) {
-      return mergeTheme(base, props.themePatch) as ResolvedTheme<S>
+      return mergeTheme(base, props.themePatch) as ResolvedTheme<ThemeSchema>
     }
     return base
   }
   // ② 用 themePatch 合并到 parent / fallback
   if (props.themePatch) {
-    const base = parentTheme?.value ?? (defaultLight.resolve() as unknown as ResolvedTheme<S>)
-    return mergeTheme(base, props.themePatch) as ResolvedTheme<S>
+    const base = parentTheme?.value ?? (defaultLight.resolve() as unknown as ResolvedTheme<ThemeSchema>)
+    return mergeTheme(base, props.themePatch) as ResolvedTheme<ThemeSchema>
   }
   // ③ 都没传 → 直接用 parent / fallback
   if (parentTheme) return parentTheme.value
@@ -90,7 +93,7 @@ const mergedTheme = computed<ResolvedTheme<S>>(() => {
         '\n  根 Provider 建议显式传 `:theme="myTheme"`。',
     )
   }
-  return defaultLight.resolve() as unknown as ResolvedTheme<S>
+  return defaultLight.resolve() as unknown as ResolvedTheme<ThemeSchema>
 })
 
 // ─── componentTokens 浅合并 ───

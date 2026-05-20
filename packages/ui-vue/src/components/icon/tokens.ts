@@ -62,8 +62,8 @@ declare module '@kenconnet666/zui-core' {
  * - depth 5 阶领域 opacity（subtle 0.8 / muted 0.6 / dim 0.4 / faded 0.25 / ghost 0.15）
  * - spin 5 阶时长（tiny=0.3s 极快 → huge=3s 极慢）
  */
-export function deriveIconTokens<S extends ThemeSchema>(
-  theme: ResolvedTheme<S>,
+export function deriveIconTokens(
+  theme: ResolvedTheme<ThemeSchema>,
 ): ZIconTokens {
   const slot = (theme as unknown as { color?: Record<string, string | number> }).color
   const read = (key: string, fallback: string): string => {

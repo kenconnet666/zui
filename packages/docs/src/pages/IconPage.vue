@@ -1,27 +1,22 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 /**
  * ZIcon 演示页 —— v2.1 全离散版：5 阶 size / 6 色 / 5 阶 depth / 5 阶 spin / css factory。
  * + 嵌套 ZConfigProvider 实时切 componentTokens。
  */
 import { computed, ref, shallowRef, watchEffect } from 'vue'
+import type { ZIconColor, ZIconDepth, ZIconSize, ZIconSpinPreset } from '@kenconnet666/zui-vue'
 import { ZConfigProvider, ZIcon } from '@kenconnet666/zui-vue'
-import type {
-  ZIconColor,
-  ZIconDepth,
-  ZIconSize,
-  ZIconSpinPreset,
-} from '@kenconnet666/zui-vue'
 import type { Chain, DefaultSchema } from '@kenconnet666/zui-core'
 import {
-  HomeOutline,
-  HeartOutline,
-  Trash,
-  Reload,
   CheckmarkCircle,
-  WarningOutline,
   CloseCircle,
+  HeartOutline,
+  HomeOutline,
   InformationCircleOutline,
+  Reload,
   StarOutline,
+  Trash,
+  WarningOutline,
 } from '@vicons/ionicons5'
 
 const sizes: ZIconSize[] = ['tiny', 'small', 'middle', 'large', 'huge']
@@ -113,10 +108,10 @@ watchEffect(() => {
   <article>
     <h1>ZIcon</h1>
     <p>
-      框架无关图标容器 —— <strong>4 维度全离散</strong>（size / color / depth / spin），
-      所有维度走 <code>defineVariants</code>。任何不在维度里的需求（hover / 媒体查询 /
-      任意 chain 方法）通过 <code>:css="s =&gt; { ... }"</code> 用 zui-core chain
-      自由写。21 项 component token 全部可被 <code>ZConfigProvider</code> 覆盖。
+      框架无关图标容器 —— <strong>4 维度全离散</strong>（size / color / depth / spin）， 所有维度走
+      <code>defineVariants</code>。任何不在维度里的需求（hover / 媒体查询 / 任意 chain 方法）通过
+      <code>:css="s =&gt; { ... }"</code> 用 zui-core chain 自由写。21 项 component token 全部可被
+      <code>ZConfigProvider</code> 覆盖。
     </p>
 
     <!-- ─── 1. 双模式接入 ─── -->
@@ -154,7 +149,7 @@ watchEffect(() => {
       <h2>3. <code>color</code> 6 种语义色</h2>
       <div class="row">
         <div v-for="c in colors" :key="c" class="cell-mini">
-          <ZIcon :component="HeartOutline" :color="c" size="large" />
+          <ZIcon :color="c" :component="HeartOutline" size="large" />
           <code>{{ c }}</code>
         </div>
       </div>
@@ -190,9 +185,8 @@ watchEffect(() => {
     <section>
       <h2>6. <code>:css</code> factory（用 zui-core chain 自由覆盖）</h2>
       <p>
-        <code>:css="s =&gt; { ... }"</code> 在 variants 之后应用，可覆盖任意属性。
-        所有 Chain 内建方法（<code>_hover</code> / <code>_media</code> /
-        <code>_before</code> 等）都能用。
+        <code>:css="s =&gt; { ... }"</code> 在 variants 之后应用，可覆盖任意属性。 所有 Chain
+        内建方法（<code>_hover</code> / <code>_media</code> / <code>_before</code> 等）都能用。
       </p>
       <div class="controls">
         <label>
@@ -241,7 +235,7 @@ watchEffect(() => {
         </label>
         <label>
           spin
-          <input type="checkbox" v-model="spinOn" />
+          <input v-model="spinOn" type="checkbox" />
         </label>
         <label v-if="spinOn">
           speed
@@ -252,10 +246,10 @@ watchEffect(() => {
       </div>
       <div class="preview">
         <ZIcon
-          :component="currentComponent"
-          :size="sizeC"
           :color="colorC"
+          :component="currentComponent"
           :depth="depthC"
+          :size="sizeC"
           :spin="spinValue"
         />
       </div>
@@ -266,26 +260,26 @@ watchEffect(() => {
       <h2>8. <code>ZConfigProvider</code> componentTokens 嵌套覆盖</h2>
       <p>
         外层全局 <code>defaultLight</code>；内层 Provider 改 4 个 icon token：
-        <code>primaryColor</code> / <code>sizeLarge</code> /
-        <code>spinMiddleDuration</code> / <code>depthDimOpacity</code>。两侧同步对比。
+        <code>primaryColor</code> / <code>sizeLarge</code> / <code>spinMiddleDuration</code> /
+        <code>depthDimOpacity</code>。两侧同步对比。
       </p>
 
       <div class="controls">
         <label>
           primaryColor
-          <input type="color" v-model="overridePrimaryColor" />
+          <input v-model="overridePrimaryColor" type="color" />
         </label>
         <label>
           sizeLarge
-          <input type="text" v-model="overrideSizeLarge" placeholder="64px" />
+          <input v-model="overrideSizeLarge" placeholder="64px" type="text" />
         </label>
         <label>
           spinMiddleDuration
-          <input type="text" v-model="overrideSpinMiddle" placeholder="2.5s" />
+          <input v-model="overrideSpinMiddle" placeholder="2.5s" type="text" />
         </label>
         <label>
           depthDimOpacity
-          <input type="number" step="0.1" min="0" max="1" v-model="overrideDepthDim" />
+          <input v-model="overrideDepthDim" max="1" min="0" step="0.1" type="number" />
         </label>
       </div>
 
@@ -294,7 +288,7 @@ watchEffect(() => {
           <h3>外层（默认 token）</h3>
           <div class="demo-grid">
             <ZIcon :component="HeartOutline" color="primary" size="large" />
-            <ZIcon :component="Reload" spin size="large" />
+            <ZIcon :component="Reload" size="large" spin />
             <ZIcon :component="StarOutline" depth="dim" size="large" />
             <ZIcon :component="StarOutline" depth="ghost" size="large" />
           </div>
@@ -304,7 +298,7 @@ watchEffect(() => {
           <ZConfigProvider :component-tokens="componentTokens">
             <div class="demo-grid">
               <ZIcon :component="HeartOutline" color="primary" size="large" />
-              <ZIcon :component="Reload" spin size="large" />
+              <ZIcon :component="Reload" size="large" spin />
               <ZIcon :component="StarOutline" depth="dim" size="large" />
               <ZIcon :component="StarOutline" depth="ghost" size="large" />
             </div>
@@ -322,8 +316,77 @@ watchEffect(() => {
           <code>无 label → aria-hidden（装饰性）</code>
         </div>
         <div class="cell-mini">
-          <ZIcon :component="Trash" size="large" label="删除" />
+          <ZIcon :component="Trash" label="删除" size="large" />
           <code>有 label → aria-label + role="img"</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 10. 扩展自定义 token：module augmentation ─── -->
+    <section class="extension">
+      <h2>10. 扩展自定义 token —— <code>module augmentation</code> 模式</h2>
+      <p>
+        ZIcon 的 <code>:css</code> 回调签名是
+        <code>(s: Chain&lt;ThemeSchema&gt;) =&gt; void</code> —— 组件层不穿透 <code>S</code> 泛型。
+        想让 <code>s.color._brandRoyal</code> 等自定义 token 在 IDE 里**有补全**，
+        在用户工程做一次 module augmentation 即可。
+      </p>
+
+      <h3>步骤一 —— 工程根目录 <code>src/zui.d.ts</code></h3>
+      <pre><code>import type { ThemeValue } from '@kenconnet666/zui-core'
+
+declare module '@kenconnet666/zui-core' {
+  interface ThemeSchema {
+    color?: Record&lt;string, ThemeValue&gt; &amp; {
+      brandRoyal?: string
+      brandSunset?: string
+      brandForest?: string
+    }
+  }
+}</code></pre>
+
+      <h3>步骤二 —— 顶层 ConfigProvider 喂入对应字面量</h3>
+      <pre><code>import { defaultLight, Theme } from '@kenconnet666/zui-core'
+
+const brandTheme = new Theme({
+  ...defaultLight.schema,
+  color: {
+    ...defaultLight.schema.color,
+    brandRoyal: '#1a3a8f',
+    brandSunset: '#ff7849',
+    brandForest: '#1f7a3c',
+  },
+})
+
+// App.vue
+&lt;ZConfigProvider :theme="brandTheme"&gt;
+  &lt;App /&gt;
+&lt;/ZConfigProvider&gt;</code></pre>
+
+      <h3>步骤三 —— 使用处直接补全</h3>
+      <pre><code>&lt;ZIcon :css="s =&gt; { s.color._brandRoyal }" /&gt;</code></pre>
+      <p class="note">
+        IDE 中输入 <code>s.color._brand</code> 时会列出 <code>brandRoyal</code> /
+        <code>brandSunset</code> / <code>brandForest</code>；拼错会即时报错。
+        与字面量 <code>s.color('#1a3a8f')</code> 相比，主要收益是**重命名安全** + **拼写校验**。
+      </p>
+
+      <h3>运行预览（字面量替代）</h3>
+      <p class="note">
+        docs 站没真的做全局 augmentation，下面用字面量字符串等价模拟运行结果：
+      </p>
+      <div class="row">
+        <div class="cell-mini">
+          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color('#1a3a8f') }" />
+          <code>brandRoyal</code>
+        </div>
+        <div class="cell-mini">
+          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color('#ff7849') }" />
+          <code>brandSunset</code>
+        </div>
+        <div class="cell-mini">
+          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color('#1f7a3c') }" />
+          <code>brandForest</code>
         </div>
       </div>
     </section>
@@ -430,5 +493,16 @@ pre code {
   gap: 24px;
   justify-content: start;
   font-size: 32px;
+}
+
+/* ─── 10. 扩展示例 ─── */
+.extension .note {
+  margin: 6px 0 10px;
+  font-size: 12px;
+  color: #6b7280;
+}
+.extension pre {
+  font-size: 12px;
+  margin: 8px 0;
 }
 </style>

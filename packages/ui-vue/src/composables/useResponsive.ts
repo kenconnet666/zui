@@ -2,7 +2,6 @@ import { computed, type ComputedRef } from 'vue'
 import {
   isResponsiveValue,
   type ResponsiveValue,
-  type ThemeSchema,
 } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider/useZTheme'
 
@@ -11,8 +10,8 @@ import { useZTheme } from '../provider/useZTheme'
  *
  * 给组件库 prop 解析用：传给 `isResponsiveValue(value, breakpoints)` 启用**严格模式**。
  */
-export function useBreakpoints<S extends ThemeSchema = ThemeSchema>(): ComputedRef<string[]> {
-  const theme = useZTheme<S>()
+export function useBreakpoints(): ComputedRef<string[]> {
+  const theme = useZTheme()
   return computed(() => {
     const slot = (theme.value as unknown as { breakpoint?: Record<string, unknown> }).breakpoint
     return slot ? Object.keys(slot) : []
@@ -28,10 +27,10 @@ export function useBreakpoints<S extends ThemeSchema = ThemeSchema>(): ComputedR
  * @example
  * const padding = useResponsive(() => props.padding)   // → { base, md, lg, ... } | undefined
  */
-export function useResponsive<T, S extends ThemeSchema = ThemeSchema>(
+export function useResponsive<T>(
   valueGetter: () => ResponsiveValue<T> | undefined,
 ): ComputedRef<{ base?: T; [bp: string]: T | undefined } | undefined> {
-  const breakpoints = useBreakpoints<S>()
+  const breakpoints = useBreakpoints()
   return computed(() => {
     const v = valueGetter()
     if (v === undefined) return undefined

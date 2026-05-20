@@ -25,7 +25,7 @@ import { defineVariants, presetAnimations, type ResolvedTheme, type ThemeSchema 
  * - `depth`: none + subtle/muted/dim/faded/ghost（由略淡到几乎消失）
  * - `spin`: none + 5 阶 tiny..huge（tiny 最快 / huge 最慢）
  */
-export function createIconVariants<S extends ThemeSchema = ThemeSchema>(theme: ResolvedTheme<S>) {
+export function createIconVariants(theme: ResolvedTheme<ThemeSchema>) {
   const slot = (theme as unknown as { color?: Record<string, string> }).color ?? {}
 
   // 21 项 token —— `theme.color.iconXxx`（withComponentTokens flatten 后）+ 字面量 fallback。
@@ -55,12 +55,12 @@ export function createIconVariants<S extends ThemeSchema = ThemeSchema>(theme: R
   }
   const spinKeyframe = presetAnimations.spin
 
-  const applySize = (px: string) => (s: import('@kenconnet666/zui-core').Chain<S>) => {
+  const applySize = (px: string) => (s: import('@kenconnet666/zui-core').Chain<ThemeSchema>) => {
     s.width(px)
     s.height(px)
     s.fontSize(px)
   }
-  const applySpin = (dur: string) => (s: import('@kenconnet666/zui-core').Chain<S>) => {
+  const applySpin = (dur: string) => (s: import('@kenconnet666/zui-core').Chain<ThemeSchema>) => {
     s.animationName(spinKeyframe)
     s.animationDuration(dur)
     s.animationIterationCount('infinite')

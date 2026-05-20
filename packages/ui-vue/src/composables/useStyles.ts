@@ -10,10 +10,12 @@ import { useZTheme } from '../provider/useZTheme'
 /**
  * `useStyles(factory)` —— 用 inject 进来的当前主题，生成 emotion className 的 ComputedRef。
  *
- * factory 接收 `Chain<S>`，调用者通过 statement-only 方式写样式。
+ * factory 接收 `Chain<ThemeSchema>`，调用者通过 statement-only 方式写样式。
+ * 用户工程通过 module augmentation 扩 `ThemeSchema` 即可让 `_brandRoyal` 等扩展
+ * token 在 chain 上获得 IDE 补全。
  *
  * @example
- * const cls = useStyles<MySchema>(s => {
+ * const cls = useStyles(s => {
  *   s.padding.px(12)
  *   s.color._primary
  *   s._hover(h => { h.backgroundColor._primary.alpha(85) })
@@ -23,12 +25,12 @@ import { useZTheme } from '../provider/useZTheme'
  * **不要**在 factory 内依赖闭包外的可变 ref —— 那样不会触发重新求值。
  * 需要响应 prop / state 变化时改用 [[useDynamicStyles]]。
  */
-export function useStyles<S extends ThemeSchema = ThemeSchema>(
-  factory: (s: Chain<S>) => void,
+export function useStyles(
+  factory: (s: Chain<ThemeSchema>) => void,
 ): ComputedRef<string> {
-  const theme = useZTheme<S>()
+  const theme = useZTheme()
   return computed(() => {
-    const c = new Chain<S>(theme.value)
+    const c = new Chain<ThemeSchema>(theme.value)
     factory(c)
     return toClassName(c)
   })
@@ -39,19 +41,19 @@ export function useStyles<S extends ThemeSchema = ThemeSchema>(
  *
  * @example
  * const props = defineProps<{ size: 'small' | 'middle' | 'large' }>()
- * const cls = useDynamicStyles<MySchema>(() => (s) => {
+ * const cls = useDynamicStyles(() => (s) => {
  *   s.fontSize.px(props.size === 'small' ? 12 : props.size === 'middle' ? 14 : 16)
  * })
  */
-export function useDynamicStyles<S extends ThemeSchema = ThemeSchema>(
-  factoryGetter: MaybeRefOrGetter<(s: Chain<S>) => void>,
+export function useDynamicStyles(
+  factoryGetter: MaybeRefOrGetter<(s: Chain<ThemeSchema>) => void>,
 ): ComputedRef<string> {
-  const theme = useZTheme<S>()
+  const theme = useZTheme()
   return computed(() => {
     const factory = typeof factoryGetter === 'function'
-      ? (factoryGetter as () => (s: Chain<S>) => void)()
+      ? (factoryGetter as () => (s: Chain<ThemeSchema>) => void)()
       : unref(factoryGetter)
-    const c = new Chain<S>(theme.value)
+    const c = new Chain<ThemeSchema>(theme.value)
     factory(c)
     return toClassName(c)
   })
@@ -62,6 +64,6 @@ export function useDynamicStyles<S extends ThemeSchema = ThemeSchema>(
  *
  * 用于"提前实例化 Chain"再保留引用的场景（少见，多用于 defineVariants 工厂内部）。
  */
-export function chainOf<S extends ThemeSchema>(theme: ResolvedTheme<S>): Chain<S> {
-  return new Chain<S>(theme)
+export function chainOf(theme: ResolvedTheme<ThemeSchema>): Chain<ThemeSchema> {
+  return new Chain<ThemeSchema>(theme)
 }

@@ -23,13 +23,11 @@ export interface ZDateConfig {
 /**
  * Provider 注入 key（symbol 避免与用户自定义冲突）。
  *
- * 之所以全部退化到 `ThemeSchema` 而非保留泛型 `S`：
- * Vue 3 的 `InjectionKey<T>` 不支持泛型 — 必须用具体类型。
- * 子组件 `useZTheme<S>()` 拿到后再 cast 回具体 schema，类型由 ZConfigProvider 内部 generic
- * 保证；运行时一致即可。
+ * `Z_THEME_KEY` 统一退化到 `ResolvedTheme<ThemeSchema>` —— 用户通过 module augmentation
+ * 扩展 `ThemeSchema` 后，所有消费侧的 `theme.value.color._brandRoyal` 等访问都能拿到补全，
+ * 无需在组件 / composable 上穿透 `S` 泛型。
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const Z_THEME_KEY: InjectionKey<Ref<ResolvedTheme<any>>> = Symbol('zui:theme')
+export const Z_THEME_KEY: InjectionKey<Ref<ResolvedTheme<ThemeSchema>>> = Symbol('zui:theme')
 export const Z_OVERRIDES_KEY: InjectionKey<Ref<ComponentTokenOverrides>> = Symbol(
   'zui:componentTokens',
 )
@@ -43,5 +41,3 @@ export const Z_DATE_KEY: InjectionKey<Ref<ZDateConfig>> = Symbol('zui:date')
  * 别用 `null`：null 写 Ref 后 `.value` 容易触发空指针；用 sentinel 让类型 narrow 顺畅。
  */
 export const Z_NO_PROVIDER_THEME = Symbol('zui:no-provider-theme')
-
-export type ThemeForSchema<S extends ThemeSchema> = ResolvedTheme<S>
