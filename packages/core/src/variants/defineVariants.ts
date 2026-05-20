@@ -5,7 +5,7 @@
  * 返回的函数接受 props 输出 emotion className。
  *
  * @example
- * const button = defineVariants(defaultLight, {
+ * const button = defineVariants(zuiLight, {
  *   base: s => { s.padding.px(12); s.borderRadius._middle },
  *   variants: {
  *     intent: {

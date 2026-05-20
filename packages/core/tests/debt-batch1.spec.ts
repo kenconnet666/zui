@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
-import { Chain, createIcssInstance, defaultLight, injectPreflight } from '../src'
+import { Chain, createIcssInstance, injectPreflight } from '../src'
+import { defaultLight } from './_fixture-theme'
 import { GLOBAL_KEYWORDS } from '../src/chain/keywords'
 import { LENGTH_UNITS, TIME_UNITS, ANGLE_UNITS } from '../src/chain/units'
 import { PREFLIGHT_STYLES } from '../src/preset/preflightStyles'

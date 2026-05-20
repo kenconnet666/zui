@@ -3,8 +3,8 @@ import type { Locale as DateFnsLocale } from 'date-fns'
 import type {
   ComponentTokenOverrides,
   ResolvedTheme,
-  ThemeSchema,
 } from '@kenconnet666/zui-core'
+import type { ZuiSchema } from '../theme'
 import type { ZLocale } from '../locale/types'
 
 /**
@@ -23,11 +23,11 @@ export interface ZDateConfig {
 /**
  * Provider 注入 key（symbol 避免与用户自定义冲突）。
  *
- * `Z_THEME_KEY` 统一退化到 `ResolvedTheme<ThemeSchema>` —— 用户通过 module augmentation
- * 扩展 `ThemeSchema` 后，所有消费侧的 `theme.value.color._brandRoyal` 等访问都能拿到补全，
- * 无需在组件 / composable 上穿透 `S` 泛型。
+ * `Z_THEME_KEY` 退化到 `ResolvedTheme<ZuiSchema>` —— zui-vue 内部组件直接享受
+ * 11 个语义色 + 5 阶 scale + UI 角色 zIndex 的 token 补全。用户工程要扩 brand 自家 schema：
+ * `interface MySchema extends ZuiSchema { ... }`，在调用处 cast `Ref<ResolvedTheme<MySchema>>`。
  */
-export const Z_THEME_KEY: InjectionKey<Ref<ResolvedTheme<ThemeSchema>>> = Symbol('zui:theme')
+export const Z_THEME_KEY: InjectionKey<Ref<ResolvedTheme<ZuiSchema>>> = Symbol('zui:theme')
 export const Z_OVERRIDES_KEY: InjectionKey<Ref<ComponentTokenOverrides>> = Symbol(
   'zui:componentTokens',
 )

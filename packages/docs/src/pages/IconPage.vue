@@ -4,9 +4,9 @@
  * + 嵌套 ZConfigProvider 实时切 componentTokens。
  */
 import { computed, ref, shallowRef, watchEffect } from 'vue'
-import type { ZIconColor, ZIconDepth, ZIconSize, ZIconSpinPreset } from '@kenconnet666/zui-vue'
+import type { ZIconColor, ZIconDepth, ZIconSize, ZIconSpinPreset, ZuiSchema } from '@kenconnet666/zui-vue'
 import { ZConfigProvider, ZIcon } from '@kenconnet666/zui-vue'
-import type { Chain, DefaultSchema, ThemeSchema } from '@kenconnet666/zui-core'
+import type { Chain } from '@kenconnet666/zui-core'
 import {
   CheckmarkCircle,
   CloseCircle,
@@ -37,20 +37,13 @@ const spinValue = computed(() => (spinOn.value ? spinSpeed.value : false))
 /**
  * cssExamples —— 演示 `:css` factory 的若干典型用法。
  *
- * **类型注**：回调参数用 `Chain<DefaultSchema>` 而非 `Chain<ThemeSchema>`，
- * 因为 `defaultLight` 注入的 theme 实际就是 `Theme<DefaultSchema>` —— 这样
- * 用户可以直接写 `_primary` / `_danger` 等 DefaultSchema 语义色 token，有 IDE 补全 +
- * 编译期校验。
+ * 回调参数 `Chain<ZuiSchema>` 与 ZIcon `:css` prop 类型对齐；直接 access
+ * `_primary / _danger` 等 11 个语义色 token 与 5 阶 scale，IDE 自动补全。
  *
- * 绑定到 `<ZIcon :css="...">` 时通过 `currentCssBinding` 一次 cast 解决 contravariance
- * （ZIcon prop 期望的是 `Chain<ThemeSchema>` 回调，DefaultSchema callback 是更具体的，
- * 函数参数 contravariant 下不自动兼容）。
- *
- * 用户工程若用纯 DefaultSchema，建议直接 `Chain<DefaultSchema>` 写 cssExamples；
- * 若有自定义 schema，建议显式声明 `interface MySchema extends DefaultSchema { ... }`
- * 并整套用 `Chain<MySchema>`。
+ * 用户工程要扩自家 brand：定义 `interface MySchema extends ZuiSchema { ... }`，
+ * cssExamples 改 `Chain<MySchema>` 即可。
  */
-const cssExamples: Record<string, ((s: Chain<DefaultSchema>) => void) | undefined> = {
+const cssExamples: Record<string, ((s: Chain<ZuiSchema>) => void) | undefined> = {
   '(none)': undefined,
   'hover 高亮 _primary': (s) => {
     s.cursor('pointer')
@@ -85,14 +78,6 @@ const cssExamples: Record<string, ((s: Chain<DefaultSchema>) => void) | undefine
 }
 const cssExampleKey = ref<keyof typeof cssExamples>('(none)')
 const currentCss = computed(() => cssExamples[cssExampleKey.value])
-/**
- * 把 `Chain<DefaultSchema>` 回调 cast 成 ZIcon `:css` prop 期望的
- * `Chain<ThemeSchema>` 形态。运行时主题就是 defaultLight（DefaultSchema），
- * 此 cast 是类型层的等价转换，无运行时风险。
- */
-const currentCssBinding = computed(
-  () => currentCss.value as ((s: Chain<ThemeSchema>) => void) | undefined,
-)
 
 // ─── nested ZConfigProvider 演示 ───
 // 数值化 token：sizeLarge 是 em **倍率**（无单位）；spinMiddleDuration 是秒；
@@ -229,7 +214,7 @@ watchEffect(() => {
         <ZIcon
           :component="StarOutline"
           size="huge"
-          v-bind="currentCssBinding ? { css: currentCssBinding } : {}"
+          v-bind="currentCss ? { css: currentCss } : {}"
         />
       </div>
     </section>
@@ -409,36 +394,54 @@ watchEffect(() => {
       </div>
     </section>
 
-    <!-- ─── 10. 扩展自定义 token：module augmentation ─── -->
+    <!-- ─── 10. 三层架构 + 用户扩展模式 ─── -->
     <section class="extension">
-      <h2>10. 扩展自定义 token —— <code>module augmentation</code> 模式</h2>
+      <h2>10. 三层 schema 架构 —— core / ui-vue / user 各司其职</h2>
       <p>
-        ZIcon 的 <code>:css</code> 回调签名是
-        <code>(s: Chain&lt;ThemeSchema&gt;) =&gt; void</code> —— 组件层不穿透 <code>S</code> 泛型。
-        想让 <code>s.color._brandRoyal</code> 等自定义 token 在 IDE 里**有补全**，
-        在用户工程做一次 module augmentation 即可。
+        zui 的 token 体系是<strong>三层 schema 继承</strong>：
       </p>
 
-      <h3>步骤一 —— 工程根目录 <code>src/zui.d.ts</code></h3>
-      <pre><code>import type { ThemeValue } from '@kenconnet666/zui-core'
+      <pre><code>core      BaseSchema  // 仅 Tailwind palette 242 色（CSS 原语）
+            ▲ extends
+ui-vue    ZuiSchema   // + 11 语义色 + 5 阶 size scale + fontWeight / easing / ...
+            ▲ extends
+user      MySchema    // + brand 色 / 自家自定义 scale</code></pre>
 
-declare module '@kenconnet666/zui-core' {
-  interface ThemeSchema {
-    color?: Record&lt;string, ThemeValue&gt; &amp; {
-      brandRoyal?: string
-      brandSunset?: string
-      brandForest?: string
-    }
+      <h3>已默认拥有：通过 <code>zuiLight</code> 注入</h3>
+      <p>
+        docs 站当前用 <code>&lt;ZConfigProvider :theme="zuiLight"&gt;</code> 注入完整
+        <code>ZuiSchema</code>，所以 <code>:css</code> 回调里直接可以：
+      </p>
+      <pre><code>// IDE 实时补全
+&lt;ZIcon :css="s =&gt; {
+  s.color._primary             // ZuiSchema 语义色
+  s.padding._middle             // ZuiSchema spacing
+  s.borderRadius._large         // ZuiSchema radius
+  s.fontSize._small             // ZuiSchema fontSize
+  s.fontWeight._bold            // ZuiSchema fontWeight
+  s.color._blue500              // core palette（继承自 BaseSchema）
+}" /&gt;</code></pre>
+
+      <h3>用户扩自家 brand：<code>extends ZuiSchema</code></h3>
+      <pre><code>// user/zui-schema.ts —— 类型层
+import type { ZuiSchema } from '@kenconnet666/zui-vue'
+
+export interface MySchema extends ZuiSchema {
+  color: ZuiSchema['color'] &amp; {
+    brandRoyal: string
+    brandSunset: string
+    brandForest: string
   }
-}</code></pre>
+}
 
-      <h3>步骤二 —— 顶层 ConfigProvider 喂入对应字面量</h3>
-      <pre><code>import { defaultLight, Theme } from '@kenconnet666/zui-core'
+// user/theme.ts —— 运行时
+import { Theme, zuiLight } from '@kenconnet666/zui-vue'
+import type { MySchema } from './zui-schema'
 
-const brandTheme = new Theme({
-  ...defaultLight.schema,
+export const myLight = new Theme&lt;MySchema&gt;({
+  ...zuiLight.schema,
   color: {
-    ...defaultLight.schema.color,
+    ...zuiLight.schema.color,
     brandRoyal: '#1a3a8f',
     brandSunset: '#ff7849',
     brandForest: '#1f7a3c',
@@ -446,22 +449,12 @@ const brandTheme = new Theme({
 })
 
 // App.vue
-&lt;ZConfigProvider :theme="brandTheme"&gt;
-  &lt;App /&gt;
-&lt;/ZConfigProvider&gt;</code></pre>
+&lt;ZConfigProvider :theme="myLight"&gt;&lt;App /&gt;&lt;/ZConfigProvider&gt;
 
-      <h3>步骤三 —— 使用处直接补全</h3>
-      <pre><code>&lt;ZIcon :css="s =&gt; { s.color._brandRoyal }" /&gt;</code></pre>
-      <p class="note">
-        IDE 中输入 <code>s.color._brand</code> 时会列出 <code>brandRoyal</code> /
-        <code>brandSunset</code> / <code>brandForest</code>；拼错会即时报错。
-        与字面量 <code>s.color('#1a3a8f')</code> 相比，主要收益是**重命名安全** + **拼写校验**。
-      </p>
+// 使用处：Chain&lt;MySchema&gt; 上 _brandRoyal / _primary / _blue500 全部补全
+&lt;ZIcon :css="(s: Chain&lt;MySchema&gt;) =&gt; { s.color._brandRoyal }" /&gt;</code></pre>
 
-      <h3>运行预览（字面量替代）</h3>
-      <p class="note">
-        docs 站没真的做全局 augmentation，下面用字面量字符串等价模拟运行结果：
-      </p>
+      <h3>brand 色字面量运行预览</h3>
       <div class="row">
         <div class="cell-mini">
           <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color('#1a3a8f') }" />

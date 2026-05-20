@@ -14,8 +14,8 @@
 import type {
   ComponentTokenDerivers,
   ResolvedTheme,
-  ThemeSchema,
 } from '@kenconnet666/zui-core'
+import type { ZuiSchema } from '../../theme'
 
 export interface ZIconTokens {
   // ─── 5 阶 size（em **倍率**，跟父字号缩放；最终 width = N × font-size） ───
@@ -65,7 +65,7 @@ declare module '@kenconnet666/zui-core' {
  * `s.animationDuration.s(n)` 等 unit method 把数字转成 CSS 字面量，无需在 token 端预处理。
  */
 export function deriveIconTokens(
-  theme: ResolvedTheme<ThemeSchema>,
+  theme: ResolvedTheme<ZuiSchema>,
 ): ZIconTokens {
   const slot = (theme as unknown as { color?: Record<string, string | number> }).color
   const readColor = (key: string, fallback: string): string => {
@@ -109,4 +109,4 @@ export function deriveIconTokens(
  */
 export const iconTokenDerivers = {
   icon: deriveIconTokens,
-} satisfies ComponentTokenDerivers<ThemeSchema>
+} satisfies ComponentTokenDerivers<ZuiSchema>

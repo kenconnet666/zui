@@ -19,7 +19,7 @@ import { PRESET_ANIMATION_DEFS, type PresetAnimationName } from './preset/animat
  * const emotion = createInstance({ key: 'myapp' })
  * const { icss, injectPreflight, registerCustomProperty } = createIcssInstance(emotion)
  *
- * const cls = icss(defaultLight, s => { s.color._primary })
+ * const cls = icss(paletteLight, s => { s.color._blue500 })
  * injectPreflight()
  */
 

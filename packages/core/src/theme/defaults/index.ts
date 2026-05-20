@@ -1,6 +1,6 @@
-export { defaultLight } from './light'
-export { defaultDark } from './dark'
-export type { DefaultSchema } from './schema'
+export { paletteLight } from './palette-light'
+export { paletteDark } from './palette-dark'
+export type { BaseSchema } from './schema'
 export {
   tw,
   TAILWIND_PALETTE,
@@ -10,7 +10,11 @@ export {
   flattenPalette,
 } from './palette'
 
-// 注：不再导出 `const DefaultSchema = defaultLight.schema`。
-// `DefaultSchema` 仅作类型存在，运行时入口是 `defaultLight` / `defaultDark`。
-// `class Chain<T extends ThemeSchema = DefaultSchema>` 的默认实参是**类型层**的，
-// 不需要运行时值参与（必传 theme 决策见 Plan §11.5）。
+// 注：core 不预填 semantic 色 / 5 阶 size scale 等设计系统 token。
+// 设计系统层（含 11 semantic 色、spacing/radius/fontSize/shadow/blur/duration/
+// breakpoint/easing/fontWeight/zIndex/lineHeight/letterSpacing/opacity/aspectRatio
+// 等）由 ui-vue 的 `ZuiSchema` + `zuiLight` / `zuiDark` 承载。
+//
+// 业务侧消费推荐：`import { zuiLight } from '@kenconnet666/zui-vue'`
+//
+// 仅 palette 场景（少见）：`import { paletteLight } from '@kenconnet666/zui-core'`

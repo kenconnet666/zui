@@ -1,26 +1,27 @@
-import { Theme } from '../Theme'
-import { FLAT_PALETTE, tw } from './palette'
-import type { DefaultSchema } from './schema'
+import { Theme, FLAT_PALETTE, tw } from '@kenconnet666/zui-core'
+import type { ZuiSchema } from './schema'
 
 /**
- * 内置深色主题（同 palette 242 色 + 11 语义色 + 8 个补充 token category；语义色绑暗色 shade）。
+ * zui 默认浅色主题 —— Tailwind palette 242 色 + 11 个语义色 alias 到具体 shade +
+ * 完整 5 阶 size scale + 9 阶 fontWeight + 5 个 easing + 5 阶 breakpoint + UI 角色 z-index +
+ * Tailwind 衍生 lineHeight/letterSpacing/opacity/aspectRatio。
+ *
+ * 业务侧顶层主题入口；用户工程通过 `<ZConfigProvider :theme="zuiLight">` 注入。
  */
-export const defaultDark = new Theme<DefaultSchema>({
+export const zuiLight = new Theme<ZuiSchema>({
   color: {
-    // ─── palette 242 色 ───
     ...FLAT_PALETTE,
-    // ─── 语义色（dark） ───
-    primary: tw('blue', '500'),
-    primaryHover: tw('blue', '600'),
-    danger: tw('red', '500'),
+    primary: tw('blue', '600'),
+    primaryHover: tw('blue', '500'),
+    danger: tw('red', '600'),
     warning: tw('yellow', '500'),
     success: tw('green', '500'),
     info: tw('cyan', '500'),
-    text: tw('gray', '100'),
-    textMuted: tw('gray', '400'),
-    bg: tw('gray', '900'),
-    bgMuted: tw('gray', '800'),
-    border: tw('gray', '600'),
+    text: tw('gray', '900'),
+    textMuted: tw('gray', '600'),
+    bg: '#ffffff',
+    bgMuted: tw('gray', '50'),
+    border: tw('gray', '200'),
   },
   spacing: {
     tiny: '4px',
@@ -57,11 +58,11 @@ export const defaultDark = new Theme<DefaultSchema>({
     black: 900,
   },
   shadow: {
-    tiny: '0 1px 1px 0 rgb(0 0 0 / 0.2)',
-    small: '0 1px 2px 0 rgb(0 0 0 / 0.3)',
-    middle: '0 4px 6px -1px rgb(0 0 0 / 0.4)',
-    large: '0 10px 15px -3px rgb(0 0 0 / 0.4)',
-    huge: '0 25px 50px -12px rgb(0 0 0 / 0.5)',
+    tiny: '0 1px 1px 0 rgb(0 0 0 / 0.03)',
+    small: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+    middle: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+    large: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
+    huge: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
   },
   blur: {
     none: '0',
@@ -71,7 +72,6 @@ export const defaultDark = new Theme<DefaultSchema>({
     large: '24px',
     huge: '40px',
   },
-  // ─── W1.8 补充 ───
   duration: {
     none: '0ms',
     tiny: '75ms',

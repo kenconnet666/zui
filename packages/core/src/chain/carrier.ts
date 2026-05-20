@@ -1,5 +1,17 @@
 import type { Chain } from './Chain'
-import { darken, desaturate, lighten, mix, saturate, setAlpha } from './color'
+import {
+  complement,
+  darken,
+  desaturate,
+  invert,
+  lighten,
+  mix,
+  rotateHue,
+  saturate,
+  setAlpha,
+  shade,
+  tint,
+} from './color'
 import { ENHANCED_PROPS } from './enhanced-props'
 import { GLOBAL_KEYWORDS, KEYWORD_TO_CSS } from './keywords'
 import { getUnitList, withUnit, type UnitClass } from './units'
@@ -87,10 +99,13 @@ function buildCarrier(chain: Chain<never>, prop: string): unknown {
 }
 
 /**
- * 颜色 token 命中后返回的 helper —— 暴露 alpha / darken / lighten / mix / saturate / desaturate。
+ * 颜色 token 命中后返回的 helper —— 暴露 11 个 modifier。
  *
  * 闭包持有 `value`（token 原值）：所有 modifier 基于原值计算并覆盖写入，
  * 多次调用同 modifier 不累积（每次都用原 token 重新算）。
+ *
+ * **6 个基础**：alpha / darken / lighten / mix / saturate / desaturate
+ * **5 个扩展**（0.10+）：complement / rotateHue / invert / shade / tint
  */
 interface ColorTokenValueRuntime {
   alpha(n: number): unknown
@@ -99,6 +114,16 @@ interface ColorTokenValueRuntime {
   mix(other: string, n: number): unknown
   saturate(n: number): unknown
   desaturate(n: number): unknown
+  /** 补色 —— 色相旋转 180°。 */
+  complement(): unknown
+  /** 任意角度旋转色相；deg 任意数（自动 mod 360）。 */
+  rotateHue(deg: number): unknown
+  /** RGB 反相（255 - 每 channel）。 */
+  invert(): unknown
+  /** 与黑色按 n% 混合（RGB 混黑，比 darken 更"重"）；n 取 0-100。 */
+  shade(n: number): unknown
+  /** 与白色按 n% 混合（RGB 混白，比 lighten 更"柔"）；n 取 0-100。 */
+  tint(n: number): unknown
 }
 
 function makeColorTokenValue(
@@ -130,6 +155,26 @@ function makeColorTokenValue(
     },
     desaturate(n: number) {
       internal._node[prop] = desaturate(value, n)
+      return chain
+    },
+    complement() {
+      internal._node[prop] = complement(value)
+      return chain
+    },
+    rotateHue(deg: number) {
+      internal._node[prop] = rotateHue(value, deg)
+      return chain
+    },
+    invert() {
+      internal._node[prop] = invert(value)
+      return chain
+    },
+    shade(n: number) {
+      internal._node[prop] = shade(value, n)
+      return chain
+    },
+    tint(n: number) {
+      internal._node[prop] = tint(value, n)
       return chain
     },
   }

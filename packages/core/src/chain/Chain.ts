@@ -3,7 +3,7 @@ import type { CSSObject } from '@emotion/css/create-instance'
 import { Theme } from '../theme/Theme'
 import { buildKeymap } from '../theme/keymap'
 import type { ResolvedTheme, ThemeSchema } from '../theme/types'
-import type { DefaultSchema } from '../theme/defaults/schema'
+import type { BaseSchema } from '../theme/defaults/schema'
 import type { IcxPropMethods } from '../types/properties.generated'
 import { makeChainProxy } from './proxy'
 import { deepClone, deepMergeInto } from './helpers'
@@ -96,7 +96,7 @@ export interface ChainOptions {
   debug?: boolean
 }
 
-export class Chain<T extends ThemeSchema = DefaultSchema> {
+export class Chain<T extends ThemeSchema = BaseSchema> {
   /**
    * 累计的 emotion `CSSObject`（含嵌套）。
    *
@@ -1186,4 +1186,4 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
 
 // declaration merging: 把 IcxPropMethods 的所有 declare 字段拼进 Chain 实例类型
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface Chain<T extends ThemeSchema = DefaultSchema> extends IcxPropMethods<Chain<T>, T> {}
+export interface Chain<T extends ThemeSchema = BaseSchema> extends IcxPropMethods<Chain<T>, T> {}

@@ -1,5 +1,6 @@
 import { describe, expect, it, expectTypeOf } from 'vitest'
-import { Chain, defaultLight, defineVariants } from '../src'
+import { Chain, defineVariants } from '../src'
+import { defaultLight } from './_fixture-theme'
 import type { VariantProps } from '../src'
 
 /**

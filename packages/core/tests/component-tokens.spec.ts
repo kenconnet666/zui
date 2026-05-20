@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Chain, defaultLight, withComponentTokens } from '../src'
+import { Chain, withComponentTokens } from '../src'
+import { defaultLight } from './_fixture-theme'
 
 // 注册组件 token namespace（仅本测试文件作用域）
 declare module '../src' {

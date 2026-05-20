@@ -12,7 +12,44 @@ export interface EnhancedPropConfig {
 
 // ─── 复用 keyword 集（避免重复写） ───
 
-const COLOR_KW = ['white', 'black', 'transparent', 'currentColor'] as const
+/**
+ * CSS 4 named colors（146 个）—— CSS spec 标准色名，与 palette token 并行。
+ *
+ * 这些 keyword 让用户写 `s.color.coral` / `s.backgroundColor.lavender` 等直观写法；
+ * 与 palette token（`s.color._blue500`）不冲突 —— 前者无 `_` 前缀走 keyword 路径，
+ * 后者带 `_` 走 token 路径，各有 IDE 补全。
+ *
+ * 全部小写单词形式（不走 camelCase 转换）—— CSS spec 就是这么写的。
+ */
+const CSS_NAMED_COLOR_KW = [
+  'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige',
+  'bisque', 'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood',
+  'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk',
+  'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray',
+  'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange',
+  'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray',
+  'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray',
+  'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'fuchsia',
+  'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green',
+  'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo',
+  'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon',
+  'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen',
+  'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray',
+  'lightslategrey', 'lightsteelblue', 'lightyellow', 'lime', 'limegreen', 'linen',
+  'magenta', 'maroon', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple',
+  'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue',
+  'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'navy', 'oldlace',
+  'olive', 'olivedrab', 'orange', 'orangered', 'orchid', 'palegoldenrod',
+  'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru',
+  'pink', 'plum', 'powderblue', 'purple', 'rebeccapurple', 'red',
+  'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen',
+  'seashell', 'sienna', 'silver', 'skyblue', 'slateblue', 'slategray',
+  'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'teal',
+  'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke',
+  'yellow', 'yellowgreen',
+] as const
+
+const COLOR_KW = ['white', 'black', 'transparent', 'currentColor', ...CSS_NAMED_COLOR_KW] as const
 const SPACING_KW = ['auto'] as const
 const SIZE_KW = ['auto', 'minContent', 'maxContent', 'fitContent'] as const
 const DISPLAY_KW = [

@@ -2,14 +2,13 @@ import { describe, expect, expectTypeOf, it } from 'vitest'
 import {
   Chain,
   composeVariants,
-  defaultLight,
   defineMixin,
   defineParts,
   defineVariants,
   extendVariants,
 } from '../src'
 import type { VariantPropsOf, VariantPropsOfParts } from '../src'
-import type { DefaultSchema } from '../src'
+import { defaultLight, type TestSchema } from './_fixture-theme'
 
 /**
  * CL Batch 1 测试 — 组件库核心 5 项。
@@ -21,7 +20,7 @@ import type { DefaultSchema } from '../src'
 
 describe('E5 — defineMixin 可重用样式片段', () => {
   it('基础 mixin 在 chain factory 内调用', () => {
-    const focusRing = defineMixin<DefaultSchema>(s => {
+    const focusRing = defineMixin<TestSchema>(s => {
       s._focusVisible(f => {
         f.outlineColor._primary
         f.outlineStyle('solid')
@@ -35,7 +34,7 @@ describe('E5 — defineMixin 可重用样式片段', () => {
   })
 
   it('mixin 在 defineVariants base 内调用', () => {
-    const elevation = defineMixin<DefaultSchema>(s => {
+    const elevation = defineMixin<TestSchema>(s => {
       s.boxShadow._middle
     })
 
@@ -53,8 +52,8 @@ describe('E5 — defineMixin 可重用样式片段', () => {
   })
 
   it('多个 mixin 组合', () => {
-    const m1 = defineMixin<DefaultSchema>(s => { s.padding.px(8) })
-    const m2 = defineMixin<DefaultSchema>(s => { s.borderRadius._middle })
+    const m1 = defineMixin<TestSchema>(s => { s.padding.px(8) })
+    const m2 = defineMixin<TestSchema>(s => { s.borderRadius._middle })
     const c = new Chain(defaultLight)
     m1(c)
     m2(c)

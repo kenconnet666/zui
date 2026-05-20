@@ -6,8 +6,8 @@ import type { ResolvedTheme, ThemeSchema } from './theme/types'
  * 一行 shortcut：传 theme + factory，返回 emotion className。
  *
  * ```ts
- * const cls = icss(defaultLight, s => {
- *   s.color._primary
+ * const cls = icss(paletteLight, s => {
+ *   s.color._blue500
  *   s.padding.px(16)
  * })
  * ```

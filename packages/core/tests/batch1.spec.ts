@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Chain, defaultLight, mergeTheme, resolveTheme } from '../src'
+import { Chain, mergeTheme, resolveTheme } from '../src'
+import { defaultLight } from './_fixture-theme'
 import { injectGlobal, _resetInjectGlobalCache } from '../src/injectGlobal'
 import { darken, desaturate, lighten, mix, saturate } from '../src/chain/color'
 

@@ -5,8 +5,8 @@ import {
   extendParts,
   isResponsiveValue,
   mergeComponentTokenOverrides,
-  defaultLight,
 } from '../src'
+import { defaultLight } from './_fixture-theme'
 
 declare module '../src' {
   interface ComponentTokenRegistry {

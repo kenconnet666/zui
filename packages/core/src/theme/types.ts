@@ -1,6 +1,21 @@
 /**
  * 主题 schema 的基础形状：每个 category 是 `Record<string, ThemeValue>`。
- * 用户可通过 `interface MySchema extends ThemeSchema` 加自定义 category。
+ *
+ * **不再有 `[customCategory: string]` 索引签名**（旧 0.10 之前的设计）：
+ * 该签名强制所有字段的"任意 string key 访问"都必须返回 `Record<string, ThemeValue> | undefined`，
+ * 但实际 schema 字段往往用 `Record<LiteralUnion, V>` 形式（如 `spacing: Record<Size5Keys, string>`），
+ * 任意 key 访问得不到 ThemeValue —— 与索引签名冲突，导致：
+ *  - 子接口（DefaultSchema 等）的字段被迫违反 base 约束（实测放宽是隐式的）
+ *  - 用户 module augmentation 时同名字段无法 narrow 类型（早期 docs 试过都失败）
+ *
+ * 用户加 **自定义 category**（如 `customSize`）走 declaration merging 添加新字段即可：
+ *
+ * @example
+ * declare module '@kenconnet666/zui-core' {
+ *   interface ThemeSchema {
+ *     customSize?: Record<string, ThemeValue>
+ *   }
+ * }
  */
 export interface ThemeSchema {
   color?: Record<string, ThemeValue>
@@ -22,7 +37,7 @@ export interface ThemeSchema {
   sizes?: Record<string, ThemeValue>
   cursor?: Record<string, ThemeValue>
   blur?: Record<string, ThemeValue>
-  [customCategory: string]: Record<string, ThemeValue> | undefined
+  transitionProperty?: Record<string, ThemeValue>
 }
 
 /** Theme 单格值：字面量或 function token（function token 可访问其它已解析值）。 */

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Chain, Theme, defaultLight, icss, mergeTheme, resolveTheme } from '../src'
+import { Chain, Theme, icss, mergeTheme, resolveTheme } from '../src'
+import { defaultLight } from './_fixture-theme'
 
 /**
  * Edge case 集中地（Batch 5）。

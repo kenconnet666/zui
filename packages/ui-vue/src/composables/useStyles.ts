@@ -2,15 +2,14 @@ import { computed, unref, type ComputedRef, type MaybeRefOrGetter } from 'vue'
 import {
   Chain,
   toClassName,
-  type ResolvedTheme,
-  type ThemeSchema,
-} from '@kenconnet666/zui-core'
+  type ResolvedTheme} from '@kenconnet666/zui-core'
+import type { ZuiSchema } from '../theme'
 import { useZTheme } from '../provider/useZTheme'
 
 /**
  * `useStyles(factory)` —— 用 inject 进来的当前主题，生成 emotion className 的 ComputedRef。
  *
- * factory 接收 `Chain<ThemeSchema>`，调用者通过 statement-only 方式写样式。
+ * factory 接收 `Chain<ZuiSchema>`，调用者通过 statement-only 方式写样式。
  * 用户工程通过 module augmentation 扩 `ThemeSchema` 即可让 `_brandRoyal` 等扩展
  * token 在 chain 上获得 IDE 补全。
  *
@@ -26,11 +25,11 @@ import { useZTheme } from '../provider/useZTheme'
  * 需要响应 prop / state 变化时改用 [[useDynamicStyles]]。
  */
 export function useStyles(
-  factory: (s: Chain<ThemeSchema>) => void,
+  factory: (s: Chain<ZuiSchema>) => void,
 ): ComputedRef<string> {
   const theme = useZTheme()
   return computed(() => {
-    const c = new Chain<ThemeSchema>(theme.value)
+    const c = new Chain<ZuiSchema>(theme.value)
     factory(c)
     return toClassName(c)
   })
@@ -46,14 +45,14 @@ export function useStyles(
  * })
  */
 export function useDynamicStyles(
-  factoryGetter: MaybeRefOrGetter<(s: Chain<ThemeSchema>) => void>,
+  factoryGetter: MaybeRefOrGetter<(s: Chain<ZuiSchema>) => void>,
 ): ComputedRef<string> {
   const theme = useZTheme()
   return computed(() => {
     const factory = typeof factoryGetter === 'function'
-      ? (factoryGetter as () => (s: Chain<ThemeSchema>) => void)()
+      ? (factoryGetter as () => (s: Chain<ZuiSchema>) => void)()
       : unref(factoryGetter)
-    const c = new Chain<ThemeSchema>(theme.value)
+    const c = new Chain<ZuiSchema>(theme.value)
     factory(c)
     return toClassName(c)
   })
@@ -64,6 +63,6 @@ export function useDynamicStyles(
  *
  * 用于"提前实例化 Chain"再保留引用的场景（少见，多用于 defineVariants 工厂内部）。
  */
-export function chainOf(theme: ResolvedTheme<ThemeSchema>): Chain<ThemeSchema> {
-  return new Chain<ThemeSchema>(theme)
+export function chainOf(theme: ResolvedTheme<ZuiSchema>): Chain<ZuiSchema> {
+  return new Chain<ZuiSchema>(theme)
 }

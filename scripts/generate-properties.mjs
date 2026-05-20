@@ -130,22 +130,60 @@ async function readCsstypeProperties() {
 /** 收集顶层 `const X = [...] as const` 之类的字符串数组常量，供 ENHANCED_PROPS 解引用。 */
 function collectStringArrayConsts(sf) {
   const consts = new Map()
+  // 两遍扫描：第一遍收纯 string-literal 数组；第二遍处理含 spread / identifier
+  // 引用其它已收集 const 的数组（支持 `[...A, 'x']` / `[...A, ...B]` 等组合）。
+  const pendingArrays = []
   for (const stmt of sf.statements) {
     if (!ts.isVariableStatement(stmt)) continue
     for (const decl of stmt.declarationList.declarations) {
       if (!ts.isIdentifier(decl.name)) continue
       let init = decl.initializer
       if (!init) continue
-      // 剥掉 `as const` / 类型断言
       while (init && (ts.isAsExpression(init) || ts.isTypeAssertionExpression(init))) {
         init = init.expression
       }
       if (!init || !ts.isArrayLiteralExpression(init)) continue
-      const arr = init.elements.filter(ts.isStringLiteral).map((s) => s.text)
-      if (arr.length === init.elements.length) {
-        consts.set(decl.name.text, arr)
+      const stringEls = init.elements.filter(ts.isStringLiteral)
+      if (stringEls.length === init.elements.length) {
+        // 纯字符串数组 —— 第一遍即可收
+        consts.set(decl.name.text, stringEls.map((s) => s.text))
+      } else {
+        // 含 spread / identifier，留到第二遍
+        pendingArrays.push({ name: decl.name.text, init })
       }
     }
+  }
+  // 第二遍：迭代直到无新增（保守上限 3 轮足够，spread 链一般 1-2 层）
+  for (let round = 0; round < 3 && pendingArrays.length > 0; round++) {
+    const rest = []
+    for (const { name, init } of pendingArrays) {
+      const acc = []
+      let resolvable = true
+      for (const elem of init.elements) {
+        if (ts.isStringLiteral(elem)) {
+          acc.push(elem.text)
+        } else if (
+          ts.isSpreadElement(elem) &&
+          ts.isIdentifier(elem.expression) &&
+          consts.has(elem.expression.text)
+        ) {
+          acc.push(...consts.get(elem.expression.text))
+        } else if (ts.isIdentifier(elem) && consts.has(elem.text)) {
+          acc.push(...consts.get(elem.text))
+        } else {
+          resolvable = false
+          break
+        }
+      }
+      if (resolvable) {
+        consts.set(name, acc)
+      } else {
+        rest.push({ name, init })
+      }
+    }
+    if (rest.length === pendingArrays.length) break
+    pendingArrays.length = 0
+    pendingArrays.push(...rest)
   }
   return consts
 }

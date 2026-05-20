@@ -14,7 +14,8 @@
 import { describe, expect, it } from 'vitest'
 import { defineComponent, h, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
-import { defaultLight, type Chain, type DefaultSchema } from '@kenconnet666/zui-core'
+import { type Chain } from '@kenconnet666/zui-core'
+import { zuiLight, type ZuiSchema } from '../src'
 import { ZConfigProvider, ZIcon } from '../src'
 
 const DummyIcon = defineComponent({
@@ -93,13 +94,13 @@ describe('ZIcon — color 6 种', () => {
 
   it('color="primary" 应用主题 primary', () => {
     mount(ZIcon, { props: { component: DummyIcon, color: 'primary' } })
-    const primary = String((defaultLight.resolve() as { color: Record<string, string> }).color.primary)
+    const primary = String((zuiLight.resolve() as { color: Record<string, string> }).color.primary)
     expect(getInjectedCss().toLowerCase()).toContain(primary.toLowerCase())
   })
 
   it('color="danger" 应用主题 danger', () => {
     mount(ZIcon, { props: { component: DummyIcon, color: 'danger' } })
-    const danger = String((defaultLight.resolve() as { color: Record<string, string> }).color.danger)
+    const danger = String((zuiLight.resolve() as { color: Record<string, string> }).color.danger)
     expect(getInjectedCss().toLowerCase()).toContain(danger.toLowerCase())
   })
 })
@@ -158,7 +159,7 @@ describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        css: (s: Chain<DefaultSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.cursor('pointer')
         },
       },
@@ -170,7 +171,7 @@ describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        css: (s: Chain<DefaultSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s._hover((h) => {
             h.color('#ff00aa')
           })
@@ -186,7 +187,7 @@ describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
       props: {
         component: DummyIcon,
         color: 'primary',
-        css: (s: Chain<DefaultSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.color('#abcdef')
         },
       },
@@ -198,12 +199,12 @@ describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        css: (s: Chain<DefaultSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.color._primary
         },
       },
     })
-    const primary = String((defaultLight.resolve() as { color: Record<string, string> }).color.primary)
+    const primary = String((zuiLight.resolve() as { color: Record<string, string> }).color.primary)
     expect(getInjectedCss().toLowerCase()).toContain(primary.toLowerCase())
   })
 })

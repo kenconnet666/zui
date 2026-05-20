@@ -69,6 +69,9 @@ export {
   type DeepPartialLocale,
 } from './locale'
 
+// ─── 主题（zui 设计系统） ───
+export { zuiLight, zuiDark, type ZuiSchema, type SemanticColorTokens } from './theme'
+
 // ─── Core re-export（便利） ───
 export {
   Theme,
@@ -77,8 +80,8 @@ export {
   toClassName,
   mergeTheme,
   resolveTheme,
-  defaultLight,
-  defaultDark,
+  paletteLight,
+  paletteDark,
 } from '@kenconnet666/zui-core'
 
 export type {
@@ -86,4 +89,5 @@ export type {
   ResolvedTheme,
   DeepPartial,
   ComponentTokenOverrides,
+  BaseSchema,
 } from '@kenconnet666/zui-core'

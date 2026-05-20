@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Chain, defaultLight, defineVariants, registerFont } from '../src'
+import { Chain, defineVariants, registerFont } from '../src'
+import { defaultLight } from './_fixture-theme'
 import { KEYWORD_TO_CSS } from '../src/chain/keywords'
 
 /**

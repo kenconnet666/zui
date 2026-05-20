@@ -6,6 +6,7 @@
  * 复杂场景（hover / 媒体查询 / 任意属性覆盖）一律走 `:css` factory，用 zui-core chain 自由写。
  */
 import type { Chain, ThemeSchema } from '@kenconnet666/zui-core'
+import type { ZuiSchema } from '../../theme'
 import type { Component } from 'vue'
 
 /**
@@ -49,7 +50,7 @@ export type ZIconSpin = boolean | ZIconSpinPreset
 /**
  * ZIcon props 完整签名。
  *
- * `css` 回调里的 `Chain<ThemeSchema>` 通过 module augmentation 即可获得用户扩展 token
+ * `css` 回调里的 `Chain<ZuiSchema>` 通过 module augmentation 即可获得用户扩展 token
  * 的 IDE 补全 —— 不再向上层穿透 generic。
  */
 export interface ZIconProps {
@@ -75,7 +76,7 @@ export interface ZIconProps {
    *   }"
    * />
    */
-  css?: (s: Chain<ThemeSchema>) => void
+  css?: (s: Chain<ZuiSchema>) => void
 
   /**
    * 根元素 `font-size`，即"**1em 等于多少**"的基准值。

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Chain, applyStyleProps, defaultLight } from '../src'
+import { Chain, applyStyleProps } from '../src'
+import { defaultLight, type TestSchema } from './_fixture-theme'
 import type { StyleProps, TokenOf } from '../src'
 
 describe('W10 — StyleProps + applyStyleProps', () => {
@@ -84,8 +85,8 @@ describe('W10 — StyleProps + applyStyleProps', () => {
     expect(c2._node.backgroundColor).toBe('#2563eb')
   })
 
-  it('TokenOf<"color"> 类型工具', () => {
-    type C = TokenOf<'color'>
+  it('TokenOf<"color", TestSchema> 类型工具', () => {
+    type C = TokenOf<'color', TestSchema>
     // 编译期：C 应包含 '_primary' / '_danger' 等
     const c1: C = '_primary'
     const c2: C = '_danger'
@@ -93,8 +94,8 @@ describe('W10 — StyleProps + applyStyleProps', () => {
     expect(c2).toBe('_danger')
   })
 
-  it('StyleProps<DefaultSchema> 接受所有列举的 prop', () => {
-    const props: StyleProps = {
+  it('StyleProps<TestSchema> 接受所有列举的 prop', () => {
+    const props: StyleProps<TestSchema> = {
       color: '_primary',
       bg: '_bg',
       p: '_middle',

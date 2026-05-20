@@ -2,7 +2,7 @@
  * W1.2 — 组件级 token 注册表（D14 内部 use）。
  *
  * 通过 declaration merging 让第三方组件库或用户注册自己的组件 token namespace，
- * 自动出现在 `DefaultSchema['color']` 的 keyof（intersection），从而在 chain 上
+ * 自动出现在 `BaseSchema['color']` 的 keyof（intersection），从而在 chain 上
  * 出现 `c.color._buttonPrimary` 等强类型补全。
  *
  * @example

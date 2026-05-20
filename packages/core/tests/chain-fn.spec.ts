@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Chain, defaultLight } from '../src'
+import { Chain } from '../src'
+import { defaultLight } from './_fixture-theme'
 
 describe('Chain — 函数调用形态 (逃生舱)', () => {
   it('s.color("red") 生效', () => {

@@ -1,5 +1,6 @@
 import { computed, type ComputedRef } from 'vue'
 import type { ResolvedTheme, ThemeSchema } from '@kenconnet666/zui-core'
+import type { ZuiSchema } from '../theme'
 import { useZTheme } from '../provider/useZTheme'
 
 /**
@@ -12,7 +13,7 @@ import { useZTheme } from '../provider/useZTheme'
  * 返回 `ComputedRef<string>`（多 slot 用 [[useParts]]）。
  *
  * @example
- * const buttonVariants = (theme: ResolvedTheme<ThemeSchema>) =>
+ * const buttonVariants = (theme: ResolvedTheme<ZuiSchema>) =>
  *   defineVariants(theme, { base: ..., variants: { size: { small: ..., middle: ... } } })
  *
  * const cls = useVariants(buttonVariants, () => ({ size: props.size }))
@@ -21,7 +22,7 @@ import { useZTheme } from '../provider/useZTheme'
  * 这样 ConfigProvider 嵌套覆盖 theme 时新主题色立即生效，emotion 内部按内容 hash 自动复用 CSS。
  */
 export function useVariants<P extends Record<string, unknown>>(
-  factory: (theme: ResolvedTheme<ThemeSchema>) => (props: P) => string,
+  factory: (theme: ResolvedTheme<ZuiSchema>) => (props: P) => string,
   propsGetter: () => P,
 ): ComputedRef<string> {
   const theme = useZTheme()
@@ -33,7 +34,7 @@ export function useVariants<P extends Record<string, unknown>>(
  * `useParts(factory, props)` —— 多 slot 版本，返回各 slot 的 className map。
  *
  * @example
- * const dialogParts = (theme: ResolvedTheme<ThemeSchema>) =>
+ * const dialogParts = (theme: ResolvedTheme<ZuiSchema>) =>
  *   defineParts(theme, { slots: ['root', 'header', 'body'], base: { ... }, variants: { ... } })
  *
  * const parts = useParts(dialogParts, () => ({ size: props.size }))
@@ -43,7 +44,7 @@ export function useParts<
   P extends Record<string, unknown>,
   Slot extends string,
 >(
-  factory: (theme: ResolvedTheme<ThemeSchema>) => Record<Slot, (props: P) => string>,
+  factory: (theme: ResolvedTheme<ZuiSchema>) => Record<Slot, (props: P) => string>,
   propsGetter: () => P,
 ): ComputedRef<Record<Slot, string>> {
   const theme = useZTheme()

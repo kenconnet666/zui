@@ -1,13 +1,12 @@
 <script setup lang="ts">
 /**
- * docs 站点根 —— 顶层挂 ZConfigProvider 喂入 defaultLight。
+ * docs 站点根 —— 顶层挂 ZConfigProvider 喂入 zuiLight（完整设计系统 token）。
  */
-import { defaultLight } from '@kenconnet666/zui-core'
-import { ZConfigProvider } from '@kenconnet666/zui-vue'
+import { ZConfigProvider, zuiLight } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZConfigProvider :theme="defaultLight">
+  <ZConfigProvider :theme="zuiLight">
     <div class="app-shell">
       <aside class="sidebar">
         <h1 class="brand">zui docs</h1>

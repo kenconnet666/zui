@@ -9,7 +9,7 @@ import type { ThemeSchema } from '../theme/types'
  * surface / subtle-text 等。
  *
  * @example
- * const focusRing = defineMixin<DefaultSchema>(s => {
+ * const focusRing = defineMixin<BaseSchema>(s => {
  *   s._focusVisible(f => {
  *     f.outlineColor._primary
  *     f.outlineStyle('solid')
@@ -18,7 +18,7 @@ import type { ThemeSchema } from '../theme/types'
  *   })
  * })
  *
- * const elevation = defineMixin<DefaultSchema>(s => {
+ * const elevation = defineMixin<BaseSchema>(s => {
  *   s.boxShadow._middle
  *   s.transitionProperty('box-shadow')
  *   s.transitionDuration._small

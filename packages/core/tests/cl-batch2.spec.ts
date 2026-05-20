@@ -3,11 +3,11 @@ import {
   Chain,
   applyResponsive,
   applyStyleProps,
-  defaultLight,
   defineVariants,
   isResponsiveValue,
 } from '../src'
 import type { VariantPropsOf } from '../src'
+import { defaultLight } from './_fixture-theme'
 
 /**
  * CL Batch 2 测试 — 响应式 + applyStyleProps API 统一 + boolean variants。

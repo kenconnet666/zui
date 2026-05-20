@@ -18,9 +18,8 @@
 import {
   defineVariants,
   presetAnimations,
-  type ResolvedTheme,
-  type ThemeSchema,
-} from '@kenconnet666/zui-core'
+  type ResolvedTheme} from '@kenconnet666/zui-core'
+import type { ZuiSchema } from '../../theme'
 import type { ZIconTokens } from './tokens'
 
 /**
@@ -51,7 +50,7 @@ type IconSlot = {
  * - `depth`: none + subtle/muted/dim/faded/ghost（由略淡到几乎消失）
  * - `spin`: none + 5 阶 tiny..huge（tiny 最快 / huge 最慢）
  */
-export function createIconVariants(theme: ResolvedTheme<ThemeSchema>) {
+export function createIconVariants(theme: ResolvedTheme<ZuiSchema>) {
   const slot: IconSlot = (theme as { color?: IconSlot }).color ?? {}
 
   // 21 项 token —— `theme.color.iconXxx`（withComponentTokens flatten 后）+ 字面量 fallback。
@@ -89,12 +88,12 @@ export function createIconVariants(theme: ResolvedTheme<ThemeSchema>) {
    * - width/height 同样 N em → 相对当前 font-size = 1，最终物理尺寸 = N × 父字号
    * - 用户通过 `:base-font-size` prop（ZIcon 上）覆盖根 font-size，决定"1em 等于多少"
    */
-  const applySize = (n: number) => (s: import('@kenconnet666/zui-core').Chain<ThemeSchema>) => {
+  const applySize = (n: number) => (s: import('@kenconnet666/zui-core').Chain<ZuiSchema>) => {
     s.width.em(n)
     s.height.em(n)
     s.fontSize.em(n)
   }
-  const applySpin = (dur: number) => (s: import('@kenconnet666/zui-core').Chain<ThemeSchema>) => {
+  const applySpin = (dur: number) => (s: import('@kenconnet666/zui-core').Chain<ZuiSchema>) => {
     s.animationName(spinKeyframe)
     s.animationDuration.s(dur)
     s.animationIterationCount.infinite

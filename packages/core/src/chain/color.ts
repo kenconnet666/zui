@@ -9,6 +9,7 @@
  */
 
 import {
+  adjustHue,
   darken as c2kDarken,
   desaturate as c2kDesaturate,
   lighten as c2kLighten,
@@ -109,6 +110,81 @@ export function saturate(color: string, n: number): string {
 export function desaturate(color: string, n: number): string {
   try {
     const result = c2kDesaturate(color, clamp01(n / 100))
+    return preserveAlpha(color, result)
+  } catch {
+    return color
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// 扩展 modifier（基于 color2k 已有 API 实现，含 alpha 时保留 alpha）
+// ════════════════════════════════════════════════════════════════════════
+
+/**
+ * 补色（complementary） —— 色相旋转 180°。
+ *
+ * @example
+ * complement('#2563eb')  // → '#eba125'（蓝的补色 = 橙）
+ */
+export function complement(color: string): string {
+  try {
+    const result = adjustHue(color, 180)
+    return preserveAlpha(color, result)
+  } catch {
+    return color
+  }
+}
+
+/**
+ * 任意角度旋转色相；deg 取任意数（自动 mod 360）。
+ *
+ * @example
+ * rotateHue('#2563eb', 90)   // 蓝 → 紫
+ * rotateHue('#2563eb', -60)  // 蓝 → 青
+ */
+export function rotateHue(color: string, deg: number): string {
+  try {
+    const result = adjustHue(color, deg)
+    return preserveAlpha(color, result)
+  } catch {
+    return color
+  }
+}
+
+/** 颜色反相（255 - 每个 channel）；含 alpha 时保留 alpha。 */
+export function invert(color: string): string {
+  try {
+    const [r, g, b, a = 1] = parseToRgba(color)
+    const inv = `rgba(${255 - r}, ${255 - g}, ${255 - b}, ${clamp01(a)})`
+    if (a >= 1) return toHex(inv)
+    return inv
+  } catch {
+    return color
+  }
+}
+
+/**
+ * 加深（shade） —— 与黑色混合；n 取 0-100。
+ *
+ * 与 `darken` 不同：`darken` 走 HSL 减亮度（可能保留色相），`shade` 走 RGB 混黑（更"重"）。
+ */
+export function shade(color: string, n: number): string {
+  try {
+    const result = c2kMix(color, '#000000', clamp01(n / 100))
+    return preserveAlpha(color, result)
+  } catch {
+    return color
+  }
+}
+
+/**
+ * 提亮（tint） —— 与白色混合；n 取 0-100。
+ *
+ * 与 `lighten` 不同：`lighten` 走 HSL 增亮度，`tint` 走 RGB 混白（更"柔"）。
+ */
+export function tint(color: string, n: number): string {
+  try {
+    const result = c2kMix(color, '#ffffff', clamp01(n / 100))
     return preserveAlpha(color, result)
   } catch {
     return color
