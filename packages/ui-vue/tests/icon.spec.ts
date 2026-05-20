@@ -6,7 +6,7 @@
  * 2. size 5 阶 → em 单位
  * 3. color 6 种 → 各应用对应语义色
  * 4. depth none + subtle/muted/dim/faded/ghost → opacity
- * 5. spin none + boolean + 5 阶
+ * 5. spin none + 5 阶
  * 6. css factory：基础 + 伪类 + 覆盖 variants
  * 7. a11y label
  * 8. ZConfigProvider componentTokens 嵌套覆盖
@@ -123,33 +123,44 @@ describe('ZIcon — depth 5 阶 + none（领域词）', () => {
 })
 
 describe('ZIcon — spin 5 阶 + none', () => {
-  it('未传 spin → 无动画 className 与 spin=true 不同', () => {
+  it('未传 spin → 默认 "none"，className 与 spin="middle" 不同', () => {
     const wOff = mount(ZIcon, { props: { component: DummyIcon } })
-    const wOn = mount(ZIcon, { props: { component: DummyIcon, spin: true } })
+    const wOn = mount(ZIcon, { props: { component: DummyIcon, spin: 'middle' } })
     expect(wOff.classes().join(' ')).not.toBe(wOn.classes().join(' '))
   })
 
-  it('spin=true → middle 速度 1s', () => {
-    mount(ZIcon, { props: { component: DummyIcon, spin: true } })
+  it('spin="middle" → 1s（默认速度）', () => {
+    mount(ZIcon, { props: { component: DummyIcon, spin: 'middle' } })
     const css = getInjectedCss()
     expect(css).toMatch(/animation-name/)
     expect(css).toMatch(/animation-duration:1s/)
     expect(css).toMatch(/infinite/)
   })
 
-  it('spin="tiny" → 0.3s', () => {
+  it('spin="tiny" → 0.3s（最快）', () => {
     mount(ZIcon, { props: { component: DummyIcon, spin: 'tiny' } })
     expect(getInjectedCss()).toMatch(/animation-duration:0\.3s/)
   })
 
-  it('spin="huge" → 3s', () => {
+  it('spin="huge" → 3s（最慢）', () => {
     mount(ZIcon, { props: { component: DummyIcon, spin: 'huge' } })
     expect(getInjectedCss()).toMatch(/animation-duration:3s/)
   })
 
-  it('spin="small" → 0.5s（快）', () => {
+  it('spin="small" → 0.5s', () => {
     mount(ZIcon, { props: { component: DummyIcon, spin: 'small' } })
     expect(getInjectedCss()).toMatch(/animation-duration:0\.5s/)
+  })
+
+  it('spin="large" → 2s', () => {
+    mount(ZIcon, { props: { component: DummyIcon, spin: 'large' } })
+    expect(getInjectedCss()).toMatch(/animation-duration:2s/)
+  })
+
+  it('spin="none" 与未传 spin → className 完全相同（都是 none variant）', () => {
+    const wDefault = mount(ZIcon, { props: { component: DummyIcon } })
+    const wNone = mount(ZIcon, { props: { component: DummyIcon, spin: 'none' } })
+    expect(wNone.classes().join(' ')).toBe(wDefault.classes().join(' '))
   })
 })
 
@@ -306,7 +317,7 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
     expect(css).toContain('40px')
   })
 
-  it('改 spinMiddleDuration → spin=true 取新时长', () => {
+  it('改 spinMiddleDuration → spin="middle" 取新时长', () => {
     const Wrap = defineComponent({
       components: { ZConfigProvider, ZIcon },
       data: () => ({
@@ -314,7 +325,7 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
       }),
       template: `
         <ZConfigProvider :component-tokens="overrides">
-          <ZIcon :component="DummyIcon" spin />
+          <ZIcon :component="DummyIcon" spin="middle" />
         </ZConfigProvider>
       `,
       setup() {

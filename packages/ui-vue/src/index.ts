@@ -47,7 +47,6 @@ export {
   type ZIconColor,
   type ZIconDepth,
   type ZIconSpin,
-  type ZIconSpinPreset,
 } from './components'
 
 // ─── Locale ───

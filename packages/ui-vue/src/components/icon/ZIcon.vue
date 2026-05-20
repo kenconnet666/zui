@@ -27,7 +27,7 @@ import {
 import { useZComponentTokens, useZTheme } from '../../provider'
 import { createIconVariants } from './variants'
 import { iconTokenDerivers } from './tokens'
-import type { ZIconColor, ZIconDepth, ZIconSize, ZIconSpin, ZIconSpinPreset } from './types'
+import type { ZIconColor, ZIconDepth, ZIconSize, ZIconSpin } from './types'
 
 const props = withDefaults(
   defineProps<{
@@ -44,7 +44,7 @@ const props = withDefaults(
     size: 'middle',
     color: 'default',
     depth: 'none',
-    spin: false,
+    spin: 'none',
     tag: 'i',
   },
 )
@@ -60,14 +60,6 @@ const themed = computed<ResolvedTheme<S>>(() =>
   withComponentTokens(theme.value, iconTokenDerivers, overrides.value) as ResolvedTheme<S>,
 )
 
-// ─── spin 归一化：false → 'none'；true → 'middle'；string 原样 ───
-const spinKey = computed<'none' | ZIconSpinPreset>(() => {
-  const v = props.spin
-  if (v === false || v === undefined) return 'none'
-  if (v === true) return 'middle'
-  return v
-})
-
 // ─── 离散 variants（4 维度全离散）───
 // 注：**不**走 `useVariants` —— 那个 composable 内部用 raw `useZTheme()`，绕过 Provider 覆盖。
 const variantsCls = computed(() =>
@@ -75,7 +67,7 @@ const variantsCls = computed(() =>
     size: props.size,
     color: props.color,
     depth: props.depth,
-    spin: spinKey.value,
+    spin: props.spin,
   }),
 )
 

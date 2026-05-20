@@ -11,11 +11,4 @@
 export { default as ZIcon } from './ZIcon.vue'
 export { createIconVariants } from './variants'
 export { deriveIconTokens, iconTokenDerivers, type ZIconTokens } from './tokens'
-export type {
-  ZIconProps,
-  ZIconSize,
-  ZIconColor,
-  ZIconDepth,
-  ZIconSpin,
-  ZIconSpinPreset,
-} from './types'
+export type { ZIconProps, ZIconSize, ZIconColor, ZIconDepth, ZIconSpin } from './types'

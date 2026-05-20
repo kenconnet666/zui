@@ -36,15 +36,13 @@ export type ZIconColor = 'default' | 'primary' | 'success' | 'warning' | 'danger
 export type ZIconDepth = 'none' | 'subtle' | 'muted' | 'dim' | 'faded' | 'ghost'
 
 /**
- * spin —— 旋转速度预设（5 阶 + none/隐含 boolean 兼容）。
+ * spin —— 旋转速度预设（none + 5 阶）。默认 `'none'`。
  *
- * - `false`（默认）→ 不旋转
- * - `true` 等价于 `'middle'`（1s 周期）
- * - 5 阶 `'tiny'..'huge'` 由慢到快"反"还是由快到慢？—— 与 size/duration 保持哲学一致：
- *   `tiny` = 短周期 = 快；`huge` = 长周期 = 慢。
+ * - `'none'` 不旋转
+ * - 5 阶 `'tiny'..'huge'` 与 duration 哲学一致：tiny = 短周期 = 快；huge = 长周期 = 慢。
+ *   tiny 0.3s · small 0.5s · middle 1s · large 2s · huge 3s
  */
-export type ZIconSpinPreset = 'tiny' | 'small' | 'middle' | 'large' | 'huge'
-export type ZIconSpin = boolean | ZIconSpinPreset
+export type ZIconSpin = 'none' | 'tiny' | 'small' | 'middle' | 'large' | 'huge'
 
 /**
  * ZIcon props 完整签名。
