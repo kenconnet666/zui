@@ -5,7 +5,7 @@
  * **设计要点**：
  * 1. **4 维度全离散**：size / color / depth / spin 都是枚举值，全走 `defineVariants`；
  *    无 dynamic styles / 无 applyResponsive / 无 token resolution。
- * 2. **完整 21 项 token**：所有外观（size 5 阶、6 种 color、5 阶 depth、5 阶 spin）
+ * 2. **完整 21 项 token**：所有外观（size 5 阶、6 种 color、5 阶 depth 领域词、5 阶 spin）
  *    都暴露为 `ComponentTokenRegistry.icon`，**ZConfigProvider 可全量覆盖**。
  * 3. **css factory 是逃生口**：任何不在 4 维度里的需求（hover / 媒体查询 / 任意 chain method）
  *    通过 `:css="s => { ... }"` 用 zui-core chain 自由写，在 variants 之后应用可覆盖任何属性。

@@ -24,25 +24,25 @@ describe('E4 — applyResponsive 响应式值解析', () => {
     expect(c._node.padding).toBe('16px')
   })
 
-  it('响应式对象：base + md', () => {
+  it('响应式对象：base + middle', () => {
     const c = new Chain(defaultLight)
-    applyResponsive(c, { base: 8, md: 16 }, (s, v: number) => s.padding.px(v))
+    applyResponsive(c, { base: 8, middle: 16 }, (s, v: number) => s.padding.px(v))
     expect(c._node.padding).toBe('8px')
-    // md 走 _media('_middle', ...)
+    // middle 走 _media('_middle', ...)
     const mediaKey = Object.keys(c._node).find(k => k.startsWith('@media'))
     expect(mediaKey).toBeDefined()
     const inner = c._node[mediaKey as string] as Record<string, unknown>
     expect(inner.padding).toBe('16px')
   })
 
-  it('全响应式断点（base + sm + md + lg + xl + 2xl）', () => {
+  it('全响应式断点（base + tiny + small + middle + large + huge）', () => {
     const c = new Chain(defaultLight)
-    applyResponsive(c, { base: 4, sm: 6, md: 8, lg: 10, xl: 12 },
+    applyResponsive(c, { base: 4, tiny: 6, small: 8, middle: 10, large: 12, huge: 14 },
       (s, v: number) => s.padding.px(v))
     expect(c._node.padding).toBe('4px')
-    // 4 个 @media（sm/md/lg/xl）
+    // 5 个 @media（tiny/small/middle/large/huge）
     const mediaKeys = Object.keys(c._node).filter(k => k.startsWith('@media'))
-    expect(mediaKeys.length).toBe(4)
+    expect(mediaKeys.length).toBe(5)
   })
 
   it('undefined 值跳过整个 apply', () => {
@@ -54,17 +54,17 @@ describe('E4 — applyResponsive 响应式值解析', () => {
   it('对象内 undefined 字段跳过', () => {
     const c = new Chain(defaultLight)
     applyResponsive(
-      c, { base: 8, md: undefined, lg: 16 },
+      c, { base: 8, middle: undefined, large: 16 },
       (s, v: number) => s.padding.px(v),
     )
     expect(c._node.padding).toBe('8px')
     const mediaKeys = Object.keys(c._node).filter(k => k.startsWith('@media'))
-    expect(mediaKeys.length).toBe(1)   // 只 lg
+    expect(mediaKeys.length).toBe(1)   // 只 large
   })
 
   it('字符串值也能响应式', () => {
     const c = new Chain(defaultLight)
-    applyResponsive(c, { base: 'red', md: 'blue' },
+    applyResponsive(c, { base: 'red', middle: 'blue' },
       (s, v) => s.color(v as string))
     expect(c._node.color).toBe('red')
   })
@@ -81,8 +81,8 @@ describe('isResponsiveValue 判断', () => {
 
   it('plain object with base / breakpoint keys 是响应式', () => {
     expect(isResponsiveValue({ base: 16 })).toBe(true)
-    expect(isResponsiveValue({ base: 4, md: 8 })).toBe(true)
-    expect(isResponsiveValue({ sm: 4 })).toBe(true)
+    expect(isResponsiveValue({ base: 4, middle: 8 })).toBe(true)
+    expect(isResponsiveValue({ small: 4 })).toBe(true)
   })
 
   it('空对象不是响应式', () => {

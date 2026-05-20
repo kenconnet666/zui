@@ -17,7 +17,7 @@ import { applyResponsive, isResponsiveValue, type ResponsiveValue } from '../res
  * 给组件库做 `<Box mt={4} p="md" color="_primary">` 类 prop API 用。
  * 配合 `applyStyleProps` 把 props 应用到 chain。
  *
- * 所有 alias 都接受 token（如 `'_primary'` / `'_md'`）或字面值（string / number）。
+ * 所有 alias 都接受 token（如 `'_primary'` / `'_middle'`）或字面值（string / number）。
  */
 export type StyleProps<T extends ThemeSchema = DefaultSchema> = Partial<{
   // ─── 颜色 ───
@@ -106,14 +106,14 @@ const ALIAS_MAP: Record<string, string | string[]> = {
  * 对每个 prop：
  *  - alias 形（p / px / mx / ...）→ 查 ALIAS_MAP 转 1-2 个真 CSS prop
  *  - 值是 `_xxx` token 形 → 走 chain 的 carrier token 路径
- *  - 值是响应式对象 `{ base, md, lg }` → 自动 `_media('_md', ...)` 嵌套（E4）
+ *  - 值是响应式对象 `{ base, middle, large }` → 自动 `_media('_middle', ...)` 嵌套（E4）
  *  - 否则字面值 → 走 fn(value)
  *
  * @example
- * applyStyleProps(chain, { p: '_md', bg: '_primary', rounded: 8 })
+ * applyStyleProps(chain, { p: '_middle', bg: '_primary', rounded: 8 })
  *
  * @example
- * applyStyleProps(chain, { p: { base: 4, md: 8, lg: 16 } })
+ * applyStyleProps(chain, { p: { base: 4, middle: 8, large: 16 } })
  *
  * **F1 等价 API**：`applyStyleProps(theme, props)` 返回 className 字符串（推荐用法，与
  * icss / defineVariants 参数顺序一致）。两个 overload 共存。
@@ -193,7 +193,7 @@ export type ResponsiveStyleProps<T extends ThemeSchema = DefaultSchema> = {
  *
  * @example
  * type ButtonColor = TokenOf<'color', DefaultSchema>  // '_primary' | '_danger' | ...
- * type ButtonGap = TokenOf<'spacing', DefaultSchema>  // '_xs' | '_sm' | '_md' | ...
+ * type ButtonGap = TokenOf<'spacing', DefaultSchema>  // '_tiny' | '_small' | '_middle' | ...
  */
 export type TokenOf<
   Cat extends keyof ThemeSchema,

@@ -1,26 +1,26 @@
 /**
  * E4 — 响应式 prop 解析（Chakra / Mantine / Theme UI 风）。
  *
- * 把对象形式 `{ base: ..., md: ..., lg: ... }` 解析成 chain 上的多个 `_media('_md', ...)` 调用。
+ * 把对象形式 `{ base: ..., middle: ..., large: ... }` 解析成 chain 上的多个 `_media('_middle', ...)` 调用。
  *
  * @example
- * applyResponsive(chain, { base: 8, md: 16, lg: 24 }, (s, v) => s.padding.px(v))
+ * applyResponsive(chain, { base: 8, small: 16, middle: 24 }, (s, v) => s.padding.px(v))
  * // → padding: 8px;
- * //   @media (min-width: 768px) { padding: 16px; }
- * //   @media (min-width: 1024px) { padding: 24px; }
+ * //   @media (min-width: 768px) { padding: 16px; }     // _small = theme.breakpoint.small
+ * //   @media (min-width: 1024px) { padding: 24px; }    // _middle = theme.breakpoint.middle
  *
  * 响应式 value 形式：
  * - 普通值（非对象 / 非 plain object）→ 直接 apply
- * - `{ base?: T, sm?: T, md?: T, ... }` → base 写顶层，其它 key 走 `_media('_<key>')`
+ * - `{ base?: T, tiny?: T, small?: T, ... }` → base 写顶层，其它 key 走 `_media('_<key>')`
  *
  * 断点 key 应是 theme.breakpoint 中存在的：
- * default schema 提供 sm / md / lg / xl / 2xl。
+ * default schema 提供 tiny / small / middle / large / huge（5 阶语义化）。
  */
 
 import type { Chain } from './chain/Chain'
 import type { ThemeSchema } from './theme/types'
 
-/** 响应式值：可能是 `T` 或 `{ base?: T; sm?: T; md?: T; lg?: T; xl?: T; '2xl'?: T }`。 */
+/** 响应式值：可能是 `T` 或 `{ base?: T; tiny?: T; small?: T; middle?: T; large?: T; huge?: T }`。 */
 export type ResponsiveValue<T> = T | ResponsiveObject<T>
 
 export interface ResponsiveObject<T> {
@@ -39,9 +39,9 @@ export interface ResponsiveObject<T> {
  * - **启发模式**（默认）：plain object + 全部 key 是 letter-prefixed ident（兜底兼容旧用法）。
  *
  * @example
- * isResponsiveValue({ base: 4, md: 8 }, ['sm', 'md', 'lg'])   // true
- * isResponsiveValue({ name: 'x' }, ['sm', 'md', 'lg'])        // false（严格）
- * isResponsiveValue({ name: 'x' })                            // true（启发，已知误判）
+ * isResponsiveValue({ base: 4, middle: 8 }, ['small', 'middle', 'large'])  // true
+ * isResponsiveValue({ name: 'x' }, ['small', 'middle', 'large'])           // false（严格）
+ * isResponsiveValue({ name: 'x' })                                         // true（启发，已知误判）
  */
 export function isResponsiveValue<T>(
   value: unknown,
@@ -73,7 +73,7 @@ export function isResponsiveValue<T>(
  * applyResponsive(chain, props.padding, (s, v) => s.padding.px(v))
  *
  * @example
- * applyResponsive(chain, { base: 'red', md: 'blue' }, (s, v) => s.color(v))
+ * applyResponsive(chain, { base: 'red', middle: 'blue' }, (s, v) => s.color(v))
  */
 export function applyResponsive<S extends ThemeSchema, T>(
   chain: Chain<S>,

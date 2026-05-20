@@ -41,7 +41,7 @@ export type VariantPropsOf<F> = F extends (props?: infer P) => string ? P : neve
  * })
  *
  * const buttonCore = defineVariants(theme, {
- *   base: s => { s.padding.px(12); s.borderRadius._md },
+ *   base: s => { s.padding.px(12); s.borderRadius._middle },
  *   variants: {
  *     intent: { primary: ..., danger: ... },
  *     size: { sm: ..., lg: ... },

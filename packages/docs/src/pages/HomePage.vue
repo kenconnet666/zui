@@ -13,7 +13,7 @@
     </p>
     <h2>看演示</h2>
     <ul>
-      <li><RouterLink to="/icon">ZIcon — 完整 12 token + 5 阶 depth + 双模式接入</RouterLink></li>
+      <li><RouterLink to="/icon">ZIcon — 21 项 token + 4 维度全离散（size × color × depth × spin）+ css factory 兜底</RouterLink></li>
     </ul>
   </article>
 </template>

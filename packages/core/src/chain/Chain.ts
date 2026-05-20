@@ -59,7 +59,7 @@ function normalizeAtRule(prefix: '@media' | '@supports' | '@container', query: s
 
 /**
  * `_token` 简写 → 完整 media / container 查询。
- * - `_md` → `(min-width: <theme.breakpoint.md>)`
+ * - `_middle` → `(min-width: <theme.breakpoint.middle>)`
  * - 不以 `_` 开头 → 原样
  * - 找不到 token → 原样字符串透传（让用户立刻发现）
  */
@@ -497,10 +497,10 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
   // ─── At 规则 ───
 
   /**
-   * 媒体查询；支持 `_md` 等断点 token 简写（解析自 `theme.breakpoint`）。
+   * 媒体查询；支持 `_middle` 等断点 token 简写（解析自 `theme.breakpoint`）。
    *
    * @example
-   * s._media('_md', m => m.flexDirection('row'))
+   * s._media('_middle', m => m.flexDirection('row'))
    * s._media('(prefers-color-scheme: dark)', m => m.color._textOnDark)
    */
   _media(query: string, fn: (s: this) => void): this {
@@ -546,7 +546,7 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
    * Flex stack 布局简写。
    *
    * @example
-   * s._stack({ direction: 'row', gap: '_md', align: 'center', justify: 'spaceBetween' })
+   * s._stack({ direction: 'row', gap: '_middle', align: 'center', justify: 'spaceBetween' })
    */
   _stack(
     opts: {
@@ -601,7 +601,7 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
    * Grid 简写。
    *
    * @example
-   * s._grid({ cols: 3, gap: '_md' })          // 3 列等宽
+   * s._grid({ cols: 3, gap: '_middle' })      // 3 列等宽
    * s._grid({ cols: 'auto 1fr auto' })        // 字面 template
    */
   _grid(
@@ -932,7 +932,7 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
 
   /**
    * `filter: blur(<value>)`。token 名解析自 `theme.blur` 表；未找到则原字符串透传。
-   * @example s._blur('_md') → filter: blur(12px)
+   * @example s._blur('_middle') → filter: blur(16px)
    */
   _blur(token: string): this {
     return this._prop('filter', this._resolveBlurValue(token))
@@ -940,7 +940,7 @@ export class Chain<T extends ThemeSchema = DefaultSchema> {
 
   /**
    * `backdrop-filter: blur(<value>)`。用于毛玻璃效果。
-   * @example s._backdropBlur('_md') → backdrop-filter: blur(12px)
+   * @example s._backdropBlur('_middle') → backdrop-filter: blur(16px)
    */
   _backdropBlur(token: string): this {
     return this._prop('backdropFilter', this._resolveBlurValue(token))

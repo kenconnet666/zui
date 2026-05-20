@@ -6,25 +6,25 @@
  *
  * @example
  * const button = defineVariants(defaultLight, {
- *   base: s => { s.padding.px(12); s.borderRadius._md },
+ *   base: s => { s.padding.px(12); s.borderRadius._middle },
  *   variants: {
  *     intent: {
  *       primary: s => { s.backgroundColor._primary; s.color.white },
  *       danger:  s => { s.backgroundColor._danger;  s.color.white },
  *     },
  *     size: {
- *       sm: s => { s.padding.px(8) },
- *       md: s => { s.padding.px(12) },
+ *       small: s => { s.padding.px(8) },
+ *       middle: s => { s.padding.px(12) },
  *     },
  *   },
- *   defaultVariants: { intent: 'primary', size: 'md' },
+ *   defaultVariants: { intent: 'primary', size: 'middle' },
  *   compoundVariants: [
- *     { when: { intent: 'primary', size: 'sm' }, apply: s => { s.fontSize._xs } },
+ *     { when: { intent: 'primary', size: 'small' }, apply: s => { s.fontSize._tiny } },
  *   ],
  * })
  *
- * button({ intent: 'danger', size: 'sm' })   // → className
- * button()                                   // 全 defaults
+ * button({ intent: 'danger', size: 'small' })   // → className
+ * button()                                       // 全 defaults
  */
 
 import { Chain } from '../chain/Chain'

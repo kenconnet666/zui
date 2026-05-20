@@ -11,7 +11,7 @@
  *   base: {
  *     root: s => { s.position.fixed; s.inset(0); s.zIndex._modal },
  *     overlay: s => { s.position.fixed; s.inset(0); s.backgroundColor._black.alpha(50) },
- *     content: s => { s.position.fixed; s.borderRadius._lg; s.padding._lg },
+ *     content: s => { s.position.fixed; s.borderRadius._large; s.padding._large },
  *     title: s => { s.fontWeight._bold; s.fontSize._huge },
  *   },
  *   variants: {
@@ -225,13 +225,13 @@ function stableKey(resolved: Record<string, string>): string {
  * @example
  * const dialog = defineParts(theme, {
  *   slots: ['root', 'content'] as const,
- *   base: { content: s => { s.padding._md } },
- *   variants: { size: { sm: { content: ... }, lg: { content: ... } } },
+ *   base: { content: s => { s.padding._middle } },
+ *   variants: { size: { small: { content: ... }, large: { content: ... } } },
  * })
  *
  * const compactDialog = extendParts(theme, dialog, {
- *   base: { content: s => { s.padding._sm } },
- *   variants: { size: { md: { content: s => { s.maxWidth.px(500) } } } },
+ *   base: { content: s => { s.padding._small } },
+ *   variants: { size: { middle: { content: s => { s.maxWidth.px(500) } } } },
  * })
  */
 export function extendParts<

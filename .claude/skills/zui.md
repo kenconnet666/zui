@@ -386,7 +386,7 @@ JetBrains MCP 内嵌 Node 没把 pnpm 放进 PATH。包一层 `cmd.exe /c "pnpm 
 | 现代 CSS 4 | `_safeArea(side, fn)` `_scrollSnap(...)` `_overscroll(...)` `_field(...)` |
 | 文本工具 | `_truncate()` `_lineClamp(n)` |
 | 选择器 | `_not(selector, fn)` `_has(selector, fn)` `_is(selector, fn)` `_where(selector, fn)` |
-| Token-aware | `_media('_md', fn)` `_blur('_md')` `_dur('_fast')` |
+| Token-aware | `_media('_middle', fn)` `_blur('_middle')` `_dur('_small')` |
 
 完整签名见 `packages/core/src/chain/Chain.ts`。
 
@@ -796,7 +796,7 @@ interface ZIconTokens {
 **component token 流程**（重要陷阱）：`withComponentTokens` 把所有 token flatten 到 `theme.color` 命名空间：
 - `iconSizeMiddle` / `iconPrimaryColor` / `iconDepthDimOpacity` / `iconSpinMiddleDuration` 等
 - 由于 `width / opacity / animationDuration` carrier 的 tokenCat **不是** color，**无法** `_iconXxx` 命中
-- 解决：variants 工厂 `readIconTokens(theme)` 从 `theme.color.iconXxx` 直接读字面量，再以 string/number 喂给 chain method
+- 解决：variants 工厂在 `createIconVariants` 顶部一次性 `slot.iconXxx ?? '字面量 fallback'` 构造 21 项 token snapshot（全 string），再喂 chain method。**不要**再封装 `read/readNum` 类 helper —— 预设值都是固定单位字面量，不接受用户自由输入
 
 **ZIcon 不走 `useVariants`**：`useVariants` 内部用 raw `useZTheme()`，**绕过 `withComponentTokens`** 注入的 override。
 必须 `computed(() => createIconVariants(themed.value)({ ... }))` 才能让 Provider override 生效。
