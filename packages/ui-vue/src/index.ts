@@ -69,21 +69,7 @@ export {
   type DeepPartialLocale,
 } from './locale'
 
-// ─── Core re-export（便利） ───
-export {
-  Theme,
-  Chain,
-  icss,
-  toClassName,
-  mergeTheme,
-  resolveTheme,
-  defaultLight,
-  defaultDark,
-} from '@kenconnet666/zui-core'
-
-export type {
-  ThemeSchema,
-  ResolvedTheme,
-  DeepPartial,
-  ComponentTokenOverrides,
-} from '@kenconnet666/zui-core'
+// ─── Core 全量透传 ───
+// 装 `@kenconnet666/zui-vue` 即等于装 core：用户可直接从本包 import 任何 core API，
+// 无需再依赖 `@kenconnet666/zui-core`。core 与 ui-vue 自身导出无命名冲突。
+export * from '@kenconnet666/zui-core'
