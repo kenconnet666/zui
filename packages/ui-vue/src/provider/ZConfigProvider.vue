@@ -41,8 +41,16 @@ import type { ZLocale, ZLocalePartial } from '../locale/types'
 
 const props = withDefaults(
   defineProps<{
-    /** 完整主题（顶层推荐）。`Theme<ThemeSchema>` 实例。 */
-    theme?: Theme<ThemeSchema>
+    /**
+     * 完整主题（顶层推荐）。Theme 实例。
+     *
+     * 类型用 `Theme<any>` 而非 `Theme<ThemeSchema>` —— `Theme<T>` 的 `merge<P>(...)`
+     * 让 T 同时出现在输入与输出位置（invariant），写 `Theme<ThemeSchema>` 会拒收
+     * `Theme<DefaultSchema>` 等具体 schema 实例。Provider 内部不依赖具体 T，统一在 `.resolve()`
+     * 后 cast 成 `ResolvedTheme<ThemeSchema>` 注入即可。
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    theme?: Theme<any>
     /** 主题局部补丁（嵌套推荐）。 */
     themePatch?: DeepPartial<ThemeSchema>
     /** 组件 token override（嵌套时与父浅合并）。 */

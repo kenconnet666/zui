@@ -6,7 +6,7 @@
 import { computed, ref, shallowRef, watchEffect } from 'vue'
 import type { ZIconColor, ZIconDepth, ZIconSize, ZIconSpinPreset } from '@kenconnet666/zui-vue'
 import { ZConfigProvider, ZIcon } from '@kenconnet666/zui-vue'
-import type { Chain, DefaultSchema } from '@kenconnet666/zui-core'
+import type { Chain, DefaultSchema, ThemeSchema } from '@kenconnet666/zui-core'
 import {
   CheckmarkCircle,
   CloseCircle,
@@ -34,6 +34,22 @@ const spinSpeed = ref<ZIconSpinPreset>('middle')
 const spinValue = computed(() => (spinOn.value ? spinSpeed.value : false))
 
 // ─── css factory 预制示例 ───
+/**
+ * cssExamples —— 演示 `:css` factory 的若干典型用法。
+ *
+ * **类型注**：回调参数用 `Chain<DefaultSchema>` 而非 `Chain<ThemeSchema>`，
+ * 因为 `defaultLight` 注入的 theme 实际就是 `Theme<DefaultSchema>` —— 这样
+ * 用户可以直接写 `_primary` / `_danger` 等 DefaultSchema 语义色 token，有 IDE 补全 +
+ * 编译期校验。
+ *
+ * 绑定到 `<ZIcon :css="...">` 时通过 `currentCssBinding` 一次 cast 解决 contravariance
+ * （ZIcon prop 期望的是 `Chain<ThemeSchema>` 回调，DefaultSchema callback 是更具体的，
+ * 函数参数 contravariant 下不自动兼容）。
+ *
+ * 用户工程若用纯 DefaultSchema，建议直接 `Chain<DefaultSchema>` 写 cssExamples；
+ * 若有自定义 schema，建议显式声明 `interface MySchema extends DefaultSchema { ... }`
+ * 并整套用 `Chain<MySchema>`。
+ */
 const cssExamples: Record<string, ((s: Chain<DefaultSchema>) => void) | undefined> = {
   '(none)': undefined,
   'hover 高亮 _primary': (s) => {
@@ -69,12 +85,22 @@ const cssExamples: Record<string, ((s: Chain<DefaultSchema>) => void) | undefine
 }
 const cssExampleKey = ref<keyof typeof cssExamples>('(none)')
 const currentCss = computed(() => cssExamples[cssExampleKey.value])
+/**
+ * 把 `Chain<DefaultSchema>` 回调 cast 成 ZIcon `:css` prop 期望的
+ * `Chain<ThemeSchema>` 形态。运行时主题就是 defaultLight（DefaultSchema），
+ * 此 cast 是类型层的等价转换，无运行时风险。
+ */
+const currentCssBinding = computed(
+  () => currentCss.value as ((s: Chain<ThemeSchema>) => void) | undefined,
+)
 
 // ─── nested ZConfigProvider 演示 ───
+// 数值化 token：sizeLarge 是 em **倍率**（无单位）；spinMiddleDuration 是秒；
+// depthDimOpacity 是 0..1 浮点。primaryColor 仍是色值字符串。
 const overridePrimaryColor = ref<string>('#ff00aa')
-const overrideSizeLarge = ref<string>('64px')
-const overrideSpinMiddle = ref<string>('2.5s')
-const overrideDepthDim = ref<string>('0.5')
+const overrideSizeLarge = ref<number>(2)
+const overrideSpinMiddle = ref<number>(2.5)
+const overrideDepthDim = ref<number>(0.5)
 
 const componentTokens = computed(() => ({
   icon: {
@@ -84,6 +110,9 @@ const componentTokens = computed(() => ({
     depthDimOpacity: overrideDepthDim.value,
   },
 }))
+
+// ─── baseFontSize 演示 ───
+const baseFontSize = ref<string>('32px')
 
 // ─── 当前选中的 component（用于"实时操控"那栏）───
 const currentComponent = shallowRef(HomeOutline)
@@ -200,7 +229,7 @@ watchEffect(() => {
         <ZIcon
           :component="StarOutline"
           size="huge"
-          v-bind="currentCss ? { css: currentCss } : {}"
+          v-bind="currentCssBinding ? { css: currentCssBinding } : {}"
         />
       </div>
     </section>
@@ -270,16 +299,34 @@ watchEffect(() => {
           <input v-model="overridePrimaryColor" type="color" />
         </label>
         <label>
-          sizeLarge
-          <input v-model="overrideSizeLarge" placeholder="64px" type="text" />
+          sizeLarge <span class="hint">(em 倍率)</span>
+          <input
+            v-model.number="overrideSizeLarge"
+            max="5"
+            min="0.5"
+            step="0.25"
+            type="number"
+          />
         </label>
         <label>
-          spinMiddleDuration
-          <input v-model="overrideSpinMiddle" placeholder="2.5s" type="text" />
+          spinMiddleDuration <span class="hint">(秒)</span>
+          <input
+            v-model.number="overrideSpinMiddle"
+            max="10"
+            min="0.1"
+            step="0.1"
+            type="number"
+          />
         </label>
         <label>
-          depthDimOpacity
-          <input v-model="overrideDepthDim" max="1" min="0" step="0.1" type="number" />
+          depthDimOpacity <span class="hint">(0..1)</span>
+          <input
+            v-model.number="overrideDepthDim"
+            max="1"
+            min="0"
+            step="0.1"
+            type="number"
+          />
         </label>
       </div>
 
@@ -303,6 +350,46 @@ watchEffect(() => {
               <ZIcon :component="StarOutline" depth="ghost" size="large" />
             </div>
           </ZConfigProvider>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 8.5 baseFontSize prop ─── -->
+    <section>
+      <h2>8.5 <code>:base-font-size</code> —— 控制"1em 等于多少"</h2>
+      <p>
+        ZIcon 内部 <code>size</code> variant 用 em 倍率（<code>tiny=0.75</code> /
+        <code>middle=1</code> / <code>huge=1.5</code> ...），最终物理尺寸 =
+        倍率 × 根元素 <code>font-size</code>。默认 font-size 跟随父元素；
+        传 <code>:base-font-size</code>（任意 CSS length 字符串）即用 inline style
+        覆盖该基准。
+      </p>
+
+      <div class="controls">
+        <label>
+          base-font-size
+          <input v-model="baseFontSize" placeholder="32px / 2vw / 1.5rem" type="text" />
+        </label>
+      </div>
+
+      <div class="row">
+        <div class="cell">
+          <h3>不传 base-font-size（跟随父元素字号）</h3>
+          <div class="demo-grid">
+            <ZIcon :component="HeartOutline" size="tiny" />
+            <ZIcon :component="HeartOutline" size="middle" />
+            <ZIcon :component="HeartOutline" size="large" />
+            <ZIcon :component="HeartOutline" size="huge" />
+          </div>
+        </div>
+        <div class="cell">
+          <h3>统一 base-font-size = <code>{{ baseFontSize }}</code></h3>
+          <div class="demo-grid">
+            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="tiny" />
+            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="middle" />
+            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="large" />
+            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="huge" />
+          </div>
         </div>
       </div>
     </section>
@@ -504,5 +591,13 @@ pre code {
 .extension pre {
   font-size: 12px;
   margin: 8px 0;
+}
+
+/* ─── controls 内的 unit 提示 ─── */
+.controls .hint {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: normal;
+  margin-left: 2px;
 }
 </style>

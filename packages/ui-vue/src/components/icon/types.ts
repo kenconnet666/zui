@@ -77,6 +77,23 @@ export interface ZIconProps {
    */
   css?: (s: Chain<ThemeSchema>) => void
 
+  /**
+   * 根元素 `font-size`，即"**1em 等于多少**"的基准值。
+   *
+   * - 未传 → 不写 inline style，跟随父元素 `font-size`（默认行为）
+   * - 传 → 通过 inline `style="font-size:..."` 写到根元素上；inline style
+   *   覆盖 variants 设的 `font-size: Nem`，让 width/height 的 em 单位
+   *   resolved 到这个绝对值
+   *
+   * 接受任何合法 CSS length：`'16px'` / `'1.5rem'` / `'2vw'` /
+   * `'clamp(12px, 1vw + 6px, 24px)'` 等；判断与拼写都由用户负责。
+   *
+   * @example
+   * &lt;ZIcon :component="HeartIcon" base-font-size="24px" size="large" /&gt;
+   * // → font-size:24px（inline）→ width = 1.25em = 30px
+   */
+  baseFontSize?: string
+
   /** 直接以图标组件作为 prop 传入（与 default slot 互斥；slot 优先）。 */
   component?: Component
   /** 根元素 tag，默认 `'i'`（Ionic / FontAwesome 习惯）。 */

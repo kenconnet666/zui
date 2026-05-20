@@ -243,11 +243,11 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
     expect(getInjectedCss().toLowerCase()).toContain('#abcdef')
   })
 
-  it('改 icon.depthDimOpacity → depth="dim" 跟随新值', () => {
+  it('改 icon.depthDimOpacity → depth="dim" 跟随新值（number）', () => {
     const Wrap = defineComponent({
       components: { ZConfigProvider, ZIcon },
       data: () => ({
-        overrides: { icon: { depthDimOpacity: '0.33' } },
+        overrides: { icon: { depthDimOpacity: 0.33 } },
       }),
       template: `
         <ZConfigProvider :component-tokens="overrides">
@@ -262,11 +262,11 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
     expect(getInjectedCss()).toMatch(/opacity:0\.33/)
   })
 
-  it('改 icon.sizeLarge → size="large" 跟随', () => {
+  it('改 icon.sizeLarge → size="large" 跟随（em 倍率）', () => {
     const Wrap = defineComponent({
       components: { ZConfigProvider, ZIcon },
       data: () => ({
-        overrides: { icon: { sizeLarge: '64px' } },
+        overrides: { icon: { sizeLarge: 2 } },
       }),
       template: `
         <ZConfigProvider :component-tokens="overrides">
@@ -278,14 +278,14 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
       },
     })
     mount(Wrap)
-    expect(getInjectedCss()).toMatch(/64px/)
+    expect(getInjectedCss()).toMatch(/font-size:2em/)
   })
 
   it('嵌套 Provider：外 sizeLarge + 内 primaryColor', async () => {
     const Wrap = defineComponent({
       components: { ZConfigProvider, ZIcon },
       data: () => ({
-        outer: { icon: { sizeLarge: '40px' } },
+        outer: { icon: { sizeLarge: 2.5 } },
         inner: { icon: { primaryColor: '#112233' } },
       }),
       template: `
@@ -303,14 +303,14 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
     await nextTick()
     const css = getInjectedCss().toLowerCase()
     expect(css).toContain('#112233')
-    expect(css).toContain('40px')
+    expect(css).toMatch(/font-size:2\.5em/)
   })
 
-  it('改 spinMiddleDuration → spin=true 取新时长', () => {
+  it('改 spinMiddleDuration → spin=true 取新时长（秒）', () => {
     const Wrap = defineComponent({
       components: { ZConfigProvider, ZIcon },
       data: () => ({
-        overrides: { icon: { spinMiddleDuration: '2.5s' } },
+        overrides: { icon: { spinMiddleDuration: 2.5 } },
       }),
       template: `
         <ZConfigProvider :component-tokens="overrides">
@@ -322,6 +322,17 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
       },
     })
     mount(Wrap)
-    expect(getInjectedCss()).toMatch(/2\.5s/)
+    expect(getInjectedCss()).toMatch(/animation-duration:2\.5s/)
+  })
+
+  it('baseFontSize prop → 写入 inline style font-size', () => {
+    const w = mount(ZIcon, { props: { component: DummyIcon, baseFontSize: '24px' } })
+    expect(w.attributes('style')).toContain('font-size: 24px')
+  })
+
+  it('未传 baseFontSize → 根元素无 inline font-size', () => {
+    const w = mount(ZIcon, { props: { component: DummyIcon } })
+    const style = w.attributes('style') ?? ''
+    expect(style).not.toContain('font-size')
   })
 })
