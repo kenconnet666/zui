@@ -152,17 +152,17 @@ describe('E2 — composeVariants 变体复合', () => {
         danger:  s => { s.backgroundColor._danger },
       },
       size: {
-        sm: s => { s.padding.px(8) },
-        lg: s => { s.padding.px(16) },
+        small: s => { s.padding.px(8) },
+        large: s => { s.padding.px(16) },
       },
     },
-    defaultVariants: { intent: 'primary', size: 'sm' },
+    defaultVariants: { intent: 'primary', size: 'small' },
   })
 
   const button = composeVariants(interactive, buttonCore)
 
   it('两个 variant 工厂合并', () => {
-    const cls = button({ state: 'loading', intent: 'danger', size: 'lg' })
+    const cls = button({ state: 'loading', intent: 'danger', size: 'large' })
     expect(typeof cls).toBe('string')
     // 应包含两个 className（emotion 出两个 hash）
     expect(cls.split(/\s+/).filter(Boolean).length).toBe(2)
@@ -186,7 +186,7 @@ describe('E2 — composeVariants 变体复合', () => {
       defaultVariants: { focus: 'yes' },
     })
     const composed = composeVariants(interactive, buttonCore, v3)
-    const cls = composed({ state: 'idle', intent: 'primary', size: 'sm', focus: 'yes' })
+    const cls = composed({ state: 'idle', intent: 'primary', size: 'small', focus: 'yes' })
     expect(cls.split(/\s+/).filter(Boolean).length).toBe(3)
   })
 
@@ -195,7 +195,7 @@ describe('E2 — composeVariants 变体复合', () => {
     expectTypeOf<Props>().toExtend<{
       state?: 'idle' | 'loading' | 'disabled'
       intent?: 'primary' | 'danger'
-      size?: 'sm' | 'lg'
+      size?: 'small' | 'large'
     } | undefined>()
   })
 })
@@ -209,13 +209,13 @@ describe('E3 — VariantPropsOf 类型推断', () => {
     const button = defineVariants(defaultLight, {
       variants: {
         intent: { primary: () => {}, danger: () => {} },
-        size: { sm: () => {}, md: () => {}, lg: () => {} },
+        size: { small: () => {}, middle: () => {}, large: () => {} },
       },
     })
     type Props = VariantPropsOf<typeof button>
     expectTypeOf<Props>().toExtend<{
       intent?: 'primary' | 'danger'
-      size?: 'sm' | 'md' | 'lg'
+      size?: 'small' | 'middle' | 'large'
     } | undefined>()
   })
 
@@ -246,12 +246,12 @@ describe('E1 — defineParts 多 slot', () => {
     },
     variants: {
       size: {
-        sm: { content: s => { s.padding.px(8) } },
-        md: { content: s => { s.padding.px(16) } },
-        lg: { content: s => { s.padding.px(24) } },
+        small: { content: s => { s.padding.px(8) } },
+        middle: { content: s => { s.padding.px(16) } },
+        large: { content: s => { s.padding.px(24) } },
       },
     },
-    defaultVariants: { size: 'md' },
+    defaultVariants: { size: 'middle' },
   })
 
   it('返回对象有所有 slot key', () => {
@@ -274,27 +274,27 @@ describe('E1 — defineParts 多 slot', () => {
   })
 
   it('同 slot 不同 variant 返回不同 className', () => {
-    const sm = dialog.content({ size: 'sm' })
-    const lg = dialog.content({ size: 'lg' })
+    const sm = dialog.content({ size: 'small' })
+    const lg = dialog.content({ size: 'large' })
     expect(sm).not.toBe(lg)
   })
 
   it('未声明 variant 的 slot 不受影响', () => {
     // title 没在 variants.size 里声明 → 任何 size 都返回相同 className
-    const a = dialog.title({ size: 'sm' })
-    const b = dialog.title({ size: 'lg' })
+    const a = dialog.title({ size: 'small' })
+    const b = dialog.title({ size: 'large' })
     expect(a).toBe(b)
   })
 
   it('未传 props 用 defaultVariants', () => {
     const def = dialog.content()
-    const md = dialog.content({ size: 'md' })
+    const md = dialog.content({ size: 'middle' })
     expect(def).toBe(md)
   })
 
   it('同 slot 同 props 缓存命中（==）', () => {
-    const a = dialog.content({ size: 'lg' })
-    const b = dialog.content({ size: 'lg' })
+    const a = dialog.content({ size: 'large' })
+    const b = dialog.content({ size: 'large' })
     expect(a).toBe(b)
   })
 
@@ -303,35 +303,35 @@ describe('E1 — defineParts 多 slot', () => {
       slots: ['root', 'content'] as const,
       base: { root: s => { s.padding.px(8) } },
       variants: {
-        size: { sm: { content: () => {} }, lg: { content: () => {} } },
+        size: { small: { content: () => {} }, large: { content: () => {} } },
         tone: { warm: { content: () => {} }, cool: { content: () => {} } },
       },
-      defaultVariants: { size: 'sm', tone: 'warm' },
+      defaultVariants: { size: 'small', tone: 'warm' },
       compoundVariants: [
         {
-          when: { size: 'lg', tone: 'cool' },
+          when: { size: 'large', tone: 'cool' },
           apply: { content: s => { s.backgroundColor._info } },
         },
       ],
     })
-    const a = compoundDialog.content({ size: 'lg', tone: 'cool' })
-    const b = compoundDialog.content({ size: 'lg', tone: 'warm' })
+    const a = compoundDialog.content({ size: 'large', tone: 'cool' })
+    const b = compoundDialog.content({ size: 'large', tone: 'warm' })
     expect(a).not.toBe(b)
   })
 
   it('VariantPropsOfParts<typeof dialog> 推 props 类型', () => {
     type DialogProps = VariantPropsOfParts<typeof dialog>
     expectTypeOf<DialogProps>().toExtend<{
-      size?: 'sm' | 'md' | 'lg'
+      size?: 'small' | 'middle' | 'large'
     }>()
   })
 
   it('实际应用：dialog 4 slot 组合用', () => {
     const ds = {
-      root: dialog.root({ size: 'lg' }),
-      overlay: dialog.overlay({ size: 'lg' }),
-      content: dialog.content({ size: 'lg' }),
-      title: dialog.title({ size: 'lg' }),
+      root: dialog.root({ size: 'large' }),
+      overlay: dialog.overlay({ size: 'large' }),
+      content: dialog.content({ size: 'large' }),
+      title: dialog.title({ size: 'large' }),
     }
     expect(Object.values(ds).every(s => typeof s === 'string' && s.length > 0)).toBe(true)
     // 4 个都不同

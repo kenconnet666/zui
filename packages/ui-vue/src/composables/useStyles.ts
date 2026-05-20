@@ -38,9 +38,9 @@ export function useStyles<S extends ThemeSchema = ThemeSchema>(
  * `useDynamicStyles(factoryGetter)` —— 当 factory 依赖响应式 source 时用本 hook。
  *
  * @example
- * const props = defineProps<{ size: 'sm' | 'md' | 'lg' }>()
+ * const props = defineProps<{ size: 'small' | 'middle' | 'large' }>()
  * const cls = useDynamicStyles<MySchema>(() => (s) => {
- *   s.fontSize.px(props.size === 'sm' ? 12 : props.size === 'md' ? 14 : 16)
+ *   s.fontSize.px(props.size === 'small' ? 12 : props.size === 'middle' ? 14 : 16)
  * })
  */
 export function useDynamicStyles<S extends ThemeSchema = ThemeSchema>(

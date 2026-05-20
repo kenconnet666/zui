@@ -121,10 +121,10 @@ describe('F1 — applyStyleProps 双签名', () => {
 })
 
 describe('F1 + E4 — applyStyleProps 响应式 prop', () => {
-  it('p: { base: 4, md: 8 } 自动 _media 嵌套', () => {
+  it('p: { base: 4, middle: 8 } 自动 _media 嵌套（middle = theme.breakpoint.middle）', () => {
     const c = new Chain(defaultLight)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    applyStyleProps(c, { p: { base: 4, md: 8 } as any })
+    applyStyleProps(c, { p: { base: 4, middle: 8 } as any })
     expect(c._node.padding).toBe(4)
     const mediaKeys = Object.keys(c._node).filter(k => k.startsWith('@media'))
     expect(mediaKeys.length).toBeGreaterThan(0)
@@ -133,7 +133,7 @@ describe('F1 + E4 — applyStyleProps 响应式 prop', () => {
   it('px: { base, md } → 同时响应式两个 cssProp（paddingLeft + paddingRight）', () => {
     const c = new Chain(defaultLight)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    applyStyleProps(c, { px: { base: 4, md: 8 } as any })
+    applyStyleProps(c, { px: { base: 4, middle: 8 } as any })
     expect(c._node.paddingLeft).toBe(4)
     expect(c._node.paddingRight).toBe(4)
     const mediaKeys = Object.keys(c._node).filter(k => k.startsWith('@media'))
@@ -143,7 +143,7 @@ describe('F1 + E4 — applyStyleProps 响应式 prop', () => {
   it('color: { base, md } 响应式 color', () => {
     const c = new Chain(defaultLight)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    applyStyleProps(c, { color: { base: 'red', md: 'blue' } as any })
+    applyStyleProps(c, { color: { base: 'red', middle: 'blue' } as any })
     expect(c._node.color).toBe('red')
   })
 
@@ -151,7 +151,7 @@ describe('F1 + E4 — applyStyleProps 响应式 prop', () => {
     const c = new Chain(defaultLight)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     applyStyleProps(c, {
-      p: { base: 4, md: 8 } as any,
+      p: { base: 4, middle: 8 } as any,
       bg: '_primary',
       rounded: 4,
     })

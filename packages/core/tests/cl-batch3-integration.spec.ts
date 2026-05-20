@@ -127,18 +127,18 @@ describe('集成 — 完整 Button 组件流程', () => {
         ghost:   s => { s.color._primary; s.backgroundColor.transparent },
       },
       size: {
-        sm: s => { s.padding.px(8); s.fontSize._small },
-        md: s => { s.padding.px(12); s.fontSize._middle },
-        lg: s => { s.padding.px(16); s.fontSize._large },
+        small: s => { s.padding.px(8); s.fontSize._small },
+        middle: s => { s.padding.px(12); s.fontSize._middle },
+        large: s => { s.padding.px(16); s.fontSize._large },
       },
       block: {
         true: s => { s.display.block; s.width.pct(100) },
         false: () => {},
       },
     },
-    defaultVariants: { intent: 'primary', size: 'md' },
+    defaultVariants: { intent: 'primary', size: 'middle' },
     compoundVariants: [
-      { when: { intent: 'ghost', size: 'sm' }, apply: s => { s.padding.px(6) } },
+      { when: { intent: 'ghost', size: 'small' }, apply: s => { s.padding.px(6) } },
     ],
   })
 
@@ -151,13 +151,13 @@ describe('集成 — 完整 Button 组件流程', () => {
   })
 
   it('Button 全 variant 组合', () => {
-    const cls = button({ intent: 'danger', size: 'sm', state: 'loading', block: true })
+    const cls = button({ intent: 'danger', size: 'small', state: 'loading', block: true })
     expect(typeof cls).toBe('string')
   })
 
   it('Button 18 种 props 组合都返回有效 className', () => {
     const intents: Array<'primary' | 'danger' | 'ghost'> = ['primary', 'danger', 'ghost']
-    const sizes: Array<'sm' | 'md' | 'lg'> = ['sm', 'md', 'lg']
+    const sizes: Array<'small' | 'middle' | 'large'> = ['small', 'middle', 'large']
     const states: Array<'idle' | 'loading' | 'disabled'> = ['idle', 'loading', 'disabled']
     const classes = new Set<string>()
     for (const intent of intents) {
@@ -176,14 +176,14 @@ describe('集成 — 完整 Button 组件流程', () => {
   })
 
   it('Button 缓存命中：相同 props 同 className', () => {
-    const a = button({ intent: 'primary', size: 'md' })
-    const b = button({ intent: 'primary', size: 'md' })
+    const a = button({ intent: 'primary', size: 'middle' })
+    const b = button({ intent: 'primary', size: 'middle' })
     expect(a).toBe(b)
   })
 
   it('Button 不同 size 用不同的 className', () => {
-    const sm = button({ size: 'sm' })
-    const lg = button({ size: 'lg' })
+    const sm = button({ size: 'small' })
+    const lg = button({ size: 'large' })
     expect(sm).not.toBe(lg)
   })
 })
@@ -220,12 +220,12 @@ describe('集成 — Dialog 多 slot 组件', () => {
     },
     variants: {
       size: {
-        sm: { content: s => { s.maxWidth.px(400) } },
-        md: { content: s => { s.maxWidth.px(600) } },
-        lg: { content: s => { s.maxWidth.px(900) } },
+        small: { content: s => { s.maxWidth.px(400) } },
+        middle: { content: s => { s.maxWidth.px(600) } },
+        large: { content: s => { s.maxWidth.px(900) } },
       },
     },
-    defaultVariants: { size: 'md' },
+    defaultVariants: { size: 'middle' },
   })
 
   it('6 个 slot 都返回有效 className', () => {
@@ -250,11 +250,11 @@ describe('集成 — Dialog 多 slot 组件', () => {
   })
 
   it('content 在不同 size 下 className 不同', () => {
-    expect(dialog.content({ size: 'sm' })).not.toBe(dialog.content({ size: 'lg' }))
+    expect(dialog.content({ size: 'small' })).not.toBe(dialog.content({ size: 'large' }))
   })
 
   it('未声明 variant 的 slot 不受 size 影响', () => {
-    expect(dialog.title({ size: 'sm' })).toBe(dialog.title({ size: 'lg' }))
+    expect(dialog.title({ size: 'small' })).toBe(dialog.title({ size: 'large' }))
   })
 })
 
@@ -362,7 +362,7 @@ describe('集成 — applyStyleProps 实际组件用例', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const cls = applyStyleProps(defaultLight, {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      p: { base: 4, md: 8, lg: 16 } as any,
+      p: { base: 4, middle: 8, large: 16 } as any,
       bg: '_primary',
       rounded: '_middle',
       color: 'white',

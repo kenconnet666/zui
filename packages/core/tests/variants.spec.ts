@@ -84,28 +84,28 @@ describe('defineVariants — 多 variant 组合', () => {
         },
       },
       size: {
-        sm: (s) => {
+        small: (s) => {
           s.padding.px(8)
         },
-        md: (s) => {
+        middle: (s) => {
           s.padding.px(12)
         },
-        lg: (s) => {
+        large: (s) => {
           s.padding.px(16)
         },
       },
     },
-    defaultVariants: { intent: 'primary', size: 'md' },
+    defaultVariants: { intent: 'primary', size: 'middle' },
   })
 
   it('intent + size 两 variant 同时应用', () => {
-    const cls = button({ intent: 'danger', size: 'lg' })
+    const cls = button({ intent: 'danger', size: 'large' })
     expect(cls).toBeTruthy()
   })
 
   it('单维度未传走 defaults', () => {
-    const cls = button({ intent: 'danger' }) // size 走 'md'
-    const full = button({ intent: 'danger', size: 'md' })
+    const cls = button({ intent: 'danger' }) // size 走 'middle'
+    const full = button({ intent: 'danger', size: 'middle' })
     expect(cls).toBe(full)
   })
 })
@@ -125,18 +125,18 @@ describe('defineVariants — compoundVariants', () => {
         },
       },
       size: {
-        sm: (s) => {
+        small: (s) => {
           s.padding.px(8)
         },
-        md: (s) => {
+        middle: (s) => {
           s.padding.px(12)
         },
       },
     },
-    defaultVariants: { intent: 'primary', size: 'md' },
+    defaultVariants: { intent: 'primary', size: 'middle' },
     compoundVariants: [
       {
-        when: { intent: 'ghost', size: 'sm' },
+        when: { intent: 'ghost', size: 'small' },
         apply: (s) => {
           s.padding.px(6)
         },
@@ -145,14 +145,14 @@ describe('defineVariants — compoundVariants', () => {
   })
 
   it('compound 命中：ghost + sm', () => {
-    const a = button({ intent: 'ghost', size: 'sm' })
-    const b = button({ intent: 'ghost', size: 'md' }) // 不命中 compound
+    const a = button({ intent: 'ghost', size: 'small' })
+    const b = button({ intent: 'ghost', size: 'middle' }) // 不命中 compound
     expect(a).not.toBe(b)
   })
 
   it('compound 未命中：单匹配不算', () => {
-    const a = button({ intent: 'ghost', size: 'md' }) // size 不对
-    const b = button({ intent: 'primary', size: 'sm' }) // intent 不对
+    const a = button({ intent: 'ghost', size: 'middle' }) // size 不对
+    const b = button({ intent: 'primary', size: 'small' }) // intent 不对
     expect(a).not.toBe(b)
   })
 
@@ -327,8 +327,8 @@ describe('defineVariants — 类型推断', () => {
           danger: () => {},
         },
         size: {
-          sm: () => {},
-          md: () => {},
+          small: () => {},
+          middle: () => {},
         },
       },
     })
@@ -338,7 +338,7 @@ describe('defineVariants — 类型推断', () => {
     expectTypeOf<ButtonProps>().toExtend<
       | {
           intent?: 'primary' | 'danger'
-          size?: 'sm' | 'md'
+          size?: 'small' | 'middle'
         }
       | undefined
     >()
@@ -376,24 +376,24 @@ describe('defineVariants — 实际组件库场景', () => {
           },
         },
         size: {
-          sm: (s) => {
+          small: (s) => {
             s.padding.px(8)
             s.fontSize._small
           },
-          md: (s) => {
+          middle: (s) => {
             s.padding.px(12)
             s.fontSize._middle
           },
-          lg: (s) => {
+          large: (s) => {
             s.padding.px(16)
             s.fontSize._large
           },
         },
       },
-      defaultVariants: { intent: 'primary', size: 'md' },
+      defaultVariants: { intent: 'primary', size: 'middle' },
       compoundVariants: [
         {
-          when: { intent: 'ghost', size: 'sm' },
+          when: { intent: 'ghost', size: 'small' },
           apply: (s) => {
             s.padding.px(6)
           },
@@ -403,15 +403,15 @@ describe('defineVariants — 实际组件库场景', () => {
 
     // 9 种组合都应输出有效 className
     const combos: Array<Parameters<typeof button>[0]> = [
-      { intent: 'primary', size: 'sm' },
-      { intent: 'primary', size: 'md' },
-      { intent: 'primary', size: 'lg' },
-      { intent: 'danger', size: 'sm' },
-      { intent: 'danger', size: 'md' },
-      { intent: 'danger', size: 'lg' },
-      { intent: 'ghost', size: 'sm' },
-      { intent: 'ghost', size: 'md' },
-      { intent: 'ghost', size: 'lg' },
+      { intent: 'primary', size: 'small' },
+      { intent: 'primary', size: 'middle' },
+      { intent: 'primary', size: 'large' },
+      { intent: 'danger', size: 'small' },
+      { intent: 'danger', size: 'middle' },
+      { intent: 'danger', size: 'large' },
+      { intent: 'ghost', size: 'small' },
+      { intent: 'ghost', size: 'middle' },
+      { intent: 'ghost', size: 'large' },
     ]
     for (const combo of combos) {
       const cls = button(combo)
@@ -420,8 +420,8 @@ describe('defineVariants — 实际组件库场景', () => {
     }
 
     // 不同组合输出不同 className
-    const a = button({ intent: 'primary', size: 'sm' })
-    const b = button({ intent: 'danger', size: 'lg' })
+    const a = button({ intent: 'primary', size: 'small' })
+    const b = button({ intent: 'danger', size: 'large' })
     expect(a).not.toBe(b)
   })
 })

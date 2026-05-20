@@ -13,7 +13,7 @@ import { useZTheme } from '../provider/useZTheme'
  *
  * @example
  * const buttonVariants = (theme: ResolvedTheme<S>) =>
- *   defineVariants(theme, { base: ..., variants: { size: { sm: ..., md: ... } } })
+ *   defineVariants(theme, { base: ..., variants: { size: { small: ..., middle: ... } } })
  *
  * const cls = useVariants(buttonVariants, () => ({ size: props.size }))
  *

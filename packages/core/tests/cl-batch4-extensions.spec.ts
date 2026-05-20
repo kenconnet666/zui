@@ -84,18 +84,18 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
   describe('isResponsiveValue(value, breakpoints?)', () => {
     it('严格模式：所有 key 在 breakpoints 内则 true', () => {
       expect(
-        isResponsiveValue({ base: 1, md: 2, lg: 3 }, ['sm', 'md', 'lg', 'xl']),
+        isResponsiveValue({ base: 1, middle: 2, large: 3 }, ['small', 'middle', 'large', 'huge']),
       ).toBe(true)
     })
 
     it('严格模式：含未声明 key 返回 false', () => {
       expect(
-        isResponsiveValue({ base: 1, weird: 2 }, ['sm', 'md', 'lg']),
+        isResponsiveValue({ base: 1, weird: 2 }, ['small', 'middle', 'large']),
       ).toBe(false)
     })
 
     it('启发模式（不传 breakpoints）— 向后兼容', () => {
-      expect(isResponsiveValue({ base: 1, md: 2 })).toBe(true)
+      expect(isResponsiveValue({ base: 1, middle: 2 })).toBe(true)
     })
 
     it('启发模式拒绝下划线开头 key（不被误判为响应式）', () => {
@@ -104,7 +104,7 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
 
     it('严格模式拒绝下划线开头 key', () => {
       expect(
-        isResponsiveValue({ _primary: '#fff' }, ['sm', 'md', 'lg']),
+        isResponsiveValue({ _primary: '#fff' }, ['small', 'middle', 'large']),
       ).toBe(false)
     })
 
@@ -117,7 +117,7 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
 
     it('空对象返回 false', () => {
       expect(isResponsiveValue({})).toBe(false)
-      expect(isResponsiveValue({}, ['sm', 'md'])).toBe(false)
+      expect(isResponsiveValue({}, ['small', 'middle'])).toBe(false)
     })
   })
 
@@ -198,23 +198,23 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
         },
         variants: {
           size: {
-            sm: { trigger: (s) => { s.fontSize.px(12) } },
-            md: { trigger: (s) => { s.fontSize.px(14) } },
+            small: { trigger: (s) => { s.fontSize.px(12) } },
+            middle: { trigger: (s) => { s.fontSize.px(14) } },
           },
         } as const,
-        defaultVariants: { size: 'md' },
+        defaultVariants: { size: 'middle' },
       })
 
       const customized = extendParts(theme, select, {
         variants: {
           size: {
-            md: { trigger: (s) => { s.fontSize.px(20) } },
+            middle: { trigger: (s) => { s.fontSize.px(20) } },
           },
         } as const,
       })
 
       // 拿到 className 不空（不验证 CSS 内容，emotion 已 hash）
-      const cls = customized.trigger({ size: 'md' })
+      const cls = customized.trigger({ size: 'middle' })
       expect(cls.length).toBeGreaterThan(0)
     })
   })

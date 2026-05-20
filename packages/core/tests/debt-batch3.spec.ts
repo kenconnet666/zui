@@ -30,20 +30,20 @@ describe('L5 — defineVariants LRU 缓存', () => {
         s.padding.px(8)
       },
       variants: {
-        size: { sm: () => {}, md: () => {}, lg: () => {}, xl: () => {} },
+        size: { small: () => {}, middle: () => {}, large: () => {}, huge: () => {} },
       },
       cacheLimit: 2,
     })
     // 触发 3 个不同 size
-    const a = f({ size: 'sm' }) // cache: [sm]
-    const b = f({ size: 'md' }) // cache: [sm, md]
-    const c = f({ size: 'lg' }) // cache: [md, lg]（sm 被淘汰）
+    const a = f({ size: 'small' })  // cache: [small]
+    const b = f({ size: 'middle' }) // cache: [small, middle]
+    const c = f({ size: 'large' })  // cache: [middle, large]（small 被淘汰）
     expect(computeCount).toBe(3)
-    // 再访问 sm：缓存已淘汰，需重算
-    f({ size: 'sm' })
+    // 再访问 small：缓存已淘汰，需重算
+    f({ size: 'small' })
     expect(computeCount).toBe(4)
-    // 再访问 lg：仍在缓存中
-    const c2 = f({ size: 'lg' })
+    // 再访问 large：仍在缓存中
+    const c2 = f({ size: 'large' })
     expect(c2).toBe(c)
     expect(computeCount).toBe(4)
   })
