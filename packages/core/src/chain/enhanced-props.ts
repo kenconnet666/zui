@@ -16,6 +16,7 @@ const COLOR_KW = ['white', 'black', 'transparent', 'currentColor'] as const
 const SPACING_KW = ['auto'] as const
 const SIZE_KW = ['auto', 'minContent', 'maxContent', 'fitContent'] as const
 const DISPLAY_KW = [
+  // 基础 outside / inside
   'block',
   'inline',
   'inlineBlock',
@@ -25,20 +26,66 @@ const DISPLAY_KW = [
   'inlineGrid',
   'none',
   'contents',
+  // 现代 inside
+  'flowRoot',
+  'ruby',
+  // list-item
+  'listItem',
+  // table 家族
+  'table',
+  'inlineTable',
+  'tableCell',
+  'tableRow',
+  'tableColumn',
+  'tableRowGroup',
+  'tableHeaderGroup',
+  'tableFooterGroup',
+  'tableColumnGroup',
+  'tableCaption',
 ] as const
 const POSITION_KW = ['static', 'relative', 'absolute', 'fixed', 'sticky'] as const
 const CURSOR_KW = [
+  // 通用
   'auto',
   'default',
+  'none',
+  // 交互
   'pointer',
   'text',
+  'verticalText',
   'wait',
-  'move',
+  'progress',
   'help',
-  'notAllowed',
-  'none',
+  'contextMenu',
+  'cell',
+  'crosshair',
+  // 拖放
+  'move',
   'grab',
   'grabbing',
+  'alias',
+  'copy',
+  'notAllowed',
+  'noDrop',
+  // 缩放
+  'allScroll',
+  'zoomIn',
+  'zoomOut',
+  // resize（8 方向 + 列/行 + 对角线）
+  'colResize',
+  'rowResize',
+  'eResize',
+  'nResize',
+  'sResize',
+  'wResize',
+  'neResize',
+  'nwResize',
+  'seResize',
+  'swResize',
+  'ewResize',
+  'nsResize',
+  'neswResize',
+  'nwseResize',
 ] as const
 const VISIBILITY_KW = ['visible', 'hidden', 'collapse'] as const
 const OVERFLOW_KW = ['visible', 'hidden', 'scroll', 'auto', 'clip'] as const
@@ -88,18 +135,64 @@ const ANIMATION_DIRECTION_KW = ['normal', 'reverse', 'alternate', 'alternateReve
 const ANIMATION_FILL_KW = ['none', 'forwards', 'backwards', 'both'] as const
 const ANIMATION_PLAY_KW = ['running', 'paused'] as const
 const OBJECT_FIT_KW = ['fill', 'contain', 'cover', 'none', 'scaleDown'] as const
-const TEXT_ALIGN_KW = ['left', 'right', 'center', 'justify', 'start', 'end'] as const
-const TEXT_DECO_LINE_KW = ['none', 'underline', 'overline', 'lineThrough'] as const
+const TEXT_ALIGN_KW = [
+  'left',
+  'right',
+  'center',
+  'justify',
+  'start',
+  'end',
+  'matchParent',
+  'justifyAll',
+] as const
+const TEXT_DECO_LINE_KW = [
+  'none',
+  'underline',
+  'overline',
+  'lineThrough',
+  'spellingError',
+  'grammarError',
+] as const
 const TEXT_DECO_STYLE_KW = ['solid', 'double', 'dotted', 'dashed', 'wavy'] as const
-const TEXT_TRANSFORM_KW = ['none', 'capitalize', 'uppercase', 'lowercase'] as const
+const TEXT_TRANSFORM_KW = [
+  'none',
+  'capitalize',
+  'uppercase',
+  'lowercase',
+  'fullWidth',
+  'fullSizeKana',
+  'mathAuto',
+] as const
 const TEXT_OVERFLOW_KW = ['clip', 'ellipsis'] as const
-const WHITE_SPACE_KW = ['normal', 'nowrap', 'pre', 'preWrap', 'preLine', 'breakSpaces'] as const
-const WORD_BREAK_KW = ['normal', 'breakAll', 'keepAll', 'breakWord'] as const
+const WHITE_SPACE_KW = [
+  'normal',
+  'nowrap',
+  'pre',
+  'preWrap',
+  'preLine',
+  'breakSpaces',
+  // CSS 4
+  'wrap',
+  'collapse',
+] as const
+const WORD_BREAK_KW = ['normal', 'breakAll', 'keepAll', 'breakWord', 'autoPhrase'] as const
 const BG_SIZE_KW = ['auto', 'cover', 'contain'] as const
 const BG_REPEAT_KW = ['repeat', 'noRepeat', 'repeatX', 'repeatY', 'round', 'space'] as const
 const BG_CLIP_KW = ['borderBox', 'paddingBox', 'contentBox', 'text'] as const
 const USER_SELECT_KW = ['none', 'auto', 'text', 'all', 'contain'] as const
-const POINTER_EVENTS_KW = ['none', 'auto'] as const
+const POINTER_EVENTS_KW = [
+  'none',
+  'auto',
+  // SVG（注：spec 拼写为驼峰单词，无连字符）
+  'visiblePainted',
+  'visibleFill',
+  'visibleStroke',
+  'visible',
+  'painted',
+  'fill',
+  'stroke',
+  'all',
+] as const
 const RESIZE_KW = ['none', 'both', 'horizontal', 'vertical', 'block', 'inline'] as const
 const SCROLL_BEHAVIOR_KW = ['auto', 'smooth'] as const
 const GRID_AUTO_FLOW_KW = ['row', 'column', 'dense', 'rowDense', 'columnDense'] as const
@@ -152,20 +245,30 @@ const CAPTION_SIDE_KW = [
   'inlineEnd',
 ] as const
 const LIST_STYLE_TYPE_KW = [
+  // 基础
   'disc',
   'circle',
   'square',
+  'none',
+  // 数字 / 西文字母
   'decimal',
   'decimalLeadingZero',
   'lowerRoman',
   'upperRoman',
   'lowerAlpha',
   'upperAlpha',
-  'none',
+  // 国际化（CSS spec 已标准化）
+  'lowerGreek',
+  'armenian',
+  'georgian',
+  'hebrew',
+  'hiragana',
+  'katakana',
+  'cjkIdeographic',
 ] as const
 const LIST_STYLE_POSITION_KW = ['inside', 'outside'] as const
 const STROKE_LINECAP_KW = ['butt', 'round', 'square'] as const
-const STROKE_LINEJOIN_KW = ['miter', 'round', 'bevel'] as const
+const STROKE_LINEJOIN_KW = ['miter', 'round', 'bevel', 'arcs', 'miterClip'] as const
 const SCROLL_SNAP_TYPE_KW = [
   'none',
   'x',
@@ -426,7 +529,7 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   textAlign: { tokenCat: null, unitClass: null, keywords: TEXT_ALIGN_KW },
   textDecorationLine: { tokenCat: null, unitClass: null, keywords: TEXT_DECO_LINE_KW },
   textDecorationStyle: { tokenCat: null, unitClass: null, keywords: TEXT_DECO_STYLE_KW },
-  textDecorationThickness: { tokenCat: null, unitClass: 'length', keywords: ['auto'] },
+  textDecorationThickness: { tokenCat: null, unitClass: 'length', keywords: ['auto', 'fromFont'] },
   textTransform: { tokenCat: null, unitClass: null, keywords: TEXT_TRANSFORM_KW },
   textOverflow: { tokenCat: null, unitClass: null, keywords: TEXT_OVERFLOW_KW },
   textIndent: { tokenCat: 'spacing', unitClass: 'length', keywords: null },

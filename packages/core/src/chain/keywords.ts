@@ -341,6 +341,89 @@ export const KEYWORD_TO_CSS: Record<string, string> = {
   // ─── border-width / outline-width / column-rule-width（medium 与 fontSize 复用） ───
   thin: 'thin',
   thick: 'thick',
+
+  // ═════════════════════════════════════════════════════════════════════
+  // 全量补完 —— CSS spec 已支持但 zui 之前漏掉的标准 keyword
+  // ═════════════════════════════════════════════════════════════════════
+
+  // ─── cursor 完整集（25 个标准 CSS 值） ───
+  crosshair: 'crosshair',
+  copy: 'copy',
+  alias: 'alias',
+  progress: 'progress',
+  cell: 'cell',
+  verticalText: 'vertical-text',
+  contextMenu: 'context-menu',
+  noDrop: 'no-drop',
+  zoomIn: 'zoom-in',
+  zoomOut: 'zoom-out',
+  allScroll: 'all-scroll',
+  colResize: 'col-resize',
+  rowResize: 'row-resize',
+  eResize: 'e-resize',
+  nResize: 'n-resize',
+  sResize: 's-resize',
+  wResize: 'w-resize',
+  neResize: 'ne-resize',
+  nwResize: 'nw-resize',
+  seResize: 'se-resize',
+  swResize: 'sw-resize',
+  ewResize: 'ew-resize',
+  nsResize: 'ns-resize',
+  neswResize: 'nesw-resize',
+  nwseResize: 'nwse-resize',
+
+  // ─── display table 系列 + 现代值 ───
+  table: 'table',
+  tableCell: 'table-cell',
+  tableRow: 'table-row',
+  tableColumn: 'table-column',
+  tableRowGroup: 'table-row-group',
+  tableHeaderGroup: 'table-header-group',
+  tableFooterGroup: 'table-footer-group',
+  tableColumnGroup: 'table-column-group',
+  tableCaption: 'table-caption',
+  inlineTable: 'inline-table',
+  flowRoot: 'flow-root',
+  listItem: 'list-item',
+  ruby: 'ruby',
+
+  // ─── pointer-events SVG 值（spec 拼写为单词驼峰，无连字符） ───
+  visiblePainted: 'visiblePainted',
+  visibleFill: 'visibleFill',
+  visibleStroke: 'visibleStroke',
+  painted: 'painted',
+  stroke: 'stroke',
+
+  // ─── text-align CSS 4 补 ───
+  matchParent: 'match-parent',
+  justifyAll: 'justify-all',
+
+  // ─── text-decoration-line / -thickness 补 ───
+  spellingError: 'spelling-error',
+  grammarError: 'grammar-error',
+  fromFont: 'from-font',
+
+  // ─── text-transform 补 ───
+  fullWidth: 'full-width',
+  fullSizeKana: 'full-size-kana',
+  mathAuto: 'math-auto',
+
+  // ─── word-break CSS 4 ───
+  autoPhrase: 'auto-phrase',
+
+  // ─── stroke-linejoin 补 ───
+  arcs: 'arcs',
+  miterClip: 'miter-clip',
+
+  // ─── list-style-type 国际化补完 ───
+  lowerGreek: 'lower-greek',
+  armenian: 'armenian',
+  georgian: 'georgian',
+  hebrew: 'hebrew',
+  hiragana: 'hiragana',
+  katakana: 'katakana',
+  cjkIdeographic: 'cjk-ideographic',
 }
 
 export const GLOBAL_KEYWORDS = ['inherit', 'unset', 'initial', 'revert', 'revertLayer'] as const

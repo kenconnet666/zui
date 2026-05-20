@@ -1652,7 +1652,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/cursor
      */
-  cursor: PropCarrier<TSelf, CssValueOf<'cursor'>, CursorTokens<T>, 'auto' | 'default' | 'pointer' | 'text' | 'wait' | 'move' | 'help' | 'notAllowed' | 'none' | 'grab' | 'grabbing' | GlobalKw, unknown, never>
+  cursor: PropCarrier<TSelf, CssValueOf<'cursor'>, CursorTokens<T>, 'auto' | 'default' | 'none' | 'pointer' | 'text' | 'verticalText' | 'wait' | 'progress' | 'help' | 'contextMenu' | 'cell' | 'crosshair' | 'move' | 'grab' | 'grabbing' | 'alias' | 'copy' | 'notAllowed' | 'noDrop' | 'allScroll' | 'zoomIn' | 'zoomOut' | 'colResize' | 'rowResize' | 'eResize' | 'nResize' | 'sResize' | 'wResize' | 'neResize' | 'nwResize' | 'seResize' | 'swResize' | 'ewResize' | 'nsResize' | 'neswResize' | 'nwseResize' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -1722,7 +1722,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/display
      */
-  display: PropCarrier<TSelf, CssValueOf<'display'>, never, 'block' | 'inline' | 'inlineBlock' | 'flex' | 'inlineFlex' | 'grid' | 'inlineGrid' | 'none' | 'contents' | GlobalKw, unknown, never>
+  display: PropCarrier<TSelf, CssValueOf<'display'>, never, 'block' | 'inline' | 'inlineBlock' | 'flex' | 'inlineFlex' | 'grid' | 'inlineGrid' | 'none' | 'contents' | 'flowRoot' | 'ruby' | 'listItem' | 'table' | 'inlineTable' | 'tableCell' | 'tableRow' | 'tableColumn' | 'tableRowGroup' | 'tableHeaderGroup' | 'tableFooterGroup' | 'tableColumnGroup' | 'tableCaption' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2854,7 +2854,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style-type
      */
-  listStyleType: PropCarrier<TSelf, CssValueOf<'listStyleType'>, never, 'disc' | 'circle' | 'square' | 'decimal' | 'decimalLeadingZero' | 'lowerRoman' | 'upperRoman' | 'lowerAlpha' | 'upperAlpha' | 'none' | GlobalKw, unknown, never>
+  listStyleType: PropCarrier<TSelf, CssValueOf<'listStyleType'>, never, 'disc' | 'circle' | 'square' | 'none' | 'decimal' | 'decimalLeadingZero' | 'lowerRoman' | 'upperRoman' | 'lowerAlpha' | 'upperAlpha' | 'lowerGreek' | 'armenian' | 'georgian' | 'hebrew' | 'hiragana' | 'katakana' | 'cjkIdeographic' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -4067,7 +4067,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/pointer-events
      */
-  pointerEvents: PropCarrier<TSelf, CssValueOf<'pointerEvents'>, never, 'none' | 'auto' | GlobalKw, unknown, never>
+  pointerEvents: PropCarrier<TSelf, CssValueOf<'pointerEvents'>, never, 'none' | 'auto' | 'visiblePainted' | 'visibleFill' | 'visibleStroke' | 'visible' | 'painted' | 'fill' | 'stroke' | 'all' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -4938,7 +4938,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-linejoin
      */
-  strokeLinejoin: PropCarrier<TSelf, CssValueOf<'strokeLinejoin'>, never, 'miter' | 'round' | 'bevel' | GlobalKw, unknown, never>
+  strokeLinejoin: PropCarrier<TSelf, CssValueOf<'strokeLinejoin'>, never, 'miter' | 'round' | 'bevel' | 'arcs' | 'miterClip' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -5023,7 +5023,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-align
      */
-  textAlign: PropCarrier<TSelf, CssValueOf<'textAlign'>, never, 'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | GlobalKw, unknown, never>
+  textAlign: PropCarrier<TSelf, CssValueOf<'textAlign'>, never, 'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'matchParent' | 'justifyAll' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -5146,7 +5146,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-line
      */
-  textDecorationLine: PropCarrier<TSelf, CssValueOf<'textDecorationLine'>, never, 'none' | 'underline' | 'overline' | 'lineThrough' | GlobalKw, unknown, never>
+  textDecorationLine: PropCarrier<TSelf, CssValueOf<'textDecorationLine'>, never, 'none' | 'underline' | 'overline' | 'lineThrough' | 'spellingError' | 'grammarError' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -5204,7 +5204,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-thickness
      */
-  textDecorationThickness: PropCarrier<TSelf, CssValueOf<'textDecorationThickness'>, never, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  textDecorationThickness: PropCarrier<TSelf, CssValueOf<'textDecorationThickness'>, never, 'auto' | 'fromFont' | GlobalKw, LengthUnits<TSelf>, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -5376,7 +5376,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-transform
      */
-  textTransform: PropCarrier<TSelf, CssValueOf<'textTransform'>, never, 'none' | 'capitalize' | 'uppercase' | 'lowercase' | GlobalKw, unknown, never>
+  textTransform: PropCarrier<TSelf, CssValueOf<'textTransform'>, never, 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'fullWidth' | 'fullSizeKana' | 'mathAuto' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2020.
      *
@@ -5776,7 +5776,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/white-space
      */
-  whiteSpace: PropCarrier<TSelf, CssValueOf<'whiteSpace'>, never, 'normal' | 'nowrap' | 'pre' | 'preWrap' | 'preLine' | 'breakSpaces' | GlobalKw, unknown, never>
+  whiteSpace: PropCarrier<TSelf, CssValueOf<'whiteSpace'>, never, 'normal' | 'nowrap' | 'pre' | 'preWrap' | 'preLine' | 'breakSpaces' | 'wrap' | 'collapse' | GlobalKw, unknown, never>
   /**
      * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -5846,7 +5846,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/word-break
      */
-  wordBreak: PropCarrier<TSelf, CssValueOf<'wordBreak'>, never, 'normal' | 'breakAll' | 'keepAll' | 'breakWord' | GlobalKw, unknown, never>
+  wordBreak: PropCarrier<TSelf, CssValueOf<'wordBreak'>, never, 'normal' | 'breakAll' | 'keepAll' | 'breakWord' | 'autoPhrase' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
