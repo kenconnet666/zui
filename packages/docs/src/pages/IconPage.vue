@@ -5,7 +5,7 @@
  */
 import { computed, ref, shallowRef, watchEffect } from 'vue'
 import type { ZIconProps, ZuiSchema } from '@kenconnet666/zui-vue'
-import { ZConfigProvider, ZIcon } from '@kenconnet666/zui-vue'
+import { ZConfigProvider, ZIcon, ZUnitPreset } from '@kenconnet666/zui-vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import {
   CheckmarkCircle,
@@ -430,6 +430,53 @@ const myLight = zuiLight.extend({
         <div class="cell-mini">
           <ZIcon :component="HeartOutline" size="huge" :css-root="(s) => { s.color._brandForest }" />
           <code>s.color._brandForest</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 11. ZConfigProvider :unit —— 全站 sizing 单点切换 ─── -->
+    <section>
+      <h2>11. <code>:unit</code> —— 全站 sizing 单点切换</h2>
+      <p>
+        <code>&lt;ZConfigProvider :unit&gt;</code> 写入 wrapper inline
+        <code>style="--zui-unit: ..."</code>。所有 zu 化 token（spacing / radius / fontSize /
+        blur 等）经 <code>calc(N * var(--zui-unit, 1px))</code> 自动 resolve 到该基准。
+        **ZIcon 走 em（跟随父字号），不受 unit 影响**，所以下方 demo 用 spacing/fontSize
+        组合展示效果（每行外框 padding 走 spacing.middle）。
+      </p>
+      <p>
+        嵌套 Provider 通过 css cascade 自然覆盖，无运行时合并开销。
+        预设：<code>ZUnitPreset.pixel</code>（默认 1px）/ <code>ZUnitPreset.rem</code>（a11y 1/16rem）/
+        <code>ZUnitPreset.retina</code>（2px）；也可传任意 css length 字符串。
+      </p>
+
+      <div class="row">
+        <div class="cell">
+          <h3>默认 <code>:unit="ZUnitPreset.pixel"</code> (1zu = 1px)</h3>
+          <ZConfigProvider :unit="ZUnitPreset.pixel">
+            <div :style="{ padding: '16px', border: '1px solid #ccc', display: 'flex', gap: '16px', alignItems: 'center' }">
+              <ZIcon :component="HeartOutline" size="large" />
+              <span style="font-size: 16px">spacing.middle = 16px</span>
+            </div>
+          </ZConfigProvider>
+        </div>
+        <div class="cell">
+          <h3><code>:unit="ZUnitPreset.retina"</code> (1zu = 2px，整站放大 2×)</h3>
+          <ZConfigProvider :unit="ZUnitPreset.retina">
+            <div :style="{ padding: 'calc(16 * var(--zui-unit, 1px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(16 * var(--zui-unit, 1px))', alignItems: 'center' }">
+              <ZIcon :component="HeartOutline" size="large" />
+              <span :style="{ fontSize: 'calc(16 * var(--zui-unit, 1px))' }">spacing.middle = 32px</span>
+            </div>
+          </ZConfigProvider>
+        </div>
+        <div class="cell">
+          <h3><code>:unit="ZUnitPreset.rem"</code> (跟浏览器根字号，a11y)</h3>
+          <ZConfigProvider :unit="ZUnitPreset.rem">
+            <div :style="{ padding: 'calc(16 * var(--zui-unit, 1px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(16 * var(--zui-unit, 1px))', alignItems: 'center' }">
+              <ZIcon :component="HeartOutline" size="large" />
+              <span :style="{ fontSize: 'calc(16 * var(--zui-unit, 1px))' }">浏览器大字模式整站同步放大</span>
+            </div>
+          </ZConfigProvider>
         </div>
       </div>
     </section>

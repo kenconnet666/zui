@@ -7,6 +7,9 @@ export { buildKeymap } from './theme/keymap'
 // ─── Chain ───
 export { Chain } from './chain/Chain'
 
+// ─── 单位 helper ───
+export { zu } from './chain/units'
+
 // ─── 顶层工具 ───
 export { icss } from './icss'
 export { toClassName } from './toClassName'

@@ -63,9 +63,35 @@ const props = withDefaults(
     timezone?: string
     /** date-fns Locale 对象。未传继承父。 */
     dateLocale?: DateFnsLocale
+
+    /**
+     * **逻辑单位 zu 的物理映射 —— 全站 sizing 单点切换器**。
+     *
+     * 写入 wrapper inline `style="--zui-unit: ..."`，ui-vue 所有 zu 化 token
+     * （`spacing` / `radius` / `fontSize` / `blur` 等）经 `calc(N * var(--zui-unit, 1px))`
+     * 自动 resolve 到该基准。**嵌套 Provider 通过 css cascade 自动覆盖，无运行时合并开销**。
+     *
+     * 接受任意 css length 字符串或纯数字（数字按 px 处理）：
+     * - 不传 / `'1px'` —— 默认，1zu = 1px（与传统 css 行为一致）
+     * - `'2px'` —— 整站 UI 放大 2 倍（适合超大屏）
+     * - `'0.0625rem'`（推荐用 `ZUnitPreset.rem`）—— 1zu = 1rem/16，全站跟浏览器根字号（a11y 大字模式立即生效）
+     * - `'0.05vw'` —— 响应式 fluid sizing
+     * - `'clamp(0.875px, 0.1vw, 1.25px)'` —— 任意 css length 表达式
+     *
+     * **不影响**：`breakpoint`（媒体查询基准）/ `shadow`（保留 px 字面量）/ `duration` 等非长度 token。
+     * **不影响**：ZIcon 等"跟随父字号"的组件（用 em 单位，独立于 zu 体系）。
+     */
+    unit?: string | number
   }>(),
-  {},
+  {
+    unit: '1px',
+  },
 )
+
+// ─── unit → css var 注入（写到 wrapper inline style，子组件通过 css cascade 自动读取） ───
+const unitStyle = computed(() => ({
+  '--zui-unit': typeof props.unit === 'number' ? `${props.unit}px` : props.unit,
+}))
 
 defineSlots<{
   default(props: { theme: ResolvedTheme<ZuiSchema>; locale: ZLocale }): unknown
@@ -142,5 +168,7 @@ defineExpose({
 </script>
 
 <template>
-  <slot :theme="mergedTheme" :locale="mergedLocale" />
+  <div :style="unitStyle">
+    <slot :theme="mergedTheme" :locale="mergedLocale" />
+  </div>
 </template>

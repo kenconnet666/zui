@@ -20,8 +20,10 @@ export {
   useZComponentTokenSlice,
   useZLocale,
   useZDate,
+  ZUnitPreset,
   type ZDateConfig,
   type UseZDateReturn,
+  type ZUnit,
 } from './provider'
 
 // ─── Composables ───

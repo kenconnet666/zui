@@ -433,16 +433,16 @@ CI 步骤"Generator drift check"会跑 generator 再 `git diff --exit-code`。**
 
 #### 用 size 词（tiny → huge）
 
-| Category | Keys | 备注 |
+| Category | Keys | 默认值 / 备注 |
 |---|---|---|
-| `spacing` | tiny/small/middle/large/huge | 5 阶 |
-| `fontSize` | tiny/small/middle/large/huge | 5 阶 |
-| `radius` | none/tiny/small/middle/large/huge/**full** | 7 阶（含 none+full） |
-| `shadow` | tiny/small/middle/large/huge | 5 阶 |
-| `blur` | **none**/tiny/small/middle/large/huge | 6 阶 |
-| `breakpoint` | tiny/small/middle/large/huge | 5 阶 |
-| `duration` | **none**/tiny/small/middle/large/huge | 6 阶；0ms/75ms/150ms/300ms/500ms/700ms |
-| `zIndex` | **none**/tiny/small/middle/large/huge + 角色 modal/popover/tooltip/toast + auto | 0/10/20/30/40/50 |
+| `spacing` | tiny/small/middle/large/huge | **`zu(4/8/16/24/32)`** —— 走 zu，Provider `:unit` 可全站切换基准 |
+| `fontSize` | tiny/small/middle/large/huge | **`zu(12/14/16/18/20)`** —— 走 zu，配合 `:unit="ZUnitPreset.rem"` 可达到 a11y 大字模式 |
+| `radius` | none/tiny/small/middle/large/huge/**full** | none=`'0'` / 5 阶`zu(4/8/12/16/24)` / **full=`'9999px'`**（语义性 ∞，不缩放） |
+| `shadow` | tiny/small/middle/large/huge | 保留 px 字面量（装饰性效果，与设计稿绑定，**不**跟 unit 缩放） |
+| `blur` | **none**/tiny/small/middle/large/huge | none=`'0'` / 5 阶 `zu(4/8/16/24/40)` |
+| `breakpoint` | tiny/small/middle/large/huge | **保留 px**（媒体查询基准，与"屏幕宽度"硬绑定，**不**跟 unit 缩放） |
+| `duration` | **none**/tiny/small/middle/large/huge | 6 阶；0ms/75ms/150ms/300ms/500ms/700ms（时间，非长度） |
+| `zIndex` | **none**/tiny/small/middle/large/huge + 角色 modal/popover/tooltip/toast + auto | 0/10/20/30/40/50（无单位） |
 
 #### 用领域词（按强度顺序）
 
@@ -548,23 +548,34 @@ partial 应基于已解析的字面量。dev 模式扫到 function 会 warn，�
 
 **所有 ui-vue 组件必须遵守的四条原则**。Button / Input / Dialog / Tabs / Select / ... 一概按此画。`ZIcon` 是首个参照实现（§13.10）。
 
-**① 离散预设 · 无连续输入**
+**① 离散预设优先 · size 类维度可选 `| number` escape hatch · 其它无连续输入**
 
-外观 props 只接受**有限枚举档位**，参考 5 阶哲学 `tiny / small / middle / large / huge`（必要时 `none` / `full`）。
-- 禁止 props 接受任意 CSS length（`'24px'` / `'1.5rem'`）、任意色值（`'#abcdef'`）、任意角度数字 — 这类**连续输入**全部走 §3 cssNode factory
-- 禁止"半离散"：不要"枚举档位 OR 自定义字符串"二选一的 union，prop 表达只走枚举一条路
+外观 props **默认**只接受**有限枚举档位**，参考 5 阶哲学 `tiny / small / middle / large / huge`（必要时 `none` / `full`）。
+- **禁止**：任意 CSS 字符串（`'24px'` / `'1.5rem'` / `'#abcdef'`）、任意对象 / 数组 / 函数（除 `cssRoot` 等明确 factory prop）—— 这类**复合输入**全部走 §3 cssNode factory
+- **禁止"半离散字符串"**：不要"枚举档位 OR 自定义字符串"二选一的 union，prop 表达只走枚举一条路
+- **size 类维度允许 `| number` escape hatch**（受控逃逸口）：
+  - **适用**：尺寸 / 倍率 / 时长 / 角度等"**数值本身有语义**"的维度。如 `size?: 'tiny' | ... | 'huge' | number`（em 倍率）、`spin?: 'tiny' | ... | 'huge' | number`（秒）、`rotate?: 'left' | 'right' | number`（角度）
+  - **不适用**：`color` / `depth` / `intent` / `status` 等"**档位即语义**"的枚举（"primary" / "danger" 不能用数字表达），这类只允许枚举，复杂场景走 `cssRoot`
+  - **类型严格**：只开放**单一 number**（em 倍率 / 秒 / 角度等），不开放 `string` 或 union object。需要"任意 css length"走 `cssRoot.zu(N)` 或 `cssRoot.px(N)`
+  - **实现固定形态**：`typeof props.X === 'number' ? props.X : enumMap[props.X]`
+  - 维度 default 仍是枚举字符串（如 `size: 'middle'`），不能默认 number
 - **无 dynamic styles / 无 applyResponsive / 无运行时 token resolution**
 - 每个维度必须有合理默认值（`defaultVariants` 或 `withDefaults`），用户不传也能直接渲染
 - **实现选择**（按组件复杂度二选一）：
   - **极简组件**（ZIcon / Spinner / Badge 等 —— 每个维度 → 几行 CSS、无状态笛卡尔积）：setup 内一个 `icss(themed.value, s => { ... })`，内联 base + 4 维度 switch + 末尾调用 `props.cssRoot?.(s)`。**无** `defineVariants` 工厂、**无** `cx` 拼接，一个 className 一气呵成。
-  - **复杂组件**（Button / Input / Dialog / Tabs / Select —— 含 hover/focus/disabled/active 等状态笛卡尔积，或多 slot）：用 `defineVariants` / `defineParts` 工厂；工厂是 `<script>` 块的 module-level const，**不对外 export**
+  - **复杂组件**（Button / Input / Dialog / Tabs / Select —— 含 hover/focus/disabled/active 等状态笛卡尔积，或多 slot）：用 `defineVariants` / `defineParts` 工厂；工厂是 `<script>` 块的 module-level const，**不对外 export**。**number escape hatch 在 setup 内分支处理**（变体工厂只接枚举档位，number 走 setup 直接 chain method）
 
-**② em 优先 · 尺寸跟随父字号**
+**② zu 单位优先 · 文字相关用 em · Provider 全站切换基准**
 
-尺寸维度（width / height / padding / fontSize / gap / 等）**统一用 em 单位**，跟随父元素 `font-size` 缩放；不硬编码 px。
-- 5 阶 size variant 设 N em 倍率（`tiny=0.75` / `middle=1` / `large=1.25` / `huge=1.5`），物理尺寸 = N × 父字号
-- 用户调"1em 等于多少"只走 §3 cssNode factory 写 `s.fontSize.px(N)`，**不**为此开 inline-style prop
-- 例外仅限"固定物理像素必要"的极少数维度（如 `border` 1px、`focus-ring` 2px），且优先用 token 表达
+- **大部分尺寸维度**（spacing / radius / fontSize / blur / gap / width / height / padding / 等）：组件内走 `s.padding.zu(8)` / `s.width.zu(16)` 等；theme token 表用 `zu(N)` helper（emit `calc(N * var(--zui-unit, 1px))`）。
+- **`<ZConfigProvider :unit>` 单点切换 1zu 物理意义**：默认 `'1px'`（1zu = 1px，与传统 css 一致）；`'2px'` 整站放大 2×；`ZUnitPreset.rem`（`'0.0625rem'`）跟随浏览器根字号（a11y 大字模式整站同步）；`'0.05vw'` 响应式 fluid sizing。嵌套 Provider 通过 css cascade 自然覆盖。
+- **图标 / Avatar 等文字相关组件用 em**：跟随父字号缩放，让它们在 `<button style="font-size:14px">` / `<h1>` 等不同字号容器里自动协调（用 zu 会让 icon 不随按钮文字缩放）。**注意：em 单位只在一个属性上设**（如 ZIcon 只设 `width/height: N em`，**不**设 `font-size: N em`），避免 em 复合（fontSize.em(N) + width.em(N) 会让 width 算到 N²×父字号）。
+- **不走 zu 的几类**（语义不同）：
+  - `breakpoint` —— 媒体查询基准，跟"屏幕宽度"硬绑定
+  - `shadow` —— 装饰性效果，保留 px 字面量与设计稿绑定（**可选 zu 化**，看产品需求）
+  - `radius.full = '9999px'` —— "无穷大圆角"语义
+  - `letterSpacing` —— em 单位（跟字体本身缩放）
+  - `duration / easing / zIndex / opacity / lineHeight / aspectRatio / fontWeight` —— 非长度
 
 **③ cssNode factory 是唯一逃生口**
 
@@ -822,6 +833,8 @@ declare module '@kenconnet666/zui-vue' {
 
 **§13.0 五件套首个落地，对应 §13.0 ① 实现选择中的 "极简组件" 分支：setup 内一个 `icss` chain factory 内联全部维度，不上 `defineVariants` 工厂。复杂组件（Button / Input / Dialog）照此结构但换用 `defineVariants`。**
 
+**❗ ZIcon 是 §13.0 ② 的 em 例外**：图标语义上跟随父字号（在 `<button>` / `<h1>` 等不同字号容器内自动协调），所以 size 维度用 `s.width.em(N)` / `s.height.em(N)` 而非 zu。**只设 width/height、不设 font-size**：避免 em 复合（若同时 `s.fontSize.em(N)` 与 `s.width.em(N)`，width 会算到 N²×父字号，与"N × 父字号"语义不符）。Avatar 等"跟随文字"的组件也按此 em 路径，其它组件全部走 zu。
+
 **文件结构**（2 个文件，~240 行核心实现 + 3 行 barrel）：
 
 ```
@@ -844,7 +857,7 @@ import { ZIcon } from '@kenconnet666/zui-vue/components/icon'
 
 ```ts
 export interface ZIconProps {
-  size?:  'tiny' | 'small' | 'middle' | 'large' | 'huge'                     // 5 阶 em 倍率（默认 middle）
+  size?:  'tiny' | 'small' | 'middle' | 'large' | 'huge' | number            // 5 阶档位 + number escape（任意 em 倍率；默认 'middle'）
   color?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info'  // 6 种语义（默认 default）
   depth?: 'none' | 'subtle' | 'muted' | 'dim' | 'faded' | 'ghost'            // 5 阶 + none 淡化（默认 none）
   spin?:  'none' | 'tiny' | 'small' | 'middle' | 'large' | 'huge'            // 6 阶纯枚举（默认 none；**不**接 boolean）
@@ -854,6 +867,14 @@ export interface ZIconProps {
   label?: string                                                              // a11y
 }
 ```
+
+**`size` 的 number escape**（§13.0 ① escape hatch 范式参照实现）：
+```vue
+<ZIcon size="middle" />        <!-- 5 阶档位，1em -->
+<ZIcon :size="1.125" />        <!-- 任意 em 倍率，1.125em -->
+<ZIcon :size="2.3" />          <!-- 2.3em -->
+```
+实现固定形态 `typeof props.size === 'number' ? props.size : enumMap[props.size]`。后续 Button.size / Dialog.size / Avatar.size 等 size 类维度按此模式照画。`spin` 暂未开 `| number`（用得少），需要时按同模式加。
 
 **`ZIconTokens`（21 项，全 number，可被 `<ZConfigProvider :component-tokens>` 覆盖）**：
 

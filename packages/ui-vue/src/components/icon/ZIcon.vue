@@ -44,7 +44,18 @@ import type { ZuiSchema } from '../../theme'
  * `ZIcon` 完整 props。维度全离散，union 内联表达；任意连续值 / 复杂样式走 `cssRoot`。
  */
 export interface ZIconProps {
-  size?: 'tiny' | 'small' | 'middle' | 'large' | 'huge'
+  /**
+   * 图标尺寸。
+   * - **5 阶枚举**（默认 `'middle'`）：`tiny=0.75` / `small=0.875` / `middle=1` / `large=1.25` / `huge=1.5`
+   * - **`number` escape hatch**：任意 em 倍率（如 `1.125` / `2.3` / `0.6` 等），用于"5 阶档位无法满足的精确数值"
+   *
+   * 物理尺寸 = N × 父字号。如需脱离父字号绑定，走 `cssRoot` 写 `s.width.zu(N)` 等。
+   *
+   * @example
+   * <ZIcon :component="HeartIcon" size="large" />     <!-- 1.25em -->
+   * <ZIcon :component="HeartIcon" :size="1.125" />    <!-- 1.125em -->
+   */
+  size?: 'tiny' | 'small' | 'middle' | 'large' | 'huge' | number
   color?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info'
   depth?: 'none' | 'subtle' | 'muted' | 'dim' | 'faded' | 'ghost'
   spin?: 'none' | 'tiny' | 'small' | 'middle' | 'large' | 'huge'
@@ -194,17 +205,23 @@ const className = computed(() =>
     s.flexShrink(0)
     s.lineHeight(1)
 
-    // size —— em 倍率（width / height / font-size 全设 N em）
-    const sizeN = {
-      tiny: t.sizeTiny,
-      small: t.sizeSmall,
-      middle: t.sizeMiddle,
-      large: t.sizeLarge,
-      huge: t.sizeHuge,
-    }[props.size]
+    // size —— em 倍率，物理尺寸 = N × inherited font-size（父字号）。
+    // **只设 width/height、不设 font-size**：避免 em 复合（若也写 fontSize.em(N)，
+    // width 的 em 会相对新 fontSize 算成 N² × 父字号，与"N × 父字号"语义不符）。
+    // 不写 fontSize 还保留了 slot 内文本继承父字号，不被 ZIcon 影响。
+    //
+    // size 接受字符串档位（命中 token）或 number escape（任意自定义 em 倍率）。
+    const sizeN = typeof props.size === 'number'
+      ? props.size
+      : {
+          tiny: t.sizeTiny,
+          small: t.sizeSmall,
+          middle: t.sizeMiddle,
+          large: t.sizeLarge,
+          huge: t.sizeHuge,
+        }[props.size]
     s.width.em(sizeN)
     s.height.em(sizeN)
-    s.fontSize.em(sizeN)
 
     // color
     s.color(

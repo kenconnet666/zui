@@ -69,19 +69,35 @@ describe('ZIcon — 渲染', () => {
 })
 
 describe('ZIcon — size 5 阶', () => {
-  it('default size middle → 1em', () => {
+  // 注：ZIcon 走 em 倍率（跟父字号），只设 width/height、**不**设 font-size
+  // （避免 em 复合：若同时设 fontSize.em(N) 与 width.em(N)，width 会算到 N²×父字号）。
+  it('default size middle → width:1em / height:1em', () => {
     mount(ZIcon, { props: { component: DummyIcon } })
-    expect(getInjectedCss()).toMatch(/font-size:1em/)
+    const css = getInjectedCss()
+    expect(css).toMatch(/width:1em/)
+    expect(css).toMatch(/height:1em/)
   })
 
-  it('size="tiny" → 0.75em', () => {
+  it('size="tiny" → width:0.75em', () => {
     mount(ZIcon, { props: { component: DummyIcon, size: 'tiny' } })
-    expect(getInjectedCss()).toMatch(/font-size:0\.75em/)
+    expect(getInjectedCss()).toMatch(/width:0\.75em/)
   })
 
-  it('size="huge" → 1.5em', () => {
+  it('size="huge" → width:1.5em', () => {
     mount(ZIcon, { props: { component: DummyIcon, size: 'huge' } })
-    expect(getInjectedCss()).toMatch(/font-size:1\.5em/)
+    expect(getInjectedCss()).toMatch(/width:1\.5em/)
+  })
+
+  it('size 接受 number escape（任意 em 倍率）', () => {
+    mount(ZIcon, { props: { component: DummyIcon, size: 1.125 } })
+    const css = getInjectedCss()
+    expect(css).toMatch(/width:1\.125em/)
+    expect(css).toMatch(/height:1\.125em/)
+  })
+
+  it('size 接受小数 number（2.3 等）', () => {
+    mount(ZIcon, { props: { component: DummyIcon, size: 2.3 } })
+    expect(getInjectedCss()).toMatch(/width:2\.3em/)
   })
 })
 
@@ -289,7 +305,7 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
       },
     })
     mount(Wrap)
-    expect(getInjectedCss()).toMatch(/font-size:2em/)
+    expect(getInjectedCss()).toMatch(/width:2em/)
   })
 
   it('嵌套 Provider：外 sizeLarge + 内 primaryColor', async () => {
@@ -314,7 +330,7 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
     await nextTick()
     const css = getInjectedCss().toLowerCase()
     expect(css).toContain('#112233')
-    expect(css).toMatch(/font-size:2\.5em/)
+    expect(css).toMatch(/width:2\.5em/)
   })
 
   it('改 spinMiddleDuration → spin="middle" 取新时长（秒）', () => {
