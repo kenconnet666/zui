@@ -1,9 +1,19 @@
 /**
  * `ZIcon` —— 类型定义。
  *
- * **设计哲学（v0.0.5）**：所有维度都是**离散枚举**，遵循 5 阶哲学（tiny/small/middle/large/huge），
- * 必要时 + `none`。size / color / depth / spin **四个维度全是 variants**，无 dynamic styles。
- * 复杂场景（hover / 媒体查询 / 任意属性覆盖）一律走 `:css-root` factory，用 zui-core chain 自由写。
+ * **设计哲学**：遵循 ui-vue 组件四件套（详见 `skill/zui.md §13.0`）：
+ *
+ * 1. **离散预设 · 无连续输入** —— 所有 props 都是有限枚举档位（5 阶哲学
+ *    `tiny / small / middle / large / huge`，必要时 `none` / `full`），**不**接受
+ *    任意 CSS 数值、色值、字符串。本组件 4 维度全离散：
+ *    - `size` 5 阶 / `color` 6 种语义 / `depth` 6 阶 / `spin` 6 阶
+ * 2. **em 优先 · 跟随父字号** —— 5 阶 size 用 em 倍率
+ *    （`tiny=0.75` / `middle=1` / `large=1.25` / `huge=1.5`），物理尺寸 = N × 父字号。
+ *    用户调"1em 等于多少"走 `:css-root="s => s.fontSize.px(N)"`，**不**为此开 inline-style prop
+ * 3. **`cssRoot` 是唯一逃生口** —— 任意值 / 伪类 / 媒体查询 / 嵌套选择器等需求一律走
+ *    `:css-root="s => { ... }"` 用 zui-core chain 自由写；在 variants 之后应用可覆盖任何属性
+ * 4. **完整 21 项 token · Provider 可全量覆盖** —— size 5 + color 6 + depth 5 + spin 5
+ *    全部注册到 `ComponentTokenRegistry.icon`，可被 `<ZConfigProvider :component-tokens>` 嵌套覆盖
  *
  * **命名约定**：精细覆盖 prop 用 `cssRoot` —— 名字里带"哪个节点"，为后续多 slot 组件（Dialog /
  * Tabs / Select 等）预留 `cssHeader` / `cssBody` / `cssItem` 等并列命名空间。
