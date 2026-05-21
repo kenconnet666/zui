@@ -1,6 +1,6 @@
 ---
 name: zui
-description: zui monorepo（@kenconnet666/zui-core + @kenconnet666/zui-vue）项目专用指南。当用户在本仓库工作、提及 zui / Chain / Theme / icss / defineVariants / defineParts / componentTokens / ZConfigProvider / ENHANCED_PROPS / 四态访问，或开发 ui-vue 组件库时激活此 skill。
+description: zui monorepo（@kenconnet666/zui-core + @kenconnet666/zui-vue）项目专用指南。当用户在本仓库工作、提及 zui / Chain / Theme / icss / defineVariants / defineParts / ZConfigProvider / ENHANCED_PROPS / 四态访问，或开发 ui-vue 组件库时激活此 skill。
 ---
 
 # zui 项目工作指南
@@ -42,7 +42,7 @@ zui/
 │   │   │   ├── chain/                       # Chain.ts / proxy.ts / carrier.ts / color.ts / 
 │   │   │   │                                  enhanced-props.ts / keywords.ts / units.ts / helpers.ts
 │   │   │   ├── theme/                       # Theme.ts / resolveTheme.ts / mergeTheme.ts / 
-│   │   │   │                                  keymap.ts / componentTokens.ts / defaults/
+│   │   │   │                                  keymap.ts / defaults/
 │   │   │   ├── variants/                    # defineVariants / defineParts / composeVariants / 
 │   │   │   │                                  extendVariants / extendParts / defineMixin
 │   │   │   ├── types/                       # carrier / tokens / components / styleProps / 
@@ -176,37 +176,7 @@ type VariantPropsOf<F>             // 从工厂推 props
 type VariantPropsOfParts<P>        // 从 parts 推 props
 ```
 
-### 3.5 Component Token Registry（组件库 token 命名空间）
-
-```ts
-// 用户用 declaration merging 注册：
-declare module '@kenconnet666/zui-core' {
-  interface ComponentTokenRegistry {
-    button: { primary: string; primaryHover: string; bg: string }
-    input: { borderFocus: string }
-  }
-}
-
-// 派生：组件 token 从主题色派生 → flatten 进 theme.color
-function withComponentTokens<T>(
-  theme: ResolvedTheme<T>,
-  derivers: ComponentTokenDerivers<T>,
-  overrides?: ComponentTokenOverrides,                       // 用户 ConfigProvider override
-): ResolvedTheme<T>
-// 命名规则：button.primary → theme.color.buttonPrimary（camelCase 拼接）
-// → Chain 上用 s.color._buttonPrimary 访问
-
-// 反推：拿 namespace 下完整 token map
-function componentTokensFor<C>(component: C, theme): Partial<ComponentTokenRegistry[C]>
-
-// ★ 0.7.0+：多层 ConfigProvider 嵌套时合并多层 override
-function mergeComponentTokenOverrides(
-  ...layers: Array<ComponentTokenOverrides | undefined | null>
-): ComponentTokenOverrides
-// 每个 namespace 内部浅合并；后传层同 key 覆盖前传
-```
-
-### 3.6 StyleProps + 响应式
+### 3.5 StyleProps + 响应式
 
 ```ts
 // Theme UI / Chakra 风 alias prop（p/px/bg/...）
@@ -595,15 +565,20 @@ cssItem?:   (s: Chain<ZuiSchema>) => void
 - 内部实现固定走 `icss(themed.value, ...)` —— 一行，不要手写 `new Chain + toClassName`
 - 用户拿到的 chain 默认 `Chain<ZuiSchema>`；通过 module augmentation 扩 `UserColorExt` 等即可获得自定义 token 的 IDE 补全，**无需穿透 `<S>` 泛型**
 
-**④ 完整 token 暴露 · Provider 可全量覆盖**
+**④ 三层覆盖模型 · 无 component token namespace**
 
-每个外观维度的实际值都注册到 `ComponentTokenRegistry.<componentName>`，被 `<ZConfigProvider :component-tokens>` 嵌套覆盖。
-- 组件 `setup()` 必走 `withComponentTokens(theme, derivers, overrides)` 派生 `themed`；所有取值（chain factory / variants 工厂）都喂 `themed`，**不**直接吃 raw `useZTheme()`
-- setup 内取 token snapshot 用 `componentTokensFor('<name>', themed.value) as <Tokens>` 一行拿强类型；不做 `slot.xxx ?? fallback` 双重 fallback（derivers 已经填齐 21 项）
+不再有「ComponentTokenRegistry / `<ZConfigProvider :component-tokens>` / `withComponentTokens` / `componentTokensFor`」这套 namespace 级覆盖。三个口子各管一类需求：
+
+| 层级       | 场景                            | 怎么做                                                                                  |
+| ---------- | ------------------------------- | --------------------------------------------------------------------------------------- |
+| **Theme**  | 全组件统一改色                  | `zuiLight.extend({ color: { primary: '#abc' } })` → 所有 `_primary` 调用点跟随          |
+| **Schema** | 新增品牌 / 自定义 token         | `interface UserColorExt { brandRoyal: string }` augmentation → chain `_brandRoyal` 自动可用 |
+| **Instance** | 单组件 / 单实例改一项         | `:css-root="s => s.width.em(1.2)"` 任意 chain 方法直接覆盖                              |
+
+- 组件 setup 直接吃 `useZTheme()`，**不走** `withComponentTokens / componentTokensFor`
+- 数值类档位（size / depth / spin 倍率 / opacity / 时长）写成模块级 `const SIZE_MAP / DEPTH_MAP / SPIN_MAP` 字面量 —— 设计语言决策，运行时不开放覆盖（要变就 BREAKING）
+- color 类直接走 chain shortcut `s.color._primary / _success / _danger / _warning / _info`（schema token），跟 vue-button demo 一致
 - deriver 直接读 `theme.color.primary` 等 schema 字段，**无需 cast / narrow helper** —— core 的 `ResolvedTheme` mapped type 已让 schema 字面量类型穿透（function token 求值后才宽化为 `string | number`）
-- 复杂组件的 variants 工厂是 `<script>` 块的 module-level 内部 const，**不对外 export**；Provider 切主题 / 改 token 时组件重算工厂，emotion 按内容 hash 复用 className 无开销
-- **默认不支持 `extendVariants` 继承扩展** —— 用户自定义维度走 `cssRoot` 兜底（`s._when(props.glow === 'on', g => g.filter('drop-shadow(...)'))`），或 fork 组件
-- 组件不走 `useVariants` composable —— 那个内部用 raw `useZTheme()` 绕过 `withComponentTokens`
 
 **⑤ 文件组织 · 单文件 SFC + 双 `<script>` 块**
 
@@ -611,13 +586,12 @@ cssItem?:   (s: Chain<ZuiSchema>) => void
 
 - `<script lang="ts">`（无 setup 标记）—— 模块级出口：
   - `export interface ZXxxProps { ... }`（维度 union **inline 写在字段处**，**不抽** `ZXxxSize` / `ZXxxColor` 等中间子类型 alias）
-  - `export interface ZXxxTokens { ... }` + `declare module '@kenconnet666/zui-core' { ComponentTokenRegistry { ... } }`
-  - `function deriveXxxTokens()` + `const xxxTokenDerivers` —— 全部 **内部 const，不 export**
+  - 数值类档位 `const SIZE_MAP / DEPTH_MAP / SPIN_MAP` 字面量 —— **内部 const，不 export**
   - 复杂组件还有 `function createXxxVariants()` / `createXxxParts()` —— 同样内部 const
 - `<script setup lang="ts">` —— 组件运行时：`defineProps<ZXxxProps>()`、setup 逻辑、computed、模板绑定
-- `index.ts` 3 行 re-export：`ZXxx` 默认导出 + `type ZXxxProps` + `type ZXxxTokens`（顶层 `packages/ui-vue/src/index.ts` 同步 barrel）
+- `index.ts` 3 行 re-export：`ZXxx` 默认导出 + `type ZXxxProps`（顶层 `packages/ui-vue/src/index.ts` 同步 barrel）
 
-**总结一句话**：**离散 + em + cssNode + token registry + 单文件 SFC** 五件套 — 组件 API 表面极小（每组件 3 项导出）、零运行时分支、所有复杂度推给用户在 chain 里自由表达。
+**总结一句话**：**离散 + em + cssNode + 三层覆盖模型 + 单文件 SFC** 五件套 — 组件 API 表面极小（每组件 2 项导出）、零运行时分支、所有复杂度推给用户在 chain 里自由表达。
 
 ### 13.1 包结构与 subpath 入口
 
@@ -686,18 +660,18 @@ packages/ui-vue/src/
 ```ts
 // @kenconnet666/zui-vue/provider
 import { ZConfigProvider } from '@kenconnet666/zui-vue/provider'
-import type { Theme, DeepPartial, ComponentTokenOverrides } from '@kenconnet666/zui-core'
+import type { Theme, DeepPartial } from '@kenconnet666/zui-core'
 import type { ZLocale, ZLocalePartial, ZDateConfig } from '@kenconnet666/zui-vue/provider'
 import type { Locale as DateFnsLocale } from 'date-fns'
 
 interface Props<S extends ThemeSchema = ThemeSchema> {
   theme?: Theme<S>                          // 完整主题（顶层推荐）
   themePatch?: DeepPartial<S>               // 局部 patch（嵌套推荐，与 theme 同时给时先 theme 再 patch）
-  componentTokens?: ComponentTokenOverrides // 与父浅合并
   locale?: ZLocale                          // 完整替换
   localePatch?: ZLocalePartial              // namespace 级 + 字段级浅合并
   timezone?: string                         // IANA 时区，未传继承父；根未传 → 'UTC'
   dateLocale?: DateFnsLocale                // date-fns Locale，未传继承父
+  unit?: string | number                    // 逻辑单位 zu 的物理映射，写到 wrapper inline --zui-unit
 }
 ```
 
@@ -706,23 +680,20 @@ interface Props<S extends ThemeSchema = ThemeSchema> {
 | context | 顶层 fallback | 嵌套合并方式 |
 |---|---|---|
 | theme | `defaultLight.resolve()`（dev warn） | `mergeTheme` 深合并 |
-| componentTokens | `{}` | `mergeComponentTokenOverrides` namespace 浅合并 |
 | locale | `zhCN` | `mergeLocale` namespace+字段两级浅合并；数组整体替换 |
 | timezone | `'UTC'` | 子覆盖父 |
 | dateLocale | `undefined` | 子覆盖父 |
+| unit | `'1px'` | wrapper inline `--zui-unit`，子层 css cascade 自然覆盖（无运行时合并） |
 
-Inject keys（symbol）：`Z_THEME_KEY` / `Z_OVERRIDES_KEY` / `Z_LOCALE_KEY` / `Z_DATE_KEY`，全部 `InjectionKey<Ref<...>>`。`Z_THEME_KEY` 退化到 `ResolvedTheme<any>`（Vue InjectionKey 不支持泛型），子组件 `useZTheme<S>()` cast 回。
+Inject keys（symbol）：`Z_THEME_KEY` / `Z_LOCALE_KEY` / `Z_DATE_KEY`，全部 `InjectionKey<Ref<...>>`。`Z_THEME_KEY` 退化到 `ResolvedTheme<any>`（Vue InjectionKey 不支持泛型），子组件 `useZTheme<S>()` cast 回。
 
 `<ZConfigProvider v-slot="{ theme, locale }">` 暴露 unwrapped 值；不需要时直接 `<slot />`。
 
-### 13.4 4 个 composable —— 实际签名
+### 13.4 3 个 composable —— 实际签名
 
 ```ts
 // 树外调用：dev warn + 回落 defaultLight / zhCN / UTC
 useZTheme<S>(): Ref<ResolvedTheme<S>>
-
-useZComponentTokens(): Ref<ComponentTokenOverrides>
-useZComponentTokenSlice<C extends keyof ComponentTokenRegistry>(name: C): ComputedRef<ComponentTokenOverrides[C]>
 
 useZLocale(): Ref<ZLocale>
 useZLocale<NS extends keyof ZLocaleRegistry>(ns: NS): ComputedRef<ZLocaleRegistry[NS]>
@@ -787,33 +758,27 @@ emotion 内部按 css 内容 hash 复用 className，没有性能损失。
 
 Dialog / Tabs / Select / Menu / Popover / DropdownMenu 等。`useParts(createXxxParts, propsGetter)` 返回各 slot className。嵌套 ZConfigProvider 内通过 `extendParts(theme, parent, partialConfig)` 局部覆盖。
 
-### 13.8 component token 路径
+### 13.8 三层覆盖路径（替代旧 component token）
+
+组件不再注册 namespace 到 ComponentTokenRegistry。三种典型覆盖场景：
 
 ```ts
-// 1. 用户在 root.d.ts 声明 token 形状
-declare module '@kenconnet666/zui-core' {
-  interface ComponentTokenRegistry {
-    button: { primary: string; primaryHover: string; bg: string }
-  }
+// ① 全组件改色 —— 改 theme 语义色，所有 _primary 调用点跟随
+const myLight = zuiLight.extend({ color: { primary: '#abc' } })
+<ZConfigProvider :theme="myLight">...</ZConfigProvider>
+
+// ② 新增品牌色 / 自定义 token —— schema augmentation
+declare module '@kenconnet666/zui-vue' {
+  interface UserColorExt { brandRoyal: string }
 }
+const branded = zuiLight.extend({ color: { brandRoyal: '#1a3a8f' } })
+// 任意组件内：s.color._brandRoyal  ← IDE 自动补全
 
-// 2. 组件 setup() 内 deriver 派生 + 用户 override 喂入
-const theme = useZTheme<MySchema>()
-const overrides = useZComponentTokens()
-const themed = computed(() =>
-  withComponentTokens(
-    theme.value,
-    { button: t => ({ primary: t.color.primary, primaryHover: t.color.primaryHover, bg: t.color.bg }) },
-    overrides.value,
-  ),
-)
-
-// 3. Chain 内访问 flatten 后的 token：_buttonPrimary / _buttonPrimaryHover / _buttonBg
-const cls = computed(() => icss(themed.value, s => {
-  s.backgroundColor._buttonPrimary
-  s._hover(h => { h.backgroundColor._buttonPrimaryHover })
-}))
+// ③ 单实例改 —— cssRoot 直接 chain 方法
+<ZIcon :css-root="s => { s.width.em(1.2); s.color._danger }" />
 ```
+
+组件 setup 直接 `useZTheme()` + 模块级 const map（`SIZE_MAP / DEPTH_MAP / SPIN_MAP`），无 `withComponentTokens` 派生层。
 
 ### 13.9 ZLocale 字典与扩展
 
@@ -835,23 +800,23 @@ declare module '@kenconnet666/zui-vue' {
 
 **❗ ZIcon 是 §13.0 ② 的 em 例外**：图标语义上跟随父字号（在 `<button>` / `<h1>` 等不同字号容器内自动协调），所以 size 维度用 `s.width.em(N)` / `s.height.em(N)` 而非 zu。**只设 width/height、不设 font-size**：避免 em 复合（若同时 `s.fontSize.em(N)` 与 `s.width.em(N)`，width 会算到 N²×父字号，与"N × 父字号"语义不符）。Avatar 等"跟随文字"的组件也按此 em 路径，其它组件全部走 zu。
 
-**文件结构**（2 个文件，~240 行核心实现 + 3 行 barrel）：
+**文件结构**（2 个文件，~190 行核心实现 + 3 行 barrel）：
 
 ```
 packages/ui-vue/src/components/icon/
 ├── ZIcon.vue          # <script> + <script setup> + <template> 三块
-└── index.ts           # 3 行 re-export（ZIcon + ZIconProps + ZIconTokens）
+└── index.ts           # 2 行 re-export（ZIcon + ZIconProps）
 ```
 
-**对外 API surface（仅 3 项）**：
+**对外 API surface（仅 2 项）**：
 
 ```ts
-import { ZIcon, type ZIconProps, type ZIconTokens } from '@kenconnet666/zui-vue'
+import { ZIcon, type ZIconProps } from '@kenconnet666/zui-vue'
 // 或单组件 import：
 import { ZIcon } from '@kenconnet666/zui-vue/components/icon'
 ```
 
-`deriveIconTokens` / `iconTokenDerivers` / `ZIconSize` / `ZIconColor` 等 **全部内部化**，不导出。**没有** `createIconVariants` —— ZIcon 直接走 icss 内联，不上 variants 工厂。
+`SIZE_MAP` / `DEPTH_MAP` / `SPIN_MAP` / `ZIconSize` / `ZIconColor` 等 **全部内部化**，不导出。**没有** `createIconVariants` —— ZIcon 直接走 icss 内联，不上 variants 工厂。
 
 **`ZIconProps`（union inline，不抽子类型 alias）**：
 
@@ -876,56 +841,61 @@ export interface ZIconProps {
 ```
 实现固定形态 `typeof props.size === 'number' ? props.size : enumMap[props.size]`。后续 Button.size / Dialog.size / Avatar.size 等 size 类维度按此模式照画。`spin` 暂未开 `| number`（用得少），需要时按同模式加。
 
-**`ZIconTokens`（21 项，全 number，可被 `<ZConfigProvider :component-tokens>` 覆盖）**：
+**数值类档位（模块级 const，不对外）**：
 
 ```ts
-export interface ZIconTokens {
-  // 5 阶 size — em 倍率（无单位数字），物理尺寸 = N × 父字号
-  sizeTiny: number  // 0.75
-  sizeSmall: number // 0.875
-  sizeMiddle: number // 1
-  sizeLarge: number  // 1.25
-  sizeHuge: number   // 1.5
-  // 6 种 color — string（default = 'currentColor'，5 种语义从 theme.color 派生）
-  defaultColor / primaryColor / successColor / warningColor / dangerColor / infoColor: string
-  // 5 阶 depth opacity — 0..1 浮点（subtle=0.8 最浅 → ghost=0.15 最深淡化）
-  depthSubtleOpacity / depthMutedOpacity / depthDimOpacity / depthFadedOpacity / depthGhostOpacity: number
-  // 5 阶 spin duration — 秒（tiny=0.3 极快 → huge=3 极慢）
-  spinTinyDuration / spinSmallDuration / spinMiddleDuration / spinLargeDuration / spinHugeDuration: number
-}
+const SIZE_MAP = { tiny: 0.75, small: 0.875, middle: 1, large: 1.25, huge: 1.5 } as const   // em 倍率
+const DEPTH_MAP = { subtle: 0.8, muted: 0.6, dim: 0.4, faded: 0.25, ghost: 0.15 } as const  // opacity
+const SPIN_MAP = { tiny: 0.3, small: 0.5, middle: 1, large: 2, huge: 3 } as const           // 秒
 ```
+
+设计语言级决策，运行时不开放覆盖（要变就改这里 = BREAKING）。要 app 级改色走 `zuiLight.extend({ color: { primary: '#abc' } })`；要新增品牌色走 `UserColorExt` augmentation；要单点改走 `:css-root`。
 
 **`ZIcon.vue` 内部结构**（按 §13.0 ⑤ 五件套）：
 
 `<script lang="ts">` 块（模块级出口）：
-- type imports（`Chain` / `ResolvedTheme` / `ComponentTokenDerivers` / `Component` / `ZuiSchema`）+ runtime imports（`componentTokensFor` / `icss` / `presetAnimations` / `withComponentTokens`）
-- `export interface ZIconProps {}` + `export interface ZIconTokens {}` + `declare module '@kenconnet666/zui-core' { ... }` 注册
-- `function deriveIconTokens(theme): ZIconTokens` —— 21 项字面量 + 5 种语义色直读 `theme.color.primary` 等（**无需 cast**，core ResolvedTheme 字面量穿透）
-- `const iconTokenDerivers = { icon: deriveIconTokens } satisfies ComponentTokenDerivers<ZuiSchema>`
+- type imports（`Chain` / `Component` / `ZuiSchema`）+ runtime imports（`icss` / `presetAnimations`）
+- `export interface ZIconProps {}`
+- 3 个 `as const` 数值 map（SIZE_MAP / DEPTH_MAP / SPIN_MAP）
 
-`<script setup lang="ts">` 块（**setup 仅 ~50 行**，无 variants 工厂）：
-- `import { computed } from 'vue'` + `import { useZComponentTokens, useZTheme } from '../../provider'`
+`<script setup lang="ts">` 块（**setup 仅 ~50 行**，无 variants 工厂，无 component token 派生）：
+- `import { computed } from 'vue'` + `import { useZTheme } from '../../provider'`
 - `withDefaults(defineProps<ZIconProps>(), { size: 'middle', color: 'default', depth: 'none', spin: 'none', tag: 'i' })`
-- setup 直接用 `<script>` 块声明的 `withComponentTokens` / `iconTokenDerivers` / `icss` / `componentTokensFor` / `presetAnimations` / `ResolvedTheme`（同模块共享作用域）
-- `themed = computed(() => withComponentTokens(theme.value, iconTokenDerivers, overrides.value))`
+- `const theme = useZTheme()` —— 一行注入，直吃 `ResolvedTheme<ZuiSchema>`
 - **唯一 className computed**（一气呵成，无 cx 拼接）：
 
 ```ts
-const className = computed(() => icss(themed.value, (s) => {
-  const t = componentTokensFor('icon', themed.value) as ZIconTokens
+const className = computed(() => icss(theme.value, (s) => {
   // base
   s.display.inlineFlex; s.alignItems.center; s.justifyContent.center
   s.flexShrink(0); s.lineHeight(1)
-  // size —— { tiny: t.sizeTiny, ... }[props.size] → s.width.em(N) + s.height.em(N) + s.fontSize.em(N)
-  // color —— { default: t.defaultColor, primary: t.primaryColor, ... }[props.color] → s.color(N)
-  // depth —— props.depth !== 'none' && s.opacity({ subtle: t.depthSubtleOpacity, ... }[props.depth])
-  // spin —— props.spin !== 'none' && s.animationName(presetAnimations.spin) + s.animationDuration.s(...)
+  // size —— number escape 优先，否则查 SIZE_MAP（只设 width/height、不设 fontSize 避免 em 复合）
+  const sizeN = typeof props.size === 'number' ? props.size : SIZE_MAP[props.size]
+  s.width.em(sizeN); s.height.em(sizeN)
+  // color —— 5 个语义色走 chain shortcut，'default' 显式 currentColor
+  switch (props.color) {
+    case 'default': s.color('currentColor'); break
+    case 'primary': s.color._primary; break
+    case 'success': s.color._success; break
+    case 'warning': s.color._warning; break
+    case 'danger':  s.color._danger;  break
+    case 'info':    s.color._info;    break
+  }
+  // depth —— 'none' 跳过；其余查 DEPTH_MAP
+  if (props.depth !== 'none') s.opacity(DEPTH_MAP[props.depth])
+  // spin —— 'none' 跳过；其余查 SPIN_MAP
+  if (props.spin !== 'none') {
+    s.animationName(presetAnimations.spin)
+    s.animationDuration.s(SPIN_MAP[props.spin])
+    s.animationIterationCount.infinite
+    s.animationTimingFunction.linear
+  }
   // cssRoot 用户覆盖（末尾调用，可覆盖以上任何属性）
   props.cssRoot?.(s)
 }))
 ```
 
-**component token 命名（陷阱）**：`withComponentTokens` flatten 后 token 全挂 `theme.color`：`iconSizeMiddle` / `iconPrimaryColor` / `iconDepthDimOpacity` / `iconSpinMiddleDuration` 等。由于 `width / opacity / animationDuration` carrier 的 tokenCat **不是** color，**无法** `_iconXxx` 命中 chain token —— 必须走 `componentTokensFor('icon', themed.value) as ZIconTokens` 反推回普通 object 再喂 chain method。
+**为什么 color 走 chain shortcut 而 size / depth / spin 走 const map**：chain `_xxx` 是 schema 字符串 token 的 getter，能给 `s.color(...)` / `s.backgroundColor(...)` 这类字符串属性用。`s.width.em(N)` / `s.opacity(N)` / `s.animationDuration.s(N)` 需要 **number 直接传参**，chain shortcut 帮不到，所以这三个维度都吃模块级 const 字面量。
 
 **`cssRoot` factory 范式**（任意值 / 任意 chain method 兜底）：
 
@@ -942,7 +912,7 @@ const className = computed(() => icss(themed.value, (s) => {
 />
 ```
 
-**测试覆盖**：42 tests = provider 10 + icon 32（`tests/icon.spec.ts`：渲染 5 / size 3 / color 3 / depth 5 / spin 7 / cssRoot 4 / a11y 2 / Provider 嵌套覆盖 3）。tests 只 import `ZIcon` + `Chain<ZuiSchema>`，不依赖任何内部 helper。
+**测试覆盖**：~38 tests = provider 9 + icon 29（`tests/icon.spec.ts`：渲染 5 / size 5 含 number escape / color 3 / depth 3 / spin 7 / cssRoot 4 / a11y 2）。tests 只 import `ZIcon` + `Chain<ZuiSchema>`，不依赖任何内部 helper。
 
 ### 13.11 SSR（Nuxt / Vue SSR）
 ```ts

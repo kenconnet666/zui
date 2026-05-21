@@ -4,23 +4,23 @@
  *
  * 同时承载 4 类上下文，并允许嵌套时只覆盖部分维度：
  *
- *   1. theme           —— 完整 `Theme<ZuiSchema>` 实例（替换父）
- *   2. themePatch      —— `DeepPartial<ZuiSchema>` 局部补丁（合并到父；与 theme 互斥取先 theme 后 patch）
- *   3. componentTokens —— `ComponentTokenOverrides`，与父层"key 级浅合并"
- *   4. locale          —— 完整 `ZLocale`（替换父）；或 localePatch（合并）
- *   5. timezone        —— IANA 时区，未传继承父
- *   6. dateLocale      —— date-fns Locale，未传继承父
+ *   1. theme       —— 完整 `Theme<ZuiSchema>` 实例（替换父）
+ *   2. themePatch  —— `DeepPartial<ZuiSchema>` 局部补丁（合并到父；与 theme 互斥取先 theme 后 patch）
+ *   3. locale      —— 完整 `ZLocale`（替换父）；或 localePatch（合并）
+ *   4. timezone    —— IANA 时区，未传继承父
+ *   5. dateLocale  —— date-fns Locale，未传继承父
+ *   6. unit        —— 逻辑单位 zu 的物理映射，写到 wrapper inline `--zui-unit`
  *
  * **根 Provider** 没传 `theme` 时回落 `zuiLight.resolve()` 并 dev warn。
  *
  * 用户工程要扩自家 brand：定义 `interface MySchema extends ZuiSchema { ... }`，
- * 基于 `zuiLight.schema` 派生 `Theme<MySchema>`，传给 `:theme`。
+ * 基于 `zuiLight.schema` 派生 `Theme<MySchema>`，传给 `:theme`。要单点改色 / 加品牌色，
+ * 走 `UserColorExt` augmentation 或 `:css-root`（skill §13.0 三层覆盖模型），
+ * 不再提供 `:component-tokens` namespace 级覆盖。
  */
 import { computed, inject, provide, type Ref } from 'vue'
 import {
-  mergeComponentTokenOverrides,
   mergeTheme,
-  type ComponentTokenOverrides,
   type DeepPartial,
   type ResolvedTheme,
   type Theme,
@@ -28,13 +28,7 @@ import {
 import { zuiLight } from '../theme'
 import type { ZuiSchema } from '../theme'
 import type { Locale as DateFnsLocale } from 'date-fns'
-import {
-  Z_DATE_KEY,
-  Z_LOCALE_KEY,
-  Z_OVERRIDES_KEY,
-  Z_THEME_KEY,
-  type ZDateConfig,
-} from './keys'
+import { Z_DATE_KEY, Z_LOCALE_KEY, Z_THEME_KEY, type ZDateConfig } from './keys'
 import { mergeLocale } from '../locale/merge'
 import { zhCN } from '../locale/zh-CN'
 import type { ZLocale, ZLocalePartial } from '../locale/types'
@@ -53,8 +47,6 @@ const props = withDefaults(
     theme?: Theme<any>
     /** 主题局部补丁（嵌套推荐）。 */
     themePatch?: DeepPartial<ZuiSchema>
-    /** 组件 token override（嵌套时与父浅合并）。 */
-    componentTokens?: ComponentTokenOverrides
     /** 完整 locale（替换父）。 */
     locale?: ZLocale
     /** locale 局部补丁。 */
@@ -99,7 +91,6 @@ defineSlots<{
 
 // ─── 父层 inject（可能不存在 → 用 fallback） ───
 const parentTheme = inject<Ref<ResolvedTheme<ZuiSchema>> | null>(Z_THEME_KEY, null)
-const parentOverrides = inject<Ref<ComponentTokenOverrides> | null>(Z_OVERRIDES_KEY, null)
 const parentLocale = inject<Ref<ZLocale> | null>(Z_LOCALE_KEY, null)
 const parentDate = inject<Ref<ZDateConfig> | null>(Z_DATE_KEY, null)
 
@@ -130,11 +121,6 @@ const mergedTheme = computed<ResolvedTheme<ZuiSchema>>(() => {
   return zuiLight.resolve() as ResolvedTheme<ZuiSchema>
 })
 
-// ─── componentTokens 浅合并 ───
-const mergedOverrides = computed<ComponentTokenOverrides>(() =>
-  mergeComponentTokenOverrides(parentOverrides?.value, props.componentTokens),
-)
-
 // ─── locale 合并 ───
 const mergedLocale = computed<ZLocale>(() => {
   if (props.locale) {
@@ -155,13 +141,11 @@ const mergedDate = computed<ZDateConfig>(() => {
 })
 
 provide(Z_THEME_KEY, mergedTheme)
-provide(Z_OVERRIDES_KEY, mergedOverrides)
 provide(Z_LOCALE_KEY, mergedLocale)
 provide(Z_DATE_KEY, mergedDate)
 
 defineExpose({
   theme: mergedTheme,
-  componentTokens: mergedOverrides,
   locale: mergedLocale,
   date: mergedDate,
 })

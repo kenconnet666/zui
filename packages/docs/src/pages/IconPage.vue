@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 /**
- * ZIcon 演示页 —— v2.1 全离散版：5 阶 size / 6 色 / 5 阶 depth / 5 阶 spin / css factory。
- * + 嵌套 ZConfigProvider 实时切 componentTokens。
+ * ZIcon 演示页 —— v2.2 全离散版：5 阶 size + number escape / 6 色 / 5 阶 depth /
+ * 5 阶 spin / cssRoot factory。配 `:unit` 全站 sizing 单点切换演示。
  */
 import { computed, ref, shallowRef, watchEffect } from 'vue'
 import type { ZIconProps, ZuiSchema } from '@kenconnet666/zui-vue'
@@ -83,23 +83,6 @@ const cssExamples: Record<string, ((s: Chain<ZuiSchema>) => void) | undefined> =
 const cssExampleKey = ref<keyof typeof cssExamples>('(none)')
 const currentCss = computed(() => cssExamples[cssExampleKey.value])
 
-// ─── nested ZConfigProvider 演示 ───
-// 数值化 token：sizeLarge 是 em **倍率**（无单位）；spinMiddleDuration 是秒；
-// depthDimOpacity 是 0..1 浮点。primaryColor 仍是色值字符串。
-const overridePrimaryColor = ref<string>('#ff00aa')
-const overrideSizeLarge = ref<number>(2)
-const overrideSpinMiddle = ref<number>(2.5)
-const overrideDepthDim = ref<number>(0.5)
-
-const componentTokens = computed(() => ({
-  icon: {
-    primaryColor: overridePrimaryColor.value,
-    sizeLarge: overrideSizeLarge.value,
-    spinMiddleDuration: overrideSpinMiddle.value,
-    depthDimOpacity: overrideDepthDim.value,
-  },
-}))
-
 // ─── 当前选中的 component（用于"实时操控"那栏）───
 const currentComponent = shallowRef(HomeOutline)
 const allIcons = {
@@ -123,10 +106,11 @@ watchEffect(() => {
   <article>
     <h1>ZIcon</h1>
     <p>
-      框架无关图标容器 —— <strong>4 维度全离散</strong>（size / color / depth / spin）， 所有维度走
-      <code>defineVariants</code>。任何不在维度里的需求（hover / 媒体查询 / 任意 chain 方法）通过
-      <code>:css-root="s =&gt; { ... }"</code> 用 zui-core chain 自由写。21 项 component token 全部可被
-      <code>ZConfigProvider</code> 覆盖。
+      框架无关图标容器 —— <strong>4 维度全离散</strong>（size / color / depth / spin），所有维度
+      直接在 setup 内 <code>icss</code> chain 内联（极简组件不上 <code>defineVariants</code>）。
+      <code>size</code> 支持 <code>| number</code> escape hatch 接受任意 em 倍率。任何不在维度
+      里的需求（hover / 媒体查询 / 任意 chain 方法）通过 <code>:css-root="s =&gt; { ... }"</code>
+      用 zui-core chain 自由写。
     </p>
 
     <!-- ─── 1. 双模式接入 ─── -->
@@ -270,79 +254,9 @@ watchEffect(() => {
       </div>
     </section>
 
-    <!-- ─── 8. componentTokens 嵌套覆盖 ─── -->
+    <!-- ─── 8. a11y ─── -->
     <section>
-      <h2>8. <code>ZConfigProvider</code> componentTokens 嵌套覆盖</h2>
-      <p>
-        外层全局 <code>defaultLight</code>；内层 Provider 改 4 个 icon token：
-        <code>primaryColor</code> / <code>sizeLarge</code> / <code>spinMiddleDuration</code> /
-        <code>depthDimOpacity</code>。两侧同步对比。
-      </p>
-
-      <div class="controls">
-        <label>
-          primaryColor
-          <input v-model="overridePrimaryColor" type="color" />
-        </label>
-        <label>
-          sizeLarge <span class="hint">(em 倍率)</span>
-          <input
-            v-model.number="overrideSizeLarge"
-            max="5"
-            min="0.5"
-            step="0.25"
-            type="number"
-          />
-        </label>
-        <label>
-          spinMiddleDuration <span class="hint">(秒)</span>
-          <input
-            v-model.number="overrideSpinMiddle"
-            max="10"
-            min="0.1"
-            step="0.1"
-            type="number"
-          />
-        </label>
-        <label>
-          depthDimOpacity <span class="hint">(0..1)</span>
-          <input
-            v-model.number="overrideDepthDim"
-            max="1"
-            min="0"
-            step="0.1"
-            type="number"
-          />
-        </label>
-      </div>
-
-      <div class="row">
-        <div class="cell">
-          <h3>外层（默认 token）</h3>
-          <div class="demo-grid">
-            <ZIcon :component="HeartOutline" color="primary" size="large" />
-            <ZIcon :component="Reload" size="large" spin />
-            <ZIcon :component="StarOutline" depth="dim" size="large" />
-            <ZIcon :component="StarOutline" depth="ghost" size="large" />
-          </div>
-        </div>
-        <div class="cell">
-          <h3>内层 <code>:component-tokens</code> 覆盖</h3>
-          <ZConfigProvider :component-tokens="componentTokens">
-            <div class="demo-grid">
-              <ZIcon :component="HeartOutline" color="primary" size="large" />
-              <ZIcon :component="Reload" size="large" spin />
-              <ZIcon :component="StarOutline" depth="dim" size="large" />
-              <ZIcon :component="StarOutline" depth="ghost" size="large" />
-            </div>
-          </ZConfigProvider>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── 9. a11y ─── -->
-    <section>
-      <h2>9. a11y — <code>label</code> prop</h2>
+      <h2>8. a11y — <code>label</code> prop</h2>
       <div class="row">
         <div class="cell-mini">
           <ZIcon :component="Trash" size="large" />
@@ -355,9 +269,9 @@ watchEffect(() => {
       </div>
     </section>
 
-    <!-- ─── 10. 用户扩展 token：augmentation + extend() 真正零样板 ─── -->
+    <!-- ─── 9. 用户扩展 token：augmentation + extend() 真正零样板 ─── -->
     <section class="extension">
-      <h2>10. 用户扩自家 token —— 真正的零样板隐式推导</h2>
+      <h2>9. 用户扩自家 token —— 真正的零样板隐式推导（三层覆盖模型的"加 token"层）</h2>
       <p>
         zui 的 token 体系是<strong>三层 schema 继承</strong>：
       </p>
@@ -434,9 +348,9 @@ const myLight = zuiLight.extend({
       </div>
     </section>
 
-    <!-- ─── 11. ZConfigProvider :unit —— 全站 sizing 单点切换 ─── -->
+    <!-- ─── 10. ZConfigProvider :unit —— 全站 sizing 单点切换 ─── -->
     <section>
-      <h2>11. <code>:unit</code> —— 全站 sizing 单点切换</h2>
+      <h2>10. <code>:unit</code> —— 全站 sizing 单点切换</h2>
       <p>
         <code>&lt;ZConfigProvider :unit&gt;</code> 写入 wrapper inline
         <code>style="--zui-unit: ..."</code>。所有 zu 化 token（spacing / radius / fontSize /

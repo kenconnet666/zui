@@ -1,21 +1,20 @@
 /**
- * `ZIcon` —— v2.1 全离散行为测试。
+ * `ZIcon` —— v2.2 全离散行为测试。
  *
  * 覆盖：
  * 1. 双模式渲染（slot / component prop）
- * 2. size 5 阶 → em 倍率
- * 3. color 6 种 → 各应用对应语义色
+ * 2. size 5 阶 + number escape → em 倍率
+ * 3. color 6 种 → 各应用对应语义色（chain shortcut 直读 schema）
  * 4. depth none + subtle/muted/dim/faded/ghost → opacity
  * 5. spin none + 5 阶（纯枚举，不接 boolean）
- * 6. css factory：基础 + 伪类 + 覆盖 variants
+ * 6. cssRoot factory：基础 + 伪类 + 覆盖 variants
  * 7. a11y label
- * 8. ZConfigProvider componentTokens 嵌套覆盖（number 形式）
  */
 import { describe, expect, it } from 'vitest'
-import { defineComponent, h, nextTick } from 'vue'
+import { defineComponent, h } from 'vue'
 import { mount } from '@vue/test-utils'
 import { type Chain } from '@kenconnet666/zui-core'
-import { ZConfigProvider, ZIcon, zuiLight, type ZuiSchema } from '../src'
+import { ZIcon, zuiLight, type ZuiSchema } from '../src'
 
 const DummyIcon = defineComponent({
   name: 'DummyIcon',
@@ -250,105 +249,3 @@ describe('ZIcon — a11y', () => {
   })
 })
 
-describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
-  it('改 icon.primaryColor → color="primary" 取新色', () => {
-    const Wrap = defineComponent({
-      components: { ZConfigProvider, ZIcon },
-      data: () => ({
-        overrides: { icon: { primaryColor: '#abcdef' } },
-      }),
-      template: `
-        <ZConfigProvider :component-tokens="overrides">
-          <ZIcon :component="DummyIcon" color="primary" />
-        </ZConfigProvider>
-      `,
-      setup() {
-        return { DummyIcon }
-      },
-    })
-    mount(Wrap)
-    expect(getInjectedCss().toLowerCase()).toContain('#abcdef')
-  })
-
-  it('改 icon.depthDimOpacity → depth="dim" 跟随新值（number）', () => {
-    const Wrap = defineComponent({
-      components: { ZConfigProvider, ZIcon },
-      data: () => ({
-        overrides: { icon: { depthDimOpacity: 0.33 } },
-      }),
-      template: `
-        <ZConfigProvider :component-tokens="overrides">
-          <ZIcon :component="DummyIcon" depth="dim" />
-        </ZConfigProvider>
-      `,
-      setup() {
-        return { DummyIcon }
-      },
-    })
-    mount(Wrap)
-    expect(getInjectedCss()).toMatch(/opacity:0\.33/)
-  })
-
-  it('改 icon.sizeLarge → size="large" 跟随（em 倍率）', () => {
-    const Wrap = defineComponent({
-      components: { ZConfigProvider, ZIcon },
-      data: () => ({
-        overrides: { icon: { sizeLarge: 2 } },
-      }),
-      template: `
-        <ZConfigProvider :component-tokens="overrides">
-          <ZIcon :component="DummyIcon" size="large" />
-        </ZConfigProvider>
-      `,
-      setup() {
-        return { DummyIcon }
-      },
-    })
-    mount(Wrap)
-    expect(getInjectedCss()).toMatch(/width:2em/)
-  })
-
-  it('嵌套 Provider：外 sizeLarge + 内 primaryColor', async () => {
-    const Wrap = defineComponent({
-      components: { ZConfigProvider, ZIcon },
-      data: () => ({
-        outer: { icon: { sizeLarge: 2.5 } },
-        inner: { icon: { primaryColor: '#112233' } },
-      }),
-      template: `
-        <ZConfigProvider :component-tokens="outer">
-          <ZConfigProvider :component-tokens="inner">
-            <ZIcon :component="DummyIcon" size="large" color="primary" />
-          </ZConfigProvider>
-        </ZConfigProvider>
-      `,
-      setup() {
-        return { DummyIcon }
-      },
-    })
-    mount(Wrap)
-    await nextTick()
-    const css = getInjectedCss().toLowerCase()
-    expect(css).toContain('#112233')
-    expect(css).toMatch(/width:2\.5em/)
-  })
-
-  it('改 spinMiddleDuration → spin="middle" 取新时长（秒）', () => {
-    const Wrap = defineComponent({
-      components: { ZConfigProvider, ZIcon },
-      data: () => ({
-        overrides: { icon: { spinMiddleDuration: 2.5 } },
-      }),
-      template: `
-        <ZConfigProvider :component-tokens="overrides">
-          <ZIcon :component="DummyIcon" spin="middle" />
-        </ZConfigProvider>
-      `,
-      setup() {
-        return { DummyIcon }
-      },
-    })
-    mount(Wrap)
-    expect(getInjectedCss()).toMatch(/animation-duration:2\.5s/)
-  })
-})

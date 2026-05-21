@@ -1,21 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import {
-  Theme,
-  defineParts,
-  extendParts,
-  isResponsiveValue,
-  mergeComponentTokenOverrides,
-} from '../src'
+import { Theme, defineParts, extendParts, isResponsiveValue } from '../src'
 import { defaultLight } from './_fixture-theme'
-
-declare module '../src' {
-  interface ComponentTokenRegistry {
-    dialog: {
-      bg: string
-      border: string
-    }
-  }
-}
 
 describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
   // ─── Theme.fork ──────────────────────────────────────────────
@@ -36,47 +21,6 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
       const a = t.fork({ color: { primary: '#fff' } })
       const b = t.merge({ color: { primary: '#fff' } })
       expect(a.resolve()).toEqual(b.resolve())
-    })
-  })
-
-  // ─── mergeComponentTokenOverrides ────────────────────────────
-  describe('mergeComponentTokenOverrides()', () => {
-    it('两层 override 同 namespace 不同 key — 合并而非替换', () => {
-      const merged = mergeComponentTokenOverrides(
-        { dialog: { bg: '#fff' } },
-        { dialog: { border: '#000' } },
-      )
-      expect(merged.dialog).toEqual({ bg: '#fff', border: '#000' })
-    })
-
-    it('两层 override 同 namespace 同 key — 后者覆盖前者', () => {
-      const merged = mergeComponentTokenOverrides(
-        { dialog: { bg: '#fff' } },
-        { dialog: { bg: '#000' } },
-      )
-      expect(merged.dialog).toEqual({ bg: '#000' })
-    })
-
-    it('忽略 undefined / null 层', () => {
-      const merged = mergeComponentTokenOverrides(
-        { dialog: { bg: '#fff' } },
-        undefined,
-        null,
-      )
-      expect(merged.dialog).toEqual({ bg: '#fff' })
-    })
-
-    it('多层级联（三层 ConfigProvider 模拟）', () => {
-      const merged = mergeComponentTokenOverrides(
-        { dialog: { bg: '#111' } },
-        { dialog: { bg: '#222', border: '#aaa' } },
-        { dialog: { border: '#bbb' } },
-      )
-      expect(merged.dialog).toEqual({ bg: '#222', border: '#bbb' })
-    })
-
-    it('空入参返回空对象', () => {
-      expect(mergeComponentTokenOverrides()).toEqual({})
     })
   })
 

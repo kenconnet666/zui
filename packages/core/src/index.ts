@@ -104,23 +104,6 @@ export type { StyleProps, ResponsiveStyleProps, TokenOf } from './types/stylePro
 export { applyResponsive, isResponsiveValue } from './responsive'
 export type { ResponsiveValue, ResponsiveObject } from './responsive'
 
-// ─── W1.2 ComponentTokenRegistry ───
-export type {
-  ComponentTokenRegistry,
-  FlattenComponentTokens,
-  ComponentTokenNames,
-} from './types/components'
-export {
-  withComponentTokens,
-  componentTokensFor,
-  mergeComponentTokenOverrides,
-} from './theme/componentTokens'
-export type {
-  ComponentTokenDeriver,
-  ComponentTokenDerivers,
-  ComponentTokenOverrides,
-} from './theme/componentTokens'
-
 // ─── W5.1 SSR / 多实例 wrapper ───
 export { createIcssInstance } from './createIcssInstance'
 export type {

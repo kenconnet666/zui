@@ -12,12 +12,9 @@
 export {
   ZConfigProvider,
   Z_THEME_KEY,
-  Z_OVERRIDES_KEY,
   Z_LOCALE_KEY,
   Z_DATE_KEY,
   useZTheme,
-  useZComponentTokens,
-  useZComponentTokenSlice,
   useZLocale,
   useZDate,
   ZUnitPreset,
@@ -41,7 +38,6 @@ export {
 export {
   ZIcon,
   type ZIconProps,
-  type ZIconTokens,
 } from './components'
 
 // ─── Locale ───

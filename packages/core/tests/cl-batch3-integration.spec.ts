@@ -1,8 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
-  Chain,
   applyStyleProps,
-  componentTokensFor,
   composeVariants,
   createIcssInstance,
   defineMixin,
@@ -10,76 +8,17 @@ import {
   defineVariants,
   icss,
   presetAnimations,
-  withComponentTokens,
 } from '../src'
 import { defaultDark, defaultLight, type TestSchema } from './_fixture-theme'
 
 /**
- * CL Batch 3 — 集成测试 + componentTokensFor + assert 增强。
+ * CL Batch 3 — 集成测试。
  *
  * 集成场景：模拟"组件库作者写 Button / Dialog 等组件"完整流程，端到端验证：
  * - 主题切换：light vs dark 产出不同 className
  * - SSR 多实例：两个 createIcssInstance 互不污染
  * - defineVariants + composeVariants + defineParts + applyStyleProps 联合使用
- * - componentTokensFor 拿 runtime token map
  */
-
-// ────────────────────────────────────────────────────────────────────────────
-// F6 — componentTokensFor
-// ────────────────────────────────────────────────────────────────────────────
-
-describe('F6 — componentTokensFor 拿组件 namespace 下 token', () => {
-  it('从派生主题拿到 component tokens', () => {
-    const themed = withComponentTokens(defaultLight.resolve(), {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      button: (t: any) => ({
-        primary: t.color.primary as string,
-        primaryHover: t.color.primaryHover as string,
-        bg: t.color.bg as string,
-      }) as never,
-    })
-    const tokens = componentTokensFor('button', themed)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const tk = tokens as Record<string, string>
-    expect(tk.primary).toBe('#2563eb')
-    expect(typeof tk.primaryHover).toBe('string')
-    expect(typeof tk.bg).toBe('string')
-  })
-
-  it('namespace 下无 token 返回空对象', () => {
-    const tokens = componentTokensFor('button' as never, defaultLight.resolve())
-    expect(tokens).toEqual({})
-  })
-
-  it('override 反映在 componentTokensFor 输出', () => {
-    const themed = withComponentTokens(
-      defaultLight.resolve(),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      { button: (t: any) => ({ primary: t.color.primary as string }) as never },
-      { button: { primary: '#ff0000' } as never },
-    )
-    const tokens = componentTokensFor('button', themed)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((tokens as any).primary).toBe('#ff0000')
-  })
-
-  it('多个 component namespace 互不干扰', () => {
-    const themed = withComponentTokens(defaultLight.resolve(), {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      button: (t: any) => ({ primary: t.color.primary as string }) as never,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      card: (t: any) => ({ bg: t.color.bg as string }) as never,
-    } as never)
-    const btn = componentTokensFor('button', themed)
-    const card = componentTokensFor('card' as never, themed)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((btn as any).primary).toBeDefined()
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((card as any).bg).toBeDefined()
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((btn as any).bg).toBeUndefined()
-  })
-})
 
 // ────────────────────────────────────────────────────────────────────────────
 // 集成场景 1 — 完整 Button 组件
