@@ -38,15 +38,8 @@ export {
 // ─── Components ───
 export {
   ZIcon,
-  createIconVariants,
-  deriveIconTokens,
-  iconTokenDerivers,
-  type ZIconTokens,
   type ZIconProps,
-  type ZIconSize,
-  type ZIconColor,
-  type ZIconDepth,
-  type ZIconSpin,
+  type ZIconTokens,
 } from './components'
 
 // ─── Locale ───

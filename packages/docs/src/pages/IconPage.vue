@@ -4,7 +4,7 @@
  * + 嵌套 ZConfigProvider 实时切 componentTokens。
  */
 import { computed, ref, shallowRef, watchEffect } from 'vue'
-import type { ZIconColor, ZIconDepth, ZIconSize, ZIconSpinPreset, ZuiSchema } from '@kenconnet666/zui-vue'
+import type { ZIconProps, ZuiSchema } from '@kenconnet666/zui-vue'
 import { ZConfigProvider, ZIcon } from '@kenconnet666/zui-vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import {
@@ -19,19 +19,23 @@ import {
   WarningOutline,
 } from '@vicons/ionicons5'
 
-const sizes: ZIconSize[] = ['tiny', 'small', 'middle', 'large', 'huge']
-const colors: ZIconColor[] = ['default', 'primary', 'success', 'warning', 'danger', 'info']
-const depths: ZIconDepth[] = ['none', 'subtle', 'muted', 'dim', 'faded', 'ghost']
-const spinPresets: ZIconSpinPreset[] = ['tiny', 'small', 'middle', 'large', 'huge']
+// 4 维度可选值 —— `as const` 让数组拥有 readonly tuple 类型，
+// 各 `ref<typeof xxx[number]>` 自动同步 prop union，无需独立 type alias。
+const sizes = ['tiny', 'small', 'middle', 'large', 'huge'] as const
+const colors = ['default', 'primary', 'success', 'warning', 'danger', 'info'] as const
+const depths = ['none', 'subtle', 'muted', 'dim', 'faded', 'ghost'] as const
+const spinPresets = ['tiny', 'small', 'middle', 'large', 'huge'] as const
 
 // ─── interactive controls ───
-const sizeC = ref<ZIconSize>('middle')
-const colorC = ref<ZIconColor>('default')
-const depthC = ref<ZIconDepth>('none')
+const sizeC = ref<(typeof sizes)[number]>('middle')
+const colorC = ref<(typeof colors)[number]>('default')
+const depthC = ref<(typeof depths)[number]>('none')
 const spinOn = ref<boolean>(false)
-const spinSpeed = ref<ZIconSpinPreset>('middle')
+const spinSpeed = ref<(typeof spinPresets)[number]>('middle')
 
-const spinValue = computed(() => (spinOn.value ? spinSpeed.value : false))
+const spinValue = computed<ZIconProps['spin']>(() =>
+  spinOn.value ? spinSpeed.value : 'none',
+)
 
 // ─── cssRoot factory 预制示例 ───
 /**

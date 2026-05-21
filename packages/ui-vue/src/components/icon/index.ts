@@ -1,14 +1,10 @@
 /**
  * `@kenconnet666/zui-vue/components/icon` —— ZIcon 子入口。
  *
- * 暴露：
- * - `ZIcon` 组件
- * - `createIconVariants` —— 工厂，可被 `extendVariants(theme, parent, ...)` 继承扩展
- * - `iconTokenDerivers` / `deriveIconTokens` —— 默认 token 派生器
- * - `ZIconTokens` —— component token 接口（已用 declaration merging 注册到 ComponentTokenRegistry）
- * - 各类型
+ * ZIcon 走 SFC 单文件 + 双 `<script>` 块（详见 `skill/zui.md §13.0`）；所有内部
+ * helpers（`deriveIconTokens` / `iconTokenDerivers` / `createIconVariants` / 维度子类型 alias）
+ * 不对外暴露。需要做"自定义 variants 维度"的高级用户走 `cssRoot` factory 兜底，
+ * 或直接 fork 组件。
  */
 export { default as ZIcon } from './ZIcon.vue'
-export { createIconVariants } from './variants'
-export { deriveIconTokens, iconTokenDerivers, type ZIconTokens } from './tokens'
-export type { ZIconProps, ZIconSize, ZIconColor, ZIconDepth, ZIconSpin } from './types'
+export type { ZIconProps, ZIconTokens } from './ZIcon.vue'

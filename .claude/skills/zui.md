@@ -553,8 +553,11 @@ partial 应基于已解析的字面量。dev 模式扫到 function 会 warn，�
 外观 props 只接受**有限枚举档位**，参考 5 阶哲学 `tiny / small / middle / large / huge`（必要时 `none` / `full`）。
 - 禁止 props 接受任意 CSS length（`'24px'` / `'1.5rem'`）、任意色值（`'#abcdef'`）、任意角度数字 — 这类**连续输入**全部走 §3 cssNode factory
 - 禁止"半离散"：不要"枚举档位 OR 自定义字符串"二选一的 union，prop 表达只走枚举一条路
-- 维度全走 `defineVariants` / `defineParts`，**无 dynamic styles / 无 applyResponsive / 无运行时 token resolution**
-- 每个维度必须有合理默认值（`defaultVariants`），用户不传也能直接渲染
+- **无 dynamic styles / 无 applyResponsive / 无运行时 token resolution**
+- 每个维度必须有合理默认值（`defaultVariants` 或 `withDefaults`），用户不传也能直接渲染
+- **实现选择**（按组件复杂度二选一）：
+  - **极简组件**（ZIcon / Spinner / Badge 等 —— 每个维度 → 几行 CSS、无状态笛卡尔积）：setup 内一个 `icss(themed.value, s => { ... })`，内联 base + 4 维度 switch + 末尾调用 `props.cssRoot?.(s)`。**无** `defineVariants` 工厂、**无** `cx` 拼接，一个 className 一气呵成。
+  - **复杂组件**（Button / Input / Dialog / Tabs / Select —— 含 hover/focus/disabled/active 等状态笛卡尔积，或多 slot）：用 `defineVariants` / `defineParts` 工厂；工厂是 `<script>` 块的 module-level const，**不对外 export**
 
 **② em 优先 · 尺寸跟随父字号**
 
@@ -575,19 +578,35 @@ cssItem?:   (s: Chain<ZuiSchema>) => void
 ```
 
 - 命名约定：`css<NodeName>` —— 名字里带"哪个节点"，预留 multi-slot 组件并列命名空间
-- 在 variants 之后应用（`cx(variantsCls, cssNodeCls)`），可覆盖 variants 任何属性
-- 内部实现固定走 `icss(themed.value, props.cssNode)` —— 一行，不要手写 `new Chain + toClassName`
+- **应用时机 = base + 维度之后，可覆盖任何属性**：
+  - 极简组件 / icss 路径：在同一个 chain factory 末尾 `props.cssRoot?.(s)`
+  - 复杂组件 / defineVariants 路径：单独 `icss(themed.value, props.cssRoot)` → `cx(variantsCls, cssRootCls)`
+- 内部实现固定走 `icss(themed.value, ...)` —— 一行，不要手写 `new Chain + toClassName`
 - 用户拿到的 chain 默认 `Chain<ZuiSchema>`；通过 module augmentation 扩 `UserColorExt` 等即可获得自定义 token 的 IDE 补全，**无需穿透 `<S>` 泛型**
 
 **④ 完整 token 暴露 · Provider 可全量覆盖**
 
 每个外观维度的实际值都注册到 `ComponentTokenRegistry.<componentName>`，被 `<ZConfigProvider :component-tokens>` 嵌套覆盖。
-- 组件 `setup()` 必走 `withComponentTokens(theme, derivers, overrides)` 派生 `themed`，所有 variants 工厂和 cssNode factory 都喂 `themed`，**不**直接吃 raw `useZTheme()`
-- variants 工厂内部用 `componentTokensFor('<name>', theme) as <Tokens>` 一行拿强类型 token map；不要再做 `slot.iconXxx ?? fallback` 双重 fallback（tokens.ts 派生时已经填齐）
-- 工厂模式：导出 `createXxxVariants(theme)` / `createXxxParts(theme)` 函数，**不导出常量** —— Provider 切主题 / 改 token 时组件重算工厂，emotion 按内容 hash 复用 className 无开销
-- ZIcon 不走 `useVariants` composable —— 那个内部用 raw `useZTheme()` 绕过 `withComponentTokens`。直接 `computed(() => createXxxVariants(themed.value)(propsSnapshot))`
+- 组件 `setup()` 必走 `withComponentTokens(theme, derivers, overrides)` 派生 `themed`；所有取值（chain factory / variants 工厂）都喂 `themed`，**不**直接吃 raw `useZTheme()`
+- setup 内取 token snapshot 用 `componentTokensFor('<name>', themed.value) as <Tokens>` 一行拿强类型；不做 `slot.xxx ?? fallback` 双重 fallback（derivers 已经填齐 21 项）
+- deriver 直接读 `theme.color.primary` 等 schema 字段，**无需 cast / narrow helper** —— core 的 `ResolvedTheme` mapped type 已让 schema 字面量类型穿透（function token 求值后才宽化为 `string | number`）
+- 复杂组件的 variants 工厂是 `<script>` 块的 module-level 内部 const，**不对外 export**；Provider 切主题 / 改 token 时组件重算工厂，emotion 按内容 hash 复用 className 无开销
+- **默认不支持 `extendVariants` 继承扩展** —— 用户自定义维度走 `cssRoot` 兜底（`s._when(props.glow === 'on', g => g.filter('drop-shadow(...)'))`），或 fork 组件
+- 组件不走 `useVariants` composable —— 那个内部用 raw `useZTheme()` 绕过 `withComponentTokens`
 
-**总结一句话**：**离散 + em + cssNode + token registry** 四件套 — 组件 API 表面极小、零运行时分支，所有复杂度推给用户在 chain 里自由表达。
+**⑤ 文件组织 · 单文件 SFC + 双 `<script>` 块**
+
+每个组件 1 个 `.vue` 文件 + 3 行 barrel `index.ts`。**禁止** `types.ts` / `tokens.ts` / `variants.ts` 等独立子文件。
+
+- `<script lang="ts">`（无 setup 标记）—— 模块级出口：
+  - `export interface ZXxxProps { ... }`（维度 union **inline 写在字段处**，**不抽** `ZXxxSize` / `ZXxxColor` 等中间子类型 alias）
+  - `export interface ZXxxTokens { ... }` + `declare module '@kenconnet666/zui-core' { ComponentTokenRegistry { ... } }`
+  - `function deriveXxxTokens()` + `const xxxTokenDerivers` —— 全部 **内部 const，不 export**
+  - 复杂组件还有 `function createXxxVariants()` / `createXxxParts()` —— 同样内部 const
+- `<script setup lang="ts">` —— 组件运行时：`defineProps<ZXxxProps>()`、setup 逻辑、computed、模板绑定
+- `index.ts` 3 行 re-export：`ZXxx` 默认导出 + `type ZXxxProps` + `type ZXxxTokens`（顶层 `packages/ui-vue/src/index.ts` 同步 barrel）
+
+**总结一句话**：**离散 + em + cssNode + token registry + 单文件 SFC** 五件套 — 组件 API 表面极小（每组件 3 项导出）、零运行时分支、所有复杂度推给用户在 chain 里自由表达。
 
 ### 13.1 包结构与 subpath 入口
 
@@ -799,84 +818,110 @@ declare module '@kenconnet666/zui-vue' {
 
 `mergeLocale(parent, partial)`：namespace 级浅合并；同 namespace 内字段级浅合并；数组（`weekdaysShort` / `monthsShort`）整体替换。
 
-### 13.10 ZIcon —— 首个基础组件（v2.1 极简版）
+### 13.10 ZIcon —— 首个基础组件（单文件 SFC + icss 内联参照实现）
 
-**4 维度全离散 + css factory 兜底 — 参考实现，后续 Button / Input / 等照此画。**
+**§13.0 五件套首个落地，对应 §13.0 ① 实现选择中的 "极简组件" 分支：setup 内一个 `icss` chain factory 内联全部维度，不上 `defineVariants` 工厂。复杂组件（Button / Input / Dialog）照此结构但换用 `defineVariants`。**
+
+**文件结构**（2 个文件，~240 行核心实现 + 3 行 barrel）：
+
+```
+packages/ui-vue/src/components/icon/
+├── ZIcon.vue          # <script> + <script setup> + <template> 三块
+└── index.ts           # 3 行 re-export（ZIcon + ZIconProps + ZIconTokens）
+```
+
+**对外 API surface（仅 3 项）**：
 
 ```ts
-import { ZIcon } from '@kenconnet666/zui-vue'
-import { ZIcon as IconSingle } from '@kenconnet666/zui-vue/components/icon'   // 单组件 import
+import { ZIcon, type ZIconProps, type ZIconTokens } from '@kenconnet666/zui-vue'
+// 或单组件 import：
+import { ZIcon } from '@kenconnet666/zui-vue/components/icon'
+```
 
-interface ZIconProps<S extends ThemeSchema = ThemeSchema> {
-  size?:  'tiny' | 'small' | 'middle' | 'large' | 'huge'                     // 5 阶 em（默认 middle）
+`deriveIconTokens` / `iconTokenDerivers` / `ZIconSize` / `ZIconColor` 等 **全部内部化**，不导出。**没有** `createIconVariants` —— ZIcon 直接走 icss 内联，不上 variants 工厂。
+
+**`ZIconProps`（union inline，不抽子类型 alias）**：
+
+```ts
+export interface ZIconProps {
+  size?:  'tiny' | 'small' | 'middle' | 'large' | 'huge'                     // 5 阶 em 倍率（默认 middle）
   color?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info'  // 6 种语义（默认 default）
-  depth?: 'none' | 'subtle' | 'muted' | 'dim' | 'faded' | 'ghost'            // 5 阶 + none 淡化（领域词；默认 none）
-  spin?:  boolean | 'tiny' | 'small' | 'middle' | 'large' | 'huge'           // 5 阶 + none/隐含 true≡middle
-  css?:   (s: Chain<S>) => void                                              // ★ 二次精细覆盖逃生口
+  depth?: 'none' | 'subtle' | 'muted' | 'dim' | 'faded' | 'ghost'            // 5 阶 + none 淡化（默认 none）
+  spin?:  'none' | 'tiny' | 'small' | 'middle' | 'large' | 'huge'            // 6 阶纯枚举（默认 none；**不**接 boolean）
+  cssRoot?:   (s: Chain<ZuiSchema>) => void                                  // ★ 二次精细覆盖逃生口
   component?: Component                                                       // 双模式：与 default slot 互斥（slot 优先）
   tag?: string                                                                // 根元素，默认 'i'
   label?: string                                                              // a11y
 }
 ```
 
-**ZIconTokens（21 项）—— 完整暴露，全部可被 `ZConfigProvider :component-tokens` 覆盖**：
+**`ZIconTokens`（21 项，全 number，可被 `<ZConfigProvider :component-tokens>` 覆盖）**：
 
 ```ts
-interface ZIconTokens {
-  // 5 阶 size（em，跟父字号缩放）
-  sizeTiny / sizeSmall / sizeMiddle / sizeLarge / sizeHuge: string
-  // 6 种 color
+export interface ZIconTokens {
+  // 5 阶 size — em 倍率（无单位数字），物理尺寸 = N × 父字号
+  sizeTiny: number  // 0.75
+  sizeSmall: number // 0.875
+  sizeMiddle: number // 1
+  sizeLarge: number  // 1.25
+  sizeHuge: number   // 1.5
+  // 6 种 color — string（default = 'currentColor'，5 种语义从 theme.color 派生）
   defaultColor / primaryColor / successColor / warningColor / dangerColor / infoColor: string
-  // 5 阶 depth opacity（领域词，subtle=0.8 最浅 → ghost=0.15 最深淡化）
-  depthSubtleOpacity / depthMutedOpacity / depthDimOpacity / depthFadedOpacity / depthGhostOpacity: string
-  // 5 阶 spin duration（tiny 极快 0.3s → huge 极慢 3s）
-  spinTinyDuration / spinSmallDuration / spinMiddleDuration / spinLargeDuration / spinHugeDuration: string
+  // 5 阶 depth opacity — 0..1 浮点（subtle=0.8 最浅 → ghost=0.15 最深淡化）
+  depthSubtleOpacity / depthMutedOpacity / depthDimOpacity / depthFadedOpacity / depthGhostOpacity: number
+  // 5 阶 spin duration — 秒（tiny=0.3 极快 → huge=3 极慢）
+  spinTinyDuration / spinSmallDuration / spinMiddleDuration / spinLargeDuration / spinHugeDuration: number
 }
 ```
 
-**设计哲学**：
-- 4 维度**全离散**（枚举），全部走 `defineVariants` —— size / color / depth / spin
-- 任何不在 4 维度里的需求（hover / 媒体查询 / 任意 chain method）通过 `:css="s => { ... }"` 让用户用 zui-core chain 自由写
-- css factory 在 variants **之后**应用（`cx(variantsCls, cssCls)`），可覆盖 variants 任何属性
+**`ZIcon.vue` 内部结构**（按 §13.0 ⑤ 五件套）：
 
-**component token 流程**（重要陷阱）：`withComponentTokens` 把所有 token flatten 到 `theme.color` 命名空间：
-- `iconSizeMiddle` / `iconPrimaryColor` / `iconDepthDimOpacity` / `iconSpinMiddleDuration` 等
-- 由于 `width / opacity / animationDuration` carrier 的 tokenCat **不是** color，**无法** `_iconXxx` 命中
-- 解决：variants 工厂在 `createIconVariants` 顶部一次性 `slot.iconXxx ?? '字面量 fallback'` 构造 21 项 token snapshot（全 string），再喂 chain method。**不要**再封装 `read/readNum` 类 helper —— 预设值都是固定单位字面量，不接受用户自由输入
+`<script lang="ts">` 块（模块级出口）：
+- type imports（`Chain` / `ResolvedTheme` / `ComponentTokenDerivers` / `Component` / `ZuiSchema`）+ runtime imports（`componentTokensFor` / `icss` / `presetAnimations` / `withComponentTokens`）
+- `export interface ZIconProps {}` + `export interface ZIconTokens {}` + `declare module '@kenconnet666/zui-core' { ... }` 注册
+- `function deriveIconTokens(theme): ZIconTokens` —— 21 项字面量 + 5 种语义色直读 `theme.color.primary` 等（**无需 cast**，core ResolvedTheme 字面量穿透）
+- `const iconTokenDerivers = { icon: deriveIconTokens } satisfies ComponentTokenDerivers<ZuiSchema>`
 
-**ZIcon 不走 `useVariants`**：`useVariants` 内部用 raw `useZTheme()`，**绕过 `withComponentTokens`** 注入的 override。
-必须 `computed(() => createIconVariants(themed.value)({ ... }))` 才能让 Provider override 生效。
+`<script setup lang="ts">` 块（**setup 仅 ~50 行**，无 variants 工厂）：
+- `import { computed } from 'vue'` + `import { useZComponentTokens, useZTheme } from '../../provider'`
+- `withDefaults(defineProps<ZIconProps>(), { size: 'middle', color: 'default', depth: 'none', spin: 'none', tag: 'i' })`
+- setup 直接用 `<script>` 块声明的 `withComponentTokens` / `iconTokenDerivers` / `icss` / `componentTokensFor` / `presetAnimations` / `ResolvedTheme`（同模块共享作用域）
+- `themed = computed(() => withComponentTokens(theme.value, iconTokenDerivers, overrides.value))`
+- **唯一 className computed**（一气呵成，无 cx 拼接）：
 
-**spin 语义**：
-- `false`（默认）→ variants.spin = 'none'，无动画
-- `true` → variants.spin = 'middle'（1s 周期）
-- `'tiny'`（0.3s 极快）/ `'small'`（0.5s）/ `'middle'`（1s）/ `'large'`（2s）/ `'huge'`（3s 极慢）
-
-**继承扩展**（用户加自定义 variants 维度）：
 ```ts
-import { extendVariants } from '@kenconnet666/zui-core'
-import { createIconVariants } from '@kenconnet666/zui-vue'
-
-const createIconExtVariants = (theme) =>
-  extendVariants(theme, createIconVariants(theme), {
-    variants: { glow: { on: s => { s.filter('drop-shadow(0 0 8px currentColor)') }, off: () => {} } },
-  })
+const className = computed(() => icss(themed.value, (s) => {
+  const t = componentTokensFor('icon', themed.value) as ZIconTokens
+  // base
+  s.display.inlineFlex; s.alignItems.center; s.justifyContent.center
+  s.flexShrink(0); s.lineHeight(1)
+  // size —— { tiny: t.sizeTiny, ... }[props.size] → s.width.em(N) + s.height.em(N) + s.fontSize.em(N)
+  // color —— { default: t.defaultColor, primary: t.primaryColor, ... }[props.color] → s.color(N)
+  // depth —— props.depth !== 'none' && s.opacity({ subtle: t.depthSubtleOpacity, ... }[props.depth])
+  // spin —— props.spin !== 'none' && s.animationName(presetAnimations.spin) + s.animationDuration.s(...)
+  // cssRoot 用户覆盖（末尾调用，可覆盖以上任何属性）
+  props.cssRoot?.(s)
+}))
 ```
 
-**css factory 范式**（用户自定义 hover / 媒体查询 / 任意 chain method）：
+**component token 命名（陷阱）**：`withComponentTokens` flatten 后 token 全挂 `theme.color`：`iconSizeMiddle` / `iconPrimaryColor` / `iconDepthDimOpacity` / `iconSpinMiddleDuration` 等。由于 `width / opacity / animationDuration` carrier 的 tokenCat **不是** color，**无法** `_iconXxx` 命中 chain token —— 必须走 `componentTokensFor('icon', themed.value) as ZIconTokens` 反推回普通 object 再喂 chain method。
+
+**`cssRoot` factory 范式**（任意值 / 任意 chain method 兜底）：
+
 ```vue
 <ZIcon
   :component="HeartIcon"
   color="primary"
-  :css="s => {
+  :css-root="s => {
     s.cursor.pointer
+    s.fontSize.px(24)                                    // 控制 1em 等于多少
     s._hover(h => { h.color._danger })
     s._media('_middle', m => { m.fontSize._iconSizeHuge })
   }"
 />
 ```
 
-**测试覆盖**：30 tests in `tests/icon.spec.ts`（5 渲染 + 3 size + 3 color + 3 depth + 5 spin + 4 css factory + 2 a11y + 5 Provider 覆盖嵌套）。
+**测试覆盖**：42 tests = provider 10 + icon 32（`tests/icon.spec.ts`：渲染 5 / size 3 / color 3 / depth 5 / spin 7 / cssRoot 4 / a11y 2 / Provider 嵌套覆盖 3）。tests 只 import `ZIcon` + `Chain<ZuiSchema>`，不依赖任何内部 helper。
 
 ### 13.11 SSR（Nuxt / Vue SSR）
 ```ts
