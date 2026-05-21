@@ -174,20 +174,11 @@ const props = withDefaults(defineProps<ZIconProps>(), {
   tag: 'i',
 })
 
-defineSlots<{
-  default(): unknown
-}>()
-
 // ─── 主题 + componentTokens 覆盖派生 ───
 const theme = useZTheme()
 const overrides = useZComponentTokens()
-const themed = computed<ResolvedTheme<ZuiSchema>>(
-  () =>
-    withComponentTokens(
-      theme.value,
-      iconTokenDerivers,
-      overrides.value,
-    ) as ResolvedTheme<ZuiSchema>,
+const themed = computed(() =>
+  withComponentTokens(theme.value, iconTokenDerivers, overrides.value),
 )
 
 // ─── 一个 className：在同一个 chain 里内联 base + 4 维度 + cssRoot ───
@@ -261,12 +252,11 @@ const className = computed(() =>
 )
 
 // ─── a11y 属性 ───
-const a11y = computed(() => {
-  if (props.label !== undefined && props.label !== '') {
-    return { 'aria-label': props.label, role: 'img' }
-  }
-  return { 'aria-hidden': 'true' }
-})
+const a11y = computed(() =>
+  props.label
+    ? { 'aria-label': props.label, role: 'img' }
+    : { 'aria-hidden': 'true' },
+)
 </script>
 
 <template>
