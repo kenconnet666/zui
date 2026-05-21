@@ -68,6 +68,30 @@ export {
   type DeepPartialLocale,
 } from './locale'
 
+// ─── 主题（zui 设计系统） ───
+export {
+  zuiLight,
+  zuiDark,
+  type ZuiSchema,
+  type SemanticColorTokens,
+  // 用户扩展锚点 —— 用户工程 `declare module '@kenconnet666/zui-vue' { interface UserColorExt {...} }`
+  type UserColorExt,
+  type UserSpacingExt,
+  type UserRadiusExt,
+  type UserFontSizeExt,
+  type UserFontWeightExt,
+  type UserShadowExt,
+  type UserBlurExt,
+  type UserDurationExt,
+  type UserEasingExt,
+  type UserBreakpointExt,
+  type UserZIndexExt,
+  type UserOpacityExt,
+  type UserLineHeightExt,
+  type UserLetterSpacingExt,
+  type UserAspectRatioExt,
+} from './theme'
+
 // ─── Core 全量透传 ───
 // 装 `@kenconnet666/zui-vue` 即等于装 core：用户可直接从本包 import 任何 core API，
 // 无需再依赖 `@kenconnet666/zui-core`。core 与 ui-vue 自身导出无命名冲突。

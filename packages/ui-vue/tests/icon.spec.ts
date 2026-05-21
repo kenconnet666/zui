@@ -3,19 +3,19 @@
  *
  * 覆盖：
  * 1. 双模式渲染（slot / component prop）
- * 2. size 5 阶 → em 单位
+ * 2. size 5 阶 → em 倍率
  * 3. color 6 种 → 各应用对应语义色
  * 4. depth none + subtle/muted/dim/faded/ghost → opacity
- * 5. spin none + 5 阶
+ * 5. spin none + 5 阶（纯枚举，不接 boolean）
  * 6. css factory：基础 + 伪类 + 覆盖 variants
  * 7. a11y label
- * 8. ZConfigProvider componentTokens 嵌套覆盖
+ * 8. ZConfigProvider componentTokens 嵌套覆盖（number 形式）
  */
 import { describe, expect, it } from 'vitest'
 import { defineComponent, h, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
-import { defaultLight, type Chain, type DefaultSchema } from '@kenconnet666/zui-core'
-import { ZConfigProvider, ZIcon } from '../src'
+import { type Chain } from '@kenconnet666/zui-core'
+import { ZConfigProvider, ZIcon, zuiLight, type ZuiSchema } from '../src'
 
 const DummyIcon = defineComponent({
   name: 'DummyIcon',
@@ -93,13 +93,13 @@ describe('ZIcon — color 6 种', () => {
 
   it('color="primary" 应用主题 primary', () => {
     mount(ZIcon, { props: { component: DummyIcon, color: 'primary' } })
-    const primary = String((defaultLight.resolve() as { color: Record<string, string> }).color.primary)
+    const primary = String((zuiLight.resolve() as { color: Record<string, string> }).color.primary)
     expect(getInjectedCss().toLowerCase()).toContain(primary.toLowerCase())
   })
 
   it('color="danger" 应用主题 danger', () => {
     mount(ZIcon, { props: { component: DummyIcon, color: 'danger' } })
-    const danger = String((defaultLight.resolve() as { color: Record<string, string> }).color.danger)
+    const danger = String((zuiLight.resolve() as { color: Record<string, string> }).color.danger)
     expect(getInjectedCss().toLowerCase()).toContain(danger.toLowerCase())
   })
 })
@@ -122,7 +122,7 @@ describe('ZIcon — depth 5 阶 + none（领域词）', () => {
   })
 })
 
-describe('ZIcon — spin 5 阶 + none', () => {
+describe('ZIcon — spin 5 阶 + none（纯枚举）', () => {
   it('未传 spin → 默认 "none"，className 与 spin="middle" 不同', () => {
     const wOff = mount(ZIcon, { props: { component: DummyIcon } })
     const wOn = mount(ZIcon, { props: { component: DummyIcon, spin: 'middle' } })
@@ -142,11 +142,6 @@ describe('ZIcon — spin 5 阶 + none', () => {
     expect(getInjectedCss()).toMatch(/animation-duration:0\.3s/)
   })
 
-  it('spin="huge" → 3s（最慢）', () => {
-    mount(ZIcon, { props: { component: DummyIcon, spin: 'huge' } })
-    expect(getInjectedCss()).toMatch(/animation-duration:3s/)
-  })
-
   it('spin="small" → 0.5s', () => {
     mount(ZIcon, { props: { component: DummyIcon, spin: 'small' } })
     expect(getInjectedCss()).toMatch(/animation-duration:0\.5s/)
@@ -155,6 +150,11 @@ describe('ZIcon — spin 5 阶 + none', () => {
   it('spin="large" → 2s', () => {
     mount(ZIcon, { props: { component: DummyIcon, spin: 'large' } })
     expect(getInjectedCss()).toMatch(/animation-duration:2s/)
+  })
+
+  it('spin="huge" → 3s（最慢）', () => {
+    mount(ZIcon, { props: { component: DummyIcon, spin: 'huge' } })
+    expect(getInjectedCss()).toMatch(/animation-duration:3s/)
   })
 
   it('spin="none" 与未传 spin → className 完全相同（都是 none variant）', () => {
@@ -169,7 +169,7 @@ describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        css: (s: Chain<DefaultSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.cursor('pointer')
         },
       },
@@ -181,7 +181,7 @@ describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        css: (s: Chain<DefaultSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s._hover((h) => {
             h.color('#ff00aa')
           })
@@ -197,7 +197,7 @@ describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
       props: {
         component: DummyIcon,
         color: 'primary',
-        css: (s: Chain<DefaultSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.color('#abcdef')
         },
       },
@@ -209,12 +209,12 @@ describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        css: (s: Chain<DefaultSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.color._primary
         },
       },
     })
-    const primary = String((defaultLight.resolve() as { color: Record<string, string> }).color.primary)
+    const primary = String((zuiLight.resolve() as { color: Record<string, string> }).color.primary)
     expect(getInjectedCss().toLowerCase()).toContain(primary.toLowerCase())
   })
 })
@@ -254,11 +254,11 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
     expect(getInjectedCss().toLowerCase()).toContain('#abcdef')
   })
 
-  it('改 icon.depthDimOpacity → depth="dim" 跟随新值', () => {
+  it('改 icon.depthDimOpacity → depth="dim" 跟随新值（number）', () => {
     const Wrap = defineComponent({
       components: { ZConfigProvider, ZIcon },
       data: () => ({
-        overrides: { icon: { depthDimOpacity: '0.33' } },
+        overrides: { icon: { depthDimOpacity: 0.33 } },
       }),
       template: `
         <ZConfigProvider :component-tokens="overrides">
@@ -273,11 +273,11 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
     expect(getInjectedCss()).toMatch(/opacity:0\.33/)
   })
 
-  it('改 icon.sizeLarge → size="large" 跟随', () => {
+  it('改 icon.sizeLarge → size="large" 跟随（em 倍率）', () => {
     const Wrap = defineComponent({
       components: { ZConfigProvider, ZIcon },
       data: () => ({
-        overrides: { icon: { sizeLarge: '64px' } },
+        overrides: { icon: { sizeLarge: 2 } },
       }),
       template: `
         <ZConfigProvider :component-tokens="overrides">
@@ -289,14 +289,14 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
       },
     })
     mount(Wrap)
-    expect(getInjectedCss()).toMatch(/64px/)
+    expect(getInjectedCss()).toMatch(/font-size:2em/)
   })
 
   it('嵌套 Provider：外 sizeLarge + 内 primaryColor', async () => {
     const Wrap = defineComponent({
       components: { ZConfigProvider, ZIcon },
       data: () => ({
-        outer: { icon: { sizeLarge: '40px' } },
+        outer: { icon: { sizeLarge: 2.5 } },
         inner: { icon: { primaryColor: '#112233' } },
       }),
       template: `
@@ -314,14 +314,14 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
     await nextTick()
     const css = getInjectedCss().toLowerCase()
     expect(css).toContain('#112233')
-    expect(css).toContain('40px')
+    expect(css).toMatch(/font-size:2\.5em/)
   })
 
-  it('改 spinMiddleDuration → spin="middle" 取新时长', () => {
+  it('改 spinMiddleDuration → spin="middle" 取新时长（秒）', () => {
     const Wrap = defineComponent({
       components: { ZConfigProvider, ZIcon },
       data: () => ({
-        overrides: { icon: { spinMiddleDuration: '2.5s' } },
+        overrides: { icon: { spinMiddleDuration: 2.5 } },
       }),
       template: `
         <ZConfigProvider :component-tokens="overrides">
@@ -333,6 +333,6 @@ describe('ZIcon — ZConfigProvider componentTokens 覆盖', () => {
       },
     })
     mount(Wrap)
-    expect(getInjectedCss()).toMatch(/2\.5s/)
+    expect(getInjectedCss()).toMatch(/animation-duration:2\.5s/)
   })
 })
