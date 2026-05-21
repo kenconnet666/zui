@@ -15,7 +15,32 @@
  * **预设值固定单位**：5 阶 size = em、depth = 0..1 浮点字符串、spin = s/ms 时长。
  * 用户不通过 props 传任意值（用 css factory 兜底）；缺省走 `??` fallback。
  */
-import { defineVariants, presetAnimations, type ResolvedTheme, type ThemeSchema } from '@kenconnet666/zui-core'
+import {
+  defineVariants,
+  presetAnimations,
+  type ResolvedTheme} from '@kenconnet666/zui-core'
+import type { ZuiSchema } from '../../theme'
+import type { ZIconTokens } from './tokens'
+
+/**
+ * `IconSlot` —— flatten 后的 icon namespace token 视图。
+ *
+ * `withComponentTokens` 把 `ZIconTokens` 各字段以 `icon${PascalCase}` 形式注入到
+ * `theme.color` 上；这里用 **mapped type with key remapping** 从 `ZIconTokens`
+ * 派生，**保留 per-field 类型**（`iconSizeTiny: number | undefined` /
+ * `iconPrimaryColor: string | undefined` / ...），让下面 `slot.iconXxx ?? fallback`
+ * 的访问享受：
+ *
+ * - typos 编译期即报错（`slot.iconSizeTynyy` → TS2339）
+ * - `ZIconTokens` 增删字段或改类型时同步收紧
+ * - IDE 输入 `slot.icon` 即列出 21 个键
+ *
+ * 不走 `FlattenComponentTokens<{ icon: ZIconTokens }>` —— 后者约束 `R[C] extends
+ * Record<string, unknown>`，而 `interface ZIconTokens` 无 index signature 会落到 `never`。
+ */
+type IconSlot = {
+  [K in keyof ZIconTokens as `icon${Capitalize<K & string>}`]?: ZIconTokens[K]
+}
 
 /**
  * 派生 ZIcon 的 variants 工厂。**4 维度全离散**：
@@ -25,53 +50,61 @@ import { defineVariants, presetAnimations, type ResolvedTheme, type ThemeSchema 
  * - `depth`: none + subtle/muted/dim/faded/ghost（由略淡到几乎消失）
  * - `spin`: none + 5 阶 tiny..huge（tiny 最快 / huge 最慢）
  */
-export function createIconVariants<S extends ThemeSchema = ThemeSchema>(theme: ResolvedTheme<S>) {
-  const slot = (theme as unknown as { color?: Record<string, string> }).color ?? {}
+export function createIconVariants(theme: ResolvedTheme<ZuiSchema>) {
+  const slot: IconSlot = (theme as { color?: IconSlot }).color ?? {}
 
   // 21 项 token —— `theme.color.iconXxx`（withComponentTokens flatten 后）+ 字面量 fallback。
-  // 全部 string：chain method 接受 string；opacity 走 '0.4' 这样的 CSS 字符串值。
+  // 数值统一为 number（em 倍率 / 0..1 opacity / 秒）；color 保留 string。
   const t = {
-    sizeTiny: slot.iconSizeTiny ?? '0.75em',
-    sizeSmall: slot.iconSizeSmall ?? '0.875em',
-    sizeMiddle: slot.iconSizeMiddle ?? '1em',
-    sizeLarge: slot.iconSizeLarge ?? '1.25em',
-    sizeHuge: slot.iconSizeHuge ?? '1.5em',
+    sizeTiny: slot.iconSizeTiny ?? 0.75,
+    sizeSmall: slot.iconSizeSmall ?? 0.875,
+    sizeMiddle: slot.iconSizeMiddle ?? 1,
+    sizeLarge: slot.iconSizeLarge ?? 1.25,
+    sizeHuge: slot.iconSizeHuge ?? 1.5,
     defaultColor: slot.iconDefaultColor ?? 'currentColor',
     primaryColor: slot.iconPrimaryColor ?? '#2563eb',
     successColor: slot.iconSuccessColor ?? '#22c55e',
     warningColor: slot.iconWarningColor ?? '#f59e0b',
     dangerColor: slot.iconDangerColor ?? '#ef4444',
     infoColor: slot.iconInfoColor ?? '#06b6d4',
-    depthSubtle: slot.iconDepthSubtleOpacity ?? '0.8',
-    depthMuted: slot.iconDepthMutedOpacity ?? '0.6',
-    depthDim: slot.iconDepthDimOpacity ?? '0.4',
-    depthFaded: slot.iconDepthFadedOpacity ?? '0.25',
-    depthGhost: slot.iconDepthGhostOpacity ?? '0.15',
-    spinTiny: slot.iconSpinTinyDuration ?? '0.3s',
-    spinSmall: slot.iconSpinSmallDuration ?? '0.5s',
-    spinMiddle: slot.iconSpinMiddleDuration ?? '1s',
-    spinLarge: slot.iconSpinLargeDuration ?? '2s',
-    spinHuge: slot.iconSpinHugeDuration ?? '3s',
+    depthSubtle: slot.iconDepthSubtleOpacity ?? 0.8,
+    depthMuted: slot.iconDepthMutedOpacity ?? 0.6,
+    depthDim: slot.iconDepthDimOpacity ?? 0.4,
+    depthFaded: slot.iconDepthFadedOpacity ?? 0.25,
+    depthGhost: slot.iconDepthGhostOpacity ?? 0.15,
+    spinTiny: slot.iconSpinTinyDuration ?? 0.3,
+    spinSmall: slot.iconSpinSmallDuration ?? 0.5,
+    spinMiddle: slot.iconSpinMiddleDuration ?? 1,
+    spinLarge: slot.iconSpinLargeDuration ?? 2,
+    spinHuge: slot.iconSpinHugeDuration ?? 3,
   }
   const spinKeyframe = presetAnimations.spin
 
-  const applySize = (px: string) => (s: import('@kenconnet666/zui-core').Chain<S>) => {
-    s.width(px)
-    s.height(px)
-    s.fontSize(px)
+  /**
+   * 5 阶 size：只设 width/height + font-size 均为 N em。
+   *
+   * - font-size 设为 N em 既让 spec 断言 `font-size:1em` 通过，也让"icon 直观就是
+   *   N 倍父字号"的语义成立
+   * - width/height 同样 N em → 相对当前 font-size = 1，最终物理尺寸 = N × 父字号
+   * - 用户通过 `:base-font-size` prop（ZIcon 上）覆盖根 font-size，决定"1em 等于多少"
+   */
+  const applySize = (n: number) => (s: import('@kenconnet666/zui-core').Chain<ZuiSchema>) => {
+    s.width.em(n)
+    s.height.em(n)
+    s.fontSize.em(n)
   }
-  const applySpin = (dur: string) => (s: import('@kenconnet666/zui-core').Chain<S>) => {
+  const applySpin = (dur: number) => (s: import('@kenconnet666/zui-core').Chain<ZuiSchema>) => {
     s.animationName(spinKeyframe)
-    s.animationDuration(dur)
-    s.animationIterationCount('infinite')
-    s.animationTimingFunction('linear')
+    s.animationDuration.s(dur)
+    s.animationIterationCount.infinite
+    s.animationTimingFunction.linear
   }
 
   return defineVariants(theme, {
     base: (s) => {
-      s.display('inline-flex')
-      s.alignItems('center')
-      s.justifyContent('center')
+      s.display.inlineFlex
+      s.alignItems.center
+      s.justifyContent.center
       s.flexShrink(0)
       s.lineHeight(1)
     },

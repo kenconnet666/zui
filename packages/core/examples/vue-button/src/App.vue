@@ -1,15 +1,51 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { Chain, defaultLight, defaultDark, toClassName } from '@kenconnet666/zui-core'
+import { Chain, FLAT_PALETTE, Theme, toClassName, tw } from '@kenconnet666/zui-core'
+import type { BaseSchema } from '@kenconnet666/zui-core'
+
+// ─── 0. 自定义主题（含 light / dark 两套语义色） ───
+// core 只暴露 palette；语义色由用户自家组合。
+// 真实业务请用 `zuiLight`（来自 @kenconnet666/zui-vue）。
+interface MySchema extends BaseSchema {
+  color: BaseSchema['color'] & {
+    primary: string
+    danger: string
+  }
+  spacing: { middle: string }
+  radius: { middle: string }
+  fontWeight: { bold: number }
+}
+
+const myLight = new Theme<MySchema>({
+  color: {
+    ...FLAT_PALETTE,
+    primary: tw('blue', '600'),
+    danger: tw('red', '600'),
+  },
+  spacing: { middle: '16px' },
+  radius: { middle: '12px' },
+  fontWeight: { bold: 700 },
+})
+
+const myDark = new Theme<MySchema>({
+  color: {
+    ...FLAT_PALETTE,
+    primary: tw('blue', '500'),
+    danger: tw('red', '500'),
+  },
+  spacing: { middle: '16px' },
+  radius: { middle: '12px' },
+  fontWeight: { bold: 700 },
+})
 
 const dark = ref(false)
 
 // 主题切换：dark / light
-const theme = computed(() => (dark.value ? defaultDark : defaultLight))
+const theme = computed(() => (dark.value ? myDark : myLight))
 
 // 主按钮（filled）
 const primaryCls = computed(() => {
-  const c = new Chain(theme.value)
+  const c = new Chain<MySchema>(theme.value)
   c.color.white
   c.backgroundColor._primary
   c.padding.px(12)
@@ -32,7 +68,7 @@ const primaryCls = computed(() => {
 
 // Ghost 按钮（边框 + alpha 背景）
 const ghostCls = computed(() => {
-  const c = new Chain(theme.value)
+  const c = new Chain<MySchema>(theme.value)
   c.color._primary
   c.backgroundColor._primary.alpha(10)
   c.padding.px(12)
@@ -49,13 +85,13 @@ const ghostCls = computed(() => {
 
 // Danger 按钮
 const dangerCls = computed(() => {
-  const c = new Chain(theme.value)
+  const c = new Chain<MySchema>(theme.value)
   c.color.white
   c.backgroundColor._danger
   c.padding.px(12)
   c.borderRadius._middle
   c.fontWeight._bold
-  c.borderStyle.none
+  c.borderStyle('none')
   c._hover((h) => {
     h.backgroundColor._danger.alpha(85)
   })

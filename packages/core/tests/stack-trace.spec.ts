@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Chain, defaultLight } from '../src'
+import { Chain } from '../src'
+import { defaultLight } from './_fixture-theme'
 import {
   findUserCallsite,
   isProductionEnv,

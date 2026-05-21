@@ -1,7 +1,7 @@
 import { resolveTheme } from './resolveTheme'
 import { mergeTheme } from './mergeTheme'
 import { buildKeymap } from './keymap'
-import type { DeepPartial, ResolvedTheme, ThemeSchema } from './types'
+import type { DeepMergeSchema, DeepPartial, ResolvedTheme, ThemeSchema } from './types'
 
 /**
  * 主题类的运行时实体（internal）。
@@ -68,6 +68,44 @@ class _ThemeClass<T extends ThemeSchema> {
    */
   fork<P extends DeepPartial<T>>(partial: P): Theme<T> {
     return this.merge(partial)
+  }
+
+  /**
+   * `extend(ext)` — **扩展 schema**，返回 `Theme<DeepMergeSchema<T, TExt>>`。
+   *
+   * 与 `merge` / `fork` 的关键区别：
+   * - `merge/fork` 输入 `DeepPartial<T>`，**只能改已有 token 值**，返回类型不变
+   * - `extend` 输入任意 schema-shaped 对象，**可加全新 token**，返回类型扩展
+   *
+   * 用于"在 zui 基础上加自家 brand 色 / 自家 spacing 档位"等场景，配合
+   * `declare module '@kenconnet666/zui-vue' { interface UserColorExt { ... } }`
+   * 实现"用户扩 token 后全工程隐式推导自动生效"。
+   *
+   * @example
+   * // user/theme.ts
+   * import { zuiLight } from '@kenconnet666/zui-vue'
+   * export const myLight = zuiLight.extend({
+   *   color: { brandRoyal: '#1a3a8f', brandSunset: '#ff7849' },
+   *   spacing: { extra: '40px' },
+   * })
+   * // myLight 类型自动推断为含 brandRoyal / brandSunset / extra 的 Theme
+   *
+   * @example
+   * // user/zui.d.ts —— 类型层 augmentation（与 extend 配套）
+   * declare module '@kenconnet666/zui-vue' {
+   *   interface UserColorExt { brandRoyal: string; brandSunset: string }
+   *   interface UserSpacingExt { extra: string }
+   * }
+   * // augmentation 后，任意 ZIcon `:css="(s) => { s.color._brandRoyal }"` 隐式推导
+   */
+  extend<TExt extends Record<string, Record<string, string | number>>>(
+    ext: TExt,
+  ): Theme<DeepMergeSchema<T, TExt> & ThemeSchema> {
+    const next = mergeTheme(
+      this.resolve() as unknown as ResolvedTheme<ThemeSchema>,
+      ext as unknown as DeepPartial<ThemeSchema>,
+    ) as unknown as DeepMergeSchema<T, TExt> & ThemeSchema
+    return new Theme(next) as Theme<DeepMergeSchema<T, TExt> & ThemeSchema>
   }
 }
 

@@ -1,13 +1,24 @@
 <script setup lang="ts">
 /**
- * docs 站点根 —— 顶层挂 ZConfigProvider 喂入 defaultLight。
+ * docs 站点根 —— 顶层挂 ZConfigProvider。
+ *
+ * 用 `zuiLight.extend({ ... })` 在运行时叠加 brand 色，类型层由 `zui.d.ts` 的
+ * `UserColorExt` augmentation 同步扩展 `ZuiSchema.color` —— 任意组件 `:css` 回调
+ * `(s) => { s.color._brandRoyal }` 即获得 IDE 补全 + 编译期校验。
  */
-import { defaultLight } from '@kenconnet666/zui-core'
-import { ZConfigProvider } from '@kenconnet666/zui-vue'
+import { ZConfigProvider, zuiLight } from '@kenconnet666/zui-vue'
+
+const myLight = zuiLight.extend({
+  color: {
+    brandRoyal: '#1a3a8f',
+    brandSunset: '#ff7849',
+    brandForest: '#1f7a3c',
+  },
+})
 </script>
 
 <template>
-  <ZConfigProvider :theme="defaultLight">
+  <ZConfigProvider :theme="myLight">
     <div class="app-shell">
       <aside class="sidebar">
         <h1 class="brand">zui docs</h1>

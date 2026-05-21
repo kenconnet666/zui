@@ -1,29 +1,32 @@
-<script setup lang="ts" generic="S extends ThemeSchema = ThemeSchema">
+<script setup lang="ts">
 /**
  * `ZConfigProvider` —— ui-vue 顶层/嵌套配置注入器。
  *
  * 同时承载 4 类上下文，并允许嵌套时只覆盖部分维度：
  *
- *   1. theme           —— 完整 `Theme<S>` 实例（替换父）
- *   2. themePatch      —— `DeepPartial<S>` 局部补丁（合并到父；与 theme 互斥取先 theme 后 patch）
+ *   1. theme           —— 完整 `Theme<ZuiSchema>` 实例（替换父）
+ *   2. themePatch      —— `DeepPartial<ZuiSchema>` 局部补丁（合并到父；与 theme 互斥取先 theme 后 patch）
  *   3. componentTokens —— `ComponentTokenOverrides`，与父层"key 级浅合并"
  *   4. locale          —— 完整 `ZLocale`（替换父）；或 localePatch（合并）
  *   5. timezone        —— IANA 时区，未传继承父
  *   6. dateLocale      —— date-fns Locale，未传继承父
  *
- * **根 Provider** 没传 `theme` 时回落 `defaultLight.resolve()` 并 dev warn。
+ * **根 Provider** 没传 `theme` 时回落 `zuiLight.resolve()` 并 dev warn。
+ *
+ * 用户工程要扩自家 brand：定义 `interface MySchema extends ZuiSchema { ... }`，
+ * 基于 `zuiLight.schema` 派生 `Theme<MySchema>`，传给 `:theme`。
  */
 import { computed, inject, provide, type Ref } from 'vue'
 import {
-  defaultLight,
   mergeComponentTokenOverrides,
   mergeTheme,
   type ComponentTokenOverrides,
   type DeepPartial,
   type ResolvedTheme,
   type Theme,
-  type ThemeSchema,
 } from '@kenconnet666/zui-core'
+import { zuiLight } from '../theme'
+import type { ZuiSchema } from '../theme'
 import type { Locale as DateFnsLocale } from 'date-fns'
 import {
   Z_DATE_KEY,
@@ -38,10 +41,18 @@ import type { ZLocale, ZLocalePartial } from '../locale/types'
 
 const props = withDefaults(
   defineProps<{
-    /** 完整主题（顶层推荐）。`Theme<S>` 实例。 */
-    theme?: Theme<S>
+    /**
+     * 完整主题（顶层推荐）。Theme 实例。
+     *
+     * 类型用 `Theme<any>` 而非 `Theme<ZuiSchema>` —— `Theme<T>` 的 `merge<P>(...)`
+     * 让 T 同时出现在输入与输出位置（invariant），写 `Theme<ZuiSchema>` 会拒收
+     * `Theme<MyBrandSchema extends ZuiSchema>` 等更具体的实例。Provider 内部不依赖
+     * 具体 T，统一在 `.resolve()` 后 cast 成 `ResolvedTheme<ZuiSchema>` 注入即可。
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    theme?: Theme<any>
     /** 主题局部补丁（嵌套推荐）。 */
-    themePatch?: DeepPartial<S>
+    themePatch?: DeepPartial<ZuiSchema>
     /** 组件 token override（嵌套时与父浅合并）。 */
     componentTokens?: ComponentTokenOverrides
     /** 完整 locale（替换父）。 */
@@ -57,40 +68,40 @@ const props = withDefaults(
 )
 
 defineSlots<{
-  default(props: { theme: ResolvedTheme<S>; locale: ZLocale }): unknown
+  default(props: { theme: ResolvedTheme<ZuiSchema>; locale: ZLocale }): unknown
 }>()
 
 // ─── 父层 inject（可能不存在 → 用 fallback） ───
-const parentTheme = inject<Ref<ResolvedTheme<S>> | null>(Z_THEME_KEY, null)
+const parentTheme = inject<Ref<ResolvedTheme<ZuiSchema>> | null>(Z_THEME_KEY, null)
 const parentOverrides = inject<Ref<ComponentTokenOverrides> | null>(Z_OVERRIDES_KEY, null)
 const parentLocale = inject<Ref<ZLocale> | null>(Z_LOCALE_KEY, null)
 const parentDate = inject<Ref<ZDateConfig> | null>(Z_DATE_KEY, null)
 
-// ─── theme 合并（顶层 fallback defaultLight） ───
-const mergedTheme = computed<ResolvedTheme<S>>(() => {
+// ─── theme 合并（顶层 fallback zuiLight） ───
+const mergedTheme = computed<ResolvedTheme<ZuiSchema>>(() => {
   // ① 优先用 props.theme（完整替换）
   if (props.theme) {
-    const base = props.theme.resolve() as ResolvedTheme<S>
+    const base = props.theme.resolve() as ResolvedTheme<ZuiSchema>
     if (props.themePatch) {
-      return mergeTheme(base, props.themePatch) as ResolvedTheme<S>
+      return mergeTheme(base, props.themePatch) as ResolvedTheme<ZuiSchema>
     }
     return base
   }
   // ② 用 themePatch 合并到 parent / fallback
   if (props.themePatch) {
-    const base = parentTheme?.value ?? (defaultLight.resolve() as unknown as ResolvedTheme<S>)
-    return mergeTheme(base, props.themePatch) as ResolvedTheme<S>
+    const base = parentTheme?.value ?? (zuiLight.resolve() as ResolvedTheme<ZuiSchema>)
+    return mergeTheme(base, props.themePatch) as ResolvedTheme<ZuiSchema>
   }
   // ③ 都没传 → 直接用 parent / fallback
   if (parentTheme) return parentTheme.value
   if (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production') {
     // eslint-disable-next-line no-console
     console.warn(
-      '[zui-vue/ZConfigProvider] 没有父 Provider 且未传 theme/themePatch，回落 defaultLight。' +
-        '\n  根 Provider 建议显式传 `:theme="myTheme"`。',
+      '[zui-vue/ZConfigProvider] 没有父 Provider 且未传 theme/themePatch，回落 zuiLight。' +
+        '\n  根 Provider 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。',
     )
   }
-  return defaultLight.resolve() as unknown as ResolvedTheme<S>
+  return zuiLight.resolve() as ResolvedTheme<ZuiSchema>
 })
 
 // ─── componentTokens 浅合并 ───

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Theme, assertSchemaConsistency, defaultLight } from '../src'
+import { Theme, assertSchemaConsistency } from '../src'
+import { defaultLight } from './_fixture-theme'
 
 describe('assertSchemaConsistency', () => {
   it('defaultLight 应无 issue', () => {

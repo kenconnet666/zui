@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import createEmotion from '@emotion/css/create-instance'
-import { createIcssInstance, defaultLight } from '../src'
+import { createIcssInstance } from '../src'
+import { defaultLight } from './_fixture-theme'
 
 describe('W5.1 — createIcssInstance', () => {
   it('icss 输出走自定义 instance 的 css', () => {

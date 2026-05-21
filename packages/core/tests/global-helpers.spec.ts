@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import {
   Chain,
-  defaultLight,
   injectPreflight,
   registerCustomProperty,
   injectLayer,
   injectLayerOrder,
   registerFont,
 } from '../src'
+import { defaultLight } from './_fixture-theme'
 
 /**
  * 全局副作用 helper（W5.4 / W5.5 / W8）测试。

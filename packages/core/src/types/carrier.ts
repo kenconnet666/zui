@@ -118,6 +118,16 @@ export interface ColorTokenValue<TSelf> {
   saturate(n: number): TSelf
   /** HSL 饱和度降低 n%。 */
   desaturate(n: number): TSelf
+  /** 补色 —— 色相旋转 180°。 */
+  complement(): TSelf
+  /** 任意角度旋转色相；deg 任意数（自动 mod 360）。 */
+  rotateHue(deg: number): TSelf
+  /** RGB 反相（255 - 每 channel）。 */
+  invert(): TSelf
+  /** 与黑色按 n% 混合（RGB 混黑；比 darken 更"重"）；n 取 0-100。 */
+  shade(n: number): TSelf
+  /** 与白色按 n% 混合（RGB 混白；比 lighten 更"柔"）；n 取 0-100。 */
+  tint(n: number): TSelf
 }
 
 /**

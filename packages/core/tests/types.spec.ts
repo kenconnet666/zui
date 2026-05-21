@@ -5,7 +5,8 @@
  * tsc --noEmit 通过即等价于这些断言通过。
  */
 import { describe, expectTypeOf, it } from 'vitest'
-import { Chain, defaultLight } from '../src'
+import { Chain } from '../src'
+import { defaultLight } from './_fixture-theme'
 import type { ColorTokenValue } from '../src'
 
 const c = new Chain(defaultLight)

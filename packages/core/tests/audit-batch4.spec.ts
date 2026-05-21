@@ -206,7 +206,8 @@ describe('S9.4 — injectLayer 生成 @layer name { ... } 形式', () => {
 
 describe('S9.5 — applyStyleProps 复合 alias 多 prop token 解析', () => {
   it('px: token → paddingLeft + paddingRight 都解析', async () => {
-    const { Chain, defaultLight, applyStyleProps } = await import('../src')
+    const { Chain, applyStyleProps } = await import('../src')
+    const { defaultLight } = await import('./_fixture-theme')
     const c = new Chain(defaultLight)
     applyStyleProps(c, { px: '_middle' })
     // default schema spacing.md = '16px'
@@ -215,7 +216,8 @@ describe('S9.5 — applyStyleProps 复合 alias 多 prop token 解析', () => {
   })
 
   it('my: token → marginTop + marginBottom 都解析', async () => {
-    const { Chain, defaultLight, applyStyleProps } = await import('../src')
+    const { Chain, applyStyleProps } = await import('../src')
+    const { defaultLight } = await import('./_fixture-theme')
     const c = new Chain(defaultLight)
     applyStyleProps(c, { my: '_middle' })
     expect(c._node.marginTop).toBe('16px')

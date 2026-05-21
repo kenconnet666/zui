@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Chain, defaultLight } from '../src'
+import { Chain } from '../src'
+import { defaultLight } from './_fixture-theme'
 
 /**
  * Batch 4 — 现代 CSS 4 helper 测试（4 个 Chain method）。

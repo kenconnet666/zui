@@ -23,9 +23,10 @@ export { injectLayer, injectLayerOrder } from './layer'
 export { registerFont } from './registerFont'
 export type { FontFaceSource } from './registerFont'
 
-// ─── 默认主题 ───
-export { defaultLight, defaultDark } from './theme/defaults'
-export type { DefaultSchema } from './theme/defaults/schema'
+// ─── 默认主题（仅 palette，无 semantic / 5 阶 scale） ───
+// 业务侧消费推荐 `zuiLight` / `zuiDark`（来自 @kenconnet666/zui-vue），含完整设计系统 token。
+export { paletteLight, paletteDark } from './theme/defaults'
+export type { BaseSchema } from './theme/defaults/schema'
 export {
   tw,
   TAILWIND_PALETTE,
@@ -53,6 +54,8 @@ export type {
   ResolvedTheme,
   ResolvedThemeContext,
   DeepPartial,
+  DeepMergeSchema,
+  SchemaOf,
 } from './theme/types'
 
 export type {

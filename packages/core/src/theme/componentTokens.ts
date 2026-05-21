@@ -14,10 +14,10 @@ import type { ComponentTokenRegistry } from '../types/components'
  *   interface ComponentTokenRegistry { button: { primary: string; hover: string } }
  * }
  *
- * const baseTheme = defaultLight.resolve()
+ * const baseTheme = paletteLight.resolve()
  * const themedForButton = withComponentTokens(
  *   baseTheme,
- *   { button: t => ({ primary: t.color.primary, hover: t.color.primaryHover }) },
+ *   { button: t => ({ primary: t.color.blue600, hover: t.color.blue500 }) },
  *   { button: { primary: '#f00' } },   // 可选 override
  * )
  * const c = new Chain(themedForButton)
@@ -50,11 +50,11 @@ export type ComponentTokenOverrides = {
  *   interface ComponentTokenRegistry { button: { primary: string; primaryHover: string } }
  * }
  *
- * const theme = withComponentTokens(defaultLight.resolve(), {
- *   button: t => ({ primary: t.color.primary as string, primaryHover: t.color.primaryHover as string }),
+ * const theme = withComponentTokens(paletteLight.resolve(), {
+ *   button: t => ({ primary: t.color.blue600 as string, primaryHover: t.color.blue500 as string }),
  * })
  * const tokens = componentTokensFor('button', theme)
- * // → { primary: '#2563eb', primaryHover: '#1d4ed8' }
+ * // → { primary: '#2563eb', primaryHover: '#3b82f6' }
  */
 export function componentTokensFor<C extends keyof ComponentTokenRegistry & string, T extends ThemeSchema>(
   component: C,

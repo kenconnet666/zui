@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Chain, Theme, applyStyleProps, cx, defaultLight } from '../src'
+import { Chain, Theme, applyStyleProps, cx } from '../src'
+import { defaultLight } from './_fixture-theme'
 import { deepClone } from '../src/chain/helpers'
 import { darken, lighten, setAlpha } from '../src/chain/color'
 import type { StyleProps } from '../src'

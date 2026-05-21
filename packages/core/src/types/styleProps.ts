@@ -8,7 +8,7 @@ import type {
 import type { ResolvedTheme, ThemeSchema } from '../theme/types'
 import { Chain } from '../chain/Chain'
 import { Theme } from '../theme/Theme'
-import type { DefaultSchema } from '../theme/defaults/schema'
+import type { BaseSchema } from '../theme/defaults/schema'
 import { applyResponsive, isResponsiveValue, type ResponsiveValue } from '../responsive'
 
 /**
@@ -19,7 +19,7 @@ import { applyResponsive, isResponsiveValue, type ResponsiveValue } from '../res
  *
  * 所有 alias 都接受 token（如 `'_primary'` / `'_middle'`）或字面值（string / number）。
  */
-export type StyleProps<T extends ThemeSchema = DefaultSchema> = Partial<{
+export type StyleProps<T extends ThemeSchema = BaseSchema> = Partial<{
   // ─── 颜色 ───
   color: ColorTokens<T> | (string & {})
   bg: ColorTokens<T> | (string & {})
@@ -184,7 +184,7 @@ function applyOneProp<T extends ThemeSchema>(
 /**
  * StyleProps 的响应式版本：每个字段可传普通值，也可传响应式对象 `{ base, md, lg, ... }`。
  */
-export type ResponsiveStyleProps<T extends ThemeSchema = DefaultSchema> = {
+export type ResponsiveStyleProps<T extends ThemeSchema = BaseSchema> = {
   [K in keyof StyleProps<T>]: ResponsiveValue<StyleProps<T>[K]>
 }
 
@@ -192,12 +192,12 @@ export type ResponsiveStyleProps<T extends ThemeSchema = DefaultSchema> = {
  * W10.2 — 拿单 category 的 token union（修 C9 顺手）。
  *
  * @example
- * type ButtonColor = TokenOf<'color', DefaultSchema>  // '_primary' | '_danger' | ...
- * type ButtonGap = TokenOf<'spacing', DefaultSchema>  // '_tiny' | '_small' | '_middle' | ...
+ * type ButtonColor = TokenOf<'color', BaseSchema>  // '_primary' | '_danger' | ...
+ * type ButtonGap = TokenOf<'spacing', BaseSchema>  // '_tiny' | '_small' | '_middle' | ...
  */
 export type TokenOf<
   Cat extends keyof ThemeSchema,
-  T extends ThemeSchema = DefaultSchema,
+  T extends ThemeSchema = BaseSchema,
 > = Cat extends 'color'
   ? ColorTokens<T>
   : Cat extends 'spacing'

@@ -10,9 +10,9 @@
  * `package.json` sideEffects 已精确标注本文件为 side-effectful，bundler 不会误裁。
  *
  * @example
- * import { presetAnimations, icss, defaultLight } from '@kenconnet666/zui-core'
+ * import { presetAnimations, icss, paletteLight } from '@kenconnet666/zui-core'
  *
- * const cls = icss(defaultLight, s => {
+ * const cls = icss(paletteLight, s => {
  *   s.animationName(presetAnimations.fadeIn)
  *   s.animationDuration('300ms')
  *   s.animationFillMode('both')

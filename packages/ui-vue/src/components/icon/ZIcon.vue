@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="S extends ThemeSchema = ThemeSchema">
+<script setup lang="ts">
 /**
  * `ZIcon` —— 框架无关图标容器。**v2.1 极简版**。
  *
@@ -14,6 +14,9 @@
  * **a11y**：
  * - 传 `label` → `aria-label` + `role="img"`
  * - 不传 → `aria-hidden="true"`
+ *
+ * **类型注**：组件层不再穿透 `<S>` 泛型。用户工程通过 module augmentation 扩
+ * `ThemeSchema` 即可让 `:css` 回调里的 `Chain<ZuiSchema>` 获得自定义 token 的 IDE 补全。
  */
 import { computed, type Component } from 'vue'
 import {
@@ -21,9 +24,8 @@ import {
   cx,
   toClassName,
   withComponentTokens,
-  type ResolvedTheme,
-  type ThemeSchema,
-} from '@kenconnet666/zui-core'
+  type ResolvedTheme} from '@kenconnet666/zui-core'
+import type { ZuiSchema } from '../../theme'
 import { useZComponentTokens, useZTheme } from '../../provider'
 import { createIconVariants } from './variants'
 import { iconTokenDerivers } from './tokens'
@@ -35,7 +37,13 @@ const props = withDefaults(
     color?: ZIconColor
     depth?: ZIconDepth
     spin?: ZIconSpin
-    css?: (s: Chain<S>) => void
+    /**
+     * 根元素 `font-size`（即"1em 等于多少"）。不传跟随父字号；
+     * 传则用 inline style 写到根元素，覆盖 variants 内的 `font-size: Nem`，
+     * 让 width/height 的 em 单位 resolved 到这个绝对值。
+     */
+    baseFontSize?: string
+    css?: (s: Chain<ZuiSchema>) => void
     component?: Component
     tag?: string
     label?: string
@@ -54,16 +62,16 @@ defineSlots<{
 }>()
 
 // ─── 主题 + componentTokens 覆盖派生 ───
-const theme = useZTheme<S>()
+const theme = useZTheme()
 const overrides = useZComponentTokens()
-const themed = computed<ResolvedTheme<S>>(() =>
-  withComponentTokens(theme.value, iconTokenDerivers, overrides.value) as ResolvedTheme<S>,
+const themed = computed<ResolvedTheme<ZuiSchema>>(() =>
+  withComponentTokens(theme.value, iconTokenDerivers, overrides.value) as ResolvedTheme<ZuiSchema>,
 )
 
 // ─── 离散 variants（4 维度全离散）───
 // 注：**不**走 `useVariants` —— 那个 composable 内部用 raw `useZTheme()`，绕过 Provider 覆盖。
 const variantsCls = computed(() =>
-  createIconVariants<S>(themed.value)({
+  createIconVariants(themed.value)({
     size: props.size,
     color: props.color,
     depth: props.depth,
@@ -74,7 +82,7 @@ const variantsCls = computed(() =>
 // ─── 用户精细覆盖：用 zui-core chain 自由写 ───
 const cssCls = computed(() => {
   if (!props.css) return ''
-  const c = new Chain<S>(themed.value)
+  const c = new Chain<ZuiSchema>(themed.value)
   props.css(c)
   return toClassName(c)
 })
@@ -88,10 +96,17 @@ const a11y = computed(() => {
   }
   return { 'aria-hidden': 'true' }
 })
+
+// ─── baseFontSize → inline style（不传时不写 style） ───
+const rootStyle = computed(() =>
+  props.baseFontSize !== undefined && props.baseFontSize !== ''
+    ? { fontSize: props.baseFontSize }
+    : undefined,
+)
 </script>
 
 <template>
-  <component :is="tag" :class="className" v-bind="a11y">
+  <component :is="tag" :class="className" :style="rootStyle" v-bind="a11y">
     <slot>
       <component :is="component" v-if="component" />
     </slot>

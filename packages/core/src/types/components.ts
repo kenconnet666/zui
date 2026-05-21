@@ -2,7 +2,7 @@
  * W1.2 — 组件级 token 注册表（D14 内部 use）。
  *
  * 通过 declaration merging 让第三方组件库或用户注册自己的组件 token namespace，
- * 自动出现在 `DefaultSchema['color']` 的 keyof（intersection），从而在 chain 上
+ * 自动出现在 `BaseSchema['color']` 的 keyof（intersection），从而在 chain 上
  * 出现 `c.color._buttonPrimary` 等强类型补全。
  *
  * @example
@@ -19,6 +19,10 @@
  *   }
  * }
  */
+// 故意保留空 interface —— 这是 declaration merging 的 anchor，让用户工程通过
+// `declare module '@kenconnet666/zui-core' { interface ComponentTokenRegistry { ... } }`
+// 注入自家组件 token namespace。改成 `Record<string, never>` 或 `type` 别名会破坏 merging。
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ComponentTokenRegistry {}
 
 /**

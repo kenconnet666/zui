@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Chain, defaultLight, defaultDark } from '../src'
+import { Chain } from '../src'
+import { defaultLight, defaultDark } from './_fixture-theme'
 
 describe('Palette tokens（242 色 + 11 语义色）', () => {
   it('palette token 可访问：chain.color._blue600', () => {

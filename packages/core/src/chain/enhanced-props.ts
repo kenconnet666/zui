@@ -12,10 +12,48 @@ export interface EnhancedPropConfig {
 
 // ─── 复用 keyword 集（避免重复写） ───
 
-const COLOR_KW = ['white', 'black', 'transparent', 'currentColor'] as const
+/**
+ * CSS 4 named colors（146 个）—— CSS spec 标准色名，与 palette token 并行。
+ *
+ * 这些 keyword 让用户写 `s.color.coral` / `s.backgroundColor.lavender` 等直观写法；
+ * 与 palette token（`s.color._blue500`）不冲突 —— 前者无 `_` 前缀走 keyword 路径，
+ * 后者带 `_` 走 token 路径，各有 IDE 补全。
+ *
+ * 全部小写单词形式（不走 camelCase 转换）—— CSS spec 就是这么写的。
+ */
+const CSS_NAMED_COLOR_KW = [
+  'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige',
+  'bisque', 'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood',
+  'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk',
+  'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray',
+  'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange',
+  'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray',
+  'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray',
+  'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'fuchsia',
+  'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green',
+  'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo',
+  'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon',
+  'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen',
+  'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray',
+  'lightslategrey', 'lightsteelblue', 'lightyellow', 'lime', 'limegreen', 'linen',
+  'magenta', 'maroon', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple',
+  'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue',
+  'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'navy', 'oldlace',
+  'olive', 'olivedrab', 'orange', 'orangered', 'orchid', 'palegoldenrod',
+  'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru',
+  'pink', 'plum', 'powderblue', 'purple', 'rebeccapurple', 'red',
+  'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen',
+  'seashell', 'sienna', 'silver', 'skyblue', 'slateblue', 'slategray',
+  'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'teal',
+  'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke',
+  'yellow', 'yellowgreen',
+] as const
+
+const COLOR_KW = ['white', 'black', 'transparent', 'currentColor', ...CSS_NAMED_COLOR_KW] as const
 const SPACING_KW = ['auto'] as const
 const SIZE_KW = ['auto', 'minContent', 'maxContent', 'fitContent'] as const
 const DISPLAY_KW = [
+  // 基础 outside / inside
   'block',
   'inline',
   'inlineBlock',
@@ -25,20 +63,66 @@ const DISPLAY_KW = [
   'inlineGrid',
   'none',
   'contents',
+  // 现代 inside
+  'flowRoot',
+  'ruby',
+  // list-item
+  'listItem',
+  // table 家族
+  'table',
+  'inlineTable',
+  'tableCell',
+  'tableRow',
+  'tableColumn',
+  'tableRowGroup',
+  'tableHeaderGroup',
+  'tableFooterGroup',
+  'tableColumnGroup',
+  'tableCaption',
 ] as const
 const POSITION_KW = ['static', 'relative', 'absolute', 'fixed', 'sticky'] as const
 const CURSOR_KW = [
+  // 通用
   'auto',
   'default',
+  'none',
+  // 交互
   'pointer',
   'text',
+  'verticalText',
   'wait',
-  'move',
+  'progress',
   'help',
-  'notAllowed',
-  'none',
+  'contextMenu',
+  'cell',
+  'crosshair',
+  // 拖放
+  'move',
   'grab',
   'grabbing',
+  'alias',
+  'copy',
+  'notAllowed',
+  'noDrop',
+  // 缩放
+  'allScroll',
+  'zoomIn',
+  'zoomOut',
+  // resize（8 方向 + 列/行 + 对角线）
+  'colResize',
+  'rowResize',
+  'eResize',
+  'nResize',
+  'sResize',
+  'wResize',
+  'neResize',
+  'nwResize',
+  'seResize',
+  'swResize',
+  'ewResize',
+  'nsResize',
+  'neswResize',
+  'nwseResize',
 ] as const
 const VISIBILITY_KW = ['visible', 'hidden', 'collapse'] as const
 const OVERFLOW_KW = ['visible', 'hidden', 'scroll', 'auto', 'clip'] as const
@@ -88,18 +172,64 @@ const ANIMATION_DIRECTION_KW = ['normal', 'reverse', 'alternate', 'alternateReve
 const ANIMATION_FILL_KW = ['none', 'forwards', 'backwards', 'both'] as const
 const ANIMATION_PLAY_KW = ['running', 'paused'] as const
 const OBJECT_FIT_KW = ['fill', 'contain', 'cover', 'none', 'scaleDown'] as const
-const TEXT_ALIGN_KW = ['left', 'right', 'center', 'justify', 'start', 'end'] as const
-const TEXT_DECO_LINE_KW = ['none', 'underline', 'overline', 'lineThrough'] as const
+const TEXT_ALIGN_KW = [
+  'left',
+  'right',
+  'center',
+  'justify',
+  'start',
+  'end',
+  'matchParent',
+  'justifyAll',
+] as const
+const TEXT_DECO_LINE_KW = [
+  'none',
+  'underline',
+  'overline',
+  'lineThrough',
+  'spellingError',
+  'grammarError',
+] as const
 const TEXT_DECO_STYLE_KW = ['solid', 'double', 'dotted', 'dashed', 'wavy'] as const
-const TEXT_TRANSFORM_KW = ['none', 'capitalize', 'uppercase', 'lowercase'] as const
+const TEXT_TRANSFORM_KW = [
+  'none',
+  'capitalize',
+  'uppercase',
+  'lowercase',
+  'fullWidth',
+  'fullSizeKana',
+  'mathAuto',
+] as const
 const TEXT_OVERFLOW_KW = ['clip', 'ellipsis'] as const
-const WHITE_SPACE_KW = ['normal', 'nowrap', 'pre', 'preWrap', 'preLine', 'breakSpaces'] as const
-const WORD_BREAK_KW = ['normal', 'breakAll', 'keepAll', 'breakWord'] as const
+const WHITE_SPACE_KW = [
+  'normal',
+  'nowrap',
+  'pre',
+  'preWrap',
+  'preLine',
+  'breakSpaces',
+  // CSS 4
+  'wrap',
+  'collapse',
+] as const
+const WORD_BREAK_KW = ['normal', 'breakAll', 'keepAll', 'breakWord', 'autoPhrase'] as const
 const BG_SIZE_KW = ['auto', 'cover', 'contain'] as const
 const BG_REPEAT_KW = ['repeat', 'noRepeat', 'repeatX', 'repeatY', 'round', 'space'] as const
 const BG_CLIP_KW = ['borderBox', 'paddingBox', 'contentBox', 'text'] as const
 const USER_SELECT_KW = ['none', 'auto', 'text', 'all', 'contain'] as const
-const POINTER_EVENTS_KW = ['none', 'auto'] as const
+const POINTER_EVENTS_KW = [
+  'none',
+  'auto',
+  // SVG（注：spec 拼写为驼峰单词，无连字符）
+  'visiblePainted',
+  'visibleFill',
+  'visibleStroke',
+  'visible',
+  'painted',
+  'fill',
+  'stroke',
+  'all',
+] as const
 const RESIZE_KW = ['none', 'both', 'horizontal', 'vertical', 'block', 'inline'] as const
 const SCROLL_BEHAVIOR_KW = ['auto', 'smooth'] as const
 const GRID_AUTO_FLOW_KW = ['row', 'column', 'dense', 'rowDense', 'columnDense'] as const
@@ -152,20 +282,30 @@ const CAPTION_SIDE_KW = [
   'inlineEnd',
 ] as const
 const LIST_STYLE_TYPE_KW = [
+  // 基础
   'disc',
   'circle',
   'square',
+  'none',
+  // 数字 / 西文字母
   'decimal',
   'decimalLeadingZero',
   'lowerRoman',
   'upperRoman',
   'lowerAlpha',
   'upperAlpha',
-  'none',
+  // 国际化（CSS spec 已标准化）
+  'lowerGreek',
+  'armenian',
+  'georgian',
+  'hebrew',
+  'hiragana',
+  'katakana',
+  'cjkIdeographic',
 ] as const
 const LIST_STYLE_POSITION_KW = ['inside', 'outside'] as const
 const STROKE_LINECAP_KW = ['butt', 'round', 'square'] as const
-const STROKE_LINEJOIN_KW = ['miter', 'round', 'bevel'] as const
+const STROKE_LINEJOIN_KW = ['miter', 'round', 'bevel', 'arcs', 'miterClip'] as const
 const SCROLL_SNAP_TYPE_KW = [
   'none',
   'x',
@@ -214,6 +354,59 @@ const OVERFLOW_ANCHOR_KW = ['auto', 'none'] as const
 const COLUMN_SPAN_KW = ['none', 'all'] as const
 const COLUMN_FILL_KW = ['auto', 'balance', 'balanceAll'] as const
 
+// ─── P0/P1/P2 补完 ───
+
+/** transition/animation timing function 的 CSS 标准 keyword（不含贝塞尔函数 / steps()）。 */
+const TIMING_FUNCTION_KW = [
+  'linear',
+  'ease',
+  'easeIn',
+  'easeOut',
+  'easeInOut',
+  'stepStart',
+  'stepEnd',
+] as const
+
+/** font-weight 关键字（含相对值 lighter/bolder）。 */
+const FONT_WEIGHT_KW = ['normal', 'bold', 'lighter', 'bolder'] as const
+
+/** font-size 关键字：8 阶 absolute + 2 个 relative。 */
+const FONT_SIZE_KW = [
+  'xxSmall',
+  'xSmall',
+  'small',
+  'medium',
+  'large',
+  'xLarge',
+  'xxLarge',
+  'xxxLarge',
+  'smaller',
+  'larger',
+] as const
+
+/** font-family generic family + ui-* 现代系列。 */
+const FONT_FAMILY_KW = [
+  'serif',
+  'sansSerif',
+  'monospace',
+  'cursive',
+  'fantasy',
+  'systemUi',
+  'uiSerif',
+  'uiSansSerif',
+  'uiMonospace',
+  'uiRounded',
+  'emoji',
+  'math',
+  'fangsong',
+] as const
+
+/** border-width / outline-width / column-rule-width 用 thin/medium/thick。 */
+const BORDER_WIDTH_KW = ['thin', 'medium', 'thick'] as const
+
+/** background-position / object-position / transform-origin 的方位关键字。 */
+const POSITION_VALUES_KW = ['top', 'bottom', 'left', 'right', 'center'] as const
+
 /**
  * 增强属性元数据 —— 类型 ↔ 运行时双向对齐的 **single source of truth**。
  *
@@ -254,9 +447,9 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   marginLeft: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
   marginBlock: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
   marginInline: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
-  gap: { tokenCat: 'spacing', unitClass: 'length', keywords: null },
-  rowGap: { tokenCat: 'spacing', unitClass: 'length', keywords: null },
-  columnGap: { tokenCat: 'spacing', unitClass: 'length', keywords: null },
+  gap: { tokenCat: 'spacing', unitClass: 'length', keywords: ['normal'] },
+  rowGap: { tokenCat: 'spacing', unitClass: 'length', keywords: ['normal'] },
+  columnGap: { tokenCat: 'spacing', unitClass: 'length', keywords: ['normal'] },
   inset: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
   top: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
   right: { tokenCat: 'spacing', unitClass: 'length', keywords: SPACING_KW },
@@ -272,11 +465,11 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   maxHeight: { tokenCat: 'sizes', unitClass: 'length', keywords: SIZE_KW },
 
   // ─── 字体 ───
-  fontSize: { tokenCat: 'fontSize', unitClass: 'length', keywords: null },
-  fontWeight: { tokenCat: 'fontWeight', unitClass: null, keywords: ['normal', 'bold'] },
+  fontSize: { tokenCat: 'fontSize', unitClass: 'length', keywords: FONT_SIZE_KW },
+  fontWeight: { tokenCat: 'fontWeight', unitClass: null, keywords: FONT_WEIGHT_KW },
   lineHeight: { tokenCat: 'lineHeight', unitClass: 'length', keywords: ['normal'] },
   letterSpacing: { tokenCat: 'letterSpacing', unitClass: 'length', keywords: ['normal'] },
-  fontFamily: { tokenCat: 'fonts', unitClass: null, keywords: null },
+  fontFamily: { tokenCat: 'fonts', unitClass: null, keywords: FONT_FAMILY_KW },
 
   // ─── 圆角（radius；LengthUnits） ───
   borderRadius: { tokenCat: 'radius', unitClass: 'length', keywords: null },
@@ -285,13 +478,13 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   borderBottomLeftRadius: { tokenCat: 'radius', unitClass: 'length', keywords: null },
   borderBottomRightRadius: { tokenCat: 'radius', unitClass: 'length', keywords: null },
 
-  // ─── 边框宽度（borders；LengthUnits） ───
-  borderWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
-  borderTopWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
-  borderRightWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
-  borderBottomWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
-  borderLeftWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
-  outlineWidth: { tokenCat: 'borders', unitClass: 'length', keywords: null },
+  // ─── 边框宽度（borders；LengthUnits + thin/medium/thick） ───
+  borderWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
+  borderTopWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
+  borderRightWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
+  borderBottomWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
+  borderLeftWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
+  outlineWidth: { tokenCat: 'borders', unitClass: 'length', keywords: BORDER_WIDTH_KW },
 
   // ─── 边框样式（无 token；BORDER_STYLE_KW） ───
   borderStyle: { tokenCat: null, unitClass: null, keywords: BORDER_STYLE_KW },
@@ -346,12 +539,12 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
 
   // ─── 过渡 / 动画 ───
   transitionDuration: { tokenCat: 'duration', unitClass: 'time', keywords: null },
-  transitionTimingFunction: { tokenCat: 'easing', unitClass: null, keywords: null },
-  transitionProperty: { tokenCat: 'transitionProperty', unitClass: null, keywords: null },
+  transitionTimingFunction: { tokenCat: 'easing', unitClass: null, keywords: TIMING_FUNCTION_KW },
+  transitionProperty: { tokenCat: 'transitionProperty', unitClass: null, keywords: ['none', 'all'] },
   transitionDelay: { tokenCat: 'duration', unitClass: 'time', keywords: null },
   animationDuration: { tokenCat: 'duration', unitClass: 'time', keywords: null },
   animationDelay: { tokenCat: 'duration', unitClass: 'time', keywords: null },
-  animationTimingFunction: { tokenCat: 'easing', unitClass: null, keywords: null },
+  animationTimingFunction: { tokenCat: 'easing', unitClass: null, keywords: TIMING_FUNCTION_KW },
   animationIterationCount: { tokenCat: null, unitClass: null, keywords: ['infinite'] },
   animationName: { tokenCat: null, unitClass: null, keywords: ['none'] },
   animationDirection: { tokenCat: null, unitClass: null, keywords: ANIMATION_DIRECTION_KW },
@@ -359,7 +552,7 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   animationPlayState: { tokenCat: null, unitClass: null, keywords: ANIMATION_PLAY_KW },
 
   // ─── Transform ───
-  transformOrigin: { tokenCat: null, unitClass: 'length', keywords: null },
+  transformOrigin: { tokenCat: null, unitClass: 'length', keywords: POSITION_VALUES_KW },
   rotate: { tokenCat: null, unitClass: 'angle', keywords: ['none'] },
   scale: { tokenCat: null, unitClass: null, keywords: ['none'] },
   translate: { tokenCat: null, unitClass: 'length', keywords: ['none'] },
@@ -367,13 +560,13 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
 
   // ─── Object ───
   objectFit: { tokenCat: null, unitClass: null, keywords: OBJECT_FIT_KW },
-  objectPosition: { tokenCat: null, unitClass: 'length', keywords: null },
+  objectPosition: { tokenCat: null, unitClass: 'length', keywords: POSITION_VALUES_KW },
 
   // ─── 文字 ───
   textAlign: { tokenCat: null, unitClass: null, keywords: TEXT_ALIGN_KW },
   textDecorationLine: { tokenCat: null, unitClass: null, keywords: TEXT_DECO_LINE_KW },
   textDecorationStyle: { tokenCat: null, unitClass: null, keywords: TEXT_DECO_STYLE_KW },
-  textDecorationThickness: { tokenCat: null, unitClass: 'length', keywords: ['auto'] },
+  textDecorationThickness: { tokenCat: null, unitClass: 'length', keywords: ['auto', 'fromFont'] },
   textTransform: { tokenCat: null, unitClass: null, keywords: TEXT_TRANSFORM_KW },
   textOverflow: { tokenCat: null, unitClass: null, keywords: TEXT_OVERFLOW_KW },
   textIndent: { tokenCat: 'spacing', unitClass: 'length', keywords: null },
@@ -382,7 +575,7 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
   wordSpacing: { tokenCat: null, unitClass: 'length', keywords: ['normal'] },
 
   // ─── 背景 ───
-  backgroundPosition: { tokenCat: null, unitClass: 'length', keywords: null },
+  backgroundPosition: { tokenCat: null, unitClass: 'length', keywords: POSITION_VALUES_KW },
   backgroundSize: { tokenCat: null, unitClass: 'length', keywords: BG_SIZE_KW },
   backgroundRepeat: { tokenCat: null, unitClass: null, keywords: BG_REPEAT_KW },
   backgroundClip: { tokenCat: null, unitClass: null, keywords: BG_CLIP_KW },

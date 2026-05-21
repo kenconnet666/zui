@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Chain, Theme, defaultLight } from '../src'
+import { Chain, Theme } from '../src'
+import { defaultLight } from './_fixture-theme'
 
 // W1.8 之后 defaultLight 已含 breakpoint，不需要再 wrap SchemaWithBreakpoint
 const themed = defaultLight

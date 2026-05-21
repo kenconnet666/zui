@@ -5,8 +5,6 @@ import {
   componentTokensFor,
   composeVariants,
   createIcssInstance,
-  defaultDark,
-  defaultLight,
   defineMixin,
   defineParts,
   defineVariants,
@@ -14,7 +12,7 @@ import {
   presetAnimations,
   withComponentTokens,
 } from '../src'
-import type { DefaultSchema } from '../src'
+import { defaultDark, defaultLight, type TestSchema } from './_fixture-theme'
 
 /**
  * CL Batch 3 — 集成测试 + componentTokensFor + assert 增强。
@@ -89,7 +87,7 @@ describe('F6 — componentTokensFor 拿组件 namespace 下 token', () => {
 
 describe('集成 — 完整 Button 组件流程', () => {
   // 模拟组件库的 mixin
-  const focusRing = defineMixin<DefaultSchema>(s => {
+  const focusRing = defineMixin<TestSchema>(s => {
     s._focusVisible(f => {
       f.outlineColor._primary
       f.outlineStyle('solid')

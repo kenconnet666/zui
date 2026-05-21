@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Chain, defaultLight, icss, presetAnimations } from '../src'
+import { Chain, icss, presetAnimations } from '../src'
+import { defaultLight } from './_fixture-theme'
 import type { PresetAnimationName } from '../src'
 
 /**

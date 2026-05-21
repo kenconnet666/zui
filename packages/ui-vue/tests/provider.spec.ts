@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { defineComponent, h, ref } from 'vue'
 import { mount } from '@vue/test-utils'
-import { defaultLight } from '@kenconnet666/zui-core'
+import { zuiLight } from '../src'
 import {
   ZConfigProvider,
   enUS,
@@ -18,7 +18,7 @@ function asTheme(value: unknown): AnyTheme {
 }
 
 describe('ZConfigProvider', () => {
-  it('根 Provider 不传 theme 时回落 defaultLight', () => {
+  it('根 Provider 不传 theme 时回落 zuiLight', () => {
     let captured: AnyTheme | null = null
     const Child = defineComponent({
       setup() {
@@ -32,12 +32,12 @@ describe('ZConfigProvider', () => {
       template: '<ZConfigProvider><Child /></ZConfigProvider>',
     })
     expect(captured).not.toBeNull()
-    const fallback = asTheme(defaultLight.resolve())
+    const fallback = asTheme(zuiLight.resolve())
     expect(asTheme(captured).color.primary).toBe(fallback.color.primary)
   })
 
   it('顶层 :theme 替换 fallback', () => {
-    const myTheme = defaultLight.fork({ color: { primary: '#ff0000' } })
+    const myTheme = zuiLight.fork({ color: { primary: '#ff0000' } })
     let captured: AnyTheme | null = null
     const Child = defineComponent({
       setup() {
@@ -75,7 +75,7 @@ describe('ZConfigProvider', () => {
       `,
     })
     expect(asTheme(captured).color.primary).toBe('#00ff00')
-    // 其它字段继承 fallback（defaultLight 含 color.bg = '#ffffff'）
+    // 其它字段继承 fallback（zuiLight 含 color.bg = '#ffffff'）
     expect(asTheme(captured).color.bg).toBe('#ffffff')
   })
 
@@ -213,7 +213,7 @@ describe('ZConfigProvider', () => {
   })
 
   it('主题响应式切换：父 ref 变化驱动子组件重渲染', async () => {
-    const myTheme = ref(defaultLight.fork({ color: { primary: '#111111' } }))
+    const myTheme = ref(zuiLight.fork({ color: { primary: '#111111' } }))
     let captured: string | undefined
     const Child = defineComponent({
       setup() {
@@ -230,7 +230,7 @@ describe('ZConfigProvider', () => {
       template: '<ZConfigProvider :theme="myTheme"><Child /></ZConfigProvider>',
     })
     expect(captured).toBe('#111111')
-    myTheme.value = defaultLight.fork({ color: { primary: '#222222' } })
+    myTheme.value = zuiLight.fork({ color: { primary: '#222222' } })
     await wrapper.vm.$nextTick()
     expect(captured).toBe('#222222')
   })
