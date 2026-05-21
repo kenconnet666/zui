@@ -40,7 +40,7 @@ export function createIconVariants(theme: ResolvedTheme<ZuiSchema>) {
    * - font-size 设为 N em 既让 spec 断言 `font-size:1em` 通过，也让"icon 直观就是
    *   N 倍父字号"的语义成立
    * - width/height 同样 N em → 相对当前 font-size = 1，最终物理尺寸 = N × 父字号
-   * - 用户通过 `:base-font-size` prop（ZIcon 上）覆盖根 font-size，决定"1em 等于多少"
+   * - 用户通过 `:css-root="s => { s.fontSize.px(N) }"` 覆盖根 font-size，决定"1em 等于多少"
    */
   const applySize = (n: number) => (s: Chain<ZuiSchema>) => {
     s.width.em(n)

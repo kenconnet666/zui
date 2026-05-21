@@ -38,12 +38,6 @@ const props = withDefaults(
     color?: ZIconColor
     depth?: ZIconDepth
     spin?: ZIconSpin
-    /**
-     * 根元素 `font-size`（即"1em 等于多少"）。不传跟随父字号；
-     * 传则用 inline style 写到根元素，覆盖 variants 内的 `font-size: Nem`，
-     * 让 width/height 的 em 单位 resolved 到这个绝对值。
-     */
-    baseFontSize?: string
     cssRoot?: (s: Chain<ZuiSchema>) => void
     component?: Component
     tag?: string
@@ -92,17 +86,10 @@ const a11y = computed(() => {
   }
   return { 'aria-hidden': 'true' }
 })
-
-// ─── baseFontSize → inline style（不传时不写 style） ───
-const rootStyle = computed(() =>
-  props.baseFontSize !== undefined && props.baseFontSize !== ''
-    ? { fontSize: props.baseFontSize }
-    : undefined,
-)
 </script>
 
 <template>
-  <component :is="tag" :class="className" :style="rootStyle" v-bind="a11y">
+  <component :is="tag" :class="className" v-bind="a11y">
     <slot>
       <component :is="component" v-if="component" />
     </slot>

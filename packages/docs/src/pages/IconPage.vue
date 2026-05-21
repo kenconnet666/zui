@@ -33,11 +33,11 @@ const spinSpeed = ref<ZIconSpinPreset>('middle')
 
 const spinValue = computed(() => (spinOn.value ? spinSpeed.value : false))
 
-// ─── css factory 预制示例 ───
+// ─── cssRoot factory 预制示例 ───
 /**
- * cssExamples —— 演示 `:css` factory 的若干典型用法。
+ * cssExamples —— 演示 `:css-root` factory 的若干典型用法。
  *
- * 回调参数 `Chain<ZuiSchema>` 与 ZIcon `:css` prop 类型对齐；直接 access
+ * 回调参数 `Chain<ZuiSchema>` 与 ZIcon `:css-root` prop 类型对齐；直接 access
  * `_primary / _danger` 等 11 个语义色 token 与 5 阶 scale，IDE 自动补全。
  *
  * 用户工程要扩自家 brand：定义 `interface MySchema extends ZuiSchema { ... }`，
@@ -96,9 +96,6 @@ const componentTokens = computed(() => ({
   },
 }))
 
-// ─── baseFontSize 演示 ───
-const baseFontSize = ref<string>('32px')
-
 // ─── 当前选中的 component（用于"实时操控"那栏）───
 const currentComponent = shallowRef(HomeOutline)
 const allIcons = {
@@ -124,7 +121,7 @@ watchEffect(() => {
     <p>
       框架无关图标容器 —— <strong>4 维度全离散</strong>（size / color / depth / spin）， 所有维度走
       <code>defineVariants</code>。任何不在维度里的需求（hover / 媒体查询 / 任意 chain 方法）通过
-      <code>:css="s =&gt; { ... }"</code> 用 zui-core chain 自由写。21 项 component token 全部可被
+      <code>:css-root="s =&gt; { ... }"</code> 用 zui-core chain 自由写。21 项 component token 全部可被
       <code>ZConfigProvider</code> 覆盖。
     </p>
 
@@ -195,12 +192,12 @@ watchEffect(() => {
       </div>
     </section>
 
-    <!-- ─── 6. css factory：用 core chain 自由覆盖 ─── -->
+    <!-- ─── 6. cssRoot factory：用 core chain 自由覆盖 ─── -->
     <section>
-      <h2>6. <code>:css</code> factory（用 zui-core chain 自由覆盖）</h2>
+      <h2>6. <code>:css-root</code> factory（用 zui-core chain 自由覆盖）</h2>
       <p>
-        <code>:css="s =&gt; { ... }"</code> 在 variants 之后应用，可覆盖任意属性。 所有 Chain
-        内建方法（<code>_hover</code> / <code>_media</code> / <code>_before</code> 等）都能用。
+        <code>:css-root="s =&gt; { ... }"</code> 在 variants 之后应用，可覆盖任意属性。 所有
+        Chain 内建方法（<code>_hover</code> / <code>_media</code> / <code>_before</code> 等）都能用。
       </p>
       <div class="controls">
         <label>
@@ -214,7 +211,7 @@ watchEffect(() => {
         <ZIcon
           :component="StarOutline"
           size="huge"
-          v-bind="currentCss ? { css: currentCss } : {}"
+          v-bind="currentCss ? { cssRoot: currentCss } : {}"
         />
       </div>
     </section>
@@ -339,46 +336,6 @@ watchEffect(() => {
       </div>
     </section>
 
-    <!-- ─── 8.5 baseFontSize prop ─── -->
-    <section>
-      <h2>8.5 <code>:base-font-size</code> —— 控制"1em 等于多少"</h2>
-      <p>
-        ZIcon 内部 <code>size</code> variant 用 em 倍率（<code>tiny=0.75</code> /
-        <code>middle=1</code> / <code>huge=1.5</code> ...），最终物理尺寸 =
-        倍率 × 根元素 <code>font-size</code>。默认 font-size 跟随父元素；
-        传 <code>:base-font-size</code>（任意 CSS length 字符串）即用 inline style
-        覆盖该基准。
-      </p>
-
-      <div class="controls">
-        <label>
-          base-font-size
-          <input v-model="baseFontSize" placeholder="32px / 2vw / 1.5rem" type="text" />
-        </label>
-      </div>
-
-      <div class="row">
-        <div class="cell">
-          <h3>不传 base-font-size（跟随父元素字号）</h3>
-          <div class="demo-grid">
-            <ZIcon :component="HeartOutline" size="tiny" />
-            <ZIcon :component="HeartOutline" size="middle" />
-            <ZIcon :component="HeartOutline" size="large" />
-            <ZIcon :component="HeartOutline" size="huge" />
-          </div>
-        </div>
-        <div class="cell">
-          <h3>统一 base-font-size = <code>{{ baseFontSize }}</code></h3>
-          <div class="demo-grid">
-            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="tiny" />
-            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="middle" />
-            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="large" />
-            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="huge" />
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ─── 9. a11y ─── -->
     <section>
       <h2>9. a11y — <code>label</code> prop</h2>
@@ -410,7 +367,7 @@ user      用户在 zui.d.ts 一次 augmentation</code></pre>
 
       <h3>已默认拥有 —— <code>zuiLight</code> 注入即享</h3>
       <pre><code>// 任意组件，IDE 实时补全
-&lt;ZIcon :css="(s) =&gt; {
+&lt;ZIcon :css-root="(s) =&gt; {
   s.color._primary       // ZuiSchema 语义色
   s.padding._middle       // ZuiSchema spacing
   s.borderRadius._large   // ZuiSchema radius
@@ -444,7 +401,7 @@ const myLight = zuiLight.extend({
 &lt;ZConfigProvider :theme="myLight"&gt;&lt;App /&gt;&lt;/ZConfigProvider&gt;</code></pre>
 
       <h3>使用处 —— <strong>零类型注解，隐式推导直接生效</strong> ✨</h3>
-      <pre><code>&lt;ZIcon :css="(s) =&gt; {
+      <pre><code>&lt;ZIcon :css-root="(s) =&gt; {
   s.color._brandRoyal    // ← 来自 UserColorExt augmentation
   s.color._primary        // ← ZuiSchema 内置
   s.color._blue500        // ← BaseSchema palette
@@ -459,15 +416,15 @@ const myLight = zuiLight.extend({
       </p>
       <div class="row">
         <div class="cell-mini">
-          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color._brandRoyal }" />
+          <ZIcon :component="HeartOutline" size="huge" :css-root="(s) => { s.color._brandRoyal }" />
           <code>s.color._brandRoyal</code>
         </div>
         <div class="cell-mini">
-          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color._brandSunset }" />
+          <ZIcon :component="HeartOutline" size="huge" :css-root="(s) => { s.color._brandSunset }" />
           <code>s.color._brandSunset</code>
         </div>
         <div class="cell-mini">
-          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color._brandForest }" />
+          <ZIcon :component="HeartOutline" size="huge" :css-root="(s) => { s.color._brandForest }" />
           <code>s.color._brandForest</code>
         </div>
       </div>

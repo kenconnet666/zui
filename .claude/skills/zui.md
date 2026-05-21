@@ -544,6 +544,51 @@ partial 应基于已解析的字面量。dev 模式扫到 function 会 warn，�
 
 > **状态**：Provider 层 + composables + locale 已实施（0.0.4+，2026-05）。基础组件 Button/Input/Dialog/... 尚未实现，按 13.6 / 13.7 模板逐个加。
 
+### 13.0 组件设计哲学（总纲）
+
+**所有 ui-vue 组件必须遵守的四条原则**。Button / Input / Dialog / Tabs / Select / ... 一概按此画。`ZIcon` 是首个参照实现（§13.10）。
+
+**① 离散预设 · 无连续输入**
+
+外观 props 只接受**有限枚举档位**，参考 5 阶哲学 `tiny / small / middle / large / huge`（必要时 `none` / `full`）。
+- 禁止 props 接受任意 CSS length（`'24px'` / `'1.5rem'`）、任意色值（`'#abcdef'`）、任意角度数字 — 这类**连续输入**全部走 §3 cssNode factory
+- 禁止"半离散"：不要"枚举档位 OR 自定义字符串"二选一的 union，prop 表达只走枚举一条路
+- 维度全走 `defineVariants` / `defineParts`，**无 dynamic styles / 无 applyResponsive / 无运行时 token resolution**
+- 每个维度必须有合理默认值（`defaultVariants`），用户不传也能直接渲染
+
+**② em 优先 · 尺寸跟随父字号**
+
+尺寸维度（width / height / padding / fontSize / gap / 等）**统一用 em 单位**，跟随父元素 `font-size` 缩放；不硬编码 px。
+- 5 阶 size variant 设 N em 倍率（`tiny=0.75` / `middle=1` / `large=1.25` / `huge=1.5`），物理尺寸 = N × 父字号
+- 用户调"1em 等于多少"只走 §3 cssNode factory 写 `s.fontSize.px(N)`，**不**为此开 inline-style prop
+- 例外仅限"固定物理像素必要"的极少数维度（如 `border` 1px、`focus-ring` 2px），且优先用 token 表达
+
+**③ cssNode factory 是唯一逃生口**
+
+任何不在维度里的需求 — 任意属性 / 任意值 / 伪类 / 媒体查询 / 容器查询 / 嵌套选择器 — 一律通过 chain factory prop 表达：
+
+```ts
+cssRoot?:   (s: Chain<ZuiSchema>) => void   // 单节点组件唯一
+cssHeader?: (s: Chain<ZuiSchema>) => void   // 多 slot 组件按节点拆 prop
+cssBody?:   (s: Chain<ZuiSchema>) => void
+cssItem?:   (s: Chain<ZuiSchema>) => void
+```
+
+- 命名约定：`css<NodeName>` —— 名字里带"哪个节点"，预留 multi-slot 组件并列命名空间
+- 在 variants 之后应用（`cx(variantsCls, cssNodeCls)`），可覆盖 variants 任何属性
+- 内部实现固定走 `icss(themed.value, props.cssNode)` —— 一行，不要手写 `new Chain + toClassName`
+- 用户拿到的 chain 默认 `Chain<ZuiSchema>`；通过 module augmentation 扩 `UserColorExt` 等即可获得自定义 token 的 IDE 补全，**无需穿透 `<S>` 泛型**
+
+**④ 完整 token 暴露 · Provider 可全量覆盖**
+
+每个外观维度的实际值都注册到 `ComponentTokenRegistry.<componentName>`，被 `<ZConfigProvider :component-tokens>` 嵌套覆盖。
+- 组件 `setup()` 必走 `withComponentTokens(theme, derivers, overrides)` 派生 `themed`，所有 variants 工厂和 cssNode factory 都喂 `themed`，**不**直接吃 raw `useZTheme()`
+- variants 工厂内部用 `componentTokensFor('<name>', theme) as <Tokens>` 一行拿强类型 token map；不要再做 `slot.iconXxx ?? fallback` 双重 fallback（tokens.ts 派生时已经填齐）
+- 工厂模式：导出 `createXxxVariants(theme)` / `createXxxParts(theme)` 函数，**不导出常量** —— Provider 切主题 / 改 token 时组件重算工厂，emotion 按内容 hash 复用 className 无开销
+- ZIcon 不走 `useVariants` composable —— 那个内部用 raw `useZTheme()` 绕过 `withComponentTokens`。直接 `computed(() => createXxxVariants(themed.value)(propsSnapshot))`
+
+**总结一句话**：**离散 + em + cssNode + token registry** 四件套 — 组件 API 表面极小、零运行时分支，所有复杂度推给用户在 chain 里自由表达。
+
 ### 13.1 包结构与 subpath 入口
 
 ```
