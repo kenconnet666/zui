@@ -1,6 +1,6 @@
 {
   "name": "@kenconnet666/docs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "type": "module",
   "description": "zui 文档与组件演示站点。SPA（vite + vue-router），不发布。",

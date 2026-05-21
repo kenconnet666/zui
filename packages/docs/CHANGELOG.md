@@ -1,5 +1,13 @@
 # @kenconnet666/docs
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @kenconnet666/zui-core@0.7.0
+  - @kenconnet666/zui-vue@0.1.0
+
 ## 0.0.1
 
 ### Patch Changes
