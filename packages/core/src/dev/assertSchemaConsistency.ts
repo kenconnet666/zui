@@ -90,7 +90,9 @@ export function assertSchemaConsistency<T extends ThemeSchema>(
       const v = (slot as Record<string, ThemeValue>)[key]
       if (typeof v === 'function') {
         try {
-          const probe = makeReferenceProbe(schema)
+          // ResolvedTheme<T> 在 0.7.0 类型保真后 TS 无法直接收敛为 ThemeSchema，
+          // 但运行时结构兼容（每个 category 都是 Record<string, ThemeValue>），cast 安全。
+          const probe = makeReferenceProbe(schema as ThemeSchema)
           const result = v(probe.ctx)
           if (typeof result !== 'string' && typeof result !== 'number') {
             issues.push({

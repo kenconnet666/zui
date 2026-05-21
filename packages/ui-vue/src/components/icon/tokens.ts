@@ -67,11 +67,7 @@ declare module '@kenconnet666/zui-core' {
 export function deriveIconTokens(
   theme: ResolvedTheme<ZuiSchema>,
 ): ZIconTokens {
-  const slot = (theme as unknown as { color?: Record<string, string | number> }).color
-  const readColor = (key: string, fallback: string): string => {
-    const v = slot?.[key]
-    return typeof v === 'string' ? v : typeof v === 'number' ? String(v) : fallback
-  }
+  const { color } = theme
   return {
     // size —— em 倍率（无单位数字）
     sizeTiny: 0.75,
@@ -80,13 +76,13 @@ export function deriveIconTokens(
     sizeLarge: 1.25,
     sizeHuge: 1.5,
 
-    // color（字符串，可为 hex / hsl / currentColor / token 等）
+    // color —— ZuiSchema 声明 11 个语义色必填 string，直接读
     defaultColor: 'currentColor',
-    primaryColor: readColor('primary', '#2563eb'),
-    successColor: readColor('success', '#22c55e'),
-    warningColor: readColor('warning', '#f59e0b'),
-    dangerColor: readColor('danger', '#ef4444'),
-    infoColor: readColor('info', '#06b6d4'),
+    primaryColor: color.primary,
+    successColor: color.success,
+    warningColor: color.warning,
+    dangerColor: color.danger,
+    infoColor: color.info,
 
     // depth opacity（0..1 浮点）
     depthSubtleOpacity: 0.8,

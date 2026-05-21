@@ -46,10 +46,27 @@ export type ThemeValue = string | number | ((ctx: ResolvedThemeContext) => strin
 /** function token 求值时拿到的上下文（已解析的其它 category）。 */
 export type ResolvedThemeContext = Record<string, Record<string, string | number>>
 
-/** 解析后的主题（function token 已展开）。 */
+/**
+ * 解析后的主题（function token 已展开）。
+ *
+ * **类型保真**：保留 schema 中每个 token 的原始类型（`string` / `number` / `string | number`），
+ * 只把 function token `(ctx) => R` 求值结果替换为返回类型 `R`。这样：
+ *
+ * - `color: Record<SemanticColorTokens, string>` → `{ primary: string, ... }`（不再被放宽到 string | number）
+ * - `opacity: Record<OpacityKeys, number>` → `{ half: number, ... }`
+ * - `color: { primary: (ctx) => string }` → `{ primary: string }`
+ *
+ * 旧实现 `{ [K]: string | number }` 强制把所有字段都展平成 `string | number`，
+ * 让消费方在精确类型 schema（如 `Record<K, string>`）下也得手动 `String(...)` 转换，
+ * 增加污染。0.7.0 改为 conditional infer 保留原类型。
+ */
 export type ResolvedTheme<T extends ThemeSchema> = {
   [Cat in keyof T]: T[Cat] extends Record<string, ThemeValue>
-    ? { [K in keyof T[Cat]]: string | number }
+    ? {
+        [K in keyof T[Cat]]: T[Cat][K] extends (...args: never[]) => infer R
+          ? R
+          : T[Cat][K]
+      }
     : never
 }
 
