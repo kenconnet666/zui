@@ -38,7 +38,7 @@ import type { BaseSchema } from '@kenconnet666/zui-core'
 // augmentation 后：
 //   - ZuiSchema.color 自动包含 `brandRoyal | brandSunset` 等字段
 //   - Chain<ZuiSchema> 的 token 集合自动多出 `_brandRoyal | _brandSunset`
-//   - `<ZIcon :css="(s) => { s.color._brandRoyal }" />` 隐式推导生效，无需手写
+//   - `<ZIcon :css-root="(s) => { s.color._brandRoyal }" />` 隐式推导生效，无需手写
 //     `interface MySchema extends ZuiSchema { ... }` 与 `new Theme<MySchema>(...)`
 //
 // 配合 `zuiLight.extend({ color: { brandRoyal: '#1a3a8f' } })` 在运行时喂入值。

@@ -3,9 +3,12 @@
  *
  * **设计哲学（v0.0.5）**：所有维度都是**离散枚举**，遵循 5 阶哲学（tiny/small/middle/large/huge），
  * 必要时 + `none`。size / color / depth / spin **四个维度全是 variants**，无 dynamic styles。
- * 复杂场景（hover / 媒体查询 / 任意属性覆盖）一律走 `:css` factory，用 zui-core chain 自由写。
+ * 复杂场景（hover / 媒体查询 / 任意属性覆盖）一律走 `:css-root` factory，用 zui-core chain 自由写。
+ *
+ * **命名约定**：精细覆盖 prop 用 `cssRoot` —— 名字里带"哪个节点"，为后续多 slot 组件（Dialog /
+ * Tabs / Select 等）预留 `cssHeader` / `cssBody` / `cssItem` 等并列命名空间。
  */
-import type { Chain, ThemeSchema } from '@kenconnet666/zui-core'
+import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../../theme'
 import type { Component } from 'vue'
 
@@ -20,7 +23,7 @@ export type ZIconSize = 'tiny' | 'small' | 'middle' | 'large' | 'huge'
  * color —— 6 种语义色预设。默认 `'default'`（不修改 currentColor）。
  *
  * 命中 `icon.xxxColor` token；非 default 之外的 5 种语义色都从 `theme.color.<semantic>` 派生。
- * 想要 palette 任意色 / 自定义色 → 走 `css` factory。
+ * 想要 palette 任意色 / 自定义色 → 走 `cssRoot` factory。
  */
 export type ZIconColor = 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info'
 
@@ -48,7 +51,7 @@ export type ZIconSpin = 'none' | 'tiny' | 'small' | 'middle' | 'large' | 'huge'
 /**
  * ZIcon props 完整签名。
  *
- * `css` 回调里的 `Chain<ZuiSchema>` 通过 module augmentation 即可获得用户扩展 token
+ * `cssRoot` 回调里的 `Chain<ZuiSchema>` 通过 module augmentation 即可获得用户扩展 token
  * 的 IDE 补全 —— 不再向上层穿透 generic。
  */
 export interface ZIconProps {
@@ -58,23 +61,27 @@ export interface ZIconProps {
   spin?: ZIconSpin
 
   /**
-   * 二次精细覆盖 —— 用 zui-core chain 自由写任意样式。
+   * 根元素二次精细覆盖 —— 用 zui-core chain 自由写任意样式。
    *
-   * 在 variants 之后应用，可覆盖 size / color / depth / spin 的任何属性，
+   * 在 variants 之后应用到根元素，可覆盖 size / color / depth / spin 的任何属性，
    * 也可写 `_hover` 等伪类、`_media(...)` 媒体查询、其它 chain 内建方法。
    * 这是"任何不在四个枚举维度里的需求"的统一逃生口。
+   *
+   * **命名**：`cssRoot` 而非 `css` —— ZIcon 单节点目前只有"根"一个目标；后续多 slot
+   * 组件（Dialog / Tabs / Select 等）会有 `cssHeader` / `cssBody` / `cssItem` 等并列
+   * prop，保持"`css<NodeName>`"统一命名空间。
    *
    * @example
    * <ZIcon
    *   :component="HeartIcon"
-   *   :css="s => {
+   *   :css-root="s => {
    *     s.cursor.pointer
    *     s._hover(h => { h.color._primary })
    *     s._media('_middle', m => { m.fontSize._iconSizeLarge })
    *   }"
    * />
    */
-  css?: (s: Chain<ZuiSchema>) => void
+  cssRoot?: (s: Chain<ZuiSchema>) => void
 
   /**
    * 根元素 `font-size`，即"**1em 等于多少**"的基准值。

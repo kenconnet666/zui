@@ -164,12 +164,12 @@ describe('ZIcon — spin 5 阶 + none（纯枚举）', () => {
   })
 })
 
-describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
+describe('ZIcon — cssRoot factory（用 core chain 二次覆盖）', () => {
   it('在根元素写任意 CSS 属性', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        css: (s: Chain<ZuiSchema>) => {
+        cssRoot: (s: Chain<ZuiSchema>) => {
           s.cursor('pointer')
         },
       },
@@ -181,7 +181,7 @@ describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        css: (s: Chain<ZuiSchema>) => {
+        cssRoot: (s: Chain<ZuiSchema>) => {
           s._hover((h) => {
             h.color('#ff00aa')
           })
@@ -197,7 +197,7 @@ describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
       props: {
         component: DummyIcon,
         color: 'primary',
-        css: (s: Chain<ZuiSchema>) => {
+        cssRoot: (s: Chain<ZuiSchema>) => {
           s.color('#abcdef')
         },
       },
@@ -209,7 +209,7 @@ describe('ZIcon — css factory（用 core chain 二次覆盖）', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        css: (s: Chain<ZuiSchema>) => {
+        cssRoot: (s: Chain<ZuiSchema>) => {
           s.color._primary
         },
       },

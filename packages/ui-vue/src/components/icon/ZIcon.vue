@@ -7,8 +7,9 @@
  *    无 dynamic styles / 无 applyResponsive / 无 token resolution。
  * 2. **完整 21 项 token**：所有外观（size 5 阶、6 种 color、5 阶 depth 领域词、5 阶 spin）
  *    都暴露为 `ComponentTokenRegistry.icon`，**ZConfigProvider 可全量覆盖**。
- * 3. **css factory 是逃生口**：任何不在 4 维度里的需求（hover / 媒体查询 / 任意 chain method）
- *    通过 `:css="s => { ... }"` 用 zui-core chain 自由写，在 variants 之后应用可覆盖任何属性。
+ * 3. **cssRoot factory 是逃生口**：任何不在 4 维度里的需求（hover / 媒体查询 / 任意 chain method）
+ *    通过 `:css-root="s => { ... }"` 用 zui-core chain 自由写，在 variants 之后应用可覆盖任何属性。
+ *    单节点目前只有 `cssRoot`；后续多 slot 组件会有 `cssHeader` / `cssBody` 等并列 prop。
  * 4. **图标库无关**：default slot 或 `:component` prop 双模式。
  *
  * **a11y**：
@@ -16,13 +17,13 @@
  * - 不传 → `aria-hidden="true"`
  *
  * **类型注**：组件层不再穿透 `<S>` 泛型。用户工程通过 module augmentation 扩
- * `ThemeSchema` 即可让 `:css` 回调里的 `Chain<ZuiSchema>` 获得自定义 token 的 IDE 补全。
+ * `ThemeSchema` 即可让 `:css-root` 回调里的 `Chain<ZuiSchema>` 获得自定义 token 的 IDE 补全。
  */
 import { computed, type Component } from 'vue'
 import {
   Chain,
   cx,
-  toClassName,
+  icss,
   withComponentTokens,
   type ResolvedTheme} from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../../theme'
@@ -43,7 +44,7 @@ const props = withDefaults(
      * 让 width/height 的 em 单位 resolved 到这个绝对值。
      */
     baseFontSize?: string
-    css?: (s: Chain<ZuiSchema>) => void
+    cssRoot?: (s: Chain<ZuiSchema>) => void
     component?: Component
     tag?: string
     label?: string
@@ -80,14 +81,9 @@ const variantsCls = computed(() =>
 )
 
 // ─── 用户精细覆盖：用 zui-core chain 自由写 ───
-const cssCls = computed(() => {
-  if (!props.css) return ''
-  const c = new Chain<ZuiSchema>(themed.value)
-  props.css(c)
-  return toClassName(c)
-})
+const cssRootCls = computed(() => (props.cssRoot ? icss(themed.value, props.cssRoot) : ''))
 
-const className = computed(() => cx(variantsCls.value, cssCls.value))
+const className = computed(() => cx(variantsCls.value, cssRootCls.value))
 
 // ─── a11y 属性 ───
 const a11y = computed(() => {

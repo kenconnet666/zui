@@ -57,7 +57,7 @@ declare module '@kenconnet666/zui-core' {
 /**
  * 派生默认 ZIcon tokens：
  * - size **em 倍率**（width = N × 当前 font-size），不再编码单位字面量
- * - color 从 theme.color 读 5 种语义色（缺失时 fallback 硬编码 hex）
+ * - color 从 `theme.color` 读 5 种语义色（schema 已强类型保证字段存在；fallback 仅防御未派生的 raw schema 场景）
  * - depth 5 阶领域 opacity（subtle 0.8 / muted 0.6 / dim 0.4 / faded 0.25 / ghost 0.15）
  * - spin 5 阶时长（秒；tiny=0.3 极快 → huge=3 极慢）
  *
@@ -67,35 +67,28 @@ declare module '@kenconnet666/zui-core' {
 export function deriveIconTokens(
   theme: ResolvedTheme<ZuiSchema>,
 ): ZIconTokens {
-  const slot = (theme as unknown as { color?: Record<string, string | number> }).color
-  const readColor = (key: string, fallback: string): string => {
-    const v = slot?.[key]
-    return typeof v === 'string' ? v : typeof v === 'number' ? String(v) : fallback
-  }
+  const c = theme.color
+  const str = (v: unknown, fb: string): string => (typeof v === 'string' ? v : fb)
   return {
-    // size —— em 倍率（无单位数字）
     sizeTiny: 0.75,
     sizeSmall: 0.875,
     sizeMiddle: 1,
     sizeLarge: 1.25,
     sizeHuge: 1.5,
 
-    // color（字符串，可为 hex / hsl / currentColor / token 等）
     defaultColor: 'currentColor',
-    primaryColor: readColor('primary', '#2563eb'),
-    successColor: readColor('success', '#22c55e'),
-    warningColor: readColor('warning', '#f59e0b'),
-    dangerColor: readColor('danger', '#ef4444'),
-    infoColor: readColor('info', '#06b6d4'),
+    primaryColor: str(c.primary, '#2563eb'),
+    successColor: str(c.success, '#22c55e'),
+    warningColor: str(c.warning, '#f59e0b'),
+    dangerColor: str(c.danger, '#ef4444'),
+    infoColor: str(c.info, '#06b6d4'),
 
-    // depth opacity（0..1 浮点）
     depthSubtleOpacity: 0.8,
     depthMutedOpacity: 0.6,
     depthDimOpacity: 0.4,
     depthFadedOpacity: 0.25,
     depthGhostOpacity: 0.15,
 
-    // spin duration（秒）
     spinTinyDuration: 0.3,
     spinSmallDuration: 0.5,
     spinMiddleDuration: 1,
