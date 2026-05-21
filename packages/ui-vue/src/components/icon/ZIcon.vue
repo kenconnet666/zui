@@ -1,16 +1,21 @@
 <script setup lang="ts">
 /**
- * `ZIcon` —— 框架无关图标容器。**v2.1 极简版**。
+ * `ZIcon` —— 框架无关图标容器。ui-vue 设计哲学四件套（skill §13.0）的首个参照实现。
  *
  * **设计要点**：
- * 1. **4 维度全离散**：size / color / depth / spin 都是枚举值，全走 `defineVariants`；
- *    无 dynamic styles / 无 applyResponsive / 无 token resolution。
- * 2. **完整 21 项 token**：所有外观（size 5 阶、6 种 color、5 阶 depth 领域词、5 阶 spin）
- *    都暴露为 `ComponentTokenRegistry.icon`，**ZConfigProvider 可全量覆盖**。
- * 3. **cssRoot factory 是逃生口**：任何不在 4 维度里的需求（hover / 媒体查询 / 任意 chain method）
- *    通过 `:css-root="s => { ... }"` 用 zui-core chain 自由写，在 variants 之后应用可覆盖任何属性。
- *    单节点目前只有 `cssRoot`；后续多 slot 组件会有 `cssHeader` / `cssBody` 等并列 prop。
- * 4. **图标库无关**：default slot 或 `:component` prop 双模式。
+ * 1. **离散预设 · 无连续输入** — size / color / depth / spin 4 维度全枚举，
+ *    全走 `defineVariants`；无 dynamic styles / 无 applyResponsive / 无 token resolution。
+ * 2. **em 优先 · 跟随父字号** — 5 阶 size 用 em 倍率（`tiny=0.75` → `huge=1.5`），
+ *    物理尺寸 = N × 父字号。用户调"1em 等于多少"走 `:css-root="s => s.fontSize.px(N)"`，
+ *    **不**为此开 inline-style prop。
+ * 3. **cssRoot 是唯一逃生口** — 任何不在 4 维度里的需求（任意值 / hover / 媒体查询 /
+ *    任意 chain method）通过 `:css-root="s => { ... }"` 用 zui-core chain 自由写，
+ *    在 variants 之后应用可覆盖任何属性。单节点目前只有 `cssRoot`；后续多 slot 组件
+ *    会有 `cssHeader` / `cssBody` 等并列 prop。
+ * 4. **完整 21 项 token · Provider 可全量覆盖** — 所有外观（size 5 阶、6 种 color、
+ *    5 阶 depth 领域词、5 阶 spin）都暴露为 `ComponentTokenRegistry.icon`，
+ *    **ZConfigProvider 可全量覆盖**。
+ * 5. **图标库无关** — default slot 或 `:component` prop 双模式。
  *
  * **a11y**：
  * - 传 `label` → `aria-label` + `role="img"`
