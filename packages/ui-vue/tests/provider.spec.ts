@@ -294,6 +294,117 @@ describe('ZBox — fonts schema token', () => {
   })
 })
 
+describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', () => {
+  function getInjectedCss(): string {
+    return Array.from(document.querySelectorAll('style'))
+      .map((el) => el.textContent ?? '')
+      .join('\n')
+  }
+
+  it('s.width._container → schema.sizes.container(iem(75) = 1200px @16)', () => {
+    mount(ZBox, {
+      props: {
+        theme: zuiLight,
+        iem: '16px',
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.width._container
+        },
+      },
+      slots: { default: () => 'x' },
+    })
+    expect(getInjectedCss()).toMatch(/width:calc\(75 \* var\(--zui-iem,/)
+  })
+
+  it('s.maxWidth._readable → schema.sizes.readable("65ch")', () => {
+    mount(ZBox, {
+      props: {
+        theme: zuiLight,
+        iem: '16px',
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.maxWidth._readable
+        },
+      },
+      slots: { default: () => 'x' },
+    })
+    expect(getInjectedCss()).toMatch(/max-width:65ch/)
+  })
+
+  it('s.height._screenH → schema.sizes.screenH("100vh")', () => {
+    mount(ZBox, {
+      props: {
+        theme: zuiLight,
+        iem: '16px',
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.height._screenH
+        },
+      },
+      slots: { default: () => 'x' },
+    })
+    expect(getInjectedCss()).toMatch(/height:100vh/)
+  })
+
+  it('s.borderWidth._thin → schema.borders.thin("1px")', () => {
+    mount(ZBox, {
+      props: {
+        theme: zuiLight,
+        iem: '16px',
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.borderWidth._thin
+        },
+      },
+      slots: { default: () => 'x' },
+    })
+    expect(getInjectedCss()).toMatch(/border-width:1px/)
+  })
+
+  it('s.outlineWidth._middle → schema.borders.middle("2px")(borders 复用 outlineWidth)', () => {
+    mount(ZBox, {
+      props: {
+        theme: zuiLight,
+        iem: '16px',
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.outlineWidth._middle
+        },
+      },
+      slots: { default: () => 'x' },
+    })
+    expect(getInjectedCss()).toMatch(/outline-width:2px/)
+  })
+
+  it('s.transitionProperty._colors → 逗号分隔属性列表', () => {
+    mount(ZBox, {
+      props: {
+        theme: zuiLight,
+        iem: '16px',
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.transitionProperty._colors
+        },
+      },
+      slots: { default: () => 'x' },
+    })
+    const css = getInjectedCss()
+    // 多值 css 属性
+    expect(css).toContain('transition-property')
+    expect(css).toContain('background-color')
+    expect(css).toContain('border-color')
+  })
+
+  it('themePatch 覆盖 sizes.container → ZBox cssRoot 取到新值', () => {
+    mount(ZBox, {
+      props: {
+        theme: zuiLight,
+        iem: '16px',
+        themePatch: { sizes: { container: '900px' } },
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.width._container
+        },
+      },
+      slots: { default: () => 'x' },
+    })
+    expect(getInjectedCss()).toMatch(/width:900px/)
+  })
+})
+
 describe('ZBox — iem 透传语义(无默认值,子不传则继承父 cascade)', () => {
   it('子 ZBox 不传 :iem → 不写 inline --zui-iem(让 cascade 自然透传)', () => {
     const w = mount({

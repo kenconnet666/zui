@@ -2,6 +2,55 @@
 
 ## Unreleased
 
+### 扩 ZuiSchema:新增 `sizes` / `borders` / `transitionProperty` 三个 category + zuiDark 加深 shadow
+
+补齐 chain enhanced-props 已配但 schema 缺字段的 token category,IDE 写 `s.width._container` /
+`s.borderWidth._thin` / `s.transitionProperty._colors` 时自动补全 + 走主题查找。
+
+**新增 3 个 schema category**(全部支持 `UserXxxExt` augmentation):
+
+| Category | 用于 chain carrier | 默认 keys | 单位策略 |
+|---|---|---|---|
+| `sizes` | `width / height / minW / minH / maxW / maxH / flexBasis` | 5 阶 `tiny`(64px)/`small`(128px)/`middle`(256px)/`large`(512px)/`huge`(768px)+ 4 个语义 `container`(1200px)/`readable`('65ch')/`full`('100%')/`screen`('100vw')/`screenH`('100vh') | 5 阶 iem 化(Provider 联动),语义 4 个字面量 |
+| `borders` | `borderWidth / outlineWidth` + 各 sub(top/right/bottom/left) | `none`/`thin`(1px)/`middle`(2px)/`thick`(3px)/`heavy`(4px) | **px 字面量**(同 shadow,跟字号无关) |
+| `transitionProperty` | `transitionProperty` | `none`/`all`/`colors`/`opacity`/`transform`/`shadow`/`sizes`/`default` | 逗号分隔 CSS 属性列表 |
+
+**典型用法**:
+```ts
+<ZBox :css-root="(s) => {
+  s.maxWidth._container       // 1200px page 主区
+  s.minHeight._screenH        // 100vh 全屏
+  s.borderWidth._thin         // 1px 标准边框
+  s.outlineWidth._middle      // 2px focus ring
+  s.transitionProperty._colors // 颜色族过渡
+  s.transitionDuration._small  // 150ms(已有 duration token)
+}">
+```
+
+**zuiDark 单独加深 shadow**:dark 模式 bg 深,light 的 rgb(0/0/0/0.05~0.25) 阴影看不见。
+新 zuiDark.shadow 把 rgba 不透明度提升到 0.3~0.7,深色 bg 上保留"浮起"层次感。
+
+**用户扩展**(同其它 category):
+```ts
+declare module '@kenconnet666/zui-vue' {
+  interface UserSizesExt {
+    sidebar: string
+    drawer: string
+  }
+  interface UserBordersExt {
+    superThick: string
+  }
+}
+zuiLight.extend({
+  sizes: { sidebar: '280px', drawer: '420px' },
+  borders: { superThick: '6px' },
+})
+```
+
+**对现有代码**:零 BREAKING,纯追加 token。**ZDivider `thickness` prop 仍是 string**(未来若改 carrier factory 风格再发 BREAKING entry)。
+
+---
+
 ### `ZBox :iem` 移除默认值,改为透传父 cascade(语义修正)
 
 **问题**:之前 `:iem` 默认值 `'16px'`,导致每个 ZBox 都强制写 inline `--zui-iem: 16px`,**子 ZBox 总是覆盖父级 cascade**,违反"向下透传,显式才覆盖"的本意。一旦页面里嵌套多层 ZBox(主题分组 / 装饰 box),根级 `:iem="ZIemPreset.large"` 立刻被子层默认值打回 16px。

@@ -93,6 +93,9 @@ export {
   type UserLetterSpacingExt,
   type UserAspectRatioExt,
   type UserFontsExt,
+  type UserSizesExt,
+  type UserBordersExt,
+  type UserTransitionPropertyExt,
 } from './theme'
 
 // ─── Core 全量透传 ───

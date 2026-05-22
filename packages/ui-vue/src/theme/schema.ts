@@ -76,6 +76,12 @@ export interface UserLetterSpacingExt {}
 export interface UserAspectRatioExt {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserFontsExt {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface UserSizesExt {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface UserBordersExt {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface UserTransitionPropertyExt {}
 
 /** 11 个语义色 token —— light / dark 取同 key 不同 shade。 */
 export type SemanticColorTokens =
@@ -128,6 +134,43 @@ export type LetterSpacingKeys = 'tighter' | 'tight' | 'normal' | 'wide' | 'wider
 export type AspectRatioKeys = 'square' | 'video' | 'portrait' | 'landscape'
 /** 字体家族 3 件套(对应 CSS `font-family` 经典分类)。 */
 export type FontsKeys = 'sans' | 'serif' | 'mono'
+/**
+ * 通用 size token —— 用于 `width / height / minWidth / minHeight / maxWidth / maxHeight /
+ * flexBasis` 这类「元素自身尺寸」carrier。**和 `spacing` 不同**(后者是 padding/margin/gap)。
+ *
+ * - 5 阶 `tiny/small/middle/large/huge` —— iem 化的递进尺寸(组件 / 卡片 / 弹窗框)
+ * - 4 个语义化 key —— `container`(页面主区)/ `readable`(文本阅读宽度,`'65ch'`)/
+ *   `full`(`'100%'`)/ `screen`(`'100vw'`)/ `screenH`(`'100vh'`)
+ */
+export type SizesKeys =
+  | Size5Keys
+  | 'container'
+  | 'readable'
+  | 'full'
+  | 'screen'
+  | 'screenH'
+/**
+ * 边框/outline 粗细 token —— 用于 `borderWidth / outlineWidth` 及各 sub(top/right/bottom/left)。
+ *
+ * **保留 px 字面量,不走 iem**(同 shadow):
+ * - 边框粗细跟字号无关,1px / 2px 这种"视觉细节"用 iem 反而失真(0.0625iem 用户不会想)
+ * - 跟设计稿 1:1 对齐
+ */
+export type BordersKeys = 'none' | 'thin' | 'middle' | 'thick' | 'heavy'
+/**
+ * 过渡属性预设 token —— 用于 `transitionProperty`。值是逗号分隔的 CSS 属性列表。
+ *
+ * 灵感来自 Tailwind 的 `transition-{colors|opacity|transform|shadow|all}`。
+ */
+export type TransitionPropertyKeys =
+  | 'none'
+  | 'all'
+  | 'colors'
+  | 'opacity'
+  | 'transform'
+  | 'shadow'
+  | 'sizes'
+  | 'default'
 
 /**
  * zui-vue 设计系统 schema —— **业务侧消费的标准 schema**。
@@ -177,4 +220,31 @@ export interface ZuiSchema extends BaseSchema {
    * 或局部 Provider:`<ZBox :theme-patch="{ fonts: { sans: 'Inter, sans-serif' } }">`。
    */
   fonts: Record<FontsKeys, string> & Partial<UserFontsExt>
+  /**
+   * 通用尺寸 token —— **对应 chain carrier `width / height / minWidth / minHeight /
+   * maxWidth / maxHeight / flexBasis` 的 `tokenCat: 'sizes'`**。写 `s.width._container`
+   * / `s.maxWidth._readable` / `s.height._screenH`,IDE 自动补全本表的 key。
+   *
+   * **跟 `spacing` 区别**:spacing 是「内距/外距/gap」(padding/margin/gap),sizes 是
+   * 「元素自身的宽高」。两者数字范围差别大,不复用。
+   *
+   * 5 阶 `tiny..huge` 走 iem(跟 Provider 联动),语义化 4 个 key 走字面量。
+   */
+  sizes: Record<SizesKeys, string> & Partial<UserSizesExt>
+  /**
+   * 边框 / outline 粗细 token —— **对应 chain carrier `borderWidth / outlineWidth /
+   * borderTopWidth / borderRightWidth / borderBottomWidth / borderLeftWidth` 的
+   * `tokenCat: 'borders'`**。写 `s.borderWidth._thin` / `s.outlineWidth._middle`。
+   *
+   * **保留 px 字面量,不走 iem**:1px/2px 这种"视觉细节"跟字号无关,跟设计稿对齐更稳。
+   */
+  borders: Record<BordersKeys, string> & Partial<UserBordersExt>
+  /**
+   * 过渡属性预设 —— **对应 chain carrier `transitionProperty` 的
+   * `tokenCat: 'transitionProperty'`**。写 `s.transitionProperty._colors` /
+   * `s.transitionProperty._default`,emit 出逗号分隔的 CSS 属性列表。
+   *
+   * 灵感来自 Tailwind 的 `transition-{colors|opacity|transform|shadow|all}`。
+   */
+  transitionProperty: Record<TransitionPropertyKeys, string> & Partial<UserTransitionPropertyExt>
 }

@@ -170,4 +170,69 @@ export const zuiLight = new Theme<ZuiSchema>({
     serif: 'ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
     mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
   },
+  /**
+   * 通用尺寸 token —— 用于 `width / height / minW / minH / maxW / maxH / flexBasis`。
+   *
+   * 5 阶 `tiny..huge` 走 iem(跟 Provider 字号联动),物理默认值:
+   * - tiny:64px(小图标按钮 / 短输入框)
+   * - small:128px(chip / 紧凑卡片)
+   * - middle:256px(sidebar 经典宽度 / 弹窗小)
+   * - large:512px(弹窗中)
+   * - huge:768px(弹窗大 / form 限宽)
+   *
+   * 4 个语义化 key 走字面量:
+   * - container:1200px(page 主区限宽)
+   * - readable:`'65ch'`(文本阅读最佳宽度,跟字号自适应)
+   * - full / screen / screenH:百分比 / 视口
+   */
+  sizes: {
+    tiny: iem(4),
+    small: iem(8),
+    middle: iem(16),
+    large: iem(32),
+    huge: iem(48),
+    container: iem(75),
+    readable: '65ch',
+    full: '100%',
+    screen: '100vw',
+    screenH: '100vh',
+  },
+  /**
+   * 边框 / outline 粗细 token —— **px 字面量,不走 iem**(跟 shadow 同策略)。
+   *
+   * - none:0(去边框)
+   * - thin:1px(默认 / 卡片 / 输入框)
+   * - middle:2px(focus ring / 强调边界)
+   * - thick:3px(突出卡片 / divider 强调)
+   * - heavy:4px(标题装饰 / 错误态)
+   */
+  borders: {
+    none: '0',
+    thin: '1px',
+    middle: '2px',
+    thick: '3px',
+    heavy: '4px',
+  },
+  /**
+   * 过渡属性预设 —— 逗号分隔的 CSS 属性列表,emit 后直接挂 `transition-property`。
+   *
+   * 跟 `duration` + `easing` 配套使用:
+   * ```ts
+   * s.transitionProperty._colors
+   * s.transitionDuration._middle  // 300ms
+   * s.transitionTimingFunction._inOut
+   * ```
+   */
+  transitionProperty: {
+    none: 'none',
+    all: 'all',
+    colors:
+      'color, background-color, border-color, outline-color, text-decoration-color, fill, stroke',
+    opacity: 'opacity',
+    transform: 'transform',
+    shadow: 'box-shadow',
+    sizes: 'width, height, max-width, max-height',
+    default:
+      'color, background-color, border-color, outline-color, fill, stroke, opacity, box-shadow, transform',
+  },
 })

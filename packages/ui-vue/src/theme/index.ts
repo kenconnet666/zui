@@ -28,4 +28,7 @@ export type {
   UserLetterSpacingExt,
   UserAspectRatioExt,
   UserFontsExt,
+  UserSizesExt,
+  UserBordersExt,
+  UserTransitionPropertyExt,
 } from './schema'
