@@ -32,5 +32,24 @@ export type {
   ZButtonSize,
 } from './ZButton.vue'
 
+// ─── Phase β gene 补全 ───
+export { default as ZAvatar } from './ZAvatar.vue'
+export type { ZAvatarProps, ZAvatarSize } from './ZAvatar.vue'
+
+export { default as ZTag } from './ZTag.vue'
+export type { ZTagProps, ZTagEmits, ZTagVariant, ZTagSize } from './ZTag.vue'
+
+export { default as ZBadge } from './ZBadge.vue'
+export type { ZBadgeProps } from './ZBadge.vue'
+
+export { default as ZCode } from './ZCode.vue'
+export type { ZCodeProps } from './ZCode.vue'
+
+export { default as ZBlockquote } from './ZBlockquote.vue'
+export type { ZBlockquoteProps } from './ZBlockquote.vue'
+
+export { default as ZEllipsis } from './ZEllipsis.vue'
+export type { ZEllipsisProps } from './ZEllipsis.vue'
+
 // ─── 图标(@vicons/material 全量透出 + BuiltinIcons 语义 map)───
 export * from './icons'

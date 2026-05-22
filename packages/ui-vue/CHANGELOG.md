@@ -2,6 +2,33 @@
 
 ## Unreleased
 
+### 新增 — Phase β gene 补全(P1 装饰类 6 组件)
+
+Stage 7 第一批:
+
+- **`ZAvatar`** —— 头像。优先级:default slot > `src`(图)> `text`(首字母)> 默认占位。
+  `size`(number 按 px / `small`(2iem) / `middle`(2.5iem) / `large`(3iem))/ `shape`(circle/square)/
+  `color` carrier factory(文字模式背景)/ `alt`(无障碍)。`role="img"` + `aria-label`。
+  图片 `onerror` 自动 fallback 到 text。
+- **`ZTag`** —— 标签。`color` carrier(默认 `_textSecondary`)+ `variant`(`'filled'` / `'outlined'` /
+  `'soft'`)+ `size`(small/middle/large)+ `closable`(emit close)+ `round`(胶囊形)。
+  sx:sxClose。
+- **`ZBadge`** —— 徽标。`value`(数字/字符串)+ `dot`(红点模式)+ `max`(超出显 `${max}+`,默认 99)+
+  `showZero` + `offset: [x, y]` + `color` carrier(默认 `_danger`)。
+  有 default slot → 浮挂子元素右上角(absolute + translate);无 slot → inline 显徽标本身。
+- **`ZCode`** —— 行内/块级代码。`inline=true` → `<code>` 行内;`inline=false` → `<pre><code>` 块级。
+  字体走 `fonts._mono`,背景 `_bgMuted` + 边框 `_border`。
+- **`ZBlockquote`** —— `<blockquote>` 块引用,左侧 4px `currentColor` border。`color` carrier 默认 `_primary`。
+- **`ZEllipsis`** —— 受控省略。`lines: number`(1=单行 / N>1=多行 `-webkit-line-clamp:N`) + `tag`。
+  跟 `ZText :ellipsis` 区别:独立组件可在任意位置包一层,不污染父级。
+
+测试 23 case(总 358 → 381 全绿)。
+
+**实现细节**:emotion CSS-in-JS 中 `-webkit-` 前缀属性需用 **PascalCase**(`WebkitLineClamp`,
+**不是** `webkitLineClamp`),否则 emit 出 `webkit-line-clamp` 而非 `-webkit-line-clamp`(失效)。
+
+---
+
 ### 新增 — `ZTable` + `ZButton`,Phase α 收尾(P0 全套完成)
 
 Stage 6.5 + 6.6:
