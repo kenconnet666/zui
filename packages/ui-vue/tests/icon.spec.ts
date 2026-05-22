@@ -1,19 +1,19 @@
 /**
- * `ZIcon` —— v2.2 全离散行为测试。
+ * `ZIcon` —— v3 chain factory props(单 carrier 全维度,2026-05-22)。
  *
- * 覆盖：
- * 1. 双模式渲染（slot / component prop）
- * 2. size 5 阶 + number escape → em 倍率
- * 3. color 6 种 → 各应用对应语义色（chain shortcut 直读 schema）
- * 4. depth none + subtle/muted/dim/faded/ghost → opacity
- * 5. spin none + 5 阶（纯枚举，不接 boolean）
- * 6. cssRoot factory：基础 + 伪类 + 覆盖 variants
+ * 覆盖:
+ * 1. 双模式渲染(slot / component prop)
+ * 2. size factory(width carrier):默认 1em / em 倍率 / zu / px;height 自动镜像 width
+ * 3. color factory(color carrier):默认 currentColor / schema token / modifier 链 / 字面量
+ * 4. depth factory(opacity carrier):不传 / 字面量 / schema token
+ * 5. spin factory(animationDuration carrier):不传 / 字面量 / token;自动加 name+iteration+timing
+ * 6. cssRoot factory:基础 / 伪类 / 覆盖 / 嵌套 factory
  * 7. a11y label
  */
 import { describe, expect, it } from 'vitest'
 import { defineComponent, h } from 'vue'
 import { mount } from '@vue/test-utils'
-import { type Chain } from '@kenconnet666/zui-core'
+import type { Chain } from '@kenconnet666/zui-core'
 import { ZIcon, zuiLight, type ZuiSchema } from '../src'
 
 const DummyIcon = defineComponent({
@@ -23,7 +23,7 @@ const DummyIcon = defineComponent({
   },
 })
 
-/** 收集注入 CSS，剥掉 keyframes 块避免误命中。 */
+/** 收集注入 CSS,剥掉 keyframes 块避免误命中。 */
 function getInjectedCss(): string {
   const raw = Array.from(document.querySelectorAll('style'))
     .map((el) => el.textContent ?? '')
@@ -32,12 +32,12 @@ function getInjectedCss(): string {
 }
 
 describe('ZIcon — 渲染', () => {
-  it('slot 模式：渲染 default slot 内容', () => {
+  it('slot 模式:渲染 default slot 内容', () => {
     const w = mount(ZIcon, { slots: { default: () => h(DummyIcon) } })
     expect(w.find('[data-testid="dummy"]').exists()).toBe(true)
   })
 
-  it('component prop 模式：渲染传入组件', () => {
+  it('component prop 模式:渲染传入组件', () => {
     const w = mount(ZIcon, { props: { component: DummyIcon } })
     expect(w.find('[data-testid="dummy"]').exists()).toBe(true)
   })
@@ -67,119 +67,289 @@ describe('ZIcon — 渲染', () => {
   })
 })
 
-describe('ZIcon — size 5 阶', () => {
-  // 注：ZIcon 走 em 倍率（跟父字号），只设 width/height、**不**设 font-size
-  // （避免 em 复合：若同时设 fontSize.em(N) 与 width.em(N)，width 会算到 N²×父字号）。
-  it('default size middle → width:1em / height:1em', () => {
+describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
+  it('default(未传 size)→ width:1em / height:1em', () => {
     mount(ZIcon, { props: { component: DummyIcon } })
     const css = getInjectedCss()
     expect(css).toMatch(/width:1em/)
     expect(css).toMatch(/height:1em/)
   })
 
-  it('size="tiny" → width:0.75em', () => {
-    mount(ZIcon, { props: { component: DummyIcon, size: 'tiny' } })
-    expect(getInjectedCss()).toMatch(/width:0\.75em/)
+  it('size factory → w.em(0.75) → width + height 都 0.75em(镜像)', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        size: (w: Chain<ZuiSchema>['width']) => {
+          w.em(0.75)
+        },
+      },
+    })
+    const css = getInjectedCss()
+    expect(css).toMatch(/width:0\.75em/)
+    expect(css).toMatch(/height:0\.75em/)
   })
 
-  it('size="huge" → width:1.5em', () => {
-    mount(ZIcon, { props: { component: DummyIcon, size: 'huge' } })
-    expect(getInjectedCss()).toMatch(/width:1\.5em/)
+  it('size factory → w.em(1.5) → 镜像', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        size: (w: Chain<ZuiSchema>['width']) => {
+          w.em(1.5)
+        },
+      },
+    })
+    const css = getInjectedCss()
+    expect(css).toMatch(/width:1\.5em/)
+    expect(css).toMatch(/height:1\.5em/)
   })
 
-  it('size 接受 number escape（任意 em 倍率）', () => {
-    mount(ZIcon, { props: { component: DummyIcon, size: 1.125 } })
+  it('size factory → w.em(1.125) 任意倍率镜像', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        size: (w: Chain<ZuiSchema>['width']) => {
+          w.em(1.125)
+        },
+      },
+    })
     const css = getInjectedCss()
     expect(css).toMatch(/width:1\.125em/)
     expect(css).toMatch(/height:1\.125em/)
   })
 
-  it('size 接受小数 number（2.3 等）', () => {
-    mount(ZIcon, { props: { component: DummyIcon, size: 2.3 } })
-    expect(getInjectedCss()).toMatch(/width:2\.3em/)
+  it('size factory → w.zu(16) 跟随 unit 系统(width + height 同一 calc)', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        size: (w: Chain<ZuiSchema>['width']) => {
+          w.zu(16)
+        },
+      },
+    })
+    const css = getInjectedCss()
+    expect(css).toContain('var(--zui-unit')
+    // width / height 应该用相同的 calc 表达式
+    const widthMatch = css.match(/width:calc\([^;]+\)/)
+    const heightMatch = css.match(/height:calc\([^;]+\)/)
+    expect(widthMatch).not.toBeNull()
+    expect(heightMatch).not.toBeNull()
+    expect(widthMatch![0].replace('width:', '')).toBe(heightMatch![0].replace('height:', ''))
+  })
+
+  it('size factory → w.px(20) 字面量镜像', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        size: (w: Chain<ZuiSchema>['width']) => {
+          w.px(20)
+        },
+      },
+    })
+    const css = getInjectedCss()
+    expect(css).toMatch(/width:20px/)
+    expect(css).toMatch(/height:20px/)
+  })
+
+  it('cssRoot 单独覆盖 width / height(非正方形)', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.width.px(24)
+          s.height.px(32)
+        },
+      },
+    })
+    const css = getInjectedCss()
+    expect(css).toMatch(/width:24px/)
+    expect(css).toMatch(/height:32px/)
   })
 })
 
-describe('ZIcon — color 6 种', () => {
-  it('default → currentColor', () => {
+describe('ZIcon — color factory(color carrier)', () => {
+  it('default(未传 color)→ currentColor', () => {
     mount(ZIcon, { props: { component: DummyIcon } })
     expect(getInjectedCss().toLowerCase()).toMatch(/color:currentcolor/)
   })
 
-  it('color="primary" 应用主题 primary', () => {
-    mount(ZIcon, { props: { component: DummyIcon, color: 'primary' } })
+  it('color factory → schema token c => c._primary', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        color: (c: Chain<ZuiSchema>['color']) => {
+          c._primary
+        },
+      },
+    })
     const primary = String((zuiLight.resolve() as { color: Record<string, string> }).color.primary)
     expect(getInjectedCss().toLowerCase()).toContain(primary.toLowerCase())
   })
 
-  it('color="danger" 应用主题 danger', () => {
-    mount(ZIcon, { props: { component: DummyIcon, color: 'danger' } })
+  it('color factory → c => c._danger', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        color: (c: Chain<ZuiSchema>['color']) => {
+          c._danger
+        },
+      },
+    })
     const danger = String((zuiLight.resolve() as { color: Record<string, string> }).color.danger)
     expect(getInjectedCss().toLowerCase()).toContain(danger.toLowerCase())
   })
+
+  it('color factory → token + modifier c => c._primary.alpha(50)', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        color: (c: Chain<ZuiSchema>['color']) => {
+          c._primary.alpha(50)
+        },
+      },
+    })
+    const css = getInjectedCss().toLowerCase()
+    expect(css).toMatch(/rgba\(/)
+    expect(css).toMatch(/0\.5\)/)
+  })
+
+  it('color factory → 字面量 c => c("#ff00aa")', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        color: (c: Chain<ZuiSchema>['color']) => {
+          c('#ff00aa')
+        },
+      },
+    })
+    expect(getInjectedCss().toLowerCase()).toContain('#ff00aa')
+  })
 })
 
-describe('ZIcon — depth 5 阶 + none（领域词）', () => {
-  it('depth="subtle" → opacity 0.8', () => {
-    mount(ZIcon, { props: { component: DummyIcon, depth: 'subtle' } })
+describe('ZIcon — depth factory(opacity carrier)', () => {
+  it('default(未传 depth)→ className 不含 opacity rule', () => {
+    mount(ZIcon, { props: { component: DummyIcon } })
+    expect(getInjectedCss()).not.toMatch(/opacity:/)
+  })
+
+  it('depth factory → 字面量 o => o(0.8)', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        depth: (o: Chain<ZuiSchema>['opacity']) => {
+          o(0.8)
+        },
+      },
+    })
     expect(getInjectedCss()).toMatch(/opacity:0\.8/)
   })
 
-  it('depth="ghost" → opacity 0.15', () => {
-    mount(ZIcon, { props: { component: DummyIcon, depth: 'ghost' } })
-    expect(getInjectedCss()).toMatch(/opacity:0\.15/)
+  it('depth factory → schema token o => o._half', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        depth: (o: Chain<ZuiSchema>['opacity']) => {
+          o._half
+        },
+      },
+    })
+    // zuiLight.opacity.half = 0.5
+    expect(getInjectedCss()).toMatch(/opacity:0\.5/)
   })
 
-  it('depth="none" → className 与 depth="subtle" 不同（无 opacity rule）', () => {
-    const wNone = mount(ZIcon, { props: { component: DummyIcon, depth: 'none' } })
-    const wSubtle = mount(ZIcon, { props: { component: DummyIcon, depth: 'subtle' } })
-    expect(wNone.classes().join(' ')).not.toBe(wSubtle.classes().join(' '))
+  it('depth factory → schema token o => o._strong', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        depth: (o: Chain<ZuiSchema>['opacity']) => {
+          o._strong
+        },
+      },
+    })
+    // zuiLight.opacity.strong = 0.75
+    expect(getInjectedCss()).toMatch(/opacity:0\.75/)
   })
 })
 
-describe('ZIcon — spin 5 阶 + none（纯枚举）', () => {
-  it('未传 spin → 默认 "none"，className 与 spin="middle" 不同', () => {
-    const wOff = mount(ZIcon, { props: { component: DummyIcon } })
-    const wOn = mount(ZIcon, { props: { component: DummyIcon, spin: 'middle' } })
-    expect(wOff.classes().join(' ')).not.toBe(wOn.classes().join(' '))
+describe('ZIcon — spin factory(animationDuration carrier;自动加 name + iteration + timing)', () => {
+  it('default(未传 spin)→ className 不含 animation', () => {
+    mount(ZIcon, { props: { component: DummyIcon } })
+    expect(getInjectedCss()).not.toMatch(/animation-name/)
   })
 
-  it('spin="middle" → 1s（默认速度）', () => {
-    mount(ZIcon, { props: { component: DummyIcon, spin: 'middle' } })
+  it('spin factory → d => d.s(1):自动加 name / iteration / timing,duration=1s', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        spin: (d: Chain<ZuiSchema>['animationDuration']) => {
+          d.s(1)
+        },
+      },
+    })
     const css = getInjectedCss()
     expect(css).toMatch(/animation-name/)
     expect(css).toMatch(/animation-duration:1s/)
-    expect(css).toMatch(/infinite/)
+    expect(css).toMatch(/animation-iteration-count:infinite/)
+    expect(css).toMatch(/animation-timing-function:linear/)
   })
 
-  it('spin="tiny" → 0.3s（最快）', () => {
-    mount(ZIcon, { props: { component: DummyIcon, spin: 'tiny' } })
-    expect(getInjectedCss()).toMatch(/animation-duration:0\.3s/)
+  it('spin factory → d => d.ms(300)', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        spin: (d: Chain<ZuiSchema>['animationDuration']) => {
+          d.ms(300)
+        },
+      },
+    })
+    const css = getInjectedCss()
+    expect(css).toMatch(/animation-duration:300ms/)
+    expect(css).toMatch(/animation-name/)
   })
 
-  it('spin="small" → 0.5s', () => {
-    mount(ZIcon, { props: { component: DummyIcon, spin: 'small' } })
-    expect(getInjectedCss()).toMatch(/animation-duration:0\.5s/)
+  it('spin factory → d => d._middle schema token(300ms)', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        spin: (d: Chain<ZuiSchema>['animationDuration']) => {
+          d._middle
+        },
+      },
+    })
+    // zuiLight.duration.middle = '300ms'
+    expect(getInjectedCss()).toMatch(/animation-duration:300ms/)
   })
 
-  it('spin="large" → 2s', () => {
-    mount(ZIcon, { props: { component: DummyIcon, spin: 'large' } })
-    expect(getInjectedCss()).toMatch(/animation-duration:2s/)
-  })
-
-  it('spin="huge" → 3s（最慢）', () => {
-    mount(ZIcon, { props: { component: DummyIcon, spin: 'huge' } })
+  it('spin factory → d => d.s(3) 最慢', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        spin: (d: Chain<ZuiSchema>['animationDuration']) => {
+          d.s(3)
+        },
+      },
+    })
     expect(getInjectedCss()).toMatch(/animation-duration:3s/)
   })
 
-  it('spin="none" 与未传 spin → className 完全相同（都是 none variant）', () => {
-    const wDefault = mount(ZIcon, { props: { component: DummyIcon } })
-    const wNone = mount(ZIcon, { props: { component: DummyIcon, spin: 'none' } })
-    expect(wNone.classes().join(' ')).toBe(wDefault.classes().join(' '))
+  it('cssRoot 覆盖 spin 的 timing(自定义 easing)', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        spin: (d: Chain<ZuiSchema>['animationDuration']) => {
+          d.s(2)
+        },
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.animationTimingFunction('ease-in-out')
+        },
+      },
+    })
+    const css = getInjectedCss()
+    expect(css).toMatch(/animation-duration:2s/)
+    expect(css).toMatch(/animation-timing-function:ease-in-out/)
   })
 })
 
-describe('ZIcon — cssRoot factory（用 core chain 二次覆盖）', () => {
+describe('ZIcon — cssRoot factory(逃生口)', () => {
   it('在根元素写任意 CSS 属性', () => {
     mount(ZIcon, {
       props: {
@@ -207,11 +377,13 @@ describe('ZIcon — cssRoot factory（用 core chain 二次覆盖）', () => {
     expect(getInjectedCss().toLowerCase()).toContain('#ff00aa')
   })
 
-  it('覆盖 variants 的 color（cx 后置优先）', () => {
+  it('覆盖 color factory(cssRoot 后置优先)', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        color: 'primary',
+        color: (c: Chain<ZuiSchema>['color']) => {
+          c._primary
+        },
         cssRoot: (s: Chain<ZuiSchema>) => {
           s.color('#abcdef')
         },
@@ -220,17 +392,22 @@ describe('ZIcon — cssRoot factory（用 core chain 二次覆盖）', () => {
     expect(getInjectedCss().toLowerCase()).toContain('#abcdef')
   })
 
-  it('结合 token 命中：访问 theme 颜色 _primary', () => {
+  it('cssRoot 内嵌套 color factory:_hover(h => h.color(c => c._danger))', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
         cssRoot: (s: Chain<ZuiSchema>) => {
-          s.color._primary
+          s._hover((h) => {
+            h.color((c) => {
+              c._danger
+            })
+          })
         },
       },
     })
-    const primary = String((zuiLight.resolve() as { color: Record<string, string> }).color.primary)
-    expect(getInjectedCss().toLowerCase()).toContain(primary.toLowerCase())
+    const danger = String((zuiLight.resolve() as { color: Record<string, string> }).color.danger)
+    expect(getInjectedCss().toLowerCase()).toContain(':hover')
+    expect(getInjectedCss().toLowerCase()).toContain(danger.toLowerCase())
   })
 })
 
@@ -241,11 +418,10 @@ describe('ZIcon — a11y', () => {
     expect(w.attributes('aria-label')).toBeUndefined()
   })
 
-  it('传 label → aria-label + role="img"，去掉 aria-hidden', () => {
+  it('传 label → aria-label + role="img",去掉 aria-hidden', () => {
     const w = mount(ZIcon, { props: { component: DummyIcon, label: '删除' } })
     expect(w.attributes('aria-label')).toBe('删除')
     expect(w.attributes('role')).toBe('img')
     expect(w.attributes('aria-hidden')).toBeUndefined()
   })
 })
-

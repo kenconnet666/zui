@@ -47,18 +47,35 @@ function buildCarrier(chain: Chain<never>, prop: string): unknown {
   const cfg = ENHANCED_PROPS[prop]
   const internal = chain as unknown as ChainInternal
 
-  // callable: target 是函数（fn(value) 形态）
-  // 字符串入参走 `resolveStringValue` —— 识别 `_token` / `_unit(N)` / `_token.mod(...)` 逃生舱
-  // 形态(详见 chain/escape.ts);不以 `_` 开头的字符串零开销直通,保持现有 API 完全兼容。
+  // callable: target 是函数,支持 3 种调用形态：
+  //   1. 字面量值 fn(value) —— 设置 _node[prop] = value
+  //   2. factory fn(c => c._primary) —— 把 carrier 自身传给 factory,
+  //      内部 c._primary / c('red') / c._primary.alpha(50) 全部通过 Proxy
+  //      生效（与 s.color._primary 等访问路径完全等价）
+  //   3. 字符串 fn('_token') / fn('_zu(8)') / fn('_primary.alpha(50)') —— 字符串逃生舱
+  //      走 `resolveStringValue`,识别 _ 前缀字符串模式。
+  //
+  // factory 形态典型用法：组件 prop 直接接 `(c) => c._primary` 工厂,
+  // setup 内 `s.color(props.color)` 一行应用任意 token / keyword / 字面量 / modifier 链。
+  // 详见 .claude/decisions/2026-05-22-carrier-factory-prop.md。
   const target = function (value: unknown) {
+    // 2 — factory 形态: 把 carrier(callable proxy)传给用户回调
+    if (typeof value === 'function') {
+      // proxy 还没构造完时 carrier 引用为 undefined —— 但 target 只会在 Proxy 构造后被调用,
+      // 所以这里 carrier 总是已初始化的 Proxy 实例(由外层 Proxy 闭包捕获)。
+      ;(value as (c: unknown) => void)(carrier)
+      return chain
+    }
+    // 3 — 字符串逃生舱
     if (typeof value === 'string') {
       value = resolveStringValue(value, cfg, internal._theme, internal._keymap)
     }
+    // 1 — 字面量
     internal._node[prop] = value
     return chain
   }
 
-  return new Proxy(target, {
+  const carrier: unknown = new Proxy(target, {
     get(_t, key) {
       if (typeof key !== 'string') return undefined
 
@@ -102,6 +119,8 @@ function buildCarrier(chain: Chain<never>, prop: string): unknown {
       return undefined
     },
   })
+
+  return carrier
 }
 
 /**

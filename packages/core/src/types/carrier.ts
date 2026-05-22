@@ -79,22 +79,27 @@ export interface AngleUnits {
 }
 
 /**
- * 五态 carrier 类型（W6.2）：
- *  1. callable: `prop(value)`
- *  2. token: `prop._token`（`_` 前缀，主题 token）
- *  3. keyword: `prop.keyword`（无前缀，CSS 标准关键字）
- *  4. extra-keyword: `prop._extra`（`_` 前缀，zui 补 csstype 未跟新的关键字；默认 never）
- *  5. unit 方法: `prop.px(n)` 等
+ * 六态 carrier 类型（W6.2 + 2026-05-22 factory 形态）：
+ *  1. callable: `prop(value)` —— 字面量
+ *  2. callable factory: `prop(c => c._token)` —— 把 carrier 自身传给 factory，供组件 prop 直传
+ *  3. token: `prop._token`（`_` 前缀，主题 token）
+ *  4. keyword: `prop.keyword`（无前缀，CSS 标准关键字）
+ *  5. extra-keyword: `prop._extra`（`_` 前缀，zui 补 csstype 未跟新的关键字；默认 never）
+ *  6. unit 方法: `prop.px(n)` 等
  *
  * **Statement-only**（2026-05-22 决策）：每条 setter 表达式即一条 CSS 行，类型层**所有返回类型为 `void`**，
  * 不再暴露 chain 自身。运行时 chain.color / chain.color('red') / chain.color._primary / chain.color.red 等
  * 仍返回 chain 实例（Proxy 兼容性），但 IDE 补全在 setter 表达式之后不再展开 Chain 表面，阻止
  * `s.color.red.padding.px(8)` 这种反范式链式。
  *
- * 函数态签名拆成 **两个重载交叉**（而非 `TValue | TTokens` 单 union）的原因：
+ * 函数态签名拆成 **三个重载交叉**（而非 `TValue | TTokens` 单 union）的原因：
  * csstype 的 `Property.*` 多数包含 `(string & {})` 惯用法，这会让 IDE 补全弹窗
  * 把外层 union 的字面量"吸收"成 `string` 形态而不显示候选。重载交叉等价于函数重载列表，
  * IDE 按重载顺序显示候选 —— 第一个重载只含 token 字面量，逃生舱补全得以可见。
+ *
+ * **factory 形态**（2026-05-22）：第三个重载 `(factory: (c: ThisCarrier) => void) => void` 是 self-ref，
+ * 让组件 prop 可以直接接 `(c) => c._primary` 这种工厂，setup 内只需 `s.color(props.color)` 一行即可
+ * 应用任意 token / keyword / 字面量 / modifier 链。详见 `.claude/decisions/2026-05-22-carrier-factory-prop.md`。
  *
  * `TExtraKeywords` 是 W6 generator 接管后的 D14 扩展槽：让 zui 给某些属性补 csstype 尚未跟新的
  * keyword（必须 `_` 前缀以与 CSS 标准 keyword 隔离）。Generator 会校验 token 与 extra-keyword 不重名。
@@ -106,7 +111,10 @@ export type PropCarrier<
   TUnits = unknown,
   TExtraKeywords extends string = never,
 > = ((value: TTokens) => void) &
-  ((value: TValue) => void) & { readonly [K in TTokens]: void } & {
+  ((value: TValue) => void) &
+  ((
+    factory: (c: PropCarrier<TValue, TTokens, TKeywords, TUnits, TExtraKeywords>) => void,
+  ) => void) & { readonly [K in TTokens]: void } & {
     readonly [K in TKeywords]: void
   } & { readonly [K in TExtraKeywords]: void } & TUnits
 
@@ -114,8 +122,12 @@ export type PropCarrier<
  * 无主题 token、无 unit 方法的属性（只支持函数调用 + 全局关键字）。
  *
  * **Statement-only**：返回 `void`，参见 `PropCarrier` 注释。
+ * **factory 形态**：`prop(c => c.inherit)` 同样支持。
  */
-export type PropFn<TValue> = ((value: TValue) => void) & { readonly [K in GlobalKw]: void }
+export type PropFn<TValue> = ((value: TValue) => void) &
+  ((factory: (c: PropFn<TValue>) => void) => void) & {
+    readonly [K in GlobalKw]: void
+  }
 
 /**
  * 颜色 token 命中后返回的 helper：
@@ -166,6 +178,9 @@ export type ColorPropCarrier<
   TKeywords extends string,
   TExtraKeywords extends string = never,
 > = ((value: TTokens) => void) &
-  ((value: TValue) => void) & { readonly [K in TTokens]: ColorTokenValue } & {
+  ((value: TValue) => void) &
+  ((factory: (c: ColorPropCarrier<TValue, TTokens, TKeywords, TExtraKeywords>) => void) => void) & {
+    readonly [K in TTokens]: ColorTokenValue
+  } & {
     readonly [K in TKeywords]: void
   } & { readonly [K in TExtraKeywords]: void }

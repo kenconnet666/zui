@@ -526,22 +526,59 @@ partial 应基于已解析的字面量。dev 模式扫到 function 会 warn，�
 
 **所有 ui-vue 组件必须遵守的四条原则**。Button / Input / Dialog / Tabs / Select / ... 一概按此画。`ZIcon` 是首个参照实现（§13.10）。
 
-**① 离散预设优先 · size 类维度可选 `| number` escape hatch · 其它无连续输入**
+**① ★ chain factory props 范式（2026-05-22 立此为新约定）· 直接复用 `Chain<S>[key]` · 设计档位由 schema 承担**
 
-外观 props **默认**只接受**有限枚举档位**，参考 5 阶哲学 `tiny / small / middle / large / huge`（必要时 `none` / `full`）。
-- **禁止**：任意 CSS 字符串（`'24px'` / `'1.5rem'` / `'#abcdef'`）、任意对象 / 数组 / 函数（除 `cssRoot` 等明确 factory prop）—— 这类**复合输入**全部走 §3 cssNode factory
-- **禁止"半离散字符串"**：不要"枚举档位 OR 自定义字符串"二选一的 union，prop 表达只走枚举一条路
-- **size 类维度允许 `| number` escape hatch**（受控逃逸口）：
-  - **适用**：尺寸 / 倍率 / 时长 / 角度等"**数值本身有语义**"的维度。如 `size?: 'tiny' | ... | 'huge' | number`（em 倍率）、`spin?: 'tiny' | ... | 'huge' | number`（秒）、`rotate?: 'left' | 'right' | number`（角度）
-  - **不适用**：`color` / `depth` / `intent` / `status` 等"**档位即语义**"的枚举（"primary" / "danger" 不能用数字表达），这类只允许枚举，复杂场景走 `cssRoot`
-  - **类型严格**：只开放**单一 number**（em 倍率 / 秒 / 角度等），不开放 `string` 或 union object。需要"任意 css length"走 `cssRoot.zu(N)` 或 `cssRoot.px(N)`
-  - **实现固定形态**：`typeof props.X === 'number' ? props.X : enumMap[props.X]`
-  - 维度 default 仍是枚举字符串（如 `size: 'middle'`），不能默认 number
-- **无 dynamic styles / 无 applyResponsive / 无运行时 token resolution**
-- 每个维度必须有合理默认值（`defaultVariants` 或 `withDefaults`），用户不传也能直接渲染
-- **实现选择**（按组件复杂度二选一）：
-  - **极简组件**（ZIcon / Spinner / Badge 等 —— 每个维度 → 几行 CSS、无状态笛卡尔积）：setup 内一个 `icss(themed.value, s => { ... })`，内联 base + 4 维度 switch + 末尾调用 `props.cssRoot?.(s)`。**无** `defineVariants` 工厂、**无** `cx` 拼接，一个 className 一气呵成。
-  - **复杂组件**（Button / Input / Dialog / Tabs / Select —— 含 hover/focus/disabled/active 等状态笛卡尔积，或多 slot）：用 `defineVariants` / `defineParts` 工厂；工厂是 `<script>` 块的 module-level const，**不对外 export**。**number escape hatch 在 setup 内分支处理**（变体工厂只接枚举档位，number 走 setup 直接 chain method）
+外观 props **不再是离散字符串枚举**（`'primary' | 'danger' | 'tiny' | ...`），而是 **chain factory** —— 每个维度接受一个 `(c) => void` 工厂，让 IDE 在 callback 内部直接展开 carrier 的全部能力（token / keyword / 字面量 / modifier / unit method）。
+
+```ts
+export interface ZxxxProps {
+  // 单 carrier 维度 → factory 接 `Chain<S>[key]` carrier 类型
+  color?: (c: Chain<ZuiSchema>['color']) => void
+  depth?: (o: Chain<ZuiSchema>['opacity']) => void
+
+  // 多属性维度 → factory 接整个 `Chain<S>`
+  size?: (s: Chain<ZuiSchema>) => void     // 涉及 width + height
+  spin?: (s: Chain<ZuiSchema>) => void     // 涉及 animation 4 属性
+
+  // 兜底逃生口（不变）
+  cssRoot?: (s: Chain<ZuiSchema>) => void
+}
+```
+
+**用户写法**:
+
+```vue
+<ZIcon :color="(c) => c._primary" />
+<ZIcon :color="(c) => c._danger.alpha(50)" />          <!-- modifier 链 -->
+<ZIcon :color="(c) => c('#ff00aa')" />                  <!-- 字面量 -->
+<ZIcon :size="(s) => { s.width.em(1.25); s.height.em(1.25) }" />
+<ZIcon :depth="(o) => o._half" />                       <!-- schema token -->
+```
+
+**为什么不再离散枚举**:
+- **IDE 智能补全足够强大** —— frequency-ranked suggestions + 前缀 / `_` 模糊筛选 schema token,replaces 离散枚举的"语义约束"作用
+- **设计档位的"single source of truth" = theme schema** —— `opacity.half / spacing.middle / duration.middle` 这些 5 阶 token 在 schema 内集中管理,组件层不再硬编码 `SIZE_MAP` / `DEPTH_MAP` / `SPIN_MAP`
+- **极致灵活** —— modifier 链 / 字面量 / 自定义 token augment 都在同一个 prop 表达,不需要"逃生口对逃生口"的多层 union
+- **API 一致** —— 每个组件 4-5 个 prop 全是 chain factory,API 表面零特例
+
+**粒度选择**:
+- 维度只影响**一个 CSS 属性** → factory 接 `Chain<S>['propName']` 单 carrier(IDE 补全聚焦该 carrier 能力)
+- 维度涉及**多个属性** → factory 接整个 `Chain<S>`(用户在 callback 内多行 setter)
+
+**默认值**:
+- Vue `withDefaults` 对 Function 类型 prop,default **直接给函数本身**(**不要** `() => fn` 工厂语法 —— Vue 不会调用 outer factory),例:`color: (c) => c.currentColor`
+- 默认表达"语义零位":color 默认 currentColor / size 默认 1em / 其他(depth / spin)默认不写
+
+**禁止**:
+- ~~离散字符串枚举~~(`'primary' | 'danger' | ...`)—— 旧约定,已废除
+- ~~硬编码 `SIZE_MAP` / `DEPTH_MAP` / `SPIN_MAP`~~ —— 已废除,5 阶档位的语义靠 theme schema 表达
+- ~~"枚举档位 OR 自定义字符串"二选一 union~~ —— 旧禁令同样适用 chain factory:不要再混合接受字面量 string,只接 factory 一种形态
+
+**实现选择**(按组件复杂度二选一,不变):
+- **极简组件**(ZIcon / Spinner / Badge 等):setup 内一个 `icss(themed.value, s => { ... })`,内联 base + 4 维度 factory 调用 + 末尾 `props.cssRoot?.(s)`。**无** `defineVariants` 工厂、**无** `cx` 拼接。
+- **复杂组件**(Button / Input / Dialog —— 含 hover/focus/disabled 状态笛卡尔积):用 `defineVariants` / `defineParts`;但**外观维度 props 仍然全是 chain factory**,只是内部 className 拆 base / 状态 / variants 多层。
+
+详见 `.claude/decisions/2026-05-22-carrier-factory-prop.md`。
 
 **② zu 单位优先 · 文字相关用 em · Provider 全站切换基准**
 
@@ -584,8 +621,9 @@ cssItem?:   (s: Chain<ZuiSchema>) => void
 | **Instance** | 单组件 / 单实例改一项         | `:css-root="s => s.width.em(1.2)"` 任意 chain 方法直接覆盖                              |
 
 - 组件 setup 直接吃 `useZTheme()`，**不走** `withComponentTokens / componentTokensFor`
-- 数值类档位（size / depth / spin 倍率 / opacity / 时长）写成模块级 `const SIZE_MAP / DEPTH_MAP / SPIN_MAP` 字面量 —— 设计语言决策，运行时不开放覆盖（要变就 BREAKING）
-- color 类直接走 chain shortcut `s.color._primary / _success / _danger / _warning / _info`（schema token），跟 vue-button demo 一致
+- 设计档位由 **theme schema** 表达(`spacing.middle = '16px'` / `opacity.half = 0.5` / `duration.middle = '300ms'`),组件层不再硬编码 `SIZE_MAP` / `DEPTH_MAP` / `SPIN_MAP` 字面量(2026-05-22 改 chain factory props 范式后废除)
+- 用户写 prop 时通过 factory 调用 schema token:`(o) => o._half` / `(s) => { s.animationDuration._middle; ... }`
+- color 类直接走 chain shortcut `s.color._primary / _success / _danger / _warning / _info`(schema token),跟 vue-button demo 一致
 - deriver 直接读 `theme.color.primary` 等 schema 字段，**无需 cast / narrow helper** —— core 的 `ResolvedTheme` mapped type 已让 schema 字面量类型穿透（function token 求值后才宽化为 `string | number`）
 
 **⑤ 文件组织 · 单文件 SFC + 双 `<script>` 块**
@@ -593,13 +631,13 @@ cssItem?:   (s: Chain<ZuiSchema>) => void
 每个组件 1 个 `.vue` 文件 + 3 行 barrel `index.ts`。**禁止** `types.ts` / `tokens.ts` / `variants.ts` 等独立子文件。
 
 - `<script lang="ts">`（无 setup 标记）—— 模块级出口：
-  - `export interface ZXxxProps { ... }`（维度 union **inline 写在字段处**，**不抽** `ZXxxSize` / `ZXxxColor` 等中间子类型 alias）
-  - 数值类档位 `const SIZE_MAP / DEPTH_MAP / SPIN_MAP` 字面量 —— **内部 const，不 export**
+  - `export interface ZXxxProps { ... }`(每个维度都是 chain factory:`color?: (c: Chain<ZuiSchema>['color']) => void`,粒度匹配维度本身的语义)
+  - ~~数值类档位 const map~~ —— 已废除(2026-05-22),设计档位走 theme schema
   - 复杂组件还有 `function createXxxVariants()` / `createXxxParts()` —— 同样内部 const
 - `<script setup lang="ts">` —— 组件运行时：`defineProps<ZXxxProps>()`、setup 逻辑、computed、模板绑定
 - `index.ts` 3 行 re-export：`ZXxx` 默认导出 + `type ZXxxProps`（顶层 `packages/ui-vue/src/index.ts` 同步 barrel）
 
-**总结一句话**：**离散 + em + cssNode + 三层覆盖模型 + 单文件 SFC** 五件套 — 组件 API 表面极小（每组件 2 项导出）、零运行时分支、所有复杂度推给用户在 chain 里自由表达。
+**总结一句话**：**chain factory props + em + cssNode + 三层覆盖模型 + 单文件 SFC** 五件套 — 组件 API 表面极小(每组件 2 项导出)、零硬编码档位、设计档位集中在 schema、所有复杂度推给用户在 carrier factory 内自由表达。
 
 ### 13.1 包结构与 subpath 入口
 
@@ -786,7 +824,7 @@ const branded = zuiLight.extend({ color: { brandRoyal: '#1a3a8f' } })
 <ZIcon :css-root="s => { s.width.em(1.2); s.color._danger }" />
 ```
 
-组件 setup 直接 `useZTheme()` + 模块级 const map（`SIZE_MAP / DEPTH_MAP / SPIN_MAP`），无 `withComponentTokens` 派生层。
+组件 setup 直接 `useZTheme()` + chain factory props,无 `withComponentTokens` 派生层、无模块级 const map(2026-05-22 改 chain factory 范式后废除)。
 
 ### 13.9 ZLocale 字典与扩展
 
@@ -802,125 +840,142 @@ declare module '@kenconnet666/zui-vue' {
 
 `mergeLocale(parent, partial)`：namespace 级浅合并；同 namespace 内字段级浅合并；数组（`weekdaysShort` / `monthsShort`）整体替换。
 
-### 13.10 ZIcon —— 首个基础组件（单文件 SFC + icss 内联参照实现）
+### 13.10 ZIcon —— v3 chain factory props 首个参照实现(2026-05-22)
 
-**§13.0 五件套首个落地，对应 §13.0 ① 实现选择中的 "极简组件" 分支：setup 内一个 `icss` chain factory 内联全部维度，不上 `defineVariants` 工厂。复杂组件（Button / Input / Dialog）照此结构但换用 `defineVariants`。**
+**§13.0 ① chain factory props 范式的首个落地** —— 每个外观维度都是 `(c) => void` 工厂,setup 内一行应用,无 switch / 无 const map / 无 cx 拼接。复杂组件(Button / Input / Dialog)照此结构但 className 拆 base / 状态 / variants 多层。
 
-**❗ ZIcon 是 §13.0 ② 的 em 例外**：图标语义上跟随父字号（在 `<button>` / `<h1>` 等不同字号容器内自动协调），所以 size 维度用 `s.width.em(N)` / `s.height.em(N)` 而非 zu。**只设 width/height、不设 font-size**：避免 em 复合（若同时 `s.fontSize.em(N)` 与 `s.width.em(N)`，width 会算到 N²×父字号，与"N × 父字号"语义不符）。Avatar 等"跟随文字"的组件也按此 em 路径，其它组件全部走 zu。
+**❗ ZIcon 是 §13.0 ② 的 em 例外**:图标跟随父字号(在 `<button>` / `<h1>` 等不同字号容器内自动协调),size 维度用 `s.width.em(N)` / `s.height.em(N)` 而非 zu。**只设 width/height、不设 font-size**:避免 em 复合(若同时 `s.fontSize.em(N)` 与 `s.width.em(N)`,width 会算到 N²×父字号)。Avatar 等"跟随文字"组件按此 em 路径,其它组件全部走 zu。
 
-**文件结构**（2 个文件，~190 行核心实现 + 3 行 barrel）：
+**文件结构**(2 个文件,~150 行核心实现 + 2 行 barrel):
 
 ```
 packages/ui-vue/src/components/icon/
 ├── ZIcon.vue          # <script> + <script setup> + <template> 三块
-└── index.ts           # 2 行 re-export（ZIcon + ZIconProps）
+└── index.ts           # 2 行 re-export(ZIcon + ZIconProps)
 ```
 
-**对外 API surface（仅 2 项）**：
+**对外 API surface(仅 2 项)**:
 
 ```ts
 import { ZIcon, type ZIconProps } from '@kenconnet666/zui-vue'
-// 或单组件 import：
+// 或单组件 import:
 import { ZIcon } from '@kenconnet666/zui-vue/components/icon'
 ```
 
-`SIZE_MAP` / `DEPTH_MAP` / `SPIN_MAP` / `ZIconSize` / `ZIconColor` 等 **全部内部化**，不导出。**没有** `createIconVariants` —— ZIcon 直接走 icss 内联，不上 variants 工厂。
+**没有** `createIconVariants` —— ZIcon 直接走 icss 内联。**没有** `SIZE_MAP` / `DEPTH_MAP` / `SPIN_MAP`(2026-05-22 改 chain factory 范式后废除,设计档位由 theme schema 承担)。
 
-**`ZIconProps`（union inline，不抽子类型 alias）**：
+**`ZIconProps`**(2026-05-22 v3:**4 维度全单 carrier**):
 
 ```ts
 export interface ZIconProps {
-  size?:  'tiny' | 'small' | 'middle' | 'large' | 'huge' | number            // 5 阶档位 + number escape（任意 em 倍率；默认 'middle'）
-  color?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info'  // 6 种语义（默认 default）
-  depth?: 'none' | 'subtle' | 'muted' | 'dim' | 'faded' | 'ghost'            // 5 阶 + none 淡化（默认 none）
-  spin?:  'none' | 'tiny' | 'small' | 'middle' | 'large' | 'huge'            // 6 阶纯枚举（默认 none；**不**接 boolean）
-  cssRoot?:   (s: Chain<ZuiSchema>) => void                                  // ★ 二次精细覆盖逃生口
-  component?: Component                                                       // 双模式：与 default slot 互斥（slot 优先）
-  tag?: string                                                                // 根元素，默认 'i'
-  label?: string                                                              // a11y
+  size?:  ((w: Chain<ZuiSchema>['width']) => void) | undefined              // width carrier;height 自动镜像
+  color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined              // color carrier
+  depth?: ((o: Chain<ZuiSchema>['opacity']) => void) | undefined            // opacity carrier
+  spin?:  ((d: Chain<ZuiSchema>['animationDuration']) => void) | undefined  // animationDuration carrier(name/iteration/timing 自动加)
+  cssRoot?: ((s: Chain<ZuiSchema>) => void) | undefined                     // 兜底逃生口
+
+  component?: Component                              // 双模式:与 default slot 互斥(slot 优先)
+  tag?: string                                       // 根元素,默认 'i'
+  label?: string                                     // a11y
 }
 ```
 
-**`size` 的 number escape**（§13.0 ① escape hatch 范式参照实现）：
+**`| undefined`** 显式标注 —— 与 `exactOptionalPropertyTypes: true` 兼容(用户工程开了严格模式时可以传 undefined 等同不传)。
+
+**height 镜像 width 实现**:setup 内 `props.size(s.width)` 后读 `s._node.width` 复制到 `_node.height`,保证图标永远正方形。非正方形场景走 cssRoot 单独设。
+
+**spin 自动加 name / iteration / timing**:启用时(传了 spin)在 setup 内硬编码 `s.animationName(presetAnimations.spin)` + `s.animationIterationCount.infinite` + `s.animationTimingFunction.linear`,用户只通过 `(d) => d.s(1)` 控制速度。自定义 easing / 反向旋转走 cssRoot 覆盖。
+
+**用户使用 — 4 维度全单 carrier factory,极致一致**:
+
 ```vue
-<ZIcon size="middle" />        <!-- 5 阶档位，1em -->
-<ZIcon :size="1.125" />        <!-- 任意 em 倍率，1.125em -->
-<ZIcon :size="2.3" />          <!-- 2.3em -->
+<!-- size: w.em(N) 一行,height 自动镜像 -->
+<ZIcon :component="HeartIcon" :size="(w) => w.em(1.25)" />     <!-- 1.25em × 1.25em -->
+<ZIcon :component="HeartIcon" :size="(w) => w.zu(16)" />       <!-- 跟随 :unit -->
+<ZIcon :component="HeartIcon" :size="(w) => w.px(20)" />       <!-- 字面量 -->
+
+<!-- color: schema token / modifier / 字面量 -->
+<ZIcon :component="HeartIcon" :color="(c) => c._primary" />
+<ZIcon :component="HeartIcon" :color="(c) => c._danger.alpha(50)" />
+<ZIcon :component="HeartIcon" :color="(c) => c('#ff00aa')" />
+
+<!-- depth: 字面量 / schema token -->
+<ZIcon :component="HeartIcon" :depth="(o) => o(0.5)" />
+<ZIcon :component="HeartIcon" :depth="(o) => o._half" />
+
+<!-- spin: 只控制速度(name / iteration / timing 自动加) -->
+<ZIcon :component="Reload" :spin="(d) => d.s(1)" />            <!-- 1 秒一圈 -->
+<ZIcon :component="Reload" :spin="(d) => d.ms(300)" />         <!-- 300ms -->
+<ZIcon :component="Reload" :spin="(d) => d._middle" />         <!-- schema duration token -->
+
+<!-- 非正方形 / 自定义 easing 走 cssRoot 兜底 -->
+<ZIcon :component="HeartIcon" :css-root="(s) => { s.width.px(24); s.height.px(32) }" />
+<ZIcon
+  :component="Reload"
+  :spin="(d) => d.s(2)"
+  :css-root="(s) => { s.animationTimingFunction('ease-in-out'); s.animationDirection.reverse }"
+/>
 ```
-实现固定形态 `typeof props.size === 'number' ? props.size : enumMap[props.size]`。后续 Button.size / Dialog.size / Avatar.size 等 size 类维度按此模式照画。`spin` 暂未开 `| number`（用得少），需要时按同模式加。
 
-**数值类档位（模块级 const，不对外）**：
+IDE 在每个 callback 内补全完整:
+- `c.` → 全部 color schema token(`_primary` / `_danger` / `_blue600` / ...)+ 146 CSS 命名色 + `currentColor` 等 keyword
+- 输入 `_p` → 模糊筛选 `_p*` token(`_primary` / `_primaryHover` / `_pink500` 等)
+- `c._primary.` → 11 个 ColorTokenValue modifier(`alpha` / `darken` / `lighten` / ...)
 
-```ts
-const SIZE_MAP = { tiny: 0.75, small: 0.875, middle: 1, large: 1.25, huge: 1.5 } as const   // em 倍率
-const DEPTH_MAP = { subtle: 0.8, muted: 0.6, dim: 0.4, faded: 0.25, ghost: 0.15 } as const  // opacity
-const SPIN_MAP = { tiny: 0.3, small: 0.5, middle: 1, large: 2, huge: 3 } as const           // 秒
-```
+**`ZIcon.vue` 内部结构**(按 §13.0 ⑤ 五件套):
 
-设计语言级决策，运行时不开放覆盖（要变就改这里 = BREAKING）。要 app 级改色走 `zuiLight.extend({ color: { primary: '#abc' } })`；要新增品牌色走 `UserColorExt` augmentation；要单点改走 `:css-root`。
-
-**`ZIcon.vue` 内部结构**（按 §13.0 ⑤ 五件套）：
-
-`<script lang="ts">` 块（模块级出口）：
-- type imports（`Chain` / `Component` / `ZuiSchema`）+ runtime imports（`icss` / `presetAnimations`）
+`<script lang="ts">` 块(模块级出口):
+- type imports(`Chain` / `Component` / `ZuiSchema`)+ runtime imports(`icss`)
 - `export interface ZIconProps {}`
-- 3 个 `as const` 数值 map（SIZE_MAP / DEPTH_MAP / SPIN_MAP）
+- **没有** const map(已废除)
 
-`<script setup lang="ts">` 块（**setup 仅 ~50 行**，无 variants 工厂，无 component token 派生）：
+`<script setup lang="ts">` 块(**setup 仅 ~35 行**):
 - `import { computed } from 'vue'` + `import { useZTheme } from '../../provider'`
-- `withDefaults(defineProps<ZIconProps>(), { size: 'middle', color: 'default', depth: 'none', spin: 'none', tag: 'i' })`
-- `const theme = useZTheme()` —— 一行注入，直吃 `ResolvedTheme<ZuiSchema>`
-- **唯一 className computed**（一气呵成，无 cx 拼接）：
+- `withDefaults(defineProps<ZIconProps>(), { ... })` —— ⚠️ **Function 类型 prop 的 default 直接给函数本身**,不要 `() => fn` 工厂(Vue 不调用 outer factory,会导致 default 永远不生效)
+- `const theme = useZTheme()` —— 一行注入
+- **唯一 className computed**(5 行替代旧 30+ 行 switch + 镜像 / 自动属性两个 trick):
 
 ```ts
+const props = withDefaults(defineProps<ZIconProps>(), {
+  size: (w: Chain<ZuiSchema>['width']) => { w.em(1) },          // 默认 1em(height 自动镜像)
+  color: (c: Chain<ZuiSchema>['color']) => { c.currentColor },
+  tag: 'i',
+})
+
 const className = computed(() => icss(theme.value, (s) => {
   // base
-  s.display.inlineFlex; s.alignItems.center; s.justifyContent.center
-  s.flexShrink(0); s.lineHeight(1)
-  // size —— number escape 优先，否则查 SIZE_MAP（只设 width/height、不设 fontSize 避免 em 复合）
-  const sizeN = typeof props.size === 'number' ? props.size : SIZE_MAP[props.size]
-  s.width.em(sizeN); s.height.em(sizeN)
-  // color —— 5 个语义色走 chain shortcut，'default' 显式 currentColor
-  switch (props.color) {
-    case 'default': s.color('currentColor'); break
-    case 'primary': s.color._primary; break
-    case 'success': s.color._success; break
-    case 'warning': s.color._warning; break
-    case 'danger':  s.color._danger;  break
-    case 'info':    s.color._info;    break
-  }
-  // depth —— 'none' 跳过；其余查 DEPTH_MAP
-  if (props.depth !== 'none') s.opacity(DEPTH_MAP[props.depth])
-  // spin —— 'none' 跳过；其余查 SPIN_MAP
-  if (props.spin !== 'none') {
+  s.display.inlineFlex
+  s.alignItems.center
+  s.justifyContent.center
+  s.flexShrink(0)
+  s.lineHeight(1)
+
+  // size:用户只控制 width carrier;height 自动镜像 width(保证图标正方形)
+  props.size(s.width)
+  if (s._node.width !== undefined) s._node.height = s._node.width
+
+  // color:单 carrier factory
+  s.color(props.color)
+
+  // depth:单 carrier factory;不传 = 不写 opacity
+  if (props.depth) s.opacity(props.depth)
+
+  // spin:启用时自动加 name / iteration / timing,用户只控制速度
+  if (props.spin) {
     s.animationName(presetAnimations.spin)
-    s.animationDuration.s(SPIN_MAP[props.spin])
     s.animationIterationCount.infinite
     s.animationTimingFunction.linear
+    s.animationDuration(props.spin)
   }
-  // cssRoot 用户覆盖（末尾调用，可覆盖以上任何属性）
+
+  // cssRoot 兜底
   props.cssRoot?.(s)
 }))
 ```
 
-**为什么 color 走 chain shortcut 而 size / depth / spin 走 const map**：chain `_xxx` 是 schema 字符串 token 的 getter，能给 `s.color(...)` / `s.backgroundColor(...)` 这类字符串属性用。`s.width.em(N)` / `s.opacity(N)` / `s.animationDuration.s(N)` 需要 **number 直接传参**，chain shortcut 帮不到，所以这三个维度都吃模块级 const 字面量。
+**为什么所有维度都接单 carrier**:粒度统一 —— 每个 prop 表达"该维度的一个核心轴"(width / color / opacity / animationDuration),IDE 补全聚焦该 carrier 能力(token / keyword / 字面量 / modifier / unit method)。其它属性(height 镜像 / animation name 等)由组件 setup 自动处理,用户**不需要也不能**直接操作 — 想突破走 cssRoot。这种"单轴 + 兜底"的设计模式比"多属性 chain factory"更易理解、更难写错。
 
-**`cssRoot` factory 范式**（任意值 / 任意 chain method 兜底）：
-
-```vue
-<ZIcon
-  :component="HeartIcon"
-  color="primary"
-  :css-root="s => {
-    s.cursor.pointer
-    s.fontSize.px(24)                                    // 控制 1em 等于多少
-    s._hover(h => { h.color._danger })
-    s._media('_middle', m => { m.fontSize._iconSizeHuge })
-  }"
-/>
-```
-
-**测试覆盖**：~38 tests = provider 9 + icon 29（`tests/icon.spec.ts`：渲染 5 / size 5 含 number escape / color 3 / depth 3 / spin 7 / cssRoot 4 / a11y 2）。tests 只 import `ZIcon` + `Chain<ZuiSchema>`，不依赖任何内部 helper。
+**测试覆盖**:42 tests = provider 9 + icon 33(`tests/icon.spec.ts`:渲染 5 / size 7 含镜像 + cssRoot 非正方形 / color 5 / depth 4 / spin 5 含自动属性 + cssRoot 覆盖 timing / cssRoot 4 / a11y 2)。tests 显式标注 callback 入参 `(c: Chain<ZuiSchema>['color'])` 因为 mount props 字面量内 vue-tsc 不能从 carrier union 重载推断回 callback 类型。
 
 ### 13.11 SSR（Nuxt / Vue SSR）
 ```ts
