@@ -86,6 +86,12 @@ export interface AngleUnits<TSelf> {
  * `TExtraKeywords` 是 W6 generator 接管后的 D14 扩展槽：让 zui 给某些属性补 csstype 尚未跟新的
  * keyword（必须 `_` 前缀以与 CSS 标准 keyword 隔离）。Generator 会校验 token 与 extra-keyword 不重名。
  */
+/**
+ * 函数态签名拆成 **两个重载交叉**（而非 `TValue | TTokens` 单 union）的原因：
+ * csstype 的 `Property.*` 多数包含 `(string & {})` 惯用法，这会让 IDE 补全弹窗
+ * 把外层 union 的字面量"吸收"成 `string` 形态而不显示候选。重载交叉等价于函数重载列表，
+ * IDE 按重载顺序显示候选 —— 第一个重载只含 token 字面量，逃生舱补全得以可见。
+ */
 export type PropCarrier<
   TSelf,
   TValue,
@@ -93,9 +99,10 @@ export type PropCarrier<
   TKeywords extends string,
   TUnits = unknown,
   TExtraKeywords extends string = never,
-> = ((value: TValue) => TSelf) & { readonly [K in TTokens]: TSelf } & {
-  readonly [K in TKeywords]: TSelf
-} & { readonly [K in TExtraKeywords]: TSelf } & TUnits
+> = ((value: TTokens) => TSelf) &
+  ((value: TValue) => TSelf) & { readonly [K in TTokens]: TSelf } & {
+    readonly [K in TKeywords]: TSelf
+  } & { readonly [K in TExtraKeywords]: TSelf } & TUnits
 
 /** 无主题 token、无 unit 方法的属性（只支持函数调用 + 全局关键字）。 */
 export type PropFn<TSelf, TValue> = ((value: TValue) => TSelf) & { readonly [K in GlobalKw]: TSelf }
@@ -147,6 +154,7 @@ export type ColorPropCarrier<
   TTokens extends string,
   TKeywords extends string,
   TExtraKeywords extends string = never,
-> = ((value: TValue) => TSelf) & { readonly [K in TTokens]: ColorTokenValue<TSelf> } & {
-  readonly [K in TKeywords]: TSelf
-} & { readonly [K in TExtraKeywords]: TSelf }
+> = ((value: TTokens) => TSelf) &
+  ((value: TValue) => TSelf) & { readonly [K in TTokens]: ColorTokenValue<TSelf> } & {
+    readonly [K in TKeywords]: TSelf
+  } & { readonly [K in TExtraKeywords]: TSelf }
