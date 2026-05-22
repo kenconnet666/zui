@@ -4,9 +4,9 @@
 >
 > **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-23(**Phase α 完成 ✓** 21 个 P0 组件全部交付,无人值守自主推进 → Stage α 收尾 / Stage 7)
+> **最后更新**:2026-05-23(Phase α 完成 + Stage 7 gene 补全 ✓,无人值守进入 Phase β)
 > **当前阶段**:
-> `Stage α 收尾` —— 等待用户决定是否进入 Phase β,或先做 docs 站点演示页
+> `Stage 7 Phase β 其它分类` —— feedback / display / navigation / input 补全(优先做 ZTooltip / ZPopover / ZDropdown / ZDrawer)
 
 ---
 
@@ -532,10 +532,16 @@ s._focusVisible((f) => {
 
 ### Stage 7 ── Phase β / P1 组件(高频补全)
 
-> 在 α 完整通过 + 用户使用反馈无大问题后开。
+> 在 α 完整通过 + 用户使用反馈无大问题后开。无人值守模式自行决策,gene 部分先做。
 
-**gene 补全**
-- [ ] ZAvatar / ZTag / ZBadge / ZCode / ZBlockquote / ZEllipsis(分别 SFC + spec + index 导出)
+**gene 补全** ✅ 2026-05-23
+- [x] ZAvatar(image + text fallback + size + shape circle/square + color)
+- [x] ZTag(filled/outlined/soft + closable + round + size + color carrier)
+- [x] ZBadge(value/dot/max/showZero + offset + 浮挂模式 / inline 模式)
+- [x] ZCode(inline / block + fonts._mono + 边框 + bgMuted)
+- [x] ZBlockquote(`<blockquote>` + 左侧 4px 强调色 border)
+- [x] ZEllipsis(单行 / 多行 `-webkit-line-clamp` + tag)
+- [x] 验证:type-check ✓ / tests 381/381 ✓ / build ✓
 
 **layout 补全**
 - [ ] ZAffix / ZScrollbar
@@ -749,6 +755,13 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-23 Stage 7 gene 补全完成(无人值守自主推进,进入 Phase β)
+- 改动:gene 加 6 个简单装饰组件 — ZAvatar / ZTag / ZBadge / ZCode / ZBlockquote / ZEllipsis;index 导出
+- 测试 23 case;总 381/381
+- 验证:type-check ✓ / tests 381/381 ✓ / build ✓
+- 注意:`emotion` CSS-in-JS 中 `-webkit-` 前缀属性需用 PascalCase(`WebkitLineClamp`,非 `webkitLineClamp`)
+- 下一步:Phase β 其它分类(feedback ZDrawer/ZNotification/ZPopconfirm, display ZTooltip/ZPopover/ZCollapse,etc.)
 
 ### 2026-05-23 Stage 6.5 + 6.6 完成 = Phase α 收尾(无人值守自主推进,跳过 STOP #4)
 - 改动:display/ZTable(配置式 columns + render 函数 + rowKey 函数 + bordered/striped),gene/ZButton(5 variant + loading + ripple + focus-visible)
