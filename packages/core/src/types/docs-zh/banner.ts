@@ -67,7 +67,7 @@ export const FILE_BANNER_ZH = `# zui CSS 属性值通用指南（中文）
 ### §2.4 zui 主题 token 写法
 
 \`\`\`ts
-s.color._primary                    // 主题主色（跟随 ZConfigProvider light/dark 切换）
+s.color._primary                    // 主题主色（跟随 ZBox light/dark 切换）
 s.color._textPrimary                // 语义化文本主色
 s.color._red500                     // Palette token（tailwind 50–950 阶）
 s.color._primary.alpha(0.6)         // token + 修饰链

@@ -1,9 +1,9 @@
 /**
- * `ZIemPreset` —— `<ZConfigProvider :iem>` 常用预设。
+ * `ZIemPreset` —— `<ZBox :iem>` 常用预设。
  *
  * **iem = "intrinsic em" / "我自己使用的 em"**,跟 CSS `rem`(root em)对称:
  * - `rem` = 根元素 font-size 倍率(浏览器掌控)
- * - `iem` = ZConfigProvider 注入的基准倍率(应用层掌控,默认 1iem = 16px,等同 1rem)
+ * - `iem` = ZBox 注入的基准倍率(应用层掌控,默认 1iem = 16px,等同 1rem)
  *
  * 数字 / 字符串都可直接传给 `:iem`;这里提供"语义化命名"避免业务侧记 `'16px'` 等字面量。
  *
@@ -21,22 +21,22 @@
  * @example
  * ```vue
  * <!-- 默认 16px 基准 -->
- * <ZConfigProvider :iem="ZIemPreset.default">
+ * <ZBox :iem="ZIemPreset.default">
  *   <App />
- * </ZConfigProvider>
+ * </ZBox>
  *
  * <!-- 嵌套覆盖:子树用 20px,兄弟不受影响 -->
- * <ZConfigProvider :iem="'16px'">
+ * <ZBox :iem="'16px'">
  *   <Card />                                  <!-- 1iem = 16px -->
- *   <ZConfigProvider :iem="'20px'">
+ *   <ZBox :iem="'20px'">
  *     <Sidebar />                             <!-- 1iem = 20px(嵌套覆盖) -->
- *   </ZConfigProvider>
+ *   </ZBox>
  *   <Main />                                  <!-- 1iem = 16px(回到外层) -->
- * </ZConfigProvider>
+ * </ZBox>
  *
  * <!-- 兄弟 Provider 互不影响 -->
- * <ZConfigProvider :iem="ZIemPreset.compact"><Compact /></ZConfigProvider>
- * <ZConfigProvider :iem="ZIemPreset.large"><Cozy /></ZConfigProvider>
+ * <ZBox :iem="ZIemPreset.compact"><Compact /></ZBox>
+ * <ZBox :iem="ZIemPreset.large"><Cozy /></ZBox>
  * ```
  */
 export const ZIemPreset = {

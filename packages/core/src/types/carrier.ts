@@ -11,7 +11,7 @@ export type GlobalKw = 'inherit' | 'unset' | 'initial' | 'revert' | 'revertLayer
  * - 容器查询（CSS Containment 3）：cqw / cqh / cqi / cqb / cqmin / cqmax
  * - 栅格：fr
  * - 百分比：pct → `'%'`
- * - zui 逻辑单位：iem → `calc(N * var(--zui-iem, 16px))`（ZConfigProvider 全站切换基准,默认 1iem = 16px）
+ * - zui 逻辑单位：iem → `calc(N * var(--zui-iem, 16px))`（ZBox 全站切换基准,默认 1iem = 16px）
  *
  * 合计 35 个。
  *

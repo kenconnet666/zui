@@ -6,7 +6,7 @@
 
 ## 计划
 
-- `ZConfigProvider` —— 主题 + component token overrides 嵌套覆盖
+- `ZBox` —— 主题 + component token overrides 嵌套覆盖
 - `useStyles` / `useVariants` —— Vue composable
 - 基础组件：Button / Input / Select / Dialog / Tabs / Menu / Popover / Toast / 等
 

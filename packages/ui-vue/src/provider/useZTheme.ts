@@ -7,7 +7,7 @@ import { Z_THEME_KEY } from './keys'
 /**
  * `useZTheme()` —— 取当前层级 inject 的 ResolvedTheme。
  *
- * - 在 `<ZConfigProvider>` 子树内调用 → 返回 provider 维护的 `Ref<ResolvedTheme<ZuiSchema>>`。
+ * - 在 `<ZBox>` 子树内调用 → 返回 provider 维护的 `Ref<ResolvedTheme<ZuiSchema>>`。
  * - 树外调用 → 返回 fallback `zuiLight.resolve()`，并在 dev 警告。
  *
  * 默认 schema 是 `ZuiSchema`（含 11 语义色 + 完整 5 阶 scale）。用户工程要扩自家 brand：
@@ -20,8 +20,8 @@ export function useZTheme(): Ref<ResolvedTheme<ZuiSchema>> {
   if (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production') {
      
     console.warn(
-      '[zui-vue/useZTheme] 调用点不在 <ZConfigProvider> 子树内，回落 zuiLight。' +
-        '\n  请在根组件外包一层 <ZConfigProvider :theme="zuiLight">。',
+      '[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。' +
+        '\n  请在根组件外包一层 <ZBox :theme="zuiLight">。',
     )
   }
   return ref(zuiLight.resolve()) as unknown as Ref<ResolvedTheme<ZuiSchema>>

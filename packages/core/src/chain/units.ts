@@ -11,8 +11,8 @@
  * - **栅格分数**: fr
  * - **百分比**: pct → '%'
  * - **zui 逻辑单位 iem**: `calc(N * var(--zui-iem, 16px))` —— "我自己使用的 em",跟 rem 对称
- *   (rem = root em / iem = ZConfigProvider em)。默认 `1iem = 16px`(等同 1rem);
- *   ui-vue `<ZConfigProvider :iem>` 通过 css var `--zui-iem` 全站切换 1iem 物理意义,
+ *   (rem = root em / iem = ZBox em)。默认 `1iem = 16px`(等同 1rem);
+ *   ui-vue `<ZBox :iem>` 通过 css var `--zui-iem` 全站切换 1iem 物理意义,
  *   嵌套 Provider 通过 css cascade 自动覆盖,兄弟 Provider 各自独立 —— 零运行时合并开销。
  */
 export const LENGTH_UNITS = [
@@ -57,7 +57,7 @@ export const LENGTH_UNITS = [
   'fr',
   // 百分比（特殊 ident → '%'）
   'pct',
-  // zui 逻辑单位 iem(intrinsic / ZConfigProvider em,默认 1iem = 16px)
+  // zui 逻辑单位 iem(intrinsic / ZBox em,默认 1iem = 16px)
   'iem',
 ] as const
 
@@ -93,13 +93,13 @@ export function getUnitList(cls: UnitClass): readonly string[] {
  *
  * **iem = "intrinsic em" / "我自己使用的 em"**,跟 CSS `rem`(root em)对称:
  * - `rem` = 根元素 font-size 倍率(浏览器掌控)
- * - `iem` = ZConfigProvider 注入的基准倍率(应用层掌控)
+ * - `iem` = ZBox 注入的基准倍率(应用层掌控)
  *
- * **物理意义由 ui-vue `<ZConfigProvider :iem>` 注入的 css var `--zui-iem` 决定**:
+ * **物理意义由 ui-vue `<ZBox :iem>` 注入的 css var `--zui-iem` 决定**:
  * - 默认 `16px`(不在 Provider 内 / Provider 未传 `:iem`)—— 1iem = 16px(等同 1rem)
- * - `<ZConfigProvider :iem="'20px'">` —— 整站 UI 放大 25%(大字模式)
- * - `<ZConfigProvider :iem="'1em'">` —— 跟父字号(嵌套自动)
- * - `<ZConfigProvider :iem="'1rem'">` —— 跟浏览器根字号(a11y)
+ * - `<ZBox :iem="'20px'">` —— 整站 UI 放大 25%(大字模式)
+ * - `<ZBox :iem="'1em'">` —— 跟父字号(嵌套自动)
+ * - `<ZBox :iem="'1rem'">` —— 跟浏览器根字号(a11y)
  *
  * **嵌套 Provider 通过 css cascade 自动覆盖,兄弟 Provider 各自独立 —— 零运行时合并开销**。
  *
@@ -115,7 +115,7 @@ export function iem(n: number): string {
  * **纯 TS** 的 iem 基准工厂 —— 无 css var 依赖,在编译/运行的 TS 层就把 `iem(N)` 算成具体值。
  *
  * 与 `iem(n)` 互补:
- * - `iem(n)` 走 css var,跟随 `<ZConfigProvider :iem>` cascade(默认用法)
+ * - `iem(n)` 走 css var,跟随 `<ZBox :iem>` cascade(默认用法)
  * - `iemWith(base)(n)` 在 TS 层直接计算,不依赖 css var(SSR / 静态生成 / 测试 / 非 Vue 环境)
  *
  * **解析规则**:

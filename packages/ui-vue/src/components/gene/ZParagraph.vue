@@ -9,7 +9,7 @@
  * - 默认 `lineHeight: _normal`(1.5)—— 段落舒适行高,正文阅读体验
  * - `tag` 默认 `'p'` —— 语义化段落元素
  *
- * **schema 联动**:`margin-bottom` 用 `spacing._middle`,用户 `<ZConfigProvider :iem="large">`
+ * **schema 联动**:`margin-bottom` 用 `spacing._middle`,用户 `<ZBox :iem="large">`
  * 时段间距同步放大;想自定义间距走 cssRoot:`(s) => s.marginBottom._large`。
  */
 import type { Chain } from '@kenconnet666/zui-core'

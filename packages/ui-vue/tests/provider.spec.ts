@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { defineComponent, h, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { zuiLight } from '../src'
-import { ZConfigProvider, enUS, useZDate, useZLocale, useZTheme } from '../src'
+import type { Chain } from '@kenconnet666/zui-core'
+import { ZBox, enUS, useZDate, useZLocale, useZTheme, type ZuiSchema } from '../src'
 
 type AnyTheme = Record<string, Record<string, string | number>>
 
@@ -10,7 +11,7 @@ function asTheme(value: unknown): AnyTheme {
   return value as AnyTheme
 }
 
-describe('ZConfigProvider', () => {
+describe('ZBox', () => {
   it('根 Provider 不传 theme 时回落 zuiLight', () => {
     let captured: AnyTheme | null = null
     const Child = defineComponent({
@@ -21,8 +22,8 @@ describe('ZConfigProvider', () => {
       },
     })
     mount({
-      components: { ZConfigProvider, Child },
-      template: '<ZConfigProvider><Child /></ZConfigProvider>',
+      components: { ZBox, Child },
+      template: '<ZBox><Child /></ZBox>',
     })
     expect(captured).not.toBeNull()
     const fallback = asTheme(zuiLight.resolve())
@@ -40,9 +41,9 @@ describe('ZConfigProvider', () => {
       },
     })
     mount({
-      components: { ZConfigProvider, Child },
+      components: { ZBox, Child },
       data: () => ({ myTheme }),
-      template: '<ZConfigProvider :theme="myTheme"><Child /></ZConfigProvider>',
+      template: '<ZBox :theme="myTheme"><Child /></ZBox>',
     })
     expect(asTheme(captured).color.primary).toBe('#ff0000')
   })
@@ -57,14 +58,14 @@ describe('ZConfigProvider', () => {
       },
     })
     mount({
-      components: { ZConfigProvider, Child },
+      components: { ZBox, Child },
       data: () => ({ patch: { color: { primary: '#00ff00' } } }),
       template: `
-        <ZConfigProvider>
-          <ZConfigProvider :theme-patch="patch">
+        <ZBox>
+          <ZBox :theme-patch="patch">
             <Child />
-          </ZConfigProvider>
-        </ZConfigProvider>
+          </ZBox>
+        </ZBox>
       `,
     })
     expect(asTheme(captured).color.primary).toBe('#00ff00')
@@ -82,8 +83,8 @@ describe('ZConfigProvider', () => {
       },
     })
     mount({
-      components: { ZConfigProvider, Child },
-      template: '<ZConfigProvider><Child /></ZConfigProvider>',
+      components: { ZBox, Child },
+      template: '<ZBox><Child /></ZBox>',
     })
     expect(box.value?.name).toBe('zh-CN')
   })
@@ -98,9 +99,9 @@ describe('ZConfigProvider', () => {
       },
     })
     mount({
-      components: { ZConfigProvider, Child },
+      components: { ZBox, Child },
       data: () => ({ enUS }),
-      template: '<ZConfigProvider :locale="enUS"><Child /></ZConfigProvider>',
+      template: '<ZBox :locale="enUS"><Child /></ZBox>',
     })
     expect(buttonText).toBe('Loading')
   })
@@ -117,11 +118,11 @@ describe('ZConfigProvider', () => {
       },
     })
     mount({
-      components: { ZConfigProvider, Child },
+      components: { ZBox, Child },
       data: () => ({
         patch: { button: { loading: 'Loading...' } },
       }),
-      template: '<ZConfigProvider :locale-patch="patch"><Child /></ZConfigProvider>',
+      template: '<ZBox :locale-patch="patch"><Child /></ZBox>',
     })
     expect(box.value?.name).toBe('zh-CN')
     expect(box.value?.button?.loading).toBe('Loading...')
@@ -145,14 +146,14 @@ describe('ZConfigProvider', () => {
       },
     })
     mount({
-      components: { ZConfigProvider, Outer, Inner },
+      components: { ZBox, Outer, Inner },
       template: `
-        <ZConfigProvider timezone="Asia/Shanghai">
+        <ZBox timezone="Asia/Shanghai">
           <Outer />
-          <ZConfigProvider>
+          <ZBox>
             <Inner />
-          </ZConfigProvider>
-        </ZConfigProvider>
+          </ZBox>
+        </ZBox>
       `,
     })
     expect(outerTz).toBe('Asia/Shanghai')
@@ -170,8 +171,8 @@ describe('ZConfigProvider', () => {
       },
     })
     mount({
-      components: { ZConfigProvider, Child },
-      template: '<ZConfigProvider timezone="Asia/Shanghai"><Child /></ZConfigProvider>',
+      components: { ZBox, Child },
+      template: '<ZBox timezone="Asia/Shanghai"><Child /></ZBox>',
     })
     // UTC 0:00 → Shanghai 8:00
     expect(formatted).toBe('2026-01-15 08:00')
@@ -190,13 +191,105 @@ describe('ZConfigProvider', () => {
       },
     })
     const wrapper = mount({
-      components: { ZConfigProvider, Child },
+      components: { ZBox, Child },
       setup: () => ({ myTheme }),
-      template: '<ZConfigProvider :theme="myTheme"><Child /></ZConfigProvider>',
+      template: '<ZBox :theme="myTheme"><Child /></ZBox>',
     })
     expect(captured).toBe('#111111')
     myTheme.value = zuiLight.fork({ color: { primary: '#222222' } })
     await wrapper.vm.$nextTick()
     expect(captured).toBe('#222222')
+  })
+})
+
+describe('ZBox — 底层 box 能力(cssRoot + tag)', () => {
+  function getInjectedCss(): string {
+    return Array.from(document.querySelectorAll('style'))
+      .map((el) => el.textContent ?? '')
+      .join('\n')
+  }
+
+  it('默认 tag=div', () => {
+    const w = mount(ZBox, { slots: { default: () => 'x' } })
+    expect(w.element.tagName).toBe('DIV')
+  })
+
+  it('tag prop 切换语义化元素', () => {
+    const w = mount(ZBox, { props: { tag: 'section' }, slots: { default: () => 'x' } })
+    expect(w.element.tagName).toBe('SECTION')
+  })
+
+  it('cssRoot 写入 emotion className,样式 emit', () => {
+    const w = mount(ZBox, {
+      props: {
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.padding.px(24)
+          s.backgroundColor('#abc123')
+        },
+      },
+      slots: { default: () => 'x' },
+    })
+    const cls = w.classes().find((c) => c.startsWith('css-'))
+    expect(cls).toBeDefined()
+    const css = getInjectedCss().toLowerCase()
+    expect(css).toMatch(/padding:24px/)
+    expect(css).toContain('#abc123')
+  })
+
+  it('cssRoot + iem 双 prop 共存(iemStyle 走 inline style,cssRoot 走 class)', () => {
+    const w = mount(ZBox, {
+      props: {
+        iem: '20px',
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.padding.iem(1) // 用合并 theme 的 iem,这里走 css var
+        },
+      },
+      slots: { default: () => 'x' },
+    })
+    // inline style 写 --zui-iem
+    expect(w.attributes('style')).toContain('--zui-iem: 20px')
+    // class 写 padding
+    const css = getInjectedCss()
+    expect(css).toMatch(/padding:calc\(1 \* var\(--zui-iem,/)
+  })
+
+  it('cssRoot 不传 → 不挂 className(干净 wrapper)', () => {
+    const w = mount(ZBox, { slots: { default: () => 'x' } })
+    const cls = w.classes()
+    // 没传 cssRoot 时,classList 应为空(或不含 css-* emotion class)
+    expect(cls.filter((c) => c.startsWith('css-')).length).toBe(0)
+  })
+})
+
+describe('ZBox — fonts schema token', () => {
+  function getInjectedCss(): string {
+    return Array.from(document.querySelectorAll('style'))
+      .map((el) => el.textContent ?? '')
+      .join('\n')
+  }
+
+  it('s.fontFamily._mono → 走 schema fonts.mono(zuiLight 默认 ui-monospace 栈)', () => {
+    mount(ZBox, {
+      props: {
+        cssRoot: (s: Chain<ZuiSchema>) => {
+          s.fontFamily._mono
+        },
+      },
+      slots: { default: () => 'x' },
+    })
+    expect(getInjectedCss()).toContain('ui-monospace')
+  })
+
+  it('themePatch 覆盖 fonts.mono → ZBox cssRoot 取到新值', () => {
+    mount(ZBox, {
+      props: {
+        themePatch: { fonts: { mono: 'Fira Code, monospace' } },
+        cssRoot: (s) => {
+          s.fontFamily._mono
+        },
+      },
+      slots: { default: () => 'x' },
+    })
+    expect(getInjectedCss()).toContain('Fira Code')
   })
 })

@@ -17,7 +17,7 @@
  * **默认 `tag` = `h{level}`**,语义化标题。用户可显式传 `tag` 改成 `div` 等中性元素
  * (例:页内"假标题"不参与 outline)。
  *
- * **iem 单位 + Provider 联动**:级别尺寸自动跟 ZConfigProvider 字号缩放。
+ * **iem 单位 + Provider 联动**:级别尺寸自动跟 ZBox 字号缩放。
  * **schema fontSize 5 阶 token**(`_tiny/_small/_middle/_large/_huge`)主要服务 ZText 正文,
  * 标题 6 级走纯 `iem(N)` 不污染 token 表。
  */

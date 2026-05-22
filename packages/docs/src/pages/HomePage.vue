@@ -9,7 +9,7 @@
     <h1>zui</h1>
     <p>
       <strong>框架无关</strong>的 CSS-in-JS 工具库 monorepo：核心 `@kenconnet666/zui-core` 提供
-      Chain + Theme + Variants 抽象，`@kenconnet666/zui-vue` 提供 ZConfigProvider 与 Vue 3 组件。
+      Chain + Theme + Variants 抽象，`@kenconnet666/zui-vue` 提供 ZBox 与 Vue 3 组件。
     </p>
     <h2>看演示</h2>
     <ul>

@@ -3,7 +3,7 @@
 > 框架无关的 CSS-in-JS 工具库 monorepo。
 
 - **[`@kenconnet666/zui-core`](./packages/core)** — 框架无关核心（已发 npm）。基于 `@emotion/css`，`class Chain<TSchema>` 用 declaration merging 把 ~857 个 CSS 属性挂到强类型 builder 上。
-- **[`@kenconnet666/zui-vue`](./packages/ui-vue)** — Vue 3 组件库 + `ZConfigProvider` 嵌套覆盖（开发中）。
+- **[`@kenconnet666/zui-vue`](./packages/ui-vue)** — Vue 3 组件库 + `ZBox` 嵌套覆盖（开发中）。
 
 ## 环境
 

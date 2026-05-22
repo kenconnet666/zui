@@ -106,7 +106,7 @@ type CssValueOf<K extends keyof csstype.Properties> = NonNullable<csstype.Proper
  * ### §2.4 zui 主题 token 写法
  *
  * ```ts
- * s.color._primary                    // 主题主色（跟随 ZConfigProvider light/dark 切换）
+ * s.color._primary                    // 主题主色（跟随 ZBox light/dark 切换）
  * s.color._textPrimary                // 语义化文本主色
  * s.color._red500                     // Palette token（tailwind 50–950 阶）
  * s.color._primary.alpha(0.6)         // token + 修饰链
@@ -337,7 +337,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.accentColor._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.accentColor._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.accentColor._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.accentColor._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.accentColor._primary.alpha(0.6)         // token + 修饰链
@@ -1691,7 +1691,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.backgroundColor._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.backgroundColor._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.backgroundColor._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.backgroundColor._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.backgroundColor._primary.alpha(0.6)         // token + 修饰链
@@ -2158,7 +2158,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.borderColor._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.borderColor._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.borderColor._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.borderColor._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.borderColor._primary.alpha(0.6)         // token + 修饰链
@@ -2892,7 +2892,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.borderColor._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.borderColor._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.borderColor._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.borderColor._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.borderColor._primary.alpha(0.6)         // token + 修饰链
@@ -3192,7 +3192,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.borderColor._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.borderColor._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.borderColor._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.borderColor._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.borderColor._primary.alpha(0.6)         // token + 修饰链
@@ -3594,7 +3594,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.borderColor._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.borderColor._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.borderColor._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.borderColor._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.borderColor._primary.alpha(0.6)         // token + 修饰链
@@ -4681,7 +4681,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.caretColor._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.caretColor._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.caretColor._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.caretColor._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.caretColor._primary.alpha(0.6)         // token + 修饰链
@@ -4978,7 +4978,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.color._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.color._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.color._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.color._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.color._primary.alpha(0.6)         // token + 修饰链
@@ -5386,7 +5386,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.columnRuleColor._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.columnRuleColor._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.columnRuleColor._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.columnRuleColor._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.columnRuleColor._primary.alpha(0.6)         // token + 修饰链
@@ -6920,7 +6920,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.fill._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.fill._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.fill._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.fill._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.fill._primary.alpha(0.6)         // token + 修饰链
@@ -11573,7 +11573,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.outlineColor._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.outlineColor._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.outlineColor._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.outlineColor._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.outlineColor._primary.alpha(0.6)         // token + 修饰链
@@ -14852,7 +14852,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.stroke._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.stroke._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.stroke._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.stroke._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.stroke._primary.alpha(0.6)         // token + 修饰链
@@ -15629,7 +15629,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.textDecorationColor._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.textDecorationColor._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.textDecorationColor._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.textDecorationColor._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.textDecorationColor._primary.alpha(0.6)         // token + 修饰链
@@ -18224,7 +18224,7 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    * ### 主题 token 写法
    *
    * ```ts
-   * s.borderColor._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+   * s.borderColor._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
    * s.borderColor._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
    * s.borderColor._red500                     // Palette token（tailwind 风格 50–950 阶）
    * s.borderColor._primary.alpha(0.6)         // token + 修饰链

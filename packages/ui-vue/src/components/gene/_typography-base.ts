@@ -14,10 +14,6 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../../theme'
 
-/** 系统等宽字体栈,跨平台兜底(ZText `mono`、ZCode 默认体)。 */
-export const MONO_FONT_STACK =
-  'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace'
-
 /**
  * Typography 组件共享 props —— 6 维度 carrier factory + 5 状态布尔/枚举。
  *
@@ -87,8 +83,9 @@ export function applyTypographyBase(
     })
   }
 
-  // ─── 等宽字体 ───
-  if (props.mono) s._prop('fontFamily', MONO_FONT_STACK)
+  // ─── 等宽字体 ─── 走 schema fonts._mono token,用户可在 `<ZBox :theme-patch>` /
+  // `zuiLight.extend({ fonts: { mono: '...' } })` 覆盖
+  if (props.mono) s.fontFamily._mono
 
   // ─── 省略 ───
   if (props.ellipsis === true) s._truncate()

@@ -1,9 +1,9 @@
 import type { ZLocale, ZLocalePartial } from './types'
 
 /**
- * `mergeLocale` —— 子 ZConfigProvider 嵌套时把 partial 浅合并到父 locale。
+ * `mergeLocale` —— 子 ZBox 嵌套时把 partial 浅合并到父 locale。
  *
- * 约定（与 ZConfigProvider 文档保持一致）：
+ * 约定（与 ZBox 文档保持一致）：
  * - 顶层 namespace 浅合并：父字典 + 子字典各自存在的 namespace 用子覆盖父。
  * - namespace 内部走"字段级"浅合并：同 namespace 同 key 子覆盖父；缺失字段继承父。
  * - 数组（如 `weekdaysShort`）整体替换，不做下标级合并。

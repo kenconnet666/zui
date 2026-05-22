@@ -2,6 +2,40 @@
 
 ## Unreleased
 
+### BREAKING — `ZConfigProvider` 改名为 `ZBox` + 新增 `cssRoot` / `tag`
+
+把原 `<ZConfigProvider>`(主题/iem/locale 注入器)与「装饰用底层 box」职能合并为一个组件,
+解决用户经常需要"包一层 div 改背景/边距"时还得另起 wrapper 组件的痛点。
+
+**改动**:
+- `ZConfigProvider` → `ZBox`(SFC + 所有 import / docs / tests / skill 文档同步重命名)
+- 新增 `cssRoot?: (s: Chain<ZuiSchema>) => void` —— 跟 ZIcon/ZText 一致的 chain factory,
+  可写 padding/margin/background/borderRadius、`_hover` 伪类、`_media('_small', ...)` 媒体查询等
+- 新增 `tag?: string`(默认 `'div'`)—— 语义化场景传 `'section'` / `'article'` 等
+- 全部原有 prop(`theme` / `themePatch` / `locale` / `localePatch` / `timezone` / `dateLocale` / `iem`)
+  和注入语义(`Z_THEME_KEY` / `Z_LOCALE_KEY` / `Z_DATE_KEY`)**100% 保留**
+
+**新增 schema 字段 `fonts`**(`sans` / `serif` / `mono` 3 件套):
+- 对应 chain `fontFamily` carrier 的 `tokenCat: 'fonts'` token lookup
+- `zuiLight` 默认提供跨平台兜底栈(`system-ui` / `ui-serif` / `ui-monospace`)
+- `ZText` `mono=true` 现在走 `s.fontFamily._mono`(原硬编码 `MONO_FONT_STACK` 已删)
+- 用户工程通过 `<ZBox :theme-patch="{ fonts: { mono: 'Fira Code, ...' } }">` 局部覆盖品牌字体
+- `UserFontsExt` augmentation 锚点 + 顶层 re-export
+
+**迁移**:
+```diff
+- <ZConfigProvider :theme="zuiLight" :iem="ZIemPreset.large">
++ <ZBox :theme="zuiLight" :iem="ZIemPreset.large">
+    <App />
+- </ZConfigProvider>
++ </ZBox>
+```
+
+同名情景的 props 都不动;只把标签名改了。仅当需要"包一层 div 加点装饰"时新用 `:css-root` /
+`:tag` 即可一行替代过去的额外 wrapper 组件。
+
+---
+
 ### BREAKING — 移除 `:component-tokens` + `useZComponentTokens` 等 ComponentTokenRegistry 体系
 
 跟随 core 0.7.x → unreleased 的下线。简化为三层覆盖模型：**Theme** / **Schema augmentation** / **`:css-root` Instance**。

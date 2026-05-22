@@ -8,9 +8,9 @@
  * - `@kenconnet666/zui-vue/locale`
  */
 
-// ─── Provider ───
+// ─── Provider / ZBox ───
 export {
-  ZConfigProvider,
+  ZBox,
   Z_THEME_KEY,
   Z_LOCALE_KEY,
   Z_DATE_KEY,
@@ -92,6 +92,7 @@ export {
   type UserLineHeightExt,
   type UserLetterSpacingExt,
   type UserAspectRatioExt,
+  type UserFontsExt,
 } from './theme'
 
 // ─── Core 全量透传 ───

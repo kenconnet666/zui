@@ -43,7 +43,7 @@ export interface ZIconProps {
   /**
    * 图标尺寸 factory —— 接 `width` carrier,**height 自动镜像 width**(图标始终正方形)。
    *
-   * **默认**:`(w) => w.iem(1)` —— 1iem × 1iem(默认 16px × 16px,跟随 ZConfigProvider 字号联动)。
+   * **默认**:`(w) => w.iem(1)` —— 1iem × 1iem(默认 16px × 16px,跟随 ZBox 字号联动)。
    *
    * 想表达非正方形 → 走 `cssRoot` 兜底单独设 width / height。
    * 想"跟父容器字号"(罕见)→ `(w) => w.em(1)` 显式 em。

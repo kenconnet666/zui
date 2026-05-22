@@ -9,7 +9,7 @@
  */
 import { computed, ref, shallowRef, watchEffect } from 'vue'
 import type { ZIconProps, ZuiSchema } from '@kenconnet666/zui-vue'
-import { ZConfigProvider, ZIcon, ZIemPreset } from '@kenconnet666/zui-vue'
+import { ZBox, ZIcon, ZIemPreset } from '@kenconnet666/zui-vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import {
   CheckmarkCircle,
@@ -198,7 +198,7 @@ watchEffect(() => {
       <h2>2. <code>size</code> factory —— <code>width</code> carrier(height 自动镜像)</h2>
       <p class="note">
         <code>:size="(w) =&gt; w.iem(1.25)"</code> 一行表达。height 永远等于 width。 物理像素取决于
-        <code>&lt;ZConfigProvider :iem&gt;</code> 注入的基准(默认 16px)。
+        <code>&lt;ZBox :iem&gt;</code> 注入的基准(默认 16px)。
         非正方形场景走 <code>cssRoot</code>。
       </p>
       <div class="row baseline">
@@ -363,13 +363,13 @@ declare module '@kenconnet666/zui-vue' {
 }
 
 // 步骤 2: App.vue
-import { ZConfigProvider, zuiLight } from '@kenconnet666/zui-vue'
+import { ZBox, zuiLight } from '@kenconnet666/zui-vue'
 
 const myLight = zuiLight.extend({
   color: { brandRoyal: '#1a3a8f', brandSunset: '#ff7849', brandForest: '#1f7a3c' },
 })
 
-&lt;ZConfigProvider :theme="myLight"&gt;&lt;App /&gt;&lt;/ZConfigProvider&gt;</code></pre>
+&lt;ZBox :theme="myLight"&gt;&lt;App /&gt;&lt;/ZBox&gt;</code></pre>
 
       <h3>使用处 —— 零类型注解,IDE 直接补全 ✨</h3>
       <pre><code>&lt;ZIcon :color="(c) =&gt; c._brandRoyal" /&gt;
@@ -412,7 +412,7 @@ const myLight = zuiLight.extend({
       </div>
     </section>
 
-    <!-- ─── 10. ZConfigProvider :iem —— 全站 sizing 单点切换 ─── -->
+    <!-- ─── 10. ZBox :iem —— 全站 sizing 单点切换 ─── -->
     <section>
       <h2>10. <code>:iem</code> —— 全站 sizing 单点切换</h2>
       <p>
@@ -420,7 +420,7 @@ const myLight = zuiLight.extend({
         对称 —— Provider 注入的基准倍率,默认 <code>1iem = 16px</code>(等同 1rem)。
       </p>
       <p>
-        <code>&lt;ZConfigProvider :iem&gt;</code> 写入 wrapper inline
+        <code>&lt;ZBox :iem&gt;</code> 写入 wrapper inline
         <code>style="--zui-iem: ..."</code>。所有 iem 化 token(spacing / radius / fontSize /
         blur 等)经 <code>calc(N * var(--zui-iem, 16px))</code> 自动 resolve 到该基准。
         <strong>ZIcon 默认 size 也走 iem</strong>,跟 Provider 字号联动。
@@ -429,39 +429,39 @@ const myLight = zuiLight.extend({
       <div class="row">
         <div class="cell">
           <h3>默认 <code>:iem="ZIemPreset.default"</code> (1iem = 16px)</h3>
-          <ZConfigProvider :iem="ZIemPreset.default">
+          <ZBox :iem="ZIemPreset.default">
             <div :style="{ padding: '16px', border: '1px solid #ccc', display: 'flex', gap: '16px', alignItems: 'center' }">
               <ZIcon :component="HeartOutline" />
               <span style="font-size: 16px">默认 16px 基准</span>
             </div>
-          </ZConfigProvider>
+          </ZBox>
         </div>
         <div class="cell">
           <h3><code>:iem="ZIemPreset.large"</code> (1iem = 20px,整站放大 25%)</h3>
-          <ZConfigProvider :iem="ZIemPreset.large">
+          <ZBox :iem="ZIemPreset.large">
             <div :style="{ padding: 'calc(1 * var(--zui-iem, 16px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(1 * var(--zui-iem, 16px))', alignItems: 'center' }">
               <ZIcon :component="HeartOutline" />
               <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">20px 大字模式</span>
             </div>
-          </ZConfigProvider>
+          </ZBox>
         </div>
         <div class="cell">
           <h3><code>:iem="ZIemPreset.compact"</code> (1iem = 14px,紧凑)</h3>
-          <ZConfigProvider :iem="ZIemPreset.compact">
+          <ZBox :iem="ZIemPreset.compact">
             <div :style="{ padding: 'calc(1 * var(--zui-iem, 16px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(1 * var(--zui-iem, 16px))', alignItems: 'center' }">
               <ZIcon :component="HeartOutline" />
               <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">14px 紧凑模式</span>
             </div>
-          </ZConfigProvider>
+          </ZBox>
         </div>
         <div class="cell">
           <h3><code>:iem="ZIemPreset.rem"</code> (跟浏览器根字号,a11y)</h3>
-          <ZConfigProvider :iem="ZIemPreset.rem">
+          <ZBox :iem="ZIemPreset.rem">
             <div :style="{ padding: 'calc(1 * var(--zui-iem, 16px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(1 * var(--zui-iem, 16px))', alignItems: 'center' }">
               <ZIcon :component="HeartOutline" />
               <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">浏览器大字模式整站同步放大</span>
             </div>
-          </ZConfigProvider>
+          </ZBox>
         </div>
       </div>
     </section>
@@ -476,7 +476,7 @@ const myLight = zuiLight.extend({
       </p>
 
       <h3>嵌套覆盖:子树独立设定,不影响兄弟</h3>
-      <ZConfigProvider :iem="ZIemPreset.default">
+      <ZBox :iem="ZIemPreset.default">
         <div class="nested-demo">
           <div class="nest-card outer">
             <div class="nest-label">外层 Provider: <code>:iem="ZIemPreset.default"</code> (16px)</div>
@@ -485,7 +485,7 @@ const myLight = zuiLight.extend({
               <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">外层文字 + ZIcon(1iem)</span>
             </div>
 
-            <ZConfigProvider :iem="ZIemPreset.large">
+            <ZBox :iem="ZIemPreset.large">
               <div class="nest-card inner">
                 <div class="nest-label">嵌套子树: <code>:iem="ZIemPreset.large"</code> (20px) ← 只影响这一子树</div>
                 <div class="nest-row">
@@ -493,7 +493,7 @@ const myLight = zuiLight.extend({
                   <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">子树文字 + ZIcon(1iem = 20px)</span>
                 </div>
               </div>
-            </ZConfigProvider>
+            </ZBox>
 
             <div class="nest-row">
               <ZIcon :component="HomeOutline" />
@@ -501,11 +501,11 @@ const myLight = zuiLight.extend({
             </div>
           </div>
         </div>
-      </ZConfigProvider>
+      </ZBox>
 
       <h3>兄弟 Provider:各自独立,完全不影响</h3>
       <div class="sibling-row">
-        <ZConfigProvider :iem="ZIemPreset.compact">
+        <ZBox :iem="ZIemPreset.compact">
           <div class="nest-card sibling">
             <div class="nest-label">兄弟 A: <code>compact</code> (14px)</div>
             <div class="nest-row">
@@ -513,9 +513,9 @@ const myLight = zuiLight.extend({
               <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">14px 紧凑</span>
             </div>
           </div>
-        </ZConfigProvider>
+        </ZBox>
 
-        <ZConfigProvider :iem="ZIemPreset.default">
+        <ZBox :iem="ZIemPreset.default">
           <div class="nest-card sibling">
             <div class="nest-label">兄弟 B: <code>default</code> (16px)</div>
             <div class="nest-row">
@@ -523,9 +523,9 @@ const myLight = zuiLight.extend({
               <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">16px 默认</span>
             </div>
           </div>
-        </ZConfigProvider>
+        </ZBox>
 
-        <ZConfigProvider :iem="ZIemPreset.large">
+        <ZBox :iem="ZIemPreset.large">
           <div class="nest-card sibling">
             <div class="nest-label">兄弟 C: <code>large</code> (20px)</div>
             <div class="nest-row">
@@ -533,7 +533,7 @@ const myLight = zuiLight.extend({
               <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">20px 大字</span>
             </div>
           </div>
-        </ZConfigProvider>
+        </ZBox>
       </div>
     </section>
   </article>

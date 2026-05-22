@@ -1,6 +1,6 @@
 ---
 name: zui
-description: zui monorepo（@kenconnet666/zui-core + @kenconnet666/zui-vue）项目专用指南。当用户在本仓库工作、提及 zui / Chain / Theme / icss / defineVariants / defineParts / ZConfigProvider / ENHANCED_PROPS / 四态访问，或开发 ui-vue 组件库时激活此 skill。
+description: zui monorepo（@kenconnet666/zui-core + @kenconnet666/zui-vue）项目专用指南。当用户在本仓库工作、提及 zui / Chain / Theme / icss / defineVariants / defineParts / ZBox / ENHANCED_PROPS / 四态访问，或开发 ui-vue 组件库时激活此 skill。
 ---
 
 # zui 项目工作指南
@@ -15,7 +15,7 @@ description: zui monorepo（@kenconnet666/zui-core + @kenconnet666/zui-vue）项
 **框架无关**的 CSS-in-JS 工具库 monorepo。
 
 - `@kenconnet666/zui-core`（已发 npm 0.5.0+）—— 框架无关核心：基于 `@emotion/css`，`class Chain<TSchema>` 用 declaration merging 把 ~857 个 CSS 属性挂到强类型 builder 上。
-- `@kenconnet666/zui-vue`（开发中）—— Vue 3 组件库 + `ZConfigProvider` 嵌套覆盖。
+- `@kenconnet666/zui-vue`（开发中）—— Vue 3 组件库 + `ZBox` 嵌套覆盖。
 
 **核心范式 — 四态访问**：
 
@@ -60,7 +60,7 @@ zui/
 │   │   └── CHANGELOG.md
 │   ├── ui-vue/                              # @kenconnet666/zui-vue（开发中）
 │   │   ├── src/
-│   │   │   ├── provider/                    # ZConfigProvider + 4 composables + keys
+│   │   │   ├── provider/                    # ZBox + 4 composables + keys
 │   │   │   ├── locale/                      # zh-CN / en-US / merge / types
 │   │   │   ├── composables/                 # useStyles / useVariants / useResponsive
 │   │   │   ├── components/
@@ -413,7 +413,7 @@ CI 步骤"Generator drift check"会跑 generator 再 `git diff --exit-code`。**
 
 | Category | Keys | 默认值 / 备注 |
 |---|---|---|
-| `spacing` | tiny/small/middle/large/huge | **`iem(0.25/0.5/1/1.5/2)`** —— 走 iem(默认 4/8/16/24/32px),`ZConfigProvider :iem` 全站切换基准 |
+| `spacing` | tiny/small/middle/large/huge | **`iem(0.25/0.5/1/1.5/2)`** —— 走 iem(默认 4/8/16/24/32px),`ZBox :iem` 全站切换基准 |
 | `fontSize` | tiny/small/middle/large/huge | **`iem(0.75/0.875/1/1.125/1.25)`** —— 默认 12/14/16/18/20px;`:iem="ZIemPreset.rem"` 达到 a11y 大字模式 |
 | `radius` | none/tiny/small/middle/large/huge/**full** | none=`'0'` / 5 阶`iem(0.25/0.5/0.75/1/1.5)`(默认 4/8/12/16/24px)/ **full=`'9999px'`**(语义性 ∞,不缩放) |
 | `shadow` | tiny/small/middle/large/huge | 保留 px 字面量（装饰性效果，与设计稿绑定，**不**跟 unit 缩放） |
@@ -580,14 +580,14 @@ export interface ZxxxProps {
 
 详见 `.claude/decisions/2026-05-22-carrier-factory-prop.md`。
 
-**② iem 单位优先 · `<ZConfigProvider :iem>` 全站切换基准 · 罕见局部用 em**
+**② iem 单位优先 · `<ZBox :iem>` 全站切换基准 · 罕见局部用 em**
 
 `iem` = **"我自己使用的 em"**,跟 CSS `rem`(root em)对称:
 - `rem` = 浏览器根元素 font-size 倍率(浏览器掌控,默认 16px)
-- `iem` = ZConfigProvider 注入的基准倍率(应用层掌控,**默认 1iem = 16px**,等同 1rem)
+- `iem` = ZBox 注入的基准倍率(应用层掌控,**默认 1iem = 16px**,等同 1rem)
 
 - **大部分尺寸维度**(spacing / radius / fontSize / blur / gap / width / height / padding / 等):组件内走 `s.padding.iem(1)` / `s.width.iem(1.5)` 等;theme token 表用 `iem(N)` helper(emit `calc(N * var(--zui-iem, 16px))`)。**N 是"几个基准字号"**,跟 rem 用法一致(`iem(1)` = 1iem,`iem(1.5)` = 1.5iem)。
-- **`<ZConfigProvider :iem>` 单点切换 1iem 物理意义**:默认 `ZIemPreset.default`(`'16px'`)/ `ZIemPreset.large`(`'20px'`,大字模式)/ `ZIemPreset.compact`(`'14px'`,紧凑)/ `ZIemPreset.em`(`'1em'`,跟父字号)/ `ZIemPreset.rem`(`'1rem'`,a11y 跟浏览器根字号)。**嵌套 Provider 通过 css cascade 自然覆盖,兄弟 Provider 各自独立 —— 零运行时合并开销**。
+- **`<ZBox :iem>` 单点切换 1iem 物理意义**:默认 `ZIemPreset.default`(`'16px'`)/ `ZIemPreset.large`(`'20px'`,大字模式)/ `ZIemPreset.compact`(`'14px'`,紧凑)/ `ZIemPreset.em`(`'1em'`,跟父字号)/ `ZIemPreset.rem`(`'1rem'`,a11y 跟浏览器根字号)。**嵌套 Provider 通过 css cascade 自然覆盖,兄弟 Provider 各自独立 —— 零运行时合并开销**。
 - **ZIcon 等图标默认也走 iem**(`(w) => w.iem(1)` 默认),跟 Provider 字号联动,整站统一图标尺寸。想"跟随父容器字号"的罕见局部场景显式 `(w) => w.em(N)`。注意 em 单位只在一个属性上设(如 ZIcon 只设 `width/height: N em`,**不**设 `font-size: N em`),避免 em 复合(fontSize.em(N) + width.em(N) 会让 width 算到 N²×父字号)。
 - **不走 iem 的几类**(语义不同):
   - `breakpoint` —— 媒体查询基准,跟"屏幕宽度"硬绑定
@@ -616,7 +616,7 @@ cssItem?:   (s: Chain<ZuiSchema>) => void
 
 **④ 三层覆盖模型 · 无 component token namespace**
 
-不再有「ComponentTokenRegistry / `<ZConfigProvider :component-tokens>` / `withComponentTokens` / `componentTokensFor`」这套 namespace 级覆盖。三个口子各管一类需求：
+不再有「ComponentTokenRegistry / `<ZBox :component-tokens>` / `withComponentTokens` / `componentTokensFor`」这套 namespace 级覆盖。三个口子各管一类需求：
 
 | 层级       | 场景                            | 怎么做                                                                                  |
 | ---------- | ------------------------------- | --------------------------------------------------------------------------------------- |
@@ -647,7 +647,7 @@ cssItem?:   (s: Chain<ZuiSchema>) => void
 
 ```
 packages/ui-vue/src/
-├── provider/          # ZConfigProvider + 4 composables + injection keys
+├── provider/          # ZBox + 4 composables + injection keys
 ├── locale/            # ZLocale types + zhCN / enUS + mergeLocale
 ├── composables/       # useStyles / useDynamicStyles / useVariants / useParts / useResponsive / useBreakpoints
 ├── shared/            # 内部工具（floating-ui wrapper、domId、...）
@@ -705,11 +705,11 @@ packages/ui-vue/src/
 
 `vue-tsc` 与 `@vue/language-*` 必须保持同 minor（同步发版），用 `~` 锁住 minor。
 
-### 13.3 ZConfigProvider —— 实际签名
+### 13.3 ZBox —— 实际签名
 
 ```ts
 // @kenconnet666/zui-vue/provider
-import { ZConfigProvider } from '@kenconnet666/zui-vue/provider'
+import { ZBox } from '@kenconnet666/zui-vue/provider'
 import type { Theme, DeepPartial } from '@kenconnet666/zui-core'
 import type { ZLocale, ZLocalePartial, ZDateConfig } from '@kenconnet666/zui-vue/provider'
 import type { Locale as DateFnsLocale } from 'date-fns'
@@ -737,7 +737,7 @@ interface Props<S extends ThemeSchema = ThemeSchema> {
 
 Inject keys（symbol）：`Z_THEME_KEY` / `Z_LOCALE_KEY` / `Z_DATE_KEY`，全部 `InjectionKey<Ref<...>>`。`Z_THEME_KEY` 退化到 `ResolvedTheme<any>`（Vue InjectionKey 不支持泛型），子组件 `useZTheme<S>()` cast 回。
 
-`<ZConfigProvider v-slot="{ theme, locale }">` 暴露 unwrapped 值；不需要时直接 `<slot />`。
+`<ZBox v-slot="{ theme, locale }">` 暴露 unwrapped 值；不需要时直接 `<slot />`。
 
 ### 13.4 3 个 composable —— 实际签名
 
@@ -806,7 +806,7 @@ emotion 内部按 css 内容 hash 复用 className，没有性能损失。
 
 ### 13.7 多 slot 组件用 defineParts
 
-Dialog / Tabs / Select / Menu / Popover / DropdownMenu 等。`useParts(createXxxParts, propsGetter)` 返回各 slot className。嵌套 ZConfigProvider 内通过 `extendParts(theme, parent, partialConfig)` 局部覆盖。
+Dialog / Tabs / Select / Menu / Popover / DropdownMenu 等。`useParts(createXxxParts, propsGetter)` 返回各 slot className。嵌套 ZBox 内通过 `extendParts(theme, parent, partialConfig)` 局部覆盖。
 
 ### 13.8 三层覆盖路径（替代旧 component token）
 
@@ -815,7 +815,7 @@ Dialog / Tabs / Select / Menu / Popover / DropdownMenu 等。`useParts(createXxx
 ```ts
 // ① 全组件改色 —— 改 theme 语义色，所有 _primary 调用点跟随
 const myLight = zuiLight.extend({ color: { primary: '#abc' } })
-<ZConfigProvider :theme="myLight">...</ZConfigProvider>
+<ZBox :theme="myLight">...</ZBox>
 
 // ② 新增品牌色 / 自定义 token —— schema augmentation
 declare module '@kenconnet666/zui-vue' {
@@ -848,7 +848,7 @@ declare module '@kenconnet666/zui-vue' {
 
 **§13.0 ① chain factory props 范式的首个落地** —— 每个外观维度都是 `(c) => void` 工厂,setup 内一行应用,无 switch / 无 const map / 无 cx 拼接。复杂组件(Button / Input / Dialog)照此结构但 className 拆 base / 状态 / variants 多层。
 
-**ZIcon size 默认 iem**(2026-05-22 改 iem 范式后):默认 `(w) => w.iem(1)`(1iem,默认 16px),跟 ZConfigProvider 字号联动 —— 整站统一图标尺寸。**只设 width(height 自动镜像)、不设 fontSize**,避免 em 复合(若同时 `s.fontSize.em(N)` + `s.width.em(N)`,width 会算到 N²×父字号)。想"跟随父字号"的罕见场景显式 `(w) => w.em(N)`。
+**ZIcon size 默认 iem**(2026-05-22 改 iem 范式后):默认 `(w) => w.iem(1)`(1iem,默认 16px),跟 ZBox 字号联动 —— 整站统一图标尺寸。**只设 width(height 自动镜像)、不设 fontSize**,避免 em 复合(若同时 `s.fontSize.em(N)` + `s.width.em(N)`,width 会算到 N²×父字号)。想"跟随父字号"的罕见场景显式 `(w) => w.em(N)`。
 
 **文件结构**(2 个文件,~150 行核心实现 + 2 行 barrel):
 

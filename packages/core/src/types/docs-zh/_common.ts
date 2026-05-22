@@ -220,7 +220,7 @@ export const GLOBAL_KW_SYNTAX_ROW: SyntaxRow = [
 export const COLOR_TOKEN_USAGE_SNIPPET = `### 主题 token 写法
 
 \`\`\`ts
-s.${'<prop>'}._primary                    // 主题主色（ZConfigProvider 切 light/dark 自动跟随）
+s.${'<prop>'}._primary                    // 主题主色（ZBox 切 light/dark 自动跟随）
 s.${'<prop>'}._textPrimary                // 语义化文本主色（zui-vue ZuiSchema 提供）
 s.${'<prop>'}._red500                     // Palette token（tailwind 风格 50–950 阶）
 s.${'<prop>'}._primary.alpha(0.6)         // token + 修饰链

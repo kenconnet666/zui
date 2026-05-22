@@ -74,6 +74,8 @@ export interface UserLineHeightExt {}
 export interface UserLetterSpacingExt {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserAspectRatioExt {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface UserFontsExt {}
 
 /** 11 个语义色 token —— light / dark 取同 key 不同 shade。 */
 export type SemanticColorTokens =
@@ -124,6 +126,8 @@ export type LineHeightKeys = 'none' | 'tight' | 'snug' | 'normal' | 'relaxed' | 
 export type LetterSpacingKeys = 'tighter' | 'tight' | 'normal' | 'wide' | 'wider'
 /** aspectRatio 4 个常用比例。 */
 export type AspectRatioKeys = 'square' | 'video' | 'portrait' | 'landscape'
+/** 字体家族 3 件套(对应 CSS `font-family` 经典分类)。 */
+export type FontsKeys = 'sans' | 'serif' | 'mono'
 
 /**
  * zui-vue 设计系统 schema —— **业务侧消费的标准 schema**。
@@ -160,4 +164,17 @@ export interface ZuiSchema extends BaseSchema {
   letterSpacing: Record<LetterSpacingKeys, string> & Partial<UserLetterSpacingExt>
   /** aspectRatio 4 个常用比例 + 用户扩展。 */
   aspectRatio: Record<AspectRatioKeys, string> & Partial<UserAspectRatioExt>
+  /**
+   * 字体家族 3 件套 + 用户扩展。**对应 chain `fontFamily` carrier 的 token lookup**
+   * (`tokenCat: 'fonts'`),用户写 `s.fontFamily._mono` 查 `schema.fonts.mono`。
+   *
+   * **默认值跨平台兜底**:
+   * - `sans`:`system-ui` 优先,fallback 到各平台系统 UI 字体
+   * - `serif`:`ui-serif` 优先,fallback Georgia/Times
+   * - `mono`:`ui-monospace` 优先,fallback SFMono/Menlo/Consolas
+   *
+   * 业务侧覆盖品牌字体:`zuiLight.extend({ fonts: { sans: 'Inter, ...' } })`,
+   * 或局部 Provider:`<ZBox :theme-patch="{ fonts: { sans: 'Inter, sans-serif' } }">`。
+   */
+  fonts: Record<FontsKeys, string> & Partial<UserFontsExt>
 }

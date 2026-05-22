@@ -27,4 +27,5 @@ export type {
   UserLineHeightExt,
   UserLetterSpacingExt,
   UserAspectRatioExt,
+  UserFontsExt,
 } from './schema'

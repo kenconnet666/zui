@@ -8,7 +8,7 @@ import type { ZuiSchema } from './schema'
  *
  * **尺寸类 token（spacing / radius / fontSize / blur）走 zui 逻辑单位 `iem`**:
  * 每个值 emit `calc(N * var(--zui-iem, 16px))`,**默认 1iem = 16px**(等同 1rem);
- * `<ZConfigProvider :iem="ZIemPreset.large">` 整站放大 25%(1iem=20px)、
+ * `<ZBox :iem="ZIemPreset.large">` 整站放大 25%(1iem=20px)、
  * `:iem="ZIemPreset.rem"` 跟随浏览器根字号(a11y),
  * **嵌套 Provider 通过 css cascade 自然覆盖,兄弟 Provider 各自独立**。详见 skill §13.0 ②。
  *
@@ -26,7 +26,7 @@ import type { ZuiSchema } from './schema'
  * - `letterSpacing` —— em 单位,跟字体本身缩放(iem 体系无关)
  * - `duration` / `easing` / `zIndex` / `opacity` / `lineHeight` / `aspectRatio` / `fontWeight` —— 非长度
  *
- * 业务侧顶层主题入口;用户工程通过 `<ZConfigProvider :theme="zuiLight">` 注入。
+ * 业务侧顶层主题入口;用户工程通过 `<ZBox :theme="zuiLight">` 注入。
  */
 export const zuiLight = new Theme<ZuiSchema>({
   color: {
@@ -160,5 +160,14 @@ export const zuiLight = new Theme<ZuiSchema>({
     video: '16 / 9',
     portrait: '3 / 4',
     landscape: '4 / 3',
+  },
+  /**
+   * 字体家族 3 件套 —— 跨平台兜底栈,业务侧覆盖品牌字体走 `zuiLight.extend({ fonts: {...} })`
+   * 或 `<ZBox :theme-patch="{ fonts: {...} }">`。`s.fontFamily._mono` 查这里的 `mono`。
+   */
+  fonts: {
+    sans: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+    serif: 'ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
+    mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
   },
 })

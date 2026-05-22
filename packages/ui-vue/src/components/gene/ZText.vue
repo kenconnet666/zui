@@ -21,7 +21,7 @@
  * - `mono`          → 系统等宽字体栈
  * - `ellipsis`      → `true` 单行截断(`_truncate`)/ `N: number` 多行截断(`_lineClamp(N)`)
  *
- * **iem 单位默认**(§13.0 ②):走 schema fontSize token 默认 1iem = 16px,跟 ZConfigProvider
+ * **iem 单位默认**(§13.0 ②):走 schema fontSize token 默认 1iem = 16px,跟 ZBox
  * 字号联动。复杂需求(自定义伪类 / 多段 text-decoration / 渐变文本)走 cssRoot 兜底。
  *
  * **a11y**:纯文本元素,不强加 role;`mono`/`italic`/`strikethrough` 是视觉装饰,

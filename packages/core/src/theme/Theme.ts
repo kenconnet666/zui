@@ -61,7 +61,7 @@ class _ThemeClass<T extends ThemeSchema> {
   /**
    * `fork()` — `merge()` 的别名（推荐入口）。
    *
-   * 语义"派生子主题"比"合并"更贴合 ZConfigProvider 嵌套覆盖场景：
+   * 语义"派生子主题"比"合并"更贴合 ZBox 嵌套覆盖场景：
    *
    * @example
    * const dark = light.fork({ color: { background: '#000', text: '#fff' } })

@@ -37,4 +37,5 @@ export const zuiDark = new Theme<ZuiSchema>({
   lineHeight: zuiLight.schema.lineHeight,
   letterSpacing: zuiLight.schema.letterSpacing,
   aspectRatio: zuiLight.schema.aspectRatio,
+  fonts: zuiLight.schema.fonts,
 })

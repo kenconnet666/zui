@@ -1,12 +1,12 @@
 <script setup lang="ts">
 /**
- * docs 站点根 —— 顶层挂 ZConfigProvider。
+ * docs 站点根 —— 顶层挂 ZBox。
  *
  * 用 `zuiLight.extend({ ... })` 在运行时叠加 brand 色，类型层由 `zui.d.ts` 的
  * `UserColorExt` augmentation 同步扩展 `ZuiSchema.color` —— 任意组件 `:css` 回调
  * `(s) => { s.color._brandRoyal }` 即获得 IDE 补全 + 编译期校验。
  */
-import { ZConfigProvider, zuiLight } from '@kenconnet666/zui-vue'
+import { ZBox, zuiLight } from '@kenconnet666/zui-vue'
 
 const myLight = zuiLight.extend({
   color: {
@@ -18,7 +18,7 @@ const myLight = zuiLight.extend({
 </script>
 
 <template>
-  <ZConfigProvider :theme="myLight">
+  <ZBox :theme="myLight">
     <div class="app-shell">
       <aside class="sidebar">
         <h1 class="brand">zui docs</h1>
@@ -31,7 +31,7 @@ const myLight = zuiLight.extend({
         <RouterView />
       </main>
     </div>
-  </ZConfigProvider>
+  </ZBox>
 </template>
 
 <style scoped>
