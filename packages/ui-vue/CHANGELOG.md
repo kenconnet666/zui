@@ -2,6 +2,51 @@
 
 ## Unreleased
 
+### BREAKING — 目录扁平化 + 单入口化 + 删除 composables
+
+**理由**:三件事一起做完成"分类化、扁平化、单入口化"的结构重整,为后续 P0/P1/P2/P3 分阶段
+组件落地腾出干净的目录树。
+
+**目录扁平化**(`src/components/` 嵌套层取消,各分类直接放 `src/` 根):
+
+```
+src/components/gene/*           → src/gene/*
+src/theme/*                     → src/provider/theme/*
+src/locale/*                    → src/provider/locale/*
+src/provider/useZTheme.ts       → src/provider/theme/useZTheme.ts
+src/provider/useZLocale.ts      → src/provider/locale/useZLocale.ts
+src/provider/useZDate.ts        → src/provider/date/useZDate.ts
+(新建占位)                       → src/{layout,input,display,feedback,navigation,tool}/index.ts
+(新建空目录)                     → src/_internal/  src/_hooks/
+```
+
+`provider/` 根目录仅保留:`ZBox.vue` + `keys.ts` + `units.ts` + `index.ts`。
+
+**单入口化**:`package.json/exports` 删除所有 subpath(`./provider`、`./locale`、`./composables`、
+`./components`、`./components/gene`),只暴露 `.` 主入口。`vite.config.ts/build.lib.entry` 从对象式
+多入口改为单字符串 `'src/index.ts'`(rollup `preserveModules` 不变,tree-shake 由 bundler 处理)。
+
+**删除 composables**:`useStyles` / `useDynamicStyles` / `chainOf` / `useVariants` / `useParts` /
+`useBreakpoints` / `useResponsive` 全部移除。这些 hook 无任何组件依赖,实际仅作为外部工具函数
+被业务方少量使用,且 80% 能力可直接走 `@vueuse/core`(`useBreakpoints` / `useElementSize` 等),
+保留它们只增加包面积和文档维护成本。业务侧需要时直接装 `@vueuse/core`。
+
+**迁移**:
+```diff
+- import { useZTheme } from '@kenconnet666/zui-vue/provider'
++ import { useZTheme } from '@kenconnet666/zui-vue'
+
+- import { zhCN } from '@kenconnet666/zui-vue/locale'
++ import { zhCN } from '@kenconnet666/zui-vue'
+
+- import { useStyles, useBreakpoints } from '@kenconnet666/zui-vue/composables'
++ // 自行安装 @vueuse/core,或在组件内直接用 icss(theme, factory) + matchMedia
+```
+
+**决策文档**:`.claude/decisions/2026-05-23-stage1-flatten-and-single-entry.md`
+
+---
+
 ### BREAKING — 语义色 `textMuted` 改名为 `textSecondary`
 
 **理由**:对齐 antd / MUI 的 `text.secondary` 命名惯例,语义清晰("次要文本"层级),且避免跟主题模式名 `light` 字面冲突。

@@ -16,14 +16,7 @@ import dts from 'vite-plugin-dts'
 export default defineConfig({
   build: {
     lib: {
-      entry: {
-        index: 'src/index.ts',
-        'provider/index': 'src/provider/index.ts',
-        'locale/index': 'src/locale/index.ts',
-        'composables/index': 'src/composables/index.ts',
-        'components/index': 'src/components/index.ts',
-        'components/gene/index': 'src/components/gene/index.ts',
-      },
+      entry: 'src/index.ts',
       formats: ['es'],
     },
     minify: false,

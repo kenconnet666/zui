@@ -11,26 +11,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./provider": {
-      "types": "./dist/provider/index.d.ts",
-      "import": "./dist/provider/index.js"
-    },
-    "./locale": {
-      "types": "./dist/locale/index.d.ts",
-      "import": "./dist/locale/index.js"
-    },
-    "./composables": {
-      "types": "./dist/composables/index.d.ts",
-      "import": "./dist/composables/index.js"
-    },
-    "./components": {
-      "types": "./dist/components/index.d.ts",
-      "import": "./dist/components/index.js"
-    },
-    "./components/gene": {
-      "types": "./dist/components/gene/index.d.ts",
-      "import": "./dist/components/gene/index.js"
-    },
     "./package.json": "./package.json"
   },
   "files": [

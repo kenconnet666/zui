@@ -1,8 +1,8 @@
 import { inject, ref, type Ref } from 'vue'
 import type { ResolvedTheme } from '@kenconnet666/zui-core'
-import { zuiLight } from '../theme'
-import type { ZuiSchema } from '../theme'
-import { Z_THEME_KEY } from './keys'
+import { zuiLight } from '.'
+import type { ZuiSchema } from '.'
+import { Z_THEME_KEY } from '../keys'
 
 /**
  * `useZTheme()` —— 取当前层级 inject 的 ResolvedTheme。

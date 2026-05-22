@@ -67,13 +67,13 @@ import {
   type ResolvedTheme,
   type Theme,
 } from '@kenconnet666/zui-core'
-import { zuiLight } from '../theme'
-import type { ZuiSchema } from '../theme'
+import { zuiLight } from './theme'
+import type { ZuiSchema } from './theme'
 import type { Locale as DateFnsLocale } from 'date-fns'
 import { Z_DATE_KEY, Z_LOCALE_KEY, Z_THEME_KEY, type ZDateConfig } from './keys'
-import { mergeLocale } from '../locale/merge'
-import { zhCN } from '../locale/zh-CN'
-import type { ZLocale, ZLocalePartial } from '../locale/types'
+import { mergeLocale } from './locale/merge'
+import { zhCN } from './locale/zh-CN'
+import type { ZLocale, ZLocalePartial } from './locale/types'
 
 const props = withDefaults(
   defineProps<{

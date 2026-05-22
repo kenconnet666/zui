@@ -1,7 +1,7 @@
 import { computed, inject, ref, type ComputedRef } from 'vue'
 import type { Locale as DateFnsLocale } from 'date-fns'
 import { formatInTimeZone, fromZonedTime, toZonedTime } from 'date-fns-tz'
-import { Z_DATE_KEY, type ZDateConfig } from './keys'
+import { Z_DATE_KEY, type ZDateConfig } from '../keys'
 
 /**
  * `useZDate()` —— Provider 注入的时区 + locale 配置 + 常用日期操作。

@@ -16,7 +16,7 @@
  * - `disabled` 走 `aria-disabled` 而非原生 `disabled`(`<a>` 没有原生 `disabled`)
  */
 import type { Chain } from '@kenconnet666/zui-core'
-import type { ZuiSchema } from '../../theme'
+import type { ZuiSchema } from '../provider/theme'
 
 /** ZLink 完整 props。**继承 ZText 全部维度 + 链接 4 字段**。 */
 export interface ZLinkProps {
@@ -52,7 +52,7 @@ export interface ZLinkProps {
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
-import { useZTheme } from '../../provider'
+import { useZTheme } from '../provider'
 import { applyTypographyBase } from './_typography-base'
 
 const props = withDefaults(defineProps<ZLinkProps>(), {

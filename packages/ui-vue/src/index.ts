@@ -1,11 +1,8 @@
 /**
- * `@kenconnet666/zui-vue` —— Vue 3 集成层。
+ * `@kenconnet666/zui-vue` —— Vue 3 集成层。**单入口**(BREAKING v0.2,2026-05-23)。
  *
- * 主入口聚合 Provider、composables、locale，并 re-export 一部分 core API。
- * 精细 tree-shake 走 subpath：
- * - `@kenconnet666/zui-vue/provider`
- * - `@kenconnet666/zui-vue/composables`
- * - `@kenconnet666/zui-vue/locale`
+ * 不再支持 subpath import(`/provider` / `/locale` / `/composables`)。所有 API 经主入口
+ * 透出,tree-shake 由 bundler(rollup `preserveModules`+ pure marker)负责。
  */
 
 // ─── Provider / ZBox ───
@@ -23,60 +20,13 @@ export {
   type ZIem,
 } from './provider'
 
-// ─── Composables ───
-export {
-  useStyles,
-  useDynamicStyles,
-  chainOf,
-  useVariants,
-  useParts,
-  useBreakpoints,
-  useResponsive,
-} from './composables'
-
-// ─── Components ───
-export {
-  ZIcon,
-  type ZIconProps,
-  ZText,
-  type ZTextProps,
-  ZTitle,
-  type ZTitleProps,
-  type ZTitleLevel,
-  ZParagraph,
-  type ZParagraphProps,
-  ZLink,
-  type ZLinkProps,
-  ZDivider,
-  type ZDividerProps,
-} from './components'
-
-// ─── Locale ───
-export {
-  zhCN,
-  enUS,
-  mergeLocale,
-  type ZLocale,
-  type ZLocalePartial,
-  type ZLocaleRegistry,
-  type ZLocaleCommon,
-  type ZLocaleButton,
-  type ZLocaleInput,
-  type ZLocaleSelect,
-  type ZLocaleDialog,
-  type ZLocalePagination,
-  type ZLocaleForm,
-  type ZLocaleDatePicker,
-  type DeepPartialLocale,
-} from './locale'
-
-// ─── 主题（zui 设计系统） ───
+// ─── 主题(zui 设计系统)───
 export {
   zuiLight,
   zuiDark,
   type ZuiSchema,
   type SemanticColorTokens,
-  // 用户扩展锚点 —— 用户工程 `declare module '@kenconnet666/zui-vue' { interface UserColorExt {...} }`
+  // 用户扩展锚点 —— `declare module '@kenconnet666/zui-vue' { interface UserColorExt {...} }`
   type UserColorExt,
   type UserSpacingExt,
   type UserRadiusExt,
@@ -96,9 +46,36 @@ export {
   type UserSizesExt,
   type UserBordersExt,
   type UserTransitionPropertyExt,
-} from './theme'
+} from './provider/theme'
+
+// ─── Locale ───
+export {
+  zhCN,
+  enUS,
+  mergeLocale,
+  type ZLocale,
+  type ZLocalePartial,
+  type ZLocaleRegistry,
+  type ZLocaleCommon,
+  type ZLocaleButton,
+  type ZLocaleInput,
+  type ZLocaleSelect,
+  type ZLocaleDialog,
+  type ZLocalePagination,
+  type ZLocaleForm,
+  type ZLocaleDatePicker,
+  type DeepPartialLocale,
+} from './provider/locale'
+
+// ─── Components ───
+export * from './gene'
+export * from './layout'
+export * from './input'
+export * from './display'
+export * from './feedback'
+export * from './navigation'
+export * from './tool'
 
 // ─── Core 全量透传 ───
-// 装 `@kenconnet666/zui-vue` 即等于装 core：用户可直接从本包 import 任何 core API，
-// 无需再依赖 `@kenconnet666/zui-core`。core 与 ui-vue 自身导出无命名冲突。
+// 装 `@kenconnet666/zui-vue` 即等于装 core:用户可直接从本包 import 任何 core API。
 export * from '@kenconnet666/zui-core'

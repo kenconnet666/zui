@@ -13,7 +13,7 @@
  * 时段间距同步放大;想自定义间距走 cssRoot:`(s) => s.marginBottom._large`。
  */
 import type { Chain } from '@kenconnet666/zui-core'
-import type { ZuiSchema } from '../../theme'
+import type { ZuiSchema } from '../provider/theme'
 
 /** ZParagraph 完整 props。**继承 ZText 全部维度**(同 props 接口,默认值不同)。 */
 export interface ZParagraphProps {
@@ -39,7 +39,7 @@ export interface ZParagraphProps {
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
-import { useZTheme } from '../../provider'
+import { useZTheme } from '../provider'
 import { applyTypographyBase } from './_typography-base'
 
 const props = withDefaults(defineProps<ZParagraphProps>(), {

@@ -2,11 +2,11 @@
 
 > **用途**:供后续 Claude session(尤其定时任务)读取并按序推进 zui-vue 重构与组件实现。
 >
-> **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync，但是定时任务无人值守情况除外，需要自行决策并写文档在C:\code\zui\.claude目录让用户知道，然后继续执行即可。要求注意搜索本地文件，网络，context7，github等渠道，遇到困难也要搜索足够信息再决策，不要空想，有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
+> **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-22(初版,基于讨论稿 v3 落地)
+> **最后更新**:2026-05-23(Stage 1 完成,无人值守自主推进 → Stage 2)
 > **当前阶段**:
-> `Stage 1 ── 目录搬迁` 待开始，同时注意查看系统（包括core模块）是否有旧的技术栈和多余文件等，如有自行决策并修复或者简化并记录然后继续执行
+> `Stage 2 ── props 哲学(cssRoot → css + SxObject)` 进行中
 
 ---
 
@@ -14,7 +14,7 @@
 
 - `@kenconnet666/zui-vue` 是 `@kenconnet666/zui-core` 的 Vue 3 集成层(框架无关 CSS-in-JS + chain DSL 之上构建组件库)
 - 主入口 `<ZBox>`(主题/iem/locale/date 注入器 + 底层带 `css` 的 box 容器)
-- 已交付组件(`src/components/gene/`):ZIcon、ZText、ZTitle、ZParagraph、ZLink、ZDivider
+- 已交付组件(`src/gene/`):ZIcon、ZText、ZTitle、ZParagraph、ZLink、ZDivider
 - 已配 peerDeps:`@floating-ui/vue` / `@vueuse/core` / `@vueuse/integrations` / `async-validator` / `color2k` / `date-fns(-tz)` / `@vicons/ionicons5`(将改 `@vicons/material`)
 - **完整文档**:见 `.claude/skills/zui.md`(API + 范式 + 验证铁律)
 
@@ -353,39 +353,41 @@ s._focusVisible((f) => {
 
 ## 5. 阶段化任务清单(打勾推进)
 
-### Stage 1 ── 目录搬迁(纯重组,**无功能变更**)
+### Stage 1 ── 目录搬迁(纯重组,**无功能变更**)✅ 2026-05-23 完成
 
 > 目标:从 `components/` 嵌套结构改为扁平 `src/{gene,layout,...}/`,provider 内部按 theme/locale/date 分子目录,删除无用 composables 和 components/theme/locale 旧路径。
+>
+> 决策文档:`.claude/decisions/2026-05-23-stage1-flatten-and-single-entry.md`
 
-- [ ] 新建 `src/provider/theme/`(空目录占位)
-- [ ] 新建 `src/provider/locale/`
-- [ ] 新建 `src/provider/date/`
-- [ ] 移动 `src/theme/schema.ts` → `src/provider/theme/schema.ts`
-- [ ] 移动 `src/theme/zui-light.ts` → `src/provider/theme/zui-light.ts`
-- [ ] 移动 `src/theme/zui-dark.ts` → `src/provider/theme/zui-dark.ts`
-- [ ] 移动 `src/theme/index.ts` → `src/provider/theme/index.ts`
-- [ ] 移动 `src/locale/types.ts` → `src/provider/locale/types.ts`
-- [ ] 移动 `src/locale/zh-CN.ts` → `src/provider/locale/zh-CN.ts`
-- [ ] 移动 `src/locale/en-US.ts` → `src/provider/locale/en-US.ts`
-- [ ] 移动 `src/locale/merge.ts` → `src/provider/locale/merge.ts`
-- [ ] 移动 `src/locale/index.ts` → `src/provider/locale/index.ts`
-- [ ] 移动 `src/provider/useZTheme.ts` → `src/provider/theme/useZTheme.ts`
-- [ ] 移动 `src/provider/useZLocale.ts` → `src/provider/locale/useZLocale.ts`
-- [ ] 移动 `src/provider/useZDate.ts` → `src/provider/date/useZDate.ts`
-- [ ] 新建 `src/provider/date/index.ts`(导出 useZDate / 类型)
-- [ ] 移动 `src/components/gene/*` → `src/gene/*`(6 个 SFC + index.ts + _typography-base.ts)
-- [ ] 新建空目录 `src/layout/` `src/input/` `src/display/` `src/feedback/` `src/navigation/` `src/tool/`(各加 placeholder `index.ts`,内容仅 `export {}`)
-- [ ] **删除** `src/components/`(整目录)
-- [ ] **删除** `src/composables/`(整目录)
-- [ ] **删除** `src/theme/`(旧路径)
-- [ ] **删除** `src/locale/`(旧路径)
-- [ ] 全代码库 grep & 修复 import 路径(`from '../theme'` → `from '../provider/theme'` 等)
-- [ ] `src/provider/index.ts` 同步从 `./theme` `./locale` `./date` 子模块 re-export
-- [ ] `src/index.ts` 移除 composables 段(`useStyles` / `useDynamicStyles` / `chainOf` / `useVariants` / `useParts` / `useBreakpoints` / `useResponsive` 全删)
-- [ ] `vite.config.ts` 单入口化:`entry: 'src/index.ts'`,删除其它 lib.entry 项
-- [ ] `package.json` `exports` 只保留 `.` 和 `./package.json`,删除其它子入口
-- [ ] **验证**:type-check ✓ / test ✓ / build ✓
-- [ ] CHANGELOG entry(BREAKING:目录扁平 + 单入口 + composables 全删)
+- [x] 新建 `src/provider/theme/`(空目录占位)
+- [x] 新建 `src/provider/locale/`
+- [x] 新建 `src/provider/date/`
+- [x] 移动 `src/theme/schema.ts` → `src/provider/theme/schema.ts`
+- [x] 移动 `src/theme/zui-light.ts` → `src/provider/theme/zui-light.ts`
+- [x] 移动 `src/theme/zui-dark.ts` → `src/provider/theme/zui-dark.ts`
+- [x] 移动 `src/theme/index.ts` → `src/provider/theme/index.ts`
+- [x] 移动 `src/locale/types.ts` → `src/provider/locale/types.ts`
+- [x] 移动 `src/locale/zh-CN.ts` → `src/provider/locale/zh-CN.ts`
+- [x] 移动 `src/locale/en-US.ts` → `src/provider/locale/en-US.ts`
+- [x] 移动 `src/locale/merge.ts` → `src/provider/locale/merge.ts`
+- [x] 移动 `src/locale/index.ts` → `src/provider/locale/index.ts`
+- [x] 移动 `src/provider/useZTheme.ts` → `src/provider/theme/useZTheme.ts`
+- [x] 移动 `src/provider/useZLocale.ts` → `src/provider/locale/useZLocale.ts`
+- [x] 移动 `src/provider/useZDate.ts` → `src/provider/date/useZDate.ts`
+- [x] 新建 `src/provider/date/index.ts`(导出 useZDate / 类型)
+- [x] 移动 `src/components/gene/*` → `src/gene/*`(6 个 SFC + index.ts + _typography-base.ts)
+- [x] 新建空目录 `src/layout/` `src/input/` `src/display/` `src/feedback/` `src/navigation/` `src/tool/`(各加 placeholder `index.ts`,内容仅 `export {}`)
+- [x] **删除** `src/components/`(整目录)
+- [x] **删除** `src/composables/`(整目录)
+- [x] **删除** `src/theme/`(旧路径)
+- [x] **删除** `src/locale/`(旧路径)
+- [x] 全代码库 grep & 修复 import 路径(`from '../theme'` → `from '../provider/theme'` 等)
+- [x] `src/provider/index.ts` 同步从 `./theme` `./locale` `./date` 子模块 re-export
+- [x] `src/index.ts` 移除 composables 段(`useStyles` / `useDynamicStyles` / `chainOf` / `useVariants` / `useParts` / `useBreakpoints` / `useResponsive` 全删)
+- [x] `vite.config.ts` 单入口化:`entry: 'src/index.ts'`,删除其它 lib.entry 项
+- [x] `package.json` `exports` 只保留 `.` 和 `./package.json`,删除其它子入口
+- [x] **验证**:type-check ✓ / test 147/147 ✓ / build ✓
+- [x] CHANGELOG entry(BREAKING:目录扁平 + 单入口 + composables 全删)
 
 ### Stage 2 ── props 哲学(BREAKING)
 
@@ -574,7 +576,7 @@ s._focusVisible((f) => {
 
 ## 6. 关键停下问用户
 
-定时任务遇到下列节点**必须停下,等用户确认后才继续**:
+定时任务遇到下列节点**必须停下,等用户确认后才继续**(无人值守模式下自行决策 + 写决策文档继续):
 
 1. **Stage 1 完成后**:重大目录搬迁完成,给用户看 diff 和验证报告,确认无遗漏
 2. **Stage 4 完成后**:主题色彩变更视觉影响大,让用户在 docs 站点验收 light/dark 模式视觉
@@ -748,6 +750,12 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 
 > 每个 Stage / 子段完成后追加一条。
 
+### 2026-05-23 Stage 1 完成(无人值守自主推进)
+- 改动:目录扁平化(`components/gene` → `gene/`,`theme` → `provider/theme`,`locale` → `provider/locale`,`provider/useZ*` → `provider/{theme,locale,date}/useZ*`),删 `composables/`,新建 6 个分类占位 `{layout,input,display,feedback,navigation,tool}/index.ts`,单入口化(vite.config + package.json/exports)
+- 验证:type-check ✓ / tests 147/147 ✓ / build ✓
+- 文档:`.claude/decisions/2026-05-23-stage1-flatten-and-single-entry.md`
+- 下一步:Stage 2 cssRoot → css + SxObject 类型 + helper
+
 ### 2026-05-22 路线图文档初版
 - 改动:写 `.claude/zui-vue-roadmap.md`(本文件)
 - 验证:N/A(纯文档)
@@ -778,5 +786,6 @@ docs 站点:             C:\code\zui\packages\docs
 历史决策:              C:\code\zui\.claude\decisions\
 ui-vue 入口:           C:\code\zui\packages\ui-vue\src\index.ts
 provider 入口:         C:\code\zui\packages\ui-vue\src\provider\index.ts
+gene 入口:             C:\code\zui\packages\ui-vue\src\gene\index.ts
 CHANGELOG:             C:\code\zui\packages\ui-vue\CHANGELOG.md
 ```

@@ -12,7 +12,7 @@
  *   调用此 helper 之前/之后自行处理
  */
 import type { Chain } from '@kenconnet666/zui-core'
-import type { ZuiSchema } from '../../theme'
+import type { ZuiSchema } from '../provider/theme'
 
 /**
  * Typography 组件共享 props —— 6 维度 carrier factory + 5 状态布尔/枚举。

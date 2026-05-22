@@ -1,8 +1,8 @@
 import type { InjectionKey, Ref } from 'vue'
 import type { Locale as DateFnsLocale } from 'date-fns'
 import type { ResolvedTheme } from '@kenconnet666/zui-core'
-import type { ZuiSchema } from '../theme'
-import type { ZLocale } from '../locale/types'
+import type { ZuiSchema } from './theme'
+import type { ZLocale } from './locale/types'
 
 /**
  * `ZDateConfig` —— Provider 注入的日期 / 时区配置。

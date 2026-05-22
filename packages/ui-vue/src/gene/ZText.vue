@@ -28,7 +28,7 @@
  * 语义层面用户通过 `tag` 切到 `code`/`em`/`del`/`ins`/`mark` 等语义标签。
  */
 import type { Chain } from '@kenconnet666/zui-core'
-import type { ZuiSchema } from '../../theme'
+import type { ZuiSchema } from '../provider/theme'
 
 /**
  * `ZText` 完整 props。**6 个 carrier factory + 5 个状态 + cssRoot + tag**。
@@ -149,7 +149,7 @@ export interface ZTextProps {
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
-import { useZTheme } from '../../provider'
+import { useZTheme } from '../provider'
 import { applyTypographyBase } from './_typography-base'
 
 const props = withDefaults(defineProps<ZTextProps>(), {

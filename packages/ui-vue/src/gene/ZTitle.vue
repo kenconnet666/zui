@@ -22,7 +22,7 @@
  * 标题 6 级走纯 `iem(N)` 不污染 token 表。
  */
 import type { Chain } from '@kenconnet666/zui-core'
-import type { ZuiSchema } from '../../theme'
+import type { ZuiSchema } from '../provider/theme'
 
 /** ZTitle 支持的标题级别。 */
 export type ZTitleLevel = 1 | 2 | 3 | 4 | 5 | 6
@@ -54,7 +54,7 @@ export interface ZTitleProps {
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
-import { useZTheme } from '../../provider'
+import { useZTheme } from '../provider'
 import { applyTypographyBase } from './_typography-base'
 
 const props = withDefaults(defineProps<ZTitleProps>(), {

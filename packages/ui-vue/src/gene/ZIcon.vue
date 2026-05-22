@@ -30,7 +30,7 @@
 import type { Component } from 'vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import { icss, presetAnimations } from '@kenconnet666/zui-core'
-import type { ZuiSchema } from '../../theme'
+import type { ZuiSchema } from '../provider/theme'
 
 // ═══════════════════════════════════════════════════════════════════════
 // 公开类型
@@ -133,7 +133,7 @@ export interface ZIconProps {
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useZTheme } from '../../provider'
+import { useZTheme } from '../provider'
 
 const props = withDefaults(defineProps<ZIconProps>(), {
   // Vue defineProps:Function 类型 prop 的 default 直接给函数本身(不需 () => 工厂)

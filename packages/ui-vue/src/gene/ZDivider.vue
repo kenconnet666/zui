@@ -19,7 +19,7 @@
  * **a11y**:`role="separator"` + `aria-orientation`,屏读器能跳读。
  */
 import type { Chain } from '@kenconnet666/zui-core'
-import type { ZuiSchema } from '../../theme'
+import type { ZuiSchema } from '../provider/theme'
 
 export interface ZDividerProps {
   /** 方向,默认 `'horizontal'`。垂直需父容器有高度(否则 0px)。 */
@@ -56,7 +56,7 @@ export interface ZDividerProps {
 <script lang="ts" setup>
 import { computed, useSlots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
-import { useZTheme } from '../../provider'
+import { useZTheme } from '../provider'
 
 const props = withDefaults(defineProps<ZDividerProps>(), {
   orientation: 'horizontal',

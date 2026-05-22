@@ -1,7 +1,7 @@
 import { computed, inject, ref, type ComputedRef, type Ref } from 'vue'
-import { Z_LOCALE_KEY } from './keys'
-import { zhCN } from '../locale/zh-CN'
-import type { ZLocale, ZLocaleRegistry } from '../locale/types'
+import { Z_LOCALE_KEY } from '../keys'
+import { zhCN } from './zh-CN'
+import type { ZLocale, ZLocaleRegistry } from './types'
 
 /**
  * `useZLocale()` —— 取当前 ZLocale 全量字典。
