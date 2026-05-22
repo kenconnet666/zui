@@ -39,10 +39,12 @@ const transform: DocsGroup = {
 
 \`\`\`ts
 // 围绕左上角旋转
-s.transformOrigin('left top').transform('rotate(45deg)')
+s.transformOrigin('left top')
+s.transform('rotate(45deg)')
 
 // 围绕底部中心缩放（从底向上展开）
-s.transformOrigin.bottom.transform('scaleY(0)')
+s.transformOrigin.bottom
+s.transform('scaleY(0)')
 // transition 后 scaleY(1) 就是"从底部展开"动画
 \`\`\`
 
@@ -87,7 +89,9 @@ s.rotate('1 1 0 45deg')             // 围绕自定义轴向量
 
 \`\`\`ts
 // 现代写法（独立属性 + 复合）
-s.rotate('45deg').scale('1.2').translate('10px, 20px')
+s.rotate('45deg')
+s.scale('1.2')
+s.translate('10px, 20px')
 
 // 经典写法（transform 综合）
 s.transform('rotate(45deg) scale(1.2) translate(10px, 20px)')
@@ -179,7 +183,10 @@ s.translate.px(8)
 ### 经典："绝对定位居中"
 
 \`\`\`ts
-s.position.absolute.top('50%').left('50%').translate('-50% -50%')
+s.position.absolute
+s.top('50%')
+s.left('50%')
+s.translate('-50% -50%')
 // 元素中心位于父容器中心，无视元素尺寸
 \`\`\`
 
@@ -374,7 +381,8 @@ s.backgroundColor('rgba(255,255,255,0.6)')         // 半透明白底
 
 \`\`\`ts
 // 黑色文字在彩色背景上 → 反相文字效果
-s.color.white.mixBlendMode.difference
+s.color.white
+s.mixBlendMode.difference
 
 // 让 SVG icon 与背景融合
 s.mixBlendMode.multiply

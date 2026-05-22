@@ -11,28 +11,29 @@ import type { ColorTokenValue } from '../src'
 
 const c = new Chain(defaultLight)
 
-describe('Chain — 类型层四态', () => {
-  it('s.color._primary 返回 ColorTokenValue（带 alpha）', () => {
-    expectTypeOf(c.color._primary).toMatchTypeOf<ColorTokenValue<typeof c>>()
+describe('Chain — 类型层四态（statement-only：setter 返回 void）', () => {
+  it('s.color._primary 返回 ColorTokenValue（带 alpha；modifier 调用后才 void）', () => {
+    expectTypeOf(c.color._primary).toMatchTypeOf<ColorTokenValue>()
     expectTypeOf(c.color._primary.alpha).toBeCallableWith(50)
+    expectTypeOf(c.color._primary.alpha(50)).toBeVoid()
   })
 
-  it('s.padding._large 返回 Chain（非颜色 token）', () => {
-    expectTypeOf(c.padding._large).toEqualTypeOf<typeof c>()
+  it('s.padding._large 返回 void（非颜色 token statement-only）', () => {
+    expectTypeOf(c.padding._large).toBeVoid()
   })
 
-  it('s.color.white 返回 Chain（CSS keyword）', () => {
-    expectTypeOf(c.color.white).toEqualTypeOf<typeof c>()
+  it('s.color.white 返回 void（CSS keyword statement-only）', () => {
+    expectTypeOf(c.color.white).toBeVoid()
   })
 
-  it('s.padding.px 是 (n: number) => Chain', () => {
+  it('s.padding.px 是 (n: number) => void', () => {
     expectTypeOf(c.padding.px).toBeFunction()
     expectTypeOf(c.padding.px).parameter(0).toBeNumber()
-    expectTypeOf(c.padding.px(16)).toEqualTypeOf<typeof c>()
+    expectTypeOf(c.padding.px(16)).toBeVoid()
   })
 
-  it('fn 调用 s.color("red") 返回 Chain', () => {
-    expectTypeOf(c.color('red' as const)).toEqualTypeOf<typeof c>()
+  it('fn 调用 s.color("red") 返回 void', () => {
+    expectTypeOf(c.color('red' as const)).toBeVoid()
   })
 
   it('未增强属性是 PropFn（仅 fn + GlobalKw）', () => {

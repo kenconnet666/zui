@@ -162,7 +162,10 @@ describe('_field', () => {
 describe('Batch 4 联合使用', () => {
   it('mobile 底栏：safeArea bottom + scrollSnap container', () => {
     const c = new Chain(defaultLight)
-    c._safeArea('bottom').overflow('auto')._scrollSnap({ type: 'x', strictness: 'mandatory' })
+    // statement-only：每条 setter 独立一行（carrier 类型层返回 void，禁止 fluent 链式）
+    c._safeArea('bottom')
+    c.overflow('auto')
+    c._scrollSnap({ type: 'x', strictness: 'mandatory' })
     expect(c._node.paddingBottom).toBe('env(safe-area-inset-bottom)')
     expect(c._node.overflow).toBe('auto')
     expect(c._node.scrollSnapType).toBe('x mandatory')

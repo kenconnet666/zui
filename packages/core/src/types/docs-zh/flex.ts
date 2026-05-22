@@ -40,7 +40,9 @@ const flex: DocsGroup = {
 ### 经典用法
 
 \`\`\`ts
-s.display.flex.flexDirection.column.gap.px(12)
+s.display.flex
+s.flexDirection.column
+s.gap.px(12)
 // 垂直堆叠子元素，间距 12px
 \`\`\``,
     syntax: [['4 个方向 keyword', '`row` ｜ `rowReverse` ｜ `column` ｜ `columnReverse`', '只接受关键字']],
@@ -68,7 +70,9 @@ s.display.flex.flexDirection.column.gap.px(12)
     details: `### 用例
 
 \`\`\`ts
-s.display.flex.flexWrap.wrap.gap.px(8)
+s.display.flex
+s.flexWrap.wrap
+s.gap.px(8)
 // 子元素挤不下时换行，每行间隔 8px
 \`\`\`
 
@@ -138,13 +142,18 @@ spaceEvenly:        [A]    [B]    [C]              所有间距 90
 
 \`\`\`ts
 // 完美居中
-s.display.flex.justifyContent.center.alignItems.center
+s.display.flex
+s.justifyContent.center
+s.alignItems.center
 
 // 两端对齐导航
-s.display.flex.justifyContent.spaceBetween         // [logo] ............. [user]
+s.display.flex
+s.justifyContent.spaceBetween         // [logo] ............. [user]
 
 // 工具栏
-s.display.flex.justifyContent.flexEnd.gap.px(8)    // 按钮组右对齐
+s.display.flex
+s.justifyContent.flexEnd
+s.gap.px(8)    // 按钮组右对齐
 \`\`\``,
     syntax: [
       [
@@ -225,7 +234,8 @@ s.display.flex
 不同字号 / 字体的子元素，用 \`baseline\` 比 \`center\` 更整齐：
 
 \`\`\`ts
-s.display.flex.alignItems.baseline
+s.display.flex
+s.alignItems.baseline
 // <span>大</span> <small>小</small>
 // 大字和小字按 baseline 对齐，视觉更稳
 \`\`\``,
@@ -276,10 +286,14 @@ s.display.flex.alignItems.baseline
 
 \`\`\`ts
 // 多行 grid 整体居中
-s.display.grid.gridTemplateColumns('repeat(3, 1fr)').alignContent.center
+s.display.grid
+s.gridTemplateColumns('repeat(3, 1fr)')
+s.alignContent.center
 
 // flex 多行内容均匀分布
-s.display.flex.flexWrap.wrap.alignContent.spaceBetween
+s.display.flex
+s.flexWrap.wrap
+s.alignContent.spaceBetween
 \`\`\``,
     syntax: [
       ['基础对齐', '`stretch` ｜ `flexStart` ｜ `flexEnd` ｜ `center` ｜ `start` ｜ `end` ｜ `baseline` ｜ `normal`', '只接受关键字'],
@@ -361,10 +375,12 @@ s.flexGrow(1)        // 此子元素占满剩余空间，其他兄弟保持原�
 
 \`\`\`ts
 // 防止图标 / 按钮被压缩
-s.flexShrink(0).width.px(40)
+s.flexShrink(0)
+s.width.px(40)
 
 // 让长文本可压缩
-s.flexShrink(1).minWidth(0)
+s.flexShrink(1)
+s.minWidth(0)
 // minWidth(0) 是关键 —— flex 子元素默认 min-width: auto 会阻止收缩到内容以下
 \`\`\``,
     syntax: [['`<number>`', '`0` `1` `2`', '非负数字']],
@@ -477,7 +493,8 @@ s.gap('12px 24px')            // 行间距 12px，列间距 24px
 等价于：
 
 \`\`\`ts
-s.rowGap.px(12).columnGap.px(24)
+s.rowGap.px(12)
+s.columnGap.px(24)
 \`\`\`
 
 ### gap vs margin

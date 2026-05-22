@@ -131,7 +131,7 @@ ${colorTokenUsage('borderColor')}
 ### 配合 borderStyle / borderWidth
 
 只有 \`border-style\` 不是 \`none\` 时才显示边框 —— **新元素默认 border-style 是 none**，光设颜色不显示！
-正确写法：\`s.border('1px solid').borderColor._primary\`。`,
+正确写法：\`s.border('1px solid'); s.borderColor._primary\`（两条 statement，statement-only 风）。`,
 
     insertNamedColors: true,
 

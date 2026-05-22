@@ -173,10 +173,13 @@ s.userSelect.all
 
 \`\`\`ts
 // 让 disabled 按钮不响应点击
-s.pointerEvents.none.opacity(0.5)
+s.pointerEvents.none
+s.opacity(0.5)
 
 // 装饰性遮罩不阻挡下层交互
-s.position.absolute.inset(0).pointerEvents.none
+s.position.absolute
+s.inset(0)
+s.pointerEvents.none
 
 // 仅让按钮内的图标透传点击到按钮本身
 // icon: s.pointerEvents.none
@@ -276,7 +279,10 @@ s.appearance.none
   .paddingRight.px(32)
 
 // 自定义 checkbox（hide 原生勾选）
-s.appearance.none.width.px(16).height.px(16).border('2px solid')
+s.appearance.none
+s.width.px(16)
+s.height.px(16)
+s.border('2px solid')
 \`\`\`
 
 ### 前缀
@@ -393,7 +399,8 @@ s.fieldSizing.content
 s.interpolateSize.allowKeywords
 
 // 然后子元素可以动画 height: auto
-s.transition('height 300ms').height(0)
+s.transition('height 300ms')
+s.height(0)
 // hover/active: s.height('auto')         // 现在可以动画了
 \`\`\``,
     syntax: [['2 个 keyword', '`numericOnly` ｜ `allowKeywords`', '只接受关键字']],

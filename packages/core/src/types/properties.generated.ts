@@ -289,7 +289,7 @@ type CssValueOf<K extends keyof csstype.Properties> = NonNullable<csstype.Proper
  * **非 ENHANCED_PROPS**（如 `transform` / `filter` / `clipPath` / `gridTemplateColumns` 等复杂语法属性）
  * 只有函数态 + GlobalKw 关键字（`inherit` / `initial` / `unset` / `revert` / `revertLayer`）。
  */
-export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
+export interface IcxPropMethods<T extends ThemeSchema> {
   /**
    * 设置**原生表单控件**（checkbox / radio / range slider / progress bar）的强调色。让 `<input type="checkbox">` 等不用自定义 CSS 即可染色。
    *
@@ -432,7 +432,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/accent-color
    */
-  accentColor: ColorPropCarrier<TSelf, CssValueOf<'accentColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  accentColor: ColorPropCarrier<CssValueOf<'accentColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
    * flex / grid 容器**交叉轴方向**上**多行内容**之间的对齐方式。**仅在 `flexWrap: wrap/wrapReverse`（多行）或 grid 多行时生效**。
    *
@@ -477,10 +477,14 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 多行 grid 整体居中
-   * s.display.grid.gridTemplateColumns('repeat(3, 1fr)').alignContent.center
+   * s.display.grid
+   * s.gridTemplateColumns('repeat(3, 1fr)')
+   * s.alignContent.center
    *
    * // flex 多行内容均匀分布
-   * s.display.flex.flexWrap.wrap.alignContent.spaceBetween
+   * s.display.flex
+   * s.flexWrap.wrap
+   * s.alignContent.spaceBetween
    * ```
    *
    * ## 兼容性
@@ -504,7 +508,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/align-content
    */
-  alignContent: PropCarrier<TSelf, CssValueOf<'alignContent'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | GlobalKw, unknown, never>
+  alignContent: PropCarrier<CssValueOf<'alignContent'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | GlobalKw, unknown, never>
   /**
    * flex / grid 容器**交叉轴方向**上**所有子元素**的对齐方式（flex row 时控制垂直对齐）。
    *
@@ -549,7 +553,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * 不同字号 / 字体的子元素，用 `baseline` 比 `center` 更整齐：
    *
    * ```ts
-   * s.display.flex.alignItems.baseline
+   * s.display.flex
+   * s.alignItems.baseline
    * // <span>大</span> <small>小</small>
    * // 大字和小字按 baseline 对齐，视觉更稳
    * ```
@@ -574,7 +579,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/align-items
    */
-  alignItems: PropCarrier<TSelf, CssValueOf<'alignItems'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | GlobalKw, unknown, never>
+  alignItems: PropCarrier<CssValueOf<'alignItems'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | GlobalKw, unknown, never>
   /**
    * flex / grid **子元素**在交叉轴方向上的对齐方式（覆盖父的 `alignItems`）。可让单个子元素与其他兄弟对齐方式不同。
    *
@@ -619,7 +624,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * 不同字号 / 字体的子元素，用 `baseline` 比 `center` 更整齐：
    *
    * ```ts
-   * s.display.flex.alignItems.baseline
+   * s.display.flex
+   * s.alignItems.baseline
    * // <span>大</span> <small>小</small>
    * // 大字和小字按 baseline 对齐，视觉更稳
    * ```
@@ -644,13 +650,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/align-self
    */
-  alignSelf: PropCarrier<TSelf, CssValueOf<'alignSelf'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | 'auto' | GlobalKw, unknown, never>
+  alignSelf: PropCarrier<CssValueOf<'alignSelf'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | 'auto' | GlobalKw, unknown, never>
   /**
      * **Syntax**: `[ normal | <baseline-position> | <content-distribution> | <overflow-position>? <content-position> ]#`
      *
      * **Initial value**: `normal`
      */
-  alignTracks: PropFn<TSelf, CssValueOf<'alignTracks'>>
+  alignTracks: PropFn<CssValueOf<'alignTracks'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -664,7 +670,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/alignment-baseline
      */
-  alignmentBaseline: PropFn<TSelf, CssValueOf<'alignmentBaseline'>>
+  alignmentBaseline: PropFn<CssValueOf<'alignmentBaseline'>>
   /**
    * 给元素**命名为锚点** —— 让其他绝对定位的元素可以**相对此锚点定位**（CSS Anchor Positioning，实验性）。
    *
@@ -723,7 +729,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/anchor-name
    */
-  anchorName: PropCarrier<TSelf, CssValueOf<'anchorName'>, never, 'none' | GlobalKw, unknown, never>
+  anchorName: PropCarrier<CssValueOf<'anchorName'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * **Syntax**: `none | all | <dashed-ident>#`
      *
@@ -733,7 +739,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      * | :-----: | :---------: | :----: | :-----: | :-: |
      * | **131** | **preview** | **26** | **131** | No  |
      */
-  anchorScope: PropFn<TSelf, CssValueOf<'anchorScope'>>
+  anchorScope: PropFn<CssValueOf<'anchorScope'>>
   /**
      * Since July 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -747,7 +753,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-composition
      */
-  animationComposition: PropFn<TSelf, CssValueOf<'animationComposition'>>
+  animationComposition: PropFn<CssValueOf<'animationComposition'>>
   /**
    * 设置 `@keyframes` 动画**开始前的延迟**。可负值（让动画从中间状态开始）。
    *
@@ -773,7 +779,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 用例
    *
    * ```ts
-   * s.transition('opacity 300ms').transitionDelay.ms(100)     // 等 100ms 才开始
+   * s.transition('opacity 300ms')
+   * s.transitionDelay.ms(100)     // 等 100ms 才开始
    *
    * // 错峰动画
    * // child1: transitionDelay 0ms
@@ -802,7 +809,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-delay
    */
-  animationDelay: PropCarrier<TSelf, CssValueOf<'animationDelay'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>, never>
+  animationDelay: PropCarrier<CssValueOf<'animationDelay'>, DurationTokens<T>, GlobalKw, TimeUnits, never>
   /**
    * 设置动画**播放方向** —— 正向、反向、交替（来回）。
    *
@@ -858,7 +865,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-direction
    */
-  animationDirection: PropCarrier<TSelf, CssValueOf<'animationDirection'>, never, 'normal' | 'reverse' | 'alternate' | 'alternateReverse' | GlobalKw, unknown, never>
+  animationDirection: PropCarrier<CssValueOf<'animationDirection'>, never, 'normal' | 'reverse' | 'alternate' | 'alternateReverse' | GlobalKw, unknown, never>
   /**
    * 设置 `@keyframes` **动画的持续时间**。0 表示动画立即跳到终态。
    *
@@ -919,7 +926,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-duration
    */
-  animationDuration: PropCarrier<TSelf, CssValueOf<'animationDuration'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>, never>
+  animationDuration: PropCarrier<CssValueOf<'animationDuration'>, DurationTokens<T>, GlobalKw, TimeUnits, never>
   /**
    * 决定动画**结束后**（以及开始前延迟期间）元素保留**哪个状态** —— 起始 / 终止 / 双向 / 都不保留。
    *
@@ -955,7 +962,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *   .animationFillMode.forwards    // 不写的话动画结束会回到初始 opacity:1，但若 fadeIn 从 0→1，初始可能就是 1，最关键的是用 forwards 让进入动画的"中间状态"得以保留
    *
    * // 延迟 200ms 才开始动画，但希望延迟期间元素已是 0% 状态
-   * s.animationDelay.ms(200).animationFillMode.backwards
+   * s.animationDelay.ms(200)
+   * s.animationFillMode.backwards
    * ```
    *
    * ## 兼容性
@@ -978,7 +986,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-fill-mode
    */
-  animationFillMode: PropCarrier<TSelf, CssValueOf<'animationFillMode'>, never, 'none' | 'forwards' | 'backwards' | 'both' | GlobalKw, unknown, never>
+  animationFillMode: PropCarrier<CssValueOf<'animationFillMode'>, never, 'none' | 'forwards' | 'backwards' | 'both' | GlobalKw, unknown, never>
   /**
    * 设置动画**循环次数**。可为整数、小数（不完整循环）、或 `infinite`（无限循环）。
    *
@@ -1032,7 +1040,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-iteration-count
    */
-  animationIterationCount: PropCarrier<TSelf, CssValueOf<'animationIterationCount'>, never, 'infinite' | GlobalKw, unknown, never>
+  animationIterationCount: PropCarrier<CssValueOf<'animationIterationCount'>, never, 'infinite' | GlobalKw, unknown, never>
   /**
    * 指定使用的 `@keyframes` **关键帧动画名称**。多个动画用逗号分隔，同时播放。
    *
@@ -1098,7 +1106,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-name
    */
-  animationName: PropCarrier<TSelf, CssValueOf<'animationName'>, never, 'none' | GlobalKw, unknown, never>
+  animationName: PropCarrier<CssValueOf<'animationName'>, never, 'none' | GlobalKw, unknown, never>
   /**
    * 控制动画**播放 / 暂停**状态。可用于 JS 控制动画暂停。
    *
@@ -1127,7 +1135,9 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // hover 时暂停动画
-   * s.animationName('spin').animationDuration.s(2).animationIterationCount.infinite
+   * s.animationName('spin')
+   * s.animationDuration.s(2)
+   * s.animationIterationCount.infinite
    * // :hover 选择器或 hover 状态下：
    * //   s.animationPlayState.paused
    * ```
@@ -1152,7 +1162,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-play-state
    */
-  animationPlayState: PropCarrier<TSelf, CssValueOf<'animationPlayState'>, never, 'running' | 'paused' | GlobalKw, unknown, never>
+  animationPlayState: PropCarrier<CssValueOf<'animationPlayState'>, never, 'running' | 'paused' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -1166,7 +1176,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-range-end
      */
-  animationRangeEnd: PropFn<TSelf, CssValueOf<'animationRangeEnd'>>
+  animationRangeEnd: PropFn<CssValueOf<'animationRangeEnd'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -1180,7 +1190,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-range-start
      */
-  animationRangeStart: PropFn<TSelf, CssValueOf<'animationRangeStart'>>
+  animationRangeStart: PropFn<CssValueOf<'animationRangeStart'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -1194,7 +1204,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-timeline
      */
-  animationTimeline: PropFn<TSelf, CssValueOf<'animationTimeline'>>
+  animationTimeline: PropFn<CssValueOf<'animationTimeline'>>
   /**
    * 设置 `@keyframes` 动画的**速率曲线**。规则同 `transitionTimingFunction`，但作用于关键帧动画。
    *
@@ -1265,7 +1275,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-timing-function
    */
-  animationTimingFunction: PropCarrier<TSelf, CssValueOf<'animationTimingFunction'>, EasingTokens<T>, 'linear' | 'ease' | 'easeIn' | 'easeOut' | 'easeInOut' | 'stepStart' | 'stepEnd' | GlobalKw, unknown, never>
+  animationTimingFunction: PropCarrier<CssValueOf<'animationTimingFunction'>, EasingTokens<T>, 'linear' | 'ease' | 'easeIn' | 'easeOut' | 'easeInOut' | 'stepStart' | 'stepEnd' | GlobalKw, unknown, never>
   /**
    * 控制原生表单控件的**外观渲染** —— 用浏览器默认样式、平台原生样式、或完全去除让 CSS 接管。
    *
@@ -1301,7 +1311,10 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *   .paddingRight.px(32)
    *
    * // 自定义 checkbox（hide 原生勾选）
-   * s.appearance.none.width.px(16).height.px(16).border('2px solid')
+   * s.appearance.none
+   * s.width.px(16)
+   * s.height.px(16)
+   * s.border('2px solid')
    * ```
    *
    * ### 前缀
@@ -1328,7 +1341,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/appearance
    */
-  appearance: PropCarrier<TSelf, CssValueOf<'appearance'>, never, 'none' | 'auto' | 'textfield' | 'menulistButton' | GlobalKw, unknown, never>
+  appearance: PropCarrier<CssValueOf<'appearance'>, never, 'none' | 'auto' | 'textfield' | 'menulistButton' | GlobalKw, unknown, never>
   /**
    * 设置元素的**宽高比**。只设了宽度时浏览器按比例自动算高度（反之亦然），无需手动维护两者同步。
    *
@@ -1367,7 +1380,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * 设了 `aspectRatio` 后，只需设一个轴的尺寸，另一个轴自动计算：
    *
    * ```ts
-   * s.width('100%').aspectRatio('16 / 9')
+   * s.width('100%')
+   * s.aspectRatio('16 / 9')
    * // 宽度撑满父容器，高度按 16:9 自动算出
    * ```
    *
@@ -1387,7 +1401,9 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * `aspect-ratio` 指定的高度是**期望值**，仍受 `min-height` / `max-height` 约束：
    *
    * ```ts
-   * s.width('100%').aspectRatio('16 / 9').maxHeight('80vh')
+   * s.width('100%')
+   * s.aspectRatio('16 / 9')
+   * s.maxHeight('80vh')
    * // 宽 100% 时按 16:9 算高，但不超过视口高度 80%
    * ```
    *
@@ -1415,7 +1431,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/aspect-ratio
    */
-  aspectRatio: PropCarrier<TSelf, CssValueOf<'aspectRatio'>, AspectRatioTokens<T>, 'auto' | GlobalKw, unknown, never>
+  aspectRatio: PropCarrier<CssValueOf<'aspectRatio'>, AspectRatioTokens<T>, 'auto' | GlobalKw, unknown, never>
   /**
    * 给元素**身后的内容**应用滤镜（毛玻璃、玻璃拟态最常用）。元素本身不变，但**透过它看到的下层**被滤镜处理。
    *
@@ -1487,7 +1503,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/backdrop-filter
    */
-  backdropFilter: PropCarrier<TSelf, CssValueOf<'backdropFilter'>, never, 'none' | GlobalKw, unknown, never>
+  backdropFilter: PropCarrier<CssValueOf<'backdropFilter'>, never, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -1502,7 +1518,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/backface-visibility
      */
-  backfaceVisibility: PropFn<TSelf, CssValueOf<'backfaceVisibility'>>
+  backfaceVisibility: PropFn<CssValueOf<'backfaceVisibility'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1516,7 +1532,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-attachment
      */
-  backgroundAttachment: PropFn<TSelf, CssValueOf<'backgroundAttachment'>>
+  backgroundAttachment: PropFn<CssValueOf<'backgroundAttachment'>>
   /**
    * 决定**多重背景**之间（或 background-image 与 background-color 之间）的**混合模式**。可叠加滤镜般的色彩效果。
    *
@@ -1586,7 +1602,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-blend-mode
    */
-  backgroundBlendMode: PropCarrier<TSelf, CssValueOf<'backgroundBlendMode'>, never, 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'colorDodge' | 'colorBurn' | 'hardLight' | 'softLight' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity' | 'plusDarker' | 'plusLighter' | GlobalKw, unknown, never>
+  backgroundBlendMode: PropCarrier<CssValueOf<'backgroundBlendMode'>, never, 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'colorDodge' | 'colorBurn' | 'hardLight' | 'softLight' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity' | 'plusDarker' | 'plusLighter' | GlobalKw, unknown, never>
   /**
    * 决定背景（image 和 color）**绘制范围** —— border 内 / padding 内 / content 内 / 仅文字。
    *
@@ -1643,7 +1659,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-clip
    */
-  backgroundClip: PropCarrier<TSelf, CssValueOf<'backgroundClip'>, never, 'borderBox' | 'paddingBox' | 'contentBox' | 'text' | GlobalKw, unknown, never>
+  backgroundClip: PropCarrier<CssValueOf<'backgroundClip'>, never, 'borderBox' | 'paddingBox' | 'contentBox' | 'text' | GlobalKw, unknown, never>
   /**
    * 设置元素的**背景色**。叠在 `background-image` 之下，常用作底色。
    *
@@ -1771,7 +1787,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-color
    */
-  backgroundColor: ColorPropCarrier<TSelf, CssValueOf<'backgroundColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  backgroundColor: ColorPropCarrier<CssValueOf<'backgroundColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1785,7 +1801,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-image
      */
-  backgroundImage: PropFn<TSelf, CssValueOf<'backgroundImage'>>
+  backgroundImage: PropFn<CssValueOf<'backgroundImage'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -1799,7 +1815,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-origin
      */
-  backgroundOrigin: PropFn<TSelf, CssValueOf<'backgroundOrigin'>>
+  backgroundOrigin: PropFn<CssValueOf<'backgroundOrigin'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
      *
@@ -1813,7 +1829,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-position-x
      */
-  backgroundPositionX: PropFn<TSelf, CssValueOf<'backgroundPositionX'>>
+  backgroundPositionX: PropFn<CssValueOf<'backgroundPositionX'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
      *
@@ -1827,7 +1843,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-position-y
      */
-  backgroundPositionY: PropFn<TSelf, CssValueOf<'backgroundPositionY'>>
+  backgroundPositionY: PropFn<CssValueOf<'backgroundPositionY'>>
   /**
    * 决定 `background-image` 在容器中**是否平铺**、如何平铺。
    *
@@ -1892,7 +1908,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-repeat
    */
-  backgroundRepeat: PropCarrier<TSelf, CssValueOf<'backgroundRepeat'>, never, 'repeat' | 'noRepeat' | 'repeatX' | 'repeatY' | 'round' | 'space' | GlobalKw, unknown, never>
+  backgroundRepeat: PropCarrier<CssValueOf<'backgroundRepeat'>, never, 'repeat' | 'noRepeat' | 'repeatX' | 'repeatY' | 'round' | 'space' | GlobalKw, unknown, never>
   /**
    * 设置 `background-image` 的**显示尺寸** —— 拉伸 / 包含 / 覆盖 / 平铺时的图片大小。
    *
@@ -1992,7 +2008,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-size
    */
-  backgroundSize: PropCarrier<TSelf, CssValueOf<'backgroundSize'>, never, 'auto' | 'cover' | 'contain' | GlobalKw, LengthUnits<TSelf>, never>
+  backgroundSize: PropCarrier<CssValueOf<'backgroundSize'>, never, 'auto' | 'cover' | 'contain' | GlobalKw, LengthUnits, never>
   /**
      * **Syntax**: `<length-percentage> | sub | super | baseline`
      *
@@ -2002,7 +2018,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      * | :----: | :-----: | :----: | :----: | :-: |
      * | **1**  |   No    | **4**  | **79** | No  |
      */
-  baselineShift: PropFn<TSelf, CssValueOf<'baselineShift'>>
+  baselineShift: PropFn<CssValueOf<'baselineShift'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2017,7 +2033,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/block-size
      */
-  blockSize: PropFn<TSelf, CssValueOf<'blockSize'>>
+  blockSize: PropFn<CssValueOf<'blockSize'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2031,7 +2047,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end-color
      */
-  borderBlockEndColor: PropFn<TSelf, CssValueOf<'borderBlockEndColor'>>
+  borderBlockEndColor: PropFn<CssValueOf<'borderBlockEndColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2045,7 +2061,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end-style
      */
-  borderBlockEndStyle: PropFn<TSelf, CssValueOf<'borderBlockEndStyle'>>
+  borderBlockEndStyle: PropFn<CssValueOf<'borderBlockEndStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2059,7 +2075,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end-width
      */
-  borderBlockEndWidth: PropFn<TSelf, CssValueOf<'borderBlockEndWidth'>>
+  borderBlockEndWidth: PropFn<CssValueOf<'borderBlockEndWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2073,7 +2089,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start-color
      */
-  borderBlockStartColor: PropFn<TSelf, CssValueOf<'borderBlockStartColor'>>
+  borderBlockStartColor: PropFn<CssValueOf<'borderBlockStartColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2087,7 +2103,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start-style
      */
-  borderBlockStartStyle: PropFn<TSelf, CssValueOf<'borderBlockStartStyle'>>
+  borderBlockStartStyle: PropFn<CssValueOf<'borderBlockStartStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2101,7 +2117,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start-width
      */
-  borderBlockStartWidth: PropFn<TSelf, CssValueOf<'borderBlockStartWidth'>>
+  borderBlockStartWidth: PropFn<CssValueOf<'borderBlockStartWidth'>>
   /**
    * 设置元素**下边框**的颜色。其他规则同 [`borderColor`]。
    *
@@ -2157,7 +2173,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 配合 borderStyle / borderWidth
    *
    * 只有 `border-style` 不是 `none` 时才显示边框 —— **新元素默认 border-style 是 none**，光设颜色不显示！
-   * 正确写法：`s.border('1px solid').borderColor._primary`。
+   * 正确写法：`s.border('1px solid'); s.borderColor._primary`（两条 statement，statement-only 风）。
    *
    * ## CSS 命名色（146 个，按色相分组）
    *
@@ -2238,7 +2254,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-color
    */
-  borderBottomColor: ColorPropCarrier<TSelf, CssValueOf<'borderBottomColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  borderBottomColor: ColorPropCarrier<CssValueOf<'borderBottomColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
    * 设置元素**左下角**的圆角半径。
    *
@@ -2333,7 +2349,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-left-radius
    */
-  borderBottomLeftRadius: PropCarrier<TSelf, CssValueOf<'borderBottomLeftRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  borderBottomLeftRadius: PropCarrier<CssValueOf<'borderBottomLeftRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * 设置元素**右下角**的圆角半径。
    *
@@ -2428,7 +2444,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-right-radius
    */
-  borderBottomRightRadius: PropCarrier<TSelf, CssValueOf<'borderBottomRightRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  borderBottomRightRadius: PropCarrier<CssValueOf<'borderBottomRightRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * 设置元素**下边框**的样式。规则同 `borderStyle`。
    *
@@ -2502,7 +2518,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-style
    */
-  borderBottomStyle: PropCarrier<TSelf, CssValueOf<'borderBottomStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  borderBottomStyle: PropCarrier<CssValueOf<'borderBottomStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
    * 设置元素**下边框**的宽度。规则同 `borderWidth`。
    *
@@ -2539,8 +2555,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 必须配合 borderStyle
    *
    * ```ts
-   * s.borderWidth.px(2).borderColor._primary             // ❌ 不显示
-   * s.borderWidth.px(2).borderStyle.solid.borderColor._primary  // ✅
+   * // ❌ 不显示
+   * s.borderWidth.px(2)
+   * s.borderColor._primary
+   * // ✅
+   * s.borderWidth.px(2)
+   * s.borderStyle.solid
+   * s.borderColor._primary
    * ```
    *
    * ### 长度单位
@@ -2586,7 +2607,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-width
    */
-  borderBottomWidth: PropCarrier<TSelf, CssValueOf<'borderBottomWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
+  borderBottomWidth: PropCarrier<CssValueOf<'borderBottomWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
   /**
    * 决定 `<table>` 中相邻单元格**边框合并还是分离**。表格样式的核心开关。
    *
@@ -2643,7 +2664,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-collapse
    */
-  borderCollapse: PropCarrier<TSelf, CssValueOf<'borderCollapse'>, never, 'collapse' | 'separate' | GlobalKw, unknown, never>
+  borderCollapse: PropCarrier<CssValueOf<'borderCollapse'>, never, 'collapse' | 'separate' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -2657,7 +2678,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-end-end-radius
      */
-  borderEndEndRadius: PropFn<TSelf, CssValueOf<'borderEndEndRadius'>>
+  borderEndEndRadius: PropFn<CssValueOf<'borderEndEndRadius'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -2671,7 +2692,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-end-start-radius
      */
-  borderEndStartRadius: PropFn<TSelf, CssValueOf<'borderEndStartRadius'>>
+  borderEndStartRadius: PropFn<CssValueOf<'borderEndStartRadius'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -2685,7 +2706,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-outset
      */
-  borderImageOutset: PropFn<TSelf, CssValueOf<'borderImageOutset'>>
+  borderImageOutset: PropFn<CssValueOf<'borderImageOutset'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2016.
      *
@@ -2699,7 +2720,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-repeat
      */
-  borderImageRepeat: PropFn<TSelf, CssValueOf<'borderImageRepeat'>>
+  borderImageRepeat: PropFn<CssValueOf<'borderImageRepeat'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -2713,7 +2734,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-slice
      */
-  borderImageSlice: PropFn<TSelf, CssValueOf<'borderImageSlice'>>
+  borderImageSlice: PropFn<CssValueOf<'borderImageSlice'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -2727,7 +2748,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-source
      */
-  borderImageSource: PropFn<TSelf, CssValueOf<'borderImageSource'>>
+  borderImageSource: PropFn<CssValueOf<'borderImageSource'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -2741,7 +2762,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-width
      */
-  borderImageWidth: PropFn<TSelf, CssValueOf<'borderImageWidth'>>
+  borderImageWidth: PropFn<CssValueOf<'borderImageWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2756,7 +2777,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end-color
      */
-  borderInlineEndColor: PropFn<TSelf, CssValueOf<'borderInlineEndColor'>>
+  borderInlineEndColor: PropFn<CssValueOf<'borderInlineEndColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2771,7 +2792,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end-style
      */
-  borderInlineEndStyle: PropFn<TSelf, CssValueOf<'borderInlineEndStyle'>>
+  borderInlineEndStyle: PropFn<CssValueOf<'borderInlineEndStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2786,7 +2807,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end-width
      */
-  borderInlineEndWidth: PropFn<TSelf, CssValueOf<'borderInlineEndWidth'>>
+  borderInlineEndWidth: PropFn<CssValueOf<'borderInlineEndWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2801,7 +2822,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start-color
      */
-  borderInlineStartColor: PropFn<TSelf, CssValueOf<'borderInlineStartColor'>>
+  borderInlineStartColor: PropFn<CssValueOf<'borderInlineStartColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2816,7 +2837,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start-style
      */
-  borderInlineStartStyle: PropFn<TSelf, CssValueOf<'borderInlineStartStyle'>>
+  borderInlineStartStyle: PropFn<CssValueOf<'borderInlineStartStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -2830,7 +2851,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start-width
      */
-  borderInlineStartWidth: PropFn<TSelf, CssValueOf<'borderInlineStartWidth'>>
+  borderInlineStartWidth: PropFn<CssValueOf<'borderInlineStartWidth'>>
   /**
    * 设置元素**左边框**的颜色。其他规则同 [`borderColor`]。
    *
@@ -2886,7 +2907,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 配合 borderStyle / borderWidth
    *
    * 只有 `border-style` 不是 `none` 时才显示边框 —— **新元素默认 border-style 是 none**，光设颜色不显示！
-   * 正确写法：`s.border('1px solid').borderColor._primary`。
+   * 正确写法：`s.border('1px solid'); s.borderColor._primary`（两条 statement，statement-only 风）。
    *
    * ## CSS 命名色（146 个，按色相分组）
    *
@@ -2967,7 +2988,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left-color
    */
-  borderLeftColor: ColorPropCarrier<TSelf, CssValueOf<'borderLeftColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  borderLeftColor: ColorPropCarrier<CssValueOf<'borderLeftColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
    * 设置元素**左边框**的样式。规则同 `borderStyle`。
    *
@@ -3041,7 +3062,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left-style
    */
-  borderLeftStyle: PropCarrier<TSelf, CssValueOf<'borderLeftStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  borderLeftStyle: PropCarrier<CssValueOf<'borderLeftStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
    * 设置元素**左边框**的宽度。规则同 `borderWidth`。
    *
@@ -3078,8 +3099,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 必须配合 borderStyle
    *
    * ```ts
-   * s.borderWidth.px(2).borderColor._primary             // ❌ 不显示
-   * s.borderWidth.px(2).borderStyle.solid.borderColor._primary  // ✅
+   * // ❌ 不显示
+   * s.borderWidth.px(2)
+   * s.borderColor._primary
+   * // ✅
+   * s.borderWidth.px(2)
+   * s.borderStyle.solid
+   * s.borderColor._primary
    * ```
    *
    * ### 长度单位
@@ -3125,7 +3151,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left-width
    */
-  borderLeftWidth: PropCarrier<TSelf, CssValueOf<'borderLeftWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
+  borderLeftWidth: PropCarrier<CssValueOf<'borderLeftWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
   /**
    * 设置元素**右边框**的颜色。其他规则同 [`borderColor`]。
    *
@@ -3181,7 +3207,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 配合 borderStyle / borderWidth
    *
    * 只有 `border-style` 不是 `none` 时才显示边框 —— **新元素默认 border-style 是 none**，光设颜色不显示！
-   * 正确写法：`s.border('1px solid').borderColor._primary`。
+   * 正确写法：`s.border('1px solid'); s.borderColor._primary`（两条 statement，statement-only 风）。
    *
    * ## CSS 命名色（146 个，按色相分组）
    *
@@ -3262,7 +3288,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right-color
    */
-  borderRightColor: ColorPropCarrier<TSelf, CssValueOf<'borderRightColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  borderRightColor: ColorPropCarrier<CssValueOf<'borderRightColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
    * 设置元素**右边框**的样式。规则同 `borderStyle`。
    *
@@ -3336,7 +3362,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right-style
    */
-  borderRightStyle: PropCarrier<TSelf, CssValueOf<'borderRightStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  borderRightStyle: PropCarrier<CssValueOf<'borderRightStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
    * 设置元素**右边框**的宽度。规则同 `borderWidth`。
    *
@@ -3373,8 +3399,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 必须配合 borderStyle
    *
    * ```ts
-   * s.borderWidth.px(2).borderColor._primary             // ❌ 不显示
-   * s.borderWidth.px(2).borderStyle.solid.borderColor._primary  // ✅
+   * // ❌ 不显示
+   * s.borderWidth.px(2)
+   * s.borderColor._primary
+   * // ✅
+   * s.borderWidth.px(2)
+   * s.borderStyle.solid
+   * s.borderColor._primary
    * ```
    *
    * ### 长度单位
@@ -3420,7 +3451,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right-width
    */
-  borderRightWidth: PropCarrier<TSelf, CssValueOf<'borderRightWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
+  borderRightWidth: PropCarrier<CssValueOf<'borderRightWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
   /**
    * 设置 `<table>` 中相邻单元格**边框之间的距离**。仅在 `borderCollapse: separate` 时生效。
    *
@@ -3446,7 +3477,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 用例
    *
    * ```ts
-   * s.borderCollapse.separate.borderSpacing.px(8)
+   * s.borderCollapse.separate
+   * s.borderSpacing.px(8)
    * s.borderSpacing('12px 4px')         // 横 12px，纵 4px
    * ```
    *
@@ -3493,7 +3525,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-spacing
    */
-  borderSpacing: PropCarrier<TSelf, CssValueOf<'borderSpacing'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  borderSpacing: PropCarrier<CssValueOf<'borderSpacing'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -3507,7 +3539,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-start-end-radius
      */
-  borderStartEndRadius: PropFn<TSelf, CssValueOf<'borderStartEndRadius'>>
+  borderStartEndRadius: PropFn<CssValueOf<'borderStartEndRadius'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -3521,7 +3553,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-start-start-radius
      */
-  borderStartStartRadius: PropFn<TSelf, CssValueOf<'borderStartStartRadius'>>
+  borderStartStartRadius: PropFn<CssValueOf<'borderStartStartRadius'>>
   /**
    * 设置元素**上边框**的颜色。其他规则同 [`borderColor`]。
    *
@@ -3577,7 +3609,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 配合 borderStyle / borderWidth
    *
    * 只有 `border-style` 不是 `none` 时才显示边框 —— **新元素默认 border-style 是 none**，光设颜色不显示！
-   * 正确写法：`s.border('1px solid').borderColor._primary`。
+   * 正确写法：`s.border('1px solid'); s.borderColor._primary`（两条 statement，statement-only 风）。
    *
    * ## CSS 命名色（146 个，按色相分组）
    *
@@ -3658,7 +3690,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-color
    */
-  borderTopColor: ColorPropCarrier<TSelf, CssValueOf<'borderTopColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  borderTopColor: ColorPropCarrier<CssValueOf<'borderTopColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
    * 设置元素**左上角**的圆角半径。可用 2 个值指定该角的横/纵半径（椭圆角）。
    *
@@ -3753,7 +3785,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-left-radius
    */
-  borderTopLeftRadius: PropCarrier<TSelf, CssValueOf<'borderTopLeftRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  borderTopLeftRadius: PropCarrier<CssValueOf<'borderTopLeftRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * 设置元素**右上角**的圆角半径。
    *
@@ -3848,7 +3880,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-right-radius
    */
-  borderTopRightRadius: PropCarrier<TSelf, CssValueOf<'borderTopRightRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  borderTopRightRadius: PropCarrier<CssValueOf<'borderTopRightRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * 设置元素**上边框**的样式。规则同 `borderStyle`。
    *
@@ -3922,7 +3954,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-style
    */
-  borderTopStyle: PropCarrier<TSelf, CssValueOf<'borderTopStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  borderTopStyle: PropCarrier<CssValueOf<'borderTopStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
    * 设置元素**上边框**的宽度。规则同 `borderWidth`。
    *
@@ -3959,8 +3991,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 必须配合 borderStyle
    *
    * ```ts
-   * s.borderWidth.px(2).borderColor._primary             // ❌ 不显示
-   * s.borderWidth.px(2).borderStyle.solid.borderColor._primary  // ✅
+   * // ❌ 不显示
+   * s.borderWidth.px(2)
+   * s.borderColor._primary
+   * // ✅
+   * s.borderWidth.px(2)
+   * s.borderStyle.solid
+   * s.borderColor._primary
    * ```
    *
    * ### 长度单位
@@ -4006,7 +4043,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-width
    */
-  borderTopWidth: PropCarrier<TSelf, CssValueOf<'borderTopWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
+  borderTopWidth: PropCarrier<CssValueOf<'borderTopWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
   /**
    * 设置定位元素距**底部**的偏移量。正值向上移，负值向下移。**只在 `position` 非 `static` 时生效**。其他规则同 [`inset`]。
    *
@@ -4054,7 +4091,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 绝对定位充满父容器
    *
    * ```ts
-   * s.position.absolute.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
+   * s.position.absolute
+   * s.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
    * // 前提：父容器 position 不是 static
    * ```
    *
@@ -4104,7 +4142,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/bottom
    */
-  bottom: PropCarrier<TSelf, CssValueOf<'bottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  bottom: PropCarrier<CssValueOf<'bottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * 决定**跨行 / 跨栏 / 跨页**元素的**装饰**（border / padding / background / box-shadow）如何处理 —— 整体计算还是每片单独计算。
    *
@@ -4138,8 +4176,10 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ```ts
    * // slice（默认）：第一行只有左圆角，最后一行只有右圆角
    * // clone：每行都有完整左右圆角
-   * s.padding.px(4).backgroundColor._yellow200.borderRadius.px(4)
-   *   .boxDecorationBreak.clone
+   * s.padding.px(4)
+   * s.backgroundColor._yellow200
+   * s.borderRadius.px(4)
+   * s.boxDecorationBreak.clone
    * ```
    *
    * ## 兼容性
@@ -4164,7 +4204,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/box-decoration-break
    */
-  boxDecorationBreak: PropCarrier<TSelf, CssValueOf<'boxDecorationBreak'>, never, 'slice' | 'clone' | GlobalKw, unknown, never>
+  boxDecorationBreak: PropCarrier<CssValueOf<'boxDecorationBreak'>, never, 'slice' | 'clone' | GlobalKw, unknown, never>
   /**
    * 给元素添加**阴影**。可叠加多组（逗号分隔），支持外/内阴影。CSS 中最常用的视觉增强属性。
    *
@@ -4256,7 +4296,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/box-shadow
    */
-  boxShadow: PropCarrier<TSelf, CssValueOf<'boxShadow'>, ShadowTokens<T>, 'none' | GlobalKw, unknown, never>
+  boxShadow: PropCarrier<CssValueOf<'boxShadow'>, ShadowTokens<T>, 'none' | GlobalKw, unknown, never>
   /**
    * 决定元素的 `width` / `height` **是否包含** `padding` 和 `border`。CSS 历史上最经典的"踩坑点"。
    *
@@ -4339,7 +4379,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/box-sizing
    */
-  boxSizing: PropCarrier<TSelf, CssValueOf<'boxSizing'>, never, 'borderBox' | 'contentBox' | GlobalKw, unknown, never>
+  boxSizing: PropCarrier<CssValueOf<'boxSizing'>, never, 'borderBox' | 'contentBox' | GlobalKw, unknown, never>
   /**
    * 控制元素**后**是否强制分页 / 分栏。规则同 `breakBefore`。
    *
@@ -4423,7 +4463,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/break-after
    */
-  breakAfter: PropCarrier<TSelf, CssValueOf<'breakAfter'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'left' | 'right' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
+  breakAfter: PropCarrier<CssValueOf<'breakAfter'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'left' | 'right' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
   /**
    * 控制元素**前**是否**强制分页 / 分栏 / 分区域**（打印分页 / 多栏布局换栏）。
    *
@@ -4507,7 +4547,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/break-before
    */
-  breakBefore: PropCarrier<TSelf, CssValueOf<'breakBefore'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'left' | 'right' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
+  breakBefore: PropCarrier<CssValueOf<'breakBefore'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'left' | 'right' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
   /**
    * 控制元素**内部**是否允许分页 / 分栏。常用于让卡片 / 表格行**不被打印分页拆断**。
    *
@@ -4552,7 +4592,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/break-inside
    */
-  breakInside: PropCarrier<TSelf, CssValueOf<'breakInside'>, never, 'auto' | 'avoid' | 'avoidPage' | 'avoidColumn' | 'avoidRegion' | GlobalKw, unknown, never>
+  breakInside: PropCarrier<CssValueOf<'breakInside'>, never, 'auto' | 'avoid' | 'avoidPage' | 'avoidColumn' | 'avoidRegion' | GlobalKw, unknown, never>
   /**
    * 决定 `<caption>` 元素（表格标题）**显示在表格上方还是下方**。
    *
@@ -4598,7 +4638,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/caption-side
    */
-  captionSide: PropCarrier<TSelf, CssValueOf<'captionSide'>, never, 'top' | 'bottom' | 'blockStart' | 'blockEnd' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
+  captionSide: PropCarrier<CssValueOf<'captionSide'>, never, 'top' | 'bottom' | 'blockStart' | 'blockEnd' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
   /**
    * 设置**文本输入光标**（caret）的颜色 —— `<input>` / `<textarea>` / `contenteditable` 元素聚焦时的闪烁竖线。
    *
@@ -4737,7 +4777,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/caret-color
    */
-  caretColor: ColorPropCarrier<TSelf, CssValueOf<'caretColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  caretColor: ColorPropCarrier<CssValueOf<'caretColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
      * **Syntax**: `auto | bar | block | underscore`
      *
@@ -4749,7 +4789,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/caret-shape
      */
-  caretShape: PropFn<TSelf, CssValueOf<'caretShape'>>
+  caretShape: PropFn<CssValueOf<'caretShape'>>
   /**
    * 让元素**不与浮动元素并排** —— 在它之前的浮动元素结束之后才开始布局。配合 `float` 使用。
    *
@@ -4811,7 +4851,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/clear
    */
-  clear: PropCarrier<TSelf, CssValueOf<'clear'>, never, 'left' | 'right' | 'none' | 'both' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
+  clear: PropCarrier<CssValueOf<'clear'>, never, 'left' | 'right' | 'none' | 'both' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
   /**
    * **几何裁剪**:把元素显示区裁成任意形状/路径。与 mask 区别 —— clip-path 是**硬边裁切**(0/1),mask 是**alpha 渐变**。
    *
@@ -4887,7 +4927,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/clip-path
    */
-  clipPath: PropFn<TSelf, CssValueOf<'clipPath'>>
+  clipPath: PropFn<CssValueOf<'clipPath'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -4901,7 +4941,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/clip-rule
      */
-  clipRule: PropFn<TSelf, CssValueOf<'clipRule'>>
+  clipRule: PropFn<CssValueOf<'clipRule'>>
   /**
    * 设置元素的**前景色** —— 文字色，并作为 `currentColor` 源被 `border-color` / `outline-color` / svg `fill` / `caret-color` 等在未显式设置时引用。
    *
@@ -5036,7 +5076,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/color
    */
-  color: ColorPropCarrier<TSelf, CssValueOf<'color'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  color: ColorPropCarrier<CssValueOf<'color'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
      * Since May 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -5051,7 +5091,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/print-color-adjust
      */
-  colorAdjust: PropFn<TSelf, CssValueOf<'colorAdjust'>>
+  colorAdjust: PropFn<CssValueOf<'colorAdjust'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -5065,7 +5105,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/color-interpolation-filters
      */
-  colorInterpolationFilters: PropFn<TSelf, CssValueOf<'colorInterpolationFilters'>>
+  colorInterpolationFilters: PropFn<CssValueOf<'colorInterpolationFilters'>>
   /**
    * 告诉浏览器元素支持**哪种配色模式**（light / dark） —— 让原生表单 / 滚动条 / 系统色等自动适配。
    *
@@ -5126,7 +5166,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/color-scheme
    */
-  colorScheme: PropCarrier<TSelf, CssValueOf<'colorScheme'>, never, 'normal' | 'light' | 'dark' | 'lightDark' | 'only' | GlobalKw, unknown, never>
+  colorScheme: PropCarrier<CssValueOf<'colorScheme'>, never, 'normal' | 'light' | 'dark' | 'lightDark' | 'only' | GlobalKw, unknown, never>
   /**
    * 指定**栏数**（多栏布局的简单方式）。
    *
@@ -5169,7 +5209,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-count
    */
-  columnCount: PropCarrier<TSelf, CssValueOf<'columnCount'>, never, 'auto' | GlobalKw, unknown, never>
+  columnCount: PropCarrier<CssValueOf<'columnCount'>, never, 'auto' | GlobalKw, unknown, never>
   /**
    * 决定多栏内容如何**填充各栏** —— 平衡（每栏内容等高）还是顺序填充（先填满第一栏再换下一栏）。
    *
@@ -5213,7 +5253,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-fill
    */
-  columnFill: PropCarrier<TSelf, CssValueOf<'columnFill'>, never, 'auto' | 'balance' | 'balanceAll' | GlobalKw, unknown, never>
+  columnFill: PropCarrier<CssValueOf<'columnFill'>, never, 'auto' | 'balance' | 'balanceAll' | GlobalKw, unknown, never>
   /**
    * 仅设置**列间距**（水平方向）。可单独覆盖 `gap` 简写的列间距值。
    *
@@ -5247,7 +5287,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * 等价于：
    *
    * ```ts
-   * s.rowGap.px(12).columnGap.px(24)
+   * s.rowGap.px(12)
+   * s.columnGap.px(24)
    * ```
    *
    * ### gap vs margin
@@ -5306,7 +5347,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-gap
    */
-  columnGap: PropCarrier<TSelf, CssValueOf<'columnGap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
+  columnGap: PropCarrier<CssValueOf<'columnGap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits, never>
   /**
    * 设置**多栏布局**（`column-count` / `columns`）中**栏间分隔线**的颜色。类似栏间的 border。
    *
@@ -5440,7 +5481,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule-color
    */
-  columnRuleColor: ColorPropCarrier<TSelf, CssValueOf<'columnRuleColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  columnRuleColor: ColorPropCarrier<CssValueOf<'columnRuleColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
    * 设置**多栏布局**中**栏间分隔线**的样式。规则同 `borderStyle`。⚠️ 必须设非 `none` 才显示。
    *
@@ -5515,7 +5556,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule-style
    */
-  columnRuleStyle: PropCarrier<TSelf, CssValueOf<'columnRuleStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  columnRuleStyle: PropCarrier<CssValueOf<'columnRuleStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
    * 设置**多栏布局**（`columns` / `columnCount`）中**栏间分隔线**的宽度。规则同 `borderWidth`。
    *
@@ -5552,8 +5593,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 必须配合 borderStyle
    *
    * ```ts
-   * s.borderWidth.px(2).borderColor._primary             // ❌ 不显示
-   * s.borderWidth.px(2).borderStyle.solid.borderColor._primary  // ✅
+   * // ❌ 不显示
+   * s.borderWidth.px(2)
+   * s.borderColor._primary
+   * // ✅
+   * s.borderWidth.px(2)
+   * s.borderStyle.solid
+   * s.borderColor._primary
    * ```
    *
    * ### 长度单位
@@ -5600,7 +5646,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule-width
    */
-  columnRuleWidth: PropCarrier<TSelf, CssValueOf<'columnRuleWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  columnRuleWidth: PropCarrier<CssValueOf<'columnRuleWidth'>, BordersTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * 让元素**跨越所有栏**（多栏内容中的标题 / 横幅常用）。
    *
@@ -5652,7 +5698,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-span
    */
-  columnSpan: PropCarrier<TSelf, CssValueOf<'columnSpan'>, never, 'none' | 'all' | GlobalKw, unknown, never>
+  columnSpan: PropCarrier<CssValueOf<'columnSpan'>, never, 'none' | 'all' | GlobalKw, unknown, never>
   /**
    * 指定**每栏的理想宽度**（栏数由容器宽度自动算）。
    *
@@ -5728,7 +5774,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-width
    */
-  columnWidth: PropCarrier<TSelf, CssValueOf<'columnWidth'>, never, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  columnWidth: PropCarrier<CssValueOf<'columnWidth'>, never, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * **containment 隔离** —— 告诉浏览器本元素子树**不会影响**外部布局/绘制/样式,允许跳过子树的渲染开销。性能优化属性。
    *
@@ -5791,7 +5837,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain
    */
-  contain: PropFn<TSelf, CssValueOf<'contain'>>
+  contain: PropFn<CssValueOf<'contain'>>
   /**
    * `contain-intrinsic-size` 的**块轴分量**(逻辑属性版,跟随 `writing-mode`)。详情见 [`contain-intrinsic-size`]。
    *
@@ -5849,7 +5895,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-block-size
    */
-  containIntrinsicBlockSize: PropFn<TSelf, CssValueOf<'containIntrinsicBlockSize'>>
+  containIntrinsicBlockSize: PropFn<CssValueOf<'containIntrinsicBlockSize'>>
   /**
    * `contain-intrinsic-size` 的**高度分量**(单轴版)。详情见 [`contain-intrinsic-size`]。
    *
@@ -5907,7 +5953,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-height
    */
-  containIntrinsicHeight: PropFn<TSelf, CssValueOf<'containIntrinsicHeight'>>
+  containIntrinsicHeight: PropFn<CssValueOf<'containIntrinsicHeight'>>
   /**
    * `contain-intrinsic-size` 的**行轴分量**(逻辑属性版,跟随 `writing-mode`)。详情见 [`contain-intrinsic-size`]。
    *
@@ -5965,7 +6011,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-inline-size
    */
-  containIntrinsicInlineSize: PropFn<TSelf, CssValueOf<'containIntrinsicInlineSize'>>
+  containIntrinsicInlineSize: PropFn<CssValueOf<'containIntrinsicInlineSize'>>
   /**
    * `contain-intrinsic-size` 的**宽度分量**(单轴版)。详情见 [`contain-intrinsic-size`]。
    *
@@ -6023,7 +6069,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-width
    */
-  containIntrinsicWidth: PropFn<TSelf, CssValueOf<'containIntrinsicWidth'>>
+  containIntrinsicWidth: PropFn<CssValueOf<'containIntrinsicWidth'>>
   /**
    * 本元素的**容器名** —— 给 `@container <name> (...)` 引用,实现"按名定向查询"。
    *
@@ -6079,7 +6125,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/container-name
    */
-  containerName: PropFn<TSelf, CssValueOf<'containerName'>>
+  containerName: PropFn<CssValueOf<'containerName'>>
   /**
    * 本元素的**容器查询类型** —— 决定 `@container` 查询能查询哪些维度。
    *
@@ -6130,7 +6176,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/container-type
    */
-  containerType: PropFn<TSelf, CssValueOf<'containerType'>>
+  containerType: PropFn<CssValueOf<'containerType'>>
   /**
    * 在 `::before` / `::after` 伪元素中**插入内容**（文字 / 图片 / counter 数值 / attr）。
    *
@@ -6178,7 +6224,9 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // ::after
-   * s.content("''").display.block.clear.both
+   * s.content("''")
+   * s.display.block
+   * s.clear.both
    * ```
    *
    * ### 现代替代
@@ -6210,7 +6258,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/content
    */
-  content: PropCarrier<TSelf, CssValueOf<'content'>, never, 'none' | 'normal' | GlobalKw, unknown, never>
+  content: PropCarrier<CssValueOf<'content'>, never, 'none' | 'normal' | GlobalKw, unknown, never>
   /**
    * **内容可见性优化** —— 浏览器对视口外子树**跳过渲染**(类似 `display: none` 但保留可达性 + 自动复活)。性能利器,通常配 `contain-intrinsic-size` 使用。
    *
@@ -6268,7 +6316,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/content-visibility
    */
-  contentVisibility: PropFn<TSelf, CssValueOf<'contentVisibility'>>
+  contentVisibility: PropFn<CssValueOf<'contentVisibility'>>
   /**
    * **递增 CSS 计数器**（每遇到该元素时计数器 +1，或自定义增量）。
    *
@@ -6311,7 +6359,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/counter-increment
    */
-  counterIncrement: PropCarrier<TSelf, CssValueOf<'counterIncrement'>, never, 'none' | GlobalKw, unknown, never>
+  counterIncrement: PropCarrier<CssValueOf<'counterIncrement'>, never, 'none' | GlobalKw, unknown, never>
   /**
    * **重置 CSS 计数器**到指定值（默认 0）。配合 `content: counter(...)` 实现自定义编号。
    *
@@ -6368,7 +6416,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/counter-reset
    */
-  counterReset: PropCarrier<TSelf, CssValueOf<'counterReset'>, never, 'none' | GlobalKw, unknown, never>
+  counterReset: PropCarrier<CssValueOf<'counterReset'>, never, 'none' | GlobalKw, unknown, never>
   /**
    * **设置 CSS 计数器**到指定值（不依赖前值）。与 `counterReset` 类似但语义更强：明确设置而非"重置"。
    *
@@ -6410,7 +6458,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/counter-set
    */
-  counterSet: PropCarrier<TSelf, CssValueOf<'counterSet'>, never, 'none' | GlobalKw, unknown, never>
+  counterSet: PropCarrier<CssValueOf<'counterSet'>, never, 'none' | GlobalKw, unknown, never>
   /**
    * 设置元素**鼠标指针**的样式 —— 箭头 / 手型 / 文字光标 / 等待 / 拖动 / 调整方向等。
    *
@@ -6520,7 +6568,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/cursor
    */
-  cursor: PropCarrier<TSelf, CssValueOf<'cursor'>, CursorTokens<T>, 'auto' | 'default' | 'none' | 'pointer' | 'text' | 'verticalText' | 'wait' | 'progress' | 'help' | 'contextMenu' | 'cell' | 'crosshair' | 'move' | 'grab' | 'grabbing' | 'alias' | 'copy' | 'notAllowed' | 'noDrop' | 'allScroll' | 'zoomIn' | 'zoomOut' | 'colResize' | 'rowResize' | 'eResize' | 'nResize' | 'sResize' | 'wResize' | 'neResize' | 'nwResize' | 'seResize' | 'swResize' | 'ewResize' | 'nsResize' | 'neswResize' | 'nwseResize' | GlobalKw, unknown, never>
+  cursor: PropCarrier<CssValueOf<'cursor'>, CursorTokens<T>, 'auto' | 'default' | 'none' | 'pointer' | 'text' | 'verticalText' | 'wait' | 'progress' | 'help' | 'contextMenu' | 'cell' | 'crosshair' | 'move' | 'grab' | 'grabbing' | 'alias' | 'copy' | 'notAllowed' | 'noDrop' | 'allScroll' | 'zoomIn' | 'zoomOut' | 'colResize' | 'rowResize' | 'eResize' | 'nResize' | 'sResize' | 'wResize' | 'neResize' | 'nwResize' | 'seResize' | 'swResize' | 'ewResize' | 'nsResize' | 'neswResize' | 'nwseResize' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -6534,7 +6582,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/cx
      */
-  cx: PropFn<TSelf, CssValueOf<'cx'>>
+  cx: PropFn<CssValueOf<'cx'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -6548,7 +6596,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/cy
      */
-  cy: PropFn<TSelf, CssValueOf<'cy'>>
+  cy: PropFn<CssValueOf<'cy'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -6562,7 +6610,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/d
      */
-  d: PropFn<TSelf, CssValueOf<'d'>>
+  d: PropFn<CssValueOf<'d'>>
   /**
    * 设置**文本流方向** —— 从左到右（LTR）或从右到左（RTL）。RTL 用于阿拉伯语 / 希伯来语。
    *
@@ -6612,7 +6660,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/direction
    */
-  direction: PropCarrier<TSelf, CssValueOf<'direction'>, never, 'ltr' | 'rtl' | GlobalKw, unknown, never>
+  direction: PropCarrier<CssValueOf<'direction'>, never, 'ltr' | 'rtl' | GlobalKw, unknown, never>
   /**
    * 决定元素的**显示类型** —— 是块级、行内、flex 容器、grid 容器还是不显示等。CSS 布局的总开关。
    *
@@ -6733,7 +6781,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/display
    */
-  display: PropCarrier<TSelf, CssValueOf<'display'>, never, 'block' | 'inline' | 'inlineBlock' | 'flex' | 'inlineFlex' | 'grid' | 'inlineGrid' | 'none' | 'contents' | 'flowRoot' | 'ruby' | 'listItem' | 'table' | 'inlineTable' | 'tableCell' | 'tableRow' | 'tableColumn' | 'tableRowGroup' | 'tableHeaderGroup' | 'tableFooterGroup' | 'tableColumnGroup' | 'tableCaption' | GlobalKw, unknown, never>
+  display: PropCarrier<CssValueOf<'display'>, never, 'block' | 'inline' | 'inlineBlock' | 'flex' | 'inlineFlex' | 'grid' | 'inlineGrid' | 'none' | 'contents' | 'flowRoot' | 'ruby' | 'listItem' | 'table' | 'inlineTable' | 'tableCell' | 'tableRow' | 'tableColumn' | 'tableRowGroup' | 'tableHeaderGroup' | 'tableFooterGroup' | 'tableColumnGroup' | 'tableCaption' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -6747,7 +6795,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/dominant-baseline
      */
-  dominantBaseline: PropFn<TSelf, CssValueOf<'dominantBaseline'>>
+  dominantBaseline: PropFn<CssValueOf<'dominantBaseline'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -6761,7 +6809,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/empty-cells
      */
-  emptyCells: PropFn<TSelf, CssValueOf<'emptyCells'>>
+  emptyCells: PropFn<CssValueOf<'emptyCells'>>
   /**
    * 控制 `<input>` / `<textarea>` / `<select>` 等表单元素的**尺寸自动调整模式** —— 是固定还是按内容增长。
    *
@@ -6814,7 +6862,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/field-sizing
    */
-  fieldSizing: PropCarrier<TSelf, CssValueOf<'fieldSizing'>, never, 'content' | 'fixed' | GlobalKw, unknown, never>
+  fieldSizing: PropCarrier<CssValueOf<'fieldSizing'>, never, 'content' | 'fixed' | GlobalKw, unknown, never>
   /**
    * SVG 专属：设置 SVG 图形（`<path>` / `<circle>` / `<rect>` 等）的**填充颜色**。
    *
@@ -6970,7 +7018,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/fill
    */
-  fill: ColorPropCarrier<TSelf, CssValueOf<'fill'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  fill: ColorPropCarrier<CssValueOf<'fill'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -6984,7 +7032,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/fill-opacity
      */
-  fillOpacity: PropFn<TSelf, CssValueOf<'fillOpacity'>>
+  fillOpacity: PropFn<CssValueOf<'fillOpacity'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -6998,7 +7046,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/fill-rule
      */
-  fillRule: PropFn<TSelf, CssValueOf<'fillRule'>>
+  fillRule: PropFn<CssValueOf<'fillRule'>>
   /**
    * 给元素应用**视觉滤镜** —— 模糊、亮度、对比度、灰度、阴影等。可链式叠加多个滤镜函数。
    *
@@ -7095,7 +7143,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/filter
    */
-  filter: PropCarrier<TSelf, CssValueOf<'filter'>, never, 'none' | GlobalKw, unknown, never>
+  filter: PropCarrier<CssValueOf<'filter'>, never, 'none' | GlobalKw, unknown, never>
   /**
    * flex 子元素的**初始尺寸** —— 在剩余空间分配（flexGrow/flexShrink）之前的"起步大小"。
    *
@@ -7185,7 +7233,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-basis
    */
-  flexBasis: PropCarrier<TSelf, CssValueOf<'flexBasis'>, SizeTokens<T>, 'auto' | 'fill' | 'maxContent' | 'minContent' | 'fitContent' | 'content' | GlobalKw, LengthUnits<TSelf>, never>
+  flexBasis: PropCarrier<CssValueOf<'flexBasis'>, SizeTokens<T>, 'auto' | 'fill' | 'maxContent' | 'minContent' | 'fitContent' | 'content' | GlobalKw, LengthUnits, never>
   /**
    * 决定 flex 容器的**主轴方向** —— 子元素是横向排列还是纵向排列、是否反向。仅对 `display: flex/inlineFlex` 容器生效。
    *
@@ -7225,7 +7273,9 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 经典用法
    *
    * ```ts
-   * s.display.flex.flexDirection.column.gap.px(12)
+   * s.display.flex
+   * s.flexDirection.column
+   * s.gap.px(12)
    * // 垂直堆叠子元素，间距 12px
    * ```
    *
@@ -7249,7 +7299,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-direction
    */
-  flexDirection: PropCarrier<TSelf, CssValueOf<'flexDirection'>, never, 'row' | 'rowReverse' | 'column' | 'columnReverse' | GlobalKw, unknown, never>
+  flexDirection: PropCarrier<CssValueOf<'flexDirection'>, never, 'row' | 'rowReverse' | 'column' | 'columnReverse' | GlobalKw, unknown, never>
   /**
    * flex 子元素的**放大比例** —— 容器有剩余空间时，按此比例分配给各子元素。**默认 0**（不放大）。
    *
@@ -7311,7 +7361,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-grow
    */
-  flexGrow: PropCarrier<TSelf, CssValueOf<'flexGrow'>, never, GlobalKw, unknown, never>
+  flexGrow: PropCarrier<CssValueOf<'flexGrow'>, never, GlobalKw, unknown, never>
   /**
    * flex 子元素的**收缩比例** —— 容器空间不足时，按此比例缩小各子元素。**默认 1**（允许收缩）。
    *
@@ -7338,10 +7388,12 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 防止图标 / 按钮被压缩
-   * s.flexShrink(0).width.px(40)
+   * s.flexShrink(0)
+   * s.width.px(40)
    *
    * // 让长文本可压缩
-   * s.flexShrink(1).minWidth(0)
+   * s.flexShrink(1)
+   * s.minWidth(0)
    * // minWidth(0) 是关键 —— flex 子元素默认 min-width: auto 会阻止收缩到内容以下
    * ```
    *
@@ -7365,7 +7417,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-shrink
    */
-  flexShrink: PropCarrier<TSelf, CssValueOf<'flexShrink'>, never, GlobalKw, unknown, never>
+  flexShrink: PropCarrier<CssValueOf<'flexShrink'>, never, GlobalKw, unknown, never>
   /**
    * 决定 flex 子元素**是否换行**。默认所有子元素挤在一行（必要时压缩尺寸），开启换行后超出宽度的会换行排列。
    *
@@ -7394,7 +7446,9 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 用例
    *
    * ```ts
-   * s.display.flex.flexWrap.wrap.gap.px(8)
+   * s.display.flex
+   * s.flexWrap.wrap
+   * s.gap.px(8)
    * // 子元素挤不下时换行，每行间隔 8px
    * ```
    *
@@ -7425,7 +7479,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-wrap
    */
-  flexWrap: PropCarrier<TSelf, CssValueOf<'flexWrap'>, never, 'nowrap' | 'wrap' | 'wrapReverse' | GlobalKw, unknown, never>
+  flexWrap: PropCarrier<CssValueOf<'flexWrap'>, never, 'nowrap' | 'wrap' | 'wrapReverse' | GlobalKw, unknown, never>
   /**
    * 让元素**浮动**到容器一侧，**脱离正常文档流**，文字 / 行内元素会环绕它。现代布局已被 flex / grid 取代，但 `<img>` 文字环绕仍是经典场景。
    *
@@ -7459,7 +7513,9 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 给 <img>
-   * s.float.left.marginRight.px(16).marginBottom.px(8)
+   * s.float.left
+   * s.marginRight.px(16)
+   * s.marginBottom.px(8)
    * // 旁边的文字会自动环绕
    * ```
    *
@@ -7490,7 +7546,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/float
    */
-  float: PropCarrier<TSelf, CssValueOf<'float'>, never, 'left' | 'right' | 'none' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
+  float: PropCarrier<CssValueOf<'float'>, never, 'left' | 'right' | 'none' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -7504,7 +7560,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flood-color
      */
-  floodColor: PropFn<TSelf, CssValueOf<'floodColor'>>
+  floodColor: PropFn<CssValueOf<'floodColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -7518,7 +7574,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flood-opacity
      */
-  floodOpacity: PropFn<TSelf, CssValueOf<'floodOpacity'>>
+  floodOpacity: PropFn<CssValueOf<'floodOpacity'>>
   /**
    * 设置元素使用的**字体族**。可写具体字体名 + 回退族，或仅写通用族关键字。
    *
@@ -7601,7 +7657,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-family
    */
-  fontFamily: PropCarrier<TSelf, CssValueOf<'fontFamily'>, FontsTokens<T>, 'serif' | 'sansSerif' | 'monospace' | 'cursive' | 'fantasy' | 'systemUi' | 'uiSerif' | 'uiSansSerif' | 'uiMonospace' | 'uiRounded' | 'emoji' | 'math' | 'fangsong' | GlobalKw, unknown, never>
+  fontFamily: PropCarrier<CssValueOf<'fontFamily'>, FontsTokens<T>, 'serif' | 'sansSerif' | 'monospace' | 'cursive' | 'fantasy' | 'systemUi' | 'uiSerif' | 'uiSansSerif' | 'uiMonospace' | 'uiRounded' | 'emoji' | 'math' | 'fangsong' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -7616,7 +7672,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-feature-settings
      */
-  fontFeatureSettings: PropFn<TSelf, CssValueOf<'fontFeatureSettings'>>
+  fontFeatureSettings: PropFn<CssValueOf<'fontFeatureSettings'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -7631,7 +7687,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-kerning
      */
-  fontKerning: PropFn<TSelf, CssValueOf<'fontKerning'>>
+  fontKerning: PropFn<CssValueOf<'fontKerning'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -7646,7 +7702,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-language-override
      */
-  fontLanguageOverride: PropFn<TSelf, CssValueOf<'fontLanguageOverride'>>
+  fontLanguageOverride: PropFn<CssValueOf<'fontLanguageOverride'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2020.
      *
@@ -7660,7 +7716,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-optical-sizing
      */
-  fontOpticalSizing: PropFn<TSelf, CssValueOf<'fontOpticalSizing'>>
+  fontOpticalSizing: PropFn<CssValueOf<'fontOpticalSizing'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2022.
      *
@@ -7674,7 +7730,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-palette
      */
-  fontPalette: PropFn<TSelf, CssValueOf<'fontPalette'>>
+  fontPalette: PropFn<CssValueOf<'fontPalette'>>
   /**
    * 设置元素的**字号**。可用长度（px/rem/em 等）、百分比（相对父级字号）、关键字（绝对大小 / 相对大小）。
    *
@@ -7777,7 +7833,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-size
    */
-  fontSize: PropCarrier<TSelf, CssValueOf<'fontSize'>, FontSizeTokens<T>, 'xxSmall' | 'xSmall' | 'small' | 'medium' | 'large' | 'xLarge' | 'xxLarge' | 'xxxLarge' | 'smaller' | 'larger' | GlobalKw, LengthUnits<TSelf>, never>
+  fontSize: PropCarrier<CssValueOf<'fontSize'>, FontSizeTokens<T>, 'xxSmall' | 'xSmall' | 'small' | 'medium' | 'large' | 'xLarge' | 'xxLarge' | 'xxxLarge' | 'smaller' | 'larger' | GlobalKw, LengthUnits, never>
   /**
      * Since July 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -7791,7 +7847,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-size-adjust
      */
-  fontSizeAdjust: PropFn<TSelf, CssValueOf<'fontSizeAdjust'>>
+  fontSizeAdjust: PropFn<CssValueOf<'fontSizeAdjust'>>
   /**
      * The **`font-smooth`** CSS property controls the application of anti-aliasing when fonts are rendered.
      *
@@ -7805,7 +7861,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-smooth
      */
-  fontSmooth: PropFn<TSelf, CssValueOf<'fontSmooth'>>
+  fontSmooth: PropFn<CssValueOf<'fontSmooth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -7819,7 +7875,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-style
      */
-  fontStyle: PropFn<TSelf, CssValueOf<'fontStyle'>>
+  fontStyle: PropFn<CssValueOf<'fontStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2022.
      *
@@ -7833,7 +7889,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis
      */
-  fontSynthesis: PropFn<TSelf, CssValueOf<'fontSynthesis'>>
+  fontSynthesis: PropFn<CssValueOf<'fontSynthesis'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -7847,7 +7903,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-position
      */
-  fontSynthesisPosition: PropFn<TSelf, CssValueOf<'fontSynthesisPosition'>>
+  fontSynthesisPosition: PropFn<CssValueOf<'fontSynthesisPosition'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
      *
@@ -7861,7 +7917,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-small-caps
      */
-  fontSynthesisSmallCaps: PropFn<TSelf, CssValueOf<'fontSynthesisSmallCaps'>>
+  fontSynthesisSmallCaps: PropFn<CssValueOf<'fontSynthesisSmallCaps'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
      *
@@ -7875,7 +7931,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-style
      */
-  fontSynthesisStyle: PropFn<TSelf, CssValueOf<'fontSynthesisStyle'>>
+  fontSynthesisStyle: PropFn<CssValueOf<'fontSynthesisStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
      *
@@ -7889,7 +7945,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-weight
      */
-  fontSynthesisWeight: PropFn<TSelf, CssValueOf<'fontSynthesisWeight'>>
+  fontSynthesisWeight: PropFn<CssValueOf<'fontSynthesisWeight'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -7903,7 +7959,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant
      */
-  fontVariant: PropFn<TSelf, CssValueOf<'fontVariant'>>
+  fontVariant: PropFn<CssValueOf<'fontVariant'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
      *
@@ -7917,7 +7973,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-alternates
      */
-  fontVariantAlternates: PropFn<TSelf, CssValueOf<'fontVariantAlternates'>>
+  fontVariantAlternates: PropFn<CssValueOf<'fontVariantAlternates'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -7931,7 +7987,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-caps
      */
-  fontVariantCaps: PropFn<TSelf, CssValueOf<'fontVariantCaps'>>
+  fontVariantCaps: PropFn<CssValueOf<'fontVariantCaps'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -7945,7 +8001,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-east-asian
      */
-  fontVariantEastAsian: PropFn<TSelf, CssValueOf<'fontVariantEastAsian'>>
+  fontVariantEastAsian: PropFn<CssValueOf<'fontVariantEastAsian'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -7959,7 +8015,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-emoji
      */
-  fontVariantEmoji: PropFn<TSelf, CssValueOf<'fontVariantEmoji'>>
+  fontVariantEmoji: PropFn<CssValueOf<'fontVariantEmoji'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -7974,7 +8030,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-ligatures
      */
-  fontVariantLigatures: PropFn<TSelf, CssValueOf<'fontVariantLigatures'>>
+  fontVariantLigatures: PropFn<CssValueOf<'fontVariantLigatures'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -7988,7 +8044,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-numeric
      */
-  fontVariantNumeric: PropFn<TSelf, CssValueOf<'fontVariantNumeric'>>
+  fontVariantNumeric: PropFn<CssValueOf<'fontVariantNumeric'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -8002,7 +8058,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-position
      */
-  fontVariantPosition: PropFn<TSelf, CssValueOf<'fontVariantPosition'>>
+  fontVariantPosition: PropFn<CssValueOf<'fontVariantPosition'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2018.
      *
@@ -8016,7 +8072,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variation-settings
      */
-  fontVariationSettings: PropFn<TSelf, CssValueOf<'fontVariationSettings'>>
+  fontVariationSettings: PropFn<CssValueOf<'fontVariationSettings'>>
   /**
    * 设置字体的**粗细**（重量）。可用关键字或数字（100-900，整百）；支持可变字体的任意精细值。
    *
@@ -8091,7 +8147,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-weight
    */
-  fontWeight: PropCarrier<TSelf, CssValueOf<'fontWeight'>, FontWeightTokens<T>, 'normal' | 'bold' | 'lighter' | 'bolder' | GlobalKw, unknown, never>
+  fontWeight: PropCarrier<CssValueOf<'fontWeight'>, FontWeightTokens<T>, 'normal' | 'bold' | 'lighter' | 'bolder' | GlobalKw, unknown, never>
   /**
      * **Syntax**: `normal | <percentage [0,∞]> | ultra-condensed | extra-condensed | condensed | semi-condensed | semi-expanded | expanded | extra-expanded | ultra-expanded`
      *
@@ -8101,7 +8157,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      * | :----: | :-----: | :------: | :--: | :-: |
      * |   No   |   No    | **18.4** |  No  | No  |
      */
-  fontWidth: PropFn<TSelf, CssValueOf<'fontWidth'>>
+  fontWidth: PropFn<CssValueOf<'fontWidth'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -8116,7 +8172,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/forced-color-adjust
      */
-  forcedColorAdjust: PropFn<TSelf, CssValueOf<'forcedColorAdjust'>>
+  forcedColorAdjust: PropFn<CssValueOf<'forcedColorAdjust'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -8130,7 +8186,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-auto-columns
      */
-  gridAutoColumns: PropFn<TSelf, CssValueOf<'gridAutoColumns'>>
+  gridAutoColumns: PropFn<CssValueOf<'gridAutoColumns'>>
   /**
    * grid 中**未显式定位的子元素**如何自动填入网格 —— 沿行还是沿列、是否填补空隙。
    *
@@ -8189,7 +8245,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-auto-flow
    */
-  gridAutoFlow: PropCarrier<TSelf, CssValueOf<'gridAutoFlow'>, never, 'row' | 'column' | 'dense' | 'rowDense' | 'columnDense' | GlobalKw, unknown, never>
+  gridAutoFlow: PropCarrier<CssValueOf<'gridAutoFlow'>, never, 'row' | 'column' | 'dense' | 'rowDense' | 'columnDense' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -8203,7 +8259,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-auto-rows
      */
-  gridAutoRows: PropFn<TSelf, CssValueOf<'gridAutoRows'>>
+  gridAutoRows: PropFn<CssValueOf<'gridAutoRows'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -8217,7 +8273,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-column-end
      */
-  gridColumnEnd: PropFn<TSelf, CssValueOf<'gridColumnEnd'>>
+  gridColumnEnd: PropFn<CssValueOf<'gridColumnEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -8231,7 +8287,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-column-start
      */
-  gridColumnStart: PropFn<TSelf, CssValueOf<'gridColumnStart'>>
+  gridColumnStart: PropFn<CssValueOf<'gridColumnStart'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -8245,7 +8301,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-row-end
      */
-  gridRowEnd: PropFn<TSelf, CssValueOf<'gridRowEnd'>>
+  gridRowEnd: PropFn<CssValueOf<'gridRowEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -8259,7 +8315,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-row-start
      */
-  gridRowStart: PropFn<TSelf, CssValueOf<'gridRowStart'>>
+  gridRowStart: PropFn<CssValueOf<'gridRowStart'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -8273,7 +8329,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template-areas
      */
-  gridTemplateAreas: PropFn<TSelf, CssValueOf<'gridTemplateAreas'>>
+  gridTemplateAreas: PropFn<CssValueOf<'gridTemplateAreas'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -8287,7 +8343,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template-columns
      */
-  gridTemplateColumns: PropFn<TSelf, CssValueOf<'gridTemplateColumns'>>
+  gridTemplateColumns: PropFn<CssValueOf<'gridTemplateColumns'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -8301,7 +8357,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template-rows
      */
-  gridTemplateRows: PropFn<TSelf, CssValueOf<'gridTemplateRows'>>
+  gridTemplateRows: PropFn<CssValueOf<'gridTemplateRows'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -8315,7 +8371,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hanging-punctuation
      */
-  hangingPunctuation: PropFn<TSelf, CssValueOf<'hangingPunctuation'>>
+  hangingPunctuation: PropFn<CssValueOf<'hangingPunctuation'>>
   /**
    * 设置元素的**内容区高度**。行为与 `width` 类似，但百分比参照父元素**高度**（且父高度需显式设置才生效）。
    *
@@ -8400,7 +8456,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/height
    */
-  height: PropCarrier<TSelf, CssValueOf<'height'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
+  height: PropCarrier<CssValueOf<'height'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
   /**
      * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -8415,7 +8471,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hyphenate-character
      */
-  hyphenateCharacter: PropFn<TSelf, CssValueOf<'hyphenateCharacter'>>
+  hyphenateCharacter: PropFn<CssValueOf<'hyphenateCharacter'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -8429,7 +8485,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hyphenate-limit-chars
      */
-  hyphenateLimitChars: PropFn<TSelf, CssValueOf<'hyphenateLimitChars'>>
+  hyphenateLimitChars: PropFn<CssValueOf<'hyphenateLimitChars'>>
   /**
      * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -8444,7 +8500,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hyphens
      */
-  hyphens: PropFn<TSelf, CssValueOf<'hyphens'>>
+  hyphens: PropFn<CssValueOf<'hyphens'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2020.
      *
@@ -8458,7 +8514,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/image-orientation
      */
-  imageOrientation: PropFn<TSelf, CssValueOf<'imageOrientation'>>
+  imageOrientation: PropFn<CssValueOf<'imageOrientation'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -8472,7 +8528,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/image-rendering
      */
-  imageRendering: PropFn<TSelf, CssValueOf<'imageRendering'>>
+  imageRendering: PropFn<CssValueOf<'imageRendering'>>
   /**
      * The **`image-resolution`** CSS property specifies the intrinsic resolution of all raster images used in or on the element. It affects content images such as replaced elements and generated content, and decorative images such as `background-image` images.
      *
@@ -8480,7 +8536,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `1dppx`
      */
-  imageResolution: PropFn<TSelf, CssValueOf<'imageResolution'>>
+  imageResolution: PropFn<CssValueOf<'imageResolution'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -8494,13 +8550,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/initial-letter
      */
-  initialLetter: PropFn<TSelf, CssValueOf<'initialLetter'>>
+  initialLetter: PropFn<CssValueOf<'initialLetter'>>
   /**
      * **Syntax**: `[ auto | alphabetic | hanging | ideographic ]`
      *
      * **Initial value**: `auto`
      */
-  initialLetterAlign: PropFn<TSelf, CssValueOf<'initialLetterAlign'>>
+  initialLetterAlign: PropFn<CssValueOf<'initialLetterAlign'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -8515,7 +8571,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inline-size
      */
-  inlineSize: PropFn<TSelf, CssValueOf<'inlineSize'>>
+  inlineSize: PropFn<CssValueOf<'inlineSize'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -8529,7 +8585,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-block-end
      */
-  insetBlockEnd: PropFn<TSelf, CssValueOf<'insetBlockEnd'>>
+  insetBlockEnd: PropFn<CssValueOf<'insetBlockEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -8543,7 +8599,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-block-start
      */
-  insetBlockStart: PropFn<TSelf, CssValueOf<'insetBlockStart'>>
+  insetBlockStart: PropFn<CssValueOf<'insetBlockStart'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -8557,7 +8613,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-inline-end
      */
-  insetInlineEnd: PropFn<TSelf, CssValueOf<'insetInlineEnd'>>
+  insetInlineEnd: PropFn<CssValueOf<'insetInlineEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -8571,7 +8627,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-inline-start
      */
-  insetInlineStart: PropFn<TSelf, CssValueOf<'insetInlineStart'>>
+  insetInlineStart: PropFn<CssValueOf<'insetInlineStart'>>
   /**
    * 允许 `auto` / `min-content` 等**内容驱动尺寸关键字**参与 `transition` / `@keyframes` 动画（默认这些值无法动画）。
    *
@@ -8603,7 +8659,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * s.interpolateSize.allowKeywords
    *
    * // 然后子元素可以动画 height: auto
-   * s.transition('height 300ms').height(0)
+   * s.transition('height 300ms')
+   * s.height(0)
    * // hover/active: s.height('auto')         // 现在可以动画了
    * ```
    *
@@ -8628,7 +8685,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/interpolate-size
    */
-  interpolateSize: PropCarrier<TSelf, CssValueOf<'interpolateSize'>, never, 'allowKeywords' | 'numericOnly' | GlobalKw, unknown, never>
+  interpolateSize: PropCarrier<CssValueOf<'interpolateSize'>, never, 'allowKeywords' | 'numericOnly' | GlobalKw, unknown, never>
   /**
    * 控制元素是否创建**新的层叠上下文**（stacking context）。常用于让 `mix-blend-mode` 局部生效，不影响外部。
    *
@@ -8690,7 +8747,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/isolation
    */
-  isolation: PropCarrier<TSelf, CssValueOf<'isolation'>, never, 'auto' | 'isolate' | GlobalKw, unknown, never>
+  isolation: PropCarrier<CssValueOf<'isolation'>, never, 'auto' | 'isolate' | GlobalKw, unknown, never>
   /**
    * flex / grid 容器**主轴方向**上的对齐方式。控制子元素如何分配剩余空间（左对齐 / 居中 / 两端 / 等距等）。
    *
@@ -8749,13 +8806,18 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 完美居中
-   * s.display.flex.justifyContent.center.alignItems.center
+   * s.display.flex
+   * s.justifyContent.center
+   * s.alignItems.center
    *
    * // 两端对齐导航
-   * s.display.flex.justifyContent.spaceBetween         // [logo] ............. [user]
+   * s.display.flex
+   * s.justifyContent.spaceBetween         // [logo] ............. [user]
    *
    * // 工具栏
-   * s.display.flex.justifyContent.flexEnd.gap.px(8)    // 按钮组右对齐
+   * s.display.flex
+   * s.justifyContent.flexEnd
+   * s.gap.px(8)    // 按钮组右对齐
    * ```
    *
    * ## 兼容性
@@ -8780,7 +8842,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/justify-content
    */
-  justifyContent: PropCarrier<TSelf, CssValueOf<'justifyContent'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | GlobalKw, unknown, never>
+  justifyContent: PropCarrier<CssValueOf<'justifyContent'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | GlobalKw, unknown, never>
   /**
    * **grid** 容器中：所有子元素在**主轴方向**（行内方向）上的默认对齐方式。在 flex 容器中无效（用 `justifyContent`）。
    *
@@ -8839,13 +8901,18 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 完美居中
-   * s.display.flex.justifyContent.center.alignItems.center
+   * s.display.flex
+   * s.justifyContent.center
+   * s.alignItems.center
    *
    * // 两端对齐导航
-   * s.display.flex.justifyContent.spaceBetween         // [logo] ............. [user]
+   * s.display.flex
+   * s.justifyContent.spaceBetween         // [logo] ............. [user]
    *
    * // 工具栏
-   * s.display.flex.justifyContent.flexEnd.gap.px(8)    // 按钮组右对齐
+   * s.display.flex
+   * s.justifyContent.flexEnd
+   * s.gap.px(8)    // 按钮组右对齐
    * ```
    *
    * ## 兼容性
@@ -8869,7 +8936,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/justify-items
    */
-  justifyItems: PropCarrier<TSelf, CssValueOf<'justifyItems'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | GlobalKw, unknown, never>
+  justifyItems: PropCarrier<CssValueOf<'justifyItems'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | GlobalKw, unknown, never>
   /**
    * **grid 子元素**在**主轴方向**（行内方向）上的对齐方式（覆盖父的 `justifyItems`）。在 flex 子元素中无效。
    *
@@ -8928,13 +8995,18 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 完美居中
-   * s.display.flex.justifyContent.center.alignItems.center
+   * s.display.flex
+   * s.justifyContent.center
+   * s.alignItems.center
    *
    * // 两端对齐导航
-   * s.display.flex.justifyContent.spaceBetween         // [logo] ............. [user]
+   * s.display.flex
+   * s.justifyContent.spaceBetween         // [logo] ............. [user]
    *
    * // 工具栏
-   * s.display.flex.justifyContent.flexEnd.gap.px(8)    // 按钮组右对齐
+   * s.display.flex
+   * s.justifyContent.flexEnd
+   * s.gap.px(8)    // 按钮组右对齐
    * ```
    *
    * ## 兼容性
@@ -8958,13 +9030,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/justify-self
    */
-  justifySelf: PropCarrier<TSelf, CssValueOf<'justifySelf'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | 'auto' | GlobalKw, unknown, never>
+  justifySelf: PropCarrier<CssValueOf<'justifySelf'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | 'auto' | GlobalKw, unknown, never>
   /**
      * **Syntax**: `[ normal | <content-distribution> | <overflow-position>? [ <content-position> | left | right ] ]#`
      *
      * **Initial value**: `normal`
      */
-  justifyTracks: PropFn<TSelf, CssValueOf<'justifyTracks'>>
+  justifyTracks: PropFn<CssValueOf<'justifyTracks'>>
   /**
    * 设置定位元素距**左侧**的偏移量。正值向右移，负值向左溢出。**只在 `position` 非 `static` 时生效**。其他规则同 [`inset`]。
    *
@@ -9012,7 +9084,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 绝对定位充满父容器
    *
    * ```ts
-   * s.position.absolute.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
+   * s.position.absolute
+   * s.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
    * // 前提：父容器 position 不是 static
    * ```
    *
@@ -9062,7 +9135,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/left
    */
-  left: PropCarrier<TSelf, CssValueOf<'left'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  left: PropCarrier<CssValueOf<'left'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * 设置**字符之间**的额外间距（正值变宽松，负值变紧凑）。常用于标题字间距优化。
    *
@@ -9090,10 +9163,12 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 大标题增加字间距（视觉更稳）
-   * s.fontSize('48px').letterSpacing.px(-1)     // 负值（紧凑）
+   * s.fontSize('48px')
+   * s.letterSpacing.px(-1)     // 负值（紧凑）
    *
    * // 全大写英文加字间距（提升可读性）
-   * s.textTransform.uppercase.letterSpacing.em(0.05)
+   * s.textTransform.uppercase
+   * s.letterSpacing.em(0.05)
    *
    * // 中文标题适度展开
    * s.letterSpacing.em(0.1)
@@ -9142,7 +9217,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/letter-spacing
    */
-  letterSpacing: PropCarrier<TSelf, CssValueOf<'letterSpacing'>, LetterSpacingTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
+  letterSpacing: PropCarrier<CssValueOf<'letterSpacing'>, LetterSpacingTokens<T>, 'normal' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -9156,7 +9231,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/lighting-color
      */
-  lightingColor: PropFn<TSelf, CssValueOf<'lightingColor'>>
+  lightingColor: PropFn<CssValueOf<'lightingColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -9171,7 +9246,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/line-break
      */
-  lineBreak: PropFn<TSelf, CssValueOf<'lineBreak'>>
+  lineBreak: PropFn<CssValueOf<'lineBreak'>>
   /**
    * 设置文字**行高** —— 每行文字占据的垂直空间。直接影响段落呼吸感与可读性。
    *
@@ -9262,7 +9337,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/line-height
    */
-  lineHeight: PropCarrier<TSelf, CssValueOf<'lineHeight'>, LineHeightTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
+  lineHeight: PropCarrier<CssValueOf<'lineHeight'>, LineHeightTokens<T>, 'normal' | GlobalKw, LengthUnits, never>
   /**
      * The **`line-height-step`** CSS property sets the step unit for line box heights. When the property is set, line box heights are rounded up to the closest multiple of the unit.
      *
@@ -9270,7 +9345,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  lineHeightStep: PropFn<TSelf, CssValueOf<'lineHeightStep'>>
+  lineHeightStep: PropFn<CssValueOf<'lineHeightStep'>>
   /**
    * 使用**图片**作为列表标记（替代 `listStyleType` 的字符）。
    *
@@ -9322,7 +9397,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style-image
    */
-  listStyleImage: PropCarrier<TSelf, CssValueOf<'listStyleImage'>, never, 'none' | GlobalKw, unknown, never>
+  listStyleImage: PropCarrier<CssValueOf<'listStyleImage'>, never, 'none' | GlobalKw, unknown, never>
   /**
    * 决定列表标记**在文本之外还是文本流之内**。
    *
@@ -9364,7 +9439,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style-position
    */
-  listStylePosition: PropCarrier<TSelf, CssValueOf<'listStylePosition'>, never, 'inside' | 'outside' | GlobalKw, unknown, never>
+  listStylePosition: PropCarrier<CssValueOf<'listStylePosition'>, never, 'inside' | 'outside' | GlobalKw, unknown, never>
   /**
    * 设置列表项的**标记类型**（点 / 数字 / 罗马字 / 自定义）。
    *
@@ -9443,7 +9518,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style-type
    */
-  listStyleType: PropCarrier<TSelf, CssValueOf<'listStyleType'>, never, 'disc' | 'circle' | 'square' | 'none' | 'decimal' | 'decimalLeadingZero' | 'lowerRoman' | 'upperRoman' | 'lowerAlpha' | 'upperAlpha' | 'lowerGreek' | 'armenian' | 'georgian' | 'hebrew' | 'hiragana' | 'katakana' | 'cjkIdeographic' | GlobalKw, unknown, never>
+  listStyleType: PropCarrier<CssValueOf<'listStyleType'>, never, 'disc' | 'circle' | 'square' | 'none' | 'decimal' | 'decimalLeadingZero' | 'lowerRoman' | 'upperRoman' | 'lowerAlpha' | 'upperAlpha' | 'lowerGreek' | 'armenian' | 'georgian' | 'hebrew' | 'hiragana' | 'katakana' | 'cjkIdeographic' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -9457,7 +9532,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-block-end
      */
-  marginBlockEnd: PropFn<TSelf, CssValueOf<'marginBlockEnd'>>
+  marginBlockEnd: PropFn<CssValueOf<'marginBlockEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -9471,7 +9546,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-block-start
      */
-  marginBlockStart: PropFn<TSelf, CssValueOf<'marginBlockStart'>>
+  marginBlockStart: PropFn<CssValueOf<'marginBlockStart'>>
   /**
    * 设置元素的**下外边距**。常用于段落 / 标题之间的垂直间隔。其他规则同 [`margin`]。
    *
@@ -9507,7 +9582,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 水平居中经典写法
    *
    * ```ts
-   * s.width.px(800).margin('0 auto')
+   * s.width.px(800)
+   * s.margin('0 auto')
    * // 块级元素 800px 宽，左右 auto 均分剩余空间 = 水平居中
    * // 等价于：marginLeft.auto + marginRight.auto
    * ```
@@ -9576,7 +9652,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-bottom
    */
-  marginBottom: PropCarrier<TSelf, CssValueOf<'marginBottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  marginBottom: PropCarrier<CssValueOf<'marginBottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -9591,7 +9667,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-inline-end
      */
-  marginInlineEnd: PropFn<TSelf, CssValueOf<'marginInlineEnd'>>
+  marginInlineEnd: PropFn<CssValueOf<'marginInlineEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -9606,7 +9682,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-inline-start
      */
-  marginInlineStart: PropFn<TSelf, CssValueOf<'marginInlineStart'>>
+  marginInlineStart: PropFn<CssValueOf<'marginInlineStart'>>
   /**
    * 设置元素的**左外边距**。`auto` 可把元素推到容器右侧（左侧留空），是 flex 布局末尾对齐常用技巧。其他规则同 [`margin`]。
    *
@@ -9642,7 +9718,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 水平居中经典写法
    *
    * ```ts
-   * s.width.px(800).margin('0 auto')
+   * s.width.px(800)
+   * s.margin('0 auto')
    * // 块级元素 800px 宽，左右 auto 均分剩余空间 = 水平居中
    * // 等价于：marginLeft.auto + marginRight.auto
    * ```
@@ -9711,7 +9788,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-left
    */
-  marginLeft: PropCarrier<TSelf, CssValueOf<'marginLeft'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  marginLeft: PropCarrier<CssValueOf<'marginLeft'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * 设置元素的**右外边距**。正值向右推开相邻内容，`auto` 可把元素推到容器左侧（右侧留空）。其他规则同 [`margin`]。
    *
@@ -9747,7 +9824,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 水平居中经典写法
    *
    * ```ts
-   * s.width.px(800).margin('0 auto')
+   * s.width.px(800)
+   * s.margin('0 auto')
    * // 块级元素 800px 宽，左右 auto 均分剩余空间 = 水平居中
    * // 等价于：marginLeft.auto + marginRight.auto
    * ```
@@ -9816,7 +9894,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-right
    */
-  marginRight: PropCarrier<TSelf, CssValueOf<'marginRight'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  marginRight: PropCarrier<CssValueOf<'marginRight'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * 设置元素的**上外边距**。正值向下推开相邻内容，负值让元素上移。其他规则同 [`margin`]。
    *
@@ -9852,7 +9930,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 水平居中经典写法
    *
    * ```ts
-   * s.width.px(800).margin('0 auto')
+   * s.width.px(800)
+   * s.margin('0 auto')
    * // 块级元素 800px 宽，左右 auto 均分剩余空间 = 水平居中
    * // 等价于：marginLeft.auto + marginRight.auto
    * ```
@@ -9921,7 +10000,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-top
    */
-  marginTop: PropCarrier<TSelf, CssValueOf<'marginTop'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  marginTop: PropCarrier<CssValueOf<'marginTop'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -9935,7 +10014,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-trim
      */
-  marginTrim: PropFn<TSelf, CssValueOf<'marginTrim'>>
+  marginTrim: PropFn<CssValueOf<'marginTrim'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -9947,7 +10026,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker
      */
-  marker: PropFn<TSelf, CssValueOf<'marker'>>
+  marker: PropFn<CssValueOf<'marker'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -9961,7 +10040,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker-end
      */
-  markerEnd: PropFn<TSelf, CssValueOf<'markerEnd'>>
+  markerEnd: PropFn<CssValueOf<'markerEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -9975,7 +10054,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker-mid
      */
-  markerMid: PropFn<TSelf, CssValueOf<'markerMid'>>
+  markerMid: PropFn<CssValueOf<'markerMid'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -9989,7 +10068,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker-start
      */
-  markerStart: PropFn<TSelf, CssValueOf<'markerStart'>>
+  markerStart: PropFn<CssValueOf<'markerStart'>>
   /**
      * The **`mask-border-mode`** CSS property specifies the blending mode used in a mask border.
      *
@@ -9997,7 +10076,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `alpha`
      */
-  maskBorderMode: PropFn<TSelf, CssValueOf<'maskBorderMode'>>
+  maskBorderMode: PropFn<CssValueOf<'maskBorderMode'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -10012,7 +10091,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-outset
      */
-  maskBorderOutset: PropFn<TSelf, CssValueOf<'maskBorderOutset'>>
+  maskBorderOutset: PropFn<CssValueOf<'maskBorderOutset'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -10027,7 +10106,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-repeat
      */
-  maskBorderRepeat: PropFn<TSelf, CssValueOf<'maskBorderRepeat'>>
+  maskBorderRepeat: PropFn<CssValueOf<'maskBorderRepeat'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -10042,7 +10121,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-slice
      */
-  maskBorderSlice: PropFn<TSelf, CssValueOf<'maskBorderSlice'>>
+  maskBorderSlice: PropFn<CssValueOf<'maskBorderSlice'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -10057,7 +10136,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-source
      */
-  maskBorderSource: PropFn<TSelf, CssValueOf<'maskBorderSource'>>
+  maskBorderSource: PropFn<CssValueOf<'maskBorderSource'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -10072,7 +10151,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-width
      */
-  maskBorderWidth: PropFn<TSelf, CssValueOf<'maskBorderWidth'>>
+  maskBorderWidth: PropFn<CssValueOf<'maskBorderWidth'>>
   /**
    * 蒙版**生效区域**裁剪边界:超出该边界的蒙版部分被裁掉。
    *
@@ -10123,7 +10202,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-clip
    */
-  maskClip: PropFn<TSelf, CssValueOf<'maskClip'>>
+  maskClip: PropFn<CssValueOf<'maskClip'>>
   /**
    * 多张蒙版**复合方式**(类似 Photoshop 图层混合)。
    *
@@ -10171,7 +10250,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-composite
    */
-  maskComposite: PropFn<TSelf, CssValueOf<'maskComposite'>>
+  maskComposite: PropFn<CssValueOf<'maskComposite'>>
   /**
    * 蒙版**图像/渐变源**。模板的 alpha(或 luminance,见 `mask-mode`)决定元素显示/隐藏。
    *
@@ -10226,7 +10305,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-image
    */
-  maskImage: PropFn<TSelf, CssValueOf<'maskImage'>>
+  maskImage: PropFn<CssValueOf<'maskImage'>>
   /**
    * 蒙版**读取通道**:从 alpha 还是亮度(luminance)取值。
    *
@@ -10273,7 +10352,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-mode
    */
-  maskMode: PropFn<TSelf, CssValueOf<'maskMode'>>
+  maskMode: PropFn<CssValueOf<'maskMode'>>
   /**
    * 蒙版**定位区域起点**:从 border-box / padding-box / content-box 哪个边缘开始。
    *
@@ -10319,7 +10398,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-origin
    */
-  maskOrigin: PropFn<TSelf, CssValueOf<'maskOrigin'>>
+  maskOrigin: PropFn<CssValueOf<'maskOrigin'>>
   /**
    * 蒙版图像**起点位置**(与 `background-position` 等价语义)。
    *
@@ -10380,7 +10459,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-position
    */
-  maskPosition: PropFn<TSelf, CssValueOf<'maskPosition'>>
+  maskPosition: PropFn<CssValueOf<'maskPosition'>>
   /**
    * 蒙版图像**平铺方式**(与 `background-repeat` 等价语义)。
    *
@@ -10428,7 +10507,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-repeat
    */
-  maskRepeat: PropFn<TSelf, CssValueOf<'maskRepeat'>>
+  maskRepeat: PropFn<CssValueOf<'maskRepeat'>>
   /**
    * 蒙版图像**缩放尺寸**(与 `background-size` 等价语义)。
    *
@@ -10476,7 +10555,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-size
    */
-  maskSize: PropFn<TSelf, CssValueOf<'maskSize'>>
+  maskSize: PropFn<CssValueOf<'maskSize'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -10490,7 +10569,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-type
      */
-  maskType: PropFn<TSelf, CssValueOf<'maskType'>>
+  maskType: PropFn<CssValueOf<'maskType'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -10498,7 +10577,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `pack`
      */
-  masonryAutoFlow: PropFn<TSelf, CssValueOf<'masonryAutoFlow'>>
+  masonryAutoFlow: PropFn<CssValueOf<'masonryAutoFlow'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -10512,7 +10591,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/math-depth
      */
-  mathDepth: PropFn<TSelf, CssValueOf<'mathDepth'>>
+  mathDepth: PropFn<CssValueOf<'mathDepth'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -10526,7 +10605,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/math-shift
      */
-  mathShift: PropFn<TSelf, CssValueOf<'mathShift'>>
+  mathShift: PropFn<CssValueOf<'mathShift'>>
   /**
      * Since August 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -10540,7 +10619,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/math-style
      */
-  mathStyle: PropFn<TSelf, CssValueOf<'mathStyle'>>
+  mathStyle: PropFn<CssValueOf<'mathStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -10554,7 +10633,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-block-size
      */
-  maxBlockSize: PropFn<TSelf, CssValueOf<'maxBlockSize'>>
+  maxBlockSize: PropFn<CssValueOf<'maxBlockSize'>>
   /**
    * 设置元素的**最大高度**上限。内容超出时通常配合 `overflow: auto/hidden` 截断或滚动。
    *
@@ -10585,7 +10664,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 经典用法：下拉列表高度限制
    *
    * ```ts
-   * s.maxHeight.px(300).overflowY.auto
+   * s.maxHeight.px(300)
+   * s.overflowY.auto
    * // 最多 300px 高，超出时内部滚动
    * ```
    *
@@ -10637,7 +10717,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-height
    */
-  maxHeight: PropCarrier<TSelf, CssValueOf<'maxHeight'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
+  maxHeight: PropCarrier<CssValueOf<'maxHeight'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -10652,13 +10732,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-inline-size
      */
-  maxInlineSize: PropFn<TSelf, CssValueOf<'maxInlineSize'>>
+  maxInlineSize: PropFn<CssValueOf<'maxInlineSize'>>
   /**
      * **Syntax**: `none | <integer>`
      *
      * **Initial value**: `none`
      */
-  maxLines: PropFn<TSelf, CssValueOf<'maxLines'>>
+  maxLines: PropFn<CssValueOf<'maxLines'>>
   /**
    * 设置元素的**最大宽度**上限。元素宽度不会超过此值，常用于响应式布局限制内容区最宽。
    *
@@ -10689,7 +10769,9 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 经典用法：内容区宽度限制
    *
    * ```ts
-   * s.width('100%').maxWidth.px(1200).marginInline.auto
+   * s.width('100%')
+   * s.maxWidth.px(1200)
+   * s.marginInline.auto
    * // 等宽占满但不超 1200px，左右 auto 水平居中
    * ```
    *
@@ -10745,7 +10827,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-width
    */
-  maxWidth: PropCarrier<TSelf, CssValueOf<'maxWidth'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
+  maxWidth: PropCarrier<CssValueOf<'maxWidth'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -10759,7 +10841,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-block-size
      */
-  minBlockSize: PropFn<TSelf, CssValueOf<'minBlockSize'>>
+  minBlockSize: PropFn<CssValueOf<'minBlockSize'>>
   /**
    * 设置元素的**最小高度**下限。内容较少时不会缩到比此高度更小，常用于保证卡片/区块最低高度。
    *
@@ -10841,7 +10923,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-height
    */
-  minHeight: PropCarrier<TSelf, CssValueOf<'minHeight'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
+  minHeight: PropCarrier<CssValueOf<'minHeight'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -10855,7 +10937,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-inline-size
      */
-  minInlineSize: PropFn<TSelf, CssValueOf<'minInlineSize'>>
+  minInlineSize: PropFn<CssValueOf<'minInlineSize'>>
   /**
    * 设置元素的**最小宽度**下限。元素宽度不会缩小到此值以下（即使父容器更窄），可防止内容被压碎。
    *
@@ -10940,7 +11022,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-width
    */
-  minWidth: PropCarrier<TSelf, CssValueOf<'minWidth'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
+  minWidth: PropCarrier<CssValueOf<'minWidth'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
   /**
    * 决定元素**与下层内容**的**混合模式**（不仅是背景之间，还可与父级 / 兄弟元素混合）。
    *
@@ -10985,7 +11067,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 黑色文字在彩色背景上 → 反相文字效果
-   * s.color.white.mixBlendMode.difference
+   * s.color.white
+   * s.mixBlendMode.difference
    *
    * // 让 SVG icon 与背景融合
    * s.mixBlendMode.multiply
@@ -11025,7 +11108,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mix-blend-mode
    */
-  mixBlendMode: PropCarrier<TSelf, CssValueOf<'mixBlendMode'>, never, 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'colorDodge' | 'colorBurn' | 'hardLight' | 'softLight' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity' | 'plusDarker' | 'plusLighter' | GlobalKw, unknown, never>
+  mixBlendMode: PropCarrier<CssValueOf<'mixBlendMode'>, never, 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'colorDodge' | 'colorBurn' | 'hardLight' | 'softLight' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity' | 'plusDarker' | 'plusLighter' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -11040,7 +11123,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-distance
      */
-  motionDistance: PropFn<TSelf, CssValueOf<'motionDistance'>>
+  motionDistance: PropFn<CssValueOf<'motionDistance'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -11055,7 +11138,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-path
      */
-  motionPath: PropFn<TSelf, CssValueOf<'motionPath'>>
+  motionPath: PropFn<CssValueOf<'motionPath'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -11070,7 +11153,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-rotate
      */
-  motionRotation: PropFn<TSelf, CssValueOf<'motionRotation'>>
+  motionRotation: PropFn<CssValueOf<'motionRotation'>>
   /**
    * 决定**替换元素**（`<img>` / `<video>`）的内容如何**适应容器**（拉伸 / 包含 / 覆盖等）。
    *
@@ -11102,10 +11185,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 头像（裁剪铺满）
-   * s.width.px(80).height.px(80).objectFit.cover
+   * s.width.px(80)
+   * s.height.px(80)
+   * s.objectFit.cover
    *
    * // 商品图（完整显示）
-   * s.objectFit.contain.backgroundColor._neutral100      // 留白处用浅灰
+   * s.objectFit.contain
+   * s.backgroundColor._neutral100      // 留白处用浅灰
    * ```
    *
    * ## 兼容性
@@ -11127,7 +11213,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/object-fit
    */
-  objectFit: PropCarrier<TSelf, CssValueOf<'objectFit'>, never, 'fill' | 'contain' | 'cover' | 'none' | 'scaleDown' | GlobalKw, unknown, never>
+  objectFit: PropCarrier<CssValueOf<'objectFit'>, never, 'fill' | 'contain' | 'cover' | 'none' | 'scaleDown' | GlobalKw, unknown, never>
   /**
    * 决定**替换元素**（`<img>` / `<video>`）内容**在容器中的位置**（配合 `objectFit: cover/contain` 使用）。
    *
@@ -11159,7 +11245,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // cover 模式下，让头像聚焦在人脸（顶部）
-   * s.objectFit.cover.objectPosition.top
+   * s.objectFit.cover
+   * s.objectPosition.top
    *
    * // 精确控制
    * s.objectPosition('25% 75%')           // 横向 25%，纵向 75%
@@ -11208,7 +11295,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/object-position
    */
-  objectPosition: PropCarrier<TSelf, CssValueOf<'objectPosition'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits<TSelf>, never>
+  objectPosition: PropCarrier<CssValueOf<'objectPosition'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits, never>
   /**
      * **Syntax**: `none | <basic-shape-rect>`
      *
@@ -11220,7 +11307,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/object-view-box
      */
-  objectViewBox: PropFn<TSelf, CssValueOf<'objectViewBox'>>
+  objectViewBox: PropFn<CssValueOf<'objectViewBox'>>
   /**
      * Since August 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -11234,7 +11321,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-anchor
      */
-  offsetAnchor: PropFn<TSelf, CssValueOf<'offsetAnchor'>>
+  offsetAnchor: PropFn<CssValueOf<'offsetAnchor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -11249,7 +11336,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-distance
      */
-  offsetDistance: PropFn<TSelf, CssValueOf<'offsetDistance'>>
+  offsetDistance: PropFn<CssValueOf<'offsetDistance'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -11264,7 +11351,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-path
      */
-  offsetPath: PropFn<TSelf, CssValueOf<'offsetPath'>>
+  offsetPath: PropFn<CssValueOf<'offsetPath'>>
   /**
      * Since January 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -11278,7 +11365,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-position
      */
-  offsetPosition: PropFn<TSelf, CssValueOf<'offsetPosition'>>
+  offsetPosition: PropFn<CssValueOf<'offsetPosition'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -11293,7 +11380,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-rotate
      */
-  offsetRotate: PropFn<TSelf, CssValueOf<'offsetRotate'>>
+  offsetRotate: PropFn<CssValueOf<'offsetRotate'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -11308,7 +11395,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-rotate
      */
-  offsetRotation: PropFn<TSelf, CssValueOf<'offsetRotation'>>
+  offsetRotation: PropFn<CssValueOf<'offsetRotation'>>
   /**
    * 设置元素的**整体透明度**（0 完全透明 → 1 完全不透明）。影响整个元素**包括子元素**。
    *
@@ -11372,7 +11459,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/opacity
    */
-  opacity: PropCarrier<TSelf, CssValueOf<'opacity'>, OpacityTokens<T>, GlobalKw, unknown, never>
+  opacity: PropCarrier<CssValueOf<'opacity'>, OpacityTokens<T>, GlobalKw, unknown, never>
   /**
    * flex / grid 子元素的**显示顺序** —— 不改变 DOM 顺序但改变视觉顺序。可为**负数**。
    *
@@ -11431,7 +11518,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/order
    */
-  order: PropCarrier<TSelf, CssValueOf<'order'>, never, GlobalKw, unknown, never>
+  order: PropCarrier<CssValueOf<'order'>, never, GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -11445,7 +11532,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/orphans
      */
-  orphans: PropFn<TSelf, CssValueOf<'orphans'>>
+  orphans: PropFn<CssValueOf<'orphans'>>
   /**
    * 设置元素的**外轮廓 outline 颜色**。outline 不占空间、可跨圆角包绕，常用于焦点态高亮。
    *
@@ -11582,7 +11669,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-color
    */
-  outlineColor: ColorPropCarrier<TSelf, CssValueOf<'outlineColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  outlineColor: ColorPropCarrier<CssValueOf<'outlineColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
    * 控制 **outline 与元素边缘的距离**。可为**负值**（outline 缩入元素内部），常用于焦点环呼吸感。
    *
@@ -11608,8 +11695,10 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 用例
    *
    * ```ts
-   * s.outlineWidth.px(2).outlineStyle.solid.outlineColor._primary
-   *   .outlineOffset.px(4)             // 焦点环离元素 4px 远
+   * s.outlineWidth.px(2)
+   * s.outlineStyle.solid
+   * s.outlineColor._primary
+   * s.outlineOffset.px(4)             // 焦点环离元素 4px 远
    *
    * s.outlineOffset.px(-2)             // outline 缩入元素 2px，防止被父级 overflow:hidden 裁切
    * ```
@@ -11656,7 +11745,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-offset
    */
-  outlineOffset: PropCarrier<TSelf, CssValueOf<'outlineOffset'>, never, GlobalKw, LengthUnits<TSelf>, never>
+  outlineOffset: PropCarrier<CssValueOf<'outlineOffset'>, never, GlobalKw, LengthUnits, never>
   /**
    * 设置 outline 的样式。同 `borderStyle`，常用 `solid`。outline 还接受 `auto`（平台原生焦点环）。
    *
@@ -11731,7 +11820,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-style
    */
-  outlineStyle: PropCarrier<TSelf, CssValueOf<'outlineStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  outlineStyle: PropCarrier<CssValueOf<'outlineStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
    * 设置 **outline 的宽度**。outline 不占空间，可跨圆角包绕。
    *
@@ -11768,8 +11857,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 必须配合 borderStyle
    *
    * ```ts
-   * s.borderWidth.px(2).borderColor._primary             // ❌ 不显示
-   * s.borderWidth.px(2).borderStyle.solid.borderColor._primary  // ✅
+   * // ❌ 不显示
+   * s.borderWidth.px(2)
+   * s.borderColor._primary
+   * // ✅
+   * s.borderWidth.px(2)
+   * s.borderStyle.solid
+   * s.borderColor._primary
    * ```
    *
    * ### 长度单位
@@ -11815,7 +11909,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-width
    */
-  outlineWidth: PropCarrier<TSelf, CssValueOf<'outlineWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
+  outlineWidth: PropCarrier<CssValueOf<'outlineWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
   /**
    * 控制**滚动锚定**（scroll anchoring）—— 防止页面顶部加载新内容时**当前可视区跳动**。
    *
@@ -11870,7 +11964,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-anchor
    */
-  overflowAnchor: PropCarrier<TSelf, CssValueOf<'overflowAnchor'>, never, 'auto' | 'none' | GlobalKw, unknown, never>
+  overflowAnchor: PropCarrier<CssValueOf<'overflowAnchor'>, never, 'auto' | 'none' | GlobalKw, unknown, never>
   /**
      * Since September 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -11884,13 +11978,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-block
      */
-  overflowBlock: PropFn<TSelf, CssValueOf<'overflowBlock'>>
+  overflowBlock: PropFn<CssValueOf<'overflowBlock'>>
   /**
      * **Syntax**: `padding-box | content-box`
      *
      * **Initial value**: `padding-box`
      */
-  overflowClipBox: PropFn<TSelf, CssValueOf<'overflowClipBox'>>
+  overflowClipBox: PropFn<CssValueOf<'overflowClipBox'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -11904,7 +11998,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-clip-margin
      */
-  overflowClipMargin: PropFn<TSelf, CssValueOf<'overflowClipMargin'>>
+  overflowClipMargin: PropFn<CssValueOf<'overflowClipMargin'>>
   /**
      * Since September 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -11918,7 +12012,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-inline
      */
-  overflowInline: PropFn<TSelf, CssValueOf<'overflowInline'>>
+  overflowInline: PropFn<CssValueOf<'overflowInline'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2018.
      *
@@ -11933,7 +12027,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-wrap
      */
-  overflowWrap: PropFn<TSelf, CssValueOf<'overflowWrap'>>
+  overflowWrap: PropFn<CssValueOf<'overflowWrap'>>
   /**
    * 控制元素**水平方向**内容溢出的处理。其他规则同 [`overflow`]，但只接受单值。
    *
@@ -12005,7 +12099,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-x
    */
-  overflowX: PropCarrier<TSelf, CssValueOf<'overflowX'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
+  overflowX: PropCarrier<CssValueOf<'overflowX'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
   /**
    * 控制元素**垂直方向**内容溢出的处理。其他规则同 [`overflow`]，但只接受单值。
    *
@@ -12077,7 +12171,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-y
    */
-  overflowY: PropCarrier<TSelf, CssValueOf<'overflowY'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
+  overflowY: PropCarrier<CssValueOf<'overflowY'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -12091,7 +12185,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overlay
      */
-  overlay: PropFn<TSelf, CssValueOf<'overlay'>>
+  overlay: PropFn<CssValueOf<'overlay'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -12105,7 +12199,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-block
      */
-  overscrollBehaviorBlock: PropFn<TSelf, CssValueOf<'overscrollBehaviorBlock'>>
+  overscrollBehaviorBlock: PropFn<CssValueOf<'overscrollBehaviorBlock'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -12119,7 +12213,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-inline
      */
-  overscrollBehaviorInline: PropFn<TSelf, CssValueOf<'overscrollBehaviorInline'>>
+  overscrollBehaviorInline: PropFn<CssValueOf<'overscrollBehaviorInline'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -12133,7 +12227,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-x
      */
-  overscrollBehaviorX: PropFn<TSelf, CssValueOf<'overscrollBehaviorX'>>
+  overscrollBehaviorX: PropFn<CssValueOf<'overscrollBehaviorX'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -12147,7 +12241,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-y
      */
-  overscrollBehaviorY: PropFn<TSelf, CssValueOf<'overscrollBehaviorY'>>
+  overscrollBehaviorY: PropFn<CssValueOf<'overscrollBehaviorY'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -12161,7 +12255,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-block-end
      */
-  paddingBlockEnd: PropFn<TSelf, CssValueOf<'paddingBlockEnd'>>
+  paddingBlockEnd: PropFn<CssValueOf<'paddingBlockEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -12175,7 +12269,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-block-start
      */
-  paddingBlockStart: PropFn<TSelf, CssValueOf<'paddingBlockStart'>>
+  paddingBlockStart: PropFn<CssValueOf<'paddingBlockStart'>>
   /**
    * 设置元素的**下内边距**。⚠️ 百分比参照**父容器宽度**（非高度）。其他规则同 [`padding`]。
    *
@@ -12273,7 +12367,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-bottom
    */
-  paddingBottom: PropCarrier<TSelf, CssValueOf<'paddingBottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  paddingBottom: PropCarrier<CssValueOf<'paddingBottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -12288,7 +12382,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-inline-end
      */
-  paddingInlineEnd: PropFn<TSelf, CssValueOf<'paddingInlineEnd'>>
+  paddingInlineEnd: PropFn<CssValueOf<'paddingInlineEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -12303,7 +12397,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-inline-start
      */
-  paddingInlineStart: PropFn<TSelf, CssValueOf<'paddingInlineStart'>>
+  paddingInlineStart: PropFn<CssValueOf<'paddingInlineStart'>>
   /**
    * 设置元素的**左内边距**。其他规则同 [`padding`]。
    *
@@ -12401,7 +12495,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-left
    */
-  paddingLeft: PropCarrier<TSelf, CssValueOf<'paddingLeft'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  paddingLeft: PropCarrier<CssValueOf<'paddingLeft'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * 设置元素的**右内边距**。其他规则同 [`padding`]。
    *
@@ -12499,7 +12593,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-right
    */
-  paddingRight: PropCarrier<TSelf, CssValueOf<'paddingRight'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  paddingRight: PropCarrier<CssValueOf<'paddingRight'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * 设置元素的**上内边距**。⚠️ 百分比参照**父容器宽度**（非高度），常用于实现固定宽高比容器。其他规则同 [`padding`]。
    *
@@ -12597,7 +12691,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-top
    */
-  paddingTop: PropCarrier<TSelf, CssValueOf<'paddingTop'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  paddingTop: PropCarrier<CssValueOf<'paddingTop'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since February 2023.
      *
@@ -12611,7 +12705,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/page
      */
-  page: PropFn<TSelf, CssValueOf<'page'>>
+  page: PropFn<CssValueOf<'page'>>
   /**
      * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -12625,7 +12719,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/paint-order
      */
-  paintOrder: PropFn<TSelf, CssValueOf<'paintOrder'>>
+  paintOrder: PropFn<CssValueOf<'paintOrder'>>
   /**
    * 设置 **3D 透视距离** —— 观察者到 Z=0 平面的距离。值越小透视越强烈（夸张），越大越平。设此属性可让子元素的 3D 变换看起来"立体"。
    *
@@ -12718,7 +12812,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/perspective
    */
-  perspective: PropCarrier<TSelf, CssValueOf<'perspective'>, never, 'none' | GlobalKw, LengthUnits<TSelf>, never>
+  perspective: PropCarrier<CssValueOf<'perspective'>, never, 'none' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -12733,7 +12827,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/perspective-origin
      */
-  perspectiveOrigin: PropFn<TSelf, CssValueOf<'perspectiveOrigin'>>
+  perspectiveOrigin: PropFn<CssValueOf<'perspectiveOrigin'>>
   /**
    * 控制元素**是否响应鼠标 / 触摸事件**（点击、hover、拖动）。`none` 让元素**事件穿透**到下方。
    *
@@ -12775,10 +12869,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 让 disabled 按钮不响应点击
-   * s.pointerEvents.none.opacity(0.5)
+   * s.pointerEvents.none
+   * s.opacity(0.5)
    *
    * // 装饰性遮罩不阻挡下层交互
-   * s.position.absolute.inset(0).pointerEvents.none
+   * s.position.absolute
+   * s.inset(0)
+   * s.pointerEvents.none
    *
    * // 仅让按钮内的图标透传点击到按钮本身
    * // icon: s.pointerEvents.none
@@ -12809,7 +12906,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/pointer-events
    */
-  pointerEvents: PropCarrier<TSelf, CssValueOf<'pointerEvents'>, never, 'none' | 'auto' | 'visiblePainted' | 'visibleFill' | 'visibleStroke' | 'visible' | 'painted' | 'fill' | 'stroke' | 'all' | GlobalKw, unknown, never>
+  pointerEvents: PropCarrier<CssValueOf<'pointerEvents'>, never, 'none' | 'auto' | 'visiblePainted' | 'visibleFill' | 'visibleStroke' | 'visible' | 'painted' | 'fill' | 'stroke' | 'all' | GlobalKw, unknown, never>
   /**
    * 决定元素的**定位上下文** —— 影响该元素如何参与文档流，以及 `top` / `right` / `bottom` / `left` / `inset` / `z-index` 是否生效、以谁为基准。
    *
@@ -12850,14 +12947,21 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 居中遮罩
-   * s.position.fixed.inset(0)             // 4 边都贴视口 = 全屏
-   *   .display.flex.alignItems.center.justifyContent.center
+   * s.position.fixed
+   * s.inset(0)             // 4 边都贴视口 = 全屏
+   * s.display.flex
+   * s.alignItems.center
+   * s.justifyContent.center
    *
    * // 粘性头部
-   * s.position.sticky.top(0).zIndex(10)
+   * s.position.sticky
+   * s.top(0)
+   * s.zIndex(10)
    *
    * // 绝对定位徽标
-   * s.position.absolute.top.px(-8).right.px(-8)
+   * s.position.absolute
+   * s.top.px(-8)
+   * s.right.px(-8)
    * ```
    *
    * ## 兼容性
@@ -12881,7 +12985,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position
    */
-  position: PropCarrier<TSelf, CssValueOf<'position'>, never, 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky' | GlobalKw, unknown, never>
+  position: PropCarrier<CssValueOf<'position'>, never, 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky' | GlobalKw, unknown, never>
   /**
    * 绑定到一个已命名的**锚点元素**，让自己相对该锚点定位（CSS Anchor Positioning，实验性）。
    *
@@ -12925,7 +13029,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-anchor
    */
-  positionAnchor: PropCarrier<TSelf, CssValueOf<'positionAnchor'>, never, 'auto' | GlobalKw, unknown, never>
+  positionAnchor: PropCarrier<CssValueOf<'positionAnchor'>, never, 'auto' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -12939,7 +13043,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-area
      */
-  positionArea: PropFn<TSelf, CssValueOf<'positionArea'>>
+  positionArea: PropFn<CssValueOf<'positionArea'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -12953,7 +13057,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-try-fallbacks
      */
-  positionTryFallbacks: PropFn<TSelf, CssValueOf<'positionTryFallbacks'>>
+  positionTryFallbacks: PropFn<CssValueOf<'positionTryFallbacks'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -12967,7 +13071,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-try-order
      */
-  positionTryOrder: PropFn<TSelf, CssValueOf<'positionTryOrder'>>
+  positionTryOrder: PropFn<CssValueOf<'positionTryOrder'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -12981,7 +13085,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-visibility
      */
-  positionVisibility: PropFn<TSelf, CssValueOf<'positionVisibility'>>
+  positionVisibility: PropFn<CssValueOf<'positionVisibility'>>
   /**
      * Since May 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -12996,7 +13100,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/print-color-adjust
      */
-  printColorAdjust: PropFn<TSelf, CssValueOf<'printColorAdjust'>>
+  printColorAdjust: PropFn<CssValueOf<'printColorAdjust'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -13010,7 +13114,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/quotes
      */
-  quotes: PropFn<TSelf, CssValueOf<'quotes'>>
+  quotes: PropFn<CssValueOf<'quotes'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -13024,7 +13128,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/r
      */
-  r: PropFn<TSelf, CssValueOf<'r'>>
+  r: PropFn<CssValueOf<'r'>>
   /**
    * 允许用户**手动调整元素尺寸**（拖右下角）。最常用于 `<textarea>` 让用户拖动改大小。
    *
@@ -13086,7 +13190,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/resize
    */
-  resize: PropCarrier<TSelf, CssValueOf<'resize'>, never, 'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline' | GlobalKw, unknown, never>
+  resize: PropCarrier<CssValueOf<'resize'>, never, 'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline' | GlobalKw, unknown, never>
   /**
    * 设置定位元素距**右侧**的偏移量。正值向左移（向内缩），负值向右溢出。**只在 `position` 非 `static` 时生效**。其他规则同 [`inset`]。
    *
@@ -13134,7 +13238,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 绝对定位充满父容器
    *
    * ```ts
-   * s.position.absolute.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
+   * s.position.absolute
+   * s.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
    * // 前提：父容器 position 不是 static
    * ```
    *
@@ -13184,7 +13289,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/right
    */
-  right: PropCarrier<TSelf, CssValueOf<'right'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  right: PropCarrier<CssValueOf<'right'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * 设置元素的**旋转角度**（CSS Transforms 2，独立属性，等价于 `transform: rotate()`）。可指定旋转轴。
    *
@@ -13225,7 +13330,9 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 现代写法（独立属性 + 复合）
-   * s.rotate('45deg').scale('1.2').translate('10px, 20px')
+   * s.rotate('45deg')
+   * s.scale('1.2')
+   * s.translate('10px, 20px')
    *
    * // 经典写法（transform 综合）
    * s.transform('rotate(45deg) scale(1.2) translate(10px, 20px)')
@@ -13257,7 +13364,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/rotate
    */
-  rotate: PropCarrier<TSelf, CssValueOf<'rotate'>, never, 'none' | GlobalKw, AngleUnits<TSelf>, never>
+  rotate: PropCarrier<CssValueOf<'rotate'>, never, 'none' | GlobalKw, AngleUnits, never>
   /**
    * 仅设置**行间距**（垂直方向）。可单独覆盖 `gap` 简写的行间距值。
    *
@@ -13291,7 +13398,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * 等价于：
    *
    * ```ts
-   * s.rowGap.px(12).columnGap.px(24)
+   * s.rowGap.px(12)
+   * s.columnGap.px(24)
    * ```
    *
    * ### gap vs margin
@@ -13350,7 +13458,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/row-gap
    */
-  rowGap: PropCarrier<TSelf, CssValueOf<'rowGap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
+  rowGap: PropCarrier<CssValueOf<'rowGap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits, never>
   /**
      * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -13364,13 +13472,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ruby-align
      */
-  rubyAlign: PropFn<TSelf, CssValueOf<'rubyAlign'>>
+  rubyAlign: PropFn<CssValueOf<'rubyAlign'>>
   /**
      * **Syntax**: `separate | collapse | auto`
      *
      * **Initial value**: `separate`
      */
-  rubyMerge: PropFn<TSelf, CssValueOf<'rubyMerge'>>
+  rubyMerge: PropFn<CssValueOf<'rubyMerge'>>
   /**
      * **Syntax**: `auto | none`
      *
@@ -13382,7 +13490,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ruby-overhang
      */
-  rubyOverhang: PropFn<TSelf, CssValueOf<'rubyOverhang'>>
+  rubyOverhang: PropFn<CssValueOf<'rubyOverhang'>>
   /**
      * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -13397,7 +13505,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ruby-position
      */
-  rubyPosition: PropFn<TSelf, CssValueOf<'rubyPosition'>>
+  rubyPosition: PropFn<CssValueOf<'rubyPosition'>>
   /**
      * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -13411,7 +13519,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/rx
      */
-  rx: PropFn<TSelf, CssValueOf<'rx'>>
+  rx: PropFn<CssValueOf<'rx'>>
   /**
      * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -13425,7 +13533,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ry
      */
-  ry: PropFn<TSelf, CssValueOf<'ry'>>
+  ry: PropFn<CssValueOf<'ry'>>
   /**
    * 设置元素的**缩放比例**（CSS Transforms 2 独立属性）。1.0 = 原始大小，2 = 双倍，0.5 = 一半。
    *
@@ -13494,7 +13602,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scale
    */
-  scale: PropCarrier<TSelf, CssValueOf<'scale'>, never, 'none' | GlobalKw, unknown, never>
+  scale: PropCarrier<CssValueOf<'scale'>, never, 'none' | GlobalKw, unknown, never>
   /**
    * 设置滚动**是否平滑过渡** —— JS `scrollTo` / 锚点跳转时是瞬间跳过去还是平滑滚过去。
    *
@@ -13558,7 +13666,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-behavior
    */
-  scrollBehavior: PropCarrier<TSelf, CssValueOf<'scrollBehavior'>, never, 'auto' | 'smooth' | GlobalKw, unknown, never>
+  scrollBehavior: PropCarrier<CssValueOf<'scrollBehavior'>, never, 'auto' | 'smooth' | GlobalKw, unknown, never>
   /**
      * **Syntax**: `none | nearest`
      *
@@ -13568,7 +13676,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      * | :-----: | :-----: | :----: | :-----: | :-: |
      * | **133** |   No    |   No   | **133** | No  |
      */
-  scrollInitialTarget: PropFn<TSelf, CssValueOf<'scrollInitialTarget'>>
+  scrollInitialTarget: PropFn<CssValueOf<'scrollInitialTarget'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -13582,7 +13690,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-block-end
      */
-  scrollMarginBlockEnd: PropFn<TSelf, CssValueOf<'scrollMarginBlockEnd'>>
+  scrollMarginBlockEnd: PropFn<CssValueOf<'scrollMarginBlockEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -13596,7 +13704,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-block-start
      */
-  scrollMarginBlockStart: PropFn<TSelf, CssValueOf<'scrollMarginBlockStart'>>
+  scrollMarginBlockStart: PropFn<CssValueOf<'scrollMarginBlockStart'>>
   /**
    * snap 对齐时**下方**的外边距偏移。
    *
@@ -13673,7 +13781,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-bottom
    */
-  scrollMarginBottom: PropCarrier<TSelf, CssValueOf<'scrollMarginBottom'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollMarginBottom: PropCarrier<CssValueOf<'scrollMarginBottom'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -13687,7 +13795,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-inline-end
      */
-  scrollMarginInlineEnd: PropFn<TSelf, CssValueOf<'scrollMarginInlineEnd'>>
+  scrollMarginInlineEnd: PropFn<CssValueOf<'scrollMarginInlineEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -13701,7 +13809,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-inline-start
      */
-  scrollMarginInlineStart: PropFn<TSelf, CssValueOf<'scrollMarginInlineStart'>>
+  scrollMarginInlineStart: PropFn<CssValueOf<'scrollMarginInlineStart'>>
   /**
    * snap 对齐时**左侧**的外边距偏移。
    *
@@ -13778,7 +13886,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-left
    */
-  scrollMarginLeft: PropCarrier<TSelf, CssValueOf<'scrollMarginLeft'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollMarginLeft: PropCarrier<CssValueOf<'scrollMarginLeft'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * snap 对齐时**右侧**的外边距偏移。
    *
@@ -13855,7 +13963,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-right
    */
-  scrollMarginRight: PropCarrier<TSelf, CssValueOf<'scrollMarginRight'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollMarginRight: PropCarrier<CssValueOf<'scrollMarginRight'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * snap 对齐时**上方**的外边距偏移。常用于锚点跳转时避开固定头部。
    *
@@ -13930,7 +14038,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-top
    */
-  scrollMarginTop: PropCarrier<TSelf, CssValueOf<'scrollMarginTop'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollMarginTop: PropCarrier<CssValueOf<'scrollMarginTop'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -13944,7 +14052,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-block-end
      */
-  scrollPaddingBlockEnd: PropFn<TSelf, CssValueOf<'scrollPaddingBlockEnd'>>
+  scrollPaddingBlockEnd: PropFn<CssValueOf<'scrollPaddingBlockEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -13958,7 +14066,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-block-start
      */
-  scrollPaddingBlockStart: PropFn<TSelf, CssValueOf<'scrollPaddingBlockStart'>>
+  scrollPaddingBlockStart: PropFn<CssValueOf<'scrollPaddingBlockStart'>>
   /**
    * 滚动容器**底部**的内边距偏移。
    *
@@ -14035,7 +14143,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-bottom
    */
-  scrollPaddingBottom: PropCarrier<TSelf, CssValueOf<'scrollPaddingBottom'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollPaddingBottom: PropCarrier<CssValueOf<'scrollPaddingBottom'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -14049,7 +14157,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-inline-end
      */
-  scrollPaddingInlineEnd: PropFn<TSelf, CssValueOf<'scrollPaddingInlineEnd'>>
+  scrollPaddingInlineEnd: PropFn<CssValueOf<'scrollPaddingInlineEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
      *
@@ -14063,7 +14171,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-inline-start
      */
-  scrollPaddingInlineStart: PropFn<TSelf, CssValueOf<'scrollPaddingInlineStart'>>
+  scrollPaddingInlineStart: PropFn<CssValueOf<'scrollPaddingInlineStart'>>
   /**
    * 滚动容器**左侧**的内边距偏移。
    *
@@ -14140,7 +14248,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-left
    */
-  scrollPaddingLeft: PropCarrier<TSelf, CssValueOf<'scrollPaddingLeft'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollPaddingLeft: PropCarrier<CssValueOf<'scrollPaddingLeft'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * 滚动容器**右侧**的内边距偏移。
    *
@@ -14217,7 +14325,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-right
    */
-  scrollPaddingRight: PropCarrier<TSelf, CssValueOf<'scrollPaddingRight'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollPaddingRight: PropCarrier<CssValueOf<'scrollPaddingRight'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * 滚动容器**顶部**的内边距偏移。最常用 —— 让出固定头部空间。
    *
@@ -14294,7 +14402,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-top
    */
-  scrollPaddingTop: PropCarrier<TSelf, CssValueOf<'scrollPaddingTop'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollPaddingTop: PropCarrier<CssValueOf<'scrollPaddingTop'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * 在**滚动项**（snap children）上设置**对齐点** —— 滚动停止时该 item 的哪一边对齐到容器边缘。
    *
@@ -14339,7 +14447,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-snap-align
    */
-  scrollSnapAlign: PropCarrier<TSelf, CssValueOf<'scrollSnapAlign'>, never, 'none' | 'start' | 'end' | 'center' | GlobalKw, unknown, never>
+  scrollSnapAlign: PropCarrier<CssValueOf<'scrollSnapAlign'>, never, 'none' | 'start' | 'end' | 'center' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -14354,7 +14462,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-bottom
      */
-  scrollSnapMarginBottom: PropFn<TSelf, CssValueOf<'scrollSnapMarginBottom'>>
+  scrollSnapMarginBottom: PropFn<CssValueOf<'scrollSnapMarginBottom'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -14369,7 +14477,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-left
      */
-  scrollSnapMarginLeft: PropFn<TSelf, CssValueOf<'scrollSnapMarginLeft'>>
+  scrollSnapMarginLeft: PropFn<CssValueOf<'scrollSnapMarginLeft'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -14384,7 +14492,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-right
      */
-  scrollSnapMarginRight: PropFn<TSelf, CssValueOf<'scrollSnapMarginRight'>>
+  scrollSnapMarginRight: PropFn<CssValueOf<'scrollSnapMarginRight'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -14399,7 +14507,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-top
      */
-  scrollSnapMarginTop: PropFn<TSelf, CssValueOf<'scrollSnapMarginTop'>>
+  scrollSnapMarginTop: PropFn<CssValueOf<'scrollSnapMarginTop'>>
   /**
    * 决定滚动是否**必须停在每个 snap point**（不允许快速滑过多个）。
    *
@@ -14428,7 +14536,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 全屏 PPT 风滑动：每次只滑 1 屏
-   * s.scrollSnapType('y mandatory').scrollSnapStop.always
+   * s.scrollSnapType('y mandatory')
+   * s.scrollSnapStop.always
    * ```
    *
    * ## 兼容性
@@ -14450,7 +14559,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-snap-stop
    */
-  scrollSnapStop: PropCarrier<TSelf, CssValueOf<'scrollSnapStop'>, never, 'normal' | 'always' | GlobalKw, unknown, never>
+  scrollSnapStop: PropCarrier<CssValueOf<'scrollSnapStop'>, never, 'normal' | 'always' | GlobalKw, unknown, never>
   /**
    * 在**滚动容器**上启用**滚动捕捉** —— 滚动结束时自动对齐到子元素。常用于卡片轮播、全屏滑动。
    *
@@ -14498,7 +14607,9 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 容器
-   * s.scrollSnapType('x mandatory').overflowX.auto.display.flex
+   * s.scrollSnapType('x mandatory')
+   * s.overflowX.auto
+   * s.display.flex
    *
    * // 每个 item
    * s.scrollSnapAlign.start              // 滚动停止时对齐到 item 起点
@@ -14526,7 +14637,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-snap-type
    */
-  scrollSnapType: PropCarrier<TSelf, CssValueOf<'scrollSnapType'>, never, 'none' | 'x' | 'y' | 'block' | 'inline' | 'both' | 'mandatory' | 'proximity' | GlobalKw, unknown, never>
+  scrollSnapType: PropCarrier<CssValueOf<'scrollSnapType'>, never, 'none' | 'x' | 'y' | 'block' | 'inline' | 'both' | 'mandatory' | 'proximity' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -14540,7 +14651,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-timeline-axis
      */
-  scrollTimelineAxis: PropFn<TSelf, CssValueOf<'scrollTimelineAxis'>>
+  scrollTimelineAxis: PropFn<CssValueOf<'scrollTimelineAxis'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -14554,7 +14665,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-timeline-name
      */
-  scrollTimelineName: PropFn<TSelf, CssValueOf<'scrollTimelineName'>>
+  scrollTimelineName: PropFn<CssValueOf<'scrollTimelineName'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -14568,7 +14679,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scrollbar-color
      */
-  scrollbarColor: PropFn<TSelf, CssValueOf<'scrollbarColor'>>
+  scrollbarColor: PropFn<CssValueOf<'scrollbarColor'>>
   /**
      * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -14582,7 +14693,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scrollbar-gutter
      */
-  scrollbarGutter: PropFn<TSelf, CssValueOf<'scrollbarGutter'>>
+  scrollbarGutter: PropFn<CssValueOf<'scrollbarGutter'>>
   /**
      * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -14596,7 +14707,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scrollbar-width
      */
-  scrollbarWidth: PropFn<TSelf, CssValueOf<'scrollbarWidth'>>
+  scrollbarWidth: PropFn<CssValueOf<'scrollbarWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -14610,7 +14721,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-image-threshold
      */
-  shapeImageThreshold: PropFn<TSelf, CssValueOf<'shapeImageThreshold'>>
+  shapeImageThreshold: PropFn<CssValueOf<'shapeImageThreshold'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -14624,7 +14735,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-margin
      */
-  shapeMargin: PropFn<TSelf, CssValueOf<'shapeMargin'>>
+  shapeMargin: PropFn<CssValueOf<'shapeMargin'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -14638,7 +14749,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-outside
      */
-  shapeOutside: PropFn<TSelf, CssValueOf<'shapeOutside'>>
+  shapeOutside: PropFn<CssValueOf<'shapeOutside'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -14652,7 +14763,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-rendering
      */
-  shapeRendering: PropFn<TSelf, CssValueOf<'shapeRendering'>>
+  shapeRendering: PropFn<CssValueOf<'shapeRendering'>>
   /**
      * **Syntax**: `normal | spell-out || digits || [ literal-punctuation | no-punctuation ]`
      *
@@ -14664,7 +14775,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/speak-as
      */
-  speakAs: PropFn<TSelf, CssValueOf<'speakAs'>>
+  speakAs: PropFn<CssValueOf<'speakAs'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -14678,7 +14789,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stop-color
      */
-  stopColor: PropFn<TSelf, CssValueOf<'stopColor'>>
+  stopColor: PropFn<CssValueOf<'stopColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -14692,7 +14803,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stop-opacity
      */
-  stopOpacity: PropFn<TSelf, CssValueOf<'stopOpacity'>>
+  stopOpacity: PropFn<CssValueOf<'stopOpacity'>>
   /**
    * SVG 专属：设置 SVG 图形的**描边颜色**（线条 / 轮廓）。配合 `stroke-width` 控制粗细。
    *
@@ -14838,7 +14949,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke
    */
-  stroke: ColorPropCarrier<TSelf, CssValueOf<'stroke'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  stroke: ColorPropCarrier<CssValueOf<'stroke'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
      * **Syntax**: `<color>`
      *
@@ -14848,7 +14959,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      * | :----: | :-----: | :------: | :--: | :-: |
      * |   No   |   No    | **11.1** |  No  | No  |
      */
-  strokeColor: PropFn<TSelf, CssValueOf<'strokeColor'>>
+  strokeColor: PropFn<CssValueOf<'strokeColor'>>
   /**
    * SVG 专属：设置**虚线描边**的模式（实线段长度和间隔长度）。可创建虚线、点状线、复杂图案。
    *
@@ -14885,7 +14996,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 圆周长例如 314.16
-   * s.strokeDasharray('314.16').strokeDashoffset('157.08')
+   * s.strokeDasharray('314.16')
+   * s.strokeDashoffset('157.08')
    * // 显示 50% 进度（offset 让虚线偏移半圈）
    *
    * // 配合 transition 动画 strokeDashoffset 0 → 314.16
@@ -14914,7 +15026,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-dasharray
    */
-  strokeDasharray: PropCarrier<TSelf, CssValueOf<'strokeDasharray'>, never, 'none' | GlobalKw, unknown, never>
+  strokeDasharray: PropCarrier<CssValueOf<'strokeDasharray'>, never, 'none' | GlobalKw, unknown, never>
   /**
    * SVG 专属：设置**虚线描边的起始偏移** —— 让虚线从路径的哪个位置开始。常用于实现"画线 / 进度环"动画。
    *
@@ -15003,7 +15115,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-dashoffset
    */
-  strokeDashoffset: PropCarrier<TSelf, CssValueOf<'strokeDashoffset'>, never, GlobalKw, LengthUnits<TSelf>, never>
+  strokeDashoffset: PropCarrier<CssValueOf<'strokeDashoffset'>, never, GlobalKw, LengthUnits, never>
   /**
    * SVG 专属：决定**描边线段端点**的形状（直角 / 圆角 / 方块延伸）。
    *
@@ -15063,7 +15175,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-linecap
    */
-  strokeLinecap: PropCarrier<TSelf, CssValueOf<'strokeLinecap'>, never, 'butt' | 'round' | 'square' | GlobalKw, unknown, never>
+  strokeLinecap: PropCarrier<CssValueOf<'strokeLinecap'>, never, 'butt' | 'round' | 'square' | GlobalKw, unknown, never>
   /**
    * SVG 专属：决定**描边拐角**的形状（尖角 / 圆角 / 斜切 / 弧形）。
    *
@@ -15111,7 +15223,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // Material Design / Feather Icons 风格
-   * s.strokeLinecap.round.strokeLinejoin.round
+   * s.strokeLinecap.round
+   * s.strokeLinejoin.round
    * ```
    *
    * ## 兼容性
@@ -15133,7 +15246,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-linejoin
    */
-  strokeLinejoin: PropCarrier<TSelf, CssValueOf<'strokeLinejoin'>, never, 'miter' | 'round' | 'bevel' | 'arcs' | 'miterClip' | GlobalKw, unknown, never>
+  strokeLinejoin: PropCarrier<CssValueOf<'strokeLinejoin'>, never, 'miter' | 'round' | 'bevel' | 'arcs' | 'miterClip' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -15147,7 +15260,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-miterlimit
      */
-  strokeMiterlimit: PropFn<TSelf, CssValueOf<'strokeMiterlimit'>>
+  strokeMiterlimit: PropFn<CssValueOf<'strokeMiterlimit'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -15161,7 +15274,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-opacity
      */
-  strokeOpacity: PropFn<TSelf, CssValueOf<'strokeOpacity'>>
+  strokeOpacity: PropFn<CssValueOf<'strokeOpacity'>>
   /**
    * SVG 专属：设置图形**描边的粗细**。仅在 SVG 元素（`<path>` / `<circle>` 等）上生效。
    *
@@ -15188,7 +15301,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 用例
    *
    * ```ts
-   * s.stroke._primary.strokeWidth.px(2)            // 2px 描边
+   * s.stroke._primary
+   * s.strokeWidth.px(2)            // 2px 描边
    * s.strokeWidth(0.5)                             // 0.5 用户坐标单位
    * ```
    *
@@ -15247,7 +15361,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-width
    */
-  strokeWidth: PropCarrier<TSelf, CssValueOf<'strokeWidth'>, BordersTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  strokeWidth: PropCarrier<CssValueOf<'strokeWidth'>, BordersTokens<T>, GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2021.
      *
@@ -15262,7 +15376,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/tab-size
      */
-  tabSize: PropFn<TSelf, CssValueOf<'tabSize'>>
+  tabSize: PropFn<CssValueOf<'tabSize'>>
   /**
    * 决定 `<table>` 列宽**算法**。
    *
@@ -15290,7 +15404,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 用例
    *
    * ```ts
-   * s.tableLayout.fixed.width('100%')
+   * s.tableLayout.fixed
+   * s.width('100%')
    * // 大表格性能优化：跳过列宽计算，按首行/colgroup 设的宽
    * ```
    *
@@ -15313,7 +15428,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/table-layout
    */
-  tableLayout: PropCarrier<TSelf, CssValueOf<'tableLayout'>, never, 'auto' | 'fixed' | GlobalKw, unknown, never>
+  tableLayout: PropCarrier<CssValueOf<'tableLayout'>, never, 'auto' | 'fixed' | GlobalKw, unknown, never>
   /**
    * 设置文本**水平对齐方式** —— 左对齐、居中、右对齐、两端对齐等。
    *
@@ -15381,7 +15496,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-align
    */
-  textAlign: PropCarrier<TSelf, CssValueOf<'textAlign'>, never, 'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'matchParent' | 'justifyAll' | GlobalKw, unknown, never>
+  textAlign: PropCarrier<CssValueOf<'textAlign'>, never, 'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'matchParent' | 'justifyAll' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -15395,7 +15510,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-align-last
      */
-  textAlignLast: PropFn<TSelf, CssValueOf<'textAlignLast'>>
+  textAlignLast: PropFn<CssValueOf<'textAlignLast'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2016.
      *
@@ -15409,7 +15524,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-anchor
      */
-  textAnchor: PropFn<TSelf, CssValueOf<'textAnchor'>>
+  textAnchor: PropFn<CssValueOf<'textAnchor'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -15423,7 +15538,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-autospace
      */
-  textAutospace: PropFn<TSelf, CssValueOf<'textAutospace'>>
+  textAutospace: PropFn<CssValueOf<'textAutospace'>>
   /**
      * **Syntax**: `normal | <'text-box-trim'> || <'text-box-edge'>`
      *
@@ -15435,7 +15550,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-box
      */
-  textBox: PropFn<TSelf, CssValueOf<'textBox'>>
+  textBox: PropFn<CssValueOf<'textBox'>>
   /**
      * **Syntax**: `auto | <text-edge>`
      *
@@ -15447,7 +15562,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-box-edge
      */
-  textBoxEdge: PropFn<TSelf, CssValueOf<'textBoxEdge'>>
+  textBoxEdge: PropFn<CssValueOf<'textBoxEdge'>>
   /**
      * **Syntax**: `none | trim-start | trim-end | trim-both`
      *
@@ -15459,7 +15574,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-box-trim
      */
-  textBoxTrim: PropFn<TSelf, CssValueOf<'textBoxTrim'>>
+  textBoxTrim: PropFn<CssValueOf<'textBoxTrim'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -15474,7 +15589,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-combine-upright
      */
-  textCombineUpright: PropFn<TSelf, CssValueOf<'textCombineUpright'>>
+  textCombineUpright: PropFn<CssValueOf<'textCombineUpright'>>
   /**
    * 设置**文本装饰线**（下划线 / 删除线 / 上划线）的颜色。未设置时跟随 `color`。
    *
@@ -15605,7 +15720,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-color
    */
-  textDecorationColor: ColorPropCarrier<TSelf, CssValueOf<'textDecorationColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  textDecorationColor: ColorPropCarrier<CssValueOf<'textDecorationColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
    * 设置**文本装饰线**的类型（下划线 / 删除线 / 上划线 / 拼写错误）。可多选叠加。
    *
@@ -15674,7 +15789,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-line
    */
-  textDecorationLine: PropCarrier<TSelf, CssValueOf<'textDecorationLine'>, never, 'none' | 'underline' | 'overline' | 'lineThrough' | 'spellingError' | 'grammarError' | GlobalKw, unknown, never>
+  textDecorationLine: PropCarrier<CssValueOf<'textDecorationLine'>, never, 'none' | 'underline' | 'overline' | 'lineThrough' | 'spellingError' | 'grammarError' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -15689,7 +15804,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-skip
      */
-  textDecorationSkip: PropFn<TSelf, CssValueOf<'textDecorationSkip'>>
+  textDecorationSkip: PropFn<CssValueOf<'textDecorationSkip'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -15703,7 +15818,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-skip-ink
      */
-  textDecorationSkipInk: PropFn<TSelf, CssValueOf<'textDecorationSkipInk'>>
+  textDecorationSkipInk: PropFn<CssValueOf<'textDecorationSkipInk'>>
   /**
    * 设置文本装饰线的**样式**（实线 / 虚线 / 双线 / 波浪线）。
    *
@@ -15749,7 +15864,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-style
    */
-  textDecorationStyle: PropCarrier<TSelf, CssValueOf<'textDecorationStyle'>, never, 'solid' | 'double' | 'dotted' | 'dashed' | 'wavy' | GlobalKw, unknown, never>
+  textDecorationStyle: PropCarrier<CssValueOf<'textDecorationStyle'>, never, 'solid' | 'double' | 'dotted' | 'dashed' | 'wavy' | GlobalKw, unknown, never>
   /**
    * 设置文本装饰线的**粗细**。可精细控制下划线 / 删除线粗细。
    *
@@ -15777,7 +15892,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 用例
    *
    * ```ts
-   * s.textDecorationLine.underline.textDecorationThickness.px(2)
+   * s.textDecorationLine.underline
+   * s.textDecorationThickness.px(2)
    * // 2px 粗下划线（无视字号）
    * ```
    *
@@ -15826,7 +15942,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-thickness
    */
-  textDecorationThickness: PropCarrier<TSelf, CssValueOf<'textDecorationThickness'>, never, 'auto' | 'fromFont' | GlobalKw, LengthUnits<TSelf>, never>
+  textDecorationThickness: PropCarrier<CssValueOf<'textDecorationThickness'>, never, 'auto' | 'fromFont' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -15841,7 +15957,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis-color
      */
-  textEmphasisColor: PropFn<TSelf, CssValueOf<'textEmphasisColor'>>
+  textEmphasisColor: PropFn<CssValueOf<'textEmphasisColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -15856,7 +15972,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis-position
      */
-  textEmphasisPosition: PropFn<TSelf, CssValueOf<'textEmphasisPosition'>>
+  textEmphasisPosition: PropFn<CssValueOf<'textEmphasisPosition'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -15871,7 +15987,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis-style
      */
-  textEmphasisStyle: PropFn<TSelf, CssValueOf<'textEmphasisStyle'>>
+  textEmphasisStyle: PropFn<CssValueOf<'textEmphasisStyle'>>
   /**
    * 设置**首行缩进** —— 段落第一行的左侧（或 LTR/RTL 起点侧）额外缩进。中文排版常用 2 字符。
    *
@@ -15904,7 +16020,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 悬挂缩进（hanging indent）
    *
    * ```ts
-   * s.textIndent.em(-2).paddingLeft.em(2)
+   * s.textIndent.em(-2)
+   * s.paddingLeft.em(2)
    * // 首行外凸 2 字符，配合 padding-left 让首行齐左边，其他行向右缩进
    * ```
    *
@@ -15951,7 +16068,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-indent
    */
-  textIndent: PropCarrier<TSelf, CssValueOf<'textIndent'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  textIndent: PropCarrier<CssValueOf<'textIndent'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -15965,7 +16082,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-justify
      */
-  textJustify: PropFn<TSelf, CssValueOf<'textJustify'>>
+  textJustify: PropFn<CssValueOf<'textJustify'>>
   /**
    * 在竖排书写（`writingMode: verticalRl/verticalLr`）时，控制单个**字符的朝向**。
    *
@@ -16009,7 +16126,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-orientation
    */
-  textOrientation: PropCarrier<TSelf, CssValueOf<'textOrientation'>, never, 'mixed' | 'upright' | 'sideways' | GlobalKw, unknown, never>
+  textOrientation: PropCarrier<CssValueOf<'textOrientation'>, never, 'mixed' | 'upright' | 'sideways' | GlobalKw, unknown, never>
   /**
    * 决定**溢出文本**的处理方式（截断或省略号）。需配合 `overflow: hidden` + `whiteSpace: nowrap`（或 line-clamp）才生效。
    *
@@ -16072,7 +16189,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-overflow
    */
-  textOverflow: PropCarrier<TSelf, CssValueOf<'textOverflow'>, never, 'clip' | 'ellipsis' | GlobalKw, unknown, never>
+  textOverflow: PropCarrier<CssValueOf<'textOverflow'>, never, 'clip' | 'ellipsis' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -16086,7 +16203,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-rendering
      */
-  textRendering: PropFn<TSelf, CssValueOf<'textRendering'>>
+  textRendering: PropFn<CssValueOf<'textRendering'>>
   /**
    * 给**文字**添加阴影。比 `boxShadow` 简化，**无 `spread`，无 `inset`**。可叠加多组。
    *
@@ -16159,7 +16276,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-shadow
    */
-  textShadow: PropCarrier<TSelf, CssValueOf<'textShadow'>, ShadowTokens<T>, 'none' | GlobalKw, unknown, never>
+  textShadow: PropCarrier<CssValueOf<'textShadow'>, ShadowTokens<T>, 'none' | GlobalKw, unknown, never>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -16173,7 +16290,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-size-adjust
      */
-  textSizeAdjust: PropFn<TSelf, CssValueOf<'textSizeAdjust'>>
+  textSizeAdjust: PropFn<CssValueOf<'textSizeAdjust'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -16187,7 +16304,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-spacing-trim
      */
-  textSpacingTrim: PropFn<TSelf, CssValueOf<'textSpacingTrim'>>
+  textSpacingTrim: PropFn<CssValueOf<'textSpacingTrim'>>
   /**
    * 控制文字的**大小写转换** / 全角半角转换（不修改 DOM，仅显示层变换）。
    *
@@ -16247,7 +16364,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-transform
    */
-  textTransform: PropCarrier<TSelf, CssValueOf<'textTransform'>, never, 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'fullWidth' | 'fullSizeKana' | 'mathAuto' | GlobalKw, unknown, never>
+  textTransform: PropCarrier<CssValueOf<'textTransform'>, never, 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'fullWidth' | 'fullSizeKana' | 'mathAuto' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2020.
      *
@@ -16261,7 +16378,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-underline-offset
      */
-  textUnderlineOffset: PropFn<TSelf, CssValueOf<'textUnderlineOffset'>>
+  textUnderlineOffset: PropFn<CssValueOf<'textUnderlineOffset'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -16276,7 +16393,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-underline-position
      */
-  textUnderlinePosition: PropFn<TSelf, CssValueOf<'textUnderlinePosition'>>
+  textUnderlinePosition: PropFn<CssValueOf<'textUnderlinePosition'>>
   /**
      * Since October 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -16290,7 +16407,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-wrap-mode
      */
-  textWrapMode: PropFn<TSelf, CssValueOf<'textWrapMode'>>
+  textWrapMode: PropFn<CssValueOf<'textWrapMode'>>
   /**
      * Since October 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -16304,7 +16421,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-wrap-style
      */
-  textWrapStyle: PropFn<TSelf, CssValueOf<'textWrapStyle'>>
+  textWrapStyle: PropFn<CssValueOf<'textWrapStyle'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -16318,7 +16435,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/timeline-scope
      */
-  timelineScope: PropFn<TSelf, CssValueOf<'timelineScope'>>
+  timelineScope: PropFn<CssValueOf<'timelineScope'>>
   /**
    * 设置定位元素距**顶部**的偏移量。正值向下移，负值向上移。**只在 `position` 非 `static` 时生效**。其他规则同 [`inset`]。
    *
@@ -16366,7 +16483,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 绝对定位充满父容器
    *
    * ```ts
-   * s.position.absolute.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
+   * s.position.absolute
+   * s.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
    * // 前提：父容器 position 不是 static
    * ```
    *
@@ -16416,7 +16534,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/top
    */
-  top: PropCarrier<TSelf, CssValueOf<'top'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  top: PropCarrier<CssValueOf<'top'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * 决定**触摸操作**（移动端）哪些动作由浏览器默认处理（滚动 / 缩放）、哪些被 JS 接管。常用于绘图 / 拖拽组件禁用浏览器手势。
    *
@@ -16483,7 +16601,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/touch-action
    */
-  touchAction: PropCarrier<TSelf, CssValueOf<'touchAction'>, never, 'auto' | 'none' | 'panX' | 'panY' | 'panLeft' | 'panRight' | 'panUp' | 'panDown' | 'pinchZoom' | 'manipulation' | GlobalKw, unknown, never>
+  touchAction: PropCarrier<CssValueOf<'touchAction'>, never, 'auto' | 'none' | 'panX' | 'panY' | 'panLeft' | 'panRight' | 'panUp' | 'panDown' | 'pinchZoom' | 'manipulation' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -16498,7 +16616,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform
      */
-  transform: PropFn<TSelf, CssValueOf<'transform'>>
+  transform: PropFn<CssValueOf<'transform'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -16512,7 +16630,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform-box
      */
-  transformBox: PropFn<TSelf, CssValueOf<'transformBox'>>
+  transformBox: PropFn<CssValueOf<'transformBox'>>
   /**
    * 设置 `transform` 变换的**原点位置** —— 旋转/缩放围绕哪个点进行。默认元素中心 (50% 50%)。
    *
@@ -16552,10 +16670,12 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 围绕左上角旋转
-   * s.transformOrigin('left top').transform('rotate(45deg)')
+   * s.transformOrigin('left top')
+   * s.transform('rotate(45deg)')
    *
    * // 围绕底部中心缩放（从底向上展开）
-   * s.transformOrigin.bottom.transform('scaleY(0)')
+   * s.transformOrigin.bottom
+   * s.transform('scaleY(0)')
    * // transition 后 scaleY(1) 就是"从底部展开"动画
    * ```
    *
@@ -16605,7 +16725,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform-origin
    */
-  transformOrigin: PropCarrier<TSelf, CssValueOf<'transformOrigin'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits<TSelf>, never>
+  transformOrigin: PropCarrier<CssValueOf<'transformOrigin'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -16620,7 +16740,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform-style
      */
-  transformStyle: PropFn<TSelf, CssValueOf<'transformStyle'>>
+  transformStyle: PropFn<CssValueOf<'transformStyle'>>
   /**
      * Since August 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -16634,7 +16754,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-behavior
      */
-  transitionBehavior: PropFn<TSelf, CssValueOf<'transitionBehavior'>>
+  transitionBehavior: PropFn<CssValueOf<'transitionBehavior'>>
   /**
    * 设置 CSS 过渡**开始前的延迟**。可为负值（让过渡从中间状态开始）。
    *
@@ -16660,7 +16780,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 用例
    *
    * ```ts
-   * s.transition('opacity 300ms').transitionDelay.ms(100)     // 等 100ms 才开始
+   * s.transition('opacity 300ms')
+   * s.transitionDelay.ms(100)     // 等 100ms 才开始
    *
    * // 错峰动画
    * // child1: transitionDelay 0ms
@@ -16689,7 +16810,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-delay
    */
-  transitionDelay: PropCarrier<TSelf, CssValueOf<'transitionDelay'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>, never>
+  transitionDelay: PropCarrier<CssValueOf<'transitionDelay'>, DurationTokens<T>, GlobalKw, TimeUnits, never>
   /**
    * 设置 CSS 过渡（`transition`）的**持续时间**。0 表示无过渡（即时变化）。
    *
@@ -16750,7 +16871,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-duration
    */
-  transitionDuration: PropCarrier<TSelf, CssValueOf<'transitionDuration'>, DurationTokens<T>, GlobalKw, TimeUnits<TSelf>, never>
+  transitionDuration: PropCarrier<CssValueOf<'transitionDuration'>, DurationTokens<T>, GlobalKw, TimeUnits, never>
   /**
    * 指定**哪些 CSS 属性**要应用过渡动画。可以是单个属性名、多个属性名、或 `all` / `none`。
    *
@@ -16826,7 +16947,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-property
    */
-  transitionProperty: PropCarrier<TSelf, CssValueOf<'transitionProperty'>, TransitionPropertyTokens<T>, 'none' | 'all' | GlobalKw, unknown, never>
+  transitionProperty: PropCarrier<CssValueOf<'transitionProperty'>, TransitionPropertyTokens<T>, 'none' | 'all' | GlobalKw, unknown, never>
   /**
    * 设置 CSS 过渡的**速率曲线**（缓动函数）—— 决定过渡是匀速、加速、减速还是阶梯式。
    *
@@ -16897,7 +17018,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-timing-function
    */
-  transitionTimingFunction: PropCarrier<TSelf, CssValueOf<'transitionTimingFunction'>, EasingTokens<T>, 'linear' | 'ease' | 'easeIn' | 'easeOut' | 'easeInOut' | 'stepStart' | 'stepEnd' | GlobalKw, unknown, never>
+  transitionTimingFunction: PropCarrier<CssValueOf<'transitionTimingFunction'>, EasingTokens<T>, 'linear' | 'ease' | 'easeIn' | 'easeOut' | 'easeInOut' | 'stepStart' | 'stepEnd' | GlobalKw, unknown, never>
   /**
    * 设置元素的**平移量**（CSS Transforms 2 独立属性）。等价于 `transform: translate()`，可单独动画化。
    *
@@ -16938,7 +17059,10 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 经典："绝对定位居中"
    *
    * ```ts
-   * s.position.absolute.top('50%').left('50%').translate('-50% -50%')
+   * s.position.absolute
+   * s.top('50%')
+   * s.left('50%')
+   * s.translate('-50% -50%')
    * // 元素中心位于父容器中心，无视元素尺寸
    * ```
    *
@@ -16990,7 +17114,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/translate
    */
-  translate: PropCarrier<TSelf, CssValueOf<'translate'>, never, 'none' | GlobalKw, LengthUnits<TSelf>, never>
+  translate: PropCarrier<CssValueOf<'translate'>, never, 'none' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -17004,7 +17128,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/unicode-bidi
      */
-  unicodeBidi: PropFn<TSelf, CssValueOf<'unicodeBidi'>>
+  unicodeBidi: PropFn<CssValueOf<'unicodeBidi'>>
   /**
    * 控制文本是否**可被用户选中**（鼠标拖选、键盘 Ctrl+A 等）。
    *
@@ -17066,7 +17190,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/user-select
    */
-  userSelect: PropCarrier<TSelf, CssValueOf<'userSelect'>, never, 'none' | 'auto' | 'text' | 'all' | 'contain' | GlobalKw, unknown, never>
+  userSelect: PropCarrier<CssValueOf<'userSelect'>, never, 'none' | 'auto' | 'text' | 'all' | 'contain' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -17080,7 +17204,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/vector-effect
      */
-  vectorEffect: PropFn<TSelf, CssValueOf<'vectorEffect'>>
+  vectorEffect: PropFn<CssValueOf<'vectorEffect'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -17094,7 +17218,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/vertical-align
      */
-  verticalAlign: PropFn<TSelf, CssValueOf<'verticalAlign'>>
+  verticalAlign: PropFn<CssValueOf<'verticalAlign'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -17108,7 +17232,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline-axis
      */
-  viewTimelineAxis: PropFn<TSelf, CssValueOf<'viewTimelineAxis'>>
+  viewTimelineAxis: PropFn<CssValueOf<'viewTimelineAxis'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -17122,7 +17246,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline-inset
      */
-  viewTimelineInset: PropFn<TSelf, CssValueOf<'viewTimelineInset'>>
+  viewTimelineInset: PropFn<CssValueOf<'viewTimelineInset'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -17136,7 +17260,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline-name
      */
-  viewTimelineName: PropFn<TSelf, CssValueOf<'viewTimelineName'>>
+  viewTimelineName: PropFn<CssValueOf<'viewTimelineName'>>
   /**
      * **Syntax**: `none | <custom-ident>+`
      *
@@ -17148,7 +17272,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-transition-class
      */
-  viewTransitionClass: PropFn<TSelf, CssValueOf<'viewTransitionClass'>>
+  viewTransitionClass: PropFn<CssValueOf<'viewTransitionClass'>>
   /**
      * Since October 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -17162,7 +17286,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-transition-name
      */
-  viewTransitionName: PropFn<TSelf, CssValueOf<'viewTransitionName'>>
+  viewTransitionName: PropFn<CssValueOf<'viewTransitionName'>>
   /**
    * 控制元素是否**可见**（但仍占空间，与 `display: none` 不同）。还可用于表格行 / 列的隐藏。
    *
@@ -17227,7 +17351,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/visibility
    */
-  visibility: PropCarrier<TSelf, CssValueOf<'visibility'>, never, 'visible' | 'hidden' | 'collapse' | GlobalKw, unknown, never>
+  visibility: PropCarrier<CssValueOf<'visibility'>, never, 'visible' | 'hidden' | 'collapse' | GlobalKw, unknown, never>
   /**
    * 控制文本中**空白字符**（空格、换行、tab）的处理 + 是否换行。CSS 中最容易混淆的属性之一。
    *
@@ -17271,7 +17395,9 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * // 一行省略
-   * s.whiteSpace.nowrap.overflow.hidden.textOverflow.ellipsis
+   * s.whiteSpace.nowrap
+   * s.overflow.hidden
+   * s.textOverflow.ellipsis
    * ```
    *
    * ## 兼容性
@@ -17293,7 +17419,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/white-space
    */
-  whiteSpace: PropCarrier<TSelf, CssValueOf<'whiteSpace'>, never, 'normal' | 'nowrap' | 'pre' | 'preWrap' | 'preLine' | 'breakSpaces' | 'wrap' | 'collapse' | GlobalKw, unknown, never>
+  whiteSpace: PropCarrier<CssValueOf<'whiteSpace'>, never, 'normal' | 'nowrap' | 'pre' | 'preWrap' | 'preLine' | 'breakSpaces' | 'wrap' | 'collapse' | GlobalKw, unknown, never>
   /**
      * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -17307,7 +17433,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/white-space-collapse
      */
-  whiteSpaceCollapse: PropFn<TSelf, CssValueOf<'whiteSpaceCollapse'>>
+  whiteSpaceCollapse: PropFn<CssValueOf<'whiteSpaceCollapse'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -17321,7 +17447,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/widows
      */
-  widows: PropFn<TSelf, CssValueOf<'widows'>>
+  widows: PropFn<CssValueOf<'widows'>>
   /**
    * 设置元素的**内容区宽度**（content-box 模式）或**边框盒宽度**（border-box 模式）。
    *
@@ -17356,7 +17482,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * ```ts
    * s.width.px(200)               // 200px 内容宽（默认 content-box）
-   * s.boxSizing.borderBox.width.px(200)   // 200px 边框盒宽（含 padding + border）
+   * s.boxSizing.borderBox          // 200px 边框盒宽（含 padding + border）
+   * s.width.px(200)
    * ```
    *
    * ### 百分比参照
@@ -17422,7 +17549,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/width
    */
-  width: PropCarrier<TSelf, CssValueOf<'width'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits<TSelf>, never>
+  width: PropCarrier<CssValueOf<'width'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
   /**
    * 提示浏览器某元素**即将变化** —— 让浏览器**提前优化**该元素（创建合成层、GPU 加速）。
    *
@@ -17491,7 +17618,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/will-change
    */
-  willChange: PropCarrier<TSelf, CssValueOf<'willChange'>, never, 'auto' | 'scrollPosition' | 'contents' | GlobalKw, unknown, never>
+  willChange: PropCarrier<CssValueOf<'willChange'>, never, 'auto' | 'scrollPosition' | 'contents' | GlobalKw, unknown, never>
   /**
    * 控制**单词何时可断行** —— 处理英文长单词溢出、CJK 文本断行规则。
    *
@@ -17555,7 +17682,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/word-break
    */
-  wordBreak: PropCarrier<TSelf, CssValueOf<'wordBreak'>, never, 'normal' | 'breakAll' | 'keepAll' | 'breakWord' | 'autoPhrase' | GlobalKw, unknown, never>
+  wordBreak: PropCarrier<CssValueOf<'wordBreak'>, never, 'normal' | 'breakAll' | 'keepAll' | 'breakWord' | 'autoPhrase' | GlobalKw, unknown, never>
   /**
    * 设置**单词之间**的额外间距（按空白字符识别单词）。对 CJK 文字效果有限（无空格分词）。
    *
@@ -17629,7 +17756,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/word-spacing
    */
-  wordSpacing: PropCarrier<TSelf, CssValueOf<'wordSpacing'>, never, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
+  wordSpacing: PropCarrier<CssValueOf<'wordSpacing'>, never, 'normal' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2018.
      *
@@ -17637,7 +17764,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  wordWrap: PropFn<TSelf, CssValueOf<'wordWrap'>>
+  wordWrap: PropFn<CssValueOf<'wordWrap'>>
   /**
    * 设置**书写方向** —— 横排 / 竖排，从左到右 / 从右到左。CJK 古典竖排、日文 / 蒙文等需要。
    *
@@ -17683,7 +17810,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/writing-mode
    */
-  writingMode: PropCarrier<TSelf, CssValueOf<'writingMode'>, never, 'horizontalTb' | 'verticalRl' | 'verticalLr' | 'sidewaysRl' | 'sidewaysLr' | GlobalKw, unknown, never>
+  writingMode: PropCarrier<CssValueOf<'writingMode'>, never, 'horizontalTb' | 'verticalRl' | 'verticalLr' | 'sidewaysRl' | 'sidewaysLr' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -17697,7 +17824,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/x
      */
-  x: PropFn<TSelf, CssValueOf<'x'>>
+  x: PropFn<CssValueOf<'x'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -17711,7 +17838,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/y
      */
-  y: PropFn<TSelf, CssValueOf<'y'>>
+  y: PropFn<CssValueOf<'y'>>
   /**
    * 控制元素的**层叠顺序**（z 轴前后）。数值越大越靠前。**仅对 `position` 非 `static` 的元素生效**。
    *
@@ -17738,8 +17865,10 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 用例
    *
    * ```ts
-   * s.position.relative.zIndex(10)     // 浮起到第 10 层
-   * s.position.fixed.zIndex(9999)      // Modal 最顶层（zui token：s.zIndex._modal）
+   * s.position.relative
+   * s.zIndex(10)     // 浮起到第 10 层
+   * s.position.fixed
+   * s.zIndex(9999)      // Modal 最顶层（zui token：s.zIndex._modal）
    * ```
    *
    * ### 层叠上下文（stacking context）
@@ -17781,7 +17910,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/z-index
    */
-  zIndex: PropCarrier<TSelf, CssValueOf<'zIndex'>, ZIndexTokens<T>, 'auto' | GlobalKw, unknown, never>
+  zIndex: PropCarrier<CssValueOf<'zIndex'>, ZIndexTokens<T>, 'auto' | GlobalKw, unknown, never>
   /**
      * Since May 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -17795,7 +17924,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/zoom
      */
-  zoom: PropFn<TSelf, CssValueOf<'zoom'>>
+  zoom: PropFn<CssValueOf<'zoom'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -17809,7 +17938,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/all
      */
-  all: PropFn<TSelf, CssValueOf<'all'>>
+  all: PropFn<CssValueOf<'all'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -17822,7 +17951,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation
      */
-  animation: PropFn<TSelf, CssValueOf<'animation'>>
+  animation: PropFn<CssValueOf<'animation'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -17834,7 +17963,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-range
      */
-  animationRange: PropFn<TSelf, CssValueOf<'animationRange'>>
+  animationRange: PropFn<CssValueOf<'animationRange'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -17846,7 +17975,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background
      */
-  background: PropFn<TSelf, CssValueOf<'background'>>
+  background: PropFn<CssValueOf<'background'>>
   /**
    * 设置 `background-image` **在容器中的位置**。可用关键字、百分比、长度，单值或多值组合。
    *
@@ -17952,7 +18081,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-position
    */
-  backgroundPosition: PropCarrier<TSelf, CssValueOf<'backgroundPosition'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits<TSelf>, never>
+  backgroundPosition: PropCarrier<CssValueOf<'backgroundPosition'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -17964,7 +18093,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border
      */
-  border: PropFn<TSelf, CssValueOf<'border'>>
+  border: PropFn<CssValueOf<'border'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -17976,7 +18105,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block
      */
-  borderBlock: PropFn<TSelf, CssValueOf<'borderBlock'>>
+  borderBlock: PropFn<CssValueOf<'borderBlock'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -17990,7 +18119,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-color
      */
-  borderBlockColor: PropFn<TSelf, CssValueOf<'borderBlockColor'>>
+  borderBlockColor: PropFn<CssValueOf<'borderBlockColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -18002,7 +18131,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end
      */
-  borderBlockEnd: PropFn<TSelf, CssValueOf<'borderBlockEnd'>>
+  borderBlockEnd: PropFn<CssValueOf<'borderBlockEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -18014,7 +18143,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start
      */
-  borderBlockStart: PropFn<TSelf, CssValueOf<'borderBlockStart'>>
+  borderBlockStart: PropFn<CssValueOf<'borderBlockStart'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -18028,7 +18157,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-style
      */
-  borderBlockStyle: PropFn<TSelf, CssValueOf<'borderBlockStyle'>>
+  borderBlockStyle: PropFn<CssValueOf<'borderBlockStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -18042,7 +18171,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-width
      */
-  borderBlockWidth: PropFn<TSelf, CssValueOf<'borderBlockWidth'>>
+  borderBlockWidth: PropFn<CssValueOf<'borderBlockWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -18054,7 +18183,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom
      */
-  borderBottom: PropFn<TSelf, CssValueOf<'borderBottom'>>
+  borderBottom: PropFn<CssValueOf<'borderBottom'>>
   /**
    * 设置元素**四条边框**的颜色（简写，可一次设 1/2/3/4 个值）。
    *
@@ -18110,7 +18239,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 配合 borderStyle / borderWidth
    *
    * 只有 `border-style` 不是 `none` 时才显示边框 —— **新元素默认 border-style 是 none**，光设颜色不显示！
-   * 正确写法：`s.border('1px solid').borderColor._primary`。
+   * 正确写法：`s.border('1px solid'); s.borderColor._primary`（两条 statement，statement-only 风）。
    *
    * ## CSS 命名色（146 个，按色相分组）
    *
@@ -18191,7 +18320,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-color
    */
-  borderColor: ColorPropCarrier<TSelf, CssValueOf<'borderColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  borderColor: ColorPropCarrier<CssValueOf<'borderColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -18204,7 +18333,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image
      */
-  borderImage: PropFn<TSelf, CssValueOf<'borderImage'>>
+  borderImage: PropFn<CssValueOf<'borderImage'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -18216,7 +18345,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline
      */
-  borderInline: PropFn<TSelf, CssValueOf<'borderInline'>>
+  borderInline: PropFn<CssValueOf<'borderInline'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -18230,7 +18359,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-color
      */
-  borderInlineColor: PropFn<TSelf, CssValueOf<'borderInlineColor'>>
+  borderInlineColor: PropFn<CssValueOf<'borderInlineColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -18242,7 +18371,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end
      */
-  borderInlineEnd: PropFn<TSelf, CssValueOf<'borderInlineEnd'>>
+  borderInlineEnd: PropFn<CssValueOf<'borderInlineEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -18254,7 +18383,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start
      */
-  borderInlineStart: PropFn<TSelf, CssValueOf<'borderInlineStart'>>
+  borderInlineStart: PropFn<CssValueOf<'borderInlineStart'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -18268,7 +18397,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-style
      */
-  borderInlineStyle: PropFn<TSelf, CssValueOf<'borderInlineStyle'>>
+  borderInlineStyle: PropFn<CssValueOf<'borderInlineStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -18282,7 +18411,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-width
      */
-  borderInlineWidth: PropFn<TSelf, CssValueOf<'borderInlineWidth'>>
+  borderInlineWidth: PropFn<CssValueOf<'borderInlineWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -18294,7 +18423,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left
      */
-  borderLeft: PropFn<TSelf, CssValueOf<'borderLeft'>>
+  borderLeft: PropFn<CssValueOf<'borderLeft'>>
   /**
    * 设置元素**四个圆角**的半径（简写）。支持单值四角统一、多值各角不同、`/` 分隔横纵半径做椭圆角。
    *
@@ -18392,7 +18521,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-radius
    */
-  borderRadius: PropCarrier<TSelf, CssValueOf<'borderRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  borderRadius: PropCarrier<CssValueOf<'borderRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -18404,7 +18533,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right
      */
-  borderRight: PropFn<TSelf, CssValueOf<'borderRight'>>
+  borderRight: PropFn<CssValueOf<'borderRight'>>
   /**
    * 设置元素**四条边框的样式**。这是显示边框的**开关** —— 默认 `none` 不显示，必须显式设为 `solid` 等才能看到边框。
    *
@@ -18479,7 +18608,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-style
    */
-  borderStyle: PropCarrier<TSelf, CssValueOf<'borderStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  borderStyle: PropCarrier<CssValueOf<'borderStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -18491,7 +18620,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top
      */
-  borderTop: PropFn<TSelf, CssValueOf<'borderTop'>>
+  borderTop: PropFn<CssValueOf<'borderTop'>>
   /**
    * 设置元素**四条边框的宽度**（简写，可一次设 1/2/3/4 个值）。⚠️ 必须配合非 `none` 的 `borderStyle` 才会显示。
    *
@@ -18528,8 +18657,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 必须配合 borderStyle
    *
    * ```ts
-   * s.borderWidth.px(2).borderColor._primary             // ❌ 不显示
-   * s.borderWidth.px(2).borderStyle.solid.borderColor._primary  // ✅
+   * // ❌ 不显示
+   * s.borderWidth.px(2)
+   * s.borderColor._primary
+   * // ✅
+   * s.borderWidth.px(2)
+   * s.borderStyle.solid
+   * s.borderColor._primary
    * ```
    *
    * ### 长度单位
@@ -18576,9 +18710,9 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-width
    */
-  borderWidth: PropCarrier<TSelf, CssValueOf<'borderWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits<TSelf>, never>
+  borderWidth: PropCarrier<CssValueOf<'borderWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
   /** **Syntax**: `<'caret-color'> || <'caret-shape'>` */
-  caret: PropFn<TSelf, CssValueOf<'caret'>>
+  caret: PropFn<CssValueOf<'caret'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -18591,7 +18725,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule
      */
-  columnRule: PropFn<TSelf, CssValueOf<'columnRule'>>
+  columnRule: PropFn<CssValueOf<'columnRule'>>
   /**
    * 把元素内容**分成多栏**（类似报纸 / 杂志排版）。可指定栏数或栏宽。
    *
@@ -18654,7 +18788,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/columns
    */
-  columns: PropCarrier<TSelf, CssValueOf<'columns'>, never, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  columns: PropCarrier<CssValueOf<'columns'>, never, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * **内禀占位尺寸**简写 —— 给 `contain: size` 或 `content-visibility: auto` 的元素一个"预估尺寸",避免坍缩。
    *
@@ -18712,7 +18846,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-size
    */
-  containIntrinsicSize: PropFn<TSelf, CssValueOf<'containIntrinsicSize'>>
+  containIntrinsicSize: PropFn<CssValueOf<'containIntrinsicSize'>>
   /**
    * **容器查询**简写 —— `container-name` 与 `container-type` 二合一,声明本元素成为**查询容器**让子节点用 `@container` 按本元素尺寸响应。
    *
@@ -18774,7 +18908,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/container
    */
-  container: PropFn<TSelf, CssValueOf<'container'>>
+  container: PropFn<CssValueOf<'container'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -18787,7 +18921,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex
      */
-  flex: PropFn<TSelf, CssValueOf<'flex'>>
+  flex: PropFn<CssValueOf<'flex'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -18800,7 +18934,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-flow
      */
-  flexFlow: PropFn<TSelf, CssValueOf<'flexFlow'>>
+  flexFlow: PropFn<CssValueOf<'flexFlow'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -18812,7 +18946,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font
      */
-  font: PropFn<TSelf, CssValueOf<'font'>>
+  font: PropFn<CssValueOf<'font'>>
   /**
    * flex / grid / 多栏布局中**子元素之间的间距**（同时设行/列间距的简写）。比传统 `margin` 方案更优 —— 不会在边缘产生多余间距。
    *
@@ -18846,7 +18980,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * 等价于：
    *
    * ```ts
-   * s.rowGap.px(12).columnGap.px(24)
+   * s.rowGap.px(12)
+   * s.columnGap.px(24)
    * ```
    *
    * ### gap vs margin
@@ -18905,7 +19040,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/gap
    */
-  gap: PropCarrier<TSelf, CssValueOf<'gap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits<TSelf>, never>
+  gap: PropCarrier<CssValueOf<'gap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -18917,7 +19052,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid
      */
-  grid: PropFn<TSelf, CssValueOf<'grid'>>
+  grid: PropFn<CssValueOf<'grid'>>
   /**
    * grid 子元素的**完整位置简写**（4 个值：row-start / column-start / row-end / column-end），或引用 `gridTemplateAreas` 中命名的区域。
    *
@@ -18988,7 +19123,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-area
    */
-  gridArea: PropCarrier<TSelf, CssValueOf<'gridArea'>, never, 'auto' | GlobalKw, unknown, never>
+  gridArea: PropCarrier<CssValueOf<'gridArea'>, never, 'auto' | GlobalKw, unknown, never>
   /**
    * grid **子元素**占据的**列范围**（简写：`grid-column-start / grid-column-end`）。可用线编号 / 命名线 / span 跨度。
    *
@@ -19050,7 +19185,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-column
    */
-  gridColumn: PropCarrier<TSelf, CssValueOf<'gridColumn'>, never, 'auto' | GlobalKw, unknown, never>
+  gridColumn: PropCarrier<CssValueOf<'gridColumn'>, never, 'auto' | GlobalKw, unknown, never>
   /**
    * grid **子元素**占据的**行范围**（简写）。规则同 `gridColumn`，方向变为垂直。
    *
@@ -19112,7 +19247,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-row
    */
-  gridRow: PropCarrier<TSelf, CssValueOf<'gridRow'>, never, 'auto' | GlobalKw, unknown, never>
+  gridRow: PropCarrier<CssValueOf<'gridRow'>, never, 'auto' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -19124,7 +19259,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template
      */
-  gridTemplate: PropFn<TSelf, CssValueOf<'gridTemplate'>>
+  gridTemplate: PropFn<CssValueOf<'gridTemplate'>>
   /**
    * **定位偏移简写**：同时设置 `top` / `right` / `bottom` / `left` 四个偏移值。**只在 `position` 非 `static` 时生效**。
    *
@@ -19172,7 +19307,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 绝对定位充满父容器
    *
    * ```ts
-   * s.position.absolute.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
+   * s.position.absolute
+   * s.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
    * // 前提：父容器 position 不是 static
    * ```
    *
@@ -19222,7 +19358,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset
    */
-  inset: PropCarrier<TSelf, CssValueOf<'inset'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  inset: PropCarrier<CssValueOf<'inset'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -19234,7 +19370,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-block
      */
-  insetBlock: PropFn<TSelf, CssValueOf<'insetBlock'>>
+  insetBlock: PropFn<CssValueOf<'insetBlock'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -19246,7 +19382,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-inline
      */
-  insetInline: PropFn<TSelf, CssValueOf<'insetInline'>>
+  insetInline: PropFn<CssValueOf<'insetInline'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -19261,7 +19397,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/line-clamp
      */
-  lineClamp: PropFn<TSelf, CssValueOf<'lineClamp'>>
+  lineClamp: PropFn<CssValueOf<'lineClamp'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -19273,7 +19409,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style
      */
-  listStyle: PropFn<TSelf, CssValueOf<'listStyle'>>
+  listStyle: PropFn<CssValueOf<'listStyle'>>
   /**
    * 设置元素**四条边外边距**（简写，可一次设 1/2/3/4 个值）。外边距是元素边框外到相邻元素之间的透明空间。
    *
@@ -19309,7 +19445,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 水平居中经典写法
    *
    * ```ts
-   * s.width.px(800).margin('0 auto')
+   * s.width.px(800)
+   * s.margin('0 auto')
    * // 块级元素 800px 宽，左右 auto 均分剩余空间 = 水平居中
    * // 等价于：marginLeft.auto + marginRight.auto
    * ```
@@ -19378,7 +19515,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin
    */
-  margin: PropCarrier<TSelf, CssValueOf<'margin'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  margin: PropCarrier<CssValueOf<'margin'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * **逻辑属性**：同时设置元素块轴（Block Axis）起止两端的外边距。水平书写模式下等同 `marginTop + marginBottom`；竖排文字模式下等同左右外边距。其他规则同 [`margin`]。
    *
@@ -19414,7 +19551,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 水平居中经典写法
    *
    * ```ts
-   * s.width.px(800).margin('0 auto')
+   * s.width.px(800)
+   * s.margin('0 auto')
    * // 块级元素 800px 宽，左右 auto 均分剩余空间 = 水平居中
    * // 等价于：marginLeft.auto + marginRight.auto
    * ```
@@ -19483,7 +19621,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-block
    */
-  marginBlock: PropCarrier<TSelf, CssValueOf<'marginBlock'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  marginBlock: PropCarrier<CssValueOf<'marginBlock'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * **逻辑属性**：同时设置元素行轴（Inline Axis）起止两端的外边距。水平书写模式下等同 `marginLeft + marginRight`。`marginInline.auto` 水平居中（等同 `margin: 0 auto`）。其他规则同 [`margin`]。
    *
@@ -19519,7 +19657,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    * ### 水平居中经典写法
    *
    * ```ts
-   * s.width.px(800).margin('0 auto')
+   * s.width.px(800)
+   * s.margin('0 auto')
    * // 块级元素 800px 宽，左右 auto 均分剩余空间 = 水平居中
    * // 等价于：marginLeft.auto + marginRight.auto
    * ```
@@ -19588,7 +19727,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-inline
    */
-  marginInline: PropCarrier<TSelf, CssValueOf<'marginInline'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  marginInline: PropCarrier<CssValueOf<'marginInline'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * **遮罩**简写 —— 用一张图像/渐变作为元素**透明度模板**:模板黑色区域元素**隐藏**、白色**显示**、灰色按 alpha 半透明。一句话设全部 8 个子属性。
    *
@@ -19653,7 +19792,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask
    */
-  mask: PropFn<TSelf, CssValueOf<'mask'>>
+  mask: PropFn<CssValueOf<'mask'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -19666,7 +19805,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border
      */
-  maskBorder: PropFn<TSelf, CssValueOf<'maskBorder'>>
+  maskBorder: PropFn<CssValueOf<'maskBorder'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -19679,7 +19818,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset
      */
-  motion: PropFn<TSelf, CssValueOf<'motion'>>
+  motion: PropFn<CssValueOf<'motion'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -19692,7 +19831,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset
      */
-  offset: PropFn<TSelf, CssValueOf<'offset'>>
+  offset: PropFn<CssValueOf<'offset'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
      *
@@ -19704,7 +19843,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline
      */
-  outline: PropFn<TSelf, CssValueOf<'outline'>>
+  outline: PropFn<CssValueOf<'outline'>>
   /**
    * 控制元素**内容溢出容器时**的处理方式（裁剪 / 滚动 / 显示）。可作 X 和 Y 两轴的简写。
    *
@@ -19777,7 +19916,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow
    */
-  overflow: PropCarrier<TSelf, CssValueOf<'overflow'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
+  overflow: PropCarrier<CssValueOf<'overflow'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -19791,7 +19930,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior
      */
-  overscrollBehavior: PropFn<TSelf, CssValueOf<'overscrollBehavior'>>
+  overscrollBehavior: PropFn<CssValueOf<'overscrollBehavior'>>
   /**
    * 设置元素**四条边内边距**（简写，可一次设 1/2/3/4 个值）。内边距是内容区与边框之间的透明空间，会撑大元素盒子（content-box 模式），背景色/图会延伸到内边距区域。
    *
@@ -19889,7 +20028,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding
    */
-  padding: PropCarrier<TSelf, CssValueOf<'padding'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  padding: PropCarrier<CssValueOf<'padding'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * **逻辑属性**：同时设置元素块轴两端的内边距。水平书写模式下等同 `paddingTop + paddingBottom`。其他规则同 [`padding`]。
    *
@@ -19987,7 +20126,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-block
    */
-  paddingBlock: PropCarrier<TSelf, CssValueOf<'paddingBlock'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  paddingBlock: PropCarrier<CssValueOf<'paddingBlock'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
    * **逻辑属性**：同时设置元素行轴两端的内边距。水平书写模式下等同 `paddingLeft + paddingRight`。其他规则同 [`padding`]。
    *
@@ -20085,7 +20224,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-inline
    */
-  paddingInline: PropCarrier<TSelf, CssValueOf<'paddingInline'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
+  paddingInline: PropCarrier<CssValueOf<'paddingInline'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -20097,7 +20236,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/place-content
      */
-  placeContent: PropFn<TSelf, CssValueOf<'placeContent'>>
+  placeContent: PropFn<CssValueOf<'placeContent'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -20109,7 +20248,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/place-items
      */
-  placeItems: PropFn<TSelf, CssValueOf<'placeItems'>>
+  placeItems: PropFn<CssValueOf<'placeItems'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -20121,7 +20260,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/place-self
      */
-  placeSelf: PropFn<TSelf, CssValueOf<'placeSelf'>>
+  placeSelf: PropFn<CssValueOf<'placeSelf'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -20133,7 +20272,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-try
      */
-  positionTry: PropFn<TSelf, CssValueOf<'positionTry'>>
+  positionTry: PropFn<CssValueOf<'positionTry'>>
   /**
    * 设置 snap item **对齐时**距容器边缘的**外边距偏移**（简写，1/2/3/4 值，类似 `margin`）。让 snap 时留出呼吸空间。
    *
@@ -20210,7 +20349,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin
    */
-  scrollMargin: PropCarrier<TSelf, CssValueOf<'scrollMargin'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollMargin: PropCarrier<CssValueOf<'scrollMargin'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * snap 对齐时**块方向**（横排 = 纵轴）的外边距偏移（简写，1 或 2 值）。
    *
@@ -20286,7 +20425,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-block
    */
-  scrollMarginBlock: PropCarrier<TSelf, CssValueOf<'scrollMarginBlock'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollMarginBlock: PropCarrier<CssValueOf<'scrollMarginBlock'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * snap 对齐时**行内方向**（横排 = 横轴）的外边距偏移（简写）。
    *
@@ -20362,7 +20501,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-inline
    */
-  scrollMarginInline: PropCarrier<TSelf, CssValueOf<'scrollMarginInline'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollMarginInline: PropCarrier<CssValueOf<'scrollMarginInline'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * 在**滚动容器**上设置**内边距偏移** —— 让 snap point 距容器边缘留出空间（如固定头部、侧栏）。
    *
@@ -20439,7 +20578,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding
    */
-  scrollPadding: PropCarrier<TSelf, CssValueOf<'scrollPadding'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollPadding: PropCarrier<CssValueOf<'scrollPadding'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * 滚动容器**块方向**（横排 = 纵轴）的内边距偏移（简写）。
    *
@@ -20516,7 +20655,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-block
    */
-  scrollPaddingBlock: PropCarrier<TSelf, CssValueOf<'scrollPaddingBlock'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollPaddingBlock: PropCarrier<CssValueOf<'scrollPaddingBlock'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
    * 滚动容器**行内方向**（横排 = 横轴）的内边距偏移（简写）。
    *
@@ -20593,7 +20732,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-inline
    */
-  scrollPaddingInline: PropCarrier<TSelf, CssValueOf<'scrollPaddingInline'>, SpacingTokens<T>, GlobalKw, LengthUnits<TSelf>, never>
+  scrollPaddingInline: PropCarrier<CssValueOf<'scrollPaddingInline'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2021.
      *
@@ -20606,7 +20745,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin
      */
-  scrollSnapMargin: PropFn<TSelf, CssValueOf<'scrollSnapMargin'>>
+  scrollSnapMargin: PropFn<CssValueOf<'scrollSnapMargin'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -20618,7 +20757,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-timeline
      */
-  scrollTimeline: PropFn<TSelf, CssValueOf<'scrollTimeline'>>
+  scrollTimeline: PropFn<CssValueOf<'scrollTimeline'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -20630,7 +20769,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration
      */
-  textDecoration: PropFn<TSelf, CssValueOf<'textDecoration'>>
+  textDecoration: PropFn<CssValueOf<'textDecoration'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -20643,7 +20782,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis
      */
-  textEmphasis: PropFn<TSelf, CssValueOf<'textEmphasis'>>
+  textEmphasis: PropFn<CssValueOf<'textEmphasis'>>
   /**
    * 控制**文本换行算法**（CSS Text 4）—— 让长段落的换行更美观（避免孤行、平衡每行长度）。
    *
@@ -20707,7 +20846,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-wrap
    */
-  textWrap: PropCarrier<TSelf, CssValueOf<'textWrap'>, never, 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable' | GlobalKw, unknown, never>
+  textWrap: PropCarrier<CssValueOf<'textWrap'>, never, 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable' | GlobalKw, unknown, never>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -20720,7 +20859,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition
      */
-  transition: PropFn<TSelf, CssValueOf<'transition'>>
+  transition: PropFn<CssValueOf<'transition'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -20732,7 +20871,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline
      */
-  viewTimeline: PropFn<TSelf, CssValueOf<'viewTimeline'>>
+  viewTimeline: PropFn<CssValueOf<'viewTimeline'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -20740,7 +20879,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0s`
      */
-  MozAnimationDelay: PropFn<TSelf, CssValueOf<'MozAnimationDelay'>>
+  MozAnimationDelay: PropFn<CssValueOf<'MozAnimationDelay'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -20748,7 +20887,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  MozAnimationDirection: PropFn<TSelf, CssValueOf<'MozAnimationDirection'>>
+  MozAnimationDirection: PropFn<CssValueOf<'MozAnimationDirection'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -20756,7 +20895,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0s`
      */
-  MozAnimationDuration: PropFn<TSelf, CssValueOf<'MozAnimationDuration'>>
+  MozAnimationDuration: PropFn<CssValueOf<'MozAnimationDuration'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -20764,7 +20903,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  MozAnimationFillMode: PropFn<TSelf, CssValueOf<'MozAnimationFillMode'>>
+  MozAnimationFillMode: PropFn<CssValueOf<'MozAnimationFillMode'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -20772,7 +20911,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `1`
      */
-  MozAnimationIterationCount: PropFn<TSelf, CssValueOf<'MozAnimationIterationCount'>>
+  MozAnimationIterationCount: PropFn<CssValueOf<'MozAnimationIterationCount'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -20780,7 +20919,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  MozAnimationName: PropFn<TSelf, CssValueOf<'MozAnimationName'>>
+  MozAnimationName: PropFn<CssValueOf<'MozAnimationName'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -20788,7 +20927,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `running`
      */
-  MozAnimationPlayState: PropFn<TSelf, CssValueOf<'MozAnimationPlayState'>>
+  MozAnimationPlayState: PropFn<CssValueOf<'MozAnimationPlayState'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -20796,7 +20935,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `ease`
      */
-  MozAnimationTimingFunction: PropFn<TSelf, CssValueOf<'MozAnimationTimingFunction'>>
+  MozAnimationTimingFunction: PropFn<CssValueOf<'MozAnimationTimingFunction'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -20804,7 +20943,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none` (but this value is overridden in the user agent CSS)
      */
-  MozAppearance: PropFn<TSelf, CssValueOf<'MozAppearance'>>
+  MozAppearance: PropFn<CssValueOf<'MozAppearance'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -20812,19 +20951,19 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `visible`
      */
-  MozBackfaceVisibility: PropFn<TSelf, CssValueOf<'MozBackfaceVisibility'>>
+  MozBackfaceVisibility: PropFn<CssValueOf<'MozBackfaceVisibility'>>
   /**
      * **Syntax**: `<url> | none`
      *
      * **Initial value**: `none`
      */
-  MozBinding: PropFn<TSelf, CssValueOf<'MozBinding'>>
+  MozBinding: PropFn<CssValueOf<'MozBinding'>>
   /**
      * **Syntax**: `<color>+ | none`
      *
      * **Initial value**: `none`
      */
-  MozBorderBottomColors: PropFn<TSelf, CssValueOf<'MozBorderBottomColors'>>
+  MozBorderBottomColors: PropFn<CssValueOf<'MozBorderBottomColors'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -20832,7 +20971,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `currentcolor`
      */
-  MozBorderEndColor: PropFn<TSelf, CssValueOf<'MozBorderEndColor'>>
+  MozBorderEndColor: PropFn<CssValueOf<'MozBorderEndColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -20840,7 +20979,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  MozBorderEndStyle: PropFn<TSelf, CssValueOf<'MozBorderEndStyle'>>
+  MozBorderEndStyle: PropFn<CssValueOf<'MozBorderEndStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -20848,19 +20987,19 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `medium`
      */
-  MozBorderEndWidth: PropFn<TSelf, CssValueOf<'MozBorderEndWidth'>>
+  MozBorderEndWidth: PropFn<CssValueOf<'MozBorderEndWidth'>>
   /**
      * **Syntax**: `<color>+ | none`
      *
      * **Initial value**: `none`
      */
-  MozBorderLeftColors: PropFn<TSelf, CssValueOf<'MozBorderLeftColors'>>
+  MozBorderLeftColors: PropFn<CssValueOf<'MozBorderLeftColors'>>
   /**
      * **Syntax**: `<color>+ | none`
      *
      * **Initial value**: `none`
      */
-  MozBorderRightColors: PropFn<TSelf, CssValueOf<'MozBorderRightColors'>>
+  MozBorderRightColors: PropFn<CssValueOf<'MozBorderRightColors'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -20868,7 +21007,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `currentcolor`
      */
-  MozBorderStartColor: PropFn<TSelf, CssValueOf<'MozBorderStartColor'>>
+  MozBorderStartColor: PropFn<CssValueOf<'MozBorderStartColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -20876,13 +21015,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  MozBorderStartStyle: PropFn<TSelf, CssValueOf<'MozBorderStartStyle'>>
+  MozBorderStartStyle: PropFn<CssValueOf<'MozBorderStartStyle'>>
   /**
      * **Syntax**: `<color>+ | none`
      *
      * **Initial value**: `none`
      */
-  MozBorderTopColors: PropFn<TSelf, CssValueOf<'MozBorderTopColors'>>
+  MozBorderTopColors: PropFn<CssValueOf<'MozBorderTopColors'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -20890,7 +21029,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `content-box`
      */
-  MozBoxSizing: PropFn<TSelf, CssValueOf<'MozBoxSizing'>>
+  MozBoxSizing: PropFn<CssValueOf<'MozBoxSizing'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -20898,7 +21037,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `currentcolor`
      */
-  MozColumnRuleColor: PropFn<TSelf, CssValueOf<'MozColumnRuleColor'>>
+  MozColumnRuleColor: PropFn<CssValueOf<'MozColumnRuleColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -20906,7 +21045,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  MozColumnRuleStyle: PropFn<TSelf, CssValueOf<'MozColumnRuleStyle'>>
+  MozColumnRuleStyle: PropFn<CssValueOf<'MozColumnRuleStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -20914,7 +21053,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `medium`
      */
-  MozColumnRuleWidth: PropFn<TSelf, CssValueOf<'MozColumnRuleWidth'>>
+  MozColumnRuleWidth: PropFn<CssValueOf<'MozColumnRuleWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2016.
      *
@@ -20922,13 +21061,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  MozColumnWidth: PropFn<TSelf, CssValueOf<'MozColumnWidth'>>
+  MozColumnWidth: PropFn<CssValueOf<'MozColumnWidth'>>
   /**
      * **Syntax**: `none | [ fill | fill-opacity | stroke | stroke-opacity ]#`
      *
      * **Initial value**: `none`
      */
-  MozContextProperties: PropFn<TSelf, CssValueOf<'MozContextProperties'>>
+  MozContextProperties: PropFn<CssValueOf<'MozContextProperties'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -20936,7 +21075,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  MozFontFeatureSettings: PropFn<TSelf, CssValueOf<'MozFontFeatureSettings'>>
+  MozFontFeatureSettings: PropFn<CssValueOf<'MozFontFeatureSettings'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -20944,7 +21083,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  MozFontLanguageOverride: PropFn<TSelf, CssValueOf<'MozFontLanguageOverride'>>
+  MozFontLanguageOverride: PropFn<CssValueOf<'MozFontLanguageOverride'>>
   /**
      * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -20952,7 +21091,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `manual`
      */
-  MozHyphens: PropFn<TSelf, CssValueOf<'MozHyphens'>>
+  MozHyphens: PropFn<CssValueOf<'MozHyphens'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -20960,7 +21099,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  MozMarginEnd: PropFn<TSelf, CssValueOf<'MozMarginEnd'>>
+  MozMarginEnd: PropFn<CssValueOf<'MozMarginEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -20968,7 +21107,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  MozMarginStart: PropFn<TSelf, CssValueOf<'MozMarginStart'>>
+  MozMarginStart: PropFn<CssValueOf<'MozMarginStart'>>
   /**
      * The **`-moz-orient`** CSS property specifies the orientation of the element to which it's applied.
      *
@@ -20976,7 +21115,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `inline`
      */
-  MozOrient: PropFn<TSelf, CssValueOf<'MozOrient'>>
+  MozOrient: PropFn<CssValueOf<'MozOrient'>>
   /**
      * The **`font-smooth`** CSS property controls the application of anti-aliasing when fonts are rendered.
      *
@@ -20984,31 +21123,31 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  MozOsxFontSmoothing: PropFn<TSelf, CssValueOf<'MozOsxFontSmoothing'>>
+  MozOsxFontSmoothing: PropFn<CssValueOf<'MozOsxFontSmoothing'>>
   /**
      * **Syntax**: `<outline-radius>`
      *
      * **Initial value**: `0`
      */
-  MozOutlineRadiusBottomleft: PropFn<TSelf, CssValueOf<'MozOutlineRadiusBottomleft'>>
+  MozOutlineRadiusBottomleft: PropFn<CssValueOf<'MozOutlineRadiusBottomleft'>>
   /**
      * **Syntax**: `<outline-radius>`
      *
      * **Initial value**: `0`
      */
-  MozOutlineRadiusBottomright: PropFn<TSelf, CssValueOf<'MozOutlineRadiusBottomright'>>
+  MozOutlineRadiusBottomright: PropFn<CssValueOf<'MozOutlineRadiusBottomright'>>
   /**
      * **Syntax**: `<outline-radius>`
      *
      * **Initial value**: `0`
      */
-  MozOutlineRadiusTopleft: PropFn<TSelf, CssValueOf<'MozOutlineRadiusTopleft'>>
+  MozOutlineRadiusTopleft: PropFn<CssValueOf<'MozOutlineRadiusTopleft'>>
   /**
      * **Syntax**: `<outline-radius>`
      *
      * **Initial value**: `0`
      */
-  MozOutlineRadiusTopright: PropFn<TSelf, CssValueOf<'MozOutlineRadiusTopright'>>
+  MozOutlineRadiusTopright: PropFn<CssValueOf<'MozOutlineRadiusTopright'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -21016,7 +21155,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  MozPaddingEnd: PropFn<TSelf, CssValueOf<'MozPaddingEnd'>>
+  MozPaddingEnd: PropFn<CssValueOf<'MozPaddingEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -21024,7 +21163,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  MozPaddingStart: PropFn<TSelf, CssValueOf<'MozPaddingStart'>>
+  MozPaddingStart: PropFn<CssValueOf<'MozPaddingStart'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21032,7 +21171,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  MozPerspective: PropFn<TSelf, CssValueOf<'MozPerspective'>>
+  MozPerspective: PropFn<CssValueOf<'MozPerspective'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21040,13 +21179,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `50% 50%`
      */
-  MozPerspectiveOrigin: PropFn<TSelf, CssValueOf<'MozPerspectiveOrigin'>>
+  MozPerspectiveOrigin: PropFn<CssValueOf<'MozPerspectiveOrigin'>>
   /**
      * **Syntax**: `ignore | stretch-to-fit`
      *
      * **Initial value**: `stretch-to-fit`
      */
-  MozStackSizing: PropFn<TSelf, CssValueOf<'MozStackSizing'>>
+  MozStackSizing: PropFn<CssValueOf<'MozStackSizing'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2021.
      *
@@ -21054,13 +21193,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `8`
      */
-  MozTabSize: PropFn<TSelf, CssValueOf<'MozTabSize'>>
+  MozTabSize: PropFn<CssValueOf<'MozTabSize'>>
   /**
      * **Syntax**: `none | blink`
      *
      * **Initial value**: `none`
      */
-  MozTextBlink: PropFn<TSelf, CssValueOf<'MozTextBlink'>>
+  MozTextBlink: PropFn<CssValueOf<'MozTextBlink'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -21068,7 +21207,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto` for smartphone browsers supporting inflation, `none` in other cases (and then not modifiable).
      */
-  MozTextSizeAdjust: PropFn<TSelf, CssValueOf<'MozTextSizeAdjust'>>
+  MozTextSizeAdjust: PropFn<CssValueOf<'MozTextSizeAdjust'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21076,7 +21215,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  MozTransform: PropFn<TSelf, CssValueOf<'MozTransform'>>
+  MozTransform: PropFn<CssValueOf<'MozTransform'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21084,7 +21223,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `50% 50% 0`
      */
-  MozTransformOrigin: PropFn<TSelf, CssValueOf<'MozTransformOrigin'>>
+  MozTransformOrigin: PropFn<CssValueOf<'MozTransformOrigin'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21092,7 +21231,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `flat`
      */
-  MozTransformStyle: PropFn<TSelf, CssValueOf<'MozTransformStyle'>>
+  MozTransformStyle: PropFn<CssValueOf<'MozTransformStyle'>>
   /**
      * The **`user-modify`** property has no effect in Firefox. It was originally planned to determine whether or not the content of an element can be edited by a user.
      *
@@ -21100,7 +21239,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `read-only`
      */
-  MozUserModify: PropFn<TSelf, CssValueOf<'MozUserModify'>>
+  MozUserModify: PropFn<CssValueOf<'MozUserModify'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -21108,73 +21247,73 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  MozUserSelect: PropFn<TSelf, CssValueOf<'MozUserSelect'>>
+  MozUserSelect: PropFn<CssValueOf<'MozUserSelect'>>
   /**
      * **Syntax**: `drag | no-drag`
      *
      * **Initial value**: `drag`
      */
-  MozWindowDragging: PropFn<TSelf, CssValueOf<'MozWindowDragging'>>
+  MozWindowDragging: PropFn<CssValueOf<'MozWindowDragging'>>
   /**
      * **Syntax**: `default | menu | tooltip | sheet | none`
      *
      * **Initial value**: `default`
      */
-  MozWindowShadow: PropFn<TSelf, CssValueOf<'MozWindowShadow'>>
+  MozWindowShadow: PropFn<CssValueOf<'MozWindowShadow'>>
   /**
      * **Syntax**: `false | true`
      *
      * **Initial value**: `false`
      */
-  msAccelerator: PropFn<TSelf, CssValueOf<'msAccelerator'>>
+  msAccelerator: PropFn<CssValueOf<'msAccelerator'>>
   /**
      * **Syntax**: `tb | rl | bt | lr`
      *
      * **Initial value**: `tb`
      */
-  msBlockProgression: PropFn<TSelf, CssValueOf<'msBlockProgression'>>
+  msBlockProgression: PropFn<CssValueOf<'msBlockProgression'>>
   /**
      * **Syntax**: `none | chained`
      *
      * **Initial value**: `none`
      */
-  msContentZoomChaining: PropFn<TSelf, CssValueOf<'msContentZoomChaining'>>
+  msContentZoomChaining: PropFn<CssValueOf<'msContentZoomChaining'>>
   /**
      * **Syntax**: `<percentage>`
      *
      * **Initial value**: `400%`
      */
-  msContentZoomLimitMax: PropFn<TSelf, CssValueOf<'msContentZoomLimitMax'>>
+  msContentZoomLimitMax: PropFn<CssValueOf<'msContentZoomLimitMax'>>
   /**
      * **Syntax**: `<percentage>`
      *
      * **Initial value**: `100%`
      */
-  msContentZoomLimitMin: PropFn<TSelf, CssValueOf<'msContentZoomLimitMin'>>
+  msContentZoomLimitMin: PropFn<CssValueOf<'msContentZoomLimitMin'>>
   /**
      * **Syntax**: `snapInterval( <percentage>, <percentage> ) | snapList( <percentage># )`
      *
      * **Initial value**: `snapInterval(0%, 100%)`
      */
-  msContentZoomSnapPoints: PropFn<TSelf, CssValueOf<'msContentZoomSnapPoints'>>
+  msContentZoomSnapPoints: PropFn<CssValueOf<'msContentZoomSnapPoints'>>
   /**
      * **Syntax**: `none | proximity | mandatory`
      *
      * **Initial value**: `none`
      */
-  msContentZoomSnapType: PropFn<TSelf, CssValueOf<'msContentZoomSnapType'>>
+  msContentZoomSnapType: PropFn<CssValueOf<'msContentZoomSnapType'>>
   /**
      * **Syntax**: `none | zoom`
      *
      * **Initial value**: zoom for the top level element, none for all other elements
      */
-  msContentZooming: PropFn<TSelf, CssValueOf<'msContentZooming'>>
+  msContentZooming: PropFn<CssValueOf<'msContentZooming'>>
   /**
      * **Syntax**: `<string>`
      *
      * **Initial value**: "" (the empty string)
      */
-  msFilter: PropFn<TSelf, CssValueOf<'msFilter'>>
+  msFilter: PropFn<CssValueOf<'msFilter'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21182,7 +21321,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `row`
      */
-  msFlexDirection: PropFn<TSelf, CssValueOf<'msFlexDirection'>>
+  msFlexDirection: PropFn<CssValueOf<'msFlexDirection'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21190,55 +21329,55 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  msFlexPositive: PropFn<TSelf, CssValueOf<'msFlexPositive'>>
+  msFlexPositive: PropFn<CssValueOf<'msFlexPositive'>>
   /**
      * **Syntax**: `[ none | <custom-ident> ]#`
      *
      * **Initial value**: `none`
      */
-  msFlowFrom: PropFn<TSelf, CssValueOf<'msFlowFrom'>>
+  msFlowFrom: PropFn<CssValueOf<'msFlowFrom'>>
   /**
      * **Syntax**: `[ none | <custom-ident> ]#`
      *
      * **Initial value**: `none`
      */
-  msFlowInto: PropFn<TSelf, CssValueOf<'msFlowInto'>>
+  msFlowInto: PropFn<CssValueOf<'msFlowInto'>>
   /**
      * **Syntax**: `none | <track-list> | <auto-track-list>`
      *
      * **Initial value**: `none`
      */
-  msGridColumns: PropFn<TSelf, CssValueOf<'msGridColumns'>>
+  msGridColumns: PropFn<CssValueOf<'msGridColumns'>>
   /**
      * **Syntax**: `none | <track-list> | <auto-track-list>`
      *
      * **Initial value**: `none`
      */
-  msGridRows: PropFn<TSelf, CssValueOf<'msGridRows'>>
+  msGridRows: PropFn<CssValueOf<'msGridRows'>>
   /**
      * **Syntax**: `auto | none`
      *
      * **Initial value**: `auto`
      */
-  msHighContrastAdjust: PropFn<TSelf, CssValueOf<'msHighContrastAdjust'>>
+  msHighContrastAdjust: PropFn<CssValueOf<'msHighContrastAdjust'>>
   /**
      * **Syntax**: `auto | <integer>{1,3}`
      *
      * **Initial value**: `auto`
      */
-  msHyphenateLimitChars: PropFn<TSelf, CssValueOf<'msHyphenateLimitChars'>>
+  msHyphenateLimitChars: PropFn<CssValueOf<'msHyphenateLimitChars'>>
   /**
      * **Syntax**: `no-limit | <integer>`
      *
      * **Initial value**: `no-limit`
      */
-  msHyphenateLimitLines: PropFn<TSelf, CssValueOf<'msHyphenateLimitLines'>>
+  msHyphenateLimitLines: PropFn<CssValueOf<'msHyphenateLimitLines'>>
   /**
      * **Syntax**: `<percentage> | <length>`
      *
      * **Initial value**: `0`
      */
-  msHyphenateLimitZone: PropFn<TSelf, CssValueOf<'msHyphenateLimitZone'>>
+  msHyphenateLimitZone: PropFn<CssValueOf<'msHyphenateLimitZone'>>
   /**
      * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -21246,13 +21385,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `manual`
      */
-  msHyphens: PropFn<TSelf, CssValueOf<'msHyphens'>>
+  msHyphens: PropFn<CssValueOf<'msHyphens'>>
   /**
      * **Syntax**: `auto | after`
      *
      * **Initial value**: `auto`
      */
-  msImeAlign: PropFn<TSelf, CssValueOf<'msImeAlign'>>
+  msImeAlign: PropFn<CssValueOf<'msImeAlign'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -21260,7 +21399,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  msLineBreak: PropFn<TSelf, CssValueOf<'msLineBreak'>>
+  msLineBreak: PropFn<CssValueOf<'msLineBreak'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21268,13 +21407,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  msOrder: PropFn<TSelf, CssValueOf<'msOrder'>>
+  msOrder: PropFn<CssValueOf<'msOrder'>>
   /**
      * **Syntax**: `auto | none | scrollbar | -ms-autohiding-scrollbar`
      *
      * **Initial value**: `auto`
      */
-  msOverflowStyle: PropFn<TSelf, CssValueOf<'msOverflowStyle'>>
+  msOverflowStyle: PropFn<CssValueOf<'msOverflowStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21282,7 +21421,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `visible`
      */
-  msOverflowX: PropFn<TSelf, CssValueOf<'msOverflowX'>>
+  msOverflowX: PropFn<CssValueOf<'msOverflowX'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21290,121 +21429,121 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `visible`
      */
-  msOverflowY: PropFn<TSelf, CssValueOf<'msOverflowY'>>
+  msOverflowY: PropFn<CssValueOf<'msOverflowY'>>
   /**
      * **Syntax**: `chained | none`
      *
      * **Initial value**: `chained`
      */
-  msScrollChaining: PropFn<TSelf, CssValueOf<'msScrollChaining'>>
+  msScrollChaining: PropFn<CssValueOf<'msScrollChaining'>>
   /**
      * **Syntax**: `auto | <length>`
      *
      * **Initial value**: `auto`
      */
-  msScrollLimitXMax: PropFn<TSelf, CssValueOf<'msScrollLimitXMax'>>
+  msScrollLimitXMax: PropFn<CssValueOf<'msScrollLimitXMax'>>
   /**
      * **Syntax**: `<length>`
      *
      * **Initial value**: `0`
      */
-  msScrollLimitXMin: PropFn<TSelf, CssValueOf<'msScrollLimitXMin'>>
+  msScrollLimitXMin: PropFn<CssValueOf<'msScrollLimitXMin'>>
   /**
      * **Syntax**: `auto | <length>`
      *
      * **Initial value**: `auto`
      */
-  msScrollLimitYMax: PropFn<TSelf, CssValueOf<'msScrollLimitYMax'>>
+  msScrollLimitYMax: PropFn<CssValueOf<'msScrollLimitYMax'>>
   /**
      * **Syntax**: `<length>`
      *
      * **Initial value**: `0`
      */
-  msScrollLimitYMin: PropFn<TSelf, CssValueOf<'msScrollLimitYMin'>>
+  msScrollLimitYMin: PropFn<CssValueOf<'msScrollLimitYMin'>>
   /**
      * **Syntax**: `none | railed`
      *
      * **Initial value**: `railed`
      */
-  msScrollRails: PropFn<TSelf, CssValueOf<'msScrollRails'>>
+  msScrollRails: PropFn<CssValueOf<'msScrollRails'>>
   /**
      * **Syntax**: `snapInterval( <length-percentage>, <length-percentage> ) | snapList( <length-percentage># )`
      *
      * **Initial value**: `snapInterval(0px, 100%)`
      */
-  msScrollSnapPointsX: PropFn<TSelf, CssValueOf<'msScrollSnapPointsX'>>
+  msScrollSnapPointsX: PropFn<CssValueOf<'msScrollSnapPointsX'>>
   /**
      * **Syntax**: `snapInterval( <length-percentage>, <length-percentage> ) | snapList( <length-percentage># )`
      *
      * **Initial value**: `snapInterval(0px, 100%)`
      */
-  msScrollSnapPointsY: PropFn<TSelf, CssValueOf<'msScrollSnapPointsY'>>
+  msScrollSnapPointsY: PropFn<CssValueOf<'msScrollSnapPointsY'>>
   /**
      * **Syntax**: `none | proximity | mandatory`
      *
      * **Initial value**: `none`
      */
-  msScrollSnapType: PropFn<TSelf, CssValueOf<'msScrollSnapType'>>
+  msScrollSnapType: PropFn<CssValueOf<'msScrollSnapType'>>
   /**
      * **Syntax**: `none | vertical-to-horizontal`
      *
      * **Initial value**: `none`
      */
-  msScrollTranslation: PropFn<TSelf, CssValueOf<'msScrollTranslation'>>
+  msScrollTranslation: PropFn<CssValueOf<'msScrollTranslation'>>
   /**
      * **Syntax**: `<color>`
      *
      * **Initial value**: depends on user agent
      */
-  msScrollbar3dlightColor: PropFn<TSelf, CssValueOf<'msScrollbar3dlightColor'>>
+  msScrollbar3dlightColor: PropFn<CssValueOf<'msScrollbar3dlightColor'>>
   /**
      * **Syntax**: `<color>`
      *
      * **Initial value**: `ButtonText`
      */
-  msScrollbarArrowColor: PropFn<TSelf, CssValueOf<'msScrollbarArrowColor'>>
+  msScrollbarArrowColor: PropFn<CssValueOf<'msScrollbarArrowColor'>>
   /**
      * **Syntax**: `<color>`
      *
      * **Initial value**: depends on user agent
      */
-  msScrollbarBaseColor: PropFn<TSelf, CssValueOf<'msScrollbarBaseColor'>>
+  msScrollbarBaseColor: PropFn<CssValueOf<'msScrollbarBaseColor'>>
   /**
      * **Syntax**: `<color>`
      *
      * **Initial value**: `ThreeDDarkShadow`
      */
-  msScrollbarDarkshadowColor: PropFn<TSelf, CssValueOf<'msScrollbarDarkshadowColor'>>
+  msScrollbarDarkshadowColor: PropFn<CssValueOf<'msScrollbarDarkshadowColor'>>
   /**
      * **Syntax**: `<color>`
      *
      * **Initial value**: `ThreeDFace`
      */
-  msScrollbarFaceColor: PropFn<TSelf, CssValueOf<'msScrollbarFaceColor'>>
+  msScrollbarFaceColor: PropFn<CssValueOf<'msScrollbarFaceColor'>>
   /**
      * **Syntax**: `<color>`
      *
      * **Initial value**: `ThreeDHighlight`
      */
-  msScrollbarHighlightColor: PropFn<TSelf, CssValueOf<'msScrollbarHighlightColor'>>
+  msScrollbarHighlightColor: PropFn<CssValueOf<'msScrollbarHighlightColor'>>
   /**
      * **Syntax**: `<color>`
      *
      * **Initial value**: `ThreeDDarkShadow`
      */
-  msScrollbarShadowColor: PropFn<TSelf, CssValueOf<'msScrollbarShadowColor'>>
+  msScrollbarShadowColor: PropFn<CssValueOf<'msScrollbarShadowColor'>>
   /**
      * **Syntax**: `<color>`
      *
      * **Initial value**: `Scrollbar`
      */
-  msScrollbarTrackColor: PropFn<TSelf, CssValueOf<'msScrollbarTrackColor'>>
+  msScrollbarTrackColor: PropFn<CssValueOf<'msScrollbarTrackColor'>>
   /**
      * **Syntax**: `none | ideograph-alpha | ideograph-numeric | ideograph-parenthesis | ideograph-space`
      *
      * **Initial value**: `none`
      */
-  msTextAutospace: PropFn<TSelf, CssValueOf<'msTextAutospace'>>
+  msTextAutospace: PropFn<CssValueOf<'msTextAutospace'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -21412,7 +21551,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  msTextCombineHorizontal: PropFn<TSelf, CssValueOf<'msTextCombineHorizontal'>>
+  msTextCombineHorizontal: PropFn<CssValueOf<'msTextCombineHorizontal'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21420,7 +21559,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `clip`
      */
-  msTextOverflow: PropFn<TSelf, CssValueOf<'msTextOverflow'>>
+  msTextOverflow: PropFn<CssValueOf<'msTextOverflow'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2019.
      *
@@ -21428,13 +21567,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  msTouchAction: PropFn<TSelf, CssValueOf<'msTouchAction'>>
+  msTouchAction: PropFn<CssValueOf<'msTouchAction'>>
   /**
      * **Syntax**: `grippers | none`
      *
      * **Initial value**: `grippers`
      */
-  msTouchSelect: PropFn<TSelf, CssValueOf<'msTouchSelect'>>
+  msTouchSelect: PropFn<CssValueOf<'msTouchSelect'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21442,7 +21581,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  msTransform: PropFn<TSelf, CssValueOf<'msTransform'>>
+  msTransform: PropFn<CssValueOf<'msTransform'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21450,7 +21589,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `50% 50% 0`
      */
-  msTransformOrigin: PropFn<TSelf, CssValueOf<'msTransformOrigin'>>
+  msTransformOrigin: PropFn<CssValueOf<'msTransformOrigin'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21458,7 +21597,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0s`
      */
-  msTransitionDelay: PropFn<TSelf, CssValueOf<'msTransitionDelay'>>
+  msTransitionDelay: PropFn<CssValueOf<'msTransitionDelay'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21466,7 +21605,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0s`
      */
-  msTransitionDuration: PropFn<TSelf, CssValueOf<'msTransitionDuration'>>
+  msTransitionDuration: PropFn<CssValueOf<'msTransitionDuration'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21474,7 +21613,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: all
      */
-  msTransitionProperty: PropFn<TSelf, CssValueOf<'msTransitionProperty'>>
+  msTransitionProperty: PropFn<CssValueOf<'msTransitionProperty'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21482,13 +21621,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `ease`
      */
-  msTransitionTimingFunction: PropFn<TSelf, CssValueOf<'msTransitionTimingFunction'>>
+  msTransitionTimingFunction: PropFn<CssValueOf<'msTransitionTimingFunction'>>
   /**
      * **Syntax**: `none | element | text`
      *
      * **Initial value**: `text`
      */
-  msUserSelect: PropFn<TSelf, CssValueOf<'msUserSelect'>>
+  msUserSelect: PropFn<CssValueOf<'msUserSelect'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21496,25 +21635,25 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  msWordBreak: PropFn<TSelf, CssValueOf<'msWordBreak'>>
+  msWordBreak: PropFn<CssValueOf<'msWordBreak'>>
   /**
      * **Syntax**: `auto | both | start | end | maximum | clear`
      *
      * **Initial value**: `auto`
      */
-  msWrapFlow: PropFn<TSelf, CssValueOf<'msWrapFlow'>>
+  msWrapFlow: PropFn<CssValueOf<'msWrapFlow'>>
   /**
      * **Syntax**: `<length>`
      *
      * **Initial value**: `0`
      */
-  msWrapMargin: PropFn<TSelf, CssValueOf<'msWrapMargin'>>
+  msWrapMargin: PropFn<CssValueOf<'msWrapMargin'>>
   /**
      * **Syntax**: `wrap | none`
      *
      * **Initial value**: `wrap`
      */
-  msWrapThrough: PropFn<TSelf, CssValueOf<'msWrapThrough'>>
+  msWrapThrough: PropFn<CssValueOf<'msWrapThrough'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -21522,7 +21661,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `horizontal-tb`
      */
-  msWritingMode: PropFn<TSelf, CssValueOf<'msWritingMode'>>
+  msWritingMode: PropFn<CssValueOf<'msWritingMode'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21530,7 +21669,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  WebkitAlignContent: PropFn<TSelf, CssValueOf<'WebkitAlignContent'>>
+  WebkitAlignContent: PropFn<CssValueOf<'WebkitAlignContent'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21538,7 +21677,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  WebkitAlignItems: PropFn<TSelf, CssValueOf<'WebkitAlignItems'>>
+  WebkitAlignItems: PropFn<CssValueOf<'WebkitAlignItems'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21546,7 +21685,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitAlignSelf: PropFn<TSelf, CssValueOf<'WebkitAlignSelf'>>
+  WebkitAlignSelf: PropFn<CssValueOf<'WebkitAlignSelf'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21554,7 +21693,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0s`
      */
-  WebkitAnimationDelay: PropFn<TSelf, CssValueOf<'WebkitAnimationDelay'>>
+  WebkitAnimationDelay: PropFn<CssValueOf<'WebkitAnimationDelay'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21562,7 +21701,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  WebkitAnimationDirection: PropFn<TSelf, CssValueOf<'WebkitAnimationDirection'>>
+  WebkitAnimationDirection: PropFn<CssValueOf<'WebkitAnimationDirection'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21570,7 +21709,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0s`
      */
-  WebkitAnimationDuration: PropFn<TSelf, CssValueOf<'WebkitAnimationDuration'>>
+  WebkitAnimationDuration: PropFn<CssValueOf<'WebkitAnimationDuration'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21578,7 +21717,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitAnimationFillMode: PropFn<TSelf, CssValueOf<'WebkitAnimationFillMode'>>
+  WebkitAnimationFillMode: PropFn<CssValueOf<'WebkitAnimationFillMode'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21586,7 +21725,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `1`
      */
-  WebkitAnimationIterationCount: PropFn<TSelf, CssValueOf<'WebkitAnimationIterationCount'>>
+  WebkitAnimationIterationCount: PropFn<CssValueOf<'WebkitAnimationIterationCount'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21594,7 +21733,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitAnimationName: PropFn<TSelf, CssValueOf<'WebkitAnimationName'>>
+  WebkitAnimationName: PropFn<CssValueOf<'WebkitAnimationName'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21602,7 +21741,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `running`
      */
-  WebkitAnimationPlayState: PropFn<TSelf, CssValueOf<'WebkitAnimationPlayState'>>
+  WebkitAnimationPlayState: PropFn<CssValueOf<'WebkitAnimationPlayState'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21610,7 +21749,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `ease`
      */
-  WebkitAnimationTimingFunction: PropFn<TSelf, CssValueOf<'WebkitAnimationTimingFunction'>>
+  WebkitAnimationTimingFunction: PropFn<CssValueOf<'WebkitAnimationTimingFunction'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -21618,7 +21757,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none` (but this value is overridden in the user agent CSS)
      */
-  WebkitAppearance: PropFn<TSelf, CssValueOf<'WebkitAppearance'>>
+  WebkitAppearance: PropFn<CssValueOf<'WebkitAppearance'>>
   /**
      * Since September 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -21626,7 +21765,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitBackdropFilter: PropFn<TSelf, CssValueOf<'WebkitBackdropFilter'>>
+  WebkitBackdropFilter: PropFn<CssValueOf<'WebkitBackdropFilter'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -21634,7 +21773,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `visible`
      */
-  WebkitBackfaceVisibility: PropFn<TSelf, CssValueOf<'WebkitBackfaceVisibility'>>
+  WebkitBackfaceVisibility: PropFn<CssValueOf<'WebkitBackfaceVisibility'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21642,7 +21781,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `border-box`
      */
-  WebkitBackgroundClip: PropFn<TSelf, CssValueOf<'WebkitBackgroundClip'>>
+  WebkitBackgroundClip: PropFn<CssValueOf<'WebkitBackgroundClip'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21650,7 +21789,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `padding-box`
      */
-  WebkitBackgroundOrigin: PropFn<TSelf, CssValueOf<'WebkitBackgroundOrigin'>>
+  WebkitBackgroundOrigin: PropFn<CssValueOf<'WebkitBackgroundOrigin'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21658,25 +21797,25 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto auto`
      */
-  WebkitBackgroundSize: PropFn<TSelf, CssValueOf<'WebkitBackgroundSize'>>
+  WebkitBackgroundSize: PropFn<CssValueOf<'WebkitBackgroundSize'>>
   /**
      * **Syntax**: `<color>`
      *
      * **Initial value**: `currentcolor`
      */
-  WebkitBorderBeforeColor: PropFn<TSelf, CssValueOf<'WebkitBorderBeforeColor'>>
+  WebkitBorderBeforeColor: PropFn<CssValueOf<'WebkitBorderBeforeColor'>>
   /**
      * **Syntax**: `<'border-style'>`
      *
      * **Initial value**: `none`
      */
-  WebkitBorderBeforeStyle: PropFn<TSelf, CssValueOf<'WebkitBorderBeforeStyle'>>
+  WebkitBorderBeforeStyle: PropFn<CssValueOf<'WebkitBorderBeforeStyle'>>
   /**
      * **Syntax**: `<'border-width'>`
      *
      * **Initial value**: `medium`
      */
-  WebkitBorderBeforeWidth: PropFn<TSelf, CssValueOf<'WebkitBorderBeforeWidth'>>
+  WebkitBorderBeforeWidth: PropFn<CssValueOf<'WebkitBorderBeforeWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21684,7 +21823,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitBorderBottomLeftRadius: PropFn<TSelf, CssValueOf<'WebkitBorderBottomLeftRadius'>>
+  WebkitBorderBottomLeftRadius: PropFn<CssValueOf<'WebkitBorderBottomLeftRadius'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21692,7 +21831,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitBorderBottomRightRadius: PropFn<TSelf, CssValueOf<'WebkitBorderBottomRightRadius'>>
+  WebkitBorderBottomRightRadius: PropFn<CssValueOf<'WebkitBorderBottomRightRadius'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21700,7 +21839,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `100%`
      */
-  WebkitBorderImageSlice: PropFn<TSelf, CssValueOf<'WebkitBorderImageSlice'>>
+  WebkitBorderImageSlice: PropFn<CssValueOf<'WebkitBorderImageSlice'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21708,7 +21847,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitBorderTopLeftRadius: PropFn<TSelf, CssValueOf<'WebkitBorderTopLeftRadius'>>
+  WebkitBorderTopLeftRadius: PropFn<CssValueOf<'WebkitBorderTopLeftRadius'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21716,7 +21855,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitBorderTopRightRadius: PropFn<TSelf, CssValueOf<'WebkitBorderTopRightRadius'>>
+  WebkitBorderTopRightRadius: PropFn<CssValueOf<'WebkitBorderTopRightRadius'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -21724,7 +21863,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `slice`
      */
-  WebkitBoxDecorationBreak: PropFn<TSelf, CssValueOf<'WebkitBoxDecorationBreak'>>
+  WebkitBoxDecorationBreak: PropFn<CssValueOf<'WebkitBoxDecorationBreak'>>
   /**
      * The **`-webkit-box-reflect`** CSS property lets you reflect the content of an element in one specific direction.
      *
@@ -21732,7 +21871,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitBoxReflect: PropFn<TSelf, CssValueOf<'WebkitBoxReflect'>>
+  WebkitBoxReflect: PropFn<CssValueOf<'WebkitBoxReflect'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21740,7 +21879,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitBoxShadow: PropFn<TSelf, CssValueOf<'WebkitBoxShadow'>>
+  WebkitBoxShadow: PropFn<CssValueOf<'WebkitBoxShadow'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -21748,7 +21887,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `content-box`
      */
-  WebkitBoxSizing: PropFn<TSelf, CssValueOf<'WebkitBoxSizing'>>
+  WebkitBoxSizing: PropFn<CssValueOf<'WebkitBoxSizing'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -21756,7 +21895,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitClipPath: PropFn<TSelf, CssValueOf<'WebkitClipPath'>>
+  WebkitClipPath: PropFn<CssValueOf<'WebkitClipPath'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -21764,7 +21903,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitColumnCount: PropFn<TSelf, CssValueOf<'WebkitColumnCount'>>
+  WebkitColumnCount: PropFn<CssValueOf<'WebkitColumnCount'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -21772,7 +21911,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `balance`
      */
-  WebkitColumnFill: PropFn<TSelf, CssValueOf<'WebkitColumnFill'>>
+  WebkitColumnFill: PropFn<CssValueOf<'WebkitColumnFill'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -21780,7 +21919,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `currentcolor`
      */
-  WebkitColumnRuleColor: PropFn<TSelf, CssValueOf<'WebkitColumnRuleColor'>>
+  WebkitColumnRuleColor: PropFn<CssValueOf<'WebkitColumnRuleColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -21788,7 +21927,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitColumnRuleStyle: PropFn<TSelf, CssValueOf<'WebkitColumnRuleStyle'>>
+  WebkitColumnRuleStyle: PropFn<CssValueOf<'WebkitColumnRuleStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -21796,7 +21935,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `medium`
      */
-  WebkitColumnRuleWidth: PropFn<TSelf, CssValueOf<'WebkitColumnRuleWidth'>>
+  WebkitColumnRuleWidth: PropFn<CssValueOf<'WebkitColumnRuleWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -21804,7 +21943,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitColumnSpan: PropFn<TSelf, CssValueOf<'WebkitColumnSpan'>>
+  WebkitColumnSpan: PropFn<CssValueOf<'WebkitColumnSpan'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2016.
      *
@@ -21812,7 +21951,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitColumnWidth: PropFn<TSelf, CssValueOf<'WebkitColumnWidth'>>
+  WebkitColumnWidth: PropFn<CssValueOf<'WebkitColumnWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
      *
@@ -21820,7 +21959,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitFilter: PropFn<TSelf, CssValueOf<'WebkitFilter'>>
+  WebkitFilter: PropFn<CssValueOf<'WebkitFilter'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21828,7 +21967,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitFlexBasis: PropFn<TSelf, CssValueOf<'WebkitFlexBasis'>>
+  WebkitFlexBasis: PropFn<CssValueOf<'WebkitFlexBasis'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21836,7 +21975,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `row`
      */
-  WebkitFlexDirection: PropFn<TSelf, CssValueOf<'WebkitFlexDirection'>>
+  WebkitFlexDirection: PropFn<CssValueOf<'WebkitFlexDirection'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21844,7 +21983,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitFlexGrow: PropFn<TSelf, CssValueOf<'WebkitFlexGrow'>>
+  WebkitFlexGrow: PropFn<CssValueOf<'WebkitFlexGrow'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21852,7 +21991,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `1`
      */
-  WebkitFlexShrink: PropFn<TSelf, CssValueOf<'WebkitFlexShrink'>>
+  WebkitFlexShrink: PropFn<CssValueOf<'WebkitFlexShrink'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21860,7 +21999,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `nowrap`
      */
-  WebkitFlexWrap: PropFn<TSelf, CssValueOf<'WebkitFlexWrap'>>
+  WebkitFlexWrap: PropFn<CssValueOf<'WebkitFlexWrap'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -21868,7 +22007,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  WebkitFontFeatureSettings: PropFn<TSelf, CssValueOf<'WebkitFontFeatureSettings'>>
+  WebkitFontFeatureSettings: PropFn<CssValueOf<'WebkitFontFeatureSettings'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -21876,7 +22015,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitFontKerning: PropFn<TSelf, CssValueOf<'WebkitFontKerning'>>
+  WebkitFontKerning: PropFn<CssValueOf<'WebkitFontKerning'>>
   /**
      * The **`font-smooth`** CSS property controls the application of anti-aliasing when fonts are rendered.
      *
@@ -21884,7 +22023,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitFontSmoothing: PropFn<TSelf, CssValueOf<'WebkitFontSmoothing'>>
+  WebkitFontSmoothing: PropFn<CssValueOf<'WebkitFontSmoothing'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -21892,7 +22031,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  WebkitFontVariantLigatures: PropFn<TSelf, CssValueOf<'WebkitFontVariantLigatures'>>
+  WebkitFontVariantLigatures: PropFn<CssValueOf<'WebkitFontVariantLigatures'>>
   /**
      * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -21900,7 +22039,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitHyphenateCharacter: PropFn<TSelf, CssValueOf<'WebkitHyphenateCharacter'>>
+  WebkitHyphenateCharacter: PropFn<CssValueOf<'WebkitHyphenateCharacter'>>
   /**
      * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -21908,7 +22047,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `manual`
      */
-  WebkitHyphens: PropFn<TSelf, CssValueOf<'WebkitHyphens'>>
+  WebkitHyphens: PropFn<CssValueOf<'WebkitHyphens'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -21916,7 +22055,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  WebkitInitialLetter: PropFn<TSelf, CssValueOf<'WebkitInitialLetter'>>
+  WebkitInitialLetter: PropFn<CssValueOf<'WebkitInitialLetter'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -21924,7 +22063,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `normal`
      */
-  WebkitJustifyContent: PropFn<TSelf, CssValueOf<'WebkitJustifyContent'>>
+  WebkitJustifyContent: PropFn<CssValueOf<'WebkitJustifyContent'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -21932,7 +22071,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitLineBreak: PropFn<TSelf, CssValueOf<'WebkitLineBreak'>>
+  WebkitLineBreak: PropFn<CssValueOf<'WebkitLineBreak'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -21940,7 +22079,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitLineClamp: PropFn<TSelf, CssValueOf<'WebkitLineClamp'>>
+  WebkitLineClamp: PropFn<CssValueOf<'WebkitLineClamp'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -21948,7 +22087,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitLogicalHeight: PropFn<TSelf, CssValueOf<'WebkitLogicalHeight'>>
+  WebkitLogicalHeight: PropFn<CssValueOf<'WebkitLogicalHeight'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -21956,7 +22095,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitLogicalWidth: PropFn<TSelf, CssValueOf<'WebkitLogicalWidth'>>
+  WebkitLogicalWidth: PropFn<CssValueOf<'WebkitLogicalWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -21964,7 +22103,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitMarginEnd: PropFn<TSelf, CssValueOf<'WebkitMarginEnd'>>
+  WebkitMarginEnd: PropFn<CssValueOf<'WebkitMarginEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -21972,13 +22111,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitMarginStart: PropFn<TSelf, CssValueOf<'WebkitMarginStart'>>
+  WebkitMarginStart: PropFn<CssValueOf<'WebkitMarginStart'>>
   /**
      * **Syntax**: `<attachment>#`
      *
      * **Initial value**: `scroll`
      */
-  WebkitMaskAttachment: PropFn<TSelf, CssValueOf<'WebkitMaskAttachment'>>
+  WebkitMaskAttachment: PropFn<CssValueOf<'WebkitMaskAttachment'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -21986,7 +22125,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitMaskBoxImageOutset: PropFn<TSelf, CssValueOf<'WebkitMaskBoxImageOutset'>>
+  WebkitMaskBoxImageOutset: PropFn<CssValueOf<'WebkitMaskBoxImageOutset'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -21994,7 +22133,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `stretch`
      */
-  WebkitMaskBoxImageRepeat: PropFn<TSelf, CssValueOf<'WebkitMaskBoxImageRepeat'>>
+  WebkitMaskBoxImageRepeat: PropFn<CssValueOf<'WebkitMaskBoxImageRepeat'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -22002,7 +22141,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitMaskBoxImageSlice: PropFn<TSelf, CssValueOf<'WebkitMaskBoxImageSlice'>>
+  WebkitMaskBoxImageSlice: PropFn<CssValueOf<'WebkitMaskBoxImageSlice'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -22010,7 +22149,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitMaskBoxImageSource: PropFn<TSelf, CssValueOf<'WebkitMaskBoxImageSource'>>
+  WebkitMaskBoxImageSource: PropFn<CssValueOf<'WebkitMaskBoxImageSource'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -22018,7 +22157,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitMaskBoxImageWidth: PropFn<TSelf, CssValueOf<'WebkitMaskBoxImageWidth'>>
+  WebkitMaskBoxImageWidth: PropFn<CssValueOf<'WebkitMaskBoxImageWidth'>>
   /**
      * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -22026,7 +22165,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `border`
      */
-  WebkitMaskClip: PropFn<TSelf, CssValueOf<'WebkitMaskClip'>>
+  WebkitMaskClip: PropFn<CssValueOf<'WebkitMaskClip'>>
   /**
      * The **`-webkit-mask-composite`** property specifies the manner in which multiple mask images applied to the same element are composited with one another. Mask images are composited in the opposite order that they are declared with the `-webkit-mask-image` property.
      *
@@ -22034,7 +22173,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `source-over`
      */
-  WebkitMaskComposite: PropFn<TSelf, CssValueOf<'WebkitMaskComposite'>>
+  WebkitMaskComposite: PropFn<CssValueOf<'WebkitMaskComposite'>>
   /**
      * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -22042,7 +22181,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitMaskImage: PropFn<TSelf, CssValueOf<'WebkitMaskImage'>>
+  WebkitMaskImage: PropFn<CssValueOf<'WebkitMaskImage'>>
   /**
      * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -22050,7 +22189,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `padding`
      */
-  WebkitMaskOrigin: PropFn<TSelf, CssValueOf<'WebkitMaskOrigin'>>
+  WebkitMaskOrigin: PropFn<CssValueOf<'WebkitMaskOrigin'>>
   /**
      * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -22058,7 +22197,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0% 0%`
      */
-  WebkitMaskPosition: PropFn<TSelf, CssValueOf<'WebkitMaskPosition'>>
+  WebkitMaskPosition: PropFn<CssValueOf<'WebkitMaskPosition'>>
   /**
      * The `-webkit-mask-position-x` CSS property sets the initial horizontal position of a mask image.
      *
@@ -22066,7 +22205,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0%`
      */
-  WebkitMaskPositionX: PropFn<TSelf, CssValueOf<'WebkitMaskPositionX'>>
+  WebkitMaskPositionX: PropFn<CssValueOf<'WebkitMaskPositionX'>>
   /**
      * The `-webkit-mask-position-y` CSS property sets the initial vertical position of a mask image.
      *
@@ -22074,7 +22213,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0%`
      */
-  WebkitMaskPositionY: PropFn<TSelf, CssValueOf<'WebkitMaskPositionY'>>
+  WebkitMaskPositionY: PropFn<CssValueOf<'WebkitMaskPositionY'>>
   /**
      * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -22082,7 +22221,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `repeat`
      */
-  WebkitMaskRepeat: PropFn<TSelf, CssValueOf<'WebkitMaskRepeat'>>
+  WebkitMaskRepeat: PropFn<CssValueOf<'WebkitMaskRepeat'>>
   /**
      * The `-webkit-mask-repeat-x` property specifies whether and how a mask image is repeated (tiled) horizontally.
      *
@@ -22090,7 +22229,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `repeat`
      */
-  WebkitMaskRepeatX: PropFn<TSelf, CssValueOf<'WebkitMaskRepeatX'>>
+  WebkitMaskRepeatX: PropFn<CssValueOf<'WebkitMaskRepeatX'>>
   /**
      * The `-webkit-mask-repeat-y` property sets whether and how a mask image is repeated (tiled) vertically.
      *
@@ -22098,7 +22237,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `repeat`
      */
-  WebkitMaskRepeatY: PropFn<TSelf, CssValueOf<'WebkitMaskRepeatY'>>
+  WebkitMaskRepeatY: PropFn<CssValueOf<'WebkitMaskRepeatY'>>
   /**
      * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -22106,7 +22245,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto auto`
      */
-  WebkitMaskSize: PropFn<TSelf, CssValueOf<'WebkitMaskSize'>>
+  WebkitMaskSize: PropFn<CssValueOf<'WebkitMaskSize'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -22114,7 +22253,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitMaxInlineSize: PropFn<TSelf, CssValueOf<'WebkitMaxInlineSize'>>
+  WebkitMaxInlineSize: PropFn<CssValueOf<'WebkitMaxInlineSize'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -22122,13 +22261,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitOrder: PropFn<TSelf, CssValueOf<'WebkitOrder'>>
+  WebkitOrder: PropFn<CssValueOf<'WebkitOrder'>>
   /**
      * **Syntax**: `auto | touch`
      *
      * **Initial value**: `auto`
      */
-  WebkitOverflowScrolling: PropFn<TSelf, CssValueOf<'WebkitOverflowScrolling'>>
+  WebkitOverflowScrolling: PropFn<CssValueOf<'WebkitOverflowScrolling'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -22136,7 +22275,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitPaddingEnd: PropFn<TSelf, CssValueOf<'WebkitPaddingEnd'>>
+  WebkitPaddingEnd: PropFn<CssValueOf<'WebkitPaddingEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -22144,7 +22283,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitPaddingStart: PropFn<TSelf, CssValueOf<'WebkitPaddingStart'>>
+  WebkitPaddingStart: PropFn<CssValueOf<'WebkitPaddingStart'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -22152,7 +22291,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitPerspective: PropFn<TSelf, CssValueOf<'WebkitPerspective'>>
+  WebkitPerspective: PropFn<CssValueOf<'WebkitPerspective'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -22160,7 +22299,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `50% 50%`
      */
-  WebkitPerspectiveOrigin: PropFn<TSelf, CssValueOf<'WebkitPerspectiveOrigin'>>
+  WebkitPerspectiveOrigin: PropFn<CssValueOf<'WebkitPerspectiveOrigin'>>
   /**
      * Since May 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -22168,7 +22307,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `economy`
      */
-  WebkitPrintColorAdjust: PropFn<TSelf, CssValueOf<'WebkitPrintColorAdjust'>>
+  WebkitPrintColorAdjust: PropFn<CssValueOf<'WebkitPrintColorAdjust'>>
   /**
      * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
@@ -22176,7 +22315,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `alternate`
      */
-  WebkitRubyPosition: PropFn<TSelf, CssValueOf<'WebkitRubyPosition'>>
+  WebkitRubyPosition: PropFn<CssValueOf<'WebkitRubyPosition'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2022.
      *
@@ -22184,7 +22323,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitScrollSnapType: PropFn<TSelf, CssValueOf<'WebkitScrollSnapType'>>
+  WebkitScrollSnapType: PropFn<CssValueOf<'WebkitScrollSnapType'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -22192,7 +22331,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitShapeMargin: PropFn<TSelf, CssValueOf<'WebkitShapeMargin'>>
+  WebkitShapeMargin: PropFn<CssValueOf<'WebkitShapeMargin'>>
   /**
      * **`-webkit-tap-highlight-color`** is a non-standard CSS property that sets the color of the highlight that appears over a link while it's being tapped. The highlighting indicates to the user that their tap is being successfully recognized, and indicates which element they're tapping on.
      *
@@ -22200,7 +22339,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `black`
      */
-  WebkitTapHighlightColor: PropFn<TSelf, CssValueOf<'WebkitTapHighlightColor'>>
+  WebkitTapHighlightColor: PropFn<CssValueOf<'WebkitTapHighlightColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -22208,7 +22347,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitTextCombine: PropFn<TSelf, CssValueOf<'WebkitTextCombine'>>
+  WebkitTextCombine: PropFn<CssValueOf<'WebkitTextCombine'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -22216,7 +22355,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `currentcolor`
      */
-  WebkitTextDecorationColor: PropFn<TSelf, CssValueOf<'WebkitTextDecorationColor'>>
+  WebkitTextDecorationColor: PropFn<CssValueOf<'WebkitTextDecorationColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -22224,7 +22363,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitTextDecorationLine: PropFn<TSelf, CssValueOf<'WebkitTextDecorationLine'>>
+  WebkitTextDecorationLine: PropFn<CssValueOf<'WebkitTextDecorationLine'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -22232,7 +22371,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `objects`
      */
-  WebkitTextDecorationSkip: PropFn<TSelf, CssValueOf<'WebkitTextDecorationSkip'>>
+  WebkitTextDecorationSkip: PropFn<CssValueOf<'WebkitTextDecorationSkip'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -22240,7 +22379,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `solid`
      */
-  WebkitTextDecorationStyle: PropFn<TSelf, CssValueOf<'WebkitTextDecorationStyle'>>
+  WebkitTextDecorationStyle: PropFn<CssValueOf<'WebkitTextDecorationStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -22248,7 +22387,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `currentcolor`
      */
-  WebkitTextEmphasisColor: PropFn<TSelf, CssValueOf<'WebkitTextEmphasisColor'>>
+  WebkitTextEmphasisColor: PropFn<CssValueOf<'WebkitTextEmphasisColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -22256,7 +22395,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitTextEmphasisPosition: PropFn<TSelf, CssValueOf<'WebkitTextEmphasisPosition'>>
+  WebkitTextEmphasisPosition: PropFn<CssValueOf<'WebkitTextEmphasisPosition'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
@@ -22264,7 +22403,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitTextEmphasisStyle: PropFn<TSelf, CssValueOf<'WebkitTextEmphasisStyle'>>
+  WebkitTextEmphasisStyle: PropFn<CssValueOf<'WebkitTextEmphasisStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
      *
@@ -22272,7 +22411,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `currentcolor`
      */
-  WebkitTextFillColor: PropFn<TSelf, CssValueOf<'WebkitTextFillColor'>>
+  WebkitTextFillColor: PropFn<CssValueOf<'WebkitTextFillColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2020.
      *
@@ -22280,7 +22419,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `mixed`
      */
-  WebkitTextOrientation: PropFn<TSelf, CssValueOf<'WebkitTextOrientation'>>
+  WebkitTextOrientation: PropFn<CssValueOf<'WebkitTextOrientation'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -22288,7 +22427,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto` for smartphone browsers supporting inflation, `none` in other cases (and then not modifiable).
      */
-  WebkitTextSizeAdjust: PropFn<TSelf, CssValueOf<'WebkitTextSizeAdjust'>>
+  WebkitTextSizeAdjust: PropFn<CssValueOf<'WebkitTextSizeAdjust'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -22296,7 +22435,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `currentcolor`
      */
-  WebkitTextStrokeColor: PropFn<TSelf, CssValueOf<'WebkitTextStrokeColor'>>
+  WebkitTextStrokeColor: PropFn<CssValueOf<'WebkitTextStrokeColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
@@ -22304,7 +22443,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0`
      */
-  WebkitTextStrokeWidth: PropFn<TSelf, CssValueOf<'WebkitTextStrokeWidth'>>
+  WebkitTextStrokeWidth: PropFn<CssValueOf<'WebkitTextStrokeWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -22312,7 +22451,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitTextUnderlinePosition: PropFn<TSelf, CssValueOf<'WebkitTextUnderlinePosition'>>
+  WebkitTextUnderlinePosition: PropFn<CssValueOf<'WebkitTextUnderlinePosition'>>
   /**
      * The `-webkit-touch-callout` CSS property controls the display of the default callout shown when you touch and hold a touch target.
      *
@@ -22320,7 +22459,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `default`
      */
-  WebkitTouchCallout: PropFn<TSelf, CssValueOf<'WebkitTouchCallout'>>
+  WebkitTouchCallout: PropFn<CssValueOf<'WebkitTouchCallout'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -22328,7 +22467,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `none`
      */
-  WebkitTransform: PropFn<TSelf, CssValueOf<'WebkitTransform'>>
+  WebkitTransform: PropFn<CssValueOf<'WebkitTransform'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -22336,7 +22475,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `50% 50% 0`
      */
-  WebkitTransformOrigin: PropFn<TSelf, CssValueOf<'WebkitTransformOrigin'>>
+  WebkitTransformOrigin: PropFn<CssValueOf<'WebkitTransformOrigin'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -22344,7 +22483,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `flat`
      */
-  WebkitTransformStyle: PropFn<TSelf, CssValueOf<'WebkitTransformStyle'>>
+  WebkitTransformStyle: PropFn<CssValueOf<'WebkitTransformStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -22352,7 +22491,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0s`
      */
-  WebkitTransitionDelay: PropFn<TSelf, CssValueOf<'WebkitTransitionDelay'>>
+  WebkitTransitionDelay: PropFn<CssValueOf<'WebkitTransitionDelay'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -22360,7 +22499,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `0s`
      */
-  WebkitTransitionDuration: PropFn<TSelf, CssValueOf<'WebkitTransitionDuration'>>
+  WebkitTransitionDuration: PropFn<CssValueOf<'WebkitTransitionDuration'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -22368,7 +22507,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: all
      */
-  WebkitTransitionProperty: PropFn<TSelf, CssValueOf<'WebkitTransitionProperty'>>
+  WebkitTransitionProperty: PropFn<CssValueOf<'WebkitTransitionProperty'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -22376,13 +22515,13 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `ease`
      */
-  WebkitTransitionTimingFunction: PropFn<TSelf, CssValueOf<'WebkitTransitionTimingFunction'>>
+  WebkitTransitionTimingFunction: PropFn<CssValueOf<'WebkitTransitionTimingFunction'>>
   /**
      * **Syntax**: `read-only | read-write | read-write-plaintext-only`
      *
      * **Initial value**: `read-only`
      */
-  WebkitUserModify: PropFn<TSelf, CssValueOf<'WebkitUserModify'>>
+  WebkitUserModify: PropFn<CssValueOf<'WebkitUserModify'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -22390,7 +22529,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `auto`
      */
-  WebkitUserSelect: PropFn<TSelf, CssValueOf<'WebkitUserSelect'>>
+  WebkitUserSelect: PropFn<CssValueOf<'WebkitUserSelect'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -22398,139 +22537,139 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * **Initial value**: `horizontal-tb`
      */
-  WebkitWritingMode: PropFn<TSelf, CssValueOf<'WebkitWritingMode'>>
+  WebkitWritingMode: PropFn<CssValueOf<'WebkitWritingMode'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
      * **Syntax**: `<single-animation>#`
      */
-  MozAnimation: PropFn<TSelf, CssValueOf<'MozAnimation'>>
+  MozAnimation: PropFn<CssValueOf<'MozAnimation'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
      * **Syntax**: `<'border-image-source'> || <'border-image-slice'> [ / <'border-image-width'> | / <'border-image-width'>? / <'border-image-outset'> ]? || <'border-image-repeat'>`
      */
-  MozBorderImage: PropFn<TSelf, CssValueOf<'MozBorderImage'>>
+  MozBorderImage: PropFn<CssValueOf<'MozBorderImage'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
      * **Syntax**: `<'column-rule-width'> || <'column-rule-style'> || <'column-rule-color'>`
      */
-  MozColumnRule: PropFn<TSelf, CssValueOf<'MozColumnRule'>>
+  MozColumnRule: PropFn<CssValueOf<'MozColumnRule'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
      * **Syntax**: `<'column-width'> || <'column-count'>`
      */
-  MozColumns: PropFn<TSelf, CssValueOf<'MozColumns'>>
+  MozColumns: PropFn<CssValueOf<'MozColumns'>>
   /** **Syntax**: `<outline-radius>{1,4} [ / <outline-radius>{1,4} ]?` */
-  MozOutlineRadius: PropFn<TSelf, CssValueOf<'MozOutlineRadius'>>
+  MozOutlineRadius: PropFn<CssValueOf<'MozOutlineRadius'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
      * **Syntax**: `<single-transition>#`
      */
-  MozTransition: PropFn<TSelf, CssValueOf<'MozTransition'>>
+  MozTransition: PropFn<CssValueOf<'MozTransition'>>
   /** **Syntax**: `<'-ms-content-zoom-limit-min'> <'-ms-content-zoom-limit-max'>` */
-  msContentZoomLimit: PropFn<TSelf, CssValueOf<'msContentZoomLimit'>>
+  msContentZoomLimit: PropFn<CssValueOf<'msContentZoomLimit'>>
   /** **Syntax**: `<'-ms-content-zoom-snap-type'> || <'-ms-content-zoom-snap-points'>` */
-  msContentZoomSnap: PropFn<TSelf, CssValueOf<'msContentZoomSnap'>>
+  msContentZoomSnap: PropFn<CssValueOf<'msContentZoomSnap'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
      * **Syntax**: `none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]`
      */
-  msFlex: PropFn<TSelf, CssValueOf<'msFlex'>>
+  msFlex: PropFn<CssValueOf<'msFlex'>>
   /** **Syntax**: `<'-ms-scroll-limit-x-min'> <'-ms-scroll-limit-y-min'> <'-ms-scroll-limit-x-max'> <'-ms-scroll-limit-y-max'>` */
-  msScrollLimit: PropFn<TSelf, CssValueOf<'msScrollLimit'>>
+  msScrollLimit: PropFn<CssValueOf<'msScrollLimit'>>
   /** **Syntax**: `<'-ms-scroll-snap-type'> <'-ms-scroll-snap-points-x'>` */
-  msScrollSnapX: PropFn<TSelf, CssValueOf<'msScrollSnapX'>>
+  msScrollSnapX: PropFn<CssValueOf<'msScrollSnapX'>>
   /** **Syntax**: `<'-ms-scroll-snap-type'> <'-ms-scroll-snap-points-y'>` */
-  msScrollSnapY: PropFn<TSelf, CssValueOf<'msScrollSnapY'>>
+  msScrollSnapY: PropFn<CssValueOf<'msScrollSnapY'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
      * **Syntax**: `<single-transition>#`
      */
-  msTransition: PropFn<TSelf, CssValueOf<'msTransition'>>
+  msTransition: PropFn<CssValueOf<'msTransition'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
      * **Syntax**: `<single-animation>#`
      */
-  WebkitAnimation: PropFn<TSelf, CssValueOf<'WebkitAnimation'>>
+  WebkitAnimation: PropFn<CssValueOf<'WebkitAnimation'>>
   /**
      * The **`-webkit-border-before`** CSS property is a shorthand property for setting the individual logical block start border property values in a single place in the style sheet.
      *
      * **Syntax**: `<'border-width'> || <'border-style'> || <color>`
      */
-  WebkitBorderBefore: PropFn<TSelf, CssValueOf<'WebkitBorderBefore'>>
+  WebkitBorderBefore: PropFn<CssValueOf<'WebkitBorderBefore'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
      * **Syntax**: `<'border-image-source'> || <'border-image-slice'> [ / <'border-image-width'> | / <'border-image-width'>? / <'border-image-outset'> ]? || <'border-image-repeat'>`
      */
-  WebkitBorderImage: PropFn<TSelf, CssValueOf<'WebkitBorderImage'>>
+  WebkitBorderImage: PropFn<CssValueOf<'WebkitBorderImage'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
      * **Syntax**: `<length-percentage [0,∞]>{1,4} [ / <length-percentage [0,∞]>{1,4} ]?`
      */
-  WebkitBorderRadius: PropFn<TSelf, CssValueOf<'WebkitBorderRadius'>>
+  WebkitBorderRadius: PropFn<CssValueOf<'WebkitBorderRadius'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
      * **Syntax**: `<'column-rule-width'> || <'column-rule-style'> || <'column-rule-color'>`
      */
-  WebkitColumnRule: PropFn<TSelf, CssValueOf<'WebkitColumnRule'>>
+  WebkitColumnRule: PropFn<CssValueOf<'WebkitColumnRule'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
      * **Syntax**: `<'column-width'> || <'column-count'>`
      */
-  WebkitColumns: PropFn<TSelf, CssValueOf<'WebkitColumns'>>
+  WebkitColumns: PropFn<CssValueOf<'WebkitColumns'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
      * **Syntax**: `none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]`
      */
-  WebkitFlex: PropFn<TSelf, CssValueOf<'WebkitFlex'>>
+  WebkitFlex: PropFn<CssValueOf<'WebkitFlex'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
      * **Syntax**: `<'flex-direction'> || <'flex-wrap'>`
      */
-  WebkitFlexFlow: PropFn<TSelf, CssValueOf<'WebkitFlexFlow'>>
+  WebkitFlexFlow: PropFn<CssValueOf<'WebkitFlexFlow'>>
   /**
      * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
      *
      * **Syntax**: `[ <mask-reference> || <position> [ / <bg-size> ]? || <repeat-style> || [ <visual-box> | border | padding | content | text ] || [ <visual-box> | border | padding | content ] ]#`
      */
-  WebkitMask: PropFn<TSelf, CssValueOf<'WebkitMask'>>
+  WebkitMask: PropFn<CssValueOf<'WebkitMask'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
      * **Syntax**: `<'mask-border-source'> || <'mask-border-slice'> [ / <'mask-border-width'>? [ / <'mask-border-outset'> ]? ]? || <'mask-border-repeat'> || <'mask-border-mode'>`
      */
-  WebkitMaskBoxImage: PropFn<TSelf, CssValueOf<'WebkitMaskBoxImage'>>
+  WebkitMaskBoxImage: PropFn<CssValueOf<'WebkitMaskBoxImage'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
      *
      * **Syntax**: `<'text-emphasis-style'> || <'text-emphasis-color'>`
      */
-  WebkitTextEmphasis: PropFn<TSelf, CssValueOf<'WebkitTextEmphasis'>>
+  WebkitTextEmphasis: PropFn<CssValueOf<'WebkitTextEmphasis'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
      *
      * **Syntax**: `<length> || <color>`
      */
-  WebkitTextStroke: PropFn<TSelf, CssValueOf<'WebkitTextStroke'>>
+  WebkitTextStroke: PropFn<CssValueOf<'WebkitTextStroke'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
      * **Syntax**: `<single-transition>#`
      */
-  WebkitTransition: PropFn<TSelf, CssValueOf<'WebkitTransition'>>
+  WebkitTransition: PropFn<CssValueOf<'WebkitTransition'>>
   /**
      * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
      *
@@ -22540,7 +22679,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  boxAlign: PropFn<TSelf, CssValueOf<'boxAlign'>>
+  boxAlign: PropFn<CssValueOf<'boxAlign'>>
   /**
      * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
      *
@@ -22550,7 +22689,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  boxDirection: PropFn<TSelf, CssValueOf<'boxDirection'>>
+  boxDirection: PropFn<CssValueOf<'boxDirection'>>
   /**
      * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
      *
@@ -22560,7 +22699,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  boxFlex: PropFn<TSelf, CssValueOf<'boxFlex'>>
+  boxFlex: PropFn<CssValueOf<'boxFlex'>>
   /**
      * The **`box-flex-group`** CSS property assigns the flexbox's child elements to a flex group.
      *
@@ -22570,7 +22709,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  boxFlexGroup: PropFn<TSelf, CssValueOf<'boxFlexGroup'>>
+  boxFlexGroup: PropFn<CssValueOf<'boxFlexGroup'>>
   /**
      * The **`box-lines`** CSS property determines whether the box may have a single or multiple lines (rows for horizontally oriented boxes, columns for vertically oriented boxes).
      *
@@ -22580,7 +22719,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  boxLines: PropFn<TSelf, CssValueOf<'boxLines'>>
+  boxLines: PropFn<CssValueOf<'boxLines'>>
   /**
      * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
      *
@@ -22590,7 +22729,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  boxOrdinalGroup: PropFn<TSelf, CssValueOf<'boxOrdinalGroup'>>
+  boxOrdinalGroup: PropFn<CssValueOf<'boxOrdinalGroup'>>
   /**
      * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
      *
@@ -22600,7 +22739,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  boxOrient: PropFn<TSelf, CssValueOf<'boxOrient'>>
+  boxOrient: PropFn<CssValueOf<'boxOrient'>>
   /**
      * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
      *
@@ -22610,7 +22749,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  boxPack: PropFn<TSelf, CssValueOf<'boxPack'>>
+  boxPack: PropFn<CssValueOf<'boxPack'>>
   /**
      * The **`clip`** CSS property defines a visible portion of an element. The `clip` property applies only to absolutely positioned elements — that is, elements with `position:absolute` or `position:fixed`.
      *
@@ -22620,7 +22759,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  clip: PropFn<TSelf, CssValueOf<'clip'>>
+  clip: PropFn<CssValueOf<'clip'>>
   /**
      * The **`font-stretch`** CSS property selects a normal, condensed, or expanded face from a font.
      *
@@ -22630,7 +22769,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  fontStretch: PropFn<TSelf, CssValueOf<'fontStretch'>>
+  fontStretch: PropFn<CssValueOf<'fontStretch'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -22640,7 +22779,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  gridColumnGap: PropFn<TSelf, CssValueOf<'gridColumnGap'>>
+  gridColumnGap: PropFn<CssValueOf<'gridColumnGap'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -22648,7 +22787,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  gridGap: PropFn<TSelf, CssValueOf<'gridGap'>>
+  gridGap: PropFn<CssValueOf<'gridGap'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
      *
@@ -22658,7 +22797,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  gridRowGap: PropFn<TSelf, CssValueOf<'gridRowGap'>>
+  gridRowGap: PropFn<CssValueOf<'gridRowGap'>>
   /**
      * **Syntax**: `auto | normal | active | inactive | disabled`
      *
@@ -22666,7 +22805,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  imeMode: PropFn<TSelf, CssValueOf<'imeMode'>>
+  imeMode: PropFn<CssValueOf<'imeMode'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -22676,7 +22815,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  insetArea: PropFn<TSelf, CssValueOf<'insetArea'>>
+  insetArea: PropFn<CssValueOf<'insetArea'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -22684,7 +22823,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  offsetBlock: PropFn<TSelf, CssValueOf<'offsetBlock'>>
+  offsetBlock: PropFn<CssValueOf<'offsetBlock'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -22694,7 +22833,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  offsetBlockEnd: PropFn<TSelf, CssValueOf<'offsetBlockEnd'>>
+  offsetBlockEnd: PropFn<CssValueOf<'offsetBlockEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -22704,7 +22843,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  offsetBlockStart: PropFn<TSelf, CssValueOf<'offsetBlockStart'>>
+  offsetBlockStart: PropFn<CssValueOf<'offsetBlockStart'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -22712,7 +22851,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  offsetInline: PropFn<TSelf, CssValueOf<'offsetInline'>>
+  offsetInline: PropFn<CssValueOf<'offsetInline'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -22722,7 +22861,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  offsetInlineEnd: PropFn<TSelf, CssValueOf<'offsetInlineEnd'>>
+  offsetInlineEnd: PropFn<CssValueOf<'offsetInlineEnd'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
      *
@@ -22732,7 +22871,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  offsetInlineStart: PropFn<TSelf, CssValueOf<'offsetInlineStart'>>
+  offsetInlineStart: PropFn<CssValueOf<'offsetInlineStart'>>
   /**
      * The **`page-break-after`** CSS property adjusts page breaks _after_ the current element.
      *
@@ -22742,7 +22881,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  pageBreakAfter: PropFn<TSelf, CssValueOf<'pageBreakAfter'>>
+  pageBreakAfter: PropFn<CssValueOf<'pageBreakAfter'>>
   /**
      * The **`page-break-before`** CSS property adjusts page breaks _before_ the current element.
      *
@@ -22752,7 +22891,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  pageBreakBefore: PropFn<TSelf, CssValueOf<'pageBreakBefore'>>
+  pageBreakBefore: PropFn<CssValueOf<'pageBreakBefore'>>
   /**
      * The **`page-break-inside`** CSS property adjusts page breaks _inside_ the current element.
      *
@@ -22762,7 +22901,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  pageBreakInside: PropFn<TSelf, CssValueOf<'pageBreakInside'>>
+  pageBreakInside: PropFn<CssValueOf<'pageBreakInside'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -22772,7 +22911,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  positionTryOptions: PropFn<TSelf, CssValueOf<'positionTryOptions'>>
+  positionTryOptions: PropFn<CssValueOf<'positionTryOptions'>>
   /**
      * **Syntax**: `none | <position>#`
      *
@@ -22780,7 +22919,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  scrollSnapCoordinate: PropFn<TSelf, CssValueOf<'scrollSnapCoordinate'>>
+  scrollSnapCoordinate: PropFn<CssValueOf<'scrollSnapCoordinate'>>
   /**
      * **Syntax**: `<position>`
      *
@@ -22788,7 +22927,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  scrollSnapDestination: PropFn<TSelf, CssValueOf<'scrollSnapDestination'>>
+  scrollSnapDestination: PropFn<CssValueOf<'scrollSnapDestination'>>
   /**
      * **Syntax**: `none | repeat( <length-percentage> )`
      *
@@ -22796,7 +22935,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  scrollSnapPointsX: PropFn<TSelf, CssValueOf<'scrollSnapPointsX'>>
+  scrollSnapPointsX: PropFn<CssValueOf<'scrollSnapPointsX'>>
   /**
      * **Syntax**: `none | repeat( <length-percentage> )`
      *
@@ -22804,7 +22943,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  scrollSnapPointsY: PropFn<TSelf, CssValueOf<'scrollSnapPointsY'>>
+  scrollSnapPointsY: PropFn<CssValueOf<'scrollSnapPointsY'>>
   /**
      * **Syntax**: `none | mandatory | proximity`
      *
@@ -22812,7 +22951,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  scrollSnapTypeX: PropFn<TSelf, CssValueOf<'scrollSnapTypeX'>>
+  scrollSnapTypeX: PropFn<CssValueOf<'scrollSnapTypeX'>>
   /**
      * **Syntax**: `none | mandatory | proximity`
      *
@@ -22820,7 +22959,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  scrollSnapTypeY: PropFn<TSelf, CssValueOf<'scrollSnapTypeY'>>
+  scrollSnapTypeY: PropFn<CssValueOf<'scrollSnapTypeY'>>
   /**
      * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
      *
@@ -22830,7 +22969,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  KhtmlBoxAlign: PropFn<TSelf, CssValueOf<'KhtmlBoxAlign'>>
+  KhtmlBoxAlign: PropFn<CssValueOf<'KhtmlBoxAlign'>>
   /**
      * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
      *
@@ -22840,7 +22979,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  KhtmlBoxDirection: PropFn<TSelf, CssValueOf<'KhtmlBoxDirection'>>
+  KhtmlBoxDirection: PropFn<CssValueOf<'KhtmlBoxDirection'>>
   /**
      * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
      *
@@ -22850,7 +22989,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  KhtmlBoxFlex: PropFn<TSelf, CssValueOf<'KhtmlBoxFlex'>>
+  KhtmlBoxFlex: PropFn<CssValueOf<'KhtmlBoxFlex'>>
   /**
      * The **`box-flex-group`** CSS property assigns the flexbox's child elements to a flex group.
      *
@@ -22860,7 +22999,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  KhtmlBoxFlexGroup: PropFn<TSelf, CssValueOf<'KhtmlBoxFlexGroup'>>
+  KhtmlBoxFlexGroup: PropFn<CssValueOf<'KhtmlBoxFlexGroup'>>
   /**
      * The **`box-lines`** CSS property determines whether the box may have a single or multiple lines (rows for horizontally oriented boxes, columns for vertically oriented boxes).
      *
@@ -22870,7 +23009,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  KhtmlBoxLines: PropFn<TSelf, CssValueOf<'KhtmlBoxLines'>>
+  KhtmlBoxLines: PropFn<CssValueOf<'KhtmlBoxLines'>>
   /**
      * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
      *
@@ -22880,7 +23019,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  KhtmlBoxOrdinalGroup: PropFn<TSelf, CssValueOf<'KhtmlBoxOrdinalGroup'>>
+  KhtmlBoxOrdinalGroup: PropFn<CssValueOf<'KhtmlBoxOrdinalGroup'>>
   /**
      * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
      *
@@ -22890,7 +23029,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  KhtmlBoxOrient: PropFn<TSelf, CssValueOf<'KhtmlBoxOrient'>>
+  KhtmlBoxOrient: PropFn<CssValueOf<'KhtmlBoxOrient'>>
   /**
      * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
      *
@@ -22900,7 +23039,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  KhtmlBoxPack: PropFn<TSelf, CssValueOf<'KhtmlBoxPack'>>
+  KhtmlBoxPack: PropFn<CssValueOf<'KhtmlBoxPack'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
      *
@@ -22910,7 +23049,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  KhtmlLineBreak: PropFn<TSelf, CssValueOf<'KhtmlLineBreak'>>
+  KhtmlLineBreak: PropFn<CssValueOf<'KhtmlLineBreak'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -22920,7 +23059,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  KhtmlOpacity: PropFn<TSelf, CssValueOf<'KhtmlOpacity'>>
+  KhtmlOpacity: PropFn<CssValueOf<'KhtmlOpacity'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.
      *
@@ -22930,7 +23069,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  KhtmlUserSelect: PropFn<TSelf, CssValueOf<'KhtmlUserSelect'>>
+  KhtmlUserSelect: PropFn<CssValueOf<'KhtmlUserSelect'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -22940,7 +23079,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBackgroundClip: PropFn<TSelf, CssValueOf<'MozBackgroundClip'>>
+  MozBackgroundClip: PropFn<CssValueOf<'MozBackgroundClip'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -22950,7 +23089,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBackgroundOrigin: PropFn<TSelf, CssValueOf<'MozBackgroundOrigin'>>
+  MozBackgroundOrigin: PropFn<CssValueOf<'MozBackgroundOrigin'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -22960,7 +23099,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBackgroundSize: PropFn<TSelf, CssValueOf<'MozBackgroundSize'>>
+  MozBackgroundSize: PropFn<CssValueOf<'MozBackgroundSize'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -22968,7 +23107,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBorderRadius: PropFn<TSelf, CssValueOf<'MozBorderRadius'>>
+  MozBorderRadius: PropFn<CssValueOf<'MozBorderRadius'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -22978,7 +23117,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBorderRadiusBottomleft: PropFn<TSelf, CssValueOf<'MozBorderRadiusBottomleft'>>
+  MozBorderRadiusBottomleft: PropFn<CssValueOf<'MozBorderRadiusBottomleft'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -22988,7 +23127,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBorderRadiusBottomright: PropFn<TSelf, CssValueOf<'MozBorderRadiusBottomright'>>
+  MozBorderRadiusBottomright: PropFn<CssValueOf<'MozBorderRadiusBottomright'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -22998,7 +23137,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBorderRadiusTopleft: PropFn<TSelf, CssValueOf<'MozBorderRadiusTopleft'>>
+  MozBorderRadiusTopleft: PropFn<CssValueOf<'MozBorderRadiusTopleft'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -23008,7 +23147,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBorderRadiusTopright: PropFn<TSelf, CssValueOf<'MozBorderRadiusTopright'>>
+  MozBorderRadiusTopright: PropFn<CssValueOf<'MozBorderRadiusTopright'>>
   /**
      * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
      *
@@ -23018,7 +23157,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBoxAlign: PropFn<TSelf, CssValueOf<'MozBoxAlign'>>
+  MozBoxAlign: PropFn<CssValueOf<'MozBoxAlign'>>
   /**
      * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
      *
@@ -23028,7 +23167,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBoxDirection: PropFn<TSelf, CssValueOf<'MozBoxDirection'>>
+  MozBoxDirection: PropFn<CssValueOf<'MozBoxDirection'>>
   /**
      * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
      *
@@ -23038,7 +23177,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBoxFlex: PropFn<TSelf, CssValueOf<'MozBoxFlex'>>
+  MozBoxFlex: PropFn<CssValueOf<'MozBoxFlex'>>
   /**
      * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
      *
@@ -23048,7 +23187,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBoxOrdinalGroup: PropFn<TSelf, CssValueOf<'MozBoxOrdinalGroup'>>
+  MozBoxOrdinalGroup: PropFn<CssValueOf<'MozBoxOrdinalGroup'>>
   /**
      * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
      *
@@ -23058,7 +23197,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBoxOrient: PropFn<TSelf, CssValueOf<'MozBoxOrient'>>
+  MozBoxOrient: PropFn<CssValueOf<'MozBoxOrient'>>
   /**
      * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
      *
@@ -23068,7 +23207,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBoxPack: PropFn<TSelf, CssValueOf<'MozBoxPack'>>
+  MozBoxPack: PropFn<CssValueOf<'MozBoxPack'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -23078,7 +23217,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozBoxShadow: PropFn<TSelf, CssValueOf<'MozBoxShadow'>>
+  MozBoxShadow: PropFn<CssValueOf<'MozBoxShadow'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -23088,7 +23227,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozColumnCount: PropFn<TSelf, CssValueOf<'MozColumnCount'>>
+  MozColumnCount: PropFn<CssValueOf<'MozColumnCount'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
      *
@@ -23098,7 +23237,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozColumnFill: PropFn<TSelf, CssValueOf<'MozColumnFill'>>
+  MozColumnFill: PropFn<CssValueOf<'MozColumnFill'>>
   /**
      * The non-standard **`-moz-float-edge`** CSS property specifies whether the height and width properties of the element include the margin, border, or padding thickness.
      *
@@ -23108,7 +23247,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozFloatEdge: PropFn<TSelf, CssValueOf<'MozFloatEdge'>>
+  MozFloatEdge: PropFn<CssValueOf<'MozFloatEdge'>>
   /**
      * The **`-moz-force-broken-image-icon`** extended CSS property can be used to force the broken image icon to be shown even when a broken image has an `alt` attribute.
      *
@@ -23118,7 +23257,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozForceBrokenImageIcon: PropFn<TSelf, CssValueOf<'MozForceBrokenImageIcon'>>
+  MozForceBrokenImageIcon: PropFn<CssValueOf<'MozForceBrokenImageIcon'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -23128,7 +23267,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozOpacity: PropFn<TSelf, CssValueOf<'MozOpacity'>>
+  MozOpacity: PropFn<CssValueOf<'MozOpacity'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
      *
@@ -23136,7 +23275,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozOutline: PropFn<TSelf, CssValueOf<'MozOutline'>>
+  MozOutline: PropFn<CssValueOf<'MozOutline'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -23146,7 +23285,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozOutlineColor: PropFn<TSelf, CssValueOf<'MozOutlineColor'>>
+  MozOutlineColor: PropFn<CssValueOf<'MozOutlineColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -23156,7 +23295,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozOutlineStyle: PropFn<TSelf, CssValueOf<'MozOutlineStyle'>>
+  MozOutlineStyle: PropFn<CssValueOf<'MozOutlineStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -23166,7 +23305,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozOutlineWidth: PropFn<TSelf, CssValueOf<'MozOutlineWidth'>>
+  MozOutlineWidth: PropFn<CssValueOf<'MozOutlineWidth'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
      *
@@ -23176,7 +23315,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozTextAlignLast: PropFn<TSelf, CssValueOf<'MozTextAlignLast'>>
+  MozTextAlignLast: PropFn<CssValueOf<'MozTextAlignLast'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -23186,7 +23325,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozTextDecorationColor: PropFn<TSelf, CssValueOf<'MozTextDecorationColor'>>
+  MozTextDecorationColor: PropFn<CssValueOf<'MozTextDecorationColor'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -23196,7 +23335,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozTextDecorationLine: PropFn<TSelf, CssValueOf<'MozTextDecorationLine'>>
+  MozTextDecorationLine: PropFn<CssValueOf<'MozTextDecorationLine'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -23206,7 +23345,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozTextDecorationStyle: PropFn<TSelf, CssValueOf<'MozTextDecorationStyle'>>
+  MozTextDecorationStyle: PropFn<CssValueOf<'MozTextDecorationStyle'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23216,7 +23355,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozTransitionDelay: PropFn<TSelf, CssValueOf<'MozTransitionDelay'>>
+  MozTransitionDelay: PropFn<CssValueOf<'MozTransitionDelay'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23226,7 +23365,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozTransitionDuration: PropFn<TSelf, CssValueOf<'MozTransitionDuration'>>
+  MozTransitionDuration: PropFn<CssValueOf<'MozTransitionDuration'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23236,7 +23375,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozTransitionProperty: PropFn<TSelf, CssValueOf<'MozTransitionProperty'>>
+  MozTransitionProperty: PropFn<CssValueOf<'MozTransitionProperty'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23246,7 +23385,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozTransitionTimingFunction: PropFn<TSelf, CssValueOf<'MozTransitionTimingFunction'>>
+  MozTransitionTimingFunction: PropFn<CssValueOf<'MozTransitionTimingFunction'>>
   /**
      * The **`-moz-user-focus`** CSS property is used to indicate whether an element can have the focus.
      *
@@ -23256,7 +23395,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozUserFocus: PropFn<TSelf, CssValueOf<'MozUserFocus'>>
+  MozUserFocus: PropFn<CssValueOf<'MozUserFocus'>>
   /**
      * In Mozilla applications, **`-moz-user-input`** determines if an element will accept user input.
      *
@@ -23266,7 +23405,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  MozUserInput: PropFn<TSelf, CssValueOf<'MozUserInput'>>
+  MozUserInput: PropFn<CssValueOf<'MozUserInput'>>
   /**
      * **Syntax**: `auto | normal | active | inactive | disabled`
      *
@@ -23274,7 +23413,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  msImeMode: PropFn<TSelf, CssValueOf<'msImeMode'>>
+  msImeMode: PropFn<CssValueOf<'msImeMode'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23282,7 +23421,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OAnimation: PropFn<TSelf, CssValueOf<'OAnimation'>>
+  OAnimation: PropFn<CssValueOf<'OAnimation'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23292,7 +23431,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OAnimationDelay: PropFn<TSelf, CssValueOf<'OAnimationDelay'>>
+  OAnimationDelay: PropFn<CssValueOf<'OAnimationDelay'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23302,7 +23441,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OAnimationDirection: PropFn<TSelf, CssValueOf<'OAnimationDirection'>>
+  OAnimationDirection: PropFn<CssValueOf<'OAnimationDirection'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23312,7 +23451,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OAnimationDuration: PropFn<TSelf, CssValueOf<'OAnimationDuration'>>
+  OAnimationDuration: PropFn<CssValueOf<'OAnimationDuration'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23322,7 +23461,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OAnimationFillMode: PropFn<TSelf, CssValueOf<'OAnimationFillMode'>>
+  OAnimationFillMode: PropFn<CssValueOf<'OAnimationFillMode'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23332,7 +23471,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OAnimationIterationCount: PropFn<TSelf, CssValueOf<'OAnimationIterationCount'>>
+  OAnimationIterationCount: PropFn<CssValueOf<'OAnimationIterationCount'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23342,7 +23481,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OAnimationName: PropFn<TSelf, CssValueOf<'OAnimationName'>>
+  OAnimationName: PropFn<CssValueOf<'OAnimationName'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23352,7 +23491,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OAnimationPlayState: PropFn<TSelf, CssValueOf<'OAnimationPlayState'>>
+  OAnimationPlayState: PropFn<CssValueOf<'OAnimationPlayState'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23362,7 +23501,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OAnimationTimingFunction: PropFn<TSelf, CssValueOf<'OAnimationTimingFunction'>>
+  OAnimationTimingFunction: PropFn<CssValueOf<'OAnimationTimingFunction'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -23372,7 +23511,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OBackgroundSize: PropFn<TSelf, CssValueOf<'OBackgroundSize'>>
+  OBackgroundSize: PropFn<CssValueOf<'OBackgroundSize'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -23380,7 +23519,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OBorderImage: PropFn<TSelf, CssValueOf<'OBorderImage'>>
+  OBorderImage: PropFn<CssValueOf<'OBorderImage'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -23390,7 +23529,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OObjectFit: PropFn<TSelf, CssValueOf<'OObjectFit'>>
+  OObjectFit: PropFn<CssValueOf<'OObjectFit'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
      *
@@ -23400,7 +23539,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OObjectPosition: PropFn<TSelf, CssValueOf<'OObjectPosition'>>
+  OObjectPosition: PropFn<CssValueOf<'OObjectPosition'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2021.
      *
@@ -23410,7 +23549,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OTabSize: PropFn<TSelf, CssValueOf<'OTabSize'>>
+  OTabSize: PropFn<CssValueOf<'OTabSize'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
      *
@@ -23420,7 +23559,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OTextOverflow: PropFn<TSelf, CssValueOf<'OTextOverflow'>>
+  OTextOverflow: PropFn<CssValueOf<'OTextOverflow'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23430,7 +23569,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OTransform: PropFn<TSelf, CssValueOf<'OTransform'>>
+  OTransform: PropFn<CssValueOf<'OTransform'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23440,7 +23579,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OTransformOrigin: PropFn<TSelf, CssValueOf<'OTransformOrigin'>>
+  OTransformOrigin: PropFn<CssValueOf<'OTransformOrigin'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23448,7 +23587,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OTransition: PropFn<TSelf, CssValueOf<'OTransition'>>
+  OTransition: PropFn<CssValueOf<'OTransition'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23458,7 +23597,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OTransitionDelay: PropFn<TSelf, CssValueOf<'OTransitionDelay'>>
+  OTransitionDelay: PropFn<CssValueOf<'OTransitionDelay'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23468,7 +23607,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OTransitionDuration: PropFn<TSelf, CssValueOf<'OTransitionDuration'>>
+  OTransitionDuration: PropFn<CssValueOf<'OTransitionDuration'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23478,7 +23617,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OTransitionProperty: PropFn<TSelf, CssValueOf<'OTransitionProperty'>>
+  OTransitionProperty: PropFn<CssValueOf<'OTransitionProperty'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
      *
@@ -23488,7 +23627,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  OTransitionTimingFunction: PropFn<TSelf, CssValueOf<'OTransitionTimingFunction'>>
+  OTransitionTimingFunction: PropFn<CssValueOf<'OTransitionTimingFunction'>>
   /**
      * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
      *
@@ -23498,7 +23637,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  WebkitBoxAlign: PropFn<TSelf, CssValueOf<'WebkitBoxAlign'>>
+  WebkitBoxAlign: PropFn<CssValueOf<'WebkitBoxAlign'>>
   /**
      * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
      *
@@ -23508,7 +23647,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  WebkitBoxDirection: PropFn<TSelf, CssValueOf<'WebkitBoxDirection'>>
+  WebkitBoxDirection: PropFn<CssValueOf<'WebkitBoxDirection'>>
   /**
      * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
      *
@@ -23518,7 +23657,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  WebkitBoxFlex: PropFn<TSelf, CssValueOf<'WebkitBoxFlex'>>
+  WebkitBoxFlex: PropFn<CssValueOf<'WebkitBoxFlex'>>
   /**
      * The **`box-flex-group`** CSS property assigns the flexbox's child elements to a flex group.
      *
@@ -23528,7 +23667,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  WebkitBoxFlexGroup: PropFn<TSelf, CssValueOf<'WebkitBoxFlexGroup'>>
+  WebkitBoxFlexGroup: PropFn<CssValueOf<'WebkitBoxFlexGroup'>>
   /**
      * The **`box-lines`** CSS property determines whether the box may have a single or multiple lines (rows for horizontally oriented boxes, columns for vertically oriented boxes).
      *
@@ -23538,7 +23677,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  WebkitBoxLines: PropFn<TSelf, CssValueOf<'WebkitBoxLines'>>
+  WebkitBoxLines: PropFn<CssValueOf<'WebkitBoxLines'>>
   /**
      * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
      *
@@ -23548,7 +23687,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  WebkitBoxOrdinalGroup: PropFn<TSelf, CssValueOf<'WebkitBoxOrdinalGroup'>>
+  WebkitBoxOrdinalGroup: PropFn<CssValueOf<'WebkitBoxOrdinalGroup'>>
   /**
      * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
      *
@@ -23558,7 +23697,7 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  WebkitBoxOrient: PropFn<TSelf, CssValueOf<'WebkitBoxOrient'>>
+  WebkitBoxOrient: PropFn<CssValueOf<'WebkitBoxOrient'>>
   /**
      * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
      *
@@ -23568,8 +23707,8 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      *
      * @deprecated
      */
-  WebkitBoxPack: PropFn<TSelf, CssValueOf<'WebkitBoxPack'>>
-  colorInterpolation: PropFn<TSelf, CssValueOf<'colorInterpolation'>>
-  colorRendering: PropFn<TSelf, CssValueOf<'colorRendering'>>
-  glyphOrientationVertical: PropFn<TSelf, CssValueOf<'glyphOrientationVertical'>>
+  WebkitBoxPack: PropFn<CssValueOf<'WebkitBoxPack'>>
+  colorInterpolation: PropFn<CssValueOf<'colorInterpolation'>>
+  colorRendering: PropFn<CssValueOf<'colorRendering'>>
+  glyphOrientationVertical: PropFn<CssValueOf<'glyphOrientationVertical'>>
 }

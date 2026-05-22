@@ -1186,4 +1186,4 @@ export class Chain<T extends ThemeSchema = BaseSchema> {
 
 // declaration merging: 把 IcxPropMethods 的所有 declare 字段拼进 Chain 实例类型
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface Chain<T extends ThemeSchema = BaseSchema> extends IcxPropMethods<Chain<T>, T> {}
+export interface Chain<T extends ThemeSchema = BaseSchema> extends IcxPropMethods<T> {}

@@ -43,8 +43,13 @@ const border: DocsGroup = {
 ### 必须配合 borderStyle
 
 \`\`\`ts
-s.borderWidth.px(2).borderColor._primary             // ❌ 不显示
-s.borderWidth.px(2).borderStyle.solid.borderColor._primary  // ✅
+// ❌ 不显示
+s.borderWidth.px(2)
+s.borderColor._primary
+// ✅
+s.borderWidth.px(2)
+s.borderStyle.solid
+s.borderColor._primary
 \`\`\`
 
 ${lengthUnitsSnippet('borderWidth')}`,
@@ -194,8 +199,10 @@ s.borderStyle('solid dashed dotted none')      // 上 / 右 / 下 / 左
     details: `### 用例
 
 \`\`\`ts
-s.outlineWidth.px(2).outlineStyle.solid.outlineColor._primary
-  .outlineOffset.px(4)             // 焦点环离元素 4px 远
+s.outlineWidth.px(2)
+s.outlineStyle.solid
+s.outlineColor._primary
+s.outlineOffset.px(4)             // 焦点环离元素 4px 远
 
 s.outlineOffset.px(-2)             // outline 缩入元素 2px，防止被父级 overflow:hidden 裁切
 \`\`\`
@@ -449,7 +456,8 @@ s.textShadow(\`
     details: `### 用例
 
 \`\`\`ts
-s.borderCollapse.separate.borderSpacing.px(8)
+s.borderCollapse.separate
+s.borderSpacing.px(8)
 s.borderSpacing('12px 4px')         // 横 12px，纵 4px
 \`\`\`
 

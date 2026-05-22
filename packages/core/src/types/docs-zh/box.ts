@@ -56,7 +56,8 @@ const box: DocsGroup = {
 
 \`\`\`ts
 s.width.px(200)               // 200px 内容宽（默认 content-box）
-s.boxSizing.borderBox.width.px(200)   // 200px 边框盒宽（含 padding + border）
+s.boxSizing.borderBox          // 200px 边框盒宽（含 padding + border）
+s.width.px(200)
 \`\`\`
 
 ### 百分比参照
@@ -137,7 +138,9 @@ ${lengthUnitsSnippet('minWidth')}`,
     details: `### 经典用法：内容区宽度限制
 
 \`\`\`ts
-s.width('100%').maxWidth.px(1200).marginInline.auto
+s.width('100%')
+s.maxWidth.px(1200)
+s.marginInline.auto
 // 等宽占满但不超 1200px，左右 auto 水平居中
 \`\`\`
 
@@ -196,7 +199,8 @@ ${lengthUnitsSnippet('minHeight')}`,
     details: `### 经典用法：下拉列表高度限制
 
 \`\`\`ts
-s.maxHeight.px(300).overflowY.auto
+s.maxHeight.px(300)
+s.overflowY.auto
 // 最多 300px 高，超出时内部滚动
 \`\`\`
 
@@ -257,7 +261,8 @@ ${lengthUnitsSnippet('maxHeight')}`,
 ### 水平居中经典写法
 
 \`\`\`ts
-s.width.px(800).margin('0 auto')
+s.width.px(800)
+s.margin('0 auto')
 // 块级元素 800px 宽，左右 auto 均分剩余空间 = 水平居中
 // 等价于：marginLeft.auto + marginRight.auto
 \`\`\`
@@ -461,7 +466,8 @@ s.inset('8px 16px 24px 32px')     // 上 右 下 左（顺时针）
 ### 绝对定位充满父容器
 
 \`\`\`ts
-s.position.absolute.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
+s.position.absolute
+s.inset.px(0)   // 等同 top:0 right:0 bottom:0 left:0
 // 前提：父容器 position 不是 static
 \`\`\`
 
@@ -535,7 +541,8 @@ s.aspectRatio('auto')       // 不设比例（默认）
 设了 \`aspectRatio\` 后，只需设一个轴的尺寸，另一个轴自动计算：
 
 \`\`\`ts
-s.width('100%').aspectRatio('16 / 9')
+s.width('100%')
+s.aspectRatio('16 / 9')
 // 宽度撑满父容器，高度按 16:9 自动算出
 \`\`\`
 
@@ -555,7 +562,9 @@ s.aspectRatio('16 / 9')  // 清晰易读
 \`aspect-ratio\` 指定的高度是**期望值**，仍受 \`min-height\` / \`max-height\` 约束：
 
 \`\`\`ts
-s.width('100%').aspectRatio('16 / 9').maxHeight('80vh')
+s.width('100%')
+s.aspectRatio('16 / 9')
+s.maxHeight('80vh')
 // 宽 100% 时按 16:9 算高，但不超过视口高度 80%
 \`\`\``,
 

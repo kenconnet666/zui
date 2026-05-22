@@ -8,8 +8,9 @@
 ## 特性
 
 - **四态访问**：`s.color('red')` / `s.color._primary` / `s.color.white` / `s.padding.px(16)`
+- **类型层 statement-only**：每个 setter 表达式一行 CSS，类型层返回 `void`，禁止 fluent 链式（IDE 补全干净，不爆 chain 表面）
 - **类型完整**：每个 CSS 属性带 csstype JSDoc（MDN 链接 / 兼容表 / Initial value）
-- **颜色 token modifier**：`s.color._primary.alpha(50).darken(15)`（基于 color2k）
+- **颜色 token modifier**：`s.color._primary.alpha(50)`（基于 color2k；modifier 覆盖式，不累积，11 个：alpha / darken / lighten / mix / shade / tint / saturate / desaturate / complement / rotateHue / invert）
 - **89+ 内建嵌套方法**：`_hover` / `_dark` / `_media` / `_groupHover` / `_lineClamp` / 等
 - **完全框架无关**：不依赖 Vue / React / Svelte / Solid
 - **`icss(theme, factory)` 一行 shortcut**

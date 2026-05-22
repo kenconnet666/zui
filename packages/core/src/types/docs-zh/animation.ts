@@ -73,7 +73,8 @@ s.transitionDuration('300ms, 500ms')     // 多属性各自时长（与 transiti
     details: `### 用例
 
 \`\`\`ts
-s.transition('opacity 300ms').transitionDelay.ms(100)     // 等 100ms 才开始
+s.transition('opacity 300ms')
+s.transitionDelay.ms(100)     // 等 100ms 才开始
 
 // 错峰动画
 // child1: transitionDelay 0ms
@@ -335,7 +336,8 @@ s.animationName('fadeIn')
   .animationFillMode.forwards    // 不写的话动画结束会回到初始 opacity:1，但若 fadeIn 从 0→1，初始可能就是 1，最关键的是用 forwards 让进入动画的"中间状态"得以保留
 
 // 延迟 200ms 才开始动画，但希望延迟期间元素已是 0% 状态
-s.animationDelay.ms(200).animationFillMode.backwards
+s.animationDelay.ms(200)
+s.animationFillMode.backwards
 \`\`\``,
     syntax: [
       ['4 个 keyword', '`none` ｜ `forwards` ｜ `backwards` ｜ `both`', '只接受关键字'],
@@ -361,7 +363,9 @@ s.animationDelay.ms(200).animationFillMode.backwards
 
 \`\`\`ts
 // hover 时暂停动画
-s.animationName('spin').animationDuration.s(2).animationIterationCount.infinite
+s.animationName('spin')
+s.animationDuration.s(2)
+s.animationIterationCount.infinite
 // :hover 选择器或 hover 状态下：
 //   s.animationPlayState.paused
 \`\`\``,

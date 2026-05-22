@@ -25,8 +25,10 @@ const misc: DocsGroup = {
     details: `### 用例
 
 \`\`\`ts
-s.position.relative.zIndex(10)     // 浮起到第 10 层
-s.position.fixed.zIndex(9999)      // Modal 最顶层（zui token：s.zIndex._modal）
+s.position.relative
+s.zIndex(10)     // 浮起到第 10 层
+s.position.fixed
+s.zIndex(9999)      // Modal 最顶层（zui token：s.zIndex._modal）
 \`\`\`
 
 ### 层叠上下文（stacking context）
@@ -124,10 +126,13 @@ s.opacity._disabled       // 例如 0.5
 
 \`\`\`ts
 // 头像（裁剪铺满）
-s.width.px(80).height.px(80).objectFit.cover
+s.width.px(80)
+s.height.px(80)
+s.objectFit.cover
 
 // 商品图（完整显示）
-s.objectFit.contain.backgroundColor._neutral100      // 留白处用浅灰
+s.objectFit.contain
+s.backgroundColor._neutral100      // 留白处用浅灰
 \`\`\``,
     syntax: [
       ['5 个 keyword', '`fill` ｜ `contain` ｜ `cover` ｜ `none` ｜ `scaleDown`', '只接受关键字'],
@@ -159,7 +164,8 @@ s.objectFit.contain.backgroundColor._neutral100      // 留白处用浅灰
 
 \`\`\`ts
 // cover 模式下，让头像聚焦在人脸（顶部）
-s.objectFit.cover.objectPosition.top
+s.objectFit.cover
+s.objectPosition.top
 
 // 精确控制
 s.objectPosition('25% 75%')           // 横向 25%，纵向 75%
@@ -474,8 +480,10 @@ s.breakInside.avoid
 \`\`\`ts
 // slice（默认）：第一行只有左圆角，最后一行只有右圆角
 // clone：每行都有完整左右圆角
-s.padding.px(4).backgroundColor._yellow200.borderRadius.px(4)
-  .boxDecorationBreak.clone
+s.padding.px(4)
+s.backgroundColor._yellow200
+s.borderRadius.px(4)
+s.boxDecorationBreak.clone
 \`\`\``,
     syntax: [['2 个 keyword', '`slice` ｜ `clone`', '只接受关键字']],
     initialValue: 'slice',
@@ -575,7 +583,9 @@ s.content("counter(item) '. '")
 
 \`\`\`ts
 // ::after
-s.content("''").display.block.clear.both
+s.content("''")
+s.display.block
+s.clear.both
 \`\`\`
 
 ### 现代替代

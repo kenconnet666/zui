@@ -362,7 +362,7 @@ function renderTypeExpr(propName, enhanced, extraKeywords) {
   const cssValue = `CssValueOf<'${propName}'>`
 
   if (!enhanced) {
-    return `PropFn<TSelf, ${cssValue}>`
+    return `PropFn<${cssValue}>`
   }
 
   const { tokenCat, unitClass, keywords } = enhanced
@@ -384,16 +384,16 @@ function renderTypeExpr(propName, enhanced, extraKeywords) {
   const carrier = tokenCat === 'color' ? 'ColorPropCarrier' : 'PropCarrier'
 
   if (carrier === 'ColorPropCarrier') {
-    // ColorPropCarrier<TSelf, TValue, TTokens, TKeywords, TExtraKeywords>
-    return `ColorPropCarrier<TSelf, ${cssValue}, ${tokensType}, ${keywordsType}, ${extraType}>`
+    // ColorPropCarrier<TValue, TTokens, TKeywords, TExtraKeywords>
+    return `ColorPropCarrier<${cssValue}, ${tokensType}, ${keywordsType}, ${extraType}>`
   }
 
-  // PropCarrier<TSelf, TValue, TTokens, TKeywords, TUnits, TExtraKeywords>
+  // PropCarrier<TValue, TTokens, TKeywords, TUnits, TExtraKeywords>
   if (unitClass) {
-    const units = `${UNIT_CLASS_TO_TYPE[unitClass]}<TSelf>`
-    return `PropCarrier<TSelf, ${cssValue}, ${tokensType}, ${keywordsType}, ${units}, ${extraType}>`
+    const units = UNIT_CLASS_TO_TYPE[unitClass]
+    return `PropCarrier<${cssValue}, ${tokensType}, ${keywordsType}, ${units}, ${extraType}>`
   }
-  return `PropCarrier<TSelf, ${cssValue}, ${tokensType}, ${keywordsType}, unknown, ${extraType}>`
+  return `PropCarrier<${cssValue}, ${tokensType}, ${keywordsType}, unknown, ${extraType}>`
 }
 
 // ─── 输出渲染 ───
@@ -457,15 +457,15 @@ function renderFile(properties, enhanced, extraKeywords, docsZh, banner) {
     lines.push('/**')
     lines.push(' * 自动生成：所有 csstype 已知 CSS 属性在 Chain 上的方法签名。')
     lines.push(' *')
-    lines.push(' * - ENHANCED_PROPS 中的属性 → `PropCarrier` / `ColorPropCarrier`（四态）')
-    lines.push(' * - 其余属性 → `PropFn`（函数态 + 全局关键字）')
+    lines.push(' * - ENHANCED_PROPS 中的属性 → `PropCarrier` / `ColorPropCarrier`（四态，类型层 statement-only：返回 void）')
+    lines.push(' * - 其余属性 → `PropFn`（函数态 + 全局关键字，类型层 statement-only：返回 void）')
     lines.push(' *')
     lines.push(
-      ' * 通过 `interface Chain<T> extends IcxPropMethods<Chain<T>, T> {}` 注入到 Chain 实例类型。',
+      ' * 通过 `interface Chain<T> extends IcxPropMethods<T> {}` 注入到 Chain 实例类型。',
     )
     lines.push(' */')
   }
-  lines.push('export interface IcxPropMethods<TSelf, T extends ThemeSchema> {')
+  lines.push('export interface IcxPropMethods<T extends ThemeSchema> {')
 
   for (const [name, info] of properties) {
     const zh = docsZh?.[name]

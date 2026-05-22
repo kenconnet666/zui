@@ -321,10 +321,18 @@ JetBrains MCP 内嵌 Node 没把 pnpm 放进 PATH，直接 PowerShell 调用会�
 `Object.assign(this, schema)` 把 function 原值挂到 instance；类型签名是 `string | number` 但运行时是 function。  
 **修复**：永远走 `theme.resolve()` / `icss(theme, ...)` / `new Chain(theme)` 拿值，**不要**直接读 `theme.color.x` 当展开后的真值用。Theme 构造时 dev 模式会 warn。
 
-### 8.10 token / keyword 命中后不返回 chain（statement-only 决策）
-`c.color._primary` 命中 token 后返回 `ColorTokenValue`（暴露 `.alpha(n)` 等 modifier），**不是 chain**。  
-`c.color.red` 命中 keyword 后语义是 statement，**用户不应**继续链式（`.red.padding.px(8)` 是错的）。  
-chain 风格：每条独立一行。
+### 8.10 ★ 类型层 statement-only —— carrier / unit / modifier 全部返回 `void`（2026-05-22 实施）
+**类型层硬约束**：所有 carrier setter（`s.color('red')` / `s.color._primary` / `s.color.red` / `s.padding.px(8)` / `s.color._primary.alpha(50)`）的 TS 返回类型都是 `void`，链式 `s.X.x.Y.y` **编译会红**（`Property 'Y' does not exist on type 'void'`）。
+
+**runtime 不变**：chain Proxy 仍 `return chain`，JS 层依赖 chain 状态切换的实现不动；只是类型签名不暴露 chain。
+
+**唯一例外 —— ColorTokenValue**：`c.color._primary` 命中 color token 返回 `ColorTokenValue`（暴露 11 个 modifier：`alpha` / `darken` / `lighten` / `mix` / `shade` / `tint` / `saturate` / `desaturate` / `complement` / `rotateHue` / `invert`），是 token 的"语义延伸窗口"；modifier 调用后才返回 `void`。⚠️ modifier 是**覆盖式、不累积**，`s.color._primary.alpha(50).darken(15)` 现在编译错（darken 是 void 上的访问），并对齐既有"后者覆盖前者"语义。
+
+**Chain 内建方法不在此约束内**：`_hover` / `_apply` / `_media` / `_when` / 等 89+ 个仍返回 `: this`，允许 `s._hover(fn)._active(fn2)` 这种 block 连写（block 容器，不是"一行 css"）。
+
+**chain 风格**：每条 setter 表达式独立一行；IDE 补全只在 token / keyword 选择位置展开，永不爆 Chain 自身表面。
+
+完整决策见 `.claude/decisions/2026-05-22-statement-only-type-layer.md`。
 
 ### 8.11 .claude/ untracked 导致 `pnpm publish` 报 `ERR_PNPM_GIT_UNCLEAN`
 `.gitignore` 必须 ignore `.claude/settings.local.json`（**不要** ignore 整个 `.claude/`，否则项目级 settings.json 也入不了 git）。

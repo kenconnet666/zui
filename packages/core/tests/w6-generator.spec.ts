@@ -24,16 +24,16 @@ describe('W6 — generator + PropCarrier extension slot', () => {
     }
   })
 
-  it('properties.generated.ts 用 PropCarrier 5/6 元形态', () => {
+  it('properties.generated.ts 用 PropCarrier 4/5 元形态（statement-only：删 TSelf 参数）', () => {
     const generated = readFileSync(
       resolve(process.cwd(), 'src/types/properties.generated.ts'),
       'utf8',
     )
-    // 抽样：padding 应该是 PropCarrier<..., LengthUnits<TSelf>, never>
+    // 抽样：padding 应该是 PropCarrier<CssValueOf<'padding'>, SpacingTokens<T>, keywords, LengthUnits, never>
     expect(generated).toMatch(
-      /padding: PropCarrier<TSelf, [^,]+, SpacingTokens<T>, [^,]+, LengthUnits<TSelf>, never>/,
+      /padding: PropCarrier<[^,]+, SpacingTokens<T>, [^,]+, LengthUnits, never>/,
     )
-    // color 应该是 ColorPropCarrier<..., ColorTokens<T>, ..., never>
-    expect(generated).toMatch(/color: ColorPropCarrier<TSelf, [^,]+, ColorTokens<T>, [^,]+, never>/)
+    // color 应该是 ColorPropCarrier<CssValueOf<'color'>, ColorTokens<T>, keywords, never>
+    expect(generated).toMatch(/color: ColorPropCarrier<[^,]+, ColorTokens<T>, [^,]+, never>/)
   })
 })

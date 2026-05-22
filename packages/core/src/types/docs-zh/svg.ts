@@ -28,7 +28,8 @@ const svg: DocsGroup = {
     details: `### 用例
 
 \`\`\`ts
-s.stroke._primary.strokeWidth.px(2)            // 2px 描边
+s.stroke._primary
+s.strokeWidth.px(2)            // 2px 描边
 s.strokeWidth(0.5)                             // 0.5 用户坐标单位
 \`\`\`
 
@@ -134,7 +135,8 @@ arcs:             ╱ ╲     弧形
 
 \`\`\`ts
 // Material Design / Feather Icons 风格
-s.strokeLinecap.round.strokeLinejoin.round
+s.strokeLinecap.round
+s.strokeLinejoin.round
 \`\`\``,
     syntax: [
       ['5 个 keyword', '`miter` ｜ `round` ｜ `bevel` ｜ `arcs` ｜ `miterClip`', '只接受关键字'],
@@ -169,7 +171,8 @@ s.strokeDasharray('1 8')         // 点状线（很短的实段 + 长间隔）
 
 \`\`\`ts
 // 圆周长例如 314.16
-s.strokeDasharray('314.16').strokeDashoffset('157.08')
+s.strokeDasharray('314.16')
+s.strokeDashoffset('157.08')
 // 显示 50% 进度（offset 让虚线偏移半圈）
 
 // 配合 transition 动画 strokeDashoffset 0 → 314.16

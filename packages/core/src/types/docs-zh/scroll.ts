@@ -81,7 +81,9 @@ s.scrollSnapType('both mandatory')     // 双轴
 
 \`\`\`ts
 // 容器
-s.scrollSnapType('x mandatory').overflowX.auto.display.flex
+s.scrollSnapType('x mandatory')
+s.overflowX.auto
+s.display.flex
 
 // 每个 item
 s.scrollSnapAlign.start              // 滚动停止时对齐到 item 起点
@@ -138,7 +140,8 @@ s.scrollSnapAlign.start              // 滚动停止时对齐到 item 起点
 
 \`\`\`ts
 // 全屏 PPT 风滑动：每次只滑 1 屏
-s.scrollSnapType('y mandatory').scrollSnapStop.always
+s.scrollSnapType('y mandatory')
+s.scrollSnapStop.always
 \`\`\``,
     syntax: [['2 个 keyword', '`normal` ｜ `always`', '只接受关键字']],
     initialValue: 'normal',

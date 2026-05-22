@@ -167,14 +167,21 @@ s.display.flowRoot               // 现代清浮动方案，替代经典 \`clear
 
 \`\`\`ts
 // 居中遮罩
-s.position.fixed.inset(0)             // 4 边都贴视口 = 全屏
-  .display.flex.alignItems.center.justifyContent.center
+s.position.fixed
+s.inset(0)             // 4 边都贴视口 = 全屏
+s.display.flex
+s.alignItems.center
+s.justifyContent.center
 
 // 粘性头部
-s.position.sticky.top(0).zIndex(10)
+s.position.sticky
+s.top(0)
+s.zIndex(10)
 
 // 绝对定位徽标
-s.position.absolute.top.px(-8).right.px(-8)
+s.position.absolute
+s.top.px(-8)
+s.right.px(-8)
 \`\`\``,
 
     syntax: [
@@ -410,7 +417,9 @@ borderBox（直观）：
 
 \`\`\`ts
 // 给 <img>
-s.float.left.marginRight.px(16).marginBottom.px(8)
+s.float.left
+s.marginRight.px(16)
+s.marginBottom.px(8)
 // 旁边的文字会自动环绕
 \`\`\`
 

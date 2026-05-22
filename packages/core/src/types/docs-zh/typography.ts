@@ -247,10 +247,12 @@ ${lengthUnitsSnippet('lineHeight')}`,
 
 \`\`\`ts
 // 大标题增加字间距（视觉更稳）
-s.fontSize('48px').letterSpacing.px(-1)     // 负值（紧凑）
+s.fontSize('48px')
+s.letterSpacing.px(-1)     // 负值（紧凑）
 
 // 全大写英文加字间距（提升可读性）
-s.textTransform.uppercase.letterSpacing.em(0.05)
+s.textTransform.uppercase
+s.letterSpacing.em(0.05)
 
 // 中文标题适度展开
 s.letterSpacing.em(0.1)
@@ -435,7 +437,8 @@ s.textDecorationLine.underline
     details: `### 用例
 
 \`\`\`ts
-s.textDecorationLine.underline.textDecorationThickness.px(2)
+s.textDecorationLine.underline
+s.textDecorationThickness.px(2)
 // 2px 粗下划线（无视字号）
 \`\`\`
 
@@ -557,7 +560,8 @@ s.textIndent.em(2)              // 首行缩进 2 字符（最常用）
 ### 悬挂缩进（hanging indent）
 
 \`\`\`ts
-s.textIndent.em(-2).paddingLeft.em(2)
+s.textIndent.em(-2)
+s.paddingLeft.em(2)
 // 首行外凸 2 字符，配合 padding-left 让首行齐左边，其他行向右缩进
 \`\`\`
 
@@ -605,7 +609,9 @@ ${lengthUnitsSnippet('textIndent')}`,
 
 \`\`\`ts
 // 一行省略
-s.whiteSpace.nowrap.overflow.hidden.textOverflow.ellipsis
+s.whiteSpace.nowrap
+s.overflow.hidden
+s.textOverflow.ellipsis
 \`\`\``,
     syntax: [
       [
@@ -733,7 +739,8 @@ s.textWrap.pretty               // 长段落（避免末行孤词）
     details: `### 用例
 
 \`\`\`ts
-s.tableLayout.fixed.width('100%')
+s.tableLayout.fixed
+s.width('100%')
 // 大表格性能优化：跳过列宽计算，按首行/colgroup 设的宽
 \`\`\``,
     syntax: [['2 个 keyword', '`auto` ｜ `fixed`', '只接受关键字']],

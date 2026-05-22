@@ -167,7 +167,6 @@ const className = computed(() =>
     // 'default' 显式写 currentColor,与 'none' 状态区分,也明确表达"跟随父 color 继承"。
     switch (props.color) {
       case 'default':
-        s.color('_primary')
         s.color.currentColor
         break
       case 'primary':
@@ -207,9 +206,7 @@ const className = computed(() =>
 
 // ─── a11y 属性 ───
 const a11y = computed(() =>
-  props.label
-    ? { 'aria-label': props.label, role: 'img' }
-    : { 'aria-hidden': 'true' },
+  props.label ? { 'aria-label': props.label, role: 'img' } : { 'aria-hidden': 'true' },
 )
 </script>
 
