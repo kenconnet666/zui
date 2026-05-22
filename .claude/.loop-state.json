@@ -1,0 +1,27 @@
+{
+  "created_at": "2026-05-21T23:04:09+08:00",
+  "task1": {
+    "name": "扩展 core 模块 escape hatch 能力",
+    "deadline": "2026-05-22T00:10:00+08:00",
+    "status": "pending",
+    "deliverable": "C:\\code\\zui\\.claude\\escape-hatch-decisions.md + 单元测试",
+    "scope": [
+      "s.xx('所有系统token+补全的系统token')",
+      "s.xx('_主题token')",
+      "s.color('_primary')",
+      "s.color('_primary/color2k等计算')",
+      "s.width('_px/数字')",
+      "s.width('_zu/数字')",
+      "zu 单位改为纯 ts 变量",
+      "必要时运行时解析；做完善，不做简化版"
+    ]
+  },
+  "task2": {
+    "name": "补全 properties.generated.ts 的 JSDoc",
+    "deadline": "2026-05-22T05:10:00+08:00",
+    "status": "pending",
+    "file": "C:\\code\\zui\\packages\\core\\src\\types\\properties.generated.ts",
+    "notes": "使用相关脚本，符合既有格式"
+  },
+  "notes": "loop 在每次 wakeup 时读此文件决定执行哪一步；任务完成后将 status 置为 done"
+}

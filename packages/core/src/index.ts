@@ -8,7 +8,10 @@ export { buildKeymap } from './theme/keymap'
 export { Chain } from './chain/Chain'
 
 // ─── 单位 helper ───
-export { zu } from './chain/units'
+export { zu, zuWith } from './chain/units'
+
+// ─── 字符串逃生舱(carrier 内部使用,顶层 re-export 供高级用户独立调用) ───
+export { resolveStringValue } from './chain/escape'
 
 // ─── 顶层工具 ───
 export { icss } from './icss'

@@ -106,6 +106,49 @@ export function zu(n: number): string {
   return `calc(${n} * var(--zui-unit, 1px))`
 }
 
+/**
+ * **纯 TS** 的 zu 基准工厂 —— 无 css var 依赖,在编译/运行的 TS 层就把 `zu(N)` 算成具体值。
+ *
+ * 与 `zu(n)` 互补:
+ * - `zu(n)` 走 css var,跟随 `<ZConfigProvider :unit>` cascade(默认用法)
+ * - `zuWith(base)(n)` 在 TS 层直接计算,不依赖 css var(SSR / 静态生成 / 测试 / 非 Vue 环境)
+ *
+ * **解析规则**:
+ * - `base: number`        → 视为 px,例 `zuWith(2)(8) = '16px'`
+ * - `base: '<num><unit>'` → 数值×N + 单位,例 `zuWith('0.0625rem')(16) = '1rem'`
+ * - 其它(`calc()` / `clamp()` / `var(--x)` / 含空格)→ 退化为 `calc(N * <base>)`,保证仍是合法 css
+ *
+ * **浮点污染防御**:计算结果 round 到 6 位小数,避免 `1.0625 * 16 = 17.000000000000004`。
+ *
+ * @example
+ * const zuPx = zuWith(2)
+ * zuPx(8)       // '16px'  ← TS 直接算好
+ *
+ * const zuRem = zuWith('0.0625rem')
+ * zuRem(16)     // '1rem'
+ *
+ * const zuFluid = zuWith('clamp(0.5px, 0.1vw, 2px)')
+ * zuFluid(8)    // 'calc(8 * clamp(0.5px, 0.1vw, 2px))' ← 复杂表达式退化
+ */
+export function zuWith(base: string | number): (n: number) => string {
+  if (typeof base === 'number') {
+    return (n: number) => `${roundNice(n * base)}px`
+  }
+  const m = base.match(/^(-?\d+(?:\.\d+)?)([a-zA-Z%]+)$/)
+  if (m) {
+    const factor = parseFloat(m[1]!)
+    const unit = m[2]!
+    return (n: number) => `${roundNice(n * factor)}${unit}`
+  }
+  // 复杂 css 表达式 → 退化 calc(),保留可读性 + 仍是合法 css length
+  return (n: number) => `calc(${n} * ${base})`
+}
+
+/** 浮点 round 到 6 位小数,避免 `0.1 + 0.2 = 0.30000000000000004` 这类污染。 */
+function roundNice(n: number): number {
+  return Math.round(n * 1_000_000) / 1_000_000
+}
+
 /** 拼成 CSS 值字符串。zu 走 css var 表达式，其它按 `${n}${unit}` 拼接。 */
 export function withUnit(n: number, ident: string): string {
   if (ident === 'zu') return zu(n)

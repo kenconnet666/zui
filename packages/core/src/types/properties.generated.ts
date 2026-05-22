@@ -4813,19 +4813,80 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    */
   clear: PropCarrier<TSelf, CssValueOf<'clear'>, never, 'left' | 'right' | 'none' | 'both' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<clip-source> | [ <basic-shape> || <geometry-box> ] | none`
-     *
-     * **Initial value**: `none`
-     *
-     * |  Chrome  | Firefox | Safari  |  Edge  |   IE   |
-     * | :------: | :-----: | :-----: | :----: | :----: |
-     * |  **55**  | **3.5** | **9.1** | **79** | **10** |
-     * | 23 _-x-_ |         | 7 _-x-_ |        |        |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/clip-path
-     */
+   * **几何裁剪**:把元素显示区裁成任意形状/路径。与 mask 区别 —— clip-path 是**硬边裁切**(0/1),mask 是**alpha 渐变**。
+   *
+   * ## 关键字
+   *
+   * ### CSS 基本形状(`<basic-shape>`)
+   *
+   * | 形式 | 示例 | 说明 |
+   * | --- | --- | --- |
+   * | `inset()` | `'inset(10px 20px 30px 40px round 8px)'` | 矩形内缩裁剪,可圆角 |
+   * | `circle()` | `'circle(50% at 50% 50%)'` | 圆形,半径 + 中心点 |
+   * | `ellipse()` | `'ellipse(50% 30% at center)'` | 椭圆,半轴 + 中心点 |
+   * | `polygon()` | `'polygon(0 0, 100% 0, 100% 100%, 0 100%)'` | 多边形顶点列表 |
+   * | `path()` | `'path("M0 0 L100 0 L50 100 Z")'` | SVG path 命令 |
+   * | `rect()` | `'rect(10px 90% 90% 10px)'` | 四边偏移矩形(CSS 4) |
+   * | `xywh()` | `'xywh(0 0 100% 100%)'` | XY+宽高 矩形(CSS 4) |
+   * | `shape()` | `'shape(from 0 0, line to 100px 0, curve to ...)'` | 声明式形状(CSS 4) |
+   *
+   * ### 其它取值
+   *
+   * | 关键字 / 形式 | 行为 |
+   * | --- | --- |
+   * | `none` | **默认值**。无裁剪 |
+   * | `<url>` | `'url(#svgClip)'` 引用 SVG `<clipPath>` |
+   * | `<geometry-box>` | `border-box` / `padding-box` / `content-box` / `margin-box` / `fill-box` / `stroke-box` / `view-box`,定义裁切参照盒 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `clipPath`。⚠️ `clipPath` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `none` |
+   * | `unset` | `clipPath` 非继承属性 → 等同 `initial`（= `none`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `clipPath` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `clipPath` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **典型用法**:
+   * ```ts
+   * s.clipPath('circle(50%)')                          // 圆形头像
+   * s.clipPath('polygon(0 0, 100% 0, 100% 80%, 0 100%)')  // 斜切底边
+   * s.clipPath('inset(0 round 8px)')                   // 仅圆角裁切(等同 border-radius 但更强)
+   * s.clipPath('url(#myClip)')                         // 引用 SVG <clipPath>
+   * ```
+   *
+   * **配合动画**:同类形状之间(如 `circle` ↔ `circle`、`polygon` 顶点数相同)可平滑 transition,跨类不可。
+   *
+   * **已废弃** `clip` 属性(矩形裁剪) —— 用 `clip-path: inset(...)` 替代。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 基本形状 | `'circle(50%)'` `'polygon(...)'` `'inset(...)'` | 见上 |
+   * | SVG 引用 | `'url(#clipId)'` | 复用 SVG `<clipPath>` |
+   * | 几何盒 | `'border-box'` `'view-box'` | 改裁切基准 |
+   * | `none` | — | 无裁剪 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `none`
+   *
+   * ### 浏览器
+   *
+   * |  Chrome  | Firefox | Safari  |  Edge  |   IE   |
+   * | :------: | :-----: | :-----: | :----: | :----: |
+   * |  **55**  | **3.5** | **9.1** | **79** | **10** |
+   * | 23 _-x-_ |         | 7 _-x-_ |        |        |
+   *
+   * `path()` Chrome 88+ / Safari 13.1+ / Firefox 97+。`shape()` Chrome 130+(2024 末新)。SVG `<clipPath>` 引用所有现代浏览器都支持。
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/clip-path
+   */
   clipPath: PropFn<TSelf, CssValueOf<'clipPath'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
@@ -5669,102 +5730,406 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    */
   columnWidth: PropCarrier<TSelf, CssValueOf<'columnWidth'>, never, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `none | strict | content | [ [ size || inline-size ] || layout || style || paint ]`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **52** | **69**  | **15.4** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain
-     */
+   * **containment 隔离** —— 告诉浏览器本元素子树**不会影响**外部布局/绘制/样式,允许跳过子树的渲染开销。性能优化属性。
+   *
+   * ## 关键字
+   *
+   * ### 6 个关键字
+   *
+   * | 关键字 | 隔离范围 | 常用场景 |
+   * | --- | --- | --- |
+   * | `none` | **默认值**。无隔离 | 一般元素 |
+   * | `strict` | = `size layout paint style`,**最强**隔离 | 复杂卡片 / 列表项 |
+   * | `content` | = `layout paint style`,**不**含 size(子尺寸仍影响父) | 可滚动列表 / 折叠面板 |
+   * | `size` | 子布局不影响本元素尺寸(必须配自给尺寸,否则坍缩) | 虚拟列表项 |
+   * | `layout` | 子布局不影响外部 | 复杂组件根 |
+   * | `paint` | 子内容不绘制到本元素外 | 溢出隐藏区 |
+   * | `style` | CSS counter/quotes 等不向外冒泡 | 罕用 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `contain`。⚠️ `contain` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `none` |
+   * | `unset` | `contain` 非继承属性 → 等同 `initial`（= `none`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `contain` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `contain` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **注意**:`contain: size` 不配 `contain-intrinsic-size` 会让元素坍缩到 0×0。
+   *
+   * **典型用法**:
+   * ```ts
+   * s.contain('content')                  // 列表项最常用,平衡性能与正确性
+   * s.contain('strict')                   // 必须配 width/height 或 contain-intrinsic-size
+   * s.contain('layout paint')             // 组合多个 keyword
+   * ```
+   *
+   * **与 container queries 关系**:`container-type: size` 隐含 `contain: size layout style paint`(完整 containment);`container-type: inline-size` 隐含 `contain: inline-size layout style paint`。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 单一 | `none` / `strict` / `content` / `size` / `layout` / `paint` / `style` | 见上 |
+   * | 多个 | `'layout paint'` | 空格组合(`size layout paint style` 任意子集) |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `none`
+   *
+   * ### 浏览器
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **52** | **69**  | **15.4** | **79** | No  |
+   *
+   * Chrome 52+ / Safari 15.4+ / Firefox 69+,稳定可用。`content-visibility` 配套使用效益更高。
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain
+   */
   contain: PropFn<TSelf, CssValueOf<'contain'>>
   /**
-     * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `auto? [ none | <length> ]`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **95** | **107** | **17** | **95** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-block-size
-     */
+   * `contain-intrinsic-size` 的**块轴分量**(逻辑属性版,跟随 `writing-mode`)。详情见 [`contain-intrinsic-size`]。
+   *
+   * ## 关键字
+   *
+   * ### 取值形式
+   *
+   * | 形式 | 行为 |
+   * | --- | --- |
+   * | `none` | **默认值**。无内禀尺寸,可能坍缩 |
+   * | `auto <length>` | **推荐**。`auto` 让浏览器记住实际渲染尺寸;`<length>` 是首次渲染前的占位 |
+   * | `<length>` | 固定内禀宽 = 高 = N |
+   * | `<length> <length>` | 分别设宽 高 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `containIntrinsicBlockSize`。⚠️ `containIntrinsicBlockSize` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `none` |
+   * | `unset` | `containIntrinsicBlockSize` 非继承属性 → 等同 `initial`（= `none`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `containIntrinsicBlockSize` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `containIntrinsicBlockSize` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **核心用途**:与 `content-visibility: auto` 配合实现**虚拟滚动列表**:
+   *
+   * ```ts
+   * s.contentVisibility('auto')
+   * s.containIntrinsicSize('auto 200px')   // 预估每项 200px 高
+   * // → 视口外的项跳过渲染,布局滚动条仍准确
+   * ```
+   *
+   * `auto` 让浏览器记住实际渲染过的尺寸,**滚动回去时复用**,避免抖动。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | `none` | — | 无内禀尺寸 |
+   * | `auto <length>` | `'auto 200px'` `'auto 100px 200px'` | 推荐:auto + 占位 |
+   * | `<length>` | `'200px'` `'100px 200px'` | 固定占位 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `none`
+   *
+   * ### 浏览器
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **95** | **107** | **17** | **95** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-block-size
+   */
   containIntrinsicBlockSize: PropFn<TSelf, CssValueOf<'containIntrinsicBlockSize'>>
   /**
-     * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `auto? [ none | <length> ]`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **95** | **107** | **17** | **95** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-height
-     */
+   * `contain-intrinsic-size` 的**高度分量**(单轴版)。详情见 [`contain-intrinsic-size`]。
+   *
+   * ## 关键字
+   *
+   * ### 取值形式
+   *
+   * | 形式 | 行为 |
+   * | --- | --- |
+   * | `none` | **默认值**。无内禀尺寸,可能坍缩 |
+   * | `auto <length>` | **推荐**。`auto` 让浏览器记住实际渲染尺寸;`<length>` 是首次渲染前的占位 |
+   * | `<length>` | 固定内禀宽 = 高 = N |
+   * | `<length> <length>` | 分别设宽 高 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `containIntrinsicHeight`。⚠️ `containIntrinsicHeight` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `none` |
+   * | `unset` | `containIntrinsicHeight` 非继承属性 → 等同 `initial`（= `none`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `containIntrinsicHeight` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `containIntrinsicHeight` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **核心用途**:与 `content-visibility: auto` 配合实现**虚拟滚动列表**:
+   *
+   * ```ts
+   * s.contentVisibility('auto')
+   * s.containIntrinsicSize('auto 200px')   // 预估每项 200px 高
+   * // → 视口外的项跳过渲染,布局滚动条仍准确
+   * ```
+   *
+   * `auto` 让浏览器记住实际渲染过的尺寸,**滚动回去时复用**,避免抖动。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | `none` | — | 无内禀尺寸 |
+   * | `auto <length>` | `'auto 200px'` `'auto 100px 200px'` | 推荐:auto + 占位 |
+   * | `<length>` | `'200px'` `'100px 200px'` | 固定占位 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `none`
+   *
+   * ### 浏览器
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **95** | **107** | **17** | **95** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-height
+   */
   containIntrinsicHeight: PropFn<TSelf, CssValueOf<'containIntrinsicHeight'>>
   /**
-     * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `auto? [ none | <length> ]`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **95** | **107** | **17** | **95** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-inline-size
-     */
+   * `contain-intrinsic-size` 的**行轴分量**(逻辑属性版,跟随 `writing-mode`)。详情见 [`contain-intrinsic-size`]。
+   *
+   * ## 关键字
+   *
+   * ### 取值形式
+   *
+   * | 形式 | 行为 |
+   * | --- | --- |
+   * | `none` | **默认值**。无内禀尺寸,可能坍缩 |
+   * | `auto <length>` | **推荐**。`auto` 让浏览器记住实际渲染尺寸;`<length>` 是首次渲染前的占位 |
+   * | `<length>` | 固定内禀宽 = 高 = N |
+   * | `<length> <length>` | 分别设宽 高 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `containIntrinsicInlineSize`。⚠️ `containIntrinsicInlineSize` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `none` |
+   * | `unset` | `containIntrinsicInlineSize` 非继承属性 → 等同 `initial`（= `none`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `containIntrinsicInlineSize` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `containIntrinsicInlineSize` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **核心用途**:与 `content-visibility: auto` 配合实现**虚拟滚动列表**:
+   *
+   * ```ts
+   * s.contentVisibility('auto')
+   * s.containIntrinsicSize('auto 200px')   // 预估每项 200px 高
+   * // → 视口外的项跳过渲染,布局滚动条仍准确
+   * ```
+   *
+   * `auto` 让浏览器记住实际渲染过的尺寸,**滚动回去时复用**,避免抖动。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | `none` | — | 无内禀尺寸 |
+   * | `auto <length>` | `'auto 200px'` `'auto 100px 200px'` | 推荐:auto + 占位 |
+   * | `<length>` | `'200px'` `'100px 200px'` | 固定占位 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `none`
+   *
+   * ### 浏览器
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **95** | **107** | **17** | **95** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-inline-size
+   */
   containIntrinsicInlineSize: PropFn<TSelf, CssValueOf<'containIntrinsicInlineSize'>>
   /**
-     * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `auto? [ none | <length> ]`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **95** | **107** | **17** | **95** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-width
-     */
+   * `contain-intrinsic-size` 的**宽度分量**(单轴版)。详情见 [`contain-intrinsic-size`]。
+   *
+   * ## 关键字
+   *
+   * ### 取值形式
+   *
+   * | 形式 | 行为 |
+   * | --- | --- |
+   * | `none` | **默认值**。无内禀尺寸,可能坍缩 |
+   * | `auto <length>` | **推荐**。`auto` 让浏览器记住实际渲染尺寸;`<length>` 是首次渲染前的占位 |
+   * | `<length>` | 固定内禀宽 = 高 = N |
+   * | `<length> <length>` | 分别设宽 高 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `containIntrinsicWidth`。⚠️ `containIntrinsicWidth` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `none` |
+   * | `unset` | `containIntrinsicWidth` 非继承属性 → 等同 `initial`（= `none`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `containIntrinsicWidth` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `containIntrinsicWidth` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **核心用途**:与 `content-visibility: auto` 配合实现**虚拟滚动列表**:
+   *
+   * ```ts
+   * s.contentVisibility('auto')
+   * s.containIntrinsicSize('auto 200px')   // 预估每项 200px 高
+   * // → 视口外的项跳过渲染,布局滚动条仍准确
+   * ```
+   *
+   * `auto` 让浏览器记住实际渲染过的尺寸,**滚动回去时复用**,避免抖动。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | `none` | — | 无内禀尺寸 |
+   * | `auto <length>` | `'auto 200px'` `'auto 100px 200px'` | 推荐:auto + 占位 |
+   * | `<length>` | `'200px'` `'100px 200px'` | 固定占位 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `none`
+   *
+   * ### 浏览器
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **95** | **107** | **17** | **95** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-width
+   */
   containIntrinsicWidth: PropFn<TSelf, CssValueOf<'containIntrinsicWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since February 2023.
-     *
-     * **Syntax**: `none | <custom-ident>+`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **105** | **110** | **16** | **105** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/container-name
-     */
+   * 本元素的**容器名** —— 给 `@container <name> (...)` 引用,实现"按名定向查询"。
+   *
+   * ## 关键字
+   *
+   * ### 取值
+   *
+   * | 形式 | 行为 |
+   * | --- | --- |
+   * | `none` | **默认值**。匿名容器(只能用 `@container (...)` 无名查询匹配最近祖先) |
+   * | `<custom-ident>` | `'card'` `'sidebar'` 等自定义名;`@container card (...)` 只匹配同名容器 |
+   * | 多个名 | `'card sidebar'` 同时拥有多个名;空格分隔 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `containerName`。⚠️ `containerName` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `none` |
+   * | `unset` | `containerName` 非继承属性 → 等同 `initial`（= `none`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `containerName` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `containerName` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **为什么要给容器命名**?多层嵌套容器时,匿名查询只匹配**最近**的查询容器,可能不是你期望的那层。命名让你跳过中间层,精确指向需要的容器。
+   *
+   * ```ts
+   * // 外层 card 容器
+   * s.container('card / inline-size')
+   * //   ... 中间层(可能也是匿名容器)
+   * //      .item:子节点想响应外层 card,而非中间层 → @container card (min-width: 400px) { ... }
+   * ```
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | `<custom-ident>` | `'card'` `'main-grid'` | 自定义名,字母数字 + `-`/`_` 开头 |
+   * | 多个 | `'card sidebar'` | 空格分隔 |
+   * | `none` | — | 匿名 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `none`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **105** | **110** | **16** | **105** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/container-name
+   */
   containerName: PropFn<TSelf, CssValueOf<'containerName'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since February 2023.
-     *
-     * **Syntax**: `normal | [ [ size | inline-size ] || scroll-state ]`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **105** | **110** | **16** | **105** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/container-type
-     */
+   * 本元素的**容器查询类型** —— 决定 `@container` 查询能查询哪些维度。
+   *
+   * ## 关键字
+   *
+   * ### 3 个关键字
+   *
+   * | 关键字 | 允许查询 | 布局副作用 |
+   * | --- | --- | --- |
+   * | `normal` | **默认值**。**不**作为查询容器 | 无副作用 |
+   * | `inline-size` | 查询**主轴**尺寸(横向布局时 = 宽度) | 主轴含布局/样式/绘制 containment;子树不能 affect 外层宽度 |
+   * | `size` | 查询**两个轴**尺寸(宽 + 高) | 两轴 containment;**子树必须明确尺寸**(否则布局崩),通常需配 `contain-intrinsic-size` |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `containerType`。⚠️ `containerType` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `normal` |
+   * | `unset` | `containerType` 非继承属性 → 等同 `initial`（= `normal`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `containerType` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `containerType` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **陷阱:为什么 `size` 比 `inline-size` 罕见**?
+   *
+   * `size` 在两个轴都建 containment,意味着**容器自身高度不能由子内容撑开**(否则就是循环依赖:子靠容器尺寸决定 layout,容器靠子撑开)。所以 `size` 需要容器**显式设高度**或配 `contain-intrinsic-size` 给个 placeholder 尺寸。
+   *
+   * 绝大多数场景用 `inline-size` —— 仅查询宽度,高度仍由内容撑开,无布局副作用。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 关键字 | `normal` / `inline-size` / `size` | 见上 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `normal`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **105** | **110** | **16** | **105** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/container-type
+   */
   containerType: PropFn<TSelf, CssValueOf<'containerType'>>
   /**
    * 在 `::before` / `::after` 伪元素中**插入内容**（文字 / 图片 / counter 数值 / attr）。
@@ -5847,18 +6212,62 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    */
   content: PropCarrier<TSelf, CssValueOf<'content'>, never, 'none' | 'normal' | GlobalKw, unknown, never>
   /**
-     * Since September 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `visible | auto | hidden`
-     *
-     * **Initial value**: `visible`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **85** | **125** | **18** | **85** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/content-visibility
-     */
+   * **内容可见性优化** —— 浏览器对视口外子树**跳过渲染**(类似 `display: none` 但保留可达性 + 自动复活)。性能利器,通常配 `contain-intrinsic-size` 使用。
+   *
+   * ## 关键字
+   *
+   * ### 3 个关键字
+   *
+   * | 关键字 | 行为 | 何时用 |
+   * | --- | --- | --- |
+   * | `visible` | **默认值**。正常渲染 | 一般元素 |
+   * | `auto` | 视口外**跳过**渲染(layout / style / paint),进入视口**自动恢复**;不影响 a11y/find-in-page | 长列表 / 文档站每个 section |
+   * | `hidden` | **始终**跳过渲染(类似 `display: none` 但保留布局空间状态可瞬间恢复) | 手动管理的虚拟列表 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `contentVisibility`。⚠️ `contentVisibility` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `visible` |
+   * | `unset` | `contentVisibility` 非继承属性 → 等同 `initial`（= `visible`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `contentVisibility` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `contentVisibility` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **与 `display: none` 区别**:
+   * - `display: none` —— 元素**不存在**于布局,Tab 不到,find-in-page 找不到
+   * - `content-visibility: hidden` —— **保留**布局占位 + a11y / find-in-page 可达,只是不绘制
+   * - `content-visibility: auto` —— 上述基础上**自动**在视口边界激活/休眠
+   *
+   * **必须配 `contain-intrinsic-size`** 否则视口外元素坍缩,滚动条乱跳:
+   * ```ts
+   * s.contentVisibility('auto')
+   * s.containIntrinsicSize('auto 300px')   // 预估占位高度
+   * ```
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 关键字 | `visible` / `auto` / `hidden` | 见上 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `visible`
+   *
+   * ### 浏览器
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **85** | **125** | **18** | **85** | No  |
+   *
+   * Chrome 85+ / Edge 85+ / Safari 18+(2024)。Firefox 暂不支持(2026 中状态)。
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/content-visibility
+   */
   contentVisibility: PropFn<TSelf, CssValueOf<'contentVisibility'>>
   /**
    * **递增 CSS 计数器**（每遇到该元素时计数器 +1，或自定义增量）。
@@ -9665,122 +10074,408 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
      */
   maskBorderWidth: PropFn<TSelf, CssValueOf<'maskBorderWidth'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `[ <coord-box> | no-clip ]#`
-     *
-     * **Initial value**: `border-box`
-     *
-     * | Chrome  | Firefox |  Safari  |   Edge   | IE  |
-     * | :-----: | :-----: | :------: | :------: | :-: |
-     * | **120** | **53**  | **15.4** | **120**  | No  |
-     * | 1 _-x-_ |         | 4 _-x-_  | 79 _-x-_ |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-clip
-     */
+   * 蒙版**生效区域**裁剪边界:超出该边界的蒙版部分被裁掉。
+   *
+   * ## 关键字
+   *
+   * ### 6 个关键字
+   *
+   * | 关键字 | 行为 |
+   * | --- | --- |
+   * | `border-box` | **默认值**。蒙版裁到 border 外缘 |
+   * | `padding-box` | 蒙版裁到 padding 外缘 |
+   * | `content-box` | 蒙版裁到内容区 |
+   * | `fill-box` | SVG 几何盒 |
+   * | `stroke-box` | SVG 含 stroke 盒 |
+   * | `no-clip` | 不裁剪(CSS 4) |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `maskClip`。⚠️ `maskClip` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `border-box` |
+   * | `unset` | `maskClip` 非继承属性 → 等同 `initial`（= `border-box`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `maskClip` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `maskClip` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **与 `mask-origin` 区别**:`origin` 是蒙版"起点"(原点位置),`clip` 是蒙版"边界"(超出剪掉)。两者通常同步设。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 关键字 | `border-box` / `padding-box` / `content-box` / `fill-box` / `stroke-box` / `no-clip` | 见上 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `border-box`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox |  Safari  |   Edge   | IE  |
+   * | :-----: | :-----: | :------: | :------: | :-: |
+   * | **120** | **53**  | **15.4** | **120**  | No  |
+   * | 1 _-x-_ |         | 4 _-x-_  | 79 _-x-_ |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-clip
+   */
   maskClip: PropFn<TSelf, CssValueOf<'maskClip'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<compositing-operator>#`
-     *
-     * **Initial value**: `add`
-     *
-     * | Chrome  | Firefox |  Safari  | Edge  | IE  |
-     * | :-----: | :-----: | :------: | :---: | :-: |
-     * | **120** | **53**  | **15.4** | 18-79 | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-composite
-     */
+   * 多张蒙版**复合方式**(类似 Photoshop 图层混合)。
+   *
+   * ## 关键字
+   *
+   * ### 4 种复合
+   *
+   * | 关键字 | 运算 | 直观效果 |
+   * | --- | --- | --- |
+   * | `add` | A ∪ B | **默认值**。两蒙版并集 —— 任一显示即显示 |
+   * | `subtract` | A - B | 从 A 减去 B 显示区(打洞) |
+   * | `intersect` | A ∩ B | 两蒙版交集 —— 两者都显示才显示 |
+   * | `exclude` | A ⊕ B | 异或 —— 只在一个里时显示(交集隐藏) |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `maskComposite`。⚠️ `maskComposite` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `add` |
+   * | `unset` | `maskComposite` 非继承属性 → 等同 `initial`（= `add`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `maskComposite` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `maskComposite` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * 多值时第 N 个 composite 控制第 N 张 mask-image 与下层合成结果的关系。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 关键字 | `add` / `subtract` / `intersect` / `exclude` | 见上 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `add`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox |  Safari  | Edge  | IE  |
+   * | :-----: | :-----: | :------: | :---: | :-: |
+   * | **120** | **53**  | **15.4** | 18-79 | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-composite
+   */
   maskComposite: PropFn<TSelf, CssValueOf<'maskComposite'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<mask-reference>#`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox |  Safari  | Edge  | IE  |
-     * | :-----: | :-----: | :------: | :---: | :-: |
-     * | **120** | **53**  | **15.4** | 16-79 | No  |
-     * | 1 _-x-_ |         | 4 _-x-_  |       |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-image
-     */
+   * 蒙版**图像/渐变源**。模板的 alpha(或 luminance,见 `mask-mode`)决定元素显示/隐藏。
+   *
+   * ## 关键字
+   *
+   * ### 取值形式
+   *
+   * | 关键字 / 形式 | 行为 |
+   * | --- | --- |
+   * | `none` | **默认值**。无蒙版 |
+   * | `<image>` | 任意 CSS 图像:`url(...)` / 渐变 / `image-set(...)` |
+   * | `<gradient>` | `linear-gradient` / `radial-gradient` / `conic-gradient` 等 |
+   * | 多张叠加 | 逗号分隔多个值:第一张在顶层,按 `mask-composite` 复合 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `maskImage`。⚠️ `maskImage` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `none` |
+   * | `unset` | `maskImage` 非继承属性 → 等同 `initial`（= `none`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `maskImage` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `maskImage` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **配合 `mask-mode` 决定如何读模板**:
+   * - `alpha` —— 模板 alpha 通道决定透明度(默认行为)
+   * - `luminance` —— 模板亮度决定透明度(黑=隐藏 / 白=显示;适合无 alpha 的灰阶图)
+   *
+   * **叠加 vs 复合**:多张 mask-image 用 `mask-composite` 控制相互关系(add / subtract / intersect / exclude)。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | `<image>` | `'url(./m.png)'` `'linear-gradient(black, transparent)'` | 单图 |
+   * | 多张 | `'url(a.svg), url(b.svg)'` | 逗号分隔,按 composite 复合 |
+   * | `none` | — | 清除蒙版 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `none`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox |  Safari  | Edge  | IE  |
+   * | :-----: | :-----: | :------: | :---: | :-: |
+   * | **120** | **53**  | **15.4** | 16-79 | No  |
+   * | 1 _-x-_ |         | 4 _-x-_  |       |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-image
+   */
   maskImage: PropFn<TSelf, CssValueOf<'maskImage'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<masking-mode>#`
-     *
-     * **Initial value**: `match-source`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **120** | **53**  | **15.4** | **120** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-mode
-     */
+   * 蒙版**读取通道**:从 alpha 还是亮度(luminance)取值。
+   *
+   * ## 关键字
+   *
+   * ### 3 个关键字
+   *
+   * | 关键字 | 行为 |
+   * | --- | --- |
+   * | `match-source` | **默认值**。SVG `<mask>` 默认走 luminance,其它默认走 alpha |
+   * | `alpha` | 强制读 alpha 通道(透明=隐藏 / 不透明=显示) |
+   * | `luminance` | 强制读亮度(黑=隐藏 / 白=显示,常用于灰阶图) |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `maskMode`。⚠️ `maskMode` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `match-source` |
+   * | `unset` | `maskMode` 非继承属性 → 等同 `initial`（= `match-source`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `maskMode` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `maskMode` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **关键陷阱**:把 PNG 当 alpha mask 时用 `match-source`(默认即可);把灰阶 JPEG 当 mask 时**必须** `luminance`,否则 JPEG 无 alpha 会全显示。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 关键字 | `match-source` / `alpha` / `luminance` | 见上 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `match-source`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **120** | **53**  | **15.4** | **120** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-mode
+   */
   maskMode: PropFn<TSelf, CssValueOf<'maskMode'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<coord-box>#`
-     *
-     * **Initial value**: `border-box`
-     *
-     * | Chrome  | Firefox |  Safari  |   Edge   | IE  |
-     * | :-----: | :-----: | :------: | :------: | :-: |
-     * | **120** | **53**  | **15.4** | **120**  | No  |
-     * | 1 _-x-_ |         | 4 _-x-_  | 79 _-x-_ |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-origin
-     */
+   * 蒙版**定位区域起点**:从 border-box / padding-box / content-box 哪个边缘开始。
+   *
+   * ## 关键字
+   *
+   * ### 5 个关键字
+   *
+   * | 关键字 | 行为 |
+   * | --- | --- |
+   * | `border-box` | **默认值**。从 border 外缘起算(包含 border 区域) |
+   * | `padding-box` | 从 padding 外缘起算(不含 border) |
+   * | `content-box` | 从内容区起算(不含 padding 和 border) |
+   * | `fill-box` | SVG 专用:`<` 元素的几何盒 |
+   * | `stroke-box` | SVG 专用:含 stroke 的盒 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `maskOrigin`。⚠️ `maskOrigin` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `border-box` |
+   * | `unset` | `maskOrigin` 非继承属性 → 等同 `initial`（= `border-box`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `maskOrigin` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `maskOrigin` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 关键字 | `border-box` / `padding-box` / `content-box` / `fill-box` / `stroke-box` | 见上 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `border-box`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox |  Safari  |   Edge   | IE  |
+   * | :-----: | :-----: | :------: | :------: | :-: |
+   * | **120** | **53**  | **15.4** | **120**  | No  |
+   * | 1 _-x-_ |         | 4 _-x-_  | 79 _-x-_ |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-origin
+   */
   maskOrigin: PropFn<TSelf, CssValueOf<'maskOrigin'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<position>#`
-     *
-     * **Initial value**: `0% 0%`
-     *
-     * | Chrome  | Firefox |  Safari   | Edge  | IE  |
-     * | :-----: | :-----: | :-------: | :---: | :-: |
-     * | **120** | **53**  | **15.4**  | 18-79 | No  |
-     * | 1 _-x-_ |         | 3.1 _-x-_ |       |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-position
-     */
+   * 蒙版图像**起点位置**(与 `background-position` 等价语义)。
+   *
+   * ## 关键字
+   *
+   * ### 关键字形式
+   *
+   * | 关键字 | 等价 % |
+   * | --- | --- |
+   * | `left` | `0%` |
+   * | `center` | `50%` |
+   * | `right` | `100%` |
+   * | `top` | `0%` |
+   * | `bottom` | `100%` |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `maskPosition`。⚠️ `maskPosition` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `0% 0%` |
+   * | `unset` | `maskPosition` 非继承属性 → 等同 `initial`（= `0% 0%`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `maskPosition` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `maskPosition` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **两值语法**: `<x> <y>`(水平 然后 垂直)。
+   *
+   * ```ts
+   * s.maskPosition('center')                  // = 'center center' = '50% 50%'
+   * s.maskPosition('left top')                // 左上
+   * s.maskPosition('20% 80%')                 // 百分比
+   * s.maskPosition('10px 20px')               // 像素
+   * s.maskPosition('right 16px bottom 8px')   // 4 值:从右 16px / 从底 8px
+   * ```
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 关键字 | `'center'` `'left top'` | 5 个位置关键字组合 |
+   * | `<percentage>` | `'50%'` `'20% 80%'` | 相对蒙版定位区域 |
+   * | `<length>` | `'10px 20px'` | 从原点偏移 |
+   * | 4 值 | `'right 16px bottom 8px'` | 从右/底偏移(CSS 4) |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `0% 0%`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox |  Safari   | Edge  | IE  |
+   * | :-----: | :-----: | :-------: | :---: | :-: |
+   * | **120** | **53**  | **15.4**  | 18-79 | No  |
+   * | 1 _-x-_ |         | 3.1 _-x-_ |       |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-position
+   */
   maskPosition: PropFn<TSelf, CssValueOf<'maskPosition'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<repeat-style>#`
-     *
-     * **Initial value**: `repeat`
-     *
-     * | Chrome  | Firefox |  Safari   | Edge  | IE  |
-     * | :-----: | :-----: | :-------: | :---: | :-: |
-     * | **120** | **53**  | **15.4**  | 18-79 | No  |
-     * | 1 _-x-_ |         | 3.1 _-x-_ |       |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-repeat
-     */
+   * 蒙版图像**平铺方式**(与 `background-repeat` 等价语义)。
+   *
+   * ## 关键字
+   *
+   * ### 6 个关键字
+   *
+   * | 关键字 | 行为 |
+   * | --- | --- |
+   * | `repeat` | **默认值**。双向平铺 |
+   * | `repeat-x` | 仅水平平铺 |
+   * | `repeat-y` | 仅垂直平铺 |
+   * | `no-repeat` | 不平铺,单次贴 |
+   * | `space` | 平铺但用间距填满(无裁剪) |
+   * | `round` | 平铺,允许缩放到刚好整数次填满 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `maskRepeat`。⚠️ `maskRepeat` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `repeat` |
+   * | `unset` | `maskRepeat` 非继承属性 → 等同 `initial`（= `repeat`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `maskRepeat` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `maskRepeat` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 关键字 | `repeat` / `no-repeat` / `space` / `round` / `repeat-x` / `repeat-y` | 见上 |
+   * | 多轴 | `'repeat space'` | 第 1 值水平 / 第 2 值垂直 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `repeat`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox |  Safari   | Edge  | IE  |
+   * | :-----: | :-----: | :-------: | :---: | :-: |
+   * | **120** | **53**  | **15.4**  | 18-79 | No  |
+   * | 1 _-x-_ |         | 3.1 _-x-_ |       |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-repeat
+   */
   maskRepeat: PropFn<TSelf, CssValueOf<'maskRepeat'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<bg-size>#`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox |  Safari  | Edge  | IE  |
-     * | :-----: | :-----: | :------: | :---: | :-: |
-     * | **120** | **53**  | **15.4** | 18-79 | No  |
-     * | 4 _-x-_ |         | 4 _-x-_  |       |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-size
-     */
+   * 蒙版图像**缩放尺寸**(与 `background-size` 等价语义)。
+   *
+   * ## 关键字
+   *
+   * ### 3 个关键字 + 长度/百分比
+   *
+   * | 关键字 / 形式 | 行为 |
+   * | --- | --- |
+   * | `auto` | **默认值**。保持图像原尺寸 / SVG 内禀比例 |
+   * | `cover` | 等比缩放**完全覆盖**定位区域(可能裁剪) |
+   * | `contain` | 等比缩放**完全装入**定位区域(可能留白) |
+   * | `<length>` | `10px` `2em` 等明确尺寸 |
+   * | `<percentage>` | `50%` 相对定位区域 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `maskSize`。⚠️ `maskSize` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `auto` |
+   * | `unset` | `maskSize` 非继承属性 → 等同 `initial`（= `auto`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `maskSize` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `maskSize` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 关键字 | `auto` / `cover` / `contain` | 见上 |
+   * | 1 值 | `'200px'` | 宽度,高度 auto |
+   * | 2 值 | `'200px 100px'` | 宽 高 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `auto`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox |  Safari  | Edge  | IE  |
+   * | :-----: | :-----: | :------: | :---: | :-: |
+   * | **120** | **53**  | **15.4** | 18-79 | No  |
+   * | 4 _-x-_ |         | 4 _-x-_  |       |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-size
+   */
   maskSize: PropFn<TSelf, CssValueOf<'maskSize'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
@@ -17961,28 +18656,124 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    */
   columns: PropCarrier<TSelf, CssValueOf<'columns'>, never, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
-     * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `[ auto? [ none | <length> ] ]{1,2}`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **83** | **107** | **17** | **83** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-size
-     */
+   * **内禀占位尺寸**简写 —— 给 `contain: size` 或 `content-visibility: auto` 的元素一个"预估尺寸",避免坍缩。
+   *
+   * ## 关键字
+   *
+   * ### 取值形式
+   *
+   * | 形式 | 行为 |
+   * | --- | --- |
+   * | `none` | **默认值**。无内禀尺寸,可能坍缩 |
+   * | `auto <length>` | **推荐**。`auto` 让浏览器记住实际渲染尺寸;`<length>` 是首次渲染前的占位 |
+   * | `<length>` | 固定内禀宽 = 高 = N |
+   * | `<length> <length>` | 分别设宽 高 |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `containIntrinsicSize`。⚠️ `containIntrinsicSize` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `none` |
+   * | `unset` | `containIntrinsicSize` 非继承属性 → 等同 `initial`（= `none`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `containIntrinsicSize` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `containIntrinsicSize` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **核心用途**:与 `content-visibility: auto` 配合实现**虚拟滚动列表**:
+   *
+   * ```ts
+   * s.contentVisibility('auto')
+   * s.containIntrinsicSize('auto 200px')   // 预估每项 200px 高
+   * // → 视口外的项跳过渲染,布局滚动条仍准确
+   * ```
+   *
+   * `auto` 让浏览器记住实际渲染过的尺寸,**滚动回去时复用**,避免抖动。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | `none` | — | 无内禀尺寸 |
+   * | `auto <length>` | `'auto 200px'` `'auto 100px 200px'` | 推荐:auto + 占位 |
+   * | `<length>` | `'200px'` `'100px 200px'` | 固定占位 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `none`
+   *
+   * ### 浏览器
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **83** | **107** | **17** | **83** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/contain-intrinsic-size
+   */
   containIntrinsicSize: PropFn<TSelf, CssValueOf<'containIntrinsicSize'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since February 2023.
-     *
-     * **Syntax**: `<'container-name'> [ / <'container-type'> ]?`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **105** | **110** | **16** | **105** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/container
-     */
+   * **容器查询**简写 —— `container-name` 与 `container-type` 二合一,声明本元素成为**查询容器**让子节点用 `@container` 按本元素尺寸响应。
+   *
+   * ## 关键字
+   *
+   * ### 语法形式
+   *
+   * | 形式 | 展开 | 示例 |
+   * | --- | --- | --- |
+   * | 仅名 | `container-name: <name>` | `'card'` |
+   * | 仅型 | `container-type: <type>` | `'inline-size'` |
+   * | 名 / 型 | `<name> / <type>` | `'card / inline-size'` |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `container`。⚠️ `container` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `none` |
+   * | `unset` | `container` 非继承属性 → 等同 `initial`（= `none`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `container` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `container` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **容器查询 vs 媒体查询**:
+   * - `@media (min-width: 768px)` —— 看**视口宽度**,所有位置都用这个全局阈值
+   * - `@container (min-width: 400px)` —— 看**最近的查询容器宽度**;同一组件放在 sidebar 和 main 里自动用不同布局
+   *
+   * **典型用法**:
+   * ```ts
+   * // 父级:声明本元素是 inline-size 容器
+   * s.container('card / inline-size')   // 等同 'container-type: inline-size; container-name: card'
+   *
+   * // 子级:CSS @container 查询
+   * // @container card (min-width: 400px) { .grid { grid-template-columns: 1fr 1fr } }
+   * ```
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | 名 / 型 | `'card / inline-size'` | 完整简写 |
+   * | 仅类型 | `'inline-size'` `'size'` | 匿名容器 |
+   * | `none` | — | 不作为容器(默认) |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `none`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **105** | **110** | **16** | **105** | No  |
+   *
+   * Chrome 105+ / Safari 16+ / Firefox 110+(2023 全面落地)。
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/container
+   */
   container: PropFn<TSelf, CssValueOf<'container'>>
   /**
      * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
@@ -18799,17 +19590,69 @@ export interface IcxPropMethods<TSelf, T extends ThemeSchema> {
    */
   marginInline: PropCarrier<TSelf, CssValueOf<'marginInline'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits<TSelf>, never>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<mask-layer>#`
-     *
-     * | Chrome  | Firefox |  Safari   | Edge  | IE  |
-     * | :-----: | :-----: | :-------: | :---: | :-: |
-     * | **120** | **53**  | **15.4**  | 12-79 | No  |
-     * | 1 _-x-_ |         | 3.1 _-x-_ |       |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask
-     */
+   * **遮罩**简写 —— 用一张图像/渐变作为元素**透明度模板**:模板黑色区域元素**隐藏**、白色**显示**、灰色按 alpha 半透明。一句话设全部 8 个子属性。
+   *
+   * ## 关键字
+   *
+   * ### 简写顺序
+   *
+   * | 位置 | 对应子属性 | 默认值 |
+   * | --- | --- | --- |
+   * | 第 1 段 | `mask-image` | `none` |
+   * | 第 2 段 | `mask-mode` | `match-source` |
+   * | 第 3 段 | `mask-repeat` | `repeat` |
+   * | 第 4 段 | `mask-position` `/` `mask-size` | `center` `/` `auto` |
+   * | 第 5 段 | `mask-origin` | `border-box` |
+   * | 第 6 段 | `mask-clip` | `border-box` |
+   * | 第 7 段 | `mask-composite` | `add` |
+   *
+   * ### 全局关键字
+   *
+   * | 关键字 | 含义 |
+   * | --- | --- |
+   * | `inherit` | 强制继承父元素 `mask`。⚠️ `mask` **非继承属性**，写 `inherit` 才显式继承 |
+   * | `initial` | 重置为 CSS spec 初始值 `see individual properties` |
+   * | `unset` | `mask` 非继承属性 → 等同 `initial`（= `see individual properties`） |
+   * | `revert` | 回到**浏览器 user-agent 样式表**中 `mask` 的值 |
+   * | `revertLayer` | 回到上一个 CSS `@layer` 中 `mask` 的值；不在 layer 中等同 `revert` |
+   *
+   * ## 详细说明
+   *
+   * **与 `background` 对偶**:写法几乎一致(image / position / size / repeat / origin / clip / composite),只是用途是"透明度模板"而非"背景图"。
+   *
+   * **典型用法**:
+   * ```ts
+   * s.mask('url(./fade.svg) center / cover no-repeat')         // SVG 蒙版居中盖满
+   * s.mask('linear-gradient(black 50%, transparent) center')   // 渐变模板,上半显示下半淡出
+   * ```
+   *
+   * **SVG `<mask>` 引用**: `mask: url(#myMask)` —— 引用同文档 SVG `<mask id="myMask">` 元素。
+   *
+   * ## 兼容性
+   *
+   * ### 可用写法（Syntax）
+   *
+   * | 形式 | 示例 | 备注 |
+   * | --- | --- | --- |
+   * | `<image>` | `'url(./mask.png)'` `'linear-gradient(black, transparent)'` | 图像 / 渐变作为蒙版 |
+   * | `<id>` | `'url(#svgMaskId)'` | 引用 SVG `<mask>` 元素 |
+   * | `none` | — | 无蒙版(默认) |
+   * | 完整简写 | `'url(./m.svg) 50% / cover no-repeat'` | 组合多子属性 |
+   * | 全局关键字 | `inherit` `initial` `unset` `revert` `revertLayer` | 见上方关键字表 |
+   *
+   * **Initial value**: `see individual properties`
+   *
+   * ### 浏览器
+   *
+   * | Chrome  | Firefox |  Safari   | Edge  | IE  |
+   * | :-----: | :-----: | :-------: | :---: | :-: |
+   * | **120** | **53**  | **15.4**  | 12-79 | No  |
+   * | 1 _-x-_ |         | 3.1 _-x-_ |       |     |
+   *
+   * WebKit 系曾用 `-webkit-mask-*` 前缀,现代 Chrome/Safari/Firefox 均原生支持无前缀(Firefox 53+ / Chrome 120+ / Safari 15.4+)。生产环境推荐双写 `-webkit-mask` + `mask`。
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask
+   */
   mask: PropFn<TSelf, CssValueOf<'mask'>>
   /**
      * This feature is not Baseline because it does not work in some of the most widely-used browsers.

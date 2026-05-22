@@ -13,10 +13,12 @@ import background from './background'
 import border from './border'
 import box from './box'
 import colors from './colors'
+import container from './container'
 import flex from './flex'
 import grid from './grid'
 import interaction from './interaction'
 import layout from './layout'
+import mask from './mask'
 import misc from './misc'
 import scroll from './scroll'
 import svg from './svg'
@@ -35,10 +37,12 @@ export const DOCS_BY_GROUP: Record<string, DocsGroup> = {
   border,
   box,
   colors,
+  container,
   flex,
   grid,
   interaction,
   layout,
+  mask,
   misc,
   scroll,
   svg,
