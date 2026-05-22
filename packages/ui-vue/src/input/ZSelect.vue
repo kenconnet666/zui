@@ -1,0 +1,357 @@
+<script lang="ts">
+/**
+ * `ZSelect` —— 单选下拉框(Phase α v1)。
+ *
+ * **API**:
+ * - `v-model:value`(单选,Phase β 支持多选)
+ * - `options: Array<{ value, label, disabled? }>` —— 必填
+ * - `placeholder?: string` —— 未选时占位
+ * - `disabled` / `clearable` / `size`(small/middle/large)
+ * - `filterable: boolean` —— 启用搜索过滤(默认 `false`)
+ * - sx:sxTrigger / sxDropdown / sxOption
+ *
+ * **实现要点**:
+ * - `usePopper`(`@floating-ui/vue`)定位下拉,跟随触发器宽度
+ * - `<ZPortal>` 渲染下拉到 body,避开父 overflow 截断
+ * - `onClickOutside`(`@vueuse/core`)外部点击关闭
+ * - `useEscapeStack` ESC 关闭
+ * - `filterable` 时触发器位置显示 input,接管过滤
+ *
+ * **a11y**:`role="combobox"` + `aria-expanded`,下拉 `role="listbox"`,选项 `role="option"`。
+ */
+import type { Chain } from '@kenconnet666/zui-core'
+import type { ZuiSchema } from '../provider/theme'
+import type { SxObject } from '../_internal/sx'
+
+export type ZSelectValue = string | number | boolean
+
+export interface ZSelectOption {
+  value: ZSelectValue
+  label: string
+  disabled?: boolean
+}
+
+export type ZSelectSize = 'small' | 'middle' | 'large'
+
+export interface ZSelectProps {
+  value?: ZSelectValue | null
+  options: ZSelectOption[]
+  placeholder?: string
+  disabled?: boolean
+  clearable?: boolean
+  filterable?: boolean
+  size?: ZSelectSize
+  sxTrigger?: SxObject
+  sxDropdown?: SxObject
+  sxOption?: SxObject
+  css?: ((s: Chain<ZuiSchema>) => void) | undefined
+}
+
+export interface ZSelectEmits {
+  (e: 'update:value', value: ZSelectValue | null): void
+  (e: 'change', value: ZSelectValue | null): void
+}
+</script>
+
+<script lang="ts" setup>
+import { computed, h, ref, watch } from 'vue'
+import { icss } from '@kenconnet666/zui-core'
+import { useZTheme } from '../provider'
+import { applySx, extractSxAttrs } from '../_internal/sx'
+import { BuiltinIcons, ZIcon } from '../gene'
+import { usePopper, useEscapeStack } from '../_hooks'
+import { onClickOutside } from '@vueuse/core'
+
+const props = withDefaults(defineProps<ZSelectProps>(), {
+  disabled: false,
+  clearable: false,
+  filterable: false,
+  size: 'middle',
+})
+
+const emit = defineEmits<ZSelectEmits>()
+
+const theme = useZTheme()
+
+const triggerRef = ref<HTMLElement | null>(null)
+const dropdownRef = ref<HTMLElement | null>(null)
+const open = ref(false)
+const search = ref('')
+
+useEscapeStack(
+  () => {
+    if (open.value) open.value = false
+  },
+  { enabled: open },
+)
+
+const { floatingStyles } = usePopper(triggerRef, dropdownRef, {
+  placement: 'bottom-start',
+  offset: 4,
+})
+
+onClickOutside(triggerRef, (e: Event) => {
+  // 触发器外点击 → 但要排除 dropdown 内的点击
+  if (dropdownRef.value && e.target && dropdownRef.value.contains(e.target as Node)) return
+  open.value = false
+})
+
+const selectedLabel = computed(() => {
+  if (props.value === null || props.value === undefined) return ''
+  return props.options.find((o) => o.value === props.value)?.label ?? String(props.value)
+})
+
+const filteredOptions = computed(() => {
+  if (!props.filterable || !search.value) return props.options
+  const q = search.value.toLowerCase()
+  return props.options.filter((o) => o.label.toLowerCase().includes(q))
+})
+
+const SIZE_PADDING_Y: Record<ZSelectSize, number> = {
+  small: 0.25,
+  middle: 0.375,
+  large: 0.5,
+}
+
+const triggerClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.display.inlineFlex
+    s.alignItems.center
+    s.gap._tiny
+    s.borderRadius._small
+    s.borderWidth._thin
+    s.borderStyle.solid
+    s.borderColor._border
+    s.backgroundColor._bg
+    s.color._text
+    s.fontSize._middle
+    s.paddingLeft._small
+    s.paddingRight._small
+    s.paddingTop.iem(SIZE_PADDING_Y[props.size])
+    s.paddingBottom.iem(SIZE_PADDING_Y[props.size])
+    s.cursor.pointer
+    s.minWidth.iem(8)
+    s.transitionProperty._colors
+    s.transitionDuration._small
+    if (open.value) s.borderColor._primary
+    if (props.disabled) {
+      s.opacity._dim
+      s._prop('cursor', 'not-allowed')
+      s.backgroundColor._bgMuted
+    }
+    applySx(s, props.sxTrigger)
+    props.css?.(s)
+  }),
+)
+const sxTriggerAttrs = computed(() => extractSxAttrs(props.sxTrigger))
+
+const triggerTextClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.flexGrow(1)
+    s._prop('overflow', 'hidden')
+    s._prop('whiteSpace', 'nowrap')
+    s._prop('textOverflow', 'ellipsis')
+    if (!selectedLabel.value && !search.value) s.color._textSecondary
+  }),
+)
+
+const triggerInputClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.flexGrow(1)
+    s.borderStyle.none
+    s.backgroundColor.transparent
+    s.color.currentColor
+    s.fontSize.inherit
+    s._prop('outline', 'none')
+    s._prop('minWidth', '0')
+    s.width.pct(100)
+  }),
+)
+
+const dropdownClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.backgroundColor._bg
+    s.color._text
+    s.borderRadius._small
+    s.boxShadow._middle
+    s.padding._tiny
+    s.zIndex._popover
+    s.minWidth.iem(8)
+    s._prop('maxHeight', '240px')
+    s._prop('overflowY', 'auto')
+    s.borderWidth._thin
+    s.borderStyle.solid
+    s.borderColor._border
+    applySx(s, props.sxDropdown)
+  }),
+)
+const sxDropdownAttrs = computed(() => extractSxAttrs(props.sxDropdown))
+
+const optionClass = (opt: ZSelectOption): string =>
+  icss(theme.value, (s) => {
+    s.display.flex
+    s.alignItems.center
+    s.padding._tiny
+    s.paddingLeft._small
+    s.paddingRight._small
+    s.borderRadius._tiny
+    s.cursor.pointer
+    s.color._text
+    s.fontSize._middle
+    if (props.value === opt.value) {
+      s.backgroundColor._primary.alpha(8)
+      s.color._primary
+    }
+    if (opt.disabled) {
+      s.opacity._dim
+      s._prop('cursor', 'not-allowed')
+    } else {
+      s._hover((h2) => {
+        h2.backgroundColor._textSecondary.alpha(8)
+      })
+    }
+    applySx(s, props.sxOption)
+  })
+const sxOptionAttrs = computed(() => extractSxAttrs(props.sxOption))
+
+const clearBtnClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.display.inlineFlex
+    s.alignItems.center
+    s.justifyContent.center
+    s.cursor.pointer
+    s.backgroundColor.transparent
+    s.borderStyle.none
+    s.padding('0')
+    s.color._textSecondary
+    s._hover((h2) => {
+      h2.color._text
+    })
+  }),
+)
+
+const arrowClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.color._textSecondary
+    s.transitionProperty._transform
+    s.transitionDuration._small
+    s._prop('transform', open.value ? 'rotate(180deg)' : 'rotate(0deg)')
+  }),
+)
+
+const showClear = computed(
+  () => props.clearable && !props.disabled && props.value !== null && props.value !== undefined,
+)
+
+function toggleOpen(): void {
+  if (props.disabled) return
+  open.value = !open.value
+  if (open.value && props.filterable) {
+    search.value = ''
+  }
+}
+
+function selectOption(opt: ZSelectOption): void {
+  if (opt.disabled) return
+  emit('update:value', opt.value)
+  emit('change', opt.value)
+  open.value = false
+  search.value = ''
+}
+
+function onClear(e: Event): void {
+  e.stopPropagation()
+  emit('update:value', null)
+  emit('change', null)
+}
+
+function onFilterInput(e: Event): void {
+  const target = e.target as HTMLInputElement
+  search.value = target.value
+  open.value = true
+}
+
+watch(
+  () => props.value,
+  () => {
+    search.value = ''
+  },
+)
+
+const emptyClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.padding._small
+    s.color._textSecondary
+    s.fontSize._small
+    s._prop('textAlign', 'center')
+  }),
+)
+
+const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }))
+const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
+</script>
+
+<template>
+  <div
+    ref="triggerRef"
+    :class="[triggerClass, sxTriggerAttrs.class]"
+    :style="sxTriggerAttrs.style"
+    role="combobox"
+    :aria-expanded="open"
+    :aria-disabled="disabled"
+    v-bind="sxTriggerAttrs.attrs"
+    @click="toggleOpen"
+  >
+    <input
+      v-if="filterable && open"
+      :class="triggerInputClass"
+      :value="search"
+      :placeholder="placeholder ?? selectedLabel"
+      autofocus
+      @input="onFilterInput"
+      @click.stop
+    />
+    <span v-else :class="triggerTextClass">
+      {{ selectedLabel || placeholder }}
+    </span>
+    <button
+      v-if="showClear"
+      type="button"
+      :class="clearBtnClass"
+      aria-label="清空"
+      tabindex="-1"
+      @click.stop="onClear"
+    >
+      <component :is="closeIcon" />
+    </button>
+    <span :class="arrowClass">
+      <component :is="downIcon" />
+    </span>
+  </div>
+
+  <Teleport to="body">
+    <div
+      v-if="open"
+      ref="dropdownRef"
+      :class="[dropdownClass, sxDropdownAttrs.class]"
+      :style="[floatingStyles, sxDropdownAttrs.style]"
+      role="listbox"
+      v-bind="sxDropdownAttrs.attrs"
+    >
+      <div
+        v-for="opt in filteredOptions"
+        :key="String(opt.value)"
+        :class="[optionClass(opt), sxOptionAttrs.class]"
+        :style="sxOptionAttrs.style"
+        role="option"
+        :aria-selected="value === opt.value"
+        :aria-disabled="opt.disabled"
+        v-bind="sxOptionAttrs.attrs"
+        @click="selectOption(opt)"
+      >
+        {{ opt.label }}
+      </div>
+      <div v-if="filteredOptions.length === 0" :class="emptyClass">无匹配项</div>
+    </div>
+  </Teleport>
+</template>

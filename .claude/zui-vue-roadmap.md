@@ -4,9 +4,9 @@
 >
 > **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-23(Stage 1-5 + 6.1 + 6.2 完成,无人值守自主推进 → Stage 6.3)
+> **最后更新**:2026-05-23(Stage 1-5 + 6.1-6.3 完成,无人值守自主推进 → Stage 6.4)
 > **当前阶段**:
-> `Stage 6.3 ── 数据录入(input/,8+ 组件)` 待开始
+> `Stage 6.4 ── 导航(navigation/,4 组件)` 待开始
 
 ---
 
@@ -479,18 +479,19 @@ s._focusVisible((f) => {
 - [x] feedback/index.ts、display/index.ts 导出
 - [x] **验证**:type-check ✓ / test 243/243 ✓ / build ✓
 
-#### Stage 6.3 ── 数据录入(input/)
+#### Stage 6.3 ── 数据录入(input/)✅ 2026-05-23 完成
 
-- [ ] **ZInput.vue** + spec(prefix/suffix slot、clearable、showCount、disabled、readonly、size、sxPrefix/sxSuffix/sxClear)
-- [ ] ZTextarea.vue + spec(autosize / maxRows)
-- [ ] ZInputNumber.vue + spec(step / min / max / precision / 上下按钮)
-- [ ] ZCheckbox.vue + ZCheckboxGroup.vue + spec
-- [ ] ZRadio.vue + ZRadioGroup.vue + spec(支持 buttonStyle)
-- [ ] ZSwitch.vue + spec(checked/unchecked label + size + loading)
-- [ ] **ZSelect.vue** + spec(单选,filterable;多选/远程搜索拆到 Phase β)
-- [ ] **ZForm.vue + ZFormItem.vue** + spec(async-validator 集成、labelPlacement、validateTrigger)
-- [ ] input/index.ts 导出
-- [ ] **验证**:type-check ✓ / test ✓ / build ✓
+- [x] **ZInput.vue** + spec(prefix/suffix slot、clearable、showCount、disabled、readonly、size、sx 4 节点)
+- [x] ZTextarea.vue + spec(autosize / maxRows / showCount)
+- [x] ZInputNumber.vue + spec(step / min / max / precision / 上下按钮 / clamp / null 空值)
+- [x] ZCheckbox.vue + ZCheckboxGroup.vue + spec(provide/inject ctx,indeterminate,options 数组)
+- [x] ZRadio.vue + ZRadioGroup.vue + spec(provide/inject ctx,buttonStyle 切按钮组)
+- [x] ZSwitch.vue + spec(role=switch + aria-checked + Space 键 / checkedLabel/uncheckedLabel)
+- [x] **ZSelect.vue** + spec(单选 + filterable + usePopper + ZPortal + onClickOutside + useEscapeStack)
+  - 多选/远程搜索拆到 Phase β
+- [x] **ZForm.vue + ZFormItem.vue** + spec(async-validator + provide/inject + required / rule / labelPlacement / validateTrigger / validate() / reset())
+- [x] input/index.ts 导出
+- [x] **验证**:type-check ✓ / test 301/301 ✓ / build ✓
 
 #### Stage 6.4 ── 导航(navigation/)
 
@@ -750,6 +751,13 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-23 Stage 6.3 完成(无人值守自主推进)
+- 改动:补 ZSelect(usePopper + ZPortal + onClickOutside + useEscapeStack)、ZForm + ZFormItem(async-validator 集成,provide/inject ctx,validate() 全表单)
+- 测试 17 case(z-select 10 + z-form 7);总 301/301
+- 验证:type-check ✓ / tests 301/301 ✓ / build ✓
+- 设计决策:多选/远程搜索 / Modal.confirm / focus trap 都推 Phase β
+- 下一步:Stage 6.4 导航(ZMenu / ZTabs / ZBreadcrumb / ZPagination)
 
 ### 2026-05-23 Stage 6.2 完成(无人值守自主推进)
 - 改动:`feedback/ZAlert + ZSpin + ZModal + ZMessage + messageApi`(5 SFC + 1 helper),`display/ZCard`;各 sx 子节点(sxHead/sxBody/sxFoot/sxMask/sxClose 等);ZModal 用 Teleport + `useEscapeStack` + body scroll lock;`createMessageApi()` 工厂走 createApp 临时实例方案

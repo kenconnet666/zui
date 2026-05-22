@@ -2,6 +2,30 @@
 
 ## Unreleased
 
+### 新增 — 数据录入第二批 `ZSelect` / `ZForm` / `ZFormItem`(P0)
+
+Stage 6.3 收尾:
+
+- **`ZSelect`** —— 单选下拉。`v-model:value` + `options` 数组(`{ value, label, disabled? }`) + `placeholder` /
+  `clearable` / `filterable`(输入框过滤) / `disabled` / `size`(small/middle/large)。
+  实现走 `usePopper`(`@floating-ui/vue` `offset+flip+shift`)+ `<Teleport to="body">` 避开 overflow 截断 +
+  `onClickOutside`(`@vueuse/core`)外部点击关闭 + `useEscapeStack` ESC 关闭。`role="combobox" /
+  aria-expanded`,下拉 `role="listbox"`,选项 `role="option"`。
+  sx:sxTrigger / sxDropdown / sxOption。
+  **Phase β 未实现**:多选 / 远程搜索 / 分组。
+- **`ZForm` + `ZFormItem`** —— 表单 + 字段项,基于 `async-validator`(peerDep)。
+  - `ZForm`:`model`(reactive 对象) / `rules`(全表 rules 字典) / `labelPlacement`(top/left) /
+    `validateTrigger`(change/blur/submit) / `disabled`。`defineExpose` `validate(): Promise<void>` /
+    `reset(): void`。
+  - `ZFormItem`:`prop`(字段名) / `label` / `rule`(单字段规则) / `required`(`*` 标记 + 必填 rule) /
+    `validateTrigger`(覆盖 form 级) / `labelWidth`。slot:default(control) / label / error。
+    通过 provide/inject 共享 form ctx。`change` 触发自动校验。失败时渲染 `role="alert"` 错误。
+  - 字段 rule 解析顺序:`required` 标记 → `rule` 单字段 → `form.rules[prop]`。
+
+测试 17 case(z-select 10 + z-form 7;总 284 → 301 全绿)。
+
+---
+
 ### 新增 — 数据录入(`input/`,P0 第一批)
 
 Stage 6.3 第一批,基础录入 6 个组件:
