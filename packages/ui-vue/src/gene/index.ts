@@ -24,5 +24,13 @@ export type { ZLinkProps } from './ZLink.vue'
 export { default as ZDivider } from './ZDivider.vue'
 export type { ZDividerProps } from './ZDivider.vue'
 
+export { default as ZButton } from './ZButton.vue'
+export type {
+  ZButtonProps,
+  ZButtonEmits,
+  ZButtonVariant,
+  ZButtonSize,
+} from './ZButton.vue'
+
 // ─── 图标(@vicons/material 全量透出 + BuiltinIcons 语义 map)───
 export * from './icons'

@@ -4,9 +4,9 @@
 >
 > **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-23(Stage 1-5 + 6.1-6.4 完成,无人值守自主推进 → Stage 6.5)
+> **最后更新**:2026-05-23(**Phase α 完成 ✓** 21 个 P0 组件全部交付,无人值守自主推进 → Stage α 收尾 / Stage 7)
 > **当前阶段**:
-> `Stage 6.5 ── ZTable(基础 columns 配置式)` 待开始
+> `Stage α 收尾` —— 等待用户决定是否进入 Phase β,或先做 docs 站点演示页
 
 ---
 
@@ -502,29 +502,27 @@ s._focusVisible((f) => {
 - [x] navigation/index.ts 导出
 - [x] **验证**:type-check ✓ / test 330/330 ✓ / build ✓
 
-#### Stage 6.5 ── 数据展示进阶(display/)
+#### Stage 6.5 ── 数据展示进阶(display/)✅ 2026-05-23 完成
 
-- [ ] **ZTable.vue** + spec(基础 columns 配置式;选择/排序/分页交互推到 Phase β)
-- [ ] display/index.ts 完整导出
-- [ ] **验证**:type-check ✓ / test ✓ / build ✓
+- [x] **ZTable.vue** + spec(基础 columns 配置式;column.render 函数自定义;dataIndex/align/width/bordered/striped/emptyText;rowKey 字符串或函数;选择/排序/分页推 Phase β)
+- [x] display/index.ts 完整导出
+- [x] **验证**:type-check ✓ / test 339/339 ✓ / build ✓
 
-#### Stage 6.6 ── gene 补 ZButton(在 §5 hooks 完成后)
+#### Stage 6.6 ── gene 补 ZButton(在 §5 hooks 完成后)✅ 2026-05-23 完成
 
-> ⚠️ **依赖前置**:`useRipple` / Vue native `:focus-visible` 已就位才开。
+> 决策文档:`.claude/decisions/2026-05-23-stage6_6-zbutton-and-phase-alpha.md`
 
-- [ ] **gene/ZButton.vue** + spec
-  - variant:`filled` / `outlined` / `text` / `ghost` / `link`(5 种)
-  - 状态:`loading` / `disabled` / `block`
-  - icon slot:`prefixIcon` / `suffixIcon`(用户传 ZIcon 或 BuiltinIcons)
-  - color carrier factory(默认 `_primary`)
-  - size:`small` / `middle` / `large`
-  - 内置:useRipple(默认开启,可 `:ripple="false"` 关)+ `:focus-visible` outline ring
-  - state layer:hover/active 用 `_primary.alpha(8/12)`
+- [x] **gene/ZButton.vue** + spec(19 case)
+  - variant:`filled` / `outlined` / `text` / `ghost` / `link`(5 种,M3 命名)
+  - 状态:`loading`(显示 BuiltinIcons.refresh + spin)/ `disabled` / `block`(width 100%)
+  - icon slot:`prefixIcon` / `suffixIcon`
+  - color carrier factory(默认 `_primary`,挂 `currentColor` 给 variant 派生)
+  - 内置:useRipple(默认开启,`:ripple="false"` 关)+ `:focus-visible` outline ring 2px
+  - state layer:**仅默认 color 走 `_primary.alpha(8/12)`**;user color 时跳过(chain modifier 限制)
   - a11y:`aria-disabled` / `aria-busy`(loading 时)
-  - sxIcon / sxRipple(若需精调)
-- [ ] gene/index.ts 加 ZButton 导出
-- [ ] **验证**:type-check ✓ / test ✓ / build ✓
-- [ ] CHANGELOG entry(新增 ZButton + Material 风波纹 + focus ring)
+- [x] gene/index.ts 加 ZButton 导出
+- [x] **验证**:type-check ✓ / test 358/358 ✓ / build ✓
+- [x] CHANGELOG entry(新增 ZButton + Material 风波纹 + focus ring)
 
 #### Stage α 收尾
 
@@ -751,6 +749,15 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-23 Stage 6.5 + 6.6 完成 = Phase α 收尾(无人值守自主推进,跳过 STOP #4)
+- 改动:display/ZTable(配置式 columns + render 函数 + rowKey 函数 + bordered/striped),gene/ZButton(5 variant + loading + ripple + focus-visible)
+- 测试:ZTable 9 + ZButton 19 = 28 case;**总 358/358 全绿**
+- 验证:type-check ✓ / tests 358/358 ✓ / build ✓
+- 文档:`.claude/decisions/2026-05-23-stage6_6-zbutton-and-phase-alpha.md`
+- Phase α 收尾:21 个 P0 组件全部交付(layout 4 + gene 7 + feedback 5 + display 2 + input 10 + navigation 4)
+- 设计精简:ZButton user color 时跳过 state layer(chain modifier 限制),改用 elevation / opacity 变化作 hover 反馈
+- 下一步:Stage 7 Phase β 高频补全(待用户优先级 sync)
 
 ### 2026-05-23 Stage 6.4 完成(无人值守自主推进)
 - 改动:navigation/ZBreadcrumb / ZPagination(用 locale.pagination 文案)/ ZTabs(line/card/segment + closable + addable)/ ZMenu(树形 items + submenu 内联展开 + collapsed)
