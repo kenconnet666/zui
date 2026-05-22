@@ -18,3 +18,20 @@ export { createMessageApi, type ZMessageApi, type CreateMessageApiOptions } from
 // ─── Phase β feedback 补全 ───
 export { default as ZDrawer } from './ZDrawer.vue'
 export type { ZDrawerProps, ZDrawerEmits, ZDrawerPlacement } from './ZDrawer.vue'
+
+export { default as ZPopconfirm } from './ZPopconfirm.vue'
+export type { ZPopconfirmProps, ZPopconfirmEmits } from './ZPopconfirm.vue'
+
+export { default as ZNotification } from './ZNotification.vue'
+export type {
+  ZNotificationProps,
+  ZNotificationEmits,
+  ZNotificationItem,
+  ZNotificationType,
+} from './ZNotification.vue'
+
+export {
+  createNotificationApi,
+  type ZNotificationApi,
+  type CreateNotificationApiOptions,
+} from './notificationApi'

@@ -12,3 +12,12 @@ export type { ZTabsProps, ZTabsEmits, ZTabItem, ZTabsType } from './ZTabs.vue'
 
 export { default as ZMenu } from './ZMenu.vue'
 export type { ZMenuProps, ZMenuEmits, ZMenuItem, ZMenuMode } from './ZMenu.vue'
+
+// ─── Phase β navigation 补全 ───
+export { default as ZDropdown } from './ZDropdown.vue'
+export type {
+  ZDropdownProps,
+  ZDropdownEmits,
+  ZDropdownItem,
+  ZDropdownTrigger,
+} from './ZDropdown.vue'

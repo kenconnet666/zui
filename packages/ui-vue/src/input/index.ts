@@ -51,3 +51,10 @@ export { default as ZFormItem } from './ZFormItem.vue'
 export type { ZFormItemProps } from './ZFormItem.vue'
 
 export type { ZFormRule, ZFormRules } from './_form-ctx'
+
+// ─── Phase β input 补全 ───
+export { default as ZSlider } from './ZSlider.vue'
+export type { ZSliderProps, ZSliderEmits } from './ZSlider.vue'
+
+export { default as ZRate } from './ZRate.vue'
+export type { ZRateProps, ZRateEmits, ZRateSize } from './ZRate.vue'
