@@ -21,3 +21,6 @@ export type { ZSpacerProps } from './ZSpacer.vue'
 // ─── Phase β 补全 ───
 export { default as ZAffix } from './ZAffix.vue'
 export type { ZAffixProps } from './ZAffix.vue'
+
+export { default as ZScrollbar } from './ZScrollbar.vue'
+export type { ZScrollbarProps } from './ZScrollbar.vue'

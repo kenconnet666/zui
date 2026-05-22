@@ -58,3 +58,10 @@ export type { ZSliderProps, ZSliderEmits } from './ZSlider.vue'
 
 export { default as ZRate } from './ZRate.vue'
 export type { ZRateProps, ZRateEmits, ZRateSize } from './ZRate.vue'
+
+export { default as ZAutoComplete } from './ZAutoComplete.vue'
+export type {
+  ZAutoCompleteProps,
+  ZAutoCompleteEmits,
+  ZAutoCompleteSize,
+} from './ZAutoComplete.vue'

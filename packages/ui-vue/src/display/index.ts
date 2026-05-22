@@ -49,3 +49,6 @@ export type { ZTimelineProps, ZTimelineItem, ZTimelineStatus } from './ZTimeline
 
 export { default as ZStatistic } from './ZStatistic.vue'
 export type { ZStatisticProps } from './ZStatistic.vue'
+
+export { default as ZImage } from './ZImage.vue'
+export type { ZImageProps } from './ZImage.vue'
