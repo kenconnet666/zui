@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+### BREAKING — 语义色 `textMuted` 改名为 `textSecondary`
+
+**理由**:对齐 antd / MUI 的 `text.secondary` 命名惯例,语义清晰("次要文本"层级),且避免跟主题模式名 `light` 字面冲突。
+
+**改动**:
+- `SemanticColorTokens` 中 `textMuted` → `textSecondary`
+- `zuiLight.color.textSecondary` / `zuiDark.color.textSecondary`(物理值不变,仍是 `tw('gray', '600')` / `tw('gray', '400')`)
+
+**迁移**:
+```diff
+- s.color._textMuted
++ s.color._textSecondary
+```
+
+**core fixture 不动**:`packages/core/tests/_fixture-theme.ts` 等自定义 schema 中 `textMuted` 字段是 core 包测试用样本,跟 ZuiSchema 无关。
+
+---
+
 ### BREAKING — 移除 `primaryHover` 语义色,hover 态由 chain modifier 派生
 
 **问题**:原 `SemanticColorTokens` 含 `primaryHover` 一个孤立的"hover 态"专属 token,但

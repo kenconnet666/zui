@@ -20,7 +20,7 @@ export const zuiDark = new Theme<ZuiSchema>({
     success: tw('green', '500'),
     info: tw('cyan', '500'),
     text: tw('gray', '100'),
-    textMuted: tw('gray', '400'),
+    textSecondary: tw('gray', '400'),
     bg: tw('gray', '900'),
     bgMuted: tw('gray', '800'),
     border: tw('gray', '600'),

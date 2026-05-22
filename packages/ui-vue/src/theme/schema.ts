@@ -3,7 +3,7 @@
  *
  * 在 `BaseSchema`（来自 core，仅 palette）之上叠加：
  * - **10 个语义色** —— `primary / danger / warning / success / info /
- *   text / textMuted / bg / bgMuted / border`(hover 态由 chain modifier 派生,见下)
+ *   text / textSecondary / bg / bgMuted / border`(hover 态由 chain modifier 派生,见下)
  * - **5 阶 size scales** —— spacing / radius / fontSize / shadow / blur / duration / breakpoint
  * - **fontWeight 9 档** —— CSS 标准 thin..black
  * - **easing 5 个 cubic-bezier** —— Material-flavor
@@ -106,7 +106,7 @@ export type SemanticColorTokens =
   | 'success'
   | 'info'
   | 'text'
-  | 'textMuted'
+  | 'textSecondary'
   | 'bg'
   | 'bgMuted'
   | 'border'

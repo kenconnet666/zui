@@ -37,7 +37,7 @@ export const zuiLight = new Theme<ZuiSchema>({
     success: tw('green', '500'),
     info: tw('cyan', '500'),
     text: tw('gray', '900'),
-    textMuted: tw('gray', '600'),
+    textSecondary: tw('gray', '600'),
     bg: '#ffffff',
     bgMuted: tw('gray', '50'),
     border: tw('gray', '200'),
