@@ -1,4 +1,4 @@
-import { Theme, FLAT_PALETTE, tw, zu } from '@kenconnet666/zui-core'
+import { Theme, FLAT_PALETTE, tw, iem } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from './schema'
 
 /**
@@ -6,20 +6,27 @@ import type { ZuiSchema } from './schema'
  * 完整 5 阶 size scale + 9 阶 fontWeight + 5 个 easing + 5 阶 breakpoint + UI 角色 z-index +
  * Tailwind 衍生 lineHeight/letterSpacing/opacity/aspectRatio。
  *
- * **尺寸类 token（spacing / radius / fontSize / blur）走 zui 逻辑单位 `zu`**：
- * 每个值 emit `calc(N * var(--zui-unit, 1px))`，默认 1zu = 1px（与传统 css 行为一致）；
- * `<ZConfigProvider :unit="'2px'">` 整站放大 2×、`:unit="ZUnitPreset.rem"` 跟随浏览器根字号
- * （a11y 友好）等，**单点切换全站 sizing**。详见 skill §13.0 ②。
+ * **尺寸类 token（spacing / radius / fontSize / blur）走 zui 逻辑单位 `iem`**:
+ * 每个值 emit `calc(N * var(--zui-iem, 16px))`,**默认 1iem = 16px**(等同 1rem);
+ * `<ZConfigProvider :iem="ZIemPreset.large">` 整站放大 25%(1iem=20px)、
+ * `:iem="ZIemPreset.rem"` 跟随浏览器根字号(a11y),
+ * **嵌套 Provider 通过 css cascade 自然覆盖,兄弟 Provider 各自独立**。详见 skill §13.0 ②。
  *
- * **不走 zu 的几类**（设计哲学）：
- * - `breakpoint` —— 媒体查询基准，跟"屏幕宽度"绑定，不该跟 unit 缩放
- * - `shadow` —— 装饰性效果，保留 px 字面量与设计稿绑定
+ * iem = "我自己使用的 em",跟 CSS `rem`(root em)对称 —— rem 由浏览器掌控,iem 由 Provider 掌控。
+ *
+ * **token 数字语义**:N 表示"几个基准字号"。
+ * - `spacing.middle = iem(1)` → 默认 16px,Provider 20px 模式下 = 20px
+ * - `fontSize.large = iem(1.125)` → 默认 18px(16×1.125),Provider 20px 模式下 = 22.5px
+ *
+ * **不走 iem 的几类**(设计哲学):
+ * - `breakpoint` —— 媒体查询基准,跟"屏幕宽度"绑定,不该跟 iem 缩放
+ * - `shadow` —— 装饰性效果,保留 px 字面量与设计稿绑定
  * - `radius.full = '9999px'` —— "无穷大圆角"语义
  * - `blur.none = '0'` —— 0 长度无需 calc
- * - `letterSpacing` —— em 单位，跟字体本身缩放（zu 体系无关）
+ * - `letterSpacing` —— em 单位,跟字体本身缩放(iem 体系无关)
  * - `duration` / `easing` / `zIndex` / `opacity` / `lineHeight` / `aspectRatio` / `fontWeight` —— 非长度
  *
- * 业务侧顶层主题入口；用户工程通过 `<ZConfigProvider :theme="zuiLight">` 注入。
+ * 业务侧顶层主题入口;用户工程通过 `<ZConfigProvider :theme="zuiLight">` 注入。
  */
 export const zuiLight = new Theme<ZuiSchema>({
   color: {
@@ -36,28 +43,31 @@ export const zuiLight = new Theme<ZuiSchema>({
     bgMuted: tw('gray', '50'),
     border: tw('gray', '200'),
   },
+  // 5 阶 spacing:默认 4/8/16/24/32px(0.25/0.5/1/1.5/2 个基准字号)
   spacing: {
-    tiny: zu(4),
-    small: zu(8),
-    middle: zu(16),
-    large: zu(24),
-    huge: zu(32),
+    tiny: iem(0.25),
+    small: iem(0.5),
+    middle: iem(1),
+    large: iem(1.5),
+    huge: iem(2),
   },
+  // radius:默认 4/8/12/16/24px(0.25/0.5/0.75/1/1.5 个基准字号);full 是语义"无穷"
   radius: {
     none: '0',
-    tiny: zu(4),
-    small: zu(8),
-    middle: zu(12),
-    large: zu(16),
-    huge: zu(24),
+    tiny: iem(0.25),
+    small: iem(0.5),
+    middle: iem(0.75),
+    large: iem(1),
+    huge: iem(1.5),
     full: '9999px',
   },
+  // fontSize:默认 12/14/16/18/20px(0.75/0.875/1/1.125/1.25 个基准字号)
   fontSize: {
-    tiny: zu(12),
-    small: zu(14),
-    middle: zu(16),
-    large: zu(18),
-    huge: zu(20),
+    tiny: iem(0.75),
+    small: iem(0.875),
+    middle: iem(1),
+    large: iem(1.125),
+    huge: iem(1.25),
   },
   fontWeight: {
     thin: 100,
@@ -77,13 +87,14 @@ export const zuiLight = new Theme<ZuiSchema>({
     large: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
     huge: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
   },
+  // blur:默认 4/8/16/24/40px(0.25/0.5/1/1.5/2.5 个基准字号)
   blur: {
     none: '0',
-    tiny: zu(4),
-    small: zu(8),
-    middle: zu(16),
-    large: zu(24),
-    huge: zu(40),
+    tiny: iem(0.25),
+    small: iem(0.5),
+    middle: iem(1),
+    large: iem(1.5),
+    huge: iem(2.5),
   },
   duration: {
     none: '0ms',

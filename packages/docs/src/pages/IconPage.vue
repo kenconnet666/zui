@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 /**
- * ZIcon 演示页 —— v3 chain factory props(2026-05-22):
+ * ZIcon 演示页 —— v3 chain factory props + iem 单位(2026-05-22):
  *   - 4 个外观维度全是单 carrier factory:size / color / depth / spin
- *   - height 自动镜像 width(图标正方形)
- *   - spin 启用时自动加 name + iteration + timing,用户只控制速度
+ *   - size 接 width carrier;height 自动镜像 width
+ *   - spin 接 animationDuration carrier;name + iteration + timing 自动加
  *   - 任何兜底需求走 cssRoot
+ *   - iem = "我自己使用的 em",跟 rem 对称,默认 1iem = 16px,Provider 切换基准
  */
 import { computed, ref, shallowRef, watchEffect } from 'vue'
 import type { ZIconProps, ZuiSchema } from '@kenconnet666/zui-vue'
-import { ZConfigProvider, ZIcon, ZUnitPreset } from '@kenconnet666/zui-vue'
+import { ZConfigProvider, ZIcon, ZIemPreset } from '@kenconnet666/zui-vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import {
   CheckmarkCircle,
@@ -23,36 +24,32 @@ import {
 } from '@vicons/ionicons5'
 
 // ─── 4 维度预定义 factory ─────────────────────────────────────────────────
-//
-// 不再是离散字符串档位 —— 每个维度提供一组**预制 factory**,IDE 补全展开 carrier 全部能力。
-// 用户自己写组件时直接 `(c) => c._primary` 等 inline factory,这里只是 demo 的可选项。
-
 type SizeFactory = NonNullable<ZIconProps['size']>
 type ColorFactory = NonNullable<ZIconProps['color']>
 type DepthFactory = NonNullable<ZIconProps['depth']>
 type SpinFactory = NonNullable<ZIconProps['spin']>
 
-/** size 预制:em 倍率(5 阶 + 任意) + zu / px 字面量。 */
+/** size 预制:iem 倍率(默认基准)/ em(跟父字号)/ px 字面量。 */
 const sizes: Record<string, SizeFactory> = {
-  'em(0.75)  极小': (w) => w.em(0.75),
-  'em(0.875) 小': (w) => w.em(0.875),
-  'em(1)     中(默认)': (w) => w.em(1),
-  'em(1.25)  大': (w) => w.em(1.25),
-  'em(1.5)   极大': (w) => w.em(1.5),
-  'em(2.3)   任意倍率': (w) => w.em(2.3),
-  'zu(16)    跟随 :unit 单位': (w) => w.zu(16),
-  'px(24)    字面量': (w) => w.px(24),
+  'iem(0.75)  极小(12px @ default)': (w) => w.iem(0.75),
+  'iem(0.875) 小(14px @ default)': (w) => w.iem(0.875),
+  'iem(1)     中(16px @ default,默认)': (w) => w.iem(1),
+  'iem(1.25)  大(20px @ default)': (w) => w.iem(1.25),
+  'iem(1.5)   极大(24px @ default)': (w) => w.iem(1.5),
+  'iem(2)     2 倍(32px @ default)': (w) => w.iem(2),
+  'em(1.25)   跟父字号(罕见)': (w) => w.em(1.25),
+  'px(24)     字面量': (w) => w.px(24),
 }
 
-/** color 预制:5 语义色 + 字面量 + currentColor + modifier 链 + ColorTokenValue 进阶。 */
+/** color 预制:语义色 + 字面量 + currentColor + modifier 链。 */
 const colors: Record<string, ColorFactory> = {
   'currentColor (默认)': (c) => c.currentColor,
   '_primary  schema token': (c) => c._primary,
-  '_success': (c) => c._success,
-  '_warning': (c) => c._warning,
-  '_danger': (c) => c._danger,
-  '_info': (c) => c._info,
-  "_primary.alpha(50)  半透明": (c) => c._primary.alpha(50),
+  _success: (c) => c._success,
+  _warning: (c) => c._warning,
+  _danger: (c) => c._danger,
+  _info: (c) => c._info,
+  '_primary.alpha(50)  半透明': (c) => c._primary.alpha(50),
   '_danger.darken(20)  暗化': (c) => c._danger.darken(20),
   "'#ff7849' 字面量": (c) => c('#ff7849'),
 }
@@ -124,7 +121,7 @@ const cssExamples: Record<string, ((s: Chain<ZuiSchema>) => void) | undefined> =
 }
 
 // ─── interactive controls ──────────────────────────────────────────────────
-const sizeKey = ref<keyof typeof sizes>('em(1)     中(默认)')
+const sizeKey = ref<keyof typeof sizes>('iem(1)     中(16px @ default,默认)')
 const colorKey = ref<keyof typeof colors>('currentColor (默认)')
 const depthKey = ref<keyof typeof depths>('(不传 = 100%)')
 const spinKey = ref<keyof typeof spins>('(不传 = 不旋转)')
@@ -164,10 +161,16 @@ watchEffect(() => {
       <code>(c) =&gt; c._primary</code> 这种工厂直传给组件 prop。
     </p>
     <ul>
-      <li><code>size</code> 接 <code>width</code> carrier;<strong>height 自动镜像 width</strong></li>
+      <li>
+        <code>size</code> 接 <code>width</code> carrier;<strong>height 自动镜像 width</strong>;默认
+        <code>(w) =&gt; w.iem(1)</code>(1 个 iem,默认 16px)
+      </li>
       <li><code>color</code> 接 <code>color</code> carrier</li>
       <li><code>depth</code> 接 <code>opacity</code> carrier</li>
-      <li><code>spin</code> 接 <code>animationDuration</code> carrier;启用时自动加 name + iteration + timing</li>
+      <li>
+        <code>spin</code> 接 <code>animationDuration</code> carrier;启用时自动加 name + iteration +
+        timing
+      </li>
       <li>任何不在 4 维度的需求 → <code>:css-root="(s) =&gt; { ... }"</code> 兜底</li>
     </ul>
 
@@ -177,15 +180,15 @@ watchEffect(() => {
       <div class="row">
         <div class="cell">
           <h3>slot 模式</h3>
-          <pre><code>&lt;ZIcon :size="(w) =&gt; w.em(1.25)"&gt;&lt;HomeOutline /&gt;&lt;/ZIcon&gt;</code></pre>
-          <ZIcon :size="(w) => w.em(1.25)">
+          <pre><code>&lt;ZIcon :size="(w) =&gt; w.iem(1.25)"&gt;&lt;HomeOutline /&gt;&lt;/ZIcon&gt;</code></pre>
+          <ZIcon :size="(w) => w.iem(1.25)">
             <HomeOutline />
           </ZIcon>
         </div>
         <div class="cell">
           <h3>component prop 模式</h3>
-          <pre><code>&lt;ZIcon :component="HomeOutline" :size="(w) =&gt; w.em(1.25)" /&gt;</code></pre>
-          <ZIcon :component="HomeOutline" :size="(w) => w.em(1.25)" />
+          <pre><code>&lt;ZIcon :component="HomeOutline" :size="(w) =&gt; w.iem(1.25)" /&gt;</code></pre>
+          <ZIcon :component="HomeOutline" :size="(w) => w.iem(1.25)" />
         </div>
       </div>
     </section>
@@ -194,8 +197,9 @@ watchEffect(() => {
     <section>
       <h2>2. <code>size</code> factory —— <code>width</code> carrier(height 自动镜像)</h2>
       <p class="note">
-        <code>:size="(w) =&gt; w.em(1.25)"</code> 一行表达。height 永远等于 width(保证正方形)。
-        非正方形场景走 <code>cssRoot</code> 单独设 width / height。
+        <code>:size="(w) =&gt; w.iem(1.25)"</code> 一行表达。height 永远等于 width。 物理像素取决于
+        <code>&lt;ZConfigProvider :iem&gt;</code> 注入的基准(默认 16px)。
+        非正方形场景走 <code>cssRoot</code>。
       </p>
       <div class="row baseline">
         <div v-for="(fn, key) in sizes" :key="key" class="cell-mini">
@@ -205,37 +209,33 @@ watchEffect(() => {
       </div>
     </section>
 
-    <!-- ─── 3. color factory(color carrier)─── -->
+    <!-- ─── 3. color factory ─── -->
     <section>
       <h2>3. <code>color</code> factory —— <code>color</code> carrier</h2>
       <p class="note">
-        IDE 补全展开 schema 全部 color token + 146 CSS 命名色 + modifier 链。
-        输入 <code>_p</code> 可模糊筛选 <code>_primary</code> / <code>_primaryHover</code> 等。
+        IDE 补全展开 schema 全部 color token + 146 CSS 命名色 + modifier 链。 输入
+        <code>_p</code> 可模糊筛选 <code>_primary</code> / <code>_primaryHover</code> 等。
       </p>
       <div class="row">
         <div v-for="(fn, key) in colors" :key="key" class="cell-mini">
-          <ZIcon :color="fn" :component="HeartOutline" :size="(w) => w.em(1.5)" />
+          <ZIcon :color="fn" :component="HeartOutline" :size="(w) => w.iem(1.5)" />
           <code>{{ key }}</code>
         </div>
       </div>
     </section>
 
-    <!-- ─── 4. depth factory(opacity carrier)─── -->
+    <!-- ─── 4. depth factory ─── -->
     <section>
       <h2>4. <code>depth</code> factory —— <code>opacity</code> carrier</h2>
       <div class="row">
         <div v-for="(fn, key) in depths" :key="key" class="cell-mini">
-          <ZIcon
-            :component="StarOutline"
-            :depth="fn"
-            :size="(w) => w.em(1.5)"
-          />
+          <ZIcon :component="StarOutline" :depth="fn" :size="(w) => w.iem(1.5)" />
           <code>{{ key }}</code>
         </div>
       </div>
     </section>
 
-    <!-- ─── 5. spin factory(animationDuration carrier)─── -->
+    <!-- ─── 5. spin factory ─── -->
     <section>
       <h2>5. <code>spin</code> factory —— <code>animationDuration</code> carrier</h2>
       <p class="note">
@@ -244,11 +244,7 @@ watchEffect(() => {
       </p>
       <div class="row">
         <div v-for="(fn, key) in spins" :key="key" class="cell-mini">
-          <ZIcon
-            :component="Reload"
-            :spin="fn"
-            :size="(w) => w.em(1.5)"
-          />
+          <ZIcon :component="Reload" :spin="fn" :size="(w) => w.iem(1.5)" />
           <code>{{ key }}</code>
         </div>
       </div>
@@ -274,7 +270,7 @@ watchEffect(() => {
       <div class="preview">
         <ZIcon
           :component="StarOutline"
-          :size="(w) => w.em(2)"
+          :size="(w) => w.iem(2)"
           v-bind="currentCss ? { cssRoot: currentCss } : {}"
         />
       </div>
@@ -333,11 +329,11 @@ watchEffect(() => {
       <h2>8. a11y — <code>label</code> prop</h2>
       <div class="row">
         <div class="cell-mini">
-          <ZIcon :component="Trash" :size="(w) => w.em(1.5)" />
+          <ZIcon :component="Trash" :size="(w) => w.iem(1.5)" />
           <code>无 label → aria-hidden(装饰性)</code>
         </div>
         <div class="cell-mini">
-          <ZIcon :component="Trash" :size="(w) => w.em(1.5)" label="删除" />
+          <ZIcon :component="Trash" :size="(w) => w.iem(1.5)" label="删除" />
           <code>有 label → aria-label + role="img"</code>
         </div>
       </div>
@@ -350,15 +346,14 @@ watchEffect(() => {
         zui 的 token 体系是<strong>三层 schema 继承</strong>:
       </p>
 
-      <pre><code>core      BaseSchema  // 仅 Tailwind palette 242 色(CSS 原语)
+      <pre><code>core      BaseSchema  // 仅 Tailwind palette 242 色
             ▲ extends
-ui-vue    ZuiSchema   // + 11 语义色 + 5 阶 size scale + fontWeight / easing / ...
-                       // 每个 category &amp; Partial&lt;UserXxxExt&gt; 留扩展锚点
+ui-vue    ZuiSchema   // + 11 语义色 + 5 阶 size + ...
             ▲ augmentation
 user      用户在 zui.d.ts 一次 augmentation</code></pre>
 
       <h3>用户扩 brand 色 —— 两步走</h3>
-      <pre><code>// 步骤 1: user/zui.d.ts —— 类型层一次 augmentation
+      <pre><code>// 步骤 1: user/zui.d.ts
 declare module '@kenconnet666/zui-vue' {
   interface UserColorExt {
     brandRoyal: string
@@ -367,23 +362,19 @@ declare module '@kenconnet666/zui-vue' {
   }
 }
 
-// 步骤 2: App.vue —— 运行时 extend() 喂入值
+// 步骤 2: App.vue
 import { ZConfigProvider, zuiLight } from '@kenconnet666/zui-vue'
 
 const myLight = zuiLight.extend({
-  color: {
-    brandRoyal: '#1a3a8f',
-    brandSunset: '#ff7849',
-    brandForest: '#1f7a3c',
-  },
+  color: { brandRoyal: '#1a3a8f', brandSunset: '#ff7849', brandForest: '#1f7a3c' },
 })
 
 &lt;ZConfigProvider :theme="myLight"&gt;&lt;App /&gt;&lt;/ZConfigProvider&gt;</code></pre>
 
       <h3>使用处 —— 零类型注解,IDE 直接补全 ✨</h3>
-      <pre><code>&lt;ZIcon :color="(c) =&gt; c._brandRoyal" /&gt;            <!-- 来自 augmentation -->
-&lt;ZIcon :color="(c) =&gt; c._primary" /&gt;               <!-- ZuiSchema 内置 -->
-&lt;ZIcon :color="(c) =&gt; c._blue500" /&gt;               <!-- BaseSchema palette -->
+      <pre><code>&lt;ZIcon :color="(c) =&gt; c._brandRoyal" /&gt;
+&lt;ZIcon :color="(c) =&gt; c._primary" /&gt;
+&lt;ZIcon :color="(c) =&gt; c._blue500" /&gt;
 &lt;ZIcon :css-root="(s) =&gt; {
   s._hover(h =&gt; h.color(c =&gt; c._brandRoyal.shade(20)))
 }" /&gt;</code></pre>
@@ -391,13 +382,13 @@ const myLight = zuiLight.extend({
       <h3>本 docs 站实际效果</h3>
       <p class="note">
         docs 工程 `src/zui.d.ts` 已做 augmentation;App.vue 已用 <code>zuiLight.extend(...)</code>
-        注入 3 个 brand 色。下面 3 个图标直接走自定义 token,**无任何类型注解**:
+        注入 3 个 brand 色:
       </p>
       <div class="row">
         <div class="cell-mini">
           <ZIcon
             :component="HeartOutline"
-            :size="(w) => w.em(2)"
+            :size="(w) => w.iem(2)"
             :color="(c) => c._brandRoyal"
           />
           <code>c._brandRoyal</code>
@@ -405,7 +396,7 @@ const myLight = zuiLight.extend({
         <div class="cell-mini">
           <ZIcon
             :component="HeartOutline"
-            :size="(w) => w.em(2)"
+            :size="(w) => w.iem(2)"
             :color="(c) => c._brandSunset"
           />
           <code>c._brandSunset</code>
@@ -413,7 +404,7 @@ const myLight = zuiLight.extend({
         <div class="cell-mini">
           <ZIcon
             :component="HeartOutline"
-            :size="(w) => w.em(2)"
+            :size="(w) => w.iem(2)"
             :color="(c) => c._brandForest"
           />
           <code>c._brandForest</code>
@@ -421,45 +412,128 @@ const myLight = zuiLight.extend({
       </div>
     </section>
 
-    <!-- ─── 10. ZConfigProvider :unit ─── -->
+    <!-- ─── 10. ZConfigProvider :iem —— 全站 sizing 单点切换 ─── -->
     <section>
-      <h2>10. <code>:unit</code> —— 全站 sizing 单点切换</h2>
+      <h2>10. <code>:iem</code> —— 全站 sizing 单点切换</h2>
       <p>
-        <code>&lt;ZConfigProvider :unit&gt;</code> 写入 wrapper inline
-        <code>style="--zui-unit: ..."</code>。所有 zu 化 token(spacing / radius / fontSize /
-        blur 等)经 <code>calc(N * var(--zui-unit, 1px))</code> 自动 resolve 到该基准。
-        ZIcon 默认走 em(跟父字号),不受 unit 影响 —— 想跟 unit 缩放,
-        size factory 写 <code>(w) =&gt; w.zu(N)</code>。
+        <code>iem</code> = <strong>"我自己使用的 em"</strong>,跟 CSS <code>rem</code>(root em)
+        对称 —— Provider 注入的基准倍率,默认 <code>1iem = 16px</code>(等同 1rem)。
+      </p>
+      <p>
+        <code>&lt;ZConfigProvider :iem&gt;</code> 写入 wrapper inline
+        <code>style="--zui-iem: ..."</code>。所有 iem 化 token(spacing / radius / fontSize /
+        blur 等)经 <code>calc(N * var(--zui-iem, 16px))</code> 自动 resolve 到该基准。
+        <strong>ZIcon 默认 size 也走 iem</strong>,跟 Provider 字号联动。
       </p>
 
       <div class="row">
         <div class="cell">
-          <h3>默认 <code>:unit="ZUnitPreset.pixel"</code> (1zu = 1px)</h3>
-          <ZConfigProvider :unit="ZUnitPreset.pixel">
+          <h3>默认 <code>:iem="ZIemPreset.default"</code> (1iem = 16px)</h3>
+          <ZConfigProvider :iem="ZIemPreset.default">
             <div :style="{ padding: '16px', border: '1px solid #ccc', display: 'flex', gap: '16px', alignItems: 'center' }">
-              <ZIcon :component="HeartOutline" :size="(w) => w.zu(24)" />
-              <span style="font-size: 16px">size = w.zu(24) = 24px</span>
+              <ZIcon :component="HeartOutline" />
+              <span style="font-size: 16px">默认 16px 基准</span>
             </div>
           </ZConfigProvider>
         </div>
         <div class="cell">
-          <h3><code>:unit="ZUnitPreset.retina"</code> (1zu = 2px,整站放大 2×)</h3>
-          <ZConfigProvider :unit="ZUnitPreset.retina">
-            <div :style="{ padding: 'calc(16 * var(--zui-unit, 1px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(16 * var(--zui-unit, 1px))', alignItems: 'center' }">
-              <ZIcon :component="HeartOutline" :size="(w) => w.zu(24)" />
-              <span :style="{ fontSize: 'calc(16 * var(--zui-unit, 1px))' }">size = w.zu(24) = 48px</span>
+          <h3><code>:iem="ZIemPreset.large"</code> (1iem = 20px,整站放大 25%)</h3>
+          <ZConfigProvider :iem="ZIemPreset.large">
+            <div :style="{ padding: 'calc(1 * var(--zui-iem, 16px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(1 * var(--zui-iem, 16px))', alignItems: 'center' }">
+              <ZIcon :component="HeartOutline" />
+              <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">20px 大字模式</span>
             </div>
           </ZConfigProvider>
         </div>
         <div class="cell">
-          <h3><code>:unit="ZUnitPreset.rem"</code> (跟浏览器根字号,a11y)</h3>
-          <ZConfigProvider :unit="ZUnitPreset.rem">
-            <div :style="{ padding: 'calc(16 * var(--zui-unit, 1px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(16 * var(--zui-unit, 1px))', alignItems: 'center' }">
-              <ZIcon :component="HeartOutline" :size="(w) => w.zu(24)" />
-              <span :style="{ fontSize: 'calc(16 * var(--zui-unit, 1px))' }">浏览器大字模式整站同步放大</span>
+          <h3><code>:iem="ZIemPreset.compact"</code> (1iem = 14px,紧凑)</h3>
+          <ZConfigProvider :iem="ZIemPreset.compact">
+            <div :style="{ padding: 'calc(1 * var(--zui-iem, 16px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(1 * var(--zui-iem, 16px))', alignItems: 'center' }">
+              <ZIcon :component="HeartOutline" />
+              <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">14px 紧凑模式</span>
             </div>
           </ZConfigProvider>
         </div>
+        <div class="cell">
+          <h3><code>:iem="ZIemPreset.rem"</code> (跟浏览器根字号,a11y)</h3>
+          <ZConfigProvider :iem="ZIemPreset.rem">
+            <div :style="{ padding: 'calc(1 * var(--zui-iem, 16px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(1 * var(--zui-iem, 16px))', alignItems: 'center' }">
+              <ZIcon :component="HeartOutline" />
+              <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">浏览器大字模式整站同步放大</span>
+            </div>
+          </ZConfigProvider>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 11. 嵌套 Provider 互不影响 ─── -->
+    <section>
+      <h2>11. 嵌套 Provider · 兄弟独立 · 零运行时合并</h2>
+      <p>
+        CSS cascade 天然支持嵌套作用域和兄弟隔离 —— 每个 Provider 在 wrapper 写
+        <code>style="--zui-iem: ..."</code>,子组件 <code>calc(N * var(--zui-iem))</code>
+        通过浏览器 CSS 引擎自动找最近祖先的值。**零运行时合并开销**。
+      </p>
+
+      <h3>嵌套覆盖:子树独立设定,不影响兄弟</h3>
+      <ZConfigProvider :iem="ZIemPreset.default">
+        <div class="nested-demo">
+          <div class="nest-card outer">
+            <div class="nest-label">外层 Provider: <code>:iem="ZIemPreset.default"</code> (16px)</div>
+            <div class="nest-row">
+              <ZIcon :component="HomeOutline" />
+              <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">外层文字 + ZIcon(1iem)</span>
+            </div>
+
+            <ZConfigProvider :iem="ZIemPreset.large">
+              <div class="nest-card inner">
+                <div class="nest-label">嵌套子树: <code>:iem="ZIemPreset.large"</code> (20px) ← 只影响这一子树</div>
+                <div class="nest-row">
+                  <ZIcon :component="HomeOutline" />
+                  <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">子树文字 + ZIcon(1iem = 20px)</span>
+                </div>
+              </div>
+            </ZConfigProvider>
+
+            <div class="nest-row">
+              <ZIcon :component="HomeOutline" />
+              <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">外层兄弟节点(回到 16px,不受嵌套影响)</span>
+            </div>
+          </div>
+        </div>
+      </ZConfigProvider>
+
+      <h3>兄弟 Provider:各自独立,完全不影响</h3>
+      <div class="sibling-row">
+        <ZConfigProvider :iem="ZIemPreset.compact">
+          <div class="nest-card sibling">
+            <div class="nest-label">兄弟 A: <code>compact</code> (14px)</div>
+            <div class="nest-row">
+              <ZIcon :component="HeartOutline" />
+              <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">14px 紧凑</span>
+            </div>
+          </div>
+        </ZConfigProvider>
+
+        <ZConfigProvider :iem="ZIemPreset.default">
+          <div class="nest-card sibling">
+            <div class="nest-label">兄弟 B: <code>default</code> (16px)</div>
+            <div class="nest-row">
+              <ZIcon :component="HeartOutline" />
+              <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">16px 默认</span>
+            </div>
+          </div>
+        </ZConfigProvider>
+
+        <ZConfigProvider :iem="ZIemPreset.large">
+          <div class="nest-card sibling">
+            <div class="nest-label">兄弟 C: <code>large</code> (20px)</div>
+            <div class="nest-row">
+              <ZIcon :component="HeartOutline" />
+              <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">20px 大字</span>
+            </div>
+          </div>
+        </ZConfigProvider>
       </div>
     </section>
   </article>
@@ -525,7 +599,7 @@ pre code {
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  min-width: 140px;
+  min-width: 160px;
   padding: 16px;
   background: #fff;
   border: 1px solid #e5e7eb;
@@ -576,5 +650,51 @@ pre code {
 .extension pre {
   font-size: 12px;
   margin: 8px 0;
+}
+
+/* ─── 嵌套 Provider 演示样式 ─── */
+.nested-demo {
+  background: #f9fafb;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+.nest-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 8px 0;
+}
+.nest-card.outer {
+  border-color: #3b82f6;
+  border-width: 2px;
+}
+.nest-card.inner {
+  background: #eff6ff;
+  border-color: #f59e0b;
+  border-width: 2px;
+  margin: 12px 0;
+}
+.nest-card.sibling {
+  flex: 1 1 200px;
+}
+.nest-label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.nest-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+}
+.sibling-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 12px;
 }
 </style>

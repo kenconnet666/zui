@@ -2,14 +2,15 @@
 /**
  * `ZConfigProvider` —— ui-vue 顶层/嵌套配置注入器。
  *
- * 同时承载 4 类上下文，并允许嵌套时只覆盖部分维度：
+ * 同时承载多类上下文，并允许嵌套时只覆盖部分维度：
  *
  *   1. theme       —— 完整 `Theme<ZuiSchema>` 实例（替换父）
  *   2. themePatch  —— `DeepPartial<ZuiSchema>` 局部补丁（合并到父；与 theme 互斥取先 theme 后 patch）
  *   3. locale      —— 完整 `ZLocale`（替换父）；或 localePatch（合并）
  *   4. timezone    —— IANA 时区，未传继承父
  *   5. dateLocale  —— date-fns Locale，未传继承父
- *   6. unit        —— 逻辑单位 zu 的物理映射，写到 wrapper inline `--zui-unit`
+ *   6. iem         —— 逻辑单位 iem 的物理映射,写到 wrapper inline `--zui-iem`
+ *                     (iem = "我自己使用的 em",跟 rem 对称,默认 1iem = 16px)
  *
  * **根 Provider** 没传 `theme` 时回落 `zuiLight.resolve()` 并 dev warn。
  *
@@ -57,32 +58,37 @@ const props = withDefaults(
     dateLocale?: DateFnsLocale
 
     /**
-     * **逻辑单位 zu 的物理映射 —— 全站 sizing 单点切换器**。
+     * **逻辑单位 iem 的物理映射 —— 全站 sizing 单点切换器**。
      *
-     * 写入 wrapper inline `style="--zui-unit: ..."`，ui-vue 所有 zu 化 token
-     * （`spacing` / `radius` / `fontSize` / `blur` 等）经 `calc(N * var(--zui-unit, 1px))`
-     * 自动 resolve 到该基准。**嵌套 Provider 通过 css cascade 自动覆盖，无运行时合并开销**。
+     * `iem` = "我自己使用的 em",跟 CSS `rem`(root em)对称 —— Provider 注入的基准倍率,
+     * 默认 1iem = 16px(等同 1rem)。
      *
-     * 接受任意 css length 字符串或纯数字（数字按 px 处理）：
-     * - 不传 / `'1px'` —— 默认，1zu = 1px（与传统 css 行为一致）
-     * - `'2px'` —— 整站 UI 放大 2 倍（适合超大屏）
-     * - `'0.0625rem'`（推荐用 `ZUnitPreset.rem`）—— 1zu = 1rem/16，全站跟浏览器根字号（a11y 大字模式立即生效）
+     * 写入 wrapper inline `style="--zui-iem: ..."`,ui-vue 所有 iem 化 token
+     * (`spacing` / `radius` / `fontSize` / `blur` 等)经 `calc(N * var(--zui-iem, 16px))`
+     * 自动 resolve 到该基准。**嵌套 Provider 通过 css cascade 自然覆盖,兄弟 Provider 各自
+     * 独立 —— 零运行时合并开销**。
+     *
+     * 接受任意 css length 字符串或纯数字(数字按 px 处理):
+     * - 不传 / `'16px'`(`ZIemPreset.default`)—— 默认,1iem = 16px
+     * - `'20px'`(`ZIemPreset.large`)—— 大字模式,整站放大 25%
+     * - `'14px'`(`ZIemPreset.compact`)—— 紧凑模式
+     * - `'1em'`(`ZIemPreset.em`)—— 跟父字号,嵌套自动
+     * - `'1rem'`(`ZIemPreset.rem`)—— 跟浏览器根字号,a11y 大字模式立即生效
      * - `'0.05vw'` —— 响应式 fluid sizing
-     * - `'clamp(0.875px, 0.1vw, 1.25px)'` —— 任意 css length 表达式
+     * - `'clamp(14px, 1vw, 20px)'` —— 任意 css length 表达式
      *
-     * **不影响**：`breakpoint`（媒体查询基准）/ `shadow`（保留 px 字面量）/ `duration` 等非长度 token。
-     * **不影响**：ZIcon 等"跟随父字号"的组件（用 em 单位，独立于 zu 体系）。
+     * **不影响**:`breakpoint`(媒体查询基准)/ `shadow`(保留 px 字面量)/ `duration` 等非长度 token。
      */
-    unit?: string | number
+    iem?: string | number
   }>(),
   {
-    unit: '1px',
+    iem: '16px',
   },
 )
 
-// ─── unit → css var 注入（写到 wrapper inline style，子组件通过 css cascade 自动读取） ───
-const unitStyle = computed(() => ({
-  '--zui-unit': typeof props.unit === 'number' ? `${props.unit}px` : props.unit,
+// ─── iem → css var 注入（写到 wrapper inline style，子组件通过 css cascade 自动读取） ───
+const iemStyle = computed(() => ({
+  '--zui-iem': typeof props.iem === 'number' ? `${props.iem}px` : props.iem,
 }))
 
 defineSlots<{
@@ -152,7 +158,7 @@ defineExpose({
 </script>
 
 <template>
-  <div :style="unitStyle">
+  <div :style="iemStyle">
     <slot :theme="mergedTheme" :locale="mergedLocale" />
   </div>
 </template>

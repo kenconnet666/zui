@@ -3,7 +3,7 @@
  *
  * 覆盖:
  * 1. 双模式渲染(slot / component prop)
- * 2. size factory(width carrier):默认 1em / em 倍率 / zu / px;height 自动镜像 width
+ * 2. size factory(width carrier):默认 1iem(16px)/ em 倍率 / iem / px;height 自动镜像 width
  * 3. color factory(color carrier):默认 currentColor / schema token / modifier 链 / 字面量
  * 4. depth factory(opacity carrier):不传 / 字面量 / schema token
  * 5. spin factory(animationDuration carrier):不传 / 字面量 / token;自动加 name+iteration+timing
@@ -68,11 +68,26 @@ describe('ZIcon — 渲染', () => {
 })
 
 describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
-  it('default(未传 size)→ width:1em / height:1em', () => {
+  it('default(未传 size)→ width:1iem / height:1iem(calc(1 * var(--zui-iem, 16px)))', () => {
     mount(ZIcon, { props: { component: DummyIcon } })
     const css = getInjectedCss()
-    expect(css).toMatch(/width:1em/)
-    expect(css).toMatch(/height:1em/)
+    expect(css).toContain('var(--zui-iem')
+    expect(css).toMatch(/width:calc\(1 \* var\(--zui-iem,/)
+    expect(css).toMatch(/height:calc\(1 \* var\(--zui-iem,/)
+  })
+
+  it('size factory → w.iem(1.25) → width + height 都 1.25iem(镜像)', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        size: (w: Chain<ZuiSchema>['width']) => {
+          w.iem(1.25)
+        },
+      },
+    })
+    const css = getInjectedCss()
+    expect(css).toMatch(/width:calc\(1\.25 \* var\(--zui-iem,/)
+    expect(css).toMatch(/height:calc\(1\.25 \* var\(--zui-iem,/)
   })
 
   it('size factory → w.em(0.75) → width + height 都 0.75em(镜像)', () => {
@@ -117,23 +132,37 @@ describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
     expect(css).toMatch(/height:1\.125em/)
   })
 
-  it('size factory → w.zu(16) 跟随 unit 系统(width + height 同一 calc)', () => {
+  it('size factory → w.iem(1.5) 跟随 :iem 基准(width + height 同一 calc)', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
         size: (w: Chain<ZuiSchema>['width']) => {
-          w.zu(16)
+          w.iem(1.5)
         },
       },
     })
     const css = getInjectedCss()
-    expect(css).toContain('var(--zui-unit')
+    expect(css).toContain('var(--zui-iem')
     // width / height 应该用相同的 calc 表达式
     const widthMatch = css.match(/width:calc\([^;]+\)/)
     const heightMatch = css.match(/height:calc\([^;]+\)/)
     expect(widthMatch).not.toBeNull()
     expect(heightMatch).not.toBeNull()
     expect(widthMatch![0].replace('width:', '')).toBe(heightMatch![0].replace('height:', ''))
+  })
+
+  it('size factory → w.em(1.25) 跟父字号(em 而非 iem)', () => {
+    mount(ZIcon, {
+      props: {
+        component: DummyIcon,
+        size: (w: Chain<ZuiSchema>['width']) => {
+          w.em(1.25)
+        },
+      },
+    })
+    const css = getInjectedCss()
+    expect(css).toMatch(/width:1\.25em/)
+    expect(css).toMatch(/height:1\.25em/)
   })
 
   it('size factory → w.px(20) 字面量镜像', () => {

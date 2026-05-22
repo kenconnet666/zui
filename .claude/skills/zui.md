@@ -413,11 +413,11 @@ CI 步骤"Generator drift check"会跑 generator 再 `git diff --exit-code`。**
 
 | Category | Keys | 默认值 / 备注 |
 |---|---|---|
-| `spacing` | tiny/small/middle/large/huge | **`zu(4/8/16/24/32)`** —— 走 zu，Provider `:unit` 可全站切换基准 |
-| `fontSize` | tiny/small/middle/large/huge | **`zu(12/14/16/18/20)`** —— 走 zu，配合 `:unit="ZUnitPreset.rem"` 可达到 a11y 大字模式 |
-| `radius` | none/tiny/small/middle/large/huge/**full** | none=`'0'` / 5 阶`zu(4/8/12/16/24)` / **full=`'9999px'`**（语义性 ∞，不缩放） |
+| `spacing` | tiny/small/middle/large/huge | **`iem(0.25/0.5/1/1.5/2)`** —— 走 iem(默认 4/8/16/24/32px),`ZConfigProvider :iem` 全站切换基准 |
+| `fontSize` | tiny/small/middle/large/huge | **`iem(0.75/0.875/1/1.125/1.25)`** —— 默认 12/14/16/18/20px;`:iem="ZIemPreset.rem"` 达到 a11y 大字模式 |
+| `radius` | none/tiny/small/middle/large/huge/**full** | none=`'0'` / 5 阶`iem(0.25/0.5/0.75/1/1.5)`(默认 4/8/12/16/24px)/ **full=`'9999px'`**(语义性 ∞,不缩放) |
 | `shadow` | tiny/small/middle/large/huge | 保留 px 字面量（装饰性效果，与设计稿绑定，**不**跟 unit 缩放） |
-| `blur` | **none**/tiny/small/middle/large/huge | none=`'0'` / 5 阶 `zu(4/8/16/24/40)` |
+| `blur` | **none**/tiny/small/middle/large/huge | none=`'0'` / 5 阶 `iem(0.25/0.5/1/1.5/2.5)`(默认 4/8/16/24/40px) |
 | `breakpoint` | tiny/small/middle/large/huge | **保留 px**（媒体查询基准，与"屏幕宽度"硬绑定，**不**跟 unit 缩放） |
 | `duration` | **none**/tiny/small/middle/large/huge | 6 阶；0ms/75ms/150ms/300ms/500ms/700ms（时间，非长度） |
 | `zIndex` | **none**/tiny/small/middle/large/huge + 角色 modal/popover/tooltip/toast + auto | 0/10/20/30/40/50（无单位） |
@@ -580,14 +580,18 @@ export interface ZxxxProps {
 
 详见 `.claude/decisions/2026-05-22-carrier-factory-prop.md`。
 
-**② zu 单位优先 · 文字相关用 em · Provider 全站切换基准**
+**② iem 单位优先 · `<ZConfigProvider :iem>` 全站切换基准 · 罕见局部用 em**
 
-- **大部分尺寸维度**（spacing / radius / fontSize / blur / gap / width / height / padding / 等）：组件内走 `s.padding.zu(8)` / `s.width.zu(16)` 等；theme token 表用 `zu(N)` helper（emit `calc(N * var(--zui-unit, 1px))`）。
-- **`<ZConfigProvider :unit>` 单点切换 1zu 物理意义**：默认 `'1px'`（1zu = 1px，与传统 css 一致）；`'2px'` 整站放大 2×；`ZUnitPreset.rem`（`'0.0625rem'`）跟随浏览器根字号（a11y 大字模式整站同步）；`'0.05vw'` 响应式 fluid sizing。嵌套 Provider 通过 css cascade 自然覆盖。
-- **图标 / Avatar 等文字相关组件用 em**：跟随父字号缩放，让它们在 `<button style="font-size:14px">` / `<h1>` 等不同字号容器里自动协调（用 zu 会让 icon 不随按钮文字缩放）。**注意：em 单位只在一个属性上设**（如 ZIcon 只设 `width/height: N em`，**不**设 `font-size: N em`），避免 em 复合（fontSize.em(N) + width.em(N) 会让 width 算到 N²×父字号）。
-- **不走 zu 的几类**（语义不同）：
-  - `breakpoint` —— 媒体查询基准，跟"屏幕宽度"硬绑定
-  - `shadow` —— 装饰性效果，保留 px 字面量与设计稿绑定（**可选 zu 化**，看产品需求）
+`iem` = **"我自己使用的 em"**,跟 CSS `rem`(root em)对称:
+- `rem` = 浏览器根元素 font-size 倍率(浏览器掌控,默认 16px)
+- `iem` = ZConfigProvider 注入的基准倍率(应用层掌控,**默认 1iem = 16px**,等同 1rem)
+
+- **大部分尺寸维度**(spacing / radius / fontSize / blur / gap / width / height / padding / 等):组件内走 `s.padding.iem(1)` / `s.width.iem(1.5)` 等;theme token 表用 `iem(N)` helper(emit `calc(N * var(--zui-iem, 16px))`)。**N 是"几个基准字号"**,跟 rem 用法一致(`iem(1)` = 1iem,`iem(1.5)` = 1.5iem)。
+- **`<ZConfigProvider :iem>` 单点切换 1iem 物理意义**:默认 `ZIemPreset.default`(`'16px'`)/ `ZIemPreset.large`(`'20px'`,大字模式)/ `ZIemPreset.compact`(`'14px'`,紧凑)/ `ZIemPreset.em`(`'1em'`,跟父字号)/ `ZIemPreset.rem`(`'1rem'`,a11y 跟浏览器根字号)。**嵌套 Provider 通过 css cascade 自然覆盖,兄弟 Provider 各自独立 —— 零运行时合并开销**。
+- **ZIcon 等图标默认也走 iem**(`(w) => w.iem(1)` 默认),跟 Provider 字号联动,整站统一图标尺寸。想"跟随父容器字号"的罕见局部场景显式 `(w) => w.em(N)`。注意 em 单位只在一个属性上设(如 ZIcon 只设 `width/height: N em`,**不**设 `font-size: N em`),避免 em 复合(fontSize.em(N) + width.em(N) 会让 width 算到 N²×父字号)。
+- **不走 iem 的几类**(语义不同):
+  - `breakpoint` —— 媒体查询基准,跟"屏幕宽度"硬绑定
+  - `shadow` —— 装饰性效果,保留 px 字面量与设计稿绑定(**可选 iem 化**,看产品需求)
   - `radius.full = '9999px'` —— "无穷大圆角"语义
   - `letterSpacing` —— em 单位（跟字体本身缩放）
   - `duration / easing / zIndex / opacity / lineHeight / aspectRatio / fontWeight` —— 非长度
@@ -717,7 +721,7 @@ interface Props<S extends ThemeSchema = ThemeSchema> {
   localePatch?: ZLocalePartial              // namespace 级 + 字段级浅合并
   timezone?: string                         // IANA 时区，未传继承父；根未传 → 'UTC'
   dateLocale?: DateFnsLocale                // date-fns Locale，未传继承父
-  unit?: string | number                    // 逻辑单位 zu 的物理映射，写到 wrapper inline --zui-unit
+  iem?: string | number                     // 逻辑单位 iem 的物理映射,写到 wrapper inline --zui-iem(默认 16px)
 }
 ```
 
@@ -729,7 +733,7 @@ interface Props<S extends ThemeSchema = ThemeSchema> {
 | locale | `zhCN` | `mergeLocale` namespace+字段两级浅合并；数组整体替换 |
 | timezone | `'UTC'` | 子覆盖父 |
 | dateLocale | `undefined` | 子覆盖父 |
-| unit | `'1px'` | wrapper inline `--zui-unit`，子层 css cascade 自然覆盖（无运行时合并） |
+| iem | `'16px'`(`ZIemPreset.default`) | wrapper inline `--zui-iem`,子层 css cascade 自然覆盖(无运行时合并;兄弟 Provider 互不影响) |
 
 Inject keys（symbol）：`Z_THEME_KEY` / `Z_LOCALE_KEY` / `Z_DATE_KEY`，全部 `InjectionKey<Ref<...>>`。`Z_THEME_KEY` 退化到 `ResolvedTheme<any>`（Vue InjectionKey 不支持泛型），子组件 `useZTheme<S>()` cast 回。
 
@@ -844,7 +848,7 @@ declare module '@kenconnet666/zui-vue' {
 
 **§13.0 ① chain factory props 范式的首个落地** —— 每个外观维度都是 `(c) => void` 工厂,setup 内一行应用,无 switch / 无 const map / 无 cx 拼接。复杂组件(Button / Input / Dialog)照此结构但 className 拆 base / 状态 / variants 多层。
 
-**❗ ZIcon 是 §13.0 ② 的 em 例外**:图标跟随父字号(在 `<button>` / `<h1>` 等不同字号容器内自动协调),size 维度用 `s.width.em(N)` / `s.height.em(N)` 而非 zu。**只设 width/height、不设 font-size**:避免 em 复合(若同时 `s.fontSize.em(N)` 与 `s.width.em(N)`,width 会算到 N²×父字号)。Avatar 等"跟随文字"组件按此 em 路径,其它组件全部走 zu。
+**ZIcon size 默认 iem**(2026-05-22 改 iem 范式后):默认 `(w) => w.iem(1)`(1iem,默认 16px),跟 ZConfigProvider 字号联动 —— 整站统一图标尺寸。**只设 width(height 自动镜像)、不设 fontSize**,避免 em 复合(若同时 `s.fontSize.em(N)` + `s.width.em(N)`,width 会算到 N²×父字号)。想"跟随父字号"的罕见场景显式 `(w) => w.em(N)`。
 
 **文件结构**(2 个文件,~150 行核心实现 + 2 行 barrel):
 
@@ -891,7 +895,7 @@ export interface ZIconProps {
 ```vue
 <!-- size: w.em(N) 一行,height 自动镜像 -->
 <ZIcon :component="HeartIcon" :size="(w) => w.em(1.25)" />     <!-- 1.25em × 1.25em -->
-<ZIcon :component="HeartIcon" :size="(w) => w.zu(16)" />       <!-- 跟随 :unit -->
+<ZIcon :component="HeartIcon" :size="(w) => w.iem(1)" />       <!-- 1iem,跟随 :iem -->
 <ZIcon :component="HeartIcon" :size="(w) => w.px(20)" />       <!-- 字面量 -->
 
 <!-- color: schema token / modifier / 字面量 -->

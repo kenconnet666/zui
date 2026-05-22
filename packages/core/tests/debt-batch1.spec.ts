@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { Chain, createIcssInstance, injectPreflight, zu } from '../src'
+import { Chain, createIcssInstance, iem, injectPreflight } from '../src'
 import { defaultLight } from './_fixture-theme'
 import { GLOBAL_KEYWORDS } from '../src/chain/keywords'
 import { LENGTH_UNITS, TIME_UNITS, ANGLE_UNITS } from '../src/chain/units'
@@ -127,30 +127,30 @@ describe('R1 — carrier unit 方法覆盖 LENGTH_UNITS 全部 30 个', () => {
     expect(c3._node.width).toBe('100vw')
   })
 
-  it('zui 逻辑单位 zu → calc(N * var(--zui-unit, 1px))', () => {
+  it('zui 逻辑单位 iem → calc(N * var(--zui-iem, 16px))（默认 1iem = 16px,Provider 切换）', () => {
     const c1 = new Chain(defaultLight)
-    c1.padding.zu(8)
-    expect(c1._node.padding).toBe('calc(8 * var(--zui-unit, 1px))')
+    c1.padding.iem(0.5)
+    expect(c1._node.padding).toBe('calc(0.5 * var(--zui-iem, 16px))')
 
     const c2 = new Chain(defaultLight)
-    c2.width.zu(16)
-    expect(c2._node.width).toBe('calc(16 * var(--zui-unit, 1px))')
+    c2.width.iem(1)
+    expect(c2._node.width).toBe('calc(1 * var(--zui-iem, 16px))')
 
     const c3 = new Chain(defaultLight)
-    c3.fontSize.zu(20)
-    expect(c3._node.fontSize).toBe('calc(20 * var(--zui-unit, 1px))')
+    c3.fontSize.iem(1.25)
+    expect(c3._node.fontSize).toBe('calc(1.25 * var(--zui-iem, 16px))')
   })
 
-  it('zu() helper 单独导出（供 theme token 使用）', () => {
-    expect(zu(1)).toBe('calc(1 * var(--zui-unit, 1px))')
-    expect(zu(0)).toBe('calc(0 * var(--zui-unit, 1px))')
-    expect(zu(16)).toBe('calc(16 * var(--zui-unit, 1px))')
-    expect(zu(0.5)).toBe('calc(0.5 * var(--zui-unit, 1px))')
+  it('iem() helper 单独导出（供 theme token 使用）', () => {
+    expect(iem(1)).toBe('calc(1 * var(--zui-iem, 16px))')
+    expect(iem(0)).toBe('calc(0 * var(--zui-iem, 16px))')
+    expect(iem(1.5)).toBe('calc(1.5 * var(--zui-iem, 16px))')
+    expect(iem(0.5)).toBe('calc(0.5 * var(--zui-iem, 16px))')
   })
 
-  it('LENGTH_UNITS 总数 = 35（含 34 个常规 + zu 逻辑单位）', () => {
+  it('LENGTH_UNITS 总数 = 35（含 34 个常规 + iem 逻辑单位）', () => {
     expect(LENGTH_UNITS.length).toBe(35)
-    expect(LENGTH_UNITS).toContain('zu')
+    expect(LENGTH_UNITS).toContain('iem')
   })
 
   it('TIME_UNITS / ANGLE_UNITS 合法 unit 都可用', () => {

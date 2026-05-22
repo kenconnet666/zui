@@ -1,39 +1,55 @@
 /**
- * `ZUnitPreset` —— `<ZConfigProvider :unit>` 常用预设。
+ * `ZIemPreset` —— `<ZConfigProvider :iem>` 常用预设。
  *
- * 数字 / 字符串都可直接传给 `:unit`；这里提供"语义化命名"避免业务侧记 `'0.0625rem'` 这种神秘字面量。
+ * **iem = "intrinsic em" / "我自己使用的 em"**,跟 CSS `rem`(root em)对称:
+ * - `rem` = 根元素 font-size 倍率(浏览器掌控)
+ * - `iem` = ZConfigProvider 注入的基准倍率(应用层掌控,默认 1iem = 16px,等同 1rem)
+ *
+ * 数字 / 字符串都可直接传给 `:iem`;这里提供"语义化命名"避免业务侧记 `'16px'` 等字面量。
  *
  * | preset | 物理意义 | 适用场景 |
  * |---|---|---|
- * | `pixel` (`'1px'`)   | 1zu = 1px            | **默认**。设计师按 px 思考，CSS 行为与传统一致 |
- * | `rem`   (`'0.0625rem'`) | 1zu = 1/16 rem (跟 root font-size) | **a11y 友好**。用户浏览器调大字号，整站尺寸同步放大 |
- * | `retina` (`'2px'`)  | 1zu = 2px            | 超大屏 / 远距离显示器整站放大 2 倍 |
+ * | `default` (`'16px'`) | 1iem = 16px | **默认基准**(等同 1rem,设计稿主基线) |
+ * | `large`   (`'20px'`) | 1iem = 20px | 大字模式(整站放大 25%) |
+ * | `compact` (`'14px'`) | 1iem = 14px | 紧凑模式(整站缩小 12.5%) |
+ * | `em`      (`'1em'`)  | 1iem = 1em(跟父字号)| 嵌套自动跟随父容器字号 |
+ * | `rem`     (`'1rem'`) | 1iem = 1rem(跟浏览器根字号)| a11y 大字模式立即生效 |
  *
- * 用户也可直接传任意 css length（`'0.05vw'` / `'clamp(...)'` 等）或 number（按 px 处理）。
+ * **嵌套 Provider 通过 css cascade 自然覆盖,兄弟 Provider 各自独立 —— 零运行时合并开销**。
+ * 用户也可直接传任意 css length(`'0.05vw'` / `'clamp(...)'` 等)或 number(按 px 处理)。
  *
  * @example
  * ```vue
- * <ZConfigProvider :unit="ZUnitPreset.rem">
- *   <App />   <!-- 整站走 rem，浏览器大字模式自动适配 -->
+ * <!-- 默认 16px 基准 -->
+ * <ZConfigProvider :iem="ZIemPreset.default">
+ *   <App />
  * </ZConfigProvider>
  *
- * <ZConfigProvider :unit="ZUnitPreset.retina">
- *   <App />   <!-- 整站 UI 放大 2× -->
+ * <!-- 嵌套覆盖:子树用 20px,兄弟不受影响 -->
+ * <ZConfigProvider :iem="'16px'">
+ *   <Card />                                  <!-- 1iem = 16px -->
+ *   <ZConfigProvider :iem="'20px'">
+ *     <Sidebar />                             <!-- 1iem = 20px(嵌套覆盖) -->
+ *   </ZConfigProvider>
+ *   <Main />                                  <!-- 1iem = 16px(回到外层) -->
  * </ZConfigProvider>
  *
- * <!-- 或直接传任意字符串 -->
- * <ZConfigProvider :unit="'0.05vw'">
- *   <App />   <!-- 响应式 fluid sizing -->
- * </ZConfigProvider>
+ * <!-- 兄弟 Provider 互不影响 -->
+ * <ZConfigProvider :iem="ZIemPreset.compact"><Compact /></ZConfigProvider>
+ * <ZConfigProvider :iem="ZIemPreset.large"><Cozy /></ZConfigProvider>
  * ```
  */
-export const ZUnitPreset = {
-  /** 默认。1zu = 1px。 */
-  pixel: '1px',
-  /** A11y 友好。1zu = 1/16 rem，跟随浏览器根字号，大字模式整站同步放大。 */
-  rem: '0.0625rem',
-  /** 大屏放大。1zu = 2px。 */
-  retina: '2px',
+export const ZIemPreset = {
+  /** **默认基准**:1iem = 16px(等同 1rem,设计稿主基线)。 */
+  default: '16px',
+  /** 大字模式:1iem = 20px(整站放大 25%)。 */
+  large: '20px',
+  /** 紧凑模式:1iem = 14px(整站缩小 12.5%)。 */
+  compact: '14px',
+  /** 跟父字号:1iem = 1em。嵌套自动跟随父容器字号缩放。 */
+  em: '1em',
+  /** 跟浏览器根字号:1iem = 1rem。a11y 大字模式立即生效。 */
+  rem: '1rem',
 } as const
 
-export type ZUnit = string | number
+export type ZIem = string | number

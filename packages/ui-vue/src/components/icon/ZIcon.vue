@@ -18,8 +18,9 @@
  * - 用户写法极简 `(w) => w.em(1.25)` 一行表达,不需嵌入多行多属性
  * - 任何不在该 carrier 表达力内的需求(非正方形 / 自定义 easing / 反向旋转)走 cssRoot 兜底
  *
- * **em 单位语义保留**(§13.0 ②):图标走 em 跟随父字号,**只设 width(height 镜像)、不设 fontSize**
- * 避免 em 复合(若同时 `s.fontSize.em(N)` + `s.width.em(N)`,width 会算到 N²×父字号)。
+ * **iem 单位默认**(§13.0 ②):图标默认 1iem(默认 16px,Provider 控制基准),跟 Provider 字号
+ * 联动,整站统一图标尺寸。**只设 width(height 镜像)、不设 fontSize**(无 em 复合问题)。
+ * 想"跟父字号"的局部场景走 cssRoot 显式写 `s.width.em(N)`。
  *
  * **设计档位由 theme schema 承担** —— 用户走 `(d) => d._middle` / `(o) => o._half` 用 schema token,
  * 不在组件内硬编码 SIZE_MAP / DEPTH_MAP / SPIN_MAP。要 app 级调整走 `zuiLight.extend(...)`。
@@ -42,15 +43,16 @@ export interface ZIconProps {
   /**
    * 图标尺寸 factory —— 接 `width` carrier,**height 自动镜像 width**(图标始终正方形)。
    *
-   * **默认**:`(w) => w.em(1)` —— 1em × 1em,跟随父字号缩放。
+   * **默认**:`(w) => w.iem(1)` —— 1iem × 1iem(默认 16px × 16px,跟随 ZConfigProvider 字号联动)。
    *
    * 想表达非正方形 → 走 `cssRoot` 兜底单独设 width / height。
+   * 想"跟父容器字号"(罕见)→ `(w) => w.em(1)` 显式 em。
    *
    * @example
-   * <ZIcon :size="(w) => w.em(1.25)" />     <!-- 1.25em × 1.25em -->
-   * <ZIcon :size="(w) => w.em(1.5)" />      <!-- 1.5em × 1.5em -->
-   * <ZIcon :size="(w) => w.zu(16)" />       <!-- 跟随 unit 系统 -->
-   * <ZIcon :size="(w) => w.px(20)" />       <!-- 字面量 -->
+   * <ZIcon :size="(w) => w.iem(1)" />      <!-- 1iem,默认 16px,Provider 控制 -->
+   * <ZIcon :size="(w) => w.iem(1.5)" />    <!-- 1.5iem,默认 24px -->
+   * <ZIcon :size="(w) => w.em(1.25)" />    <!-- 1.25em,跟父字号 -->
+   * <ZIcon :size="(w) => w.px(20)" />      <!-- 字面量 -->
    */
   size?: ((w: Chain<ZuiSchema>['width']) => void) | undefined
 
@@ -136,7 +138,7 @@ import { useZTheme } from '../../provider'
 const props = withDefaults(defineProps<ZIconProps>(), {
   // Vue defineProps:Function 类型 prop 的 default 直接给函数本身(不需 () => 工厂)
   size: (w: Chain<ZuiSchema>['width']) => {
-    w.em(1)
+    w.iem(1)
   },
   color: (c: Chain<ZuiSchema>['color']) => {
     c.currentColor

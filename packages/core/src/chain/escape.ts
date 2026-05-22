@@ -8,7 +8,7 @@
  *   3. `_tokenIdent.mod1(...).mod2(...)`  → token 反查 + color2k 链式调用
  *
  * **设计上不污染类型签名**:`PropFn` 仍是 `(v: string) => Chain`,字符串逃生舱纯在 runtime 工作。
- * 主推 API 仍是 chain shortcut `s.color._primary` / unit method `s.width.zu(2)`,本模块只
+ * 主推 API 仍是 chain shortcut `s.color._primary` / unit method `s.width.iem(1)`,本模块只
  * 服务"动态拼接 / 复制粘贴 / 非 ENHANCED_PROPS 属性"等场景。
  *
  * **快速路径**:不以 `_` 开头的字符串直接 untouched 返回,零开销。
@@ -172,7 +172,7 @@ function splitChain(s: string): string[] {
 /**
  * 识别 `_unitIdent(N)` 形态。命中返回 css 字符串,不命中返回 null。
  *
- * 例:`_px(20)` → `'20px'`,`_zu(2)` → `'calc(2 * var(--zui-unit, 1px))'`。
+ * 例:`_px(20)` → `'20px'`,`_iem(1)` → `'calc(1 * var(--zui-iem, 16px))'`。
  */
 function tryParseUnitCall(value: string): string | null {
   const m = value.match(/^_([a-z]+)\((-?\d+(?:\.\d+)?)\)$/)
@@ -205,8 +205,8 @@ function tryParseUnitCall(value: string): string | null {
  * // → setAlpha(primary, 0.5)
  *
  * @example
- * resolveStringValue('_zu(2)', { tokenCat: 'spacing' }, theme, keymap)
- * // → 'calc(2 * var(--zui-unit, 1px))'
+ * resolveStringValue('_iem(1)', { tokenCat: 'spacing' }, theme, keymap)
+ * // → 'calc(1 * var(--zui-iem, 16px))'
  *
  * @example
  * resolveStringValue('red', { tokenCat: 'color' }, theme, keymap)
