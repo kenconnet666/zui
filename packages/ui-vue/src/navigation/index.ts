@@ -21,3 +21,14 @@ export type {
   ZDropdownItem,
   ZDropdownTrigger,
 } from './ZDropdown.vue'
+
+export { default as ZSteps } from './ZSteps.vue'
+export type {
+  ZStepsProps,
+  ZStepItem,
+  ZStepsStatus,
+  ZStepsDirection,
+} from './ZSteps.vue'
+
+export { default as ZBackTop } from './ZBackTop.vue'
+export type { ZBackTopProps } from './ZBackTop.vue'

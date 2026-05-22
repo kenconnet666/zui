@@ -17,3 +17,7 @@ export type { ZSpaceProps } from './ZSpace.vue'
 
 export { default as ZSpacer } from './ZSpacer.vue'
 export type { ZSpacerProps } from './ZSpacer.vue'
+
+// ─── Phase β 补全 ───
+export { default as ZAffix } from './ZAffix.vue'
+export type { ZAffixProps } from './ZAffix.vue'

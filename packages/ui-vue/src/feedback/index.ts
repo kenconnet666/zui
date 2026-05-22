@@ -35,3 +35,6 @@ export {
   type ZNotificationApi,
   type CreateNotificationApiOptions,
 } from './notificationApi'
+
+export { default as ZLoadingBar } from './ZLoadingBar.vue'
+export type { ZLoadingBarProps } from './ZLoadingBar.vue'
