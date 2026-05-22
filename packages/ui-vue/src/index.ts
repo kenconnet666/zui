@@ -76,6 +76,9 @@ export * from './feedback'
 export * from './navigation'
 export * from './tool'
 
+// ─── 内部 hooks(标 internal,API 变更不算 BREAKING)───
+export * from './_hooks'
+
 // ─── Core 全量透传 ───
 // 装 `@kenconnet666/zui-vue` 即等于装 core:用户可直接从本包 import 任何 core API。
 export * from '@kenconnet666/zui-core'

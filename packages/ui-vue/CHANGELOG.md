@@ -2,6 +2,30 @@
 
 ## Unreleased
 
+### 新增 — 内部 hooks 基建 `src/_hooks/`(5 个 hook,标 internal)
+
+为后续复合组件(Modal / Drawer / Tooltip / Popover / Button 等)铺路,沉淀 5 个常用 composable:
+
+- **`useZId(suffix?)`** —— 包装 Vue 3.5+ 内置 `useId()` + `zui-` 前缀。复合组件给子节点关联
+  `aria-controls` / `htmlFor` 用。
+- **`usePortal(target?)`** + **`<ZPortal>`** —— Teleport target 解析 + 现成组件包装。
+  Modal / Drawer / Tooltip 渲染到 `<body>` 用。
+- **`useEscapeStack(onEscape, { enabled? })`** —— 多层浮层 ESC 栈式管理,只关最顶层(LIFO);
+  enabled=false 的 handler 跳过。
+- **`usePopper(reference, floating, opts?)`** —— `@floating-ui/vue` 薄包装,内置 `offset(8) + flip() +
+  shift({ padding: 8 })` middleware + `autoUpdate`。Popover / Tooltip / Dropdown / Select 浮层定位。
+- **`useRipple(targetRef, opts?)`** —— Material 风波纹(**自写**,VueUse 无对应)。pointerdown →
+  span + @keyframes 动画 → animationend 清理。Button / Tab / IconButton 用。
+
+**API 稳定性**:下划线前缀 `_hooks/` 标 internal,API 变更**不算 BREAKING**(组件实际使用时若需微调
+参数形状,直接改即可)。业务方使用需自行承担升级成本。
+
+测试覆盖:21 个新 spec(原 147 → 168 全绿)。
+
+决策文档:`.claude/decisions/2026-05-23-stage5-internal-hooks.md`
+
+---
+
 ### BREAKING — 主题美学升级 Material Design(C2 方案)+ 新增 `focusRing` / `overlayBg` 语义色
 
 **理由**:

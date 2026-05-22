@@ -4,9 +4,9 @@
 >
 > **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-23(Stage 1-4 完成,无人值守自主推进 → Stage 5)
+> **最后更新**:2026-05-23(Stage 1-5 完成,无人值守自主推进 → Stage 6.1)
 > **当前阶段**:
-> `Stage 5 ── 内部 hooks 基建` 待开始(**STOP #3**,无人值守自行决策)
+> `Stage 6.1 ── 布局四件套(layout/)` 待开始
 
 ---
 
@@ -435,27 +435,22 @@ s._focusVisible((f) => {
 - [x] **验证**:type-check ✓ / test 147/147 ✓(spec 动态读 `zuiLight.resolve().color.primary`,无需改硬编码)/ build ✓
 - [x] CHANGELOG entry(BREAKING:主题色彩重设 + shadow elevation + radius huge 28px + 加 focusRing/overlayBg)
 
-### Stage 5 ── 内部 hooks(为 P0 复合组件铺路)
+### Stage 5 ── 内部 hooks(为 P0 复合组件铺路)✅ 2026-05-23 完成
 
 > 目标:沉淀 `src/_hooks/`,优先包装 VueUse,只 `useRipple` 自写。
+>
+> 决策文档:`.claude/decisions/2026-05-23-stage5-internal-hooks.md`
 
-- [ ] 新建 `src/_hooks/`
-- [ ] `usePopper.ts`:包装 `@floating-ui/vue` 的 `useFloating`,默认 placement / offset / zIndex 配置
-  - 签名:`usePopper(reference, floating, { placement?, offset?, strategy?, middleware? })` 返回 `{ x, y, strategy, update }`
-- [ ] `usePortal.ts`:封装 `<Teleport>` 用法 + 默认 target `<body>`
-  - 提供 `<ZPortal>` 包装组件 + composable `usePortal()` 返回 target ref
-- [ ] `useEscapeStack.ts`:包装 `onKeyStroke('Escape')` + 栈式管理(只触发最顶层 modal/drawer/popover 的 close)
-  - 签名:`useEscapeStack(onEscape: () => void, opts?: { enabled?: Ref<boolean> })`
-- [ ] `useZId.ts`:封装 Vue 3.5+ 内置 `useId()` + zui 前缀(`'zui-' + id`)
-- [ ] `useRipple.ts`:**自写**(VueUse 无对应)
-  - pointerdown 监听 → 基于 click 坐标 + element bounding 计算 ripple 中心
-  - 动态插入 `<span class="ripple">`,基于 `@keyframes` scale+opacity 动画
-  - 自动清理(animationend 时移除 DOM)
-  - 支持 `useRipple(targetRef, { color?, duration?, disabled? })`
-- [ ] `_hooks/index.ts` 导出全部
-- [ ] **可选**:`src/index.ts` re-export(供高级业务用)
-- [ ] hooks 自身 spec(每个 hook 1 个 spec 文件,覆盖核心行为)
-- [ ] **验证**:type-check ✓ / test ✓ / build ✓
+- [x] 新建 `src/_hooks/`
+- [x] `usePopper.ts`:包装 `@floating-ui/vue` 的 `useFloating`,默认 placement / offset / middleware
+- [x] `usePortal.ts`:封装 `<Teleport>` 用法 + 默认 target `<body>` + `<ZPortal>` 组件
+- [x] `useEscapeStack.ts`:栈式 ESC 监听(LIFO,只触发最顶层 enabled handler)
+- [x] `useZId.ts`:封装 Vue 3.5+ 内置 `useId()` + `zui-` 前缀 + 可选 suffix
+- [x] `useRipple.ts`:**自写**(VueUse 无对应)
+- [x] `_hooks/index.ts` 导出全部
+- [x] `src/index.ts` re-export
+- [x] hooks 自身 spec(5 spec 文件,21 个 case)
+- [x] **验证**:type-check ✓ / test 168/168 ✓ / build ✓
 
 ### Stage 6 ── Phase α / P0 组件(MVP)
 
@@ -753,6 +748,13 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-23 Stage 5 完成(无人值守自主推进,跳过 STOP #3 API review)
+- 改动:新建 `src/_hooks/`(5 个 hook):`useZId` / `usePortal`(+ `ZPortal` 组件) / `useEscapeStack` / `usePopper`(包装 floating-ui) / `useRipple`(自写,pointerdown 注入 span + @keyframes + animationend 清理);`src/index.ts` 加 `export * from './_hooks'`
+- 测试:5 spec 文件、21 个 case(原 147 + 21 = 168/168)
+- 验证:type-check ✓ / tests 168/168 ✓ / build ✓
+- 文档:`.claude/decisions/2026-05-23-stage5-internal-hooks.md`
+- 下一步:Stage 6.1 布局四件套(ZFlex / ZGrid / ZSpace / ZSpacer)
 
 ### 2026-05-23 Stage 4 完成(无人值守自主推进,跳过 STOP #2 视觉验收)
 - 改动:`SemanticColorTokens` 加 `focusRing` + `overlayBg`(10 → 12 个语义色);zuiLight color 全套换 Material 700 / Orange 700;zuiDark color 全套换 Material 200/300/400 shade,bg 改 M3 `#121212`;两套 shadow 全部换 M3 双层 elevation(level 1-5);radius.huge 24px → 28px 对齐 M3 FAB
