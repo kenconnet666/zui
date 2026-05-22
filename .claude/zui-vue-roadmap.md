@@ -756,6 +756,13 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 
 > 每个 Stage / 子段完成后追加一条。
 
+### 2026-05-23 Stage 7 浮层批完成(ZTooltip / ZPopover / ZDrawer)
+- 改动:display/ZTooltip(usePopper + Teleport,4 trigger 模式)、display/ZPopover(类 Tooltip 但富内容 + onClickOutside + useEscapeStack)、feedback/ZDrawer(类 Modal 4 placement 滑入)
+- 测试 15 case;总 396/396
+- 验证:type-check ✓ / tests 396/396 ✓ / build ✓
+- 修 bug:ZTooltip manual 模式之前忽略 disabled,改为 disabled 总是阻止显示
+- 测试细节:Teleport 跨 spec 会留 portal DOM,加 beforeEach + wrapper.unmount() 双清理
+
 ### 2026-05-23 Stage 7 gene 补全完成(无人值守自主推进,进入 Phase β)
 - 改动:gene 加 6 个简单装饰组件 — ZAvatar / ZTag / ZBadge / ZCode / ZBlockquote / ZEllipsis;index 导出
 - 测试 23 case;总 381/381
