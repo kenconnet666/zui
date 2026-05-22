@@ -69,7 +69,7 @@ import { assertSchemaConsistency, makeCallsiteLabel } from '@kenconnet666/zui-co
 
 ## 构建组件库
 
-完整 API 速查（`Theme.fork` / `defineParts` / `extendParts` / `composeVariants` / `withComponentTokens` / `mergeComponentTokenOverrides` / `applyStyleProps` / `applyResponsive` / `createIcssInstance`）与 ConfigProvider 嵌套覆盖示范见 [仓库 skill](../../.claude/skills/zui.md)。
+完整 API 速查（`Theme.fork` / `defineParts` / `extendParts` / `composeVariants` / `applyStyleProps` / `applyResponsive` / `createIcssInstance`）与 ConfigProvider 嵌套覆盖示范见 [仓库 skill](../../.claude/skills/zui.md)。
 
 ## License
 

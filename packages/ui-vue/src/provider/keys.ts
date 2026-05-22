@@ -1,9 +1,6 @@
 import type { InjectionKey, Ref } from 'vue'
 import type { Locale as DateFnsLocale } from 'date-fns'
-import type {
-  ComponentTokenOverrides,
-  ResolvedTheme,
-} from '@kenconnet666/zui-core'
+import type { ResolvedTheme } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../theme'
 import type { ZLocale } from '../locale/types'
 
@@ -28,9 +25,6 @@ export interface ZDateConfig {
  * `interface MySchema extends ZuiSchema { ... }`，在调用处 cast `Ref<ResolvedTheme<MySchema>>`。
  */
 export const Z_THEME_KEY: InjectionKey<Ref<ResolvedTheme<ZuiSchema>>> = Symbol('zui:theme')
-export const Z_OVERRIDES_KEY: InjectionKey<Ref<ComponentTokenOverrides>> = Symbol(
-  'zui:componentTokens',
-)
 export const Z_LOCALE_KEY: InjectionKey<Ref<ZLocale>> = Symbol('zui:locale')
 export const Z_DATE_KEY: InjectionKey<Ref<ZDateConfig>> = Symbol('zui:date')
 

@@ -49,23 +49,22 @@ export type ResolvedThemeContext = Record<string, Record<string, string | number
 /**
  * 解析后的主题（function token 已展开）。
  *
- * **类型保真**：保留 schema 中每个 token 的原始类型（`string` / `number` / `string | number`），
- * 只把 function token `(ctx) => R` 求值结果替换为返回类型 `R`。这样：
+ * **字面量类型穿透**：mapped type 对每个字段做 conditional：
+ * - 字段类型是 `(...) => R`（function token）→ 求值后类型 = R（`string | number`）
+ * - 字段类型是字面量（用户 schema 写 `Record<K, string>` / `Record<K, number>`）→ **保留原类型**
  *
- * - `color: Record<SemanticColorTokens, string>` → `{ primary: string, ... }`（不再被放宽到 string | number）
- * - `opacity: Record<OpacityKeys, number>` → `{ half: number, ... }`
- * - `color: { primary: (ctx) => string }` → `{ primary: string }`
+ * 这让上层（如 `ZuiSchema.color: Record<SemanticColorTokens, string>`）的 `theme.color.primary`
+ * 静态类型保持 `string`，不被宽化为 `string | number`，调用点免去 cast / narrow helper。
  *
- * 旧实现 `{ [K]: string | number }` 强制把所有字段都展平成 `string | number`，
- * 让消费方在精确类型 schema（如 `Record<K, string>`）下也得手动 `String(...)` 转换，
- * 增加污染。0.7.0 改为 conditional infer 保留原类型。
+ * 历史背景（旧设计统一宽化 `string | number`）：mergeTheme 0.7 之前还接受 function token
+ * 的 deep merge，故无法静态区分；§12.7 砍掉 function token 之后这层宽化变成包袱。
  */
 export type ResolvedTheme<T extends ThemeSchema> = {
   [Cat in keyof T]: T[Cat] extends Record<string, ThemeValue>
     ? {
-        [K in keyof T[Cat]]: T[Cat][K] extends (...args: never[]) => infer R
+        [K in keyof T[Cat]]: (T[Cat][K] extends (...args: never[]) => infer R
           ? R
-          : T[Cat][K]
+          : T[Cat][K]) & (string | number)
       }
     : never
 }

@@ -13,6 +13,7 @@ import {
   tint,
 } from './color'
 import { ENHANCED_PROPS } from './enhanced-props'
+import { resolveStringValue } from './escape'
 import { GLOBAL_KEYWORDS, KEYWORD_TO_CSS } from './keywords'
 import { getUnitList, withUnit, type UnitClass } from './units'
 
@@ -47,7 +48,12 @@ function buildCarrier(chain: Chain<never>, prop: string): unknown {
   const internal = chain as unknown as ChainInternal
 
   // callable: target 是函数（fn(value) 形态）
+  // 字符串入参走 `resolveStringValue` —— 识别 `_token` / `_unit(N)` / `_token.mod(...)` 逃生舱
+  // 形态(详见 chain/escape.ts);不以 `_` 开头的字符串零开销直通,保持现有 API 完全兼容。
   const target = function (value: unknown) {
+    if (typeof value === 'string') {
+      value = resolveStringValue(value, cfg, internal._theme, internal._keymap)
+    }
     internal._node[prop] = value
     return chain
   }

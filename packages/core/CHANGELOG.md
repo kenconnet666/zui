@@ -1,5 +1,46 @@
 # @kenconnet666/zui-core
 
+## Unreleased
+
+### BREAKING — 移除 ComponentTokenRegistry 体系
+
+整体下线 component-namespace 级 token override 机制。简化后只有三层覆盖模型：**Theme**（全组件改色）/ **Schema augmentation**（新增品牌 / 自定义 token）/ **Instance**（`:css-root` 单点覆盖）。
+
+**移除的 API**：
+
+| API | 替代方案 |
+| --- | --- |
+| `interface ComponentTokenRegistry` | 改走 `interface UserColorExt` 等 schema augmentation 锚点（位于 `@kenconnet666/zui-vue`） |
+| `withComponentTokens(theme, derivers, overrides)` | 组件 setup 直接吃 `useZTheme()`；数值常量本地写成模块级 `const SIZE_MAP / DEPTH_MAP / SPIN_MAP` |
+| `componentTokensFor(name, theme)` | 同上，无需反推 |
+| `mergeComponentTokenOverrides(...layers)` | 不再有嵌套合并 |
+| `ComponentTokenDeriver / ComponentTokenDerivers / ComponentTokenOverrides` 类型 | 同上 |
+| `FlattenComponentTokens / ComponentTokenNames` 类型 | 同上 |
+| `BaseSchema.color & Partial<Record<FlattenComponentTokens, string>>` 这层 intersection | `BaseSchema.color = Record<PaletteToken, string>` 严格类型 |
+
+**迁移**：
+
+```ts
+// 旧
+declare module '@kenconnet666/zui-core' {
+  interface ComponentTokenRegistry {
+    icon: { primaryColor: string; sizeTiny: number }
+  }
+}
+const themed = withComponentTokens(theme, { icon: t => ({...}) }, overrides)
+const tokens = componentTokensFor('icon', themed) as ZIconTokens
+
+// 新 —— 三种典型替代路径
+// ① 改主题色（全组件统一改）
+zuiLight.extend({ color: { primary: '#abc' } })
+// ② 加品牌 token（schema augmentation，所有 chain 自动看见）
+declare module '@kenconnet666/zui-vue' {
+  interface UserColorExt { brandRoyal: string }
+}
+// ③ 数值常量直接 inline，不开放运行时改
+const SIZE_MAP = { tiny: 0.75, ..., huge: 1.5 } as const
+```
+
 ## 0.7.0
 
 ### Minor Changes

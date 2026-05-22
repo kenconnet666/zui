@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { Chain, createIcssInstance, injectPreflight } from '../src'
+import { Chain, createIcssInstance, injectPreflight, zu } from '../src'
 import { defaultLight } from './_fixture-theme'
 import { GLOBAL_KEYWORDS } from '../src/chain/keywords'
 import { LENGTH_UNITS, TIME_UNITS, ANGLE_UNITS } from '../src/chain/units'
@@ -127,9 +127,30 @@ describe('R1 — carrier unit 方法覆盖 LENGTH_UNITS 全部 30 个', () => {
     expect(c3._node.width).toBe('100vw')
   })
 
-  it('LENGTH_UNITS 总数 = 34（含 30 个常规 + svmin/svmax/lvmin/lvmax/dvmin/dvmax 6 个 + fr/pct）', () => {
-    // 6 绝对 + 4 字体相对 + 4 视口 + 12 现代视口（svw/svh/svmin/svmax × 3 套）+ 6 容器查询 + fr + pct
-    expect(LENGTH_UNITS.length).toBe(34)
+  it('zui 逻辑单位 zu → calc(N * var(--zui-unit, 1px))', () => {
+    const c1 = new Chain(defaultLight)
+    c1.padding.zu(8)
+    expect(c1._node.padding).toBe('calc(8 * var(--zui-unit, 1px))')
+
+    const c2 = new Chain(defaultLight)
+    c2.width.zu(16)
+    expect(c2._node.width).toBe('calc(16 * var(--zui-unit, 1px))')
+
+    const c3 = new Chain(defaultLight)
+    c3.fontSize.zu(20)
+    expect(c3._node.fontSize).toBe('calc(20 * var(--zui-unit, 1px))')
+  })
+
+  it('zu() helper 单独导出（供 theme token 使用）', () => {
+    expect(zu(1)).toBe('calc(1 * var(--zui-unit, 1px))')
+    expect(zu(0)).toBe('calc(0 * var(--zui-unit, 1px))')
+    expect(zu(16)).toBe('calc(16 * var(--zui-unit, 1px))')
+    expect(zu(0.5)).toBe('calc(0.5 * var(--zui-unit, 1px))')
+  })
+
+  it('LENGTH_UNITS 总数 = 35（含 34 个常规 + zu 逻辑单位）', () => {
+    expect(LENGTH_UNITS.length).toBe(35)
+    expect(LENGTH_UNITS).toContain('zu')
   })
 
   it('TIME_UNITS / ANGLE_UNITS 合法 unit 都可用', () => {

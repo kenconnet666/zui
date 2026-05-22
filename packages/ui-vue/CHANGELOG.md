@@ -1,5 +1,41 @@
 # @kenconnet666/zui-vue
 
+## Unreleased
+
+### BREAKING — 移除 `:component-tokens` + `useZComponentTokens` 等 ComponentTokenRegistry 体系
+
+跟随 core 0.7.x → unreleased 的下线。简化为三层覆盖模型：**Theme** / **Schema augmentation** / **`:css-root` Instance**。
+
+**移除的 API**：
+
+| API | 替代方案 |
+| --- | --- |
+| `<ZConfigProvider :component-tokens>` | 改主题：`<ZConfigProvider :theme="zuiLight.extend({ color: { primary: '#abc' } })">`；加品牌 token：`interface UserColorExt { brand: string }` augmentation；单实例改：`:css-root` |
+| `useZComponentTokens()` | 不再需要；组件 setup 直接 `useZTheme()` |
+| `useZComponentTokenSlice(name)` | 同上 |
+| `Z_OVERRIDES_KEY` injection key | 同上 |
+| `type ZIconTokens` 等组件 Tokens 接口 | 数值类档位由组件内部 `const SIZE_MAP / DEPTH_MAP / SPIN_MAP` 接管（不再公开） |
+
+**ZIcon 变更**：
+- 移除 `ZIconTokens` 类型导出（barrel 只剩 `ZIcon` + `ZIconProps`）
+- `size` prop 维持 `'tiny' | 'small' | 'middle' | 'large' | 'huge' | number`（number escape hatch 仍可用）
+- 5 个语义色直接走 chain shortcut `s.color._primary / _success / _warning / _danger / _info`（IDE 自动补全 ZuiSchema token）
+- `:css-root` 在 base + 维度之后调用，可覆盖任意属性（不变）
+
+**迁移**：
+
+```vue
+<!-- 旧 -->
+<ZConfigProvider :component-tokens="{ icon: { primaryColor: '#abc', sizeLarge: 2 } }">
+  <ZIcon color="primary" size="large" />
+</ZConfigProvider>
+
+<!-- 新 —— 改主题色 + cssRoot 单点改 -->
+<ZConfigProvider :theme="zuiLight.extend({ color: { primary: '#abc' } })">
+  <ZIcon color="primary" :size="2" />  <!-- size number escape -->
+</ZConfigProvider>
+```
+
 ## 0.1.0
 
 ### Minor Changes

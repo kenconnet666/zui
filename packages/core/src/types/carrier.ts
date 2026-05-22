@@ -11,8 +11,9 @@ export type GlobalKw = 'inherit' | 'unset' | 'initial' | 'revert' | 'revertLayer
  * - 容器查询（CSS Containment 3）：cqw / cqh / cqi / cqb / cqmin / cqmax
  * - 栅格：fr
  * - 百分比：pct → `'%'`
+ * - zui 逻辑单位：zu → `calc(N * var(--zui-unit, 1px))`（Provider 全站切换基准）
  *
- * 合计 34 个（修 R1 类型层漂移）。
+ * 合计 35 个。
  */
 export interface LengthUnits<TSelf> {
   // ─── 绝对 ───
@@ -58,6 +59,8 @@ export interface LengthUnits<TSelf> {
   fr(n: number): TSelf
   // ─── 百分比（特殊 ident → '%'） ───
   pct(n: number): TSelf
+  // ─── zui 逻辑单位（css var 后端，Provider :unit 全站切换） ───
+  zu(n: number): TSelf
 }
 
 export interface TimeUnits<TSelf> {

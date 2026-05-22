@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 /**
- * ZIcon 演示页 —— v2.1 全离散版：5 阶 size / 6 色 / 5 阶 depth / 5 阶 spin / css factory。
- * + 嵌套 ZConfigProvider 实时切 componentTokens。
+ * ZIcon 演示页 —— v2.2 全离散版：5 阶 size + number escape / 6 色 / 5 阶 depth /
+ * 5 阶 spin / cssRoot factory。配 `:unit` 全站 sizing 单点切换演示。
  */
 import { computed, ref, shallowRef, watchEffect } from 'vue'
-import type { ZIconColor, ZIconDepth, ZIconSize, ZIconSpinPreset, ZuiSchema } from '@kenconnet666/zui-vue'
-import { ZConfigProvider, ZIcon } from '@kenconnet666/zui-vue'
+import type { ZIconProps, ZuiSchema } from '@kenconnet666/zui-vue'
+import { ZConfigProvider, ZIcon, ZUnitPreset } from '@kenconnet666/zui-vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import {
   CheckmarkCircle,
@@ -19,25 +19,29 @@ import {
   WarningOutline,
 } from '@vicons/ionicons5'
 
-const sizes: ZIconSize[] = ['tiny', 'small', 'middle', 'large', 'huge']
-const colors: ZIconColor[] = ['default', 'primary', 'success', 'warning', 'danger', 'info']
-const depths: ZIconDepth[] = ['none', 'subtle', 'muted', 'dim', 'faded', 'ghost']
-const spinPresets: ZIconSpinPreset[] = ['tiny', 'small', 'middle', 'large', 'huge']
+// 4 维度可选值 —— `as const` 让数组拥有 readonly tuple 类型，
+// 各 `ref<typeof xxx[number]>` 自动同步 prop union，无需独立 type alias。
+const sizes = ['tiny', 'small', 'middle', 'large', 'huge'] as const
+const colors = ['default', 'primary', 'success', 'warning', 'danger', 'info'] as const
+const depths = ['none', 'subtle', 'muted', 'dim', 'faded', 'ghost'] as const
+const spinPresets = ['tiny', 'small', 'middle', 'large', 'huge'] as const
 
 // ─── interactive controls ───
-const sizeC = ref<ZIconSize>('middle')
-const colorC = ref<ZIconColor>('default')
-const depthC = ref<ZIconDepth>('none')
+const sizeC = ref<(typeof sizes)[number]>('middle')
+const colorC = ref<(typeof colors)[number]>('default')
+const depthC = ref<(typeof depths)[number]>('none')
 const spinOn = ref<boolean>(false)
-const spinSpeed = ref<ZIconSpinPreset>('middle')
+const spinSpeed = ref<(typeof spinPresets)[number]>('middle')
 
-const spinValue = computed(() => (spinOn.value ? spinSpeed.value : false))
+const spinValue = computed<ZIconProps['spin']>(() =>
+  spinOn.value ? spinSpeed.value : 'none',
+)
 
-// ─── css factory 预制示例 ───
+// ─── cssRoot factory 预制示例 ───
 /**
- * cssExamples —— 演示 `:css` factory 的若干典型用法。
+ * cssExamples —— 演示 `:css-root` factory 的若干典型用法。
  *
- * 回调参数 `Chain<ZuiSchema>` 与 ZIcon `:css` prop 类型对齐；直接 access
+ * 回调参数 `Chain<ZuiSchema>` 与 ZIcon `:css-root` prop 类型对齐；直接 access
  * `_primary / _danger` 等 11 个语义色 token 与 5 阶 scale，IDE 自动补全。
  *
  * 用户工程要扩自家 brand：定义 `interface MySchema extends ZuiSchema { ... }`，
@@ -79,26 +83,6 @@ const cssExamples: Record<string, ((s: Chain<ZuiSchema>) => void) | undefined> =
 const cssExampleKey = ref<keyof typeof cssExamples>('(none)')
 const currentCss = computed(() => cssExamples[cssExampleKey.value])
 
-// ─── nested ZConfigProvider 演示 ───
-// 数值化 token：sizeLarge 是 em **倍率**（无单位）；spinMiddleDuration 是秒；
-// depthDimOpacity 是 0..1 浮点。primaryColor 仍是色值字符串。
-const overridePrimaryColor = ref<string>('#ff00aa')
-const overrideSizeLarge = ref<number>(2)
-const overrideSpinMiddle = ref<number>(2.5)
-const overrideDepthDim = ref<number>(0.5)
-
-const componentTokens = computed(() => ({
-  icon: {
-    primaryColor: overridePrimaryColor.value,
-    sizeLarge: overrideSizeLarge.value,
-    spinMiddleDuration: overrideSpinMiddle.value,
-    depthDimOpacity: overrideDepthDim.value,
-  },
-}))
-
-// ─── baseFontSize 演示 ───
-const baseFontSize = ref<string>('32px')
-
 // ─── 当前选中的 component（用于"实时操控"那栏）───
 const currentComponent = shallowRef(HomeOutline)
 const allIcons = {
@@ -122,10 +106,11 @@ watchEffect(() => {
   <article>
     <h1>ZIcon</h1>
     <p>
-      框架无关图标容器 —— <strong>4 维度全离散</strong>（size / color / depth / spin）， 所有维度走
-      <code>defineVariants</code>。任何不在维度里的需求（hover / 媒体查询 / 任意 chain 方法）通过
-      <code>:css="s =&gt; { ... }"</code> 用 zui-core chain 自由写。21 项 component token 全部可被
-      <code>ZConfigProvider</code> 覆盖。
+      框架无关图标容器 —— <strong>4 维度全离散</strong>（size / color / depth / spin），所有维度
+      直接在 setup 内 <code>icss</code> chain 内联（极简组件不上 <code>defineVariants</code>）。
+      <code>size</code> 支持 <code>| number</code> escape hatch 接受任意 em 倍率。任何不在维度
+      里的需求（hover / 媒体查询 / 任意 chain 方法）通过 <code>:css-root="s =&gt; { ... }"</code>
+      用 zui-core chain 自由写。
     </p>
 
     <!-- ─── 1. 双模式接入 ─── -->
@@ -195,12 +180,12 @@ watchEffect(() => {
       </div>
     </section>
 
-    <!-- ─── 6. css factory：用 core chain 自由覆盖 ─── -->
+    <!-- ─── 6. cssRoot factory：用 core chain 自由覆盖 ─── -->
     <section>
-      <h2>6. <code>:css</code> factory（用 zui-core chain 自由覆盖）</h2>
+      <h2>6. <code>:css-root</code> factory（用 zui-core chain 自由覆盖）</h2>
       <p>
-        <code>:css="s =&gt; { ... }"</code> 在 variants 之后应用，可覆盖任意属性。 所有 Chain
-        内建方法（<code>_hover</code> / <code>_media</code> / <code>_before</code> 等）都能用。
+        <code>:css-root="s =&gt; { ... }"</code> 在 variants 之后应用，可覆盖任意属性。 所有
+        Chain 内建方法（<code>_hover</code> / <code>_media</code> / <code>_before</code> 等）都能用。
       </p>
       <div class="controls">
         <label>
@@ -214,7 +199,7 @@ watchEffect(() => {
         <ZIcon
           :component="StarOutline"
           size="huge"
-          v-bind="currentCss ? { css: currentCss } : {}"
+          v-bind="currentCss ? { cssRoot: currentCss } : {}"
         />
       </div>
     </section>
@@ -269,119 +254,9 @@ watchEffect(() => {
       </div>
     </section>
 
-    <!-- ─── 8. componentTokens 嵌套覆盖 ─── -->
+    <!-- ─── 8. a11y ─── -->
     <section>
-      <h2>8. <code>ZConfigProvider</code> componentTokens 嵌套覆盖</h2>
-      <p>
-        外层全局 <code>defaultLight</code>；内层 Provider 改 4 个 icon token：
-        <code>primaryColor</code> / <code>sizeLarge</code> / <code>spinMiddleDuration</code> /
-        <code>depthDimOpacity</code>。两侧同步对比。
-      </p>
-
-      <div class="controls">
-        <label>
-          primaryColor
-          <input v-model="overridePrimaryColor" type="color" />
-        </label>
-        <label>
-          sizeLarge <span class="hint">(em 倍率)</span>
-          <input
-            v-model.number="overrideSizeLarge"
-            max="5"
-            min="0.5"
-            step="0.25"
-            type="number"
-          />
-        </label>
-        <label>
-          spinMiddleDuration <span class="hint">(秒)</span>
-          <input
-            v-model.number="overrideSpinMiddle"
-            max="10"
-            min="0.1"
-            step="0.1"
-            type="number"
-          />
-        </label>
-        <label>
-          depthDimOpacity <span class="hint">(0..1)</span>
-          <input
-            v-model.number="overrideDepthDim"
-            max="1"
-            min="0"
-            step="0.1"
-            type="number"
-          />
-        </label>
-      </div>
-
-      <div class="row">
-        <div class="cell">
-          <h3>外层（默认 token）</h3>
-          <div class="demo-grid">
-            <ZIcon :component="HeartOutline" color="primary" size="large" />
-            <ZIcon :component="Reload" size="large" spin />
-            <ZIcon :component="StarOutline" depth="dim" size="large" />
-            <ZIcon :component="StarOutline" depth="ghost" size="large" />
-          </div>
-        </div>
-        <div class="cell">
-          <h3>内层 <code>:component-tokens</code> 覆盖</h3>
-          <ZConfigProvider :component-tokens="componentTokens">
-            <div class="demo-grid">
-              <ZIcon :component="HeartOutline" color="primary" size="large" />
-              <ZIcon :component="Reload" size="large" spin />
-              <ZIcon :component="StarOutline" depth="dim" size="large" />
-              <ZIcon :component="StarOutline" depth="ghost" size="large" />
-            </div>
-          </ZConfigProvider>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── 8.5 baseFontSize prop ─── -->
-    <section>
-      <h2>8.5 <code>:base-font-size</code> —— 控制"1em 等于多少"</h2>
-      <p>
-        ZIcon 内部 <code>size</code> variant 用 em 倍率（<code>tiny=0.75</code> /
-        <code>middle=1</code> / <code>huge=1.5</code> ...），最终物理尺寸 =
-        倍率 × 根元素 <code>font-size</code>。默认 font-size 跟随父元素；
-        传 <code>:base-font-size</code>（任意 CSS length 字符串）即用 inline style
-        覆盖该基准。
-      </p>
-
-      <div class="controls">
-        <label>
-          base-font-size
-          <input v-model="baseFontSize" placeholder="32px / 2vw / 1.5rem" type="text" />
-        </label>
-      </div>
-
-      <div class="row">
-        <div class="cell">
-          <h3>不传 base-font-size（跟随父元素字号）</h3>
-          <div class="demo-grid">
-            <ZIcon :component="HeartOutline" size="tiny" />
-            <ZIcon :component="HeartOutline" size="middle" />
-            <ZIcon :component="HeartOutline" size="large" />
-            <ZIcon :component="HeartOutline" size="huge" />
-          </div>
-        </div>
-        <div class="cell">
-          <h3>统一 base-font-size = <code>{{ baseFontSize }}</code></h3>
-          <div class="demo-grid">
-            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="tiny" />
-            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="middle" />
-            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="large" />
-            <ZIcon :base-font-size="baseFontSize" :component="HeartOutline" size="huge" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── 9. a11y ─── -->
-    <section>
-      <h2>9. a11y — <code>label</code> prop</h2>
+      <h2>8. a11y — <code>label</code> prop</h2>
       <div class="row">
         <div class="cell-mini">
           <ZIcon :component="Trash" size="large" />
@@ -394,9 +269,9 @@ watchEffect(() => {
       </div>
     </section>
 
-    <!-- ─── 10. 用户扩展 token：augmentation + extend() 真正零样板 ─── -->
+    <!-- ─── 9. 用户扩展 token：augmentation + extend() 真正零样板 ─── -->
     <section class="extension">
-      <h2>10. 用户扩自家 token —— 真正的零样板隐式推导</h2>
+      <h2>9. 用户扩自家 token —— 真正的零样板隐式推导（三层覆盖模型的"加 token"层）</h2>
       <p>
         zui 的 token 体系是<strong>三层 schema 继承</strong>：
       </p>
@@ -410,7 +285,7 @@ user      用户在 zui.d.ts 一次 augmentation</code></pre>
 
       <h3>已默认拥有 —— <code>zuiLight</code> 注入即享</h3>
       <pre><code>// 任意组件，IDE 实时补全
-&lt;ZIcon :css="(s) =&gt; {
+&lt;ZIcon :css-root="(s) =&gt; {
   s.color._primary       // ZuiSchema 语义色
   s.padding._middle       // ZuiSchema spacing
   s.borderRadius._large   // ZuiSchema radius
@@ -444,7 +319,7 @@ const myLight = zuiLight.extend({
 &lt;ZConfigProvider :theme="myLight"&gt;&lt;App /&gt;&lt;/ZConfigProvider&gt;</code></pre>
 
       <h3>使用处 —— <strong>零类型注解，隐式推导直接生效</strong> ✨</h3>
-      <pre><code>&lt;ZIcon :css="(s) =&gt; {
+      <pre><code>&lt;ZIcon :css-root="(s) =&gt; {
   s.color._brandRoyal    // ← 来自 UserColorExt augmentation
   s.color._primary        // ← ZuiSchema 内置
   s.color._blue500        // ← BaseSchema palette
@@ -459,16 +334,63 @@ const myLight = zuiLight.extend({
       </p>
       <div class="row">
         <div class="cell-mini">
-          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color._brandRoyal }" />
+          <ZIcon :component="HeartOutline" size="huge" :css-root="(s) => { s.color._brandRoyal }" />
           <code>s.color._brandRoyal</code>
         </div>
         <div class="cell-mini">
-          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color._brandSunset }" />
+          <ZIcon :component="HeartOutline" size="huge" :css-root="(s) => { s.color._brandSunset }" />
           <code>s.color._brandSunset</code>
         </div>
         <div class="cell-mini">
-          <ZIcon :component="HeartOutline" size="huge" :css="(s) => { s.color._brandForest }" />
+          <ZIcon :component="HeartOutline" size="huge" :css-root="(s) => { s.color._brandForest }" />
           <code>s.color._brandForest</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 10. ZConfigProvider :unit —— 全站 sizing 单点切换 ─── -->
+    <section>
+      <h2>10. <code>:unit</code> —— 全站 sizing 单点切换</h2>
+      <p>
+        <code>&lt;ZConfigProvider :unit&gt;</code> 写入 wrapper inline
+        <code>style="--zui-unit: ..."</code>。所有 zu 化 token（spacing / radius / fontSize /
+        blur 等）经 <code>calc(N * var(--zui-unit, 1px))</code> 自动 resolve 到该基准。
+        **ZIcon 走 em（跟随父字号），不受 unit 影响**，所以下方 demo 用 spacing/fontSize
+        组合展示效果（每行外框 padding 走 spacing.middle）。
+      </p>
+      <p>
+        嵌套 Provider 通过 css cascade 自然覆盖，无运行时合并开销。
+        预设：<code>ZUnitPreset.pixel</code>（默认 1px）/ <code>ZUnitPreset.rem</code>（a11y 1/16rem）/
+        <code>ZUnitPreset.retina</code>（2px）；也可传任意 css length 字符串。
+      </p>
+
+      <div class="row">
+        <div class="cell">
+          <h3>默认 <code>:unit="ZUnitPreset.pixel"</code> (1zu = 1px)</h3>
+          <ZConfigProvider :unit="ZUnitPreset.pixel">
+            <div :style="{ padding: '16px', border: '1px solid #ccc', display: 'flex', gap: '16px', alignItems: 'center' }">
+              <ZIcon :component="HeartOutline" size="large" />
+              <span style="font-size: 16px">spacing.middle = 16px</span>
+            </div>
+          </ZConfigProvider>
+        </div>
+        <div class="cell">
+          <h3><code>:unit="ZUnitPreset.retina"</code> (1zu = 2px，整站放大 2×)</h3>
+          <ZConfigProvider :unit="ZUnitPreset.retina">
+            <div :style="{ padding: 'calc(16 * var(--zui-unit, 1px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(16 * var(--zui-unit, 1px))', alignItems: 'center' }">
+              <ZIcon :component="HeartOutline" size="large" />
+              <span :style="{ fontSize: 'calc(16 * var(--zui-unit, 1px))' }">spacing.middle = 32px</span>
+            </div>
+          </ZConfigProvider>
+        </div>
+        <div class="cell">
+          <h3><code>:unit="ZUnitPreset.rem"</code> (跟浏览器根字号，a11y)</h3>
+          <ZConfigProvider :unit="ZUnitPreset.rem">
+            <div :style="{ padding: 'calc(16 * var(--zui-unit, 1px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(16 * var(--zui-unit, 1px))', alignItems: 'center' }">
+              <ZIcon :component="HeartOutline" size="large" />
+              <span :style="{ fontSize: 'calc(16 * var(--zui-unit, 1px))' }">浏览器大字模式整站同步放大</span>
+            </div>
+          </ZConfigProvider>
         </div>
       </div>
     </section>

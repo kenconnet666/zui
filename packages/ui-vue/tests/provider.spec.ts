@@ -2,14 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { defineComponent, h, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { zuiLight } from '../src'
-import {
-  ZConfigProvider,
-  enUS,
-  useZComponentTokens,
-  useZDate,
-  useZLocale,
-  useZTheme,
-} from '../src'
+import { ZConfigProvider, enUS, useZDate, useZLocale, useZTheme } from '../src'
 
 type AnyTheme = Record<string, Record<string, string | number>>
 
@@ -77,34 +70,6 @@ describe('ZConfigProvider', () => {
     expect(asTheme(captured).color.primary).toBe('#00ff00')
     // 其它字段继承 fallback（zuiLight 含 color.bg = '#ffffff'）
     expect(asTheme(captured).color.bg).toBe('#ffffff')
-  })
-
-  it('componentTokens 嵌套时浅合并', () => {
-    let captured: unknown = null
-    const Child = defineComponent({
-      setup() {
-        const t = useZComponentTokens()
-        captured = t.value
-        return () => h('div')
-      },
-    })
-    mount({
-      components: { ZConfigProvider, Child },
-      data: () => ({
-        outer: { button: { primary: '#f00' } },
-        inner: { button: { hover: '#0f0' }, input: { borderFocus: '#00f' } },
-      }),
-      template: `
-        <ZConfigProvider :component-tokens="outer">
-          <ZConfigProvider :component-tokens="inner">
-            <Child />
-          </ZConfigProvider>
-        </ZConfigProvider>
-      `,
-    })
-    const tokens = captured as Record<string, Record<string, string>>
-    expect(tokens.button).toEqual({ primary: '#f00', hover: '#0f0' })
-    expect(tokens.input).toEqual({ borderFocus: '#00f' })
   })
 
   it('locale 默认 zhCN', () => {
