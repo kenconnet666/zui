@@ -134,14 +134,22 @@ const buttonClass = computed(() =>
     if (props.color) s.color(props.color)
     else s.color._primary
 
-    // variant 区分。State layer 用 `_primary.alpha(...)` 统一;用户传 user color 时通过
-    // `currentColor` + ::before / box-shadow 模拟有偏。本 v1 简化:user color 时 hover/active
-    // 仅靠 elevation/opacity 变化,不叠 state layer。
+    // variant 区分(2026-05-23 技术债务修复:不再用 `backgroundColor.currentColor` 桥接,
+    // 因为 currentColor 在 CSS paint 时 resolve 当前 color,而后续 `color._bg` 又改了 color,
+    // 导致 filled 按钮变白底白字。改为直接独立设置 backgroundColor)。
+    //
+    // user color 处理:把 props.color factory 通过类型 cast 当 backgroundColor factory 用,
+    // 因为 color/backgroundColor 共享 schema color token,carrier 行为一致。
     const hasUserColor = !!props.color
+    type BgFactory = (b: Chain<ZuiSchema>['backgroundColor']) => void
 
     switch (props.variant) {
       case 'filled':
-        s.backgroundColor.currentColor
+        if (hasUserColor) {
+          s.backgroundColor(props.color as unknown as BgFactory)
+        } else {
+          s.backgroundColor._primary
+        }
         s.color._bg
         s.boxShadow._tiny
         s._hover((h2) => {
@@ -175,18 +183,25 @@ const buttonClass = computed(() =>
         }
         break
       case 'ghost':
-        if (!hasUserColor) {
-          s.backgroundColor._primary.alpha(8)
-          s._hover((h2) => {
-            h2.backgroundColor._primary.alpha(12)
+        // 用 ::before 伪元素做 state layer,避免 opacity 整体淡化(包括文字/图标)。
+        // user color 时降级:背景不变(透明),仅靠 ::before 颜色由 currentColor 提供。
+        s.backgroundColor.transparent
+        s._prop('position', 'relative')
+        s._before((b) => {
+          b.content("''")
+          b._prop('position', 'absolute')
+          b._prop('inset', '0')
+          b.backgroundColor.currentColor
+          b.opacity(0.08)
+          b.borderRadius.inherit
+          b.pointerEvents.none
+          b._prop('transition', 'opacity 150ms cubic-bezier(0.4, 0, 0.2, 1)')
+        })
+        s._hover((h2) => {
+          h2._before((b) => {
+            b.opacity(0.12)
           })
-        } else {
-          // user color 时,ghost 走 currentColor opacity 模拟(text 颜色由 user color 决定)
-          s.opacity(0.92)
-          s._hover((h2) => {
-            h2.opacity(1)
-          })
-        }
+        })
         break
       case 'link':
         s.backgroundColor.transparent

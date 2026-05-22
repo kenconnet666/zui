@@ -58,12 +58,12 @@ describe('ZTag', () => {
     expect(w.emitted('close')).toBeTruthy()
   })
 
-  it('variant=filled → border-color transparent + currentColor bg', () => {
+  it('variant=filled → schema color 背景(不再用 currentColor 桥接,2026-05-23 重构)', () => {
     mount(ZTag, { props: { variant: 'filled' }, slots: { default: () => 't' } })
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
       .join('\n')
-    expect(css).toMatch(/background-color:currentColor/)
+    expect(css).toMatch(/background-color:#/)
   })
 
   it('round=true → 圆角胶囊', () => {

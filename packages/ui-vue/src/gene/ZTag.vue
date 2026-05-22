@@ -77,12 +77,21 @@ const rootClass = computed(() =>
     s.borderStyle.solid
     s._prop('whiteSpace', 'nowrap')
 
-    if (props.color) s.color(props.color)
+    // 2026-05-23 技术债务修复:filled 不用 `backgroundColor.currentColor` 桥接(避免 currentColor
+    // 在 paint 时被后续 color 改写);soft 不用 `opacity` 整体淡化(会让文字/图标一起淡)。
+    type BgFactory = (b: Chain<ZuiSchema>['backgroundColor']) => void
+    const hasUserColor = !!props.color
+
+    if (hasUserColor) s.color(props.color)
     else s.color._textSecondary
 
     switch (props.variant) {
       case 'filled':
-        s.backgroundColor.currentColor
+        if (hasUserColor) {
+          s.backgroundColor(props.color as unknown as BgFactory)
+        } else {
+          s.backgroundColor._textSecondary
+        }
         s.color._bg
         s._prop('borderColor', 'transparent')
         break
@@ -91,11 +100,12 @@ const rootClass = computed(() =>
         s._prop('borderColor', 'currentColor')
         break
       case 'soft':
-        if (props.color) s.backgroundColor(props.color)
-        else s.backgroundColor._textSecondary
-        // soft 时通过 currentColor + opacity 模拟低饱和:用 background-color rgba alpha 8
-        // 由于 user color 时 alpha 不可链,这里用 inset 加层方案的简化:soft 仅做透明度
-        s.opacity._strong
+        // 默认 color → 走 alpha 浅背景 + 主色文字;user color 时降级为透明背景 + 文字(像 outlined 无边框)
+        if (hasUserColor) {
+          s.backgroundColor.transparent
+        } else {
+          s.backgroundColor._textSecondary.alpha(12)
+        }
         s._prop('borderColor', 'transparent')
         break
     }

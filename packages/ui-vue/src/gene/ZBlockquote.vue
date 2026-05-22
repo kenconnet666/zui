@@ -1,8 +1,16 @@
 <script lang="ts">
 /**
- * `ZBlockquote` —— 块引用(`<blockquote>`),左侧带强调色边条。
+ * `ZBlockquote` —— 块引用(`<blockquote>`),左侧带强调色边条 + 中性背景 + 正文色文字。
  *
- * - `color` carrier factory —— 边条 + 文字色,默认 `_primary`
+ * **视觉**:
+ * - 左侧 4px border-color = `_primary`(或 user color)
+ * - 内部背景 = `_bgMuted`(中性浅灰,不被强调色污染)
+ * - 文字 = `_text`(主色文字,不被 opacity 淡化)
+ *
+ * `color` carrier factory 仅作用于 border 颜色。文字色独立。
+ *
+ * **(2026-05-23 技术债务修复:之前 `backgroundColor.currentColor; opacity._strong; color._text`
+ * 三层导致整个元素淡化,且 currentColor 在 paint 时 resolve 当前 color 值,被后续 color._text 改写)。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -25,35 +33,27 @@ const theme = useZTheme()
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.block
-    if (props.color) s.color(props.color)
-    else s.color._primary
-    s._prop('borderLeftWidth', '4px')
-    s._prop('borderLeftStyle', 'solid')
-    s._prop('borderLeftColor', 'currentColor')
+    s.margin('0')
+    s.color._text
+    s.backgroundColor._bgMuted
+    s.borderRadius._tiny
+    s._prop('fontStyle', 'italic')
+    s.lineHeight._relaxed
     s.paddingLeft._middle
     s.paddingRight._small
     s.paddingTop._small
     s.paddingBottom._small
-    s.margin('0')
-    s.backgroundColor.currentColor
-    s.opacity._strong
-    s.color._text
-    s.borderRadius._tiny
-    s._prop('fontStyle', 'italic')
-    s.lineHeight._relaxed
-    // 文字色覆盖 currentColor 背景(text 是 mainstreem 色)
+    s._prop('borderLeftWidth', '4px')
+    s._prop('borderLeftStyle', 'solid')
+    // border-left 用 user color 或 _primary;不影响文字
+    if (props.color) {
+      s.borderLeftColor(props.color)
+    } else {
+      s.borderLeftColor._primary
+    }
     props.css?.(s)
   }),
 )
-
-const innerClass = computed(() =>
-  icss(theme.value, (s) => {
-    s.color._text
-    s._prop('fontStyle', 'normal')
-  }),
-)
-
-void innerClass
 </script>
 
 <template>

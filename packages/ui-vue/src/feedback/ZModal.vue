@@ -51,11 +51,12 @@ export interface ZModalEmits {
 </script>
 
 <script lang="ts" setup>
-import { computed, h, ref, watch } from 'vue'
+import { computed, h, onScopeDispose, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useEscapeStack } from '../_hooks'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { lockBodyScroll } from '../_internal/body-scroll-lock'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZModalProps>(), {
@@ -196,21 +197,26 @@ function onCloseClick(): void {
   emit('close')
 }
 
-// Body scroll lock(简版:visible 时 body overflow:hidden)
-const bodyOverflowOrig = ref('')
+// Body scroll lock —— 多实例共享(2026-05-23 技术债务修复)
+let releaseLock: (() => void) | null = null
 watch(
   () => props.visible,
   (v) => {
-    if (typeof document === 'undefined') return
-    if (v) {
-      bodyOverflowOrig.value = document.body.style.overflow
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = bodyOverflowOrig.value
+    if (v && !releaseLock) {
+      releaseLock = lockBodyScroll()
+    } else if (!v && releaseLock) {
+      releaseLock()
+      releaseLock = null
     }
   },
   { immediate: true },
 )
+onScopeDispose(() => {
+  if (releaseLock) {
+    releaseLock()
+    releaseLock = null
+  }
+})
 
 const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
 </script>

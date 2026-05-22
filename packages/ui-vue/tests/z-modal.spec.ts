@@ -1,15 +1,23 @@
 /**
  * `ZModal` —— Portal + mask + escape stack 对话框。
  */
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { defineComponent, h, nextTick, ref } from 'vue'
-import { mount } from '@vue/test-utils'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import { ZModal } from '../src'
 
-afterEach(() => {
+let wrappers: VueWrapper[] = []
+
+function cleanup(): void {
+  // 共享 body scroll lock 依赖 onScopeDispose 释放,wrapper.unmount() 触发它
+  wrappers.forEach((w) => w.unmount())
+  wrappers = []
   document.body.querySelectorAll('[role="dialog"]').forEach((el) => el.parentElement?.remove())
   document.body.style.overflow = ''
-})
+}
+
+beforeEach(cleanup)
+afterEach(cleanup)
 
 function makeHost(visible: ReturnType<typeof ref<boolean>>, extraProps: Record<string, unknown> = {}) {
   return defineComponent({
@@ -31,13 +39,13 @@ function makeHost(visible: ReturnType<typeof ref<boolean>>, extraProps: Record<s
 describe('ZModal — 渲染', () => {
   it('visible=false → 不渲染 dialog', () => {
     const visible = ref(false)
-    mount(makeHost(visible), { attachTo: document.body })
+    wrappers.push(mount(makeHost(visible), { attachTo: document.body }))
     expect(document.querySelector('[role="dialog"]')).toBeNull()
   })
 
   it('visible=true → portal 渲染 dialog + role=dialog + aria-modal', async () => {
     const visible = ref(true)
-    mount(makeHost(visible), { attachTo: document.body })
+    wrappers.push(mount(makeHost(visible), { attachTo: document.body }))
     await nextTick()
     const dialog = document.querySelector('[role="dialog"]')
     expect(dialog).not.toBeNull()
@@ -49,7 +57,7 @@ describe('ZModal — 渲染', () => {
 describe('ZModal — 关闭', () => {
   it('点击关闭按钮 → update:visible(false) + close', async () => {
     const visible = ref(true)
-    mount(makeHost(visible, { title: 'T' }), { attachTo: document.body })
+    wrappers.push(mount(makeHost(visible, { title: 'T' }), { attachTo: document.body }))
     await nextTick()
     const btn = document.querySelector('button[aria-label="关闭"]') as HTMLButtonElement
     expect(btn).not.toBeNull()
@@ -60,7 +68,7 @@ describe('ZModal — 关闭', () => {
 
   it('Escape 键 → 关闭', async () => {
     const visible = ref(true)
-    mount(makeHost(visible), { attachTo: document.body })
+    wrappers.push(mount(makeHost(visible), { attachTo: document.body }))
     await nextTick()
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
     await nextTick()
@@ -69,7 +77,7 @@ describe('ZModal — 关闭', () => {
 
   it('closable=false → 不渲染关闭按钮', async () => {
     const visible = ref(true)
-    mount(makeHost(visible, { title: 'T', closable: false }), { attachTo: document.body })
+    wrappers.push(mount(makeHost(visible, { title: 'T', closable: false }), { attachTo: document.body }))
     await nextTick()
     expect(document.querySelector('button[aria-label="关闭"]')).toBeNull()
   })
@@ -78,14 +86,14 @@ describe('ZModal — 关闭', () => {
 describe('ZModal — body scroll lock', () => {
   it('visible=true 时 body overflow=hidden', async () => {
     const visible = ref(true)
-    mount(makeHost(visible), { attachTo: document.body })
+    wrappers.push(mount(makeHost(visible), { attachTo: document.body }))
     await nextTick()
     expect(document.body.style.overflow).toBe('hidden')
   })
 
   it('visible 切换 → body overflow 切换', async () => {
     const visible = ref(false)
-    mount(makeHost(visible), { attachTo: document.body })
+    wrappers.push(mount(makeHost(visible), { attachTo: document.body }))
     await nextTick()
     expect(document.body.style.overflow).toBe('')
     visible.value = true

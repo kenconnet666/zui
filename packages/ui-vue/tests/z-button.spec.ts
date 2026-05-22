@@ -30,11 +30,13 @@ describe('ZButton — 渲染', () => {
 })
 
 describe('ZButton — variant', () => {
-  it('filled 默认 → 注入 box-shadow + currentColor 背景', () => {
+  it('filled 默认 → 注入 box-shadow + primary 背景 + 反色文字', () => {
     mount(ZButton, { slots: { default: () => 'x' } })
     const css = getInjectedCss()
-    expect(css).toMatch(/background-color:currentColor/)
+    // 2026-05-23 重构:不再用 currentColor 桥接(避免后续 color._bg 覆盖导致白底白字)
+    // filled 直接走 _primary 背景 + _bg 文字
     expect(css).toMatch(/box-shadow:/)
+    expect(css).toMatch(/background-color:#/)
   })
 
   it('outlined → border-color currentColor + 透明背景', () => {
