@@ -71,7 +71,7 @@ function isDevEnv(): boolean {
 
 function warn(msg: string): void {
   if (isDevEnv()) {
-    // eslint-disable-next-line no-console
+     
     console.warn(`[zui-core/escape] ${msg}`)
   }
 }

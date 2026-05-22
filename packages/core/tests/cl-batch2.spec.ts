@@ -149,7 +149,7 @@ describe('F1 + E4 — applyStyleProps 响应式 prop', () => {
 
   it('混合响应式与普通值', () => {
     const c = new Chain(defaultLight)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     applyStyleProps(c, {
       p: { base: 4, middle: 8 } as any,
       bg: '_primary',

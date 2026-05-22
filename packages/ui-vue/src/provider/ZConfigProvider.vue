@@ -118,7 +118,7 @@ const mergedTheme = computed<ResolvedTheme<ZuiSchema>>(() => {
   // ③ 都没传 → 直接用 parent / fallback
   if (parentTheme) return parentTheme.value
   if (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production') {
-    // eslint-disable-next-line no-console
+     
     console.warn(
       '[zui-vue/ZConfigProvider] 没有父 Provider 且未传 theme/themePatch，回落 zuiLight。' +
         '\n  根 Provider 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。',

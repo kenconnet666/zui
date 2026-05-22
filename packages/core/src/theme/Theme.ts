@@ -126,7 +126,7 @@ function warnFunctionTokensOnInstance(schema: unknown): void {
     for (const key in slot as Record<string, unknown>) {
       const v = (slot as Record<string, unknown>)[key]
       if (typeof v === 'function') {
-        // eslint-disable-next-line no-console
+         
         console.warn(
           `[zui-core/Theme] schema 含 function token "${cat}.${key}"。` +
             `\n  通过 instance 直接访问（theme.${cat}.${key}）会拿到 function 引用而非值；` +

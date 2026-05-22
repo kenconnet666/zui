@@ -18,7 +18,7 @@ export function useZTheme(): Ref<ResolvedTheme<ZuiSchema>> {
   const injected = inject(Z_THEME_KEY, null)
   if (injected) return injected as Ref<ResolvedTheme<ZuiSchema>>
   if (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production') {
-    // eslint-disable-next-line no-console
+     
     console.warn(
       '[zui-vue/useZTheme] 调用点不在 <ZConfigProvider> 子树内，回落 zuiLight。' +
         '\n  请在根组件外包一层 <ZConfigProvider :theme="zuiLight">。',

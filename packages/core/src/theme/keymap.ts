@@ -29,7 +29,7 @@ export function toIdent(key: string): string {
   // 检测非法字符
   if (!VALID_IDENT_RE.test(stripped)) {
     if (isDevEnv()) {
-      // eslint-disable-next-line no-console
+       
       console.warn(
         `[zui-core/toIdent] key "${key}" 含非法 ident 字符；keymap 转 "${'_' + stripped}" 可能让 carrier 无法命中。` +
           '\n  推荐：token key 仅用 字母 / 数字 / `-` / `.`',
@@ -60,7 +60,7 @@ export function buildKeymap<T extends ThemeSchema>(
       const ident = toIdent(key)
       // S3 配套：同一 category 不同 key sanitize 后 ident 撞车 → dev warn
       if (dev && inner.has(ident)) {
-        // eslint-disable-next-line no-console
+         
         console.warn(
           `[zui-core/buildKeymap] ${cat} category 中 keys "${inner.get(ident)}" 与 "${key}" ` +
             `转 ident 后都是 "${ident}"，后者覆盖前者。请重命名其中一个。`,

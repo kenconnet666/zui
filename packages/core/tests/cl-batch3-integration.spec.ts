@@ -296,7 +296,7 @@ describe('集成 — createIcssInstance SSR 隔离', () => {
 
 describe('集成 — applyStyleProps 实际组件用例', () => {
   it('Box 组件：响应式 p + bg + rounded', () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const cls = applyStyleProps(defaultLight, {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       p: { base: 4, middle: 8, large: 16 } as any,

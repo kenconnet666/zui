@@ -57,7 +57,7 @@ export function registerCustomProperty(name: `--${string}`, options: CustomPrope
   // S2 防御：检测可疑字符（合法 CSS Syntax 永远不含 ; { }）
   if (isDevEnv()) {
     if (/[;{}]/.test(options.syntax)) {
-      // eslint-disable-next-line no-console
+       
       console.warn(
         `[zui-core/registerCustomProperty] syntax 含可疑字符（; { }）："${options.syntax}"。` +
           `\n  常见合法值：'<color>' / '<length>' / '<angle>' / '<percentage>' / '<integer>' / '<number>' / '*'`,
@@ -68,13 +68,13 @@ export function registerCustomProperty(name: `--${string}`, options: CustomPrope
       !/^<[^>]+>(\s*\|\s*<[^>]+>)*$/.test(options.syntax.trim())
     ) {
       // 非已知 token + 不符合 <xxx>(|<yyy>)* 模式 → warn 但不阻塞
-      // eslint-disable-next-line no-console
+       
       console.warn(
         `[zui-core/registerCustomProperty] syntax "${options.syntax}" 非已知 CSS Values 3 token；浏览器可能静默忽略 @property。`,
       )
     }
     if (typeof options.initialValue === 'string' && /[;{}]/.test(options.initialValue)) {
-      // eslint-disable-next-line no-console
+       
       console.warn(
         `[zui-core/registerCustomProperty] initialValue 含 ;/{/} 字符可能破坏 CSS：${options.initialValue}`,
       )

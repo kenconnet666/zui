@@ -32,7 +32,7 @@ function scanForFunctionTokens(obj: unknown, path: string): void {
   for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
     const p = path ? `${path}.${key}` : key
     if (typeof value === 'function') {
-      // eslint-disable-next-line no-console
+       
       console.warn(
         `[zui-core/mergeTheme] partial 含 function token "${p}"; mergeTheme 期望已解析过的字面量。` +
           `function 会被原样合入，破坏下游 ResolvedTheme<T> 形状。请在传入前 resolveTheme()。`,

@@ -44,7 +44,7 @@ export function registerFont(family: string, sources: FontFaceSource[]): void {
       srcExpr = s.src
       // 用户已自包 url(...)，无法插入额外 escape，dev 模式 warn
       if (isDevEnv() && /[<>"]/.test(s.src)) {
-        // eslint-disable-next-line no-console
+         
         console.warn(
           `[zui-core/registerFont] sources[].src 含可疑字符（< > "），可能破坏 @font-face：${s.src}`,
         )
