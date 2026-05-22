@@ -4,9 +4,9 @@
 >
 > **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-23(Stage 1-5 完成,无人值守自主推进 → Stage 6.1)
+> **最后更新**:2026-05-23(Stage 1-5 + 6.1 完成,无人值守自主推进 → Stage 6.2)
 > **当前阶段**:
-> `Stage 6.1 ── 布局四件套(layout/)` 待开始
+> `Stage 6.2 ── 反馈+展示基础(feedback/ + display/)` 待开始
 
 ---
 
@@ -457,14 +457,14 @@ s._focusVisible((f) => {
 > 目标:做完后 zui-vue 可作业务主力组件库使用(Button/Form/Table/Modal/Menu 齐了)。
 > **顺序**:先布局,再展示/反馈基础,再交互输入,最后 ZButton(在 §5 hooks 之后)。
 
-#### Stage 6.1 ── 布局四件套(layout/)
+#### Stage 6.1 ── 布局四件套(layout/)✅ 2026-05-23 完成
 
-- [ ] **ZFlex.vue** + spec(direction/wrap/justify/align/gap 全 carrier factory + css 兜底)
-- [ ] **ZGrid.vue** + spec(cols/rows/gap + 响应式 `cols={{ small:1, middle:2, large:3 }}`)
-- [ ] **ZSpace.vue** + spec(横/竖 + 自动间距)
-- [ ] **ZSpacer.vue** + spec(`flex: 1` 推开同行)
-- [ ] `src/layout/index.ts` 导出 + `src/index.ts` 汇总
-- [ ] **验证**:type-check ✓ / test ✓ / build ✓
+- [x] **ZFlex.vue** + spec(direction / wrap / justify / align / gap factory + inline + css 兜底)
+- [x] **ZGrid.vue** + spec(cols/rows 数字 / 字符串 / 响应式对象 + gap + justify/alignItems + inline)
+- [x] **ZSpace.vue** + spec(direction horizontal/vertical + size factory 覆盖 _small + align/wrap/inline)
+- [x] **ZSpacer.vue** + spec(grow/shrink/basis factory + aria-hidden)
+- [x] `src/layout/index.ts` 导出(主入口经 `export * from './layout'` 自动)
+- [x] **验证**:type-check ✓ / test 200/200 ✓ / build ✓
 
 #### Stage 6.2 ── 基础展示 & 反馈(display/ feedback/)
 
@@ -748,6 +748,11 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-23 Stage 6.1 完成(无人值守自主推进)
+- 改动:新建 `src/layout/{ZFlex,ZGrid,ZSpace,ZSpacer}.vue` + 4 spec(32 case);`src/layout/index.ts` 导出
+- 验证:type-check ✓ / tests 200/200 ✓ / build ✓
+- 下一步:Stage 6.2 反馈+展示基础(ZAlert / ZSpin / ZCard / ZModal / ZMessage)
 
 ### 2026-05-23 Stage 5 完成(无人值守自主推进,跳过 STOP #3 API review)
 - 改动:新建 `src/_hooks/`(5 个 hook):`useZId` / `usePortal`(+ `ZPortal` 组件) / `useEscapeStack` / `usePopper`(包装 floating-ui) / `useRipple`(自写,pointerdown 注入 span + @keyframes + animationend 清理);`src/index.ts` 加 `export * from './_hooks'`

@@ -2,6 +2,29 @@
 
 ## Unreleased
 
+### 新增 — 布局四件套 `layout/`(P0)
+
+Stage 6.1 P0 布局组件落地:
+
+- **`ZFlex`** —— Flexbox 容器。props:`direction`(`row` / `column` / `row-reverse` / `column-reverse`)/
+  `wrap`(boolean / `'reverse'`)/ `justify`(`start` / `center` / `end` / `between` / `around` / `evenly`)/
+  `align`(`start` / `center` / `end` / `stretch` / `baseline`)/ `gap` carrier factory / `inline` / `css` / `tag`
+- **`ZGrid`** —— CSS Grid 容器。`cols` / `rows` 支持:
+  - 数字 → `repeat(N, minmax(0, 1fr))`
+  - 字符串 → 直接作 `grid-template-columns` / `rows`
+  - 响应式对象 → `{ tiny: 1, middle: 3 }`,最小断点作 base,其它用 `@media min-width:breakpoint`(走
+    schema `breakpoint.*` token)。
+  另含 `gap` carrier factory / `justifyItems` / `alignItems` / `inline` / `css` / `tag`。
+- **`ZSpace`** —— 等间距 flex(类 antd Space)。默认 `align: center`、`gap: _small`、不 wrap。
+  Props:`direction`(horizontal/vertical)/ `size` carrier factory / `align` / `wrap` / `inline` /
+  `css` / `tag`。
+- **`ZSpacer`** —— flex 推开占位(`flex: 1 1 auto`)。Props:`grow` / `shrink` / `basis` carrier
+  factory / `css` / `tag`。默认 `aria-hidden="true"`(屏读器跳过)。
+
+测试 32 case(原 168 → 200 全绿)。
+
+---
+
 ### 新增 — 内部 hooks 基建 `src/_hooks/`(5 个 hook,标 internal)
 
 为后续复合组件(Modal / Drawer / Tooltip / Popover / Button 等)铺路,沉淀 5 个常用 composable:
