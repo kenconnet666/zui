@@ -2,6 +2,37 @@
 
 ## Unreleased
 
+### 新增 — 反馈+展示基础(`feedback/` + `display/`,P0)
+
+Stage 6.2 P0 反馈与展示组件:
+
+- **`ZAlert`**(feedback)—— 警示横幅。`type`(info/success/warning/danger,各取 schema 语义色 + alpha 8 背景)/
+  `title` / `description` / `showIcon`(走 `BuiltinIcons.{info|success|warning|error}`)/ `closable`
+  (`emit close`)/ slots: head/icon/title/description/default/closeIcon / sx: sxIcon/sxBody/sxClose。
+- **`ZSpin`**(feedback)—— 加载指示器。两种模式:
+  - 包裹模式(有 default slot)→ overlay 浮层覆盖 + indicator 居中 + 可选 `tip` 文字
+  - 纯 indicator 模式(无 slot)→ inline-flex 单独显示
+  默认 indicator = `BuiltinIcons.refresh` + `spin: (d) => d.s(1)` + `iem` size 跟 `size` 档位。
+  sx:sxOverlay / sxIndicator。
+- **`ZCard`**(display)—— 三节点卡片。slots: head(`#head` 优先于 `title`)/ extra / default / foot。
+  `bordered`(默认 true → 边框)/ `bordered=false`(走 M3 shadow)/ `hoverable`(transition + shadow 加深)。
+  sx:sxHead / sxBody / sxFoot。
+- **`ZModal`**(feedback)—— Portal 对话框。`v-model:visible` + Teleport + `useEscapeStack` + body scroll lock。
+  `title` / `width`(string|number) / `centered` / `closable` / `maskClosable` / `to`(Teleport target) /
+  `zIndex` / sx 5 节点(sxMask/sxDialog/sxHead/sxBody/sxFoot)。emit: update:visible / close / mask-click。
+  M3 elevation `boxShadow._huge` + radius `_large`。
+  **Phase β 加 focus trap**(需 `@vueuse/integrations/useFocusTrap`)和 `Modal.confirm/alert` 静态方法。
+- **`ZMessage`** + **`createMessageApi()`**(feedback)—— 顶部 Toast 队列。
+  - 组件模式:`<ZMessage :messages :onClose>` 业务方自管数组
+  - 工厂模式:`createMessageApi()` → `{ info, success, warning, error, loading, close, destroyAll }`,
+    内部 `createApp` 临时实例 mount 到 body
+  - 默认 duration:非 loading 3s,loading 不自动关
+  - icon 跟 type 映射,loading 自带 spin 动画
+
+测试 43 case(原 200 + 43 = 243 全绿)。
+
+---
+
 ### 新增 — 布局四件套 `layout/`(P0)
 
 Stage 6.1 P0 布局组件落地:

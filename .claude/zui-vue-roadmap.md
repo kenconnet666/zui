@@ -4,9 +4,9 @@
 >
 > **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-23(Stage 1-5 + 6.1 完成,无人值守自主推进 → Stage 6.2)
+> **最后更新**:2026-05-23(Stage 1-5 + 6.1 + 6.2 完成,无人值守自主推进 → Stage 6.3)
 > **当前阶段**:
-> `Stage 6.2 ── 反馈+展示基础(feedback/ + display/)` 待开始
+> `Stage 6.3 ── 数据录入(input/,8+ 组件)` 待开始
 
 ---
 
@@ -466,16 +466,18 @@ s._focusVisible((f) => {
 - [x] `src/layout/index.ts` 导出(主入口经 `export * from './layout'` 自动)
 - [x] **验证**:type-check ✓ / test 200/200 ✓ / build ✓
 
-#### Stage 6.2 ── 基础展示 & 反馈(display/ feedback/)
+#### Stage 6.2 ── 基础展示 & 反馈(display/ feedback/)✅ 2026-05-23 完成
 
-- [ ] feedback/**ZAlert.vue** + spec(type=info/success/warning/danger、closable、showIcon、sxIcon/sxClose/sxBody)
-- [ ] feedback/**ZSpin.vue** + spec(`spinning` / `size` / 包裹模式 + 全局模式 / sxIndicator)
-- [ ] display/**ZCard.vue** + spec(title/extra slot + sxHead/sxBody/sxFoot)
-- [ ] feedback/**ZModal.vue** + spec(基于 usePortal + useFocusTrap + useEscapeStack + sxMask/sxHead/sxBody/sxFoot)
-  - 含静态方法 `Modal.confirm()` / `Modal.alert()`
-- [ ] feedback/**ZMessage.vue** + spec(顶部 toast queue + `createMessageApi()` 工厂)
-- [ ] 各分类 index.ts 导出
-- [ ] **验证**:type-check ✓ / test ✓ / build ✓
+- [x] feedback/**ZAlert.vue** + spec(type 4 种 / closable emit close / showIcon / sxIcon/sxBody/sxClose)
+- [x] feedback/**ZSpin.vue** + spec(spinning / size / 包裹模式 + 纯 indicator 模式 / tip / sxOverlay/sxIndicator)
+- [x] display/**ZCard.vue** + spec(title + head/extra/foot slot + bordered/hoverable + sxHead/sxBody/sxFoot)
+- [x] feedback/**ZModal.vue** + spec(Teleport + useEscapeStack + body scroll lock + closable/maskClosable + sxMask/sxDialog/sxHead/sxBody/sxFoot)
+  - 注:`Modal.confirm()` / `Modal.alert()` 静态方法推到 Phase β(`createMessageApi` 已是同款工厂范式)
+  - focus trap 待 Phase β 接入 `@vueuse/integrations/useFocusTrap`
+- [x] feedback/**ZMessage.vue** + spec(`messages` 数组 + 顶部居中 + auto-close)
+- [x] **`createMessageApi()` 工厂** + spec(createApp 临时实例方案,info/success/warning/error/loading + close/destroyAll)
+- [x] feedback/index.ts、display/index.ts 导出
+- [x] **验证**:type-check ✓ / test 243/243 ✓ / build ✓
 
 #### Stage 6.3 ── 数据录入(input/)
 
@@ -748,6 +750,13 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-23 Stage 6.2 完成(无人值守自主推进)
+- 改动:`feedback/ZAlert + ZSpin + ZModal + ZMessage + messageApi`(5 SFC + 1 helper),`display/ZCard`;各 sx 子节点(sxHead/sxBody/sxFoot/sxMask/sxClose 等);ZModal 用 Teleport + `useEscapeStack` + body scroll lock;`createMessageApi()` 工厂走 createApp 临时实例方案
+- 测试 6 spec(43 case,243/243 全绿)
+- 验证:type-check ✓ / tests 243/243 ✓ / build ✓
+- 设计决策:`Modal.confirm/alert` 静态方法推 Phase β(`createMessageApi` 已落地工厂范式),focus trap 也推 Phase β
+- 下一步:Stage 6.3 数据录入(8+ 组件)
 
 ### 2026-05-23 Stage 6.1 完成(无人值守自主推进)
 - 改动:新建 `src/layout/{ZFlex,ZGrid,ZSpace,ZSpacer}.vue` + 4 spec(32 case);`src/layout/index.ts` 导出
