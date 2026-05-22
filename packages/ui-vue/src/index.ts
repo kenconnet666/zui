@@ -38,6 +38,17 @@ export {
 export {
   ZIcon,
   type ZIconProps,
+  ZText,
+  type ZTextProps,
+  ZTitle,
+  type ZTitleProps,
+  type ZTitleLevel,
+  ZParagraph,
+  type ZParagraphProps,
+  ZLink,
+  type ZLinkProps,
+  ZDivider,
+  type ZDividerProps,
 } from './components'
 
 // ─── Locale ───

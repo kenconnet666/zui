@@ -22,7 +22,7 @@ export default defineConfig({
         'locale/index': 'src/locale/index.ts',
         'composables/index': 'src/composables/index.ts',
         'components/index': 'src/components/index.ts',
-        'components/icon/index': 'src/components/icon/index.ts',
+        'components/gene/index': 'src/components/gene/index.ts',
       },
       formats: ['es'],
     },

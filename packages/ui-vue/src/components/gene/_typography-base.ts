@@ -1,0 +1,96 @@
+/**
+ * `_typography-base` —— Typography 组件共享 chain 应用 helper。
+ *
+ * **不对外暴露**(下划线前缀 + 不在 `gene/index.ts` 导出)。供 ZText / ZTitle / ZParagraph /
+ * ZLink / ZCode / ZBlockquote / ZGradientText 等组件复用「6 维度 carrier factory + 5 状态」
+ * 的 chain 应用逻辑,避免每个 SFC 重复 30+ 行同款代码。
+ *
+ * **设计约束**:
+ * - 不读取 `props.cssRoot` —— 每个组件自己控制 cssRoot 调用时机
+ * - 不强加默认值 —— 默认走 `withDefaults`,这里只处理「传了就写」
+ * - 不读取组件维度的 default(如 ZLink `_primary` / ZTitle level 映射)—— 这些由各组件在
+ *   调用此 helper 之前/之后自行处理
+ */
+import type { Chain } from '@kenconnet666/zui-core'
+import type { ZuiSchema } from '../../theme'
+
+/** 系统等宽字体栈,跨平台兜底(ZText `mono`、ZCode 默认体)。 */
+export const MONO_FONT_STACK =
+  'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace'
+
+/**
+ * Typography 组件共享 props —— 6 维度 carrier factory + 5 状态布尔/枚举。
+ *
+ * 各 SFC 在 `export interface Z<Component>Props` 中**重复展开这些字段**(而不是 extends),
+ * 这样 IDE 悬停看 props 类型时一眼看到全集,符合 ZIcon 范式。
+ *
+ * **为什么不让各组件 extends 这个 interface**:
+ * - Vue `<script setup>` `defineProps<T>()` 对跨文件 interface extend 偶尔解析有边界
+ * - IDE 在 extend 链上展开慢,直接平铺更直观
+ *
+ * 本 interface 仅用作 `applyTypographyBase` 函数签名锚点,**非 props 的类型唯一来源**。
+ */
+export interface ZTypographyBaseProps {
+  size?: ((f: Chain<ZuiSchema>['fontSize']) => void) | undefined
+  weight?: ((w: Chain<ZuiSchema>['fontWeight']) => void) | undefined
+  color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
+  depth?: ((o: Chain<ZuiSchema>['opacity']) => void) | undefined
+  leading?: ((l: Chain<ZuiSchema>['lineHeight']) => void) | undefined
+  tracking?: ((t: Chain<ZuiSchema>['letterSpacing']) => void) | undefined
+  italic?: boolean
+  underline?: 'always' | 'hover' | 'none'
+  strikethrough?: boolean
+  mono?: boolean
+  ellipsis?: boolean | number
+}
+
+/**
+ * 把 6 维度 + 5 状态应用到 chain。**传了即写、不传不写**,保留 CSS cascade 行为。
+ *
+ * **调用时机**:在组件 `icss(theme, (s) => { ... })` 内,通常在「组件级默认」之后、
+ * 「cssRoot 用户覆盖」之前调用。各组件自行控制顺序。
+ *
+ * @example
+ * icss(theme.value, (s) => {
+ *   // 组件默认(可被 props 覆盖,所以放最前)
+ *   if (!props.color) s.color._primary
+ *   // 共享 6+5 维度
+ *   applyTypographyBase(s, props)
+ *   // cssRoot 用户覆盖
+ *   props.cssRoot?.(s)
+ * })
+ */
+export function applyTypographyBase(
+  s: Chain<ZuiSchema>,
+  props: ZTypographyBaseProps,
+): void {
+  // ─── 6 维度 carrier factory(传了即写,不传保留 cascade) ───
+  if (props.size) s.fontSize(props.size)
+  if (props.weight) s.fontWeight(props.weight)
+  if (props.color) s.color(props.color)
+  if (props.depth) s.opacity(props.depth)
+  if (props.leading) s.lineHeight(props.leading)
+  if (props.tracking) s.letterSpacing(props.tracking)
+
+  // ─── 斜体 ─── fontStyle 不在 ENHANCED_PROPS,走 _prop 逃生舱
+  if (props.italic) s._prop('fontStyle', 'italic')
+
+  // ─── 装饰线(underline + strikethrough 可叠加,空格分隔多值) ───
+  const baseLines: string[] = []
+  if (props.underline === 'always') baseLines.push('underline')
+  if (props.strikethrough) baseLines.push('line-through')
+  if (baseLines.length > 0) s._prop('textDecorationLine', baseLines.join(' '))
+  if (props.underline === 'hover') {
+    const hoverLines = [...baseLines, 'underline'].join(' ')
+    s._hover((h) => {
+      h._prop('textDecorationLine', hoverLines)
+    })
+  }
+
+  // ─── 等宽字体 ───
+  if (props.mono) s._prop('fontFamily', MONO_FONT_STACK)
+
+  // ─── 省略 ───
+  if (props.ellipsis === true) s._truncate()
+  else if (typeof props.ellipsis === 'number') s._lineClamp(props.ellipsis)
+}
