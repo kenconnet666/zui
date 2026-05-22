@@ -101,16 +101,17 @@ const props = withDefaults(
     /**
      * **逻辑单位 iem 的物理映射 —— 全站 sizing 单点切换器**。
      *
-     * `iem` = "我自己使用的 em",跟 CSS `rem`(root em)对称 —— Provider 注入的基准倍率,
-     * 默认 1iem = 16px(等同 1rem)。
+     * `iem` = "我自己使用的 em",跟 CSS `rem`(root em)对称 —— Provider 注入的基准倍率。
      *
-     * 写入 wrapper inline `style="--zui-iem: ..."`,ui-vue 所有 iem 化 token
-     * (`spacing` / `radius` / `fontSize` / `blur` 等)经 `calc(N * var(--zui-iem, 16px))`
-     * 自动 resolve 到该基准。**嵌套 Provider 通过 css cascade 自然覆盖,兄弟 Provider 各自
-     * 独立 —— 零运行时合并开销**。
+     * **不传 = 透传父级 cascade**(不写 inline `--zui-iem`):子 ZBox 不传则继承父 ZBox 的值,
+     * 兄弟 ZBox 各自独立。**这是默认正确的"向下覆盖"语义** —— 子 ZBox 默认不应"撞墙"覆盖父值。
+     *
+     * **根 ZBox 没传则 dev warn**(`:theme`、`:iem` 都属于根 Provider 应显式声明的配置)。
+     * 完全不挂任何 ZBox 时,chain emit 的 `calc(N * var(--zui-iem, 16px))` 自带 fallback 16px,
+     * 但**无法跟随浏览器根字号、无法整站切换大字/紧凑模式**,因此根级建议显式声明。
      *
      * 接受任意 css length 字符串或纯数字(数字按 px 处理):
-     * - 不传 / `'16px'`(`ZIemPreset.default`)—— 默认,1iem = 16px
+     * - `'16px'`(`ZIemPreset.default`)—— 标准,1iem = 16px(等同 1rem)
      * - `'20px'`(`ZIemPreset.large`)—— 大字模式,整站放大 25%
      * - `'14px'`(`ZIemPreset.compact`)—— 紧凑模式
      * - `'1em'`(`ZIemPreset.em`)—— 跟父字号,嵌套自动
@@ -155,15 +156,19 @@ const props = withDefaults(
     tag?: string
   }>(),
   {
-    iem: '16px',
     tag: 'div',
   },
 )
 
-// ─── iem → css var 注入(写到 wrapper inline style,子组件通过 css cascade 自动读取) ───
-const iemStyle = computed(() => ({
-  '--zui-iem': typeof props.iem === 'number' ? `${props.iem}px` : props.iem,
-}))
+// ─── iem → css var 注入 ───
+// **关键**:`props.iem` 未传 → 不写 inline `--zui-iem`,让 css cascade 自然透传父 ZBox 的值。
+// 这是"向下覆盖"语义的核心:子 ZBox 默认不应撞墙覆盖父值,只有显式声明 `:iem` 才覆盖子树基准。
+const iemStyle = computed<{ '--zui-iem': string } | undefined>(() => {
+  if (props.iem === undefined) return undefined
+  return {
+    '--zui-iem': typeof props.iem === 'number' ? `${props.iem}px` : props.iem,
+  }
+})
 
 defineSlots<{
   default(props: { theme: ResolvedTheme<ZuiSchema>; locale: ZLocale }): unknown
@@ -173,6 +178,21 @@ defineSlots<{
 const parentTheme = inject<Ref<ResolvedTheme<ZuiSchema>> | null>(Z_THEME_KEY, null)
 const parentLocale = inject<Ref<ZLocale> | null>(Z_LOCALE_KEY, null)
 const parentDate = inject<Ref<ZDateConfig> | null>(Z_DATE_KEY, null)
+
+// ─── 根 ZBox 未传 :iem → dev warn(提示显式声明 iem 基准,a11y / 大字模式必备) ───
+// 子 ZBox 不传 iem 是合理默认(透传父 cascade),只在"根 ZBox 没父也没显式 iem"时 warn。
+if (
+  parentTheme === null &&
+  props.iem === undefined &&
+  (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production')
+) {
+
+  console.warn(
+    '[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,' +
+      '\n  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。' +
+      '\n  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。',
+  )
+}
 
 // ─── theme 合并(顶层 fallback zuiLight) ───
 const mergedTheme = computed<ResolvedTheme<ZuiSchema>>(() => {

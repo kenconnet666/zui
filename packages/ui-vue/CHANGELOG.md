@@ -2,6 +2,30 @@
 
 ## Unreleased
 
+### `ZBox :iem` 移除默认值,改为透传父 cascade(语义修正)
+
+**问题**:之前 `:iem` 默认值 `'16px'`,导致每个 ZBox 都强制写 inline `--zui-iem: 16px`,**子 ZBox 总是覆盖父级 cascade**,违反"向下透传,显式才覆盖"的本意。一旦页面里嵌套多层 ZBox(主题分组 / 装饰 box),根级 `:iem="ZIemPreset.large"` 立刻被子层默认值打回 16px。
+
+**改动**:
+- `:iem` 改为可选,**不再有默认值**
+- 不传 `:iem` 时,wrapper 不写 inline `--zui-iem`,让 css cascade 自然透传父 ZBox 的值
+- **根 ZBox**(没有父 Provider)未传 `:iem` 时,**dev warn** 提醒显式声明根基准:
+  > `[zui-vue/ZBox] 根 ZBox 未传 :iem。所有 iem 化 token 将回落到 css var fallback 16px,无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。建议根节点显式包一层 <ZBox :iem="ZIemPreset.default">`
+
+**对现有代码**:
+- 完全没用 ZBox / 用 `chain.iem(N)` 的页面:行为不变(自带 `calc(... var(--zui-iem, 16px))` fallback)
+- 根 ZBox 已经传了 `:iem` 的工程:不变
+- 根 ZBox 没传 `:iem` 的工程:开发期 warn,生产期视觉不变(仍然 16px),但**强烈建议加上**以支持 a11y / 大字 / 紧凑模式
+
+```diff
+- <ZBox :theme="zuiLight">           <!-- 默认 16px,但子 ZBox 也会覆盖 -->
++ <ZBox :theme="zuiLight" :iem="ZIemPreset.default">  <!-- 显式 16px,子 ZBox 自动透传 -->
+    <App />
+  </ZBox>
+```
+
+---
+
 ### BREAKING — `ZConfigProvider` 改名为 `ZBox` + 新增 `cssRoot` / `tag`
 
 把原 `<ZConfigProvider>`(主题/iem/locale 注入器)与「装饰用底层 box」职能合并为一个组件,

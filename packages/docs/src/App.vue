@@ -6,7 +6,7 @@
  * `UserColorExt` augmentation 同步扩展 `ZuiSchema.color` —— 任意组件 `:css` 回调
  * `(s) => { s.color._brandRoyal }` 即获得 IDE 补全 + 编译期校验。
  */
-import { ZBox, zuiLight } from '@kenconnet666/zui-vue'
+import { ZBox, ZIemPreset, zuiLight } from '@kenconnet666/zui-vue'
 
 const myLight = zuiLight.extend({
   color: {
@@ -18,7 +18,7 @@ const myLight = zuiLight.extend({
 </script>
 
 <template>
-  <ZBox :theme="myLight">
+  <ZBox :theme="myLight" :iem="ZIemPreset.default">
     <div class="app-shell">
       <aside class="sidebar">
         <h1 class="brand">zui docs</h1>

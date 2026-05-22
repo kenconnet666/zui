@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { defineComponent, h, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { zuiLight } from '../src'
@@ -284,12 +284,104 @@ describe('ZBox — fonts schema token', () => {
     mount(ZBox, {
       props: {
         themePatch: { fonts: { mono: 'Fira Code, monospace' } },
-        cssRoot: (s) => {
+        cssRoot: (s: Chain<ZuiSchema>) => {
           s.fontFamily._mono
         },
       },
       slots: { default: () => 'x' },
     })
     expect(getInjectedCss()).toContain('Fira Code')
+  })
+})
+
+describe('ZBox — iem 透传语义(无默认值,子不传则继承父 cascade)', () => {
+  it('子 ZBox 不传 :iem → 不写 inline --zui-iem(让 cascade 自然透传)', () => {
+    const w = mount({
+      components: { ZBox },
+      template: `
+        <ZBox :theme="theme" :iem="'16px'" class="root">
+          <ZBox class="inner"><span>x</span></ZBox>
+        </ZBox>
+      `,
+      data: () => ({ theme: zuiLight }),
+    })
+    const inner = w.find('.inner')
+    expect(inner.exists()).toBe(true)
+    expect(inner.attributes('style') ?? '').not.toContain('--zui-iem')
+  })
+
+  it('显式传 :iem → 写 inline --zui-iem(子树覆盖父基准)', () => {
+    const w = mount({
+      components: { ZBox },
+      template: `
+        <ZBox :theme="theme" :iem="'16px'">
+          <ZBox class="inner" :iem="'20px'"><span>x</span></ZBox>
+        </ZBox>
+      `,
+      data: () => ({ theme: zuiLight }),
+    })
+    expect(w.find('.inner').attributes('style')).toContain('--zui-iem: 20px')
+  })
+
+  it('兄弟 ZBox 不传 iem → 各自不写 inline,独立继承父 cascade', () => {
+    const w = mount({
+      components: { ZBox },
+      template: `
+        <ZBox :theme="theme" :iem="'16px'">
+          <ZBox class="sibling-a"><span>A</span></ZBox>
+          <ZBox class="sibling-b"><span>B</span></ZBox>
+        </ZBox>
+      `,
+      data: () => ({ theme: zuiLight }),
+    })
+    expect(w.find('.sibling-a').attributes('style') ?? '').not.toContain('--zui-iem')
+    expect(w.find('.sibling-b').attributes('style') ?? '').not.toContain('--zui-iem')
+  })
+
+  it('根 ZBox 不传 :iem → dev warn 触发', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    try {
+      mount(ZBox, {
+        props: { theme: zuiLight }, // 有 theme 但没 iem
+        slots: { default: () => 'x' },
+      })
+      const calls = warnSpy.mock.calls.map((args) => String(args[0]))
+      expect(calls.some((m) => m.includes('根 ZBox 未传 `:iem`'))).toBe(true)
+    } finally {
+      warnSpy.mockRestore()
+    }
+  })
+
+  it('根 ZBox 传了 :iem → 不触发 iem warn', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    try {
+      mount(ZBox, {
+        props: { theme: zuiLight, iem: '16px' },
+        slots: { default: () => 'x' },
+      })
+      const calls = warnSpy.mock.calls.map((args) => String(args[0]))
+      expect(calls.some((m) => m.includes('根 ZBox 未传 `:iem`'))).toBe(false)
+    } finally {
+      warnSpy.mockRestore()
+    }
+  })
+
+  it('子 ZBox 不传 :iem → 不触发 iem warn(只有根才 warn)', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    try {
+      mount({
+        components: { ZBox },
+        template: `
+          <ZBox :theme="theme" :iem="'16px'">
+            <ZBox><span>inner</span></ZBox>
+          </ZBox>
+        `,
+        data: () => ({ theme: zuiLight }),
+      })
+      const calls = warnSpy.mock.calls.map((args) => String(args[0]))
+      expect(calls.some((m) => m.includes('根 ZBox 未传 `:iem`'))).toBe(false)
+    } finally {
+      warnSpy.mockRestore()
+    }
   })
 })
