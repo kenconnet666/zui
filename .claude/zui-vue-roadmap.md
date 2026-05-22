@@ -4,9 +4,9 @@
 >
 > **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-23(Stage 1+2+3 完成,无人值守自主推进 → Stage 4)
+> **最后更新**:2026-05-23(Stage 1-4 完成,无人值守自主推进 → Stage 5)
 > **当前阶段**:
-> `Stage 4 ── 主题美学(M3 / C2 方案)` 待开始(**STOP #2**,无人值守自行决策)
+> `Stage 5 ── 内部 hooks 基建` 待开始(**STOP #3**,无人值守自行决策)
 
 ---
 
@@ -419,19 +419,21 @@ s._focusVisible((f) => {
 - [x] **验证**:type-check ✓ / test 147/147 ✓ / build ✓
 - [x] CHANGELOG entry(BREAKING:peerDep `@vicons/ionicons5` → `@vicons/material`)
 
-### Stage 4 ── 主题美学(Material Design 美化方案 C2)
+### Stage 4 ── 主题美学(Material Design 美化方案 C2)✅ 2026-05-23 完成
 
 > 目标:落实 §4 完整方案,zuiLight/zuiDark 配色 + shadow elevation + radius huge=28 + 加 focusRing/overlayBg。
+>
+> 决策文档:`.claude/decisions/2026-05-23-stage4-theme-aesthetics-m3.md`
 
-- [ ] `src/provider/theme/schema.ts`:`SemanticColorTokens` 加 `focusRing` / `overlayBg`
-- [ ] `zui-light.ts` color 全替换为 §4.1 配色 + 加 focusRing/overlayBg
-- [ ] `zui-light.ts` shadow 全替换为 §4.3 M3 elevation(光面阴影,双层)
-- [ ] `zui-light.ts` radius.huge `iem(1.5)` → `iem(1.75)`
-- [ ] `zui-dark.ts` color 全替换为 §4.2 dark 配色 + 加 focusRing/overlayBg
-- [ ] `zui-dark.ts` shadow 替换为 M3 elevation dark 变体(双层阴影 rgba 0.5~0.8 不透明度)
-- [ ] `zui-dark.ts` radius.huge 同步
-- [ ] **验证**:type-check ✓ / test ✓(部分 spec 可能要更新 hard-coded primary `#2563eb` → `#1976d2` 等,逐个修)/ build ✓
-- [ ] CHANGELOG entry(BREAKING:主题色彩重设 + shadow elevation + radius huge 28px + 加 focusRing/overlayBg)
+- [x] `src/provider/theme/schema.ts`:`SemanticColorTokens` 加 `focusRing` / `overlayBg`
+- [x] `zui-light.ts` color 全替换为 §4.1 配色 + 加 focusRing/overlayBg
+- [x] `zui-light.ts` shadow 全替换为 §4.3 M3 elevation(光面阴影,双层)
+- [x] `zui-light.ts` radius.huge `iem(1.5)` → `iem(1.75)`
+- [x] `zui-dark.ts` color 全替换为 §4.2 dark 配色 + 加 focusRing/overlayBg
+- [x] `zui-dark.ts` shadow 替换为 M3 elevation dark 变体(双层阴影 rgba 0.4~0.7 不透明度)
+- [x] `zui-dark.ts` radius.huge 同步(经 zuiLight.schema.radius 继承)
+- [x] **验证**:type-check ✓ / test 147/147 ✓(spec 动态读 `zuiLight.resolve().color.primary`,无需改硬编码)/ build ✓
+- [x] CHANGELOG entry(BREAKING:主题色彩重设 + shadow elevation + radius huge 28px + 加 focusRing/overlayBg)
 
 ### Stage 5 ── 内部 hooks(为 P0 复合组件铺路)
 
@@ -751,6 +753,13 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-23 Stage 4 完成(无人值守自主推进,跳过 STOP #2 视觉验收)
+- 改动:`SemanticColorTokens` 加 `focusRing` + `overlayBg`(10 → 12 个语义色);zuiLight color 全套换 Material 700 / Orange 700;zuiDark color 全套换 Material 200/300/400 shade,bg 改 M3 `#121212`;两套 shadow 全部换 M3 双层 elevation(level 1-5);radius.huge 24px → 28px 对齐 M3 FAB
+- 验证:type-check ✓ / tests 147/147 ✓ / build ✓
+- 文档:`.claude/decisions/2026-05-23-stage4-theme-aesthetics-m3.md`
+- **视觉验收待用户**:`pnpm --filter @kenconnet666/docs dev` 看 light/dark
+- 下一步:Stage 5 内部 hooks 基建(STOP 节点 #3)
 
 ### 2026-05-23 Stage 3 完成(无人值守自主推进)
 - 改动:peerDep `@vicons/ionicons5` → `@vicons/material`(BREAKING,required 不再 optional);新建 `src/gene/icons.ts`(re-export material 全量 + `BuiltinIcons` 15 项语义 map,Outlined 变体);`src/gene/index.ts` 加 icons re-export;docs/IconPage.vue 同步 import 用 `as` 别名兼容;docs/package.json 同步

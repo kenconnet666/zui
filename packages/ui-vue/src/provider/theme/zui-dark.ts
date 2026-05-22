@@ -1,4 +1,4 @@
-import { Theme, FLAT_PALETTE, tw } from '@kenconnet666/zui-core'
+import { Theme, FLAT_PALETTE } from '@kenconnet666/zui-core'
 import { zuiLight } from './zui-light'
 import type { ZuiSchema } from './schema'
 
@@ -12,33 +12,43 @@ import type { ZuiSchema } from './schema'
  * - shadow:dark 模式 bg 深,需要更强阴影才有"浮起"感(rgba 黑色不透明度提升)
  */
 export const zuiDark = new Theme<ZuiSchema>({
+  /**
+   * **Material Design dark 配色**(Stage 4 / 2026-05-23):
+   * - primary / danger / warning / success / info 走 Material 200 shade(暗背景上更柔和、对比度更高)
+   * - text / textSecondary 用 grey-300 / grey-500(避开纯白,降低瞳孔疲劳)
+   * - bg `#121212`(M3 dark surface 推荐基色)/ bgMuted `#1e1e1e`(M3 surface +1)/ border grey-700
+   * - focusRing 同 primary;overlayBg `#000` 同 light(透明度让位 alpha modifier)
+   */
   color: {
     ...FLAT_PALETTE,
-    primary: tw('blue', '500'),
-    danger: tw('red', '500'),
-    warning: tw('yellow', '500'),
-    success: tw('green', '500'),
-    info: tw('cyan', '500'),
-    text: tw('gray', '100'),
-    textSecondary: tw('gray', '400'),
-    bg: tw('gray', '900'),
-    bgMuted: tw('gray', '800'),
-    border: tw('gray', '600'),
+    primary: '#90caf9', // Material Blue 200
+    danger: '#ef5350', // Red 400
+    warning: '#ffa726', // Orange 400
+    success: '#66bb6a', // Green 400
+    info: '#4fc3f7', // Light Blue 300
+    text: '#e0e0e0', // grey-300
+    textSecondary: '#9e9e9e', // grey-500
+    bg: '#121212', // M3 dark surface
+    bgMuted: '#1e1e1e', // M3 surface +1
+    border: '#424242', // grey-800
+    focusRing: '#90caf9', // 同 primary
+    overlayBg: '#000000',
   },
   spacing: zuiLight.schema.spacing,
   radius: zuiLight.schema.radius,
   fontSize: zuiLight.schema.fontSize,
   fontWeight: zuiLight.schema.fontWeight,
   /**
-   * dark 模式专属 shadow —— 比 light 加深 2-3 倍(0.1 → 0.4),才能在深色 bg 上看到"浮起"。
-   * 也可考虑加 `inset 0 0 0 1px rgba(255,255,255,0.04)` 做"亮缘"效果,这里先简版只调不透明度。
+   * **M3 Elevation dark 双层阴影**(Stage 4 / 2026-05-23):
+   * 跟 light 同结构(key + ambient),但不透明度提高到 0.5~0.8 范围(深色 bg 上需要更强阴影才能
+   * 制造"浮起"视觉)。
    */
   shadow: {
-    tiny: '0 1px 1px 0 rgb(0 0 0 / 0.3)',
-    small: '0 1px 2px 0 rgb(0 0 0 / 0.4)',
-    middle: '0 4px 6px -1px rgb(0 0 0 / 0.5)',
-    large: '0 10px 15px -3px rgb(0 0 0 / 0.6)',
-    huge: '0 25px 50px -12px rgb(0 0 0 / 0.7)',
+    tiny: '0px 1px 2px rgba(0,0,0,0.60), 0px 1px 3px 1px rgba(0,0,0,0.40)', // level 1 dark
+    small: '0px 1px 2px rgba(0,0,0,0.60), 0px 2px 6px 2px rgba(0,0,0,0.40)', // level 2 dark
+    middle: '0px 4px 8px 3px rgba(0,0,0,0.40), 0px 1px 3px rgba(0,0,0,0.60)', // level 3 dark
+    large: '0px 6px 10px 4px rgba(0,0,0,0.40), 0px 2px 3px rgba(0,0,0,0.65)', // level 4 dark
+    huge: '0px 8px 12px 6px rgba(0,0,0,0.45), 0px 4px 4px rgba(0,0,0,0.70)', // level 5 dark
   },
   blur: zuiLight.schema.blur,
   duration: zuiLight.schema.duration,

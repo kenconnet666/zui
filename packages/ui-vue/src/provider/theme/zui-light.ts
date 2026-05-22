@@ -1,4 +1,4 @@
-import { Theme, FLAT_PALETTE, tw, iem } from '@kenconnet666/zui-core'
+import { Theme, FLAT_PALETTE, iem } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from './schema'
 
 /**
@@ -29,18 +29,28 @@ import type { ZuiSchema } from './schema'
  * 业务侧顶层主题入口;用户工程通过 `<ZBox :theme="zuiLight">` 注入。
  */
 export const zuiLight = new Theme<ZuiSchema>({
+  /**
+   * **Material Design 经典配色**(Stage 4 / 2026-05-23 升级):
+   * - primary / danger / warning / success / info 走 Material 2 经典 700 / Orange 700 shade,
+   *   跟 M3 主题更搭(对比度高、不刺眼)
+   * - text / textSecondary 用 grey-900 / grey-700(M3 推荐 typography 色)
+   * - focusRing 同 primary,使用处叠 `.alpha(40)` 派生半透明 focus 环
+   * - overlayBg `#000`,使用处叠 `.alpha(50)` 派生 Modal 遮罩
+   */
   color: {
     ...FLAT_PALETTE,
-    primary: tw('blue', '600'),
-    danger: tw('red', '600'),
-    warning: tw('yellow', '500'),
-    success: tw('green', '500'),
-    info: tw('cyan', '500'),
-    text: tw('gray', '900'),
-    textSecondary: tw('gray', '600'),
+    primary: '#1976d2', // Material Blue 700
+    danger: '#d32f2f', // M2 Red 700
+    warning: '#ed6c02', // M2 Orange 700
+    success: '#2e7d32', // M2 Green 700
+    info: '#0288d1', // M2 Light Blue 700
+    text: '#212121', // M2 grey-900
+    textSecondary: '#616161', // M2 grey-700
     bg: '#ffffff',
-    bgMuted: tw('gray', '50'),
-    border: tw('gray', '200'),
+    bgMuted: '#f5f5f5', // M2 grey-100
+    border: '#e0e0e0', // M2 grey-300
+    focusRing: '#1976d2', // 同 primary;实际使用走 .alpha(40)
+    overlayBg: '#000000', // 实际使用走 .alpha(50) → rgba(0,0,0,0.5)
   },
   // 5 阶 spacing:默认 4/8/16/24/32px(0.25/0.5/1/1.5/2 个基准字号)
   spacing: {
@@ -50,14 +60,15 @@ export const zuiLight = new Theme<ZuiSchema>({
     large: iem(1.5),
     huge: iem(2),
   },
-  // radius:默认 4/8/12/16/24px(0.25/0.5/0.75/1/1.5 个基准字号);full 是语义"无穷"
+  // radius:默认 4/8/12/16/28px(0.25/0.5/0.75/1/1.75 个基准字号);full 是语义"无穷"
+  // huge=28px 对齐 M3 FAB / Dialog 推荐圆角(Stage 4,2026-05-23 从 24px 改 28px)
   radius: {
     none: '0',
     tiny: iem(0.25),
     small: iem(0.5),
     middle: iem(0.75),
     large: iem(1),
-    huge: iem(1.5),
+    huge: iem(1.75),
     full: '9999px',
   },
   // fontSize:默认 12/14/16/18/20px(0.75/0.875/1/1.125/1.25 个基准字号)
@@ -79,12 +90,19 @@ export const zuiLight = new Theme<ZuiSchema>({
     extrabold: 800,
     black: 900,
   },
+  /**
+   * **M3 Elevation 双层阴影**(Stage 4 / 2026-05-23):
+   * Material Design 3 elevation 模型用两层阴影叠加 ── key light(主光源,锐利)+
+   * ambient light(环境光,扩散),5 阶对应 M3 level 1-5。视觉上层次更清晰、更"真实"。
+   *
+   * level 数字越大 = 越突出(huge = M3 level 5,Dialog / 顶层浮层)。
+   */
   shadow: {
-    tiny: '0 1px 1px 0 rgb(0 0 0 / 0.03)',
-    small: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
-    middle: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-    large: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
-    huge: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
+    tiny: '0px 1px 2px rgba(0,0,0,0.30), 0px 1px 3px 1px rgba(0,0,0,0.15)', // M3 level 1
+    small: '0px 1px 2px rgba(0,0,0,0.30), 0px 2px 6px 2px rgba(0,0,0,0.15)', // level 2
+    middle: '0px 4px 8px 3px rgba(0,0,0,0.15), 0px 1px 3px rgba(0,0,0,0.30)', // level 3
+    large: '0px 6px 10px 4px rgba(0,0,0,0.15), 0px 2px 3px rgba(0,0,0,0.30)', // level 4
+    huge: '0px 8px 12px 6px rgba(0,0,0,0.15), 0px 4px 4px rgba(0,0,0,0.30)', // level 5
   },
   // blur:默认 4/8/16/24/40px(0.25/0.5/1/1.5/2.5 个基准字号)
   blur: {

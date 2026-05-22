@@ -84,19 +84,29 @@ export interface UserBordersExt {}
 export interface UserTransitionPropertyExt {}
 
 /**
- * 10 个语义色 token —— light / dark 取同 key 不同 shade。
+ * 12 个语义色 token —— light / dark 取同 key 不同 shade。
  *
  * **不含 `*Hover` 变体**:hover 态由 chain `color2k` modifier 在使用处派生,
  * 避免每个语义色都要复制一份 `xxxHover`(不对称 + 维护成本)。
  *
- * @example hover 态加深 / 提亮
+ * **新增**(2026-05-23,Stage 4):
+ * - `focusRing` —— `:focus-visible` outline 颜色基色,实际使用走 `.alpha(40)` 派生半透明环
+ *   (Material Design 设计模式:focus 环跟随 primary 色调,半透明叠加在 bg 上)
+ * - `overlayBg` —— Modal / Drawer / 加载遮罩的背景色基色,通常 `#000` + `.alpha(50)` 派生
+ *   半透明黑遮罩(Material 设计模式;暗色模式也用同 base + alpha)
+ *
+ * @example hover 态加深 / 提亮 / focus 环
  * ```ts
  * s.color._primary
  * s._hover(h => h.color._primary.darken(8))     // 加深 8%
- * // 或
  * s._hover(h => h.color._primary.lighten(8))    // 提亮 8%
- * // 或叠透明度
- * s._hover(h => h.color._primary.alpha(80))
+ * s._hover(h => h.background.color._primary.alpha(8))   // M3 state layer
+ *
+ * s._focusVisible(f => {
+ *   f.outlineWidth._middle
+ *   f.outlineStyle.solid
+ *   f.outlineColor._focusRing.alpha(40)         // 半透明 focus 环
+ * })
  * ```
  */
 export type SemanticColorTokens =
@@ -110,6 +120,8 @@ export type SemanticColorTokens =
   | 'bg'
   | 'bgMuted'
   | 'border'
+  | 'focusRing'
+  | 'overlayBg'
 
 /** 5 阶 size scale key（spacing/fontSize/shadow/blur/breakpoint 共享）。 */
 export type Size5Keys = 'tiny' | 'small' | 'middle' | 'large' | 'huge'

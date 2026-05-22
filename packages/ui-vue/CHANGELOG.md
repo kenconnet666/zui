@@ -2,6 +2,52 @@
 
 ## Unreleased
 
+### BREAKING — 主题美学升级 Material Design(C2 方案)+ 新增 `focusRing` / `overlayBg` 语义色
+
+**理由**:
+- `#L8` 锁定决策:主题美学采用 Material 2 经典色 + M3 motion/elevation/shape 的组合方案 ──
+  比 Tailwind 蓝绿色调更"产品级",跟 `@vicons/material` 图标体系搭配也更自然
+- 新增 `focusRing` / `overlayBg` 是组件库后续 Modal / Drawer / 各类 focus 环都要用的状态色,
+  之前用 `_primary.alpha(40)` / `'#000'.alpha(50)` 临时凑合,提升为 token 后业务侧统一覆盖更顺手
+
+**配色变更**(zuiLight):
+- `primary`: `tw('blue','600')` ≈ `#2563eb` → `#1976d2` Material Blue 700
+- `danger`: `#dc2626` → `#d32f2f` M2 Red 700
+- `warning`: `#eab308` → `#ed6c02` M2 Orange 700
+- `success`: `#22c55e` → `#2e7d32` M2 Green 700
+- `info`: `#06b6d4` → `#0288d1` M2 Light Blue 700
+- `text`: `#111827` → `#212121` M2 grey-900
+- `textSecondary`: `#4b5563` → `#616161` M2 grey-700
+- `bgMuted`: `#f9fafb` → `#f5f5f5` M2 grey-100
+- `border`: `#e5e7eb` → `#e0e0e0` M2 grey-300
+- (新)`focusRing`: `#1976d2` 同 primary,使用处 `.alpha(40)`
+- (新)`overlayBg`: `#000000`,使用处 `.alpha(50)`
+
+**配色变更**(zuiDark):
+- `primary`: `tw('blue','500')` → `#90caf9` Material Blue 200
+- `danger / warning / success / info`: 全部换 Material 200~400 shade
+- `text`: `#e0e0e0` grey-300 / `textSecondary`: `#9e9e9e` grey-500
+- `bg`: `#111827` → `#121212` M3 dark surface 推荐基色
+- `bgMuted`: `#1f2937` → `#1e1e1e` M3 surface +1
+- `border`: `#4b5563` → `#424242` grey-800
+- (新)`focusRing` / `overlayBg`
+
+**shadow → M3 Elevation 双层阴影**(level 1-5,两层叠加 ── key light + ambient light,
+Material Design 3 官方推荐 elevation 实现):
+- light 模式 rgba 0.15~0.30 不透明度
+- dark 模式 rgba 0.40~0.70 不透明度(深 bg 需要更强阴影才"浮起")
+
+**radius.huge**: `iem(1.5)`(24px)→ `iem(1.75)`(28px) ── 对齐 Material 3 FAB / Dialog 推荐圆角
+
+**迁移**:
+1. 内部 tests / 业务代码若 hardcode 比对 primary `#2563eb` 等具体值 → 改读 `zuiLight.resolve().color.primary`
+2. 若业务工程依赖旧 shadow 单层布局 → 重新比对 Stripe 卡片视觉(M3 双层更立体)
+3. 若依赖 `radius.huge=24` → 显式覆盖 `zuiLight.extend({ radius: { huge: iem(1.5) } })`
+
+决策文档:`.claude/decisions/2026-05-23-stage4-theme-aesthetics-m3.md`(含完整对照表 + 视觉验收清单)
+
+---
+
 ### BREAKING — 图标 peerDep 从 `@vicons/ionicons5` 切到 `@vicons/material`,新增 `BuiltinIcons` 语义 map
 
 **理由**:
