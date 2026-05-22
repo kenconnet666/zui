@@ -3,7 +3,7 @@
  *
  * 所有 gene 组件走 SFC 单文件 + 双 `<script>` 块（详见 `skill/zui.md §13.0`），
  * 公开 props 接口、组件本体；私有 helper（如 `_typography-base.ts`、内部 `*_MAP` 等）
- * 不对外暴露。需要"自定义维度 / 极致定制"的高级用户走 `cssRoot` factory 兜底，
+ * 不对外暴露。需要"自定义维度 / 极致定制"的高级用户走 `css` factory 兜底，
  * 或直接 fork 组件。
  */
 export { default as ZIcon } from './ZIcon.vue'

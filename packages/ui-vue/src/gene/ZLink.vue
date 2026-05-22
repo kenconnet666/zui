@@ -43,7 +43,7 @@ export interface ZLinkProps {
   mono?: boolean
   ellipsis?: boolean | number
 
-  cssRoot?: ((s: Chain<ZuiSchema>) => void) | undefined
+  css?: ((s: Chain<ZuiSchema>) => void) | undefined
   /** 根元素 tag,默认 `'a'`。 */
   tag?: string
 }
@@ -81,7 +81,7 @@ const className = computed(() =>
     }
 
     applyTypographyBase(s, props)
-    props.cssRoot?.(s)
+    props.css?.(s)
   }),
 )
 

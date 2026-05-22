@@ -45,7 +45,7 @@ export interface ZTitleProps {
   mono?: boolean
   ellipsis?: boolean | number
 
-  cssRoot?: ((s: Chain<ZuiSchema>) => void) | undefined
+  css?: ((s: Chain<ZuiSchema>) => void) | undefined
   /** 根元素 tag,默认 `h{level}`。 */
   tag?: string
 }
@@ -102,7 +102,7 @@ const className = computed(() =>
     s.margin('0') // 重置浏览器默认 h{N} margin,块级布局由父容器掌控
 
     applyTypographyBase(s, props)
-    props.cssRoot?.(s)
+    props.css?.(s)
   }),
 )
 </script>

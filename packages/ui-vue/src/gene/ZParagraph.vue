@@ -10,7 +10,7 @@
  * - `tag` 默认 `'p'` —— 语义化段落元素
  *
  * **schema 联动**:`margin-bottom` 用 `spacing._middle`,用户 `<ZBox :iem="large">`
- * 时段间距同步放大;想自定义间距走 cssRoot:`(s) => s.marginBottom._large`。
+ * 时段间距同步放大;想自定义间距走 css:`(s) => s.marginBottom._large`。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -30,7 +30,7 @@ export interface ZParagraphProps {
   mono?: boolean
   ellipsis?: boolean | number
 
-  cssRoot?: ((s: Chain<ZuiSchema>) => void) | undefined
+  css?: ((s: Chain<ZuiSchema>) => void) | undefined
   /** 根元素 tag,默认 `'p'`。 */
   tag?: string
 }
@@ -62,7 +62,7 @@ const className = computed(() =>
     if (!props.leading) s.lineHeight._normal // 段落舒适行高 1.5
 
     applyTypographyBase(s, props)
-    props.cssRoot?.(s)
+    props.css?.(s)
   }),
 )
 </script>

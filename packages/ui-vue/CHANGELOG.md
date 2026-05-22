@@ -2,6 +2,34 @@
 
 ## Unreleased
 
+### BREAKING — `cssRoot` prop 全局重命名为 `css`,新增 `SxObject` 类型与 helper
+
+**理由**:
+- `cssRoot` 这名字暗示"根节点的 css"但其实就是组件的核心 css 逃生口。改为更短的 `css` 更对仗
+  `class` / `style`,跟 antd / MUI 的 `sx` / `css` prop 命名习惯对齐。
+- 同时引入 `SxObject` 类型(`{ css, class, style, ...HTMLAttributes }`)+ `applySx` / `extractSxAttrs`
+  helper,为后续复合组件(ZCard / ZModal / ZTabs ...)的子节点 `sxHead` / `sxBody` / `sxFoot` props
+  提供统一基建。
+
+**改动**:
+- `ZBox` + 6 个 gene 组件(ZIcon / ZText / ZTitle / ZParagraph / ZLink / ZDivider)的 `cssRoot` prop
+  改名为 `css`(类型不变,仍是 `(s: Chain<ZuiSchema>) => void`)
+- 5 个 spec 文件同步改 `cssRoot:` → `css:`
+- `docs/IconPage.vue` 展示页改 `:css-root="..."` → `:css="..."`
+- `.claude/skills/zui.md` 全文更新
+- 新增 `src/_internal/sx.ts`(对外不直接暴露,通过组件 props 类型间接出现)
+
+**迁移**:
+```diff
+- <ZIcon :css-root="(s) => { s.color._primary }" />
++ <ZIcon :css="(s) => { s.color._primary }" />
+
+- mount(ZBox, { props: { cssRoot: (s) => s.padding.px(24) } })
++ mount(ZBox, { props: { css: (s) => s.padding.px(24) } })
+```
+
+---
+
 ### BREAKING — 目录扁平化 + 单入口化 + 删除 composables
 
 **理由**:三件事一起做完成"分类化、扁平化、单入口化"的结构重整,为后续 P0/P1/P2/P3 分阶段

@@ -1,11 +1,11 @@
 /**
- * `ZText` —— 6 维度 carrier factory + 5 状态布尔/枚举 + cssRoot + tag。
+ * `ZText` —— 6 维度 carrier factory + 5 状态布尔/枚举 + css + tag。
  *
  * 覆盖:
  * 1. 默认渲染 + slot + tag
  * 2. size / weight / color / depth / leading / tracking 6 维度
  * 3. italic / underline(always/hover) / strikethrough / mono / ellipsis(boolean/N)
- * 4. cssRoot 二次覆盖 + 伪类
+ * 4. css 二次覆盖 + 伪类
  */
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
@@ -185,27 +185,27 @@ describe('ZText — 状态 prop', () => {
   })
 })
 
-describe('ZText — cssRoot 覆盖', () => {
-  it('cssRoot 可覆盖维度属性', () => {
+describe('ZText — css 覆盖', () => {
+  it('css 可覆盖维度属性', () => {
     mount(ZText, {
       props: {
         size: (f: Chain<ZuiSchema>['fontSize']) => {
           f.px(14)
         },
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.fontSize.px(18) // 覆盖
         },
       },
       slots: { default: () => 'x' },
     })
-    // cssRoot 在 applyTypographyBase 之后,后写覆盖前写
+    // css 在 applyTypographyBase 之后,后写覆盖前写
     expect(getInjectedCss()).toMatch(/font-size:18px/)
   })
 
-  it('cssRoot 写伪类', () => {
+  it('css 写伪类', () => {
     mount(ZText, {
       props: {
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s._hover((h: Chain<ZuiSchema>) => {
             h.color((c: Chain<ZuiSchema>['color']) => c('#ff00aa'))
           })

@@ -12,8 +12,8 @@
  *   - `dateLocale`—— date-fns Locale,未传继承父
  *   - `iem`       —— 逻辑单位 iem 的物理映射,写到 wrapper inline `--zui-iem`
  *
- * **2. 底层 box 容器**(新增,跟 `<ZIcon>` 的 `cssRoot` 范式一致):
- *   - `cssRoot`   —— `(s: Chain<ZuiSchema>) => void` factory,自由写任意样式
+ * **2. 底层 box 容器**(新增,跟 `<ZIcon>` 的 `css` 范式一致):
+ *   - `css`   —— `(s: Chain<ZuiSchema>) => void` factory,自由写任意样式
  *   - `tag`       —— wrapper 元素 tag,默认 `'div'`
  *
  * 用一个组件解决两件常见事:**「我需要包一层 div 来切换主题/iem」** 和
@@ -39,7 +39,7 @@
  * </ZBox>
  *
  * <!-- 3. 只当 box 用(加点 padding/边距) -->
- * <ZBox :css-root="(s) => { s.padding._middle; s.borderRadius._small; s.background.color._bgMuted }">
+ * <ZBox :css="(s) => { s.padding._middle; s.borderRadius._small; s.background.color._bgMuted }">
  *   <SomeContent />
  * </ZBox>
  *
@@ -48,7 +48,7 @@
  *   tag="section"
  *   :iem="'18px'"
  *   :theme-patch="{ color: { primary: '#0066ff' } }"
- *   :css-root="(s) => { s.padding._large; s.margin._huge }"
+ *   :css="(s) => { s.padding._large; s.margin._huge }"
  * >
  *   ...
  * </ZBox>
@@ -56,7 +56,7 @@
  *
  * 用户工程要扩自家 brand:定义 `interface MySchema extends ZuiSchema { ... }`,
  * 基于 `zuiLight.schema` 派生 `Theme<MySchema>`,传给 `:theme`。要单点改色 / 加品牌色,
- * 走 `UserColorExt` augmentation 或 `:css-root`(skill §13.0 三层覆盖模型)。
+ * 走 `UserColorExt` augmentation 或 `:css`(skill §13.0 三层覆盖模型)。
  */
 import { computed, inject, provide, type Ref } from 'vue'
 import {
@@ -136,7 +136,7 @@ const props = withDefaults(
      * 而非父 Provider 的 theme。
      *
      * @example
-     * <ZBox :css-root="(s) => {
+     * <ZBox :css="(s) => {
      *   s.padding._middle
      *   s.borderRadius._small
      *   s.background.color._bgMuted
@@ -145,7 +145,7 @@ const props = withDefaults(
      *   ...
      * </ZBox>
      */
-    cssRoot?: (s: Chain<ZuiSchema>) => void
+    css?: (s: Chain<ZuiSchema>) => void
 
     /**
      * wrapper 元素 tag,默认 `'div'`。
@@ -244,10 +244,10 @@ provide(Z_THEME_KEY, mergedTheme)
 provide(Z_LOCALE_KEY, mergedLocale)
 provide(Z_DATE_KEY, mergedDate)
 
-// ─── cssRoot factory → emotion className(用合并后的 theme,跟子组件一致) ───
+// ─── css factory → emotion className(用合并后的 theme,跟子组件一致) ───
 const className = computed<string | undefined>(() => {
-  if (!props.cssRoot) return undefined
-  return icss(mergedTheme.value, props.cssRoot)
+  if (!props.css) return undefined
+  return icss(mergedTheme.value, props.css)
 })
 
 defineExpose({

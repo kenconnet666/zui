@@ -202,7 +202,7 @@ describe('ZBox', () => {
   })
 })
 
-describe('ZBox — 底层 box 能力(cssRoot + tag)', () => {
+describe('ZBox — 底层 box 能力(css + tag)', () => {
   function getInjectedCss(): string {
     return Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
@@ -219,10 +219,10 @@ describe('ZBox — 底层 box 能力(cssRoot + tag)', () => {
     expect(w.element.tagName).toBe('SECTION')
   })
 
-  it('cssRoot 写入 emotion className,样式 emit', () => {
+  it('css 写入 emotion className,样式 emit', () => {
     const w = mount(ZBox, {
       props: {
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.padding.px(24)
           s.backgroundColor('#abc123')
         },
@@ -236,11 +236,11 @@ describe('ZBox — 底层 box 能力(cssRoot + tag)', () => {
     expect(css).toContain('#abc123')
   })
 
-  it('cssRoot + iem 双 prop 共存(iemStyle 走 inline style,cssRoot 走 class)', () => {
+  it('css + iem 双 prop 共存(iemStyle 走 inline style,css 走 class)', () => {
     const w = mount(ZBox, {
       props: {
         iem: '20px',
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.padding.iem(1) // 用合并 theme 的 iem,这里走 css var
         },
       },
@@ -253,10 +253,10 @@ describe('ZBox — 底层 box 能力(cssRoot + tag)', () => {
     expect(css).toMatch(/padding:calc\(1 \* var\(--zui-iem,/)
   })
 
-  it('cssRoot 不传 → 不挂 className(干净 wrapper)', () => {
+  it('css 不传 → 不挂 className(干净 wrapper)', () => {
     const w = mount(ZBox, { slots: { default: () => 'x' } })
     const cls = w.classes()
-    // 没传 cssRoot 时,classList 应为空(或不含 css-* emotion class)
+    // 没传 css 时,classList 应为空(或不含 css-* emotion class)
     expect(cls.filter((c) => c.startsWith('css-')).length).toBe(0)
   })
 })
@@ -271,7 +271,7 @@ describe('ZBox — fonts schema token', () => {
   it('s.fontFamily._mono → 走 schema fonts.mono(zuiLight 默认 ui-monospace 栈)', () => {
     mount(ZBox, {
       props: {
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.fontFamily._mono
         },
       },
@@ -280,11 +280,11 @@ describe('ZBox — fonts schema token', () => {
     expect(getInjectedCss()).toContain('ui-monospace')
   })
 
-  it('themePatch 覆盖 fonts.mono → ZBox cssRoot 取到新值', () => {
+  it('themePatch 覆盖 fonts.mono → ZBox css 取到新值', () => {
     mount(ZBox, {
       props: {
         themePatch: { fonts: { mono: 'Fira Code, monospace' } },
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.fontFamily._mono
         },
       },
@@ -306,7 +306,7 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
       props: {
         theme: zuiLight,
         iem: '16px',
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.width._container
         },
       },
@@ -320,7 +320,7 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
       props: {
         theme: zuiLight,
         iem: '16px',
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.maxWidth._readable
         },
       },
@@ -334,7 +334,7 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
       props: {
         theme: zuiLight,
         iem: '16px',
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.height._screenH
         },
       },
@@ -348,7 +348,7 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
       props: {
         theme: zuiLight,
         iem: '16px',
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.borderWidth._thin
         },
       },
@@ -362,7 +362,7 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
       props: {
         theme: zuiLight,
         iem: '16px',
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.outlineWidth._middle
         },
       },
@@ -376,7 +376,7 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
       props: {
         theme: zuiLight,
         iem: '16px',
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.transitionProperty._colors
         },
       },
@@ -389,13 +389,13 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
     expect(css).toContain('border-color')
   })
 
-  it('themePatch 覆盖 sizes.container → ZBox cssRoot 取到新值', () => {
+  it('themePatch 覆盖 sizes.container → ZBox css 取到新值', () => {
     mount(ZBox, {
       props: {
         theme: zuiLight,
         iem: '16px',
         themePatch: { sizes: { container: '900px' } },
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.width._container
         },
       },

@@ -4,9 +4,9 @@
 >
 > **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-23(Stage 1 完成,无人值守自主推进 → Stage 2)
+> **最后更新**:2026-05-23(Stage 1+2 完成,无人值守自主推进 → Stage 3)
 > **当前阶段**:
-> `Stage 2 ── props 哲学(cssRoot → css + SxObject)` 进行中
+> `Stage 3 ── 图标系统切换 @vicons/material` 待开始
 
 ---
 
@@ -389,19 +389,19 @@ s._focusVisible((f) => {
 - [x] **验证**:type-check ✓ / test 147/147 ✓ / build ✓
 - [x] CHANGELOG entry(BREAKING:目录扁平 + 单入口 + composables 全删)
 
-### Stage 2 ── props 哲学(BREAKING)
+### Stage 2 ── props 哲学(BREAKING)✅ 2026-05-23 完成
 
 > 目标:`cssRoot` → `css` 全局重命名,引入 SxObject 类型与 helper(未来复合组件用)。
 
-- [ ] 写 `src/_internal/sx.ts`:`SxObject` 类型 + `applySx` + `extractSxAttrs` helper
-- [ ] ZBox.vue 改 `cssRoot` prop → `css`
-- [ ] gene 6 组件改 `cssRoot` prop → `css`(ZIcon / ZText / ZTitle / ZParagraph / ZLink / ZDivider)
-- [ ] tests 全部改 `cssRoot:` → `css:`(provider.spec / icon.spec / text.spec / title.spec / paragraph.spec / link.spec / divider.spec)
-- [ ] docs/IconPage.vue 等改 `:css-root="..."` → `:css="..."`
-- [ ] skill `.claude/skills/zui.md` 全文 cssRoot → css
-- [ ] _typography-base.ts 注释里的 cssRoot 描述同步改
-- [ ] **验证**:type-check ✓ / test ✓ / build ✓
-- [ ] CHANGELOG entry(BREAKING:cssRoot → css + SxObject 类型加入)
+- [x] 写 `src/_internal/sx.ts`:`SxObject` 类型 + `applySx` + `extractSxAttrs` helper
+- [x] ZBox.vue 改 `cssRoot` prop → `css`
+- [x] gene 6 组件改 `cssRoot` prop → `css`(ZIcon / ZText / ZTitle / ZParagraph / ZLink / ZDivider)
+- [x] tests 全部改 `cssRoot:` → `css:`(provider.spec / icon.spec / text.spec / title.spec / paragraph.spec / link.spec / divider.spec)
+- [x] docs/IconPage.vue 等改 `:css-root="..."` → `:css="..."`
+- [x] skill `.claude/skills/zui.md` 全文 cssRoot → css
+- [x] _typography-base.ts 注释里的 cssRoot 描述同步改
+- [x] **验证**:type-check ✓ / test 147/147 ✓ / build ✓
+- [x] CHANGELOG entry(BREAKING:cssRoot → css + SxObject 类型加入)
 
 ### Stage 3 ── 图标系统切换到 @vicons/material
 
@@ -749,6 +749,11 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-23 Stage 2 完成(无人值守自主推进)
+- 改动:`cssRoot` / `:css-root` 全局重命名为 `css` / `:css`(影响 ZBox.vue + gene 6 SFC + 5 spec + IconPage + skill);新建 `src/_internal/sx.ts`(`SxObject` 类型 + `applySx` + `extractSxAttrs` helper,供后续复合组件使用)
+- 验证:type-check ✓ / tests 147/147 ✓ / build ✓
+- 下一步:Stage 3 图标系统切换 @vicons/ionicons5 → @vicons/material
 
 ### 2026-05-23 Stage 1 完成(无人值守自主推进)
 - 改动:目录扁平化(`components/gene` → `gene/`,`theme` → `provider/theme`,`locale` → `provider/locale`,`provider/useZ*` → `provider/{theme,locale,date}/useZ*`),删 `composables/`,新建 6 个分类占位 `{layout,input,display,feedback,navigation,tool}/index.ts`,单入口化(vite.config + package.json/exports)

@@ -7,7 +7,7 @@
  * 3. color factory(color carrier):默认 currentColor / schema token / modifier 链 / 字面量
  * 4. depth factory(opacity carrier):不传 / 字面量 / schema token
  * 5. spin factory(animationDuration carrier):不传 / 字面量 / token;自动加 name+iteration+timing
- * 6. cssRoot factory:基础 / 伪类 / 覆盖 / 嵌套 factory
+ * 6. css factory:基础 / 伪类 / 覆盖 / 嵌套 factory
  * 7. a11y label
  */
 import { describe, expect, it } from 'vitest'
@@ -179,11 +179,11 @@ describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
     expect(css).toMatch(/height:20px/)
   })
 
-  it('cssRoot 单独覆盖 width / height(非正方形)', () => {
+  it('css 单独覆盖 width / height(非正方形)', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.width.px(24)
           s.height.px(32)
         },
@@ -360,14 +360,14 @@ describe('ZIcon — spin factory(animationDuration carrier;自动加 name + iter
     expect(getInjectedCss()).toMatch(/animation-duration:3s/)
   })
 
-  it('cssRoot 覆盖 spin 的 timing(自定义 easing)', () => {
+  it('css 覆盖 spin 的 timing(自定义 easing)', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
         spin: (d: Chain<ZuiSchema>['animationDuration']) => {
           d.s(2)
         },
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.animationTimingFunction('ease-in-out')
         },
       },
@@ -378,12 +378,12 @@ describe('ZIcon — spin factory(animationDuration carrier;自动加 name + iter
   })
 })
 
-describe('ZIcon — cssRoot factory(逃生口)', () => {
+describe('ZIcon — css factory(逃生口)', () => {
   it('在根元素写任意 CSS 属性', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.cursor('pointer')
         },
       },
@@ -395,7 +395,7 @@ describe('ZIcon — cssRoot factory(逃生口)', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s._hover((h) => {
             h.color('#ff00aa')
           })
@@ -406,14 +406,14 @@ describe('ZIcon — cssRoot factory(逃生口)', () => {
     expect(getInjectedCss().toLowerCase()).toContain('#ff00aa')
   })
 
-  it('覆盖 color factory(cssRoot 后置优先)', () => {
+  it('覆盖 color factory(css 后置优先)', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
         color: (c: Chain<ZuiSchema>['color']) => {
           c._primary
         },
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.color('#abcdef')
         },
       },
@@ -421,11 +421,11 @@ describe('ZIcon — cssRoot factory(逃生口)', () => {
     expect(getInjectedCss().toLowerCase()).toContain('#abcdef')
   })
 
-  it('cssRoot 内嵌套 color factory:_hover(h => h.color(c => c._danger))', () => {
+  it('css 内嵌套 color factory:_hover(h => h.color(c => c._danger))', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s._hover((h) => {
             h.color((c) => {
               c._danger

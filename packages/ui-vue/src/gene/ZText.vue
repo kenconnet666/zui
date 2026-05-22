@@ -22,7 +22,7 @@
  * - `ellipsis`      → `true` 单行截断(`_truncate`)/ `N: number` 多行截断(`_lineClamp(N)`)
  *
  * **iem 单位默认**(§13.0 ②):走 schema fontSize token 默认 1iem = 16px,跟 ZBox
- * 字号联动。复杂需求(自定义伪类 / 多段 text-decoration / 渐变文本)走 cssRoot 兜底。
+ * 字号联动。复杂需求(自定义伪类 / 多段 text-decoration / 渐变文本)走 css 兜底。
  *
  * **a11y**:纯文本元素,不强加 role;`mono`/`italic`/`strikethrough` 是视觉装饰,
  * 语义层面用户通过 `tag` 切到 `code`/`em`/`del`/`ins`/`mark` 等语义标签。
@@ -31,7 +31,7 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
 /**
- * `ZText` 完整 props。**6 个 carrier factory + 5 个状态 + cssRoot + tag**。
+ * `ZText` 完整 props。**6 个 carrier factory + 5 个状态 + css + tag**。
  */
 export interface ZTextProps {
   /**
@@ -128,13 +128,13 @@ export interface ZTextProps {
    *
    * @example
    * <ZText
-   *   :css-root="(s) => {
+   *   :css="(s) => {
    *     s._hover(h => h.color(c => c._primary))
    *     s.cursor.pointer
    *   }"
    * >点我</ZText>
    */
-  cssRoot?: ((s: Chain<ZuiSchema>) => void) | undefined
+  css?: ((s: Chain<ZuiSchema>) => void) | undefined
 
   /**
    * 根元素 tag,默认 `'span'`。
@@ -166,7 +166,7 @@ const theme = useZTheme()
 const className = computed(() =>
   icss(theme.value, (s) => {
     applyTypographyBase(s, props)
-    props.cssRoot?.(s)
+    props.css?.(s)
   }),
 )
 </script>

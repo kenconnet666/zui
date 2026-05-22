@@ -4,7 +4,7 @@
  *   - 4 个外观维度全是单 carrier factory:size / color / depth / spin
  *   - size 接 width carrier;height 自动镜像 width
  *   - spin 接 animationDuration carrier;name + iteration + timing 自动加
- *   - 任何兜底需求走 cssRoot
+ *   - 任何兜底需求走 css
  *   - iem = "我自己使用的 em",跟 rem 对称,默认 1iem = 16px,Provider 切换基准
  */
 import { computed, ref, shallowRef, watchEffect } from 'vue'
@@ -77,7 +77,7 @@ const spins: Record<string, SpinFactory | undefined> = {
   'd._middle  schema token (300ms)': (d) => d._middle,
 }
 
-// ─── cssRoot 兜底示例 ─────────────────────────────────────────────────────
+// ─── css 兜底示例 ─────────────────────────────────────────────────────
 const cssExamples: Record<string, ((s: Chain<ZuiSchema>) => void) | undefined> = {
   '(none)': undefined,
   'hover 高亮 _primary': (s) => {
@@ -171,7 +171,7 @@ watchEffect(() => {
         <code>spin</code> 接 <code>animationDuration</code> carrier;启用时自动加 name + iteration +
         timing
       </li>
-      <li>任何不在 4 维度的需求 → <code>:css-root="(s) =&gt; { ... }"</code> 兜底</li>
+      <li>任何不在 4 维度的需求 → <code>:css="(s) =&gt; { ... }"</code> 兜底</li>
     </ul>
 
     <!-- ─── 1. 双模式接入 ─── -->
@@ -199,7 +199,7 @@ watchEffect(() => {
       <p class="note">
         <code>:size="(w) =&gt; w.iem(1.25)"</code> 一行表达。height 永远等于 width。 物理像素取决于
         <code>&lt;ZBox :iem&gt;</code> 注入的基准(默认 16px)。
-        非正方形场景走 <code>cssRoot</code>。
+        非正方形场景走 <code>css</code>。
       </p>
       <div class="row baseline">
         <div v-for="(fn, key) in sizes" :key="key" class="cell-mini">
@@ -240,7 +240,7 @@ watchEffect(() => {
       <h2>5. <code>spin</code> factory —— <code>animationDuration</code> carrier</h2>
       <p class="note">
         用户只控制旋转速度;<code>animationName(presetAnimations.spin)</code> +
-        <code>infinite</code> + <code>linear</code> 启用时自动加上。要自定义 easing / 反向 → cssRoot。
+        <code>infinite</code> + <code>linear</code> 启用时自动加上。要自定义 easing / 反向 → css。
       </p>
       <div class="row">
         <div v-for="(fn, key) in spins" :key="key" class="cell-mini">
@@ -250,9 +250,9 @@ watchEffect(() => {
       </div>
     </section>
 
-    <!-- ─── 6. cssRoot factory ─── -->
+    <!-- ─── 6. css factory ─── -->
     <section>
-      <h2>6. <code>:css-root</code> factory —— 兜底逃生口</h2>
+      <h2>6. <code>:css</code> factory —— 兜底逃生口</h2>
       <p>
         在 4 维度之后应用,可覆盖任意属性。所有 Chain 内建方法
         (<code>_hover</code> / <code>_media</code> / <code>_before</code>
@@ -271,14 +271,14 @@ watchEffect(() => {
         <ZIcon
           :component="StarOutline"
           :size="(w) => w.iem(2)"
-          v-bind="currentCss ? { cssRoot: currentCss } : {}"
+          v-bind="currentCss ? { css: currentCss } : {}"
         />
       </div>
     </section>
 
     <!-- ─── 7. 实时操控 ─── -->
     <section>
-      <h2>7. 实时操控(4 维度 + cssRoot)</h2>
+      <h2>7. 实时操控(4 维度 + css)</h2>
       <div class="controls">
         <label>
           icon
@@ -375,7 +375,7 @@ const myLight = zuiLight.extend({
       <pre><code>&lt;ZIcon :color="(c) =&gt; c._brandRoyal" /&gt;
 &lt;ZIcon :color="(c) =&gt; c._primary" /&gt;
 &lt;ZIcon :color="(c) =&gt; c._blue500" /&gt;
-&lt;ZIcon :css-root="(s) =&gt; {
+&lt;ZIcon :css="(s) =&gt; {
   s._hover(h =&gt; h.color(c =&gt; c._brandRoyal.shade(20)))
 }" /&gt;</code></pre>
 

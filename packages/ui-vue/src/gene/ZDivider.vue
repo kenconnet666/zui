@@ -43,11 +43,11 @@ export interface ZDividerProps {
    * 线条粗细。任意 CSS 长度字符串(如 `'2px'` / `'0.1em'`)。默认 `'1px'`。
    *
    * 走字符串而非 carrier:`border-*-width` 极少需要 token 化,直传更轻。
-   * 想走 schema 长度(iem 联动)→ cssRoot 覆盖 `borderTopWidth` / `borderLeftWidth`。
+   * 想走 schema 长度(iem 联动)→ css 覆盖 `borderTopWidth` / `borderLeftWidth`。
    */
   thickness?: string
   /** 根元素二次精细覆盖。 */
-  cssRoot?: ((s: Chain<ZuiSchema>) => void) | undefined
+  css?: ((s: Chain<ZuiSchema>) => void) | undefined
   /** 根元素 tag,默认 `'div'`。 */
   tag?: string
 }
@@ -122,7 +122,7 @@ const className = computed(() =>
       s._prop('borderTopColor', 'currentColor')
     }
 
-    props.cssRoot?.(s)
+    props.css?.(s)
   }),
 )
 </script>

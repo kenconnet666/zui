@@ -143,11 +143,11 @@ describe('ZDivider — 垂直', () => {
   })
 })
 
-describe('ZDivider — cssRoot', () => {
-  it('cssRoot 可覆盖默认样式', () => {
+describe('ZDivider — css', () => {
+  it('css 可覆盖默认样式', () => {
     mount(ZDivider, {
       props: {
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s._prop('borderTopColor', 'red')
         },
       },

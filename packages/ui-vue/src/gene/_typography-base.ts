@@ -6,7 +6,7 @@
  * 的 chain 应用逻辑,避免每个 SFC 重复 30+ 行同款代码。
  *
  * **设计约束**:
- * - 不读取 `props.cssRoot` —— 每个组件自己控制 cssRoot 调用时机
+ * - 不读取 `props.css` —— 每个组件自己控制 css 调用时机
  * - 不强加默认值 —— 默认走 `withDefaults`,这里只处理「传了就写」
  * - 不读取组件维度的 default(如 ZLink `_primary` / ZTitle level 映射)—— 这些由各组件在
  *   调用此 helper 之前/之后自行处理
@@ -44,7 +44,7 @@ export interface ZTypographyBaseProps {
  * 把 6 维度 + 5 状态应用到 chain。**传了即写、不传不写**,保留 CSS cascade 行为。
  *
  * **调用时机**:在组件 `icss(theme, (s) => { ... })` 内,通常在「组件级默认」之后、
- * 「cssRoot 用户覆盖」之前调用。各组件自行控制顺序。
+ * 「css 用户覆盖」之前调用。各组件自行控制顺序。
  *
  * @example
  * icss(theme.value, (s) => {
@@ -52,8 +52,8 @@ export interface ZTypographyBaseProps {
  *   if (!props.color) s.color._primary
  *   // 共享 6+5 维度
  *   applyTypographyBase(s, props)
- *   // cssRoot 用户覆盖
- *   props.cssRoot?.(s)
+ *   // css 用户覆盖
+ *   props.css?.(s)
  * })
  */
 export function applyTypographyBase(

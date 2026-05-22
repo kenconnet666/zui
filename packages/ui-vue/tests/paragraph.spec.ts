@@ -84,10 +84,10 @@ describe('ZParagraph — props 覆盖', () => {
     expect(getInjectedCss()).toMatch(/font-size:15px/)
   })
 
-  it('cssRoot 可覆盖默认 margin-bottom', () => {
+  it('css 可覆盖默认 margin-bottom', () => {
     mount(ZParagraph, {
       props: {
-        cssRoot: (s: Chain<ZuiSchema>) => {
+        css: (s: Chain<ZuiSchema>) => {
           s.marginBottom.px(40)
         },
       },

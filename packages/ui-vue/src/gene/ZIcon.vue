@@ -16,11 +16,11 @@
  * - IDE 补全聚焦该维度的完整 carrier 能力(token / keyword / 字面量 / modifier / unit method)
  * - 输入 `_p` 模糊筛选 schema token —— 设计完主题直接挂组件库上
  * - 用户写法极简 `(w) => w.em(1.25)` 一行表达,不需嵌入多行多属性
- * - 任何不在该 carrier 表达力内的需求(非正方形 / 自定义 easing / 反向旋转)走 cssRoot 兜底
+ * - 任何不在该 carrier 表达力内的需求(非正方形 / 自定义 easing / 反向旋转)走 css 兜底
  *
  * **iem 单位默认**(§13.0 ②):图标默认 1iem(默认 16px,Provider 控制基准),跟 Provider 字号
  * 联动,整站统一图标尺寸。**只设 width(height 镜像)、不设 fontSize**(无 em 复合问题)。
- * 想"跟父字号"的局部场景走 cssRoot 显式写 `s.width.em(N)`。
+ * 想"跟父字号"的局部场景走 css 显式写 `s.width.em(N)`。
  *
  * **设计档位由 theme schema 承担** —— 用户走 `(d) => d._middle` / `(o) => o._half` 用 schema token,
  * 不在组件内硬编码 SIZE_MAP / DEPTH_MAP / SPIN_MAP。要 app 级调整走 `zuiLight.extend(...)`。
@@ -45,7 +45,7 @@ export interface ZIconProps {
    *
    * **默认**:`(w) => w.iem(1)` —— 1iem × 1iem(默认 16px × 16px,跟随 ZBox 字号联动)。
    *
-   * 想表达非正方形 → 走 `cssRoot` 兜底单独设 width / height。
+   * 想表达非正方形 → 走 `css` 兜底单独设 width / height。
    * 想"跟父容器字号"(罕见)→ `(w) => w.em(1)` 显式 em。
    *
    * @example
@@ -90,7 +90,7 @@ export interface ZIconProps {
    * 传了就自动启用:`animationName(presetAnimations.spin)` + `infinite` + `linear`。
    * 不传 = 不旋转。
    *
-   * 想自定义 easing / 反向旋转 → cssRoot 兜底覆盖 `animationTimingFunction` / `animationDirection` 等。
+   * 想自定义 easing / 反向旋转 → css 兜底覆盖 `animationTimingFunction` / `animationDirection` 等。
    *
    * @example
    * <ZIcon :spin="(d) => d.s(1)" />          <!-- 1 秒一圈 -->
@@ -98,7 +98,7 @@ export interface ZIconProps {
    * <ZIcon :spin="(d) => d._middle" />       <!-- schema duration token -->
    * <ZIcon
    *   :spin="(d) => d.s(2)"
-   *   :css-root="(s) => { s.animationTimingFunction('ease-in-out'); s.animationDirection.reverse }"
+   *   :css="(s) => { s.animationTimingFunction('ease-in-out'); s.animationDirection.reverse }"
    * />
    */
   spin?: ((d: Chain<ZuiSchema>['animationDuration']) => void) | undefined
@@ -113,14 +113,14 @@ export interface ZIconProps {
    * @example
    * <ZIcon
    *   :component="HeartIcon"
-   *   :css-root="(s) => {
+   *   :css="(s) => {
    *     s.cursor.pointer
    *     s._hover(h => h.color(c => c._primary))
    *     s.fontSize.px(24)
    *   }"
    * />
    */
-  cssRoot?: ((s: Chain<ZuiSchema>) => void) | undefined
+  css?: ((s: Chain<ZuiSchema>) => void) | undefined
 
   /** 直接以图标组件作为 prop 传入(与 default slot 互斥;slot 优先)。 */
   component?: Component
@@ -148,7 +148,7 @@ const props = withDefaults(defineProps<ZIconProps>(), {
 
 const theme = useZTheme()
 
-// ─── 一个 className:base + 4 维度 factory + cssRoot,5 行内联 ───
+// ─── 一个 className:base + 4 维度 factory + css,5 行内联 ───
 const className = computed(() =>
   icss(theme.value, (s) => {
     // base
@@ -176,8 +176,8 @@ const className = computed(() =>
       s.animationDuration(props.spin)
     }
 
-    // cssRoot 用户覆盖(最后调用,可覆盖以上任何属性)
-    props.cssRoot?.(s)
+    // css 用户覆盖(最后调用,可覆盖以上任何属性)
+    props.css?.(s)
   }),
 )
 
