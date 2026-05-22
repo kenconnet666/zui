@@ -13,7 +13,7 @@
   "dependencies": {
     "@kenconnet666/zui-core": "workspace:*",
     "@kenconnet666/zui-vue": "workspace:*",
-    "@vicons/ionicons5": "^0.13.0",
+    "@vicons/material": "^0.13.0",
     "vue": "^3.5.32",
     "vue-router": "^4.5.0"
   },

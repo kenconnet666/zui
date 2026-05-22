@@ -12,16 +12,16 @@ import type { ZIconProps, ZuiSchema } from '@kenconnet666/zui-vue'
 import { ZBox, ZIcon, ZIemPreset } from '@kenconnet666/zui-vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import {
-  CheckmarkCircle,
-  CloseCircle,
-  HeartOutline,
-  HomeOutline,
-  InformationCircleOutline,
-  Reload,
-  StarOutline,
-  Trash,
-  WarningOutline,
-} from '@vicons/ionicons5'
+  CancelOutlined as CloseCircle,
+  CheckCircleOutlined as CheckmarkCircle,
+  DeleteOutlined as Trash,
+  FavoriteBorderOutlined as HeartOutline,
+  HomeOutlined as HomeOutline,
+  InfoOutlined as InformationCircleOutline,
+  RefreshOutlined as Reload,
+  StarBorderOutlined as StarOutline,
+  WarningOutlined as WarningOutline,
+} from '@vicons/material'
 
 // ─── 4 维度预定义 factory ─────────────────────────────────────────────────
 type SizeFactory = NonNullable<ZIconProps['size']>

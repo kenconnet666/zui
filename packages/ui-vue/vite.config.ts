@@ -40,7 +40,7 @@ export default defineConfig({
         /^date-fns\//,
         'date-fns-tz',
         /^date-fns-tz\//,
-        '@vicons/ionicons5',
+        '@vicons/material',
       ],
       output: {
         preserveModules: true,

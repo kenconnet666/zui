@@ -4,9 +4,9 @@
 >
 > **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-23(Stage 1+2 完成,无人值守自主推进 → Stage 3)
+> **最后更新**:2026-05-23(Stage 1+2+3 完成,无人值守自主推进 → Stage 4)
 > **当前阶段**:
-> `Stage 3 ── 图标系统切换 @vicons/material` 待开始
+> `Stage 4 ── 主题美学(M3 / C2 方案)` 待开始(**STOP #2**,无人值守自行决策)
 
 ---
 
@@ -403,19 +403,21 @@ s._focusVisible((f) => {
 - [x] **验证**:type-check ✓ / test 147/147 ✓ / build ✓
 - [x] CHANGELOG entry(BREAKING:cssRoot → css + SxObject 类型加入)
 
-### Stage 3 ── 图标系统切换到 @vicons/material
+### Stage 3 ── 图标系统切换到 @vicons/material ✅ 2026-05-23 完成
 
 > 目标:peerDep 改 `@vicons/material`,内置图标语义 map 就位。
 
-- [ ] `package.json`:peerDeps `@vicons/ionicons5` 改为 `@vicons/material`(required,不再 optional);devDeps 同步
-- [ ] `pnpm install`(等用户在本地执行 `pnpm install` 后续才能跑测试 / 构建)
-- [ ] 写 `src/gene/icons.ts`:
+- [x] `package.json`:peerDeps `@vicons/ionicons5` 改为 `@vicons/material`(required,不再 optional);devDeps 同步
+- [x] `pnpm install`(无人值守自动执行)
+- [x] 写 `src/gene/icons.ts`:
   - re-export `* from '@vicons/material'`
   - 定义 `BuiltinIcons` 语义 map(close / check / chevronDown / chevronRight / chevronUp / chevronLeft / warning / info / success / error / search / refresh / more / add / remove)
-- [ ] `src/gene/index.ts` 加 icons 导出
-- [ ] `src/index.ts` 加 BuiltinIcons re-export
-- [ ] **验证**:type-check ✓ / test ✓ / build ✓
-- [ ] CHANGELOG entry(BREAKING:peerDep `@vicons/ionicons5` → `@vicons/material`)
+- [x] `src/gene/index.ts` 加 icons 导出
+- [x] `src/index.ts` BuiltinIcons re-export 自动包含(走 `export * from './gene'`)
+- [x] docs/IconPage.vue 同步 import 改为 material 等价图标(用 `as` 别名兼容现有代码)
+- [x] docs/package.json:`@vicons/ionicons5` → `@vicons/material`
+- [x] **验证**:type-check ✓ / test 147/147 ✓ / build ✓
+- [x] CHANGELOG entry(BREAKING:peerDep `@vicons/ionicons5` → `@vicons/material`)
 
 ### Stage 4 ── 主题美学(Material Design 美化方案 C2)
 
@@ -749,6 +751,11 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-23 Stage 3 完成(无人值守自主推进)
+- 改动:peerDep `@vicons/ionicons5` → `@vicons/material`(BREAKING,required 不再 optional);新建 `src/gene/icons.ts`(re-export material 全量 + `BuiltinIcons` 15 项语义 map,Outlined 变体);`src/gene/index.ts` 加 icons re-export;docs/IconPage.vue 同步 import 用 `as` 别名兼容;docs/package.json 同步
+- 验证:type-check ✓ / tests 147/147 ✓ / build ✓
+- 下一步:Stage 4 主题美学(M3 / C2 方案)— **STOP 节点 #2**,需写决策文档继续
 
 ### 2026-05-23 Stage 2 完成(无人值守自主推进)
 - 改动:`cssRoot` / `:css-root` 全局重命名为 `css` / `:css`(影响 ZBox.vue + gene 6 SFC + 5 spec + IconPage + skill);新建 `src/_internal/sx.ts`(`SxObject` 类型 + `applySx` + `extractSxAttrs` helper,供后续复合组件使用)

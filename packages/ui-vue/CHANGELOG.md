@@ -2,6 +2,40 @@
 
 ## Unreleased
 
+### BREAKING — 图标 peerDep 从 `@vicons/ionicons5` 切到 `@vicons/material`,新增 `BuiltinIcons` 语义 map
+
+**理由**:
+- 主题美学方案 C2(`#L8` 锁定决策)走 Material Design 视觉(M2 经典色 + M3 motion/elevation/shape),
+  内置图标自然应配套 Material 图标体系(`@vicons/material`),美观度和语义一致性都优于 Ionicons5
+- peerDep 从 optional 升 required,组件库内置反馈(`<ZAlert>` / `<ZModal>` 的关闭按钮、Select 的下拉箭头、
+  Table 的刷新按钮等)依赖固定图标,不允许业务方不装(若不装,组件渲染失败)
+- 新增 `BuiltinIcons` 语义 map(15 项:`close` / `check` / `chevronDown/Up/Left/Right` / `warning` /
+  `info` / `success` / `error` / `search` / `refresh` / `more` / `add` / `remove`),组件库 + 业务方共用
+  统一字典 —— 想要 `success` 从 `CheckCircleOutlined` 换 `DoneOutlined`,只改一处
+
+**改动**:
+- `peerDependencies` 与 `devDependencies`:`@vicons/ionicons5@^0.13.0` → `@vicons/material@^0.13.0`
+- `peerDependenciesMeta` 删除 `@vicons/ionicons5` optional 标记
+- `vite.config.ts` external 列表同步
+- 新增 `src/gene/icons.ts`:`export * from '@vicons/material'`(全量透传)+ `BuiltinIcons` map + `BuiltinIconName` type
+- `src/gene/index.ts` 添加 `export * from './icons'`
+- 主入口经 `export * from './gene'` 自动透出 `BuiltinIcons` 与 material 全套
+- `docs/IconPage.vue`:imports 改用 material 等价图标 + `as` 别名(`CheckCircleOutlined as CheckmarkCircle` 等,保持现有 docs 代码可读)
+- `docs/package.json`:dependency 同步
+
+**迁移**:
+```diff
+- import { HomeOutline } from '@vicons/ionicons5'
++ import { HomeOutlined } from '@vicons/material'         // 或:
++ import { HomeOutlined } from '@kenconnet666/zui-vue'    // 主入口透传
+
+  // 内置语义图标(新)
++ import { BuiltinIcons } from '@kenconnet666/zui-vue'
++ <ZIcon :component="BuiltinIcons.close" label="关闭" />
+```
+
+---
+
 ### BREAKING — `cssRoot` prop 全局重命名为 `css`,新增 `SxObject` 类型与 helper
 
 **理由**:

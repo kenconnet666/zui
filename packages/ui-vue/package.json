@@ -56,7 +56,7 @@
     "@emotion/css": "^11.13.5",
     "@emotion/unitless": "^0.10.0",
     "@floating-ui/vue": "^1.1.11",
-    "@vicons/ionicons5": "^0.13.0",
+    "@vicons/material": "^0.13.0",
     "@vueuse/core": "^14.3.0",
     "@vueuse/integrations": "^14.3.0",
     "async-validator": "^4.2.5",
@@ -65,11 +65,6 @@
     "date-fns-tz": "^3.2.0",
     "vue": "^3.5.0"
   },
-  "peerDependenciesMeta": {
-    "@vicons/ionicons5": {
-      "optional": true
-    }
-  },
   "dependencies": {
     "@kenconnet666/zui-core": "workspace:*"
   },
@@ -77,7 +72,7 @@
     "@emotion/css": "^11.13.5",
     "@emotion/unitless": "^0.10.0",
     "@floating-ui/vue": "^1.1.11",
-    "@vicons/ionicons5": "^0.13.0",
+    "@vicons/material": "^0.13.0",
     "@vue/test-utils": "^2.4.6",
     "@vueuse/core": "^14.3.0",
     "@vueuse/integrations": "^14.3.0",
