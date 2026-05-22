@@ -2,6 +2,54 @@
 
 ## Unreleased
 
+### 新增 — `ZTable` + `ZButton`,Phase α 收尾(P0 全套完成)
+
+Stage 6.5 + 6.6:
+
+- **`ZTable`**(display)—— 基础表格(配置式)。`columns: Array<{ key, title, dataIndex?, width?,
+  align?, render? }>` + `data` + `rowKey`(string 或函数)+ `bordered` / `striped` / `size` /
+  `emptyText`。column.render 函数返回 VNode 自定义渲染。空数据走 `emptyText` 占位行。
+  sx:sxHead / sxBody / sxRow / sxCell。
+  **未实现(Phase β)**:排序 / 选择(checkbox)/ 分页接入 / 列冻结 / expandable rows。
+- **`ZButton`**(gene)—— Material 风按钮。
+  - 5 variant:`filled`(实心) / `outlined`(描边) / `text`(文字) / `ghost`(半透明) / `link`(链接)
+  - `color` carrier factory(默认 `_primary`,挂 `currentColor` 给 variant 派生)
+  - 状态:`loading`(显 `BuiltinIcons.refresh` + spin,`aria-busy`)、`disabled`、`block`(width 100%)
+  - `prefixIcon` / `suffixIcon` slot
+  - **`useRipple` Material 波纹**(默认开启,`:ripple="false"` 关)
+  - **`:focus-visible` outline ring**(2px `_focusRing.alpha(40)` + 2px outset)
+  - state layer:默认 color 时 hover/active 走 `_primary.alpha(8/12)`;user color 时跳过(chain
+    modifier 限制,后续 phase 用 `::before` 伪元素 layer 解决)
+  - sx:sxIcon / sxRipple
+
+测试 28 case(z-table 9 + z-button 19;总 330 → 358 全绿)。
+
+### 🎉 Phase α 收尾(21 个 P0 组件)
+
+`Stage 6.1 → 6.6` 全部完成。21 个 P0 组件分类:
+
+```
+layout       ZFlex / ZGrid / ZSpace / ZSpacer
+gene         ZIcon / ZText / ZTitle / ZParagraph / ZLink / ZDivider / ZButton + BuiltinIcons
+feedback     ZAlert / ZSpin / ZModal / ZMessage + createMessageApi()
+display      ZCard / ZTable
+input        ZInput / ZTextarea / ZInputNumber / ZSwitch / ZCheckbox+Group / ZRadio+Group /
+             ZSelect / ZForm + ZFormItem
+navigation   ZBreadcrumb / ZPagination / ZTabs / ZMenu
+hooks (_hooks/) useZId / usePortal + ZPortal / useEscapeStack / usePopper / useRipple
+```
+
+类型 + 测试:type-check 0 error,**tests 358/358 pass**,build OK。
+
+决策文档:`.claude/decisions/2026-05-23-stage6_6-zbutton-and-phase-alpha.md`(含 ZButton API 细节 +
+Phase α 全套清单 + 视觉验收清单)。
+
+下一步建议:用户优先级 sync 后进入 **Phase β / P1**(高频补全:ZAvatar / ZTag / ZBadge / ZTooltip /
+ZPopover / ZDropdown / ZDrawer / ZNotification / ZDatePicker / ZSlider 等),或先在 `packages/docs`
+写 ButtonPage / FormPage / TablePage 视觉验收。
+
+---
+
 ### 新增 — 导航(`navigation/`,P0)
 
 Stage 6.4:
