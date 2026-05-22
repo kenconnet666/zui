@@ -2,6 +2,32 @@
 
 ## Unreleased
 
+### 新增 — 数据录入(`input/`,P0 第一批)
+
+Stage 6.3 第一批,基础录入 6 个组件:
+
+- **`ZInput`** —— 文本输入。`v-model:value` + `type` / `size`(small/middle/large) / `disabled` / `readonly` /
+  `clearable` / `showCount` / `maxlength` / `placeholder` / `autofocus` + slot:prefix / suffix。
+  sx:sxInput / sxPrefix / sxSuffix / sxClear。emit:`update:value` / `change` / `focus` / `blur` /
+  `clear` / `pressEnter`。聚焦时 border 走 `_primary` + `boxShadow._tiny`。
+- **`ZTextarea`** —— 多行输入。`v-model:value` + `rows` / `autosize`(动态高度,受 `maxRows` 限) /
+  `placeholder` / `disabled` / `readonly` / `maxlength` / `showCount`。sx:sxTextarea。
+- **`ZInputNumber`** —— 数字输入(上下增减按钮)。`v-model:value`(`number | null`) + `step` / `min` /
+  `max` / `precision`(`toFixed` 小数位) / `disabled` / `readonly` / `size`。空字符串 → `null`。
+- **`ZSwitch`** —— 开关。`v-model:value`(boolean) + `size` / `disabled` / `loading` / `checkedLabel` /
+  `uncheckedLabel`。`role="switch"` + `aria-checked` + 键盘 Space 切换。M3 圆形 thumb + 滑入动画。
+- **`ZCheckbox`** + **`ZCheckboxGroup`** —— 复选框组(provide/inject 共享 ctx)。Group `v-model:value`
+  是 `(string|number|boolean)[]`。子项可单独 `v-model:checked` 或进 Group。支持 `indeterminate`
+  (aria-checked=mixed)。Group `options` 数组快捷渲染 / 自定义 slot;`direction` horizontal/vertical。
+- **`ZRadio`** + **`ZRadioGroup`** —— 单选组。Group `v-model:value` + `buttonStyle`(按钮组形态)。
+  `options` 数组快捷渲染。`role="radiogroup"`,子项 `role="radio"`(button 模式时)。
+
+测试 41 case(原 243 + 41 = 284 全绿)。
+
+**Stage 6.3 未完成**:ZSelect / ZForm + ZFormItem 留在 Stage 6.3 第二批。
+
+---
+
 ### 新增 — 反馈+展示基础(`feedback/` + `display/`,P0)
 
 Stage 6.2 P0 反馈与展示组件:
