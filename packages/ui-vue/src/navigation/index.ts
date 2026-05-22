@@ -1,6 +1,14 @@
 /**
- * `navigation/` —— 导航类组件(ZMenu / ZTabs / ZBreadcrumb / ZPagination 等)。
- *
- * 占位入口:Stage 6.4 落地。
+ * `navigation/` —— 导航类组件。
  */
-export {}
+export { default as ZBreadcrumb } from './ZBreadcrumb.vue'
+export type { ZBreadcrumbProps, ZBreadcrumbItem } from './ZBreadcrumb.vue'
+
+export { default as ZPagination } from './ZPagination.vue'
+export type { ZPaginationProps, ZPaginationEmits, ZPaginationSize } from './ZPagination.vue'
+
+export { default as ZTabs } from './ZTabs.vue'
+export type { ZTabsProps, ZTabsEmits, ZTabItem, ZTabsType } from './ZTabs.vue'
+
+export { default as ZMenu } from './ZMenu.vue'
+export type { ZMenuProps, ZMenuEmits, ZMenuItem, ZMenuMode } from './ZMenu.vue'

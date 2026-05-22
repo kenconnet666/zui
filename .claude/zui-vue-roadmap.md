@@ -4,9 +4,9 @@
 >
 > **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-23(Stage 1-5 + 6.1-6.3 完成,无人值守自主推进 → Stage 6.4)
+> **最后更新**:2026-05-23(Stage 1-5 + 6.1-6.4 完成,无人值守自主推进 → Stage 6.5)
 > **当前阶段**:
-> `Stage 6.4 ── 导航(navigation/,4 组件)` 待开始
+> `Stage 6.5 ── ZTable(基础 columns 配置式)` 待开始
 
 ---
 
@@ -493,14 +493,14 @@ s._focusVisible((f) => {
 - [x] input/index.ts 导出
 - [x] **验证**:type-check ✓ / test 301/301 ✓ / build ✓
 
-#### Stage 6.4 ── 导航(navigation/)
+#### Stage 6.4 ── 导航(navigation/)✅ 2026-05-23 完成
 
-- [ ] **ZMenu.vue** + spec(horizontal/vertical/inline、collapsed、submenu)
-- [ ] **ZTabs.vue** + spec(line/card/segment、closable、addable、sxTab/sxPanel)
-- [ ] ZBreadcrumb.vue + spec
-- [ ] **ZPagination.vue** + spec(已有 locale.pagination namespace)
-- [ ] navigation/index.ts 导出
-- [ ] **验证**:type-check ✓ / test ✓ / build ✓
+- [x] **ZMenu.vue** + spec(vertical/horizontal/inline、collapsed、submenu 内联展开 + aria-expanded)
+- [x] **ZTabs.vue** + spec(line/card/segment 三种 type、closable、addable、sxTab/sxPanel/sxList、tabpanel slot 接 activeName)
+- [x] ZBreadcrumb.vue + spec(items 配置式 + separator + aria-current=page + onClick)
+- [x] **ZPagination.vue** + spec(走 `locale.pagination` namespace,siblings ±N + 首末页 + 省略号)
+- [x] navigation/index.ts 导出
+- [x] **验证**:type-check ✓ / test 330/330 ✓ / build ✓
 
 #### Stage 6.5 ── 数据展示进阶(display/)
 
@@ -751,6 +751,13 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-23 Stage 6.4 完成(无人值守自主推进)
+- 改动:navigation/ZBreadcrumb / ZPagination(用 locale.pagination 文案)/ ZTabs(line/card/segment + closable + addable)/ ZMenu(树形 items + submenu 内联展开 + collapsed)
+- 测试 29 case;总 330/330
+- 验证:type-check ✓ / tests 330/330 ✓ / build ✓
+- 设计精简:ZMenu 不做 popup-style submenu(仅 inline expand),horizontal/vertical 仅样式排版差异。后续 phase β 加 popup submenu
+- 下一步:Stage 6.5 ZTable(基础 columns 配置式)
 
 ### 2026-05-23 Stage 6.3 完成(无人值守自主推进)
 - 改动:补 ZSelect(usePopper + ZPortal + onClickOutside + useEscapeStack)、ZForm + ZFormItem(async-validator 集成,provide/inject ctx,validate() 全表单)

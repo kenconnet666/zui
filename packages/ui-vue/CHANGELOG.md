@@ -2,6 +2,29 @@
 
 ## Unreleased
 
+### 新增 — 导航(`navigation/`,P0)
+
+Stage 6.4:
+
+- **`ZBreadcrumb`** —— 面包屑。`items: [{ label, href?, onClick? }]` 配置式渲染,默认分隔符 `'/'`(可自定义)。
+  `<nav aria-label="breadcrumb">` + 最后一项 `aria-current="page"`。sx:sxItem / sxSeparator。
+- **`ZPagination`** —— 分页器。`v-model:page` + `total` / `pageSize` / `siblings`(当前页 ±N) /
+  `showTotal` / `disabled` / `size`。算法 always 显示首末 + 当前 ±siblings + 省略号。
+  文案走 `locale.pagination`(`prev` / `next` / `total`)。`aria-label="pagination"` + 当前页
+  `aria-current="page"`。sx:sxItem。
+- **`ZTabs`** —— 标签页。`v-model:value` + `tabs: [{ name, label, disabled?, closable? }]` + `type`
+  (`'line'` / `'card'` / `'segment'`)+ `closable` / `addable` / `disabled`。`role="tablist"` / `tab`
+  / `tabpanel`。emit:`update:value` / `change` / `add` / `close(name)`。slot default 接 `activeName`。
+  sx:sxList / sxTab / sxPanel。
+- **`ZMenu`** —— 菜单。`v-model:value` + `items` 树形(`children` 表示 submenu) + `mode`
+  (vertical/horizontal/inline)+ `collapsed`(折叠只显 icon)+ `disabled`。submenu 内联展开
+  (`aria-expanded` 切换),`role="menu"` / `menuitem`。sx:sxItem / sxSubmenu / sxLabel。
+  **Phase β 未实现**:popup-style submenu(本 v1 仅 inline expand)。
+
+测试 29 case(总 301 → 330 全绿)。
+
+---
+
 ### 新增 — 数据录入第二批 `ZSelect` / `ZForm` / `ZFormItem`(P0)
 
 Stage 6.3 收尾:
