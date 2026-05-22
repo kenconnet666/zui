@@ -32,7 +32,6 @@ export const zuiLight = new Theme<ZuiSchema>({
   color: {
     ...FLAT_PALETTE,
     primary: tw('blue', '600'),
-    primaryHover: tw('blue', '500'),
     danger: tw('red', '600'),
     warning: tw('yellow', '500'),
     success: tw('green', '500'),

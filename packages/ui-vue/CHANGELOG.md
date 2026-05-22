@@ -2,6 +2,44 @@
 
 ## Unreleased
 
+### BREAKING — 移除 `primaryHover` 语义色,hover 态由 chain modifier 派生
+
+**问题**:原 `SemanticColorTokens` 含 `primaryHover` 一个孤立的"hover 态"专属 token,但
+其它语义色(`danger` / `warning` / `success` / `info`)都没有对应 `xxxHover`,**不对称**。
+要么所有色都加 `Hover` 变体(token 表翻倍),要么删 `primaryHover` 让所有语义色用同一个
+模式派生 hover —— 选后者,更简洁。
+
+**改动**:
+- `SemanticColorTokens` 删 `primaryHover`(从 11 减到 10 个语义色)
+- `zuiLight.color.primaryHover` / `zuiDark.color.primaryHover` 删
+- IDE 上 `s.color._primaryHover` 报"找不到 token" → 改用 modifier
+
+**迁移**:hover 态用 chain `color2k` modifier 在使用处派生:
+```ts
+// 旧
+s._hover(h => h.color._primaryHover)
+
+// 新(三选一,按效果选)
+s._hover(h => h.color._primary.darken(8))   // 加深 8%(类似旧 zuiLight 行为)
+s._hover(h => h.color._primary.lighten(8))  // 提亮 8%(类似旧 zuiDark 行为)
+s._hover(h => h.color._primary.alpha(80))   // 80% 透明度
+```
+
+业务侧要"全站统一 hover 加深"可用 augmentation + 默认值:
+```ts
+declare module '@kenconnet666/zui-vue' {
+  interface UserColorExt {
+    primaryHover: string  // 自己加回去
+  }
+}
+zuiLight.extend({ color: { primaryHover: tw('blue', '500') } })
+```
+
+**对 core 包零影响**:core/tests/_fixture-theme.ts 等测试 fixture 自定义 schema 中
+的 `primaryHover` 不动(那是 core 包"function token 引用同级 key"等行为的测试样本)。
+
+---
+
 ### 扩 ZuiSchema:新增 `sizes` / `borders` / `transitionProperty` 三个 category + zuiDark 加深 shadow
 
 补齐 chain enhanced-props 已配但 schema 缺字段的 token category,IDE 写 `s.width._container` /

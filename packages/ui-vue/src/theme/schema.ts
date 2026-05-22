@@ -2,8 +2,8 @@
  * `ZuiSchema` —— zui-vue 设计系统层 schema。
  *
  * 在 `BaseSchema`（来自 core，仅 palette）之上叠加：
- * - **11 个语义色** —— `primary / primaryHover / danger / warning / success / info /
- *   text / textMuted / bg / bgMuted / border`
+ * - **10 个语义色** —— `primary / danger / warning / success / info /
+ *   text / textMuted / bg / bgMuted / border`(hover 态由 chain modifier 派生,见下)
  * - **5 阶 size scales** —— spacing / radius / fontSize / shadow / blur / duration / breakpoint
  * - **fontWeight 9 档** —— CSS 标准 thin..black
  * - **easing 5 个 cubic-bezier** —— Material-flavor
@@ -83,10 +83,24 @@ export interface UserBordersExt {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserTransitionPropertyExt {}
 
-/** 11 个语义色 token —— light / dark 取同 key 不同 shade。 */
+/**
+ * 10 个语义色 token —— light / dark 取同 key 不同 shade。
+ *
+ * **不含 `*Hover` 变体**:hover 态由 chain `color2k` modifier 在使用处派生,
+ * 避免每个语义色都要复制一份 `xxxHover`(不对称 + 维护成本)。
+ *
+ * @example hover 态加深 / 提亮
+ * ```ts
+ * s.color._primary
+ * s._hover(h => h.color._primary.darken(8))     // 加深 8%
+ * // 或
+ * s._hover(h => h.color._primary.lighten(8))    // 提亮 8%
+ * // 或叠透明度
+ * s._hover(h => h.color._primary.alpha(80))
+ * ```
+ */
 export type SemanticColorTokens =
   | 'primary'
-  | 'primaryHover'
   | 'danger'
   | 'warning'
   | 'success'

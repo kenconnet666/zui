@@ -3,7 +3,7 @@
  *
  * 暴露：
  * - `ZuiSchema` —— 业务侧标准 schema（含 semantic + 5 阶 + 命名 scale）
- * - `SemanticColorTokens` —— 11 个语义色 key union
+ * - `SemanticColorTokens` —— 10 个语义色 key union(`primaryHover` 已移除,hover 态走 chain modifier)
  * - `zuiLight` / `zuiDark` —— 完整 Theme 实例
  */
 export { zuiLight } from './zui-light'

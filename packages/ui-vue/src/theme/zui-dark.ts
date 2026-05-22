@@ -15,7 +15,6 @@ export const zuiDark = new Theme<ZuiSchema>({
   color: {
     ...FLAT_PALETTE,
     primary: tw('blue', '500'),
-    primaryHover: tw('blue', '600'),
     danger: tw('red', '500'),
     warning: tw('yellow', '500'),
     success: tw('green', '500'),

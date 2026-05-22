@@ -923,7 +923,7 @@ export interface ZIconProps {
 
 IDE 在每个 callback 内补全完整:
 - `c.` → 全部 color schema token(`_primary` / `_danger` / `_blue600` / ...)+ 146 CSS 命名色 + `currentColor` 等 keyword
-- 输入 `_p` → 模糊筛选 `_p*` token(`_primary` / `_primaryHover` / `_pink500` 等)
+- 输入 `_p` → 模糊筛选 `_p*` token(`_primary` / `_pink500` 等)
 - `c._primary.` → 11 个 ColorTokenValue modifier(`alpha` / `darken` / `lighten` / ...)
 
 **`ZIcon.vue` 内部结构**(按 §13.0 ⑤ 五件套):

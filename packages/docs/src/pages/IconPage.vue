@@ -214,7 +214,7 @@ watchEffect(() => {
       <h2>3. <code>color</code> factory —— <code>color</code> carrier</h2>
       <p class="note">
         IDE 补全展开 schema 全部 color token + 146 CSS 命名色 + modifier 链。 输入
-        <code>_p</code> 可模糊筛选 <code>_primary</code> / <code>_primaryHover</code> 等。
+        <code>_p</code> 可模糊筛选 <code>_primary</code> / <code>_pink500</code> 等。
       </p>
       <div class="row">
         <div v-for="(fn, key) in colors" :key="key" class="cell-mini">
