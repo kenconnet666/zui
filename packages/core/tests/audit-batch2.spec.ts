@@ -132,9 +132,10 @@ describe('S6 — function token 引用未定义路径记录完整路径', () => 
           text: '#000',
           bg: '#000',
           border: '#000',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          /* eslint-disable @typescript-eslint/no-explicit-any */
           m: ((ctx: any) =>
             `${ctx.spacing.unknownX as string} ${ctx.spacing.unknownY as string}`) as any,
+          /* eslint-enable @typescript-eslint/no-explicit-any */
         },
       }),
     )
