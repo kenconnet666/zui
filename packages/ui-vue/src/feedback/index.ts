@@ -14,3 +14,7 @@ export { default as ZMessage } from './ZMessage.vue'
 export type { ZMessageProps, ZMessageItem, ZMessageType, ZMessageEmits } from './ZMessage.vue'
 
 export { createMessageApi, type ZMessageApi, type CreateMessageApiOptions } from './messageApi'
+
+// ─── Phase β feedback 补全 ───
+export { default as ZDrawer } from './ZDrawer.vue'
+export type { ZDrawerProps, ZDrawerEmits, ZDrawerPlacement } from './ZDrawer.vue'

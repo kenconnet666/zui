@@ -2,6 +2,30 @@
 
 ## Unreleased
 
+### 新增 — Phase β 浮层批(`ZTooltip` / `ZPopover` / `ZDrawer`)
+
+Stage 7 第二批,基于已有 hooks(`usePopper` / `useEscapeStack`)+ Teleport:
+
+- **`ZTooltip`**(display)—— 悬停提示。`content` prop 或 `#content` slot。`placement`(floating-ui)+
+  `trigger`(`'hover'` / `'click'` / `'focus'` / `'manual'`,默认 hover)+ `delay`(hover enter/leave ms,默认 100)+
+  `visible`(manual 受控)+ `disabled`(总是阻止显示,覆盖 manual mode)。aria `role="tooltip"` +
+  trigger 上 `aria-describedby`。深色背景(`_text` bg + `_bg` 文字)。
+- **`ZPopover`**(display)—— 弹出层(类 Tooltip 但富内容)。`title` + `#content` slot。
+  `trigger`(`'click'`(默认) / `'hover'` / `'manual'`)。**onClickOutside**(`@vueuse/core`)外部
+  点击关闭 + **useEscapeStack** ESC 关闭。`role="dialog"`。浅色背景 + 边框 + middle elevation。
+- **`ZDrawer`**(feedback)—— 抽屉。`v-model:visible` + `placement`(`'left'` / `'right'` /
+  `'top'` / `'bottom'`,默认 right)+ `size`(string|number,默认 320px)+ `title` /
+  `closable` / `maskClosable`。body scroll lock + useEscapeStack ESC 关。
+  4 sx 节点:sxMask / sxDrawer / sxHead / sxBody / sxFoot。
+
+测试 15 case(总 381 → 396 全绿)。
+
+**实现细节**:
+- Teleport 渲染 portal 到 body,跨 spec 测试需 wrapper.unmount() + 显式清理 DOM portal 残留
+- ZTooltip:`disabled` 必须在所有 trigger 模式下都阻止显示(包括 manual 受控),否则有逻辑漏洞
+
+---
+
 ### 新增 — Phase β gene 补全(P1 装饰类 6 组件)
 
 Stage 7 第一批:
