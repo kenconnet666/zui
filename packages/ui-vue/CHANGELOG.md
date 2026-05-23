@@ -2,6 +2,31 @@
 
 ## Unreleased
 
+### 🎉 Phase α/β/γ 全部完成 — 80+ 组件 / 540 tests / 全绿
+
+roadmap §7(Phase β)+ §8(Phase γ)全部交付,Stage 9(Phase δ:VirtualList / 富文本 /
+DataGrid 企业版 / Schema-driven Form)按需开。
+
+**新组件清单**(本次 commit `e639b0b` 收尾):
+- `ZTreeSelect`(input):ZTree 嵌入下拉,叶子选中自动 close
+- `ZTour`(feedback):新手引导,steps 配置 + 4 边 mask 挖洞 + 引导卡片
+- `ZTable` 升级:`column.sortable` + `v-model:sortState`(asc/desc/none toggle) +
+  `selectable` + `v-model:selectedKeys`(全选/单选,含 indeterminate) + `aria-sort`
+- `ZSelect` 升级:`multiple` prop + 多选 toggle + `aria-multiselectable` + 多选 clearable
+
+**技术债务批 2(commit `b9ae101`)**:
+- `qrcode` 从 dependencies 移到 peerDependencies + peerDependenciesMeta.optional(业务方按需装)
+- ZCollapse / ZTransfer / ZNotification / ZMessage:reactive `Set`/`Map` → `array` / 闭包 `Map`
+  (规避 Vue test-utils "Invalid value used as weak map key" 边界)
+- 新建 `_internal/color-bridge.ts`:`applyAsBg` / `applyAsBorder` / `applyAsOutline` / `getThemeColor`
+  helper,统一替代散落 `as unknown as BgFactory` cast(影响 ZButton / ZTag / ZProgress /
+  ZGradientText / ZSlider)
+- 清理 dead code:`void h` / `void type` 等遗留标记
+
+测试 17 新 case(`z-phase-beta-upgrades.spec`,总 523 → 540 全绿)。
+
+---
+
 ### 新增 — Phase β 浮层批(`ZTooltip` / `ZPopover` / `ZDrawer`)
 
 Stage 7 第二批,基于已有 hooks(`usePopper` / `useEscapeStack`)+ Teleport:

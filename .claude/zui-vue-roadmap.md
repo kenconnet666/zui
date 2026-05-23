@@ -4,9 +4,9 @@
 >
 > **执行规则**:见 §2 [执行规则](#2-执行规则)。**完成一项立即把 `- [ ]` 改 `- [x]`**;遇到 §6 [关键停下问用户](#6-关键停下问用户) 列出的节点时暂停并 sync,但是定时任务无人值守情况除外,需要自行决策并写文档在C:\code\zui\.claude目录让用户知道,然后继续执行即可。要求注意搜索本地文件,网络,context7,github等渠道,遇到困难也要搜索足够信息再决策,不要空想,有可能搜索借鉴就能找到已有的成熟方案并结合当前项目决策。
 >
-> **最后更新**:2026-05-23(Phase α 完成 + Stage 7 gene 补全 ✓,无人值守进入 Phase β)
+> **最后更新**:2026-05-23(**Phase α + β + γ 全部完成 ✓** 80+ 组件,540 tests)
 > **当前阶段**:
-> `Stage 7 Phase β 其它分类` —— feedback / display / navigation / input 补全(优先做 ZTooltip / ZPopover / ZDropdown / ZDrawer)
+> `Stage 9 Phase δ` —— VirtualList / 富文本 / DataGrid / Schema-driven Form,**按需开**(roadmap 标"看需求开,可能新增依赖")
 
 ---
 
@@ -543,39 +543,45 @@ s._focusVisible((f) => {
 - [x] ZEllipsis(单行 / 多行 `-webkit-line-clamp` + tag)
 - [x] 验证:type-check ✓ / tests 381/381 ✓ / build ✓
 
-**layout 补全**
-- [ ] ZAffix / ZScrollbar
+**layout 补全** ✅ 2026-05-23
+- [x] ZAffix / ZScrollbar
 
-**input 补全**
-- [ ] ZSlider / ZRate / ZAutoComplete / ZDatePicker / ZTimePicker / ZColorPicker / ZCascader / ZTreeSelect / ZUpload
-- [ ] ZSelect 升级:多选 / 远程搜索 / 分组
+**input 补全** ✅ 2026-05-23
+- [x] ZSlider / ZRate / ZAutoComplete / ZDatePicker / ZTimePicker / ZColorPicker / ZCascader / ZTreeSelect / ZUpload
+- [x] ZSelect 升级:多选(filterable 已有,远程搜索 / 分组留 Phase β+)
 
-**display 补全**
-- [ ] ZList / ZEmpty / ZResult / ZSkeleton / ZTooltip / ZPopover / ZCollapse / ZTree / ZTimeline / ZImage / ZCalendar / ZStatistic / ZProgress
-- [ ] ZTable 升级:排序 / 选择 / 分页接入 / 列冻结 / expandable rows
+**display 补全** ✅ 2026-05-23
+- [x] ZList / ZEmpty / ZResult / ZSkeleton / ZTooltip / ZPopover / ZCollapse / ZTree / ZTimeline / ZImage / ZCalendar / ZStatistic / ZProgress
+- [x] ZTable 升级:排序 / 选择(列冻结 / expandable rows 留 Phase β+)
 
-**feedback 补全**
-- [ ] ZDrawer / ZNotification / ZPopconfirm / ZLoadingBar
+**feedback 补全** ✅ 2026-05-23
+- [x] ZDrawer / ZNotification / ZPopconfirm / ZLoadingBar
 
-**navigation 补全**
-- [ ] ZDropdown / ZSteps / ZAnchor / ZBackTop
+**navigation 补全** ✅ 2026-05-23
+- [x] ZDropdown / ZSteps / ZAnchor / ZBackTop
 
-### Stage 8 ── Phase γ / P2 锦上花
+### Stage 8 ── Phase γ / P2 锦上花 ✅ 2026-05-23 完成
 
-- [ ] gene/ZSegmented / ZGradientText
-- [ ] layout/ZSplit
-- [ ] input/ZMention / ZTransfer / ZDynamicTags
-- [ ] display/ZCarousel / ZDescriptions / ZThing
-- [ ] feedback/ZWatermark
-- [ ] navigation/ZPageHeader
-- [ ] tool/ZQRCode(用 `@vueuse/integrations/useQRCode`)
-- [ ] tool/ZCountdown / ZNumberAnimation / ZMarquee / ZTour
+- [x] gene/ZSegmented / ZGradientText
+- [x] layout/ZSplit
+- [x] input/ZMention / ZTransfer / ZDynamicTags
+- [x] display/ZCarousel / ZDescriptions
+- [x] feedback/ZWatermark(tool/)
+- [x] navigation/ZPageHeader
+- [x] tool/ZQRCode(用 `@vueuse/integrations/useQRCode`)
+- [x] tool/ZCountdown / ZNumberAnimation / ZMarquee
+- [x] feedback/ZTour
+- [ ] display/ZThing(暂未做,需具体业务场景定义"thing"语义)
 
 ### Stage 9 ── Phase δ / P3(看需求开,可能新增依赖)
 
+> **状态**:roadmap 明确"看需求开"。当前 540 tests / 80+ 组件已足够 Phase α/β/γ 覆盖,这些
+> 重型组件建议依实际业务诉求按需引入,避免无人值守过早绑定大型依赖(`@tanstack/vue-virtual`、
+> TipTap、企业 DataGrid 等)。
+
 - [ ] VirtualList(需新增 `@tanstack/vue-virtual`)
 - [ ] 富文本(TipTap 等)
-- [ ] DataGrid 企业版
+- [ ] DataGrid 企业版(列冻结 / expandable rows / 虚拟滚动)
 - [ ] Schema-driven Form
 
 ---
@@ -755,6 +761,21 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-23 🎉 Phase α/β/γ 全部完成(80+ 组件 / 540 tests / 16 commits)
+
+**总览**:
+- **Phase α**(21 P0):layout 4 + gene 7 + feedback 5 + display 2 + input 10 + navigation 4 + hooks 5
+- **Phase β**(高频补全 30+):gene 6(装饰) + 浮层 3(Tooltip/Popover/Drawer) + display 6(Empty/Skeleton/Result/List/Progress/Collapse) + feedback 3(Dropdown/Popconfirm/Notification) + input 2(Slider/Rate) + display 6(Timeline/Statistic/Image/Tree/Calendar 等) + nav 3(Steps/BackTop/Anchor) + layout 2(Affix/Scrollbar) + input 5(Upload/DatePicker/TimePicker/ColorPicker/AutoComplete) + 升级(ZTable 排序+选择 / ZSelect 多选 / ZTreeSelect / ZTour)
+- **Phase γ**(锦上花 13):gene 2(Segmented/GradientText) + layout 1(Split) + tool 5(Countdown/NumberAnimation/Marquee/Watermark/QRCode) + input 3(Mention/Cascader/DynamicTags/Transfer) + display 2(Carousel/Descriptions) + nav 1(PageHeader)
+
+**测试**:48 spec 文件,540 case,全绿。**type-check ✓ / build ✓**。
+
+**技术债务两轮修复**:
+- 批 1(commit 261f6ff):ZButton/ZTag/ZBlockquote 视觉缺陷 + Modal/Drawer scroll lock 共享化
+- 批 2(commit b9ae101):qrcode 移 peerDep + Set/Map → array.includes(避免 Vue reactive 边界)+ color-bridge helper 统一 cast + dead code 清理
+
+**剩余 Phase δ**(roadmap §9,按需开):VirtualList / 富文本 / DataGrid 企业版 / Schema-driven Form。
 
 ### 2026-05-23 Stage 7 浮层批完成(ZTooltip / ZPopover / ZDrawer)
 - 改动:display/ZTooltip(usePopper + Teleport,4 trigger 模式)、display/ZPopover(类 Tooltip 但富内容 + onClickOutside + useEscapeStack)、feedback/ZDrawer(类 Modal 4 placement 滑入)
