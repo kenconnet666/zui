@@ -66,3 +66,6 @@ export type {
   ZDescriptionsItem,
   ZDescriptionsSize,
 } from './ZDescriptions.vue'
+
+export { default as ZCalendar } from './ZCalendar.vue'
+export type { ZCalendarProps, ZCalendarEmits } from './ZCalendar.vue'

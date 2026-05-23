@@ -84,3 +84,13 @@ export type { ZDynamicTagsProps, ZDynamicTagsEmits } from './ZDynamicTags.vue'
 
 export { default as ZTransfer } from './ZTransfer.vue'
 export type { ZTransferProps, ZTransferEmits, ZTransferItem } from './ZTransfer.vue'
+
+export { default as ZMention } from './ZMention.vue'
+export type { ZMentionProps, ZMentionEmits } from './ZMention.vue'
+
+export { default as ZCascader } from './ZCascader.vue'
+export type {
+  ZCascaderProps,
+  ZCascaderEmits,
+  ZCascaderOption,
+} from './ZCascader.vue'

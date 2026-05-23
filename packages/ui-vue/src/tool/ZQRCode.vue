@@ -48,7 +48,8 @@ const qrOptions = computed(() => ({
   },
 }))
 
-const qrSrc = useQRCode(computed(() => props.value), qrOptions)
+// useQRCode 不接 ref options;每次 compute 时调一次,自动响应 props 变化
+const qrSrc = computed(() => useQRCode(props.value, qrOptions.value).value)
 
 const wrapClass = computed(() =>
   icss(theme.value, (s) => {
