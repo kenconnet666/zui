@@ -7,9 +7,12 @@ export type { ZCardProps } from './ZCard.vue'
 export { default as ZTable } from './ZTable.vue'
 export type {
   ZTableProps,
+  ZTableEmits,
   ZTableColumn,
   ZTableSize,
   ZTableAlign,
+  ZTableSortOrder,
+  ZTableSortState,
 } from './ZTable.vue'
 
 // ─── Phase β 浮层(usePopper)───

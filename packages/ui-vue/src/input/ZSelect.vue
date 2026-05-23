@@ -34,12 +34,14 @@ export interface ZSelectOption {
 export type ZSelectSize = 'small' | 'middle' | 'large'
 
 export interface ZSelectProps {
-  value?: ZSelectValue | null
+  value?: ZSelectValue | ZSelectValue[] | null
   options: ZSelectOption[]
   placeholder?: string
   disabled?: boolean
   clearable?: boolean
   filterable?: boolean
+  /** 多选模式;value 期望是 `ZSelectValue[]`(2026-05-23 Phase β 升级)。 */
+  multiple?: boolean
   size?: ZSelectSize
   sxTrigger?: SxObject
   sxDropdown?: SxObject
@@ -48,8 +50,8 @@ export interface ZSelectProps {
 }
 
 export interface ZSelectEmits {
-  (e: 'update:value', value: ZSelectValue | null): void
-  (e: 'change', value: ZSelectValue | null): void
+  (e: 'update:value', value: ZSelectValue | ZSelectValue[] | null): void
+  (e: 'change', value: ZSelectValue | ZSelectValue[] | null): void
 }
 </script>
 
@@ -66,6 +68,7 @@ const props = withDefaults(defineProps<ZSelectProps>(), {
   disabled: false,
   clearable: false,
   filterable: false,
+  multiple: false,
   size: 'middle',
 })
 
@@ -96,8 +99,25 @@ onClickOutside(triggerRef, (e: Event) => {
   open.value = false
 })
 
+// 多选时 value 是数组,单选是单值。统一规整为数组方便内部用。
+const valueArray = computed<ZSelectValue[]>(() => {
+  if (props.value == null) return []
+  if (Array.isArray(props.value)) return props.value
+  return [props.value as ZSelectValue]
+})
+
+function isOptionSelected(opt: ZSelectOption): boolean {
+  return valueArray.value.includes(opt.value)
+}
+
 const selectedLabel = computed(() => {
-  if (props.value === null || props.value === undefined) return ''
+  if (props.multiple) {
+    if (valueArray.value.length === 0) return ''
+    return valueArray.value
+      .map((v) => props.options.find((o) => o.value === v)?.label ?? String(v))
+      .join(', ')
+  }
+  if (props.value === null || props.value === undefined || Array.isArray(props.value)) return ''
   return props.options.find((o) => o.value === props.value)?.label ?? String(props.value)
 })
 
@@ -191,6 +211,7 @@ const optionClass = (opt: ZSelectOption): string =>
   icss(theme.value, (s) => {
     s.display.flex
     s.alignItems.center
+    s.gap._tiny
     s.padding._tiny
     s.paddingLeft._small
     s.paddingRight._small
@@ -198,7 +219,7 @@ const optionClass = (opt: ZSelectOption): string =>
     s.cursor.pointer
     s.color._text
     s.fontSize._middle
-    if (props.value === opt.value) {
+    if (isOptionSelected(opt)) {
       s.backgroundColor._primary.alpha(8)
       s.color._primary
     }
@@ -239,9 +260,11 @@ const arrowClass = computed(() =>
   }),
 )
 
-const showClear = computed(
-  () => props.clearable && !props.disabled && props.value !== null && props.value !== undefined,
-)
+const showClear = computed(() => {
+  if (!props.clearable || props.disabled) return false
+  if (props.multiple) return valueArray.value.length > 0
+  return props.value !== null && props.value !== undefined
+})
 
 function toggleOpen(): void {
   if (props.disabled) return
@@ -253,6 +276,16 @@ function toggleOpen(): void {
 
 function selectOption(opt: ZSelectOption): void {
   if (opt.disabled) return
+  if (props.multiple) {
+    // 多选:toggle 添加/移除,保持下拉打开
+    const cur = valueArray.value
+    const next = cur.includes(opt.value)
+      ? cur.filter((v) => v !== opt.value)
+      : [...cur, opt.value]
+    emit('update:value', next)
+    emit('change', next)
+    return
+  }
   emit('update:value', opt.value)
   emit('change', opt.value)
   open.value = false
@@ -261,8 +294,9 @@ function selectOption(opt: ZSelectOption): void {
 
 function onClear(e: Event): void {
   e.stopPropagation()
-  emit('update:value', null)
-  emit('change', null)
+  const empty = props.multiple ? [] : null
+  emit('update:value', empty)
+  emit('change', empty)
 }
 
 function onFilterInput(e: Event): void {
@@ -299,6 +333,7 @@ const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
     role="combobox"
     :aria-expanded="open"
     :aria-disabled="disabled"
+    :aria-multiselectable="multiple"
     v-bind="sxTriggerAttrs.attrs"
     @click="toggleOpen"
   >
@@ -344,12 +379,21 @@ const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
         :class="[optionClass(opt), sxOptionAttrs.class]"
         :style="sxOptionAttrs.style"
         role="option"
-        :aria-selected="value === opt.value"
+        :aria-selected="isOptionSelected(opt)"
         :aria-disabled="opt.disabled"
         v-bind="sxOptionAttrs.attrs"
         @click="selectOption(opt)"
       >
-        {{ opt.label }}
+        <input
+          v-if="multiple"
+          type="checkbox"
+          :checked="isOptionSelected(opt)"
+          :disabled="opt.disabled"
+          aria-hidden="true"
+          tabindex="-1"
+          @click.stop="selectOption(opt)"
+        />
+        <span>{{ opt.label }}</span>
       </div>
       <div v-if="filteredOptions.length === 0" :class="emptyClass">无匹配项</div>
     </div>

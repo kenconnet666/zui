@@ -94,3 +94,10 @@ export type {
   ZCascaderEmits,
   ZCascaderOption,
 } from './ZCascader.vue'
+
+export { default as ZTreeSelect } from './ZTreeSelect.vue'
+export type {
+  ZTreeSelectProps,
+  ZTreeSelectEmits,
+  ZTreeSelectSize,
+} from './ZTreeSelect.vue'

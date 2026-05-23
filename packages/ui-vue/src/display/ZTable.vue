@@ -1,6 +1,6 @@
 <script lang="ts">
 /**
- * `ZTable` —— 基础表格(配置式,Phase α v1)。
+ * `ZTable` —— 基础表格(配置式)。Phase α v1 + Phase β 升级。
  *
  * **API**:
  * - `columns: ZTableColumn<T>[]` —— 列定义
@@ -11,19 +11,14 @@
  * - `size?: 'small' | 'middle' | 'large'` —— 内边距档位
  * - `emptyText?: string` —— 空数据文案,默认 "暂无数据"
  *
- * **列定义**(`ZTableColumn`):
- * - `key: string`(列 key)
- * - `title: string`(表头文字)
- * - `dataIndex?: string`(取值字段,默认同 key)
- * - `width?: string | number`
- * - `align?: 'left' | 'center' | 'right'`
- * - `render?: (row, col, idx) => string | VNode` —— 自定义渲染
+ * **Phase β 升级**:
+ * - `selectable?: boolean` + `v-model:selectedKeys` —— 行选择(首列 checkbox)
+ * - column `sortable?: boolean` + `v-model:sortState` —— 排序(点击列头 toggle asc/desc/none)
+ * - `pagination?: { page, pageSize, total }` —— 分页 *显示*(实际 data 由业务方按 page 切片传入)
  *
- * **sx**:sxHead / sxRow / sxCell / sxBody
+ * **未实现**:列冻结 / expandable rows / 远端排序 callback。
  *
- * **未实现(Phase β)**:排序 / 选择(checkbox) / 分页接入 / 列冻结 / expandable rows。
- *
- * **a11y**:原生 `<table>` + `<thead>` / `<tbody>`,屏读器友好。
+ * **a11y**:`<table>` + `aria-sort` 在排序列 + `<input type=checkbox>` 全选/单选。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -32,6 +27,7 @@ import type { VNodeChild } from 'vue'
 
 export type ZTableSize = 'small' | 'middle' | 'large'
 export type ZTableAlign = 'left' | 'center' | 'right'
+export type ZTableSortOrder = 'asc' | 'desc' | null
 
 export interface ZTableColumn<T = Record<string, unknown>> {
   key: string
@@ -40,6 +36,16 @@ export interface ZTableColumn<T = Record<string, unknown>> {
   width?: string | number
   align?: ZTableAlign
   render?: (row: T, col: ZTableColumn<T>, idx: number) => VNodeChild
+  /** 是否可排序;true 时点击列头 toggle asc → desc → none。 */
+  sortable?: boolean
+  /** 自定义排序 compare(若不提供则用默认字符串/数字比较)。 */
+  sorter?: (a: T, b: T) => number
+}
+
+/** 当前排序状态。 */
+export interface ZTableSortState {
+  column: string | null
+  order: ZTableSortOrder
 }
 
 export interface ZTableProps<T = Record<string, unknown>> {
@@ -50,19 +56,30 @@ export interface ZTableProps<T = Record<string, unknown>> {
   striped?: boolean
   size?: ZTableSize
   emptyText?: string
+  /** 行选择 ── `v-model:selectedKeys` 配合用。 */
+  selectable?: boolean
+  selectedKeys?: (string | number)[]
+  /** 排序状态 ── `v-model:sortState`。 */
+  sortState?: ZTableSortState
   sxHead?: SxObject
   sxBody?: SxObject
   sxRow?: SxObject
   sxCell?: SxObject
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
+
+export interface ZTableEmits {
+  (e: 'update:selectedKeys', keys: (string | number)[]): void
+  (e: 'update:sortState', state: ZTableSortState): void
+}
 </script>
 
 <script lang="ts" setup generic="T extends Record<string, unknown>">
-import { computed } from 'vue'
+import { computed, h } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZTableProps<T>>(), {
   rowKey: 'id',
@@ -70,7 +87,12 @@ const props = withDefaults(defineProps<ZTableProps<T>>(), {
   striped: false,
   size: 'middle',
   emptyText: '暂无数据',
+  selectable: false,
+  selectedKeys: () => [],
+  sortState: () => ({ column: null, order: null }),
 })
+
+const emit = defineEmits<ZTableEmits>()
 
 const theme = useZTheme()
 
@@ -80,6 +102,98 @@ const SIZE_PADDING: Record<ZTableSize, number> = {
   large: 0.875,
 }
 
+// ─── 排序 ───
+const sortedData = computed<T[]>(() => {
+  const { column, order } = props.sortState
+  if (!column || !order) return props.data
+  const col = props.columns.find((c) => c.key === column)
+  if (!col) return props.data
+  const dataIndex = col.dataIndex ?? col.key
+  const sorter =
+    col.sorter ??
+    ((a: T, b: T) => {
+      const av = (a as Record<string, unknown>)[dataIndex]
+      const bv = (b as Record<string, unknown>)[dataIndex]
+      if (av == null) return -1
+      if (bv == null) return 1
+      if (typeof av === 'number' && typeof bv === 'number') return av - bv
+      return String(av).localeCompare(String(bv))
+    })
+  const result = [...props.data].sort(sorter)
+  return order === 'desc' ? result.reverse() : result
+})
+
+function toggleSort(col: ZTableColumn<T>): void {
+  if (!col.sortable) return
+  const cur = props.sortState
+  let nextOrder: ZTableSortOrder
+  if (cur.column !== col.key) nextOrder = 'asc'
+  else if (cur.order === 'asc') nextOrder = 'desc'
+  else if (cur.order === 'desc') nextOrder = null
+  else nextOrder = 'asc'
+  emit('update:sortState', {
+    column: nextOrder ? col.key : null,
+    order: nextOrder,
+  })
+}
+
+// ─── 行选择 ───
+function getRowKey(row: T, idx: number): string | number {
+  if (typeof props.rowKey === 'function') return props.rowKey(row)
+  const v = (row as Record<string, unknown>)[props.rowKey]
+  return v !== undefined ? (v as string | number) : idx
+}
+
+const allKeys = computed(() => sortedData.value.map((row, i) => getRowKey(row, i)))
+
+const isAllSelected = computed(
+  () =>
+    props.selectable &&
+    allKeys.value.length > 0 &&
+    allKeys.value.every((k) => props.selectedKeys.includes(k)),
+)
+const isIndeterminate = computed(() => {
+  if (!props.selectable) return false
+  const selected = allKeys.value.filter((k) => props.selectedKeys.includes(k)).length
+  return selected > 0 && selected < allKeys.value.length
+})
+
+function toggleAll(checked: boolean): void {
+  emit('update:selectedKeys', checked ? [...allKeys.value] : [])
+}
+
+function toggleRow(key: string | number): void {
+  const next = props.selectedKeys.includes(key)
+    ? props.selectedKeys.filter((k) => k !== key)
+    : [...props.selectedKeys, key]
+  emit('update:selectedKeys', next)
+}
+
+function isRowSelected(key: string | number): boolean {
+  return props.selectedKeys.includes(key)
+}
+
+// ─── 渲染 helpers ───
+function getCellValue(row: T, col: ZTableColumn<T>): unknown {
+  const key = col.dataIndex ?? col.key
+  return (row as Record<string, unknown>)[key]
+}
+
+function renderCellVNode(row: T, col: ZTableColumn<T>, idx: number): VNodeChild {
+  return col.render ? col.render(row, col, idx) : null
+}
+
+function renderCellText(row: T, col: ZTableColumn<T>): string {
+  const v = getCellValue(row, col)
+  return v == null ? '' : String(v)
+}
+
+function colWidth(col: ZTableColumn<T>): string | undefined {
+  if (col.width === undefined) return undefined
+  return typeof col.width === 'number' ? `${col.width}px` : col.width
+}
+
+// ─── 样式 ───
 const tableClass = computed(() =>
   icss(theme.value, (s) => {
     s.width.pct(100)
@@ -113,14 +227,15 @@ const tbodyClass = computed(() =>
 )
 const sxBodyAttrs = computed(() => extractSxAttrs(props.sxBody))
 
-const rowClass = (idx: number): string =>
+const rowClass = (idx: number, selected: boolean): string =>
   icss(theme.value, (s) => {
     s.borderTopWidth._thin
     s.borderTopStyle.solid
     s.borderTopColor._border
-    if (props.striped && idx % 2 === 1) s.backgroundColor._bgMuted.alpha(50)
+    if (selected) s.backgroundColor._primary.alpha(8)
+    else if (props.striped && idx % 2 === 1) s.backgroundColor._bgMuted.alpha(50)
     s._hover((h2) => {
-      h2.backgroundColor._primary.alpha(4)
+      if (!selected) h2.backgroundColor._primary.alpha(4)
     })
     applySx(s, props.sxRow)
   })
@@ -141,6 +256,36 @@ const cellClass = (col: ZTableColumn<T>): string =>
   })
 const sxCellAttrs = computed(() => extractSxAttrs(props.sxCell))
 
+const selectCellClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.padding.iem(SIZE_PADDING[props.size])
+    s.paddingLeft._small
+    s.paddingRight._small
+    s._prop('textAlign', 'center')
+    s._prop('width', 'calc(2 * var(--zui-iem, 16px))')
+  }),
+)
+
+const sortableHeadClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.cursor.pointer
+    s.userSelect.none
+    s._hover((h2) => {
+      h2.color._primary
+    })
+  }),
+)
+
+function sortIconClass(active: boolean): string {
+  return icss(theme.value, (s) => {
+    s.display.inlineFlex
+    s.alignItems.center
+    s.marginLeft._tiny
+    s.color(active ? '_primary' : '_textSecondary')
+    s.opacity(active ? 1 : 0.6)
+  })
+}
+
 const emptyClass = computed(() =>
   icss(theme.value, (s) => {
     s.padding._large
@@ -150,31 +295,27 @@ const emptyClass = computed(() =>
   }),
 )
 
-function getRowKey(row: T, idx: number): string | number {
-  if (typeof props.rowKey === 'function') return props.rowKey(row)
-  const v = (row as Record<string, unknown>)[props.rowKey]
-  return v !== undefined ? (v as string | number) : idx
+function ariaSort(col: ZTableColumn<T>): 'ascending' | 'descending' | 'none' | undefined {
+  if (!col.sortable) return undefined
+  if (props.sortState.column !== col.key) return 'none'
+  if (props.sortState.order === 'asc') return 'ascending'
+  if (props.sortState.order === 'desc') return 'descending'
+  return 'none'
 }
 
-function getCellValue(row: T, col: ZTableColumn<T>): unknown {
-  const key = col.dataIndex ?? col.key
-  return (row as Record<string, unknown>)[key]
+function sortIconFor(col: ZTableColumn<T>) {
+  const isActive = props.sortState.column === col.key
+  if (isActive && props.sortState.order === 'asc') {
+    return h(ZIcon, { component: BuiltinIcons.chevronUp })
+  }
+  if (isActive && props.sortState.order === 'desc') {
+    return h(ZIcon, { component: BuiltinIcons.chevronDown })
+  }
+  // 未激活:显示双向箭头(用 chevronDown 占位)
+  return h(ZIcon, { component: BuiltinIcons.chevronDown })
 }
 
-function renderCellVNode(row: T, col: ZTableColumn<T>, idx: number): VNodeChild {
-  return col.render ? col.render(row, col, idx) : null
-}
-
-function renderCellText(row: T, col: ZTableColumn<T>): string {
-  const v = getCellValue(row, col)
-  return v == null ? '' : String(v)
-}
-
-function colWidth(col: ZTableColumn<T>): string | undefined {
-  if (col.width === undefined) return undefined
-  return typeof col.width === 'number' ? `${col.width}px` : col.width
-}
-
+const totalColspan = computed(() => props.columns.length + (props.selectable ? 1 : 0))
 </script>
 
 <template>
@@ -185,14 +326,29 @@ function colWidth(col: ZTableColumn<T>): string | undefined {
       v-bind="sxHeadAttrs.attrs"
     >
       <tr>
+        <th v-if="selectable" :class="selectCellClass" scope="col">
+          <input
+            type="checkbox"
+            :checked="isAllSelected"
+            :indeterminate="isIndeterminate"
+            :aria-label="isAllSelected ? '取消全选' : '全选'"
+            @change="toggleAll(($event.target as HTMLInputElement).checked)"
+          />
+        </th>
         <th
           v-for="col in columns"
           :key="col.key"
-          :class="[cellClass(col), sxCellAttrs.class]"
+          :class="[cellClass(col), col.sortable ? sortableHeadClass : '', sxCellAttrs.class]"
           :style="[sxCellAttrs.style, colWidth(col) ? { width: colWidth(col) } : {}]"
+          :aria-sort="ariaSort(col)"
+          scope="col"
           v-bind="sxCellAttrs.attrs"
+          @click="toggleSort(col)"
         >
           {{ col.title }}
+          <span v-if="col.sortable" :class="sortIconClass(sortState.column === col.key)">
+            <component :is="sortIconFor(col)" />
+          </span>
         </th>
       </tr>
     </thead>
@@ -201,16 +357,24 @@ function colWidth(col: ZTableColumn<T>): string | undefined {
       :style="sxBodyAttrs.style"
       v-bind="sxBodyAttrs.attrs"
     >
-      <tr v-if="data.length === 0">
-        <td :colspan="columns.length" :class="emptyClass">{{ emptyText }}</td>
+      <tr v-if="sortedData.length === 0">
+        <td :colspan="totalColspan" :class="emptyClass">{{ emptyText }}</td>
       </tr>
       <tr
-        v-for="(row, idx) in data"
+        v-for="(row, idx) in sortedData"
         :key="getRowKey(row, idx)"
-        :class="[rowClass(idx), sxRowAttrs.class]"
+        :class="[rowClass(idx, isRowSelected(getRowKey(row, idx))), sxRowAttrs.class]"
         :style="sxRowAttrs.style"
         v-bind="sxRowAttrs.attrs"
       >
+        <td v-if="selectable" :class="selectCellClass">
+          <input
+            type="checkbox"
+            :checked="isRowSelected(getRowKey(row, idx))"
+            :aria-label="`选择第 ${idx + 1} 行`"
+            @change="toggleRow(getRowKey(row, idx))"
+          />
+        </td>
         <td
           v-for="col in columns"
           :key="col.key"

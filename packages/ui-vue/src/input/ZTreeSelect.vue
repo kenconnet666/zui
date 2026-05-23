@@ -1,0 +1,257 @@
+<script lang="ts">
+/**
+ * `ZTreeSelect` —— 树形选择(基于 ZSelect 的触发器 + ZTree 下拉)。
+ *
+ * **API**:
+ * - `v-model:value: string | null` —— 选中的 leaf key
+ * - `data: ZTreeNode[]` —— 树数据
+ * - `defaultExpandedKeys?: string[]`
+ * - `placeholder?: string` / `disabled?: boolean` / `clearable?: boolean`
+ * - `size?: 'small' | 'middle' | 'large'`
+ */
+import type { Placement } from '@floating-ui/vue'
+import type { Chain } from '@kenconnet666/zui-core'
+import type { ZuiSchema } from '../provider/theme'
+import type { ZTreeNode } from '../display/ZTree.vue'
+
+export type ZTreeSelectSize = 'small' | 'middle' | 'large'
+
+export interface ZTreeSelectProps {
+  value?: string | null
+  data: ZTreeNode[]
+  defaultExpandedKeys?: string[]
+  placeholder?: string
+  disabled?: boolean
+  clearable?: boolean
+  size?: ZTreeSelectSize
+  placement?: Placement
+  css?: ((s: Chain<ZuiSchema>) => void) | undefined
+}
+
+export interface ZTreeSelectEmits {
+  (e: 'update:value', value: string | null): void
+  (e: 'change', value: string | null, node: ZTreeNode | null): void
+}
+</script>
+
+<script lang="ts" setup>
+import { computed, h, ref, watch } from 'vue'
+import { onClickOutside } from '@vueuse/core'
+import { icss } from '@kenconnet666/zui-core'
+import { useZTheme } from '../provider'
+import { usePopper, useEscapeStack } from '../_hooks'
+import { BuiltinIcons, ZIcon } from '../gene'
+import ZTree from '../display/ZTree.vue'
+
+const props = withDefaults(defineProps<ZTreeSelectProps>(), {
+  value: null,
+  defaultExpandedKeys: () => [],
+  placeholder: '请选择',
+  disabled: false,
+  clearable: false,
+  size: 'middle',
+  placement: 'bottom-start',
+})
+
+const emit = defineEmits<ZTreeSelectEmits>()
+
+const theme = useZTheme()
+
+const triggerRef = ref<HTMLElement | null>(null)
+const dropdownRef = ref<HTMLElement | null>(null)
+const open = ref(false)
+const expandedKeys = ref<string[]>([...props.defaultExpandedKeys])
+
+const { floatingStyles } = usePopper(triggerRef, dropdownRef, {
+  placement: computed(() => props.placement),
+  offset: 4,
+})
+
+useEscapeStack(
+  () => {
+    if (open.value) open.value = false
+  },
+  { enabled: open },
+)
+
+onClickOutside(triggerRef, (e: Event) => {
+  if (!open.value) return
+  if (dropdownRef.value && e.target && dropdownRef.value.contains(e.target as Node)) return
+  open.value = false
+})
+
+function findNode(nodes: ZTreeNode[], key: string): ZTreeNode | null {
+  for (const n of nodes) {
+    if (n.key === key) return n
+    if (n.children) {
+      const c = findNode(n.children, key)
+      if (c) return c
+    }
+  }
+  return null
+}
+
+const selectedLabel = computed(() => {
+  if (props.value == null) return ''
+  const node = findNode(props.data, props.value)
+  return node?.label ?? String(props.value)
+})
+
+function toggleOpen(): void {
+  if (props.disabled) return
+  open.value = !open.value
+}
+
+function onSelectNode(key: string, node: ZTreeNode): void {
+  // 仅叶子节点触发 commit;非叶子留作 expand(由 ZTree 自管)
+  if (node.children && node.children.length > 0) return
+  emit('update:value', key)
+  emit('change', key, node)
+  open.value = false
+}
+
+function onClear(e: Event): void {
+  e.stopPropagation()
+  emit('update:value', null)
+  emit('change', null, null)
+}
+
+watch(
+  () => props.value,
+  () => {
+    // 选中变 → 关闭(已在 onSelectNode 处理,这里防外部 reset)
+  },
+)
+
+const SIZE_PADDING_Y: Record<ZTreeSelectSize, number> = {
+  small: 0.25,
+  middle: 0.375,
+  large: 0.5,
+}
+
+const triggerClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.display.inlineFlex
+    s.alignItems.center
+    s.gap._tiny
+    s.borderRadius._small
+    s.borderWidth._thin
+    s.borderStyle.solid
+    s.borderColor(open.value ? '_primary' : '_border')
+    s.backgroundColor._bg
+    s.color._text
+    s.fontSize._middle
+    s.paddingLeft._small
+    s.paddingRight._small
+    s.paddingTop.iem(SIZE_PADDING_Y[props.size])
+    s.paddingBottom.iem(SIZE_PADDING_Y[props.size])
+    s.cursor(props.disabled ? 'not-allowed' : 'pointer')
+    s.minWidth.iem(10)
+    if (props.disabled) {
+      s.opacity._dim
+      s.backgroundColor._bgMuted
+    }
+    props.css?.(s)
+  }),
+)
+
+const textClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.flexGrow(1)
+    if (!selectedLabel.value) s.color._textSecondary
+  }),
+)
+
+const dropdownClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.position.absolute
+    s.zIndex._popover
+    s.backgroundColor._bg
+    s.borderRadius._small
+    s.borderWidth._thin
+    s.borderStyle.solid
+    s.borderColor._border
+    s.boxShadow._middle
+    s.padding._tiny
+    s._prop('minWidth', 'calc(12 * var(--zui-iem, 16px))')
+    s._prop('maxHeight', '300px')
+    s._prop('overflowY', 'auto')
+  }),
+)
+
+const arrowClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.color._textSecondary
+    s.transitionProperty._transform
+    s.transitionDuration._small
+    s._prop('transform', open.value ? 'rotate(180deg)' : 'rotate(0deg)')
+  }),
+)
+
+const clearBtnClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.display.inlineFlex
+    s.alignItems.center
+    s.justifyContent.center
+    s.cursor.pointer
+    s.backgroundColor.transparent
+    s.borderStyle.none
+    s.padding('0')
+    s.color._textSecondary
+    s._hover((h2) => {
+      h2.color._text
+    })
+  }),
+)
+
+const showClear = computed(
+  () => props.clearable && !props.disabled && props.value !== null,
+)
+
+const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }))
+const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
+</script>
+
+<template>
+  <div
+    ref="triggerRef"
+    :class="triggerClass"
+    role="combobox"
+    :aria-expanded="open"
+    :aria-disabled="disabled"
+    @click="toggleOpen"
+  >
+    <span :class="textClass">{{ selectedLabel || placeholder }}</span>
+    <button
+      v-if="showClear"
+      type="button"
+      :class="clearBtnClass"
+      aria-label="清空"
+      tabindex="-1"
+      @click.stop="onClear"
+    >
+      <component :is="closeIcon" />
+    </button>
+    <span :class="arrowClass">
+      <component :is="downIcon" />
+    </span>
+  </div>
+
+  <Teleport to="body">
+    <div
+      v-if="open"
+      ref="dropdownRef"
+      :class="dropdownClass"
+      :style="floatingStyles"
+      role="listbox"
+    >
+      <ZTree
+        :data="data"
+        :expanded-keys="expandedKeys"
+        :selected-key="value"
+        @update:expanded-keys="expandedKeys = $event"
+        @select="onSelectNode"
+      />
+    </div>
+  </Teleport>
+</template>

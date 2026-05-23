@@ -38,3 +38,7 @@ export {
 
 export { default as ZLoadingBar } from './ZLoadingBar.vue'
 export type { ZLoadingBarProps } from './ZLoadingBar.vue'
+
+// ─── Phase γ feedback 补全 ───
+export { default as ZTour } from './ZTour.vue'
+export type { ZTourProps, ZTourEmits, ZTourStep } from './ZTour.vue'
