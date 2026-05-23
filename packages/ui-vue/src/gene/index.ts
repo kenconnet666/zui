@@ -51,5 +51,17 @@ export type { ZBlockquoteProps } from './ZBlockquote.vue'
 export { default as ZEllipsis } from './ZEllipsis.vue'
 export type { ZEllipsisProps } from './ZEllipsis.vue'
 
+// ─── Phase γ ───
+export { default as ZSegmented } from './ZSegmented.vue'
+export type {
+  ZSegmentedProps,
+  ZSegmentedEmits,
+  ZSegmentedOption,
+  ZSegmentedSize,
+} from './ZSegmented.vue'
+
+export { default as ZGradientText } from './ZGradientText.vue'
+export type { ZGradientTextProps } from './ZGradientText.vue'
+
 // ─── 图标(@vicons/material 全量透出 + BuiltinIcons 语义 map)───
 export * from './icons'
