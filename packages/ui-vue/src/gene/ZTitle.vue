@@ -23,6 +23,7 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
+import type { SizeProp } from '../_internal/size-prop'
 
 /** ZTitle 支持的标题级别。 */
 export type ZTitleLevel = 1 | 2 | 3 | 4 | 5 | 6
@@ -32,7 +33,8 @@ export interface ZTitleProps {
   /** 标题级别(决定默认 tag = `h{level}` + 默认 fontSize/fontWeight)。默认 `1`。 */
   level?: ZTitleLevel
 
-  size?: ((f: Chain<ZuiSchema>['fontSize']) => void) | undefined
+  /** 字号(factory|Size5|undefined union)。**传了会覆盖 level 默认 fontSize**。 */
+  size?: SizeProp<'fontSize'> | undefined
   weight?: ((w: Chain<ZuiSchema>['fontWeight']) => void) | undefined
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   depth?: ((o: Chain<ZuiSchema>['opacity']) => void) | undefined

@@ -22,6 +22,7 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export type ZSelectValue = string | number | boolean
 
@@ -30,8 +31,6 @@ export interface ZSelectOption {
   label: string
   disabled?: boolean
 }
-
-export type ZSelectSize = 'small' | 'middle' | 'large'
 
 export interface ZSelectProps {
   value?: ZSelectValue | ZSelectValue[] | null
@@ -42,7 +41,8 @@ export interface ZSelectProps {
   filterable?: boolean
   /** 多选模式;value 期望是 `ZSelectValue[]`(2026-05-23 Phase β 升级)。 */
   multiple?: boolean
-  size?: ZSelectSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(同 ZInput,复用 INPUT_SIZE_MAP)。 */
+  size?: SizePropMulti
   sxTrigger?: SxObject
   sxDropdown?: SxObject
   sxOption?: SxObject
@@ -60,6 +60,8 @@ import { computed, h, ref, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applySizeProp } from '../_internal/size-prop'
+import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
 import { BuiltinIcons, ZIcon } from '../gene'
 import { usePopper, useEscapeStack } from '../_hooks'
 import { onClickOutside } from '@vueuse/core'
@@ -127,12 +129,6 @@ const filteredOptions = computed(() => {
   return props.options.filter((o) => o.label.toLowerCase().includes(q))
 })
 
-const SIZE_PADDING_Y: Record<ZSelectSize, number> = {
-  small: 0.25,
-  middle: 0.375,
-  large: 0.5,
-}
-
 const triggerClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
@@ -144,11 +140,9 @@ const triggerClass = computed(() =>
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    s.fontSize._middle
+    applySizeProp(props.size, INPUT_SIZE_MAP, s)
     s.paddingLeft._small
     s.paddingRight._small
-    s.paddingTop.iem(SIZE_PADDING_Y[props.size])
-    s.paddingBottom.iem(SIZE_PADDING_Y[props.size])
     s.cursor.pointer
     s.minWidth.iem(8)
     s.transitionProperty._colors

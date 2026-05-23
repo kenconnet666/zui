@@ -15,15 +15,15 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-
-export type ZAutoCompleteSize = 'small' | 'middle' | 'large'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZAutoCompleteProps {
   value?: string
   options: string[]
   placeholder?: string
   disabled?: boolean
-  size?: ZAutoCompleteSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(复用 INPUT_SIZE_MAP)。 */
+  size?: SizePropMulti
   filter?: (input: string, opt: string) => boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -39,6 +39,8 @@ import { computed, ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applySizeProp } from '../_internal/size-prop'
+import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
 import { usePopper, useEscapeStack } from '../_hooks'
 
 const props = withDefaults(defineProps<ZAutoCompleteProps>(), {
@@ -81,12 +83,6 @@ onClickOutside(inputRef, (e: Event) => {
   open.value = false
 })
 
-const SIZE_PADDING_Y: Record<ZAutoCompleteSize, number> = {
-  small: 0.25,
-  middle: 0.375,
-  large: 0.5,
-}
-
 const inputClass = computed(() =>
   icss(theme.value, (s) => {
     s.borderRadius._small
@@ -95,11 +91,9 @@ const inputClass = computed(() =>
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    s.fontSize._middle
+    applySizeProp(props.size, INPUT_SIZE_MAP, s)
     s.paddingLeft._small
     s.paddingRight._small
-    s.paddingTop.iem(SIZE_PADDING_Y[props.size])
-    s.paddingBottom.iem(SIZE_PADDING_Y[props.size])
     s.width.pct(100)
     s._prop('outline', 'none')
     if (props.disabled) {

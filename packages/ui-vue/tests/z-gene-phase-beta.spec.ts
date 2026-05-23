@@ -35,8 +35,16 @@ describe('ZAvatar', () => {
     expect(css).toMatch(/border-radius:calc/)
   })
 
-  it('size 数字 → px', () => {
-    mount(ZAvatar, { props: { size: 48, text: 'X' } })
+  it('size factory → 自定义 px', () => {
+    // v2 BREAKING:size 不再接 number 字面量,改 factory 表达 px
+    mount(ZAvatar, {
+      props: {
+        size: (w: { px: (n: number) => void }) => {
+          w.px(48)
+        },
+        text: 'X',
+      },
+    })
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
       .join('\n')

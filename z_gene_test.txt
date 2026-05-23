@@ -1,0 +1,104 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.6 [39m[90mC:/code/zui/packages/ui-vue[39m
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZAvatar[2m > [22m[2msrc 显示 img + alt
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZAvatar[2m > [22m[2m图片加载失败 → fallback 到 text
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZAvatar[2m > [22m[2mdefault slot 优先
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZAvatar[2m > [22m[2mshape=square → 方形圆角(非完全圆)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZAvatar[2m > [22m[2msize factory → 自定义 px
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZTag[2m > [22m[2m默认 variant=soft
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZTag[2m > [22m[2mclosable → 渲染关闭按钮 + emit close
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZTag[2m > [22m[2mvariant=filled → schema color 背景(不再用 currentColor 桥接,2026-05-23 重构)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZTag[2m > [22m[2mround=true → 圆角胶囊
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2mvalue=5 → 显示 5
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2mvalue=0 + showZero=false → 不显示
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2mvalue=0 + showZero=true → 显示 0
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2mvalue > max → "max+"
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2mdot=true → 不显数字,只显小圆点
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2m有 default slot → wrapper position:relative
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZCode[2m > [22m[2m默认 inline=true → <code>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZCode[2m > [22m[2minline=false → <pre><code>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZCode[2m > [22m[2m字体走 mono
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBlockquote[2m > [22m[2m渲染 <blockquote>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBlockquote[2m > [22m[2m左侧 border-left 4px
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZEllipsis[2m > [22m[2m默认 lines=1 → 单行 ellipsis 三件套
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZEllipsis[2m > [22m[2mlines=3 → -webkit-line-clamp:3
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZEllipsis[2m > [22m[2mtag prop 切换根元素
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-gene-phase-beta.spec.ts [2m([22m[2m23 tests[22m[2m)[22m[32m 76[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m23 passed[39m[22m[90m (23)[39m
+[2m   Start at [22m 15:42:59
+[2m   Duration [22m 23.94s[2m (transform 3.78s, setup 0ms, import 22.74s, tests 76ms, environment 745ms)[22m
+

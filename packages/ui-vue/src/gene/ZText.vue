@@ -29,22 +29,28 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
+import type { SizeProp } from '../_internal/size-prop'
 
 /**
- * `ZText` 完整 props。**6 个 carrier factory + 5 个状态 + css + tag**。
+ * `ZText` 完整 props。**size 走 union(factory | Size5 | undefined),其它 5 维度纯 factory**。
  */
 export interface ZTextProps {
   /**
-   * 字号 factory —— 接 `fontSize` carrier。
+   * 字号 —— `factory | Size5 | undefined` union(2026-05-22 修订)。
    *
-   * **默认**:不传 = 继承父字号(等同 1em)。想强制基准字号走 `(f) => f.iem(1)`。
+   * **默认**:不传 = 继承父字号(等同 1em)。
+   *
+   * **5 阶档位**(映射 schema fontSize token):
+   * - `tiny` → `_tiny`(12px) / `small` → `_small`(14px) / `middle` → `_middle`(16px) /
+   *   `large` → `_large`(18px) / `huge` → `_huge`(20px)
    *
    * @example
-   * <ZText :size="(f) => f._middle" />        <!-- schema token,默认 16px -->
-   * <ZText :size="(f) => f.iem(1.125)" />     <!-- 1.125iem,默认 18px -->
+   * <ZText size="middle" />                   <!-- happy path -->
+   * <ZText :size="(f) => f._middle" />        <!-- factory(等价) -->
+   * <ZText :size="(f) => f.iem(1.125)" />     <!-- 1.125iem 自定义 -->
    * <ZText :size="(f) => f.px(14)" />         <!-- 字面量 -->
    */
-  size?: ((f: Chain<ZuiSchema>['fontSize']) => void) | undefined
+  size?: SizeProp<'fontSize'> | undefined
 
   /**
    * 字重 factory —— 接 `fontWeight` carrier。

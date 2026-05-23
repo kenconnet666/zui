@@ -18,8 +18,10 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
+import type { Size5 } from '../_internal/size-prop'
 
-export type ZPaginationSize = 'small' | 'middle' | 'large'
+/** ZPagination size 仅接 Size5 档位(影响 button 尺寸数字 + 字号,factory 路径无意义)。 */
+export type ZPaginationSize = Size5
 
 export interface ZPaginationProps {
   page?: number
@@ -28,6 +30,7 @@ export interface ZPaginationProps {
   siblings?: number
   showTotal?: boolean
   disabled?: boolean
+  /** 尺寸档位(`Size5`)。 */
   size?: ZPaginationSize
   sxItem?: SxObject
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -82,16 +85,22 @@ const pageList = computed<(number | 'dots')[]>(() => {
   return list
 })
 
-const SIZE_FONT: Record<ZPaginationSize, 'small' | 'middle' | 'large'> = {
+/** 字号档位 —— 跟 schema fontSize 对齐。 */
+const SIZE_FONT: Record<ZPaginationSize, 'tiny' | 'small' | 'middle' | 'large' | 'huge'> = {
+  tiny: 'tiny',
   small: 'small',
   middle: 'middle',
   large: 'large',
+  huge: 'huge',
 }
 
+/** button 尺寸 iem 倍率(5 阶,tiny/huge 各加一档)。 */
 const SIZE_DIM: Record<ZPaginationSize, number> = {
+  tiny: 1.25,
   small: 1.5,
   middle: 1.75,
   large: 2,
+  huge: 2.5,
 }
 
 const rootClass = computed(() =>

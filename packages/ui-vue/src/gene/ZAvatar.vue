@@ -14,14 +14,23 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-
-export type ZAvatarSize = number | 'small' | 'middle' | 'large'
+import type { SizeProp } from '../_internal/size-prop'
 
 export interface ZAvatarProps {
   src?: string
   alt?: string
   text?: string
-  size?: ZAvatarSize
+  /**
+   * 头像尺寸 —— `factory | Size5 | undefined` union(2026-05-22 修订)。
+   *
+   * **默认**:`'middle'`(2.5iem,默认 40px,iem 联动)。
+   *
+   * **5 阶档位**:tiny(1.5iem/24px) / small(2iem/32px) / middle(2.5iem/40px) /
+   * large(3iem/48px) / huge(4iem/64px)。
+   *
+   * **BREAKING**(v0.3 移除):不再支持 `number` 字面量;用 factory 表达 `:size="(w) => w.px(N)"`。
+   */
+  size?: SizeProp<'width'> | undefined
   shape?: 'circle' | 'square'
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -32,6 +41,7 @@ export interface ZAvatarProps {
 import { computed, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applySizeProp, type SizeMap } from '../_internal/size-prop'
 
 const props = withDefaults(defineProps<ZAvatarProps>(), {
   alt: '',
@@ -43,17 +53,24 @@ const theme = useZTheme()
 
 const imgFailed = ref(false)
 
-const SIZE_IEM: Record<'small' | 'middle' | 'large', number> = {
-  small: 2,
-  middle: 2.5,
-  large: 3,
+/** ZAvatar size 档位 → iem 倍率(width carrier;height 自动镜像)。 */
+const SIZE_MAP: SizeMap<Chain<ZuiSchema>['width']> = {
+  tiny: (w) => {
+    w.iem(1.5)
+  },
+  small: (w) => {
+    w.iem(2)
+  },
+  middle: (w) => {
+    w.iem(2.5)
+  },
+  large: (w) => {
+    w.iem(3)
+  },
+  huge: (w) => {
+    w.iem(4)
+  },
 }
-
-const sizeValue = computed(() => {
-  if (typeof props.size === 'number') return `${props.size}px`
-  const n = SIZE_IEM[props.size]
-  return `calc(${n} * var(--zui-iem, 16px))`
-})
 
 const showImage = computed(() => !!props.src && !imgFailed.value)
 const showText = computed(() => !showImage.value && !!props.text)
@@ -64,8 +81,9 @@ const rootClass = computed(() =>
     s.alignItems.center
     s.justifyContent.center
     s.flexShrink(0)
-    s._prop('width', sizeValue.value)
-    s._prop('height', sizeValue.value)
+    // size:union(width carrier;height 镜像 width 保证正方形头像)
+    applySizeProp(props.size, SIZE_MAP, s.width)
+    if (s._node.width !== undefined) s._node.height = s._node.width
     s._prop('overflow', 'hidden')
     s._prop('verticalAlign', 'middle')
     s._prop('userSelect', 'none')

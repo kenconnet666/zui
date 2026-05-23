@@ -31,30 +31,42 @@ import type { Component } from 'vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import { icss, presetAnimations } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
+import { applySizeProp, type SizeMap, type SizeProp } from '../_internal/size-prop'
 
 // ═══════════════════════════════════════════════════════════════════════
 // 公开类型
 // ═══════════════════════════════════════════════════════════════════════
 
 /**
- * `ZIcon` 完整 props。**4 个外观维度全部是单 carrier factory**,API 一致极简。
+ * `ZIcon` 完整 props。**size 支持 factory + 5 阶档位 union**(2026-05-22 修订),
+ * 其它维度纯 factory(color / depth / spin 无连续档位语义)。
  */
 export interface ZIconProps {
   /**
-   * 图标尺寸 factory —— 接 `width` carrier,**height 自动镜像 width**(图标始终正方形)。
+   * 图标尺寸 —— 接 `width` carrier factory 或 5 阶档位字符串。
+   * **height 自动镜像 width**(图标始终正方形)。
    *
-   * **默认**:`(w) => w.iem(1)` —— 1iem × 1iem(默认 16px × 16px,跟随 ZBox 字号联动)。
+   * **默认**:`'small'`(1iem,默认 16px,跟父字号同步)。**v2 兼容选择**:
+   * 旧版默认 `(w) => w.iem(1)`,新版默认 `'small'` 等价 1iem,无视觉差异。
+   *
+   * **5 阶档位**(iem 联动,Provider 字号一变全跟着变):
+   * - `tiny`:0.75iem(默认 12px)
+   * - `small`:1iem(默认 16px)
+   * - `middle`:1.25iem(默认 20px)
+   * - `large`:1.5iem(默认 24px)
+   * - `huge`:2iem(默认 32px)
    *
    * 想表达非正方形 → 走 `css` 兜底单独设 width / height。
-   * 想"跟父容器字号"(罕见)→ `(w) => w.em(1)` 显式 em。
+   * 想"跟父容器字号"(罕见)→ `:size="(w) => w.em(1)"` 显式 em。
    *
    * @example
-   * <ZIcon :size="(w) => w.iem(1)" />      <!-- 1iem,默认 16px,Provider 控制 -->
-   * <ZIcon :size="(w) => w.iem(1.5)" />    <!-- 1.5iem,默认 24px -->
-   * <ZIcon :size="(w) => w.em(1.25)" />    <!-- 1.25em,跟父字号 -->
-   * <ZIcon :size="(w) => w.px(20)" />      <!-- 字面量 -->
+   * <ZIcon size="middle" />                  <!-- happy path -->
+   * <ZIcon size="large" />
+   * <ZIcon :size="(w) => w.iem(1.5)" />      <!-- factory 逃生口 -->
+   * <ZIcon :size="(w) => w.em(1.25)" />      <!-- 1.25em,跟父字号 -->
+   * <ZIcon :size="(w) => w.px(20)" />        <!-- 字面量 -->
    */
-  size?: ((w: Chain<ZuiSchema>['width']) => void) | undefined
+  size?: SizeProp<'width'>
 
   /**
    * 图标颜色 factory —— 接 `color` carrier。
@@ -136,10 +148,8 @@ import { computed } from 'vue'
 import { useZTheme } from '../provider'
 
 const props = withDefaults(defineProps<ZIconProps>(), {
+  size: 'small',
   // Vue defineProps:Function 类型 prop 的 default 直接给函数本身(不需 () => 工厂)
-  size: (w: Chain<ZuiSchema>['width']) => {
-    w.iem(1)
-  },
   color: (c: Chain<ZuiSchema>['color']) => {
     c.currentColor
   },
@@ -148,7 +158,25 @@ const props = withDefaults(defineProps<ZIconProps>(), {
 
 const theme = useZTheme()
 
-// ─── 一个 className:base + 4 维度 factory + css,5 行内联 ───
+const SIZE_MAP: SizeMap<Chain<ZuiSchema>['width']> = {
+  tiny: (w) => {
+    w.iem(0.75)
+  },
+  small: (w) => {
+    w.iem(1)
+  },
+  middle: (w) => {
+    w.iem(1.25)
+  },
+  large: (w) => {
+    w.iem(1.5)
+  },
+  huge: (w) => {
+    w.iem(2)
+  },
+}
+
+// ─── 一个 className:base + 维度 + css,5 行内联 ───
 const className = computed(() =>
   icss(theme.value, (s) => {
     // base
@@ -158,8 +186,8 @@ const className = computed(() =>
     s.flexShrink(0)
     s.lineHeight(1)
 
-    // size:用户只控制 width carrier;height 自动镜像 width(保证图标正方形)
-    props.size(s.width)
+    // size:union(string 走 SIZE_MAP / factory 直接调);height 自动镜像 width
+    applySizeProp(props.size, SIZE_MAP, s.width)
     if (s._node.width !== undefined) s._node.height = s._node.width
 
     // color:单 carrier factory(s.color 的 factory 重载吃 props.color)

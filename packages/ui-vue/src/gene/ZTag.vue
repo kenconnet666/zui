@@ -11,14 +11,15 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export type ZTagVariant = 'filled' | 'outlined' | 'soft'
-export type ZTagSize = 'small' | 'middle' | 'large'
 
 export interface ZTagProps {
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   variant?: ZTagVariant
-  size?: ZTagSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(原 3 阶 → 5 阶,tiny/huge fallback)。 */
+  size?: SizePropMulti
   closable?: boolean
   round?: boolean
   sxClose?: SxObject
@@ -36,6 +37,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyAsBg } from '../_internal/color-bridge'
+import { applySizeProp, makeSizeMap } from '../_internal/size-prop'
 import { BuiltinIcons } from './icons'
 import ZIcon from './ZIcon.vue'
 
@@ -50,27 +52,32 @@ const emit = defineEmits<ZTagEmits>()
 
 const theme = useZTheme()
 
-const SIZE_FONT: Record<ZTagSize, 'tiny' | 'small' | 'middle'> = {
-  small: 'tiny',
-  middle: 'small',
-  large: 'middle',
-}
-
-const SIZE_PADDING_Y: Record<ZTagSize, number> = {
-  small: 0.125,
-  middle: 0.25,
-  large: 0.375,
-}
+/** ZTag size 档位 —— 同时影响 fontSize + padding-y(多 carrier 维度,3 阶实现 + fallback)。 */
+const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
+  small: (s) => {
+    s.fontSize._tiny
+    s.paddingTop.iem(0.125)
+    s.paddingBottom.iem(0.125)
+  },
+  middle: (s) => {
+    s.fontSize._small
+    s.paddingTop.iem(0.25)
+    s.paddingBottom.iem(0.25)
+  },
+  large: (s) => {
+    s.fontSize._middle
+    s.paddingTop.iem(0.375)
+    s.paddingBottom.iem(0.375)
+  },
+})
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
-    s.fontSize[`_${SIZE_FONT[props.size]}`]
     s.lineHeight._tight
-    s.paddingTop.iem(SIZE_PADDING_Y[props.size])
-    s.paddingBottom.iem(SIZE_PADDING_Y[props.size])
+    applySizeProp(props.size, SIZE_MAP, s)
     s.paddingLeft._small
     s.paddingRight._small
     s.borderRadius(props.round ? '9999px' : 'calc(0.25 * var(--zui-iem, 16px))')

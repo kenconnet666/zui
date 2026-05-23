@@ -21,14 +21,13 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-
-export type ZSpinSize = 'small' | 'middle' | 'large'
+import type { SizeProp } from '../_internal/size-prop'
 
 export interface ZSpinProps {
   /** 是否加载中,默认 `true`(因为通常 v-if/外控,组件内不需 false 时仍渲染)。 */
   spinning?: boolean
-  /** indicator 尺寸,默认 `'middle'`。 */
-  size?: ZSpinSize
+  /** indicator 尺寸 —— `factory | Size5 | undefined` union。 */
+  size?: SizeProp<'width'>
   /** 加载文字(包裹模式下显示在 indicator 下方)。 */
   tip?: string
   /** 包裹模式下覆盖层 sx 配置。 */
@@ -47,6 +46,7 @@ import { computed, h, useSlots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import type { SizeMap } from '../_internal/size-prop'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZSpinProps>(), {
@@ -60,10 +60,23 @@ const theme = useZTheme()
 
 const hasDefaultSlot = computed(() => !!slots.default)
 
-const SIZE_IEM: Record<ZSpinSize, number> = {
-  small: 1,
-  middle: 1.5,
-  large: 2,
+/** ZSpin indicator 尺寸 —— ZSpin 默认 middle 比 ZIcon 默认大一档(spinner 通常更醒目)。 */
+const SPIN_SIZE_MAP: SizeMap<Chain<ZuiSchema>['width']> = {
+  tiny: (w) => {
+    w.iem(0.875)
+  },
+  small: (w) => {
+    w.iem(1)
+  },
+  middle: (w) => {
+    w.iem(1.5)
+  },
+  large: (w) => {
+    w.iem(2)
+  },
+  huge: (w) => {
+    w.iem(2.5)
+  },
 }
 
 const rootClass = computed(() =>
@@ -116,15 +129,19 @@ const tipClass = computed(() =>
   }),
 )
 
+/** 规范化 size 为 factory(传给 ZIcon size)。 */
+const indicatorSize = computed(() => {
+  if (typeof props.size === 'string') return SPIN_SIZE_MAP[props.size]
+  return props.size
+})
+
 const defaultIndicator = computed(() =>
   h(ZIcon, {
     component: BuiltinIcons.refresh,
     spin: (d: Chain<ZuiSchema>['animationDuration']) => {
       d.s(1)
     },
-    size: (w: Chain<ZuiSchema>['width']) => {
-      w.iem(SIZE_IEM[props.size])
-    },
+    size: indicatorSize.value,
   }),
 )
 

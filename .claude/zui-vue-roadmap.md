@@ -38,7 +38,7 @@
 | L12 | **取消所有 subpath exports**,只暴露主入口 `@kenconnet666/zui-vue` | `package.json/exports` 与 `vite.config.ts/entry` 单入口化 |
 | L13 | **工具 hooks 优先 VueUse,不够包装,最后自写** | 自写仅限 `useRipple`(其它包装 floating-ui/Teleport/onKeyStroke 等)。放 `src/_hooks/` |
 | L14 | **i18n 沿用 ZLocale**(不引 vue-i18n) | 现有 namespace 已就位,新组件加 namespace 时增量补 |
-| L15 | **6 维度 carrier factory + cssRoot(改 `css`) 范式** | 全组件遵守;复合组件按需精简维度,但都必有 `css` |
+| L15 | ~~**6 维度 carrier factory + cssRoot(改 `css`) 范式**~~ **[已撤销 2026-05-22]** | 现行:`factory \| Size5 \| undefined` union(决策文档 `.claude/decisions/2026-05-22-prop-shape-union.md`)。`css` 兜底口保留。 |
 | L16 | **状态色衍生**(hover/active/disabled 等)走 chain modifier(`.darken/.lighten/.alpha`),不进 schema | 独立语义色(如 textSecondary)才进 schema |
 | L17 | **size 维度** | 交互组件有(Button/Input/Select),展示组件按需(Card/Tag 可省) |
 | L18 | **ZButton 推到 Phase β 后期** | 需要先有 `useRipple` / `useFocusVisible`(用 CSS `:focus-visible`)/ icon loading 等基建 |
@@ -761,6 +761,25 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ## 9. 进度日志(逆序追加,新条目放最前)
 
 > 每个 Stage / 子段完成后追加一条。
+
+### 2026-05-22 BREAKING — props 形态统一为 union(撤销 L15)
+
+**决策文档**:`.claude/decisions/2026-05-22-prop-shape-union.md`(撤销"chain factory only",改 `factory | Size5 | undefined` union)
+
+**改动统计**:
+- 新基建:`src/_internal/size-prop.ts`(Size5/SizeProp/SizePropMulti/SizeMap + applySizeProp/makeSizeMap)+ `src/_internal/component-sizes.ts`(INPUT_SIZE_MAP / COMPACT_PADDING_MAP 共享 SIZE_MAP)
+- 改造 25 个 SFC(详见 CHANGELOG.md):
+  - gene 10:ZIcon / ZText / ZTitle / ZParagraph / ZLink / ZSpace / ZAvatar(**BREAKING:`number` 砍掉**)/ ZTag / ZSegmented / ZButton
+  - input 9:ZInput / ZInputNumber / ZSelect / ZAutoComplete / ZDatePicker / ZTimePicker / ZTreeSelect / ZSwitch / ZRate
+  - display 4:ZProgress / ZList / ZDescriptions / ZTable
+  - feedback 2:ZSpin / ZDrawer(`Size5` 字符串 → iem 映射)
+  - navigation 1:ZPagination
+  - input `ZFormItem`:**新增 `sxControl` 节点**
+- 搭车修复:ZPopconfirm `aria-modal="false"` 删除 / ZInput dead code 清理 / ZTable+ZTreeSelect `s.color('_x')` 字符串调用 bug 修复
+- 更新文档:roadmap §1 L15 标"已撤销" / skill §13.0 ① 重写为"factory + Size5 union" 范式
+
+**验证**:type-check ✓ / **tests 548/548 ✓**(原 540 + 新 size-prop spec 8 case)/ build ⏳
+**下一步**:用户确认后 commit + 决定是否发版 v0.3.0
 
 ### 2026-05-23 🎉 Phase α/β/γ 全部完成(80+ 组件 / 540 tests / 16 commits)
 

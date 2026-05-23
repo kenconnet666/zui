@@ -11,13 +11,13 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-
-export type ZListSize = 'small' | 'middle' | 'large'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZListProps<T = unknown> {
   items: T[]
   bordered?: boolean
-  size?: ZListSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(影响 header / footer / item padding)。 */
+  size?: SizePropMulti
   header?: string
   footer?: string
   emptyText?: string
@@ -29,6 +29,8 @@ export interface ZListProps<T = unknown> {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applySizeProp } from '../_internal/size-prop'
+import { COMPACT_PADDING_MAP } from '../_internal/component-sizes'
 
 const props = withDefaults(defineProps<ZListProps<T>>(), {
   bordered: false,
@@ -37,12 +39,6 @@ const props = withDefaults(defineProps<ZListProps<T>>(), {
 })
 
 const theme = useZTheme()
-
-const SIZE_PADDING: Record<ZListSize, 'small' | 'middle' | 'large'> = {
-  small: 'small',
-  middle: 'middle',
-  large: 'large',
-}
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
@@ -63,7 +59,7 @@ const rootClass = computed(() =>
 
 const headerClass = computed(() =>
   icss(theme.value, (s) => {
-    s.padding[`_${SIZE_PADDING[props.size]}`]
+    applySizeProp(props.size, COMPACT_PADDING_MAP, s)
     s.fontWeight._semibold
     s.borderBottomWidth._thin
     s.borderBottomStyle.solid
@@ -73,7 +69,7 @@ const headerClass = computed(() =>
 
 const footerClass = computed(() =>
   icss(theme.value, (s) => {
-    s.padding[`_${SIZE_PADDING[props.size]}`]
+    applySizeProp(props.size, COMPACT_PADDING_MAP, s)
     s.color._textSecondary
     s.fontSize._small
     s.borderTopWidth._thin
@@ -84,7 +80,7 @@ const footerClass = computed(() =>
 
 const itemClass = computed(() =>
   icss(theme.value, (s) => {
-    s.padding[`_${SIZE_PADDING[props.size]}`]
+    applySizeProp(props.size, COMPACT_PADDING_MAP, s)
   }),
 )
 

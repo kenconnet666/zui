@@ -9,8 +9,7 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-
-export type ZSegmentedSize = 'small' | 'middle' | 'large'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZSegmentedOption {
   value: string | number
@@ -21,7 +20,8 @@ export interface ZSegmentedOption {
 export interface ZSegmentedProps {
   value?: string | number
   options: ZSegmentedOption[]
-  size?: ZSegmentedSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(影响每项的 padding-y)。 */
+  size?: SizePropMulti
   block?: boolean
   disabled?: boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -37,6 +37,7 @@ export interface ZSegmentedEmits {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applySizeProp, makeSizeMap } from '../_internal/size-prop'
 
 const props = withDefaults(defineProps<ZSegmentedProps>(), {
   size: 'middle',
@@ -48,11 +49,21 @@ const emit = defineEmits<ZSegmentedEmits>()
 
 const theme = useZTheme()
 
-const SIZE_PADDING_Y: Record<ZSegmentedSize, number> = {
-  small: 0.125,
-  middle: 0.25,
-  large: 0.375,
-}
+/** ZSegmented size 档位 —— 每项的 padding-y(3 阶实现 + tiny/huge fallback)。 */
+const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
+  small: (s) => {
+    s.paddingTop.iem(0.125)
+    s.paddingBottom.iem(0.125)
+  },
+  middle: (s) => {
+    s.paddingTop.iem(0.25)
+    s.paddingBottom.iem(0.25)
+  },
+  large: (s) => {
+    s.paddingTop.iem(0.375)
+    s.paddingBottom.iem(0.375)
+  },
+})
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
@@ -81,8 +92,7 @@ function itemClass(opt: ZSegmentedOption): string {
     s.fontWeight._medium
     s.paddingLeft._middle
     s.paddingRight._middle
-    s.paddingTop.iem(SIZE_PADDING_Y[props.size])
-    s.paddingBottom.iem(SIZE_PADDING_Y[props.size])
+    applySizeProp(props.size, SIZE_MAP, s)
     s.transitionProperty._colors
     s.transitionDuration._small
     if (props.block) s.flexGrow(1)

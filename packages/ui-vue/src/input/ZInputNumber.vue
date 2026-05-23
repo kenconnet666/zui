@@ -15,8 +15,7 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-
-export type ZInputNumberSize = 'small' | 'middle' | 'large'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZInputNumberProps {
   value?: number | null
@@ -26,7 +25,8 @@ export interface ZInputNumberProps {
   precision?: number
   disabled?: boolean
   readonly?: boolean
-  size?: ZInputNumberSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(同 ZInput,复用 INPUT_SIZE_MAP)。 */
+  size?: SizePropMulti
   placeholder?: string
   sxInput?: SxObject
   sxButton?: SxObject
@@ -46,6 +46,8 @@ import { computed, h } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applySizeProp } from '../_internal/size-prop'
+import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZInputNumberProps>(), {
@@ -58,12 +60,6 @@ const props = withDefaults(defineProps<ZInputNumberProps>(), {
 const emit = defineEmits<ZInputNumberEmits>()
 
 const theme = useZTheme()
-
-const SIZE_PADDING_Y: Record<ZInputNumberSize, number> = {
-  small: 0.25,
-  middle: 0.375,
-  large: 0.5,
-}
 
 const displayValue = computed(() => {
   if (props.value === null || props.value === undefined) return ''
@@ -118,9 +114,7 @@ const wrapperClass = computed(() =>
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    s.fontSize._middle
-    s.paddingTop.iem(SIZE_PADDING_Y[props.size])
-    s.paddingBottom.iem(SIZE_PADDING_Y[props.size])
+    applySizeProp(props.size, INPUT_SIZE_MAP, s)
     s.paddingLeft._small
     s.paddingRight._tiny
     if (props.disabled) {

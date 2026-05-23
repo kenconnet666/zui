@@ -21,13 +21,13 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-
-export type ZInputSize = 'small' | 'middle' | 'large'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZInputProps {
   value?: string | number
   type?: string
-  size?: ZInputSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(默认 `'middle'`)。 */
+  size?: SizePropMulti
   disabled?: boolean
   readonly?: boolean
   placeholder?: string
@@ -55,10 +55,12 @@ export interface ZInputEmits {
 </script>
 
 <script lang="ts" setup>
-import { computed, h, ref, useSlots } from 'vue'
+import { computed, h, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applySizeProp } from '../_internal/size-prop'
+import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZInputProps>(), {
@@ -73,24 +75,12 @@ const props = withDefaults(defineProps<ZInputProps>(), {
 
 const emit = defineEmits<ZInputEmits>()
 
-const slots = useSlots()
 const theme = useZTheme()
 
 const inputRef = ref<HTMLInputElement | null>(null)
 const focused = ref(false)
 
 const innerValue = computed(() => (props.value ?? '').toString())
-
-const SIZE_PADDING_Y: Record<ZInputSize, number> = {
-  small: 0.25,
-  middle: 0.375,
-  large: 0.5,
-}
-const SIZE_FONT: Record<ZInputSize, 'small' | 'middle' | 'large'> = {
-  small: 'small',
-  middle: 'middle',
-  large: 'large',
-}
 
 const wrapperClass = computed(() =>
   icss(theme.value, (s) => {
@@ -99,15 +89,13 @@ const wrapperClass = computed(() =>
     s.gap._tiny
     s.paddingLeft._small
     s.paddingRight._small
-    s.paddingTop.iem(SIZE_PADDING_Y[props.size])
-    s.paddingBottom.iem(SIZE_PADDING_Y[props.size])
+    applySizeProp(props.size, INPUT_SIZE_MAP, s)
     s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    s.fontSize[`_${SIZE_FONT[props.size]}`]
     s.lineHeight._normal
     s.width.pct(100)
     s.transitionProperty._colors

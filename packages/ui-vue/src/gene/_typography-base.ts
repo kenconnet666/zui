@@ -13,21 +13,23 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
+import { applySizeProp, type SizeMap, type SizeProp } from '../_internal/size-prop'
 
 /**
  * Typography 组件共享 props —— 6 维度 carrier factory + 5 状态布尔/枚举。
  *
+ * `size` 走 union 范式(2026-05-22 修订):`factory | Size5 | undefined`,
+ * 字符串档位映射到 schema fontSize token(`_tiny` / `_small` / `_middle` / `_large` / `_huge`)。
+ *
  * 各 SFC 在 `export interface Z<Component>Props` 中**重复展开这些字段**(而不是 extends),
  * 这样 IDE 悬停看 props 类型时一眼看到全集,符合 ZIcon 范式。
- *
- * **为什么不让各组件 extends 这个 interface**:
- * - Vue `<script setup>` `defineProps<T>()` 对跨文件 interface extend 偶尔解析有边界
- * - IDE 在 extend 链上展开慢,直接平铺更直观
- *
- * 本 interface 仅用作 `applyTypographyBase` 函数签名锚点,**非 props 的类型唯一来源**。
  */
 export interface ZTypographyBaseProps {
-  size?: ((f: Chain<ZuiSchema>['fontSize']) => void) | undefined
+  /**
+   * 字号 —— `factory | Size5 | undefined` union。字符串档位映射 schema fontSize token。
+   * 默认不传 = 继承父字号。
+   */
+  size?: SizeProp<'fontSize'> | undefined
   weight?: ((w: Chain<ZuiSchema>['fontWeight']) => void) | undefined
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   depth?: ((o: Chain<ZuiSchema>['opacity']) => void) | undefined
@@ -38,6 +40,32 @@ export interface ZTypographyBaseProps {
   strikethrough?: boolean
   mono?: boolean
   ellipsis?: boolean | number
+}
+
+/**
+ * Typography 共享 size map —— 字符串档位直接映射 schema fontSize token。
+ *
+ * 因为 schema fontSize 的 key 跟 Size5 完全一致(tiny/small/middle/large/huge),
+ * 用户写 `size="middle"` 等价于 `:size="(f) => f._middle"`。
+ *
+ * 业务方在 `zuiLight.extend({ fontSize: { ... } })` 覆盖 schema 时,这个映射也跟着变。
+ */
+export const TYPOGRAPHY_SIZE_MAP: SizeMap<Chain<ZuiSchema>['fontSize']> = {
+  tiny: (f) => {
+    f._tiny
+  },
+  small: (f) => {
+    f._small
+  },
+  middle: (f) => {
+    f._middle
+  },
+  large: (f) => {
+    f._large
+  },
+  huge: (f) => {
+    f._huge
+  },
 }
 
 /**
@@ -60,8 +88,8 @@ export function applyTypographyBase(
   s: Chain<ZuiSchema>,
   props: ZTypographyBaseProps,
 ): void {
-  // ─── 6 维度 carrier factory(传了即写,不传保留 cascade) ───
-  if (props.size) s.fontSize(props.size)
+  // ─── size: union(string 走 TYPOGRAPHY_SIZE_MAP / factory 直接调) ───
+  applySizeProp(props.size, TYPOGRAPHY_SIZE_MAP, s.fontSize)
   if (props.weight) s.fontWeight(props.weight)
   if (props.color) s.color(props.color)
   if (props.depth) s.opacity(props.depth)

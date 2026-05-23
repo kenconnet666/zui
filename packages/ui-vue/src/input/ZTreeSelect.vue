@@ -13,8 +13,7 @@ import type { Placement } from '@floating-ui/vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { ZTreeNode } from '../display/ZTree.vue'
-
-export type ZTreeSelectSize = 'small' | 'middle' | 'large'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZTreeSelectProps {
   value?: string | null
@@ -23,7 +22,8 @@ export interface ZTreeSelectProps {
   placeholder?: string
   disabled?: boolean
   clearable?: boolean
-  size?: ZTreeSelectSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(复用 INPUT_SIZE_MAP)。 */
+  size?: SizePropMulti
   placement?: Placement
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -39,6 +39,8 @@ import { computed, h, ref, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applySizeProp } from '../_internal/size-prop'
+import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
 import { usePopper, useEscapeStack } from '../_hooks'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZTree from '../display/ZTree.vue'
@@ -123,12 +125,6 @@ watch(
   },
 )
 
-const SIZE_PADDING_Y: Record<ZTreeSelectSize, number> = {
-  small: 0.25,
-  middle: 0.375,
-  large: 0.5,
-}
-
 const triggerClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
@@ -137,14 +133,13 @@ const triggerClass = computed(() =>
     s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid
-    s.borderColor(open.value ? '_primary' : '_border')
+    if (open.value) s.borderColor._primary
+    else s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    s.fontSize._middle
+    applySizeProp(props.size, INPUT_SIZE_MAP, s)
     s.paddingLeft._small
     s.paddingRight._small
-    s.paddingTop.iem(SIZE_PADDING_Y[props.size])
-    s.paddingBottom.iem(SIZE_PADDING_Y[props.size])
     s.cursor(props.disabled ? 'not-allowed' : 'pointer')
     s.minWidth.iem(10)
     if (props.disabled) {

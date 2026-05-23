@@ -13,8 +13,7 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-
-export type ZDescriptionsSize = 'small' | 'middle' | 'large'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZDescriptionsItem {
   label: string
@@ -28,7 +27,8 @@ export interface ZDescriptionsProps {
   title?: string
   column?: number
   bordered?: boolean
-  size?: ZDescriptionsSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(影响 label / value 内边距,偏紧)。 */
+  size?: SizePropMulti
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 </script>
@@ -37,6 +37,7 @@ export interface ZDescriptionsProps {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applySizeProp, makeSizeMap } from '../_internal/size-prop'
 
 const props = withDefaults(defineProps<ZDescriptionsProps>(), {
   column: 3,
@@ -46,11 +47,18 @@ const props = withDefaults(defineProps<ZDescriptionsProps>(), {
 
 const theme = useZTheme()
 
-const SIZE_PADDING: Record<ZDescriptionsSize, 'tiny' | 'small' | 'middle'> = {
-  small: 'tiny',
-  middle: 'small',
-  large: 'middle',
-}
+/** ZDescriptions 偏紧 padding(label/value 表格风),3 阶 + tiny/huge fallback。 */
+const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
+  small: (s) => {
+    s.padding._tiny
+  },
+  middle: (s) => {
+    s.padding._small
+  },
+  large: (s) => {
+    s.padding._middle
+  },
+})
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
@@ -101,7 +109,7 @@ const labelClass = computed(() =>
   icss(theme.value, (s) => {
     s.color._textSecondary
     s.fontWeight._medium
-    s.padding[`_${SIZE_PADDING[props.size]}`]
+    applySizeProp(props.size, SIZE_MAP, s)
     if (props.bordered) {
       s.backgroundColor._bgMuted
       s.borderRightWidth._thin
@@ -114,7 +122,7 @@ const labelClass = computed(() =>
 const valueClass = computed(() =>
   icss(theme.value, (s) => {
     s.color._text
-    s.padding[`_${SIZE_PADDING[props.size]}`]
+    applySizeProp(props.size, SIZE_MAP, s)
     if (props.bordered) {
       s.borderRightWidth._thin
       s.borderRightStyle.solid

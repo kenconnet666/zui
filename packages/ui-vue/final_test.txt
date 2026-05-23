@@ -1,0 +1,1 @@
+/usr/bin/bash: line 1: /c/Users/Administrator/AppData/Local/pnpm/pnpm.exe: No such file or directory

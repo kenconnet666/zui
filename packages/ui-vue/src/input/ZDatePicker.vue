@@ -11,8 +11,7 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-
-export type ZDatePickerSize = 'small' | 'middle' | 'large'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZDatePickerProps {
   value?: string
@@ -20,7 +19,8 @@ export interface ZDatePickerProps {
   max?: string
   disabled?: boolean
   placeholder?: string
-  size?: ZDatePickerSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(复用 INPUT_SIZE_MAP)。 */
+  size?: SizePropMulti
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -34,6 +34,8 @@ export interface ZDatePickerEmits {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applySizeProp } from '../_internal/size-prop'
+import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
 
 const props = withDefaults(defineProps<ZDatePickerProps>(), {
   disabled: false,
@@ -44,12 +46,6 @@ const emit = defineEmits<ZDatePickerEmits>()
 
 const theme = useZTheme()
 
-const SIZE_PADDING_Y: Record<ZDatePickerSize, number> = {
-  small: 0.25,
-  middle: 0.375,
-  large: 0.5,
-}
-
 const inputClass = computed(() =>
   icss(theme.value, (s) => {
     s.borderRadius._small
@@ -58,11 +54,9 @@ const inputClass = computed(() =>
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    s.fontSize._middle
+    applySizeProp(props.size, INPUT_SIZE_MAP, s)
     s.paddingLeft._small
     s.paddingRight._small
-    s.paddingTop.iem(SIZE_PADDING_Y[props.size])
-    s.paddingBottom.iem(SIZE_PADDING_Y[props.size])
     s._prop('outline', 'none')
     s._hover((h) => {
       if (!props.disabled) h.borderColor._primary

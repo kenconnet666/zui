@@ -23,9 +23,9 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
+import type { SizePropMulti } from '../_internal/size-prop'
 import type { VNodeChild } from 'vue'
 
-export type ZTableSize = 'small' | 'middle' | 'large'
 export type ZTableAlign = 'left' | 'center' | 'right'
 export type ZTableSortOrder = 'asc' | 'desc' | null
 
@@ -54,7 +54,8 @@ export interface ZTableProps<T = Record<string, unknown>> {
   rowKey?: string | ((row: T) => string | number)
   bordered?: boolean
   striped?: boolean
-  size?: ZTableSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(影响 cell padding-y)。 */
+  size?: SizePropMulti
   emptyText?: string
   /** 行选择 ── `v-model:selectedKeys` 配合用。 */
   selectable?: boolean
@@ -79,6 +80,7 @@ import { computed, h } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applySizeProp, makeSizeMap } from '../_internal/size-prop'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZTableProps<T>>(), {
@@ -96,11 +98,21 @@ const emit = defineEmits<ZTableEmits>()
 
 const theme = useZTheme()
 
-const SIZE_PADDING: Record<ZTableSize, number> = {
-  small: 0.375,
-  middle: 0.625,
-  large: 0.875,
-}
+/** cell padding-y(影响行高,3 阶实现 + tiny/huge fallback)。 */
+const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
+  small: (s) => {
+    s.paddingTop.iem(0.375)
+    s.paddingBottom.iem(0.375)
+  },
+  middle: (s) => {
+    s.paddingTop.iem(0.625)
+    s.paddingBottom.iem(0.625)
+  },
+  large: (s) => {
+    s.paddingTop.iem(0.875)
+    s.paddingBottom.iem(0.875)
+  },
+})
 
 // ─── 排序 ───
 const sortedData = computed<T[]>(() => {
@@ -243,7 +255,7 @@ const sxRowAttrs = computed(() => extractSxAttrs(props.sxRow))
 
 const cellClass = (col: ZTableColumn<T>): string =>
   icss(theme.value, (s) => {
-    s.padding.iem(SIZE_PADDING[props.size])
+    applySizeProp(props.size, SIZE_MAP, s)
     s.paddingLeft._middle
     s.paddingRight._middle
     s._prop('textAlign', col.align ?? 'left')
@@ -258,7 +270,7 @@ const sxCellAttrs = computed(() => extractSxAttrs(props.sxCell))
 
 const selectCellClass = computed(() =>
   icss(theme.value, (s) => {
-    s.padding.iem(SIZE_PADDING[props.size])
+    applySizeProp(props.size, SIZE_MAP, s)
     s.paddingLeft._small
     s.paddingRight._small
     s._prop('textAlign', 'center')
@@ -281,7 +293,8 @@ function sortIconClass(active: boolean): string {
     s.display.inlineFlex
     s.alignItems.center
     s.marginLeft._tiny
-    s.color(active ? '_primary' : '_textSecondary')
+    if (active) s.color._primary
+    else s.color._textSecondary
     s.opacity(active ? 1 : 0.6)
   })
 }

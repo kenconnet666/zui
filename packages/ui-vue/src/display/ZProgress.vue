@@ -14,14 +14,17 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
+import type { Size5 } from '../_internal/size-prop'
 
 export type ZProgressType = 'line' | 'circle'
-export type ZProgressSize = 'small' | 'middle' | 'large'
+/** ZProgress size 仅接 Size5 档位(尺寸是 px 数字,factory 路径无意义)。 */
+export type ZProgressSize = Size5
 export type ZProgressStatus = 'normal' | 'success' | 'warning' | 'danger'
 
 export interface ZProgressProps {
   value: number
   type?: ZProgressType
+  /** 尺寸档位(`Size5`,影响 line 高度 / circle 直径)。 */
   size?: ZProgressSize
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   showText?: boolean
@@ -47,16 +50,22 @@ const theme = useZTheme()
 
 const clampedValue = computed(() => Math.max(0, Math.min(100, props.value)))
 
+/** line 高度 px(5 阶,tiny/huge 各加一档)。 */
 const SIZE_HEIGHT: Record<ZProgressSize, number> = {
+  tiny: 2,
   small: 4,
   middle: 8,
   large: 12,
+  huge: 16,
 }
 
+/** circle 直径 px(5 阶)。 */
 const CIRCLE_DIAMETER: Record<ZProgressSize, number> = {
+  tiny: 40,
   small: 60,
   middle: 100,
   large: 140,
+  huge: 180,
 }
 
 const STATUS_COLOR: Record<ZProgressStatus, 'success' | 'warning' | 'danger' | null> = {

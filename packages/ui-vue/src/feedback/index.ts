@@ -5,7 +5,7 @@ export { default as ZAlert } from './ZAlert.vue'
 export type { ZAlertProps, ZAlertType, ZAlertEmits } from './ZAlert.vue'
 
 export { default as ZSpin } from './ZSpin.vue'
-export type { ZSpinProps, ZSpinSize } from './ZSpin.vue'
+export type { ZSpinProps } from './ZSpin.vue'
 
 export { default as ZModal } from './ZModal.vue'
 export type { ZModalProps, ZModalEmits } from './ZModal.vue'

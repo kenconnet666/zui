@@ -16,13 +16,24 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
+import type { Size5 } from '../_internal/size-prop'
 
 export type ZDrawerPlacement = 'left' | 'right' | 'top' | 'bottom'
 
 export interface ZDrawerProps {
   visible?: boolean
   placement?: ZDrawerPlacement
-  size?: string | number
+  /**
+   * 抽屉宽度(left/right)或高度(top/bottom)。
+   *
+   * 接受 3 种形态:
+   * - **`Size5` 档位字符串**(`'tiny'`/`'small'`/`'middle'`(默认)/`'large'`/`'huge'`)→ iem 联动 8/12/20/28/40iem(128/192/320/448/640px @ 默认 iem)
+   * - **`number`** → `${N}px` 字面量
+   * - **其它字符串** → 原样作为 CSS 值(如 `'50%'` / `'30vw'`)
+   *
+   * **不接 factory**(placement 决定 width vs height,factory 表达不直观;复杂控制走 `css`)。
+   */
+  size?: Size5 | number | string
   title?: string
   closable?: boolean
   maskClosable?: boolean
@@ -53,7 +64,7 @@ import { BuiltinIcons, ZIcon } from '../gene'
 const props = withDefaults(defineProps<ZDrawerProps>(), {
   visible: false,
   placement: 'right',
-  size: '320px',
+  size: 'middle',
   closable: true,
   maskClosable: true,
 })
@@ -74,9 +85,25 @@ useEscapeStack(
   { enabled: visibleRef },
 )
 
-const sizeValue = computed(() =>
-  typeof props.size === 'number' ? `${props.size}px` : props.size,
-)
+/** Size5 → iem 倍率(数值=iem 倍数,默认 16px 基准 = 128/192/320/448/640px)。 */
+const SIZE_IEM: Record<Size5, number> = {
+  tiny: 8,
+  small: 12,
+  middle: 20,
+  large: 28,
+  huge: 40,
+}
+
+function isSize5(v: string): v is Size5 {
+  return v === 'tiny' || v === 'small' || v === 'middle' || v === 'large' || v === 'huge'
+}
+
+const sizeValue = computed(() => {
+  const s = props.size
+  if (typeof s === 'number') return `${s}px`
+  if (isSize5(s)) return `calc(${SIZE_IEM[s]} * var(--zui-iem, 16px))`
+  return s
+})
 
 const maskClass = computed(() =>
   icss(theme.value, (s) => {

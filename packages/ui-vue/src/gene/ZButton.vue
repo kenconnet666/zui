@@ -28,15 +28,16 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export type ZButtonVariant = 'filled' | 'outlined' | 'text' | 'ghost' | 'link'
-export type ZButtonSize = 'small' | 'middle' | 'large'
 
 export interface ZButtonProps {
   variant?: ZButtonVariant
   /** 主色 factory(默认 `_primary`)。可写 `(c) => c._danger` 等。 */
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
-  size?: ZButtonSize
+  /** 尺寸 —— `factory | Size5 | undefined` union(影响 fontSize + padding 双轴)。 */
+  size?: SizePropMulti
   loading?: boolean
   disabled?: boolean
   block?: boolean
@@ -61,6 +62,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyAsBg } from '../_internal/color-bridge'
+import { applySizeProp, makeSizeMap } from '../_internal/size-prop'
 import { useRipple } from '../_hooks'
 import { BuiltinIcons } from './icons'
 import ZIcon from './ZIcon.vue'
@@ -80,23 +82,30 @@ const emit = defineEmits<ZButtonEmits>()
 const theme = useZTheme()
 const btnRef = ref<HTMLButtonElement | null>(null)
 
-const SIZE_PADDING_Y: Record<ZButtonSize, number> = {
-  small: 0.25,
-  middle: 0.5,
-  large: 0.75,
-}
-
-const SIZE_PADDING_X: Record<ZButtonSize, 'small' | 'middle' | 'large'> = {
-  small: 'small',
-  middle: 'middle',
-  large: 'large',
-}
-
-const SIZE_FONT: Record<ZButtonSize, 'small' | 'middle' | 'large'> = {
-  small: 'small',
-  middle: 'middle',
-  large: 'large',
-}
+/** ZButton size 档位 —— 影响 fontSize + padding 双轴(3 阶实现 + tiny/huge fallback)。 */
+const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
+  small: (s) => {
+    s.fontSize._small
+    s.paddingTop.iem(0.25)
+    s.paddingBottom.iem(0.25)
+    s.paddingLeft._small
+    s.paddingRight._small
+  },
+  middle: (s) => {
+    s.fontSize._middle
+    s.paddingTop.iem(0.5)
+    s.paddingBottom.iem(0.5)
+    s.paddingLeft._middle
+    s.paddingRight._middle
+  },
+  large: (s) => {
+    s.fontSize._large
+    s.paddingTop.iem(0.75)
+    s.paddingBottom.iem(0.75)
+    s.paddingLeft._large
+    s.paddingRight._large
+  },
+})
 
 const isClickDisabled = computed(() => props.disabled || props.loading)
 
@@ -111,13 +120,9 @@ const buttonClass = computed(() =>
     s.alignItems.center
     s.justifyContent.center
     s.gap._tiny
-    s.fontSize[`_${SIZE_FONT[props.size]}`]
     s.fontWeight._medium
     s.lineHeight._tight
-    s.paddingTop.iem(SIZE_PADDING_Y[props.size])
-    s.paddingBottom.iem(SIZE_PADDING_Y[props.size])
-    s.paddingLeft[`_${SIZE_PADDING_X[props.size]}`]
-    s.paddingRight[`_${SIZE_PADDING_X[props.size]}`]
+    applySizeProp(props.size, SIZE_MAP, s)
     s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid

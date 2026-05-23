@@ -14,8 +14,7 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-
-export type ZRateSize = 'small' | 'middle' | 'large'
+import type { SizeProp } from '../_internal/size-prop'
 
 export interface ZRateProps {
   value?: number
@@ -24,7 +23,8 @@ export interface ZRateProps {
   disabled?: boolean
   readonly?: boolean
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
-  size?: ZRateSize
+  /** 星星尺寸 —— `factory | Size5 | undefined` union(单 carrier:width / height 镜像)。 */
+  size?: SizeProp<'width'>
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -38,6 +38,7 @@ export interface ZRateEmits {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applySizeProp, type SizeMap } from '../_internal/size-prop'
 
 const props = withDefaults(defineProps<ZRateProps>(), {
   value: 0,
@@ -52,10 +53,23 @@ const emit = defineEmits<ZRateEmits>()
 
 const theme = useZTheme()
 
-const SIZE_IEM: Record<ZRateSize, number> = {
-  small: 1,
-  middle: 1.25,
-  large: 1.5,
+/** 单 carrier width 维度(height 镜像)。 */
+const SIZE_MAP: SizeMap<Chain<ZuiSchema>['width']> = {
+  tiny: (w) => {
+    w.iem(0.75)
+  },
+  small: (w) => {
+    w.iem(1)
+  },
+  middle: (w) => {
+    w.iem(1.25)
+  },
+  large: (w) => {
+    w.iem(1.5)
+  },
+  huge: (w) => {
+    w.iem(2)
+  },
 }
 
 const isInteractive = computed(() => !props.disabled && !props.readonly)
@@ -83,8 +97,9 @@ const starClass = computed(() =>
     s.alignItems.center
     s.justifyContent.center
     s._prop('position', 'relative')
-    s._prop('width', `calc(${SIZE_IEM[props.size]} * var(--zui-iem, 16px))`)
-    s._prop('height', `calc(${SIZE_IEM[props.size]} * var(--zui-iem, 16px))`)
+    applySizeProp(props.size, SIZE_MAP, s.width)
+    // height 镜像 width(保证星星方形)
+    if (s._node.width !== undefined) s._node.height = s._node.width
     s.cursor(isInteractive.value ? 'pointer' : 'default')
     s.color._border
   }),

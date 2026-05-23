@@ -9,7 +9,6 @@ export type {
   ZTableProps,
   ZTableEmits,
   ZTableColumn,
-  ZTableSize,
   ZTableAlign,
   ZTableSortOrder,
   ZTableSortState,
@@ -33,7 +32,7 @@ export { default as ZResult } from './ZResult.vue'
 export type { ZResultProps, ZResultStatus } from './ZResult.vue'
 
 export { default as ZList } from './ZList.vue'
-export type { ZListProps, ZListSize } from './ZList.vue'
+export type { ZListProps } from './ZList.vue'
 
 export { default as ZProgress } from './ZProgress.vue'
 export type {
@@ -67,7 +66,6 @@ export { default as ZDescriptions } from './ZDescriptions.vue'
 export type {
   ZDescriptionsProps,
   ZDescriptionsItem,
-  ZDescriptionsSize,
 } from './ZDescriptions.vue'
 
 export { default as ZCalendar } from './ZCalendar.vue'

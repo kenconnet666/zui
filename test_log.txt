@@ -1,0 +1,2787 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.6 [39m[90mC:/code/zui/packages/ui-vue[39m
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZTree[2m > [22m[2mrole=tree + 顶层节点渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZDropdown[2m > [22m[2mdefault 隐藏,点击触发器 → 展开 menu
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-tooltip.spec.ts[2m > [22m[2mZTooltip[2m > [22m[2m默认 hover 模式 + 默认隐藏
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-4.spec.ts[2m > [22m[2mZImage[2m > [22m[2m渲染 img,src/alt 透传
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 渲染[2m > [22m[2m默认渲染 default slot
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 渲染[2m > [22m[2m默认根元素是 <span>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 渲染[2m > [22m[2mtag prop 切换根元素
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 6 维度 carrier factory[2m > [22m[2msize factory → fontSize
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 6 维度 carrier factory[2m > [22m[2msize factory → schema token _large
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZMention[2m > [22m[2m渲染 textarea + value 透传
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 6 维度 carrier factory[2m > [22m[2mweight factory → fontWeight 数值
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 6 维度 carrier factory[2m > [22m[2mcolor factory → schema token _primary
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 6 维度 carrier factory[2m > [22m[2mdepth factory → opacity 字面量
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTreeSelect[2m > [22m[2mrole=combobox + 默认隐藏
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-4.spec.ts[2m > [22m[2mZImage[2m > [22m[2m默认 lazy=true
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-alert.spec.ts[2m > [22m[2mZAlert — 渲染[2m > [22m[2m默认 type=info + role=alert
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZSegmented[2m > [22m[2mrole=radiogroup + 渲染 options
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-alert.spec.ts[2m > [22m[2mZAlert — 渲染[2m > [22m[2mtitle + description 都显示
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTreeSelect[2m > [22m[2m点触发器 → 展开下拉 + 显示 ZTree
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZMention[2m > [22m[2m输入触发 update:value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 6 维度 carrier factory[2m > [22m[2mleading factory → lineHeight 数值
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 6 维度 carrier factory[2m > [22m[2mtracking factory → letterSpacing 字面量
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 6 维度 carrier factory[2m > [22m[2m未传 6 维度 → 不写对应 CSS(保留 cascade)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-alert.spec.ts[2m > [22m[2mZAlert — 渲染[2m > [22m[2mdefault slot 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZTree[2m > [22m[2mexpandedKeys 控制展开 → 渲染子节点
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 状态 prop[2m > [22m[2mitalic → font-style:italic
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-4.spec.ts[2m > [22m[2mZImage[2m > [22m[2m错误 + 无 fallback → 显示错误文案
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-alert.spec.ts[2m > [22m[2mZAlert — type 配色[2m > [22m[2mtype=success → 使用 success 语义色
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 状态 prop[2m > [22m[2munderline=always → text-decoration-line:underline
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZTree[2m > [22m[2m点击有子节点 → toggle expand
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZSegmented[2m > [22m[2m点选项 → update:value + change
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-4.spec.ts[2m > [22m[2mZImage[2m > [22m[2m错误 + fallback → 渲染 fallback img
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 状态 prop[2m > [22m[2munderline=hover → 嵌套 &:hover 块包含 underline
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 状态 prop[2m > [22m[2mstrikethrough → text-decoration-line:line-through
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZAvatar[2m > [22m[2msrc 显示 img + alt
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 状态 prop[2m > [22m[2munderline=always + strikethrough → 多值叠加
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZSegmented[2m > [22m[2mdisabled 选项点击不 emit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 状态 prop[2m > [22m[2mmono → font-family 包含 ui-monospace
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZCarousel[2m > [22m[2mrole=region + slot 渲染每个 item
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-alert.spec.ts[2m > [22m[2mZAlert — type 配色[2m > [22m[2mtype=danger → 使用 danger 语义色
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZAvatar[2m > [22m[2m图片加载失败 → fallback 到 text
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-alert.spec.ts[2m > [22m[2mZAlert — closable[2m > [22m[2m默认无关闭按钮
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZSegmented[2m > [22m[2maria-checked
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-tooltip.spec.ts[2m > [22m[2mZTooltip[2m > [22m[2mmanual + visible=true → 渲染 tooltip
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 状态 prop[2m > [22m[2mellipsis=true → 单行截断三件套
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZAvatar[2m > [22m[2mdefault slot 优先
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZTree[2m > [22m[2m点击叶子 → update:selectedKey
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZGradientText[2m > [22m[2m渲染 slot + 注入 gradient style
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZAvatar[2m > [22m[2mshape=square → 方形圆角(非完全圆)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZGradientText[2m > [22m[2m自定义 gradient
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — 状态 prop[2m > [22m[2mellipsis=3 → 多行 line-clamp
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZAvatar[2m > [22m[2msize 数字 → px
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZCountdown[2m > [22m[2m过去时间 → 立即显示 00:00:00 + 触发 finish
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZCarousel[2m > [22m[2m箭头按钮 + dots 渲染(showArrows/showDots 默认 true)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZCountdown[2m > [22m[2m未来时间(大量) → 显示非零数字
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZCountdown[2m > [22m[2mformat 占位符替换
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — css 覆盖[2m > [22m[2mcss 可覆盖维度属性
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-4.spec.ts[2m > [22m[2mZAnchor[2m > [22m[2m渲染 items 链接
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZNumberAnimation[2m > [22m[2m渲染初始 from 值(0 或 自定义)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZTree[2m > [22m[2mdisabled 节点 → aria-disabled=true
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTreeSelect[2m > [22m[2m点触发器 → 展开下拉 + 显示 ZTree
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-4.spec.ts[2m > [22m[2mZScrollbar[2m > [22m[2m渲染容器 + slot 内容
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZCarousel[2m > [22m[2m点下一张 → update:current(loop)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-4.spec.ts[2m > [22m[2mZScrollbar[2m > [22m[2m全局样式只注入一次(再 mount 不重复)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-tooltip.spec.ts[2m > [22m[2mZTooltip[2m > [22m[2mdisabled → 不渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZUpload[2m > [22m[2mdefault 渲染拖拽区文案
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-alert.spec.ts[2m > [22m[2mZAlert — closable[2m > [22m[2mclosable=true 渲染 aria-label 关闭按钮
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZTag[2m > [22m[2m默认 variant=soft
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/text.spec.ts[2m > [22m[2mZText — css 覆盖[2m > [22m[2mcss 写伪类
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZNumberAnimation[2m > [22m[2mformat precision + separator
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTreeSelect[2m > [22m[2m选叶子 → update:value + 关闭
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/text.spec.ts [2m([22m[2m21 tests[22m[2m)[22m[32m 223[2mms[22m[39m
+[90mstderr[2m | tests/z-tooltip.spec.ts[2m > [22m[2mZTooltip[2m > [22m[2mcontent slot 覆盖 content prop
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-alert.spec.ts[2m > [22m[2mZAlert — closable[2m > [22m[2m点击关闭按钮 → emit close
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZDescriptions[2m > [22m[2mitems 渲染 label + value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-4.spec.ts[2m > [22m[2mZAutoComplete[2m > [22m[2minput + options 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZTag[2m > [22m[2mclosable → 渲染关闭按钮 + emit close
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZDropdown[2m > [22m[2m选项点击 → emit select + 关闭
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTreeSelect[2m > [22m[2m选叶子 → update:value + 关闭
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZMarquee[2m > [22m[2m渲染 slot 内容两次(衔接)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCalendar[2m > [22m[2m渲染年月头 + 7 个星期 + 42 个日期格
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-alert.spec.ts[2m > [22m[2mZAlert — showIcon + sx[2m > [22m[2mshowIcon=false → 不渲染 icon 容器
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZDescriptions[2m > [22m[2mtitle prop 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZTag[2m > [22m[2mvariant=filled → schema color 背景(不再用 currentColor 桥接,2026-05-23 重构)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZUpload[2m > [22m[2m选择文件 → emit change + update:fileList
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-tooltip.spec.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 271[2mms[22m[39m
+[90mstderr[2m | tests/z-alert.spec.ts[2m > [22m[2mZAlert — showIcon + sx[2m > [22m[2msxBody.css 应用到 body 节点
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZMarquee[2m > [22m[2m注入 keyframes 样式
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZDescriptions[2m > [22m[2mcolumn=2 → grid-template-columns 2 列
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZDropdown[2m > [22m[2mdisabled item 点击不 emit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZTag[2m > [22m[2mround=true → 圆角胶囊
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZSplit[2m > [22m[2mfirst / second slot 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZWatermark[2m > [22m[2m渲染 default slot + overlay
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZUpload[2m > [22m[2mfileList 渲染 + 点击移除 → emit remove
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-alert.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 306[2mms[22m[39m
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCalendar[2m > [22m[2m点日期 → update:value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-4.spec.ts[2m > [22m[2mZAutoComplete[2m > [22m[2m过滤 options(默认 includes)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTreeSelect[2m > [22m[2m显示选中 label
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2mvalue=5 → 显示 5
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZSplit[2m > [22m[2mdivider role=separator + aria-orientation
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZPageHeader[2m > [22m[2mtitle 渲染 + 返回按钮
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZDatePicker[2m > [22m[2minput type=date + value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZPopconfirm[2m > [22m[2m点击触发器 → 显示气泡,确定 → emit confirm + 关
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-4.spec.ts[2m > [22m[2mZAutoComplete[2m > [22m[2m点选项 → update:value + select + 关闭
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTour[2m > [22m[2mopen=false → 不渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2mvalue=0 + showZero=false → 不显示
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma.spec.ts[2m > [22m[2mZSplit[2m > [22m[2mdirection=vertical → orientation=horizontal
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZPageHeader[2m > [22m[2m点返回 → emit back
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCalendar[2m > [22m[2m上下月切换
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZPopconfirm[2m > [22m[2m点击触发器 → 显示气泡,确定 → emit confirm + 关
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTour[2m > [22m[2mopen=true + step 0 → 渲染卡片 + 当前步标题
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2mvalue=0 + showZero=true → 显示 0
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZPageHeader[2m > [22m[2mshowBack=false → 不渲染返回按钮
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZDatePicker[2m > [22m[2minput → update:value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZPopconfirm[2m > [22m[2m取消 → emit cancel
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTour[2m > [22m[2m点下一步 → emit update:current
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2mvalue > max → "max+"
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZPageHeader[2m > [22m[2msubtitle + extra slot
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZDatePicker[2m > [22m[2mdisabled
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZPopconfirm[2m > [22m[2m取消 → emit cancel
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2mdot=true → 不显数字,只显小圆点
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-phase-beta-batch-4.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 478[2mms[22m[39m
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZTimePicker[2m > [22m[2minput type=time
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-phase-gamma.spec.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 256[2mms[22m[39m
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTour[2m > [22m[2m最后一步点完成 → emit finish + open=false
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBadge[2m > [22m[2m有 default slot → wrapper position:relative
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZDynamicTags[2m > [22m[2mvalue 数组 → 渲染 tags
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZTimePicker[2m > [22m[2minput → update:value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTable 排序[2m > [22m[2msortable 列头点击 → emit update:sortState
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZCode[2m > [22m[2m默认 inline=true → <code>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZDynamicTags[2m > [22m[2m点 add 按钮 → 显示输入框
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZColorPicker[2m > [22m[2m显示色块 + 文字 + 隐藏 input[type=color]
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZNotification (组件模式 + createNotificationApi)[2m > [22m[2mitems 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZCode[2m > [22m[2minline=false → <pre><code>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZDynamicTags[2m > [22m[2m回车提交新 tag → update:value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCalendar[2m > [22m[2mfirstDayOfWeek=1 → 周一起首
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZNotification (组件模式 + createNotificationApi)[2m > [22m[2mcreateNotificationApi - api.success 显示 + destroyAll 卸载
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTable 排序[2m > [22m[2m按 age asc 排序 → 数据顺序变 Bob/Alice/Carol
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZCode[2m > [22m[2m字体走 mono
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZDynamicTags[2m > [22m[2m回车提交新 tag → update:value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZColorPicker[2m > [22m[2minput → update:value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCascader[2m > [22m[2m默认隐藏,点触发器 → 展开
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZNotification (组件模式 + createNotificationApi)[2m > [22m[2mcreateNotificationApi - api.success 显示 + destroyAll 卸载
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTable 排序[2m > [22m[2maria-sort=ascending
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBlockquote[2m > [22m[2m渲染 <blockquote>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-5.spec.ts[2m > [22m[2mZColorPicker[2m > [22m[2mshowText=false → 不显示文字
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCascader[2m > [22m[2m默认隐藏,点触发器 → 展开
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZNotification (组件模式 + createNotificationApi)[2m > [22m[2mduration > 0 → 自动关闭
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZBlockquote[2m > [22m[2m左侧 border-left 4px
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZDynamicTags[2m > [22m[2m点 close → remove tag
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZNotification (组件模式 + createNotificationApi)[2m > [22m[2mduration > 0 → 自动关闭
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZEllipsis[2m > [22m[2m默认 lines=1 → 单行 ellipsis 三件套
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZDynamicTags[2m > [22m[2m达到 max → 不显示 add 按钮
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZTransfer[2m > [22m[2m左右两栏渲染 + title
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-phase-beta-batch-5.spec.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 568[2mms[22m[39m
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZSlider[2m > [22m[2m渲染 input[type=range] + value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZEllipsis[2m > [22m[2mlines=3 → -webkit-line-clamp:3
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZTransfer[2m > [22m[2mtargetKeys 控制右侧
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZSlider[2m > [22m[2minput → update:value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-gene-phase-beta.spec.ts[2m > [22m[2mZEllipsis[2m > [22m[2mtag prop 切换根元素
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZTransfer[2m > [22m[2m勾选 + 点右箭头 → 移到右侧
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZSlider[2m > [22m[2mshowValue=true → 显示当前值
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTable 行选择[2m > [22m[2mselectable=true → 多一列 checkbox
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-2.spec.ts[2m > [22m[2mZTransfer[2m > [22m[2m自定义 titles
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [31m❯[39m tests/z-gene-phase-beta.spec.ts [2m([22m[2m23 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 361[2mms[22m[39m
+     [32m✓[39m src 显示 img + alt[32m 89[2mms[22m[39m
+     [32m✓[39m 图片加载失败 → fallback 到 text[32m 14[2mms[22m[39m
+     [32m✓[39m default slot 优先[32m 11[2mms[22m[39m
+     [32m✓[39m shape=square → 方形圆角(非完全圆)[32m 6[2mms[22m[39m
+[31m     [31m×[31m size 数字 → px[39m[32m 12[2mms[22m[39m
+     [32m✓[39m 默认 variant=soft[32m 38[2mms[22m[39m
+     [32m✓[39m closable → 渲染关闭按钮 + emit close[32m 23[2mms[22m[39m
+     [32m✓[39m variant=filled → schema color 背景(不再用 currentColor 桥接,2026-05-23 重构)[32m 22[2mms[22m[39m
+     [32m✓[39m round=true → 圆角胶囊[32m 9[2mms[22m[39m
+     [32m✓[39m value=5 → 显示 5[32m 15[2mms[22m[39m
+     [32m✓[39m value=0 + showZero=false → 不显示[32m 4[2mms[22m[39m
+     [32m✓[39m value=0 + showZero=true → 显示 0[32m 5[2mms[22m[39m
+     [32m✓[39m value > max → "max+"[32m 4[2mms[22m[39m
+     [32m✓[39m dot=true → 不显数字,只显小圆点[32m 10[2mms[22m[39m
+     [32m✓[39m 有 default slot → wrapper position:relative[32m 5[2mms[22m[39m
+     [32m✓[39m 默认 inline=true → <code>[32m 5[2mms[22m[39m
+     [32m✓[39m inline=false → <pre><code>[32m 4[2mms[22m[39m
+     [32m✓[39m 字体走 mono[32m 4[2mms[22m[39m
+     [32m✓[39m 渲染 <blockquote>[32m 6[2mms[22m[39m
+     [32m✓[39m 左侧 border-left 4px[32m 16[2mms[22m[39m
+     [32m✓[39m 默认 lines=1 → 单行 ellipsis 三件套[32m 40[2mms[22m[39m
+     [32m✓[39m lines=3 → -webkit-line-clamp:3[32m 8[2mms[22m[39m
+     [32m✓[39m tag prop 切换根元素[32m 5[2mms[22m[39m
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCascader[2m > [22m[2m点第一列选项 → 展开第二列
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZSlider[2m > [22m[2mdisabled → input.disabled
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCascader[2m > [22m[2m点第一列选项 → 展开第二列
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTable 行选择[2m > [22m[2m点行 checkbox → emit update:selectedKeys
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-phase-gamma-batch-2.spec.ts [2m([22m[2m20 tests[22m[2m)[22m[33m 627[2mms[22m[39m
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZRate[2m > [22m[2mrole=radiogroup + count=5 默认
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCascader[2m > [22m[2m点第一列选项 → 展开第二列
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZTable 行选择[2m > [22m[2m全选 checkbox
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCascader[2m > [22m[2m点叶子 → 完整路径 emit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZSelect 多选[2m > [22m[2mmultiple=true → aria-multiselectable + value 是数组
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZRate[2m > [22m[2mvalue=3 → 第 3 颗 aria-checked=true
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCascader[2m > [22m[2m点叶子 → 完整路径 emit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZSelect 多选[2m > [22m[2m多选下点选项 → toggle 数组,不关闭
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZRate[2m > [22m[2m点第 4 颗 → update:value(4)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCascader[2m > [22m[2m点叶子 → 完整路径 emit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZRate[2m > [22m[2mreadonly → 点击不 emit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-gamma-batch-3.spec.ts[2m > [22m[2mZCascader[2m > [22m[2m显示选中路径(separator)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch.spec.ts[2m > [22m[2mZRate[2m > [22m[2mcount=10
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-phase-gamma-batch-3.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 809[2mms[22m[39m
+ [32m✓[39m tests/z-phase-beta-batch.spec.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 884[2mms[22m[39m
+[90mstderr[2m | tests/z-phase-beta-upgrades.spec.ts[2m > [22m[2mZSelect 多选[2m > [22m[2m多选 + clearable + 有选 → clearable 显示,点 clear → []
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-phase-beta-upgrades.spec.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 952[2mms[22m[39m
+[90mstderr[2m | tests/z-popover.spec.ts[2m > [22m[2mZPopover[2m > [22m[2m默认 click 模式 + 默认隐藏
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox[2m > [22m[2m根 Provider 不传 theme 时回落 zuiLight
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox[2m > [22m[2m顶层 :theme 替换 fallback
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+
+[90mstderr[2m | tests/z-popover.spec.ts[2m > [22m[2mZPopover[2m > [22m[2m点击触发器 → 渲染 dialog
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-radio.spec.ts[2m > [22m[2mZRadioGroup[2m > [22m[2moptions 渲染 + role=radiogroup
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-tabs.spec.ts[2m > [22m[2mZTabs[2m > [22m[2mrole=tablist + 渲染 tabs
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox[2m > [22m[2m嵌套 Provider :themePatch 合并父主题
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/z-tabs.spec.ts[2m > [22m[2mZTabs[2m > [22m[2m当前 tab aria-selected=true
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox[2m > [22m[2mlocale 默认 zhCN
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/z-radio.spec.ts[2m > [22m[2mZRadioGroup[2m > [22m[2m选中某项 → update:value + change
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-tabs.spec.ts[2m > [22m[2mZTabs[2m > [22m[2m点 tab → update:value + change
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-card.spec.ts[2m > [22m[2mZCard — 渲染[2m > [22m[2m只有 default slot → 不渲染 head/foot
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-tabs.spec.ts[2m > [22m[2mZTabs[2m > [22m[2mdisabled tab 点击不 emit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZEmpty[2m > [22m[2mrole=status + 默认描述 "暂无数据"
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZEmpty[2m > [22m[2mdescription prop 覆盖默认
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox[2m > [22m[2mlocale 切到 enUS
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox[2m > [22m[2mlocalePatch 合并到父 locale
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZEmpty[2m > [22m[2mdefault slot 渲染 actions
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-radio.spec.ts[2m > [22m[2mZRadioGroup[2m > [22m[2mbuttonStyle=true → 渲染按钮
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox[2m > [22m[2mtimezone / dateLocale 各自继承
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/z-tabs.spec.ts[2m > [22m[2mZTabs[2m > [22m[2mclosable=true → 每个 tab 有关闭按钮,点击 emit close
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-card.spec.ts[2m > [22m[2mZCard — 渲染[2m > [22m[2mtitle prop → 渲染 head
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox[2m > [22m[2museZDate.format 按时区格式化
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/z-radio.spec.ts[2m > [22m[2mZRadioGroup[2m > [22m[2mdisabled group → 子项 disabled
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox[2m > [22m[2m主题响应式切换：父 ref 变化驱动子组件重渲染
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+
+[90mstderr[2m | tests/z-card.spec.ts[2m > [22m[2mZCard — 渲染[2m > [22m[2m#head slot 优先于 title
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-radio.spec.ts[2m > [22m[2mZRadio 独立(group 外)[2m > [22m[2mgroup 外渲染不报错(无 onSelect 效果)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-card.spec.ts[2m > [22m[2mZCard — 渲染[2m > [22m[2m#extra slot 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-radio.spec.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 227[2mms[22m[39m
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox — 底层 box 能力(css + tag)[2m > [22m[2m默认 tag=div
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/z-popover.spec.ts[2m > [22m[2mZPopover[2m > [22m[2mmanual + visible=true 受控
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZSkeleton[2m > [22m[2mloading=true → 渲染骨架(role=status + aria-busy)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-tabs.spec.ts[2m > [22m[2mZTabs[2m > [22m[2maddable=true → 渲染添加按钮 + emit add
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-card.spec.ts[2m > [22m[2mZCard — 渲染[2m > [22m[2m#foot slot 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox — 底层 box 能力(css + tag)[2m > [22m[2mtag prop 切换语义化元素
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/z-popover.spec.ts[2m > [22m[2mZPopover[2m > [22m[2mEscape 关闭(click 模式)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-card.spec.ts[2m > [22m[2mZCard — bordered / hoverable[2m > [22m[2m默认 bordered=true → 边框 1px solid
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox — 底层 box 能力(css + tag)[2m > [22m[2mcss 写入 emotion className,样式 emit
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZSkeleton[2m > [22m[2mrows=3 → 渲染 3 行(默认)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-tabs.spec.ts[2m > [22m[2mZTabs[2m > [22m[2mpanel slot 接收 activeName
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-card.spec.ts[2m > [22m[2mZCard — bordered / hoverable[2m > [22m[2mbordered=false → 走 shadow elevation
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox — 底层 box 能力(css + tag)[2m > [22m[2mcss + iem 双 prop 共存(iemStyle 走 inline style,css 走 class)
+[22m[39m[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZSkeleton[2m > [22m[2mavatar=true → 渲染头像圆
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-tabs.spec.ts[2m > [22m[2mZTabs[2m > [22m[2mtype=card 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-card.spec.ts[2m > [22m[2mZCard — bordered / hoverable[2m > [22m[2mhoverable=true → 注入 :hover 规则 + transition
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox — 底层 box 能力(css + tag)[2m > [22m[2mcss 不传 → 不挂 className(干净 wrapper)
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZSkeleton[2m > [22m[2mloading=false → 显示 default slot
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-card.spec.ts[2m > [22m[2mZCard — sx 子节点[2m > [22m[2msxBody.css → 应用到 body class
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox — fonts schema token[2m > [22m[2ms.fontFamily._mono → 走 schema fonts.mono(zuiLight 默认 ui-monospace 栈)
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。
+  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。
+
+ [32m✓[39m tests/z-tabs.spec.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 232[2mms[22m[39m
+[90mstderr[2m | tests/z-card.spec.ts[2m > [22m[2mZCard — sx 子节点[2m > [22m[2msxHead.aria-label 透传
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZResult[2m > [22m[2mdefault status=info + title
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/provider.spec.ts[2m > [22m[2mZBox — fonts schema token[2m > [22m[2mthemePatch 覆盖 fonts.mono → ZBox css 取到新值
+[22m[39m[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,
+  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。
+  建议根节点显式包一层 `<ZBox :iem="ZIemPreset.default">`(或 `.large` / `.rem` 等)。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZResult[2m > [22m[2mstatus=success → success 色图标
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-popover.spec.ts[2m > [22m[2mZPopover[2m > [22m[2mtitle prop 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-card.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 197[2mms[22m[39m
+ [32m✓[39m tests/z-popover.spec.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 377[2mms[22m[39m
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZResult[2m > [22m[2mdescription + actions slot
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZList[2m > [22m[2mitems 渲染 + role=list
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZList[2m > [22m[2mheader / footer / 空数据 emptyText
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZList[2m > [22m[2mbordered=true → 注入边框样式
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZProgress[2m > [22m[2mline + value=40 → role=progressbar + width 40%
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZProgress[2m > [22m[2mvalue clamp 到 0-100
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZProgress[2m > [22m[2mshowText=true → 显示百分比文字
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZProgress[2m > [22m[2mtype=circle → 渲染 <svg>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZProgress[2m > [22m[2mstatus=success → success 色
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/provider.spec.ts [2m([22m[2m29 tests[22m[2m)[22m[33m 495[2mms[22m[39m
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZCollapse[2m > [22m[2mrenders titles
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZCollapse[2m > [22m[2m点 panel → toggle expanded(非 accordion 多选)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZCollapse[2m > [22m[2maccordion=true → 只能展开一个
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-display-phase-beta.spec.ts[2m > [22m[2mZCollapse[2m > [22m[2mdisabled panel 点击不切换
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — 渲染[2m > [22m[2m默认 level=1 → tag=h1
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-display-phase-beta.spec.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 773[2mms[22m[39m
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — 渲染[2m > [22m[2mlevel=3 → tag=h3
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — 渲染[2m > [22m[2m显式 tag 覆盖默认 h{level}
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — 渲染[2m > [22m[2m渲染 default slot 文本
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — level 默认尺寸/字重映射[2m > [22m[2mlevel=1 → font-size:calc(2 * iem) + font-weight:700
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — level 默认尺寸/字重映射[2m > [22m[2mlevel=2 → font-size:calc(1.75 * iem) + font-weight:700
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — level 默认尺寸/字重映射[2m > [22m[2mlevel=3 → font-size:calc(1.5 * iem) + font-weight:600
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — level 默认尺寸/字重映射[2m > [22m[2mlevel=4 → font-size:calc(1.25 * iem) + font-weight:600
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-select.spec.ts[2m > [22m[2mZSelect — 渲染[2m > [22m[2mrole=combobox + aria-expanded=false
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-checkbox.spec.ts[2m > [22m[2mZCheckbox 单独[2m > [22m[2mlabel 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-select.spec.ts[2m > [22m[2mZSelect — 渲染[2m > [22m[2mvalue=a → 显示 "Apple"
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-select.spec.ts[2m > [22m[2mZSelect — 渲染[2m > [22m[2mplaceholder 在未选时显示
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — level 默认尺寸/字重映射[2m > [22m[2mlevel=5 → font-size:calc(1.125 * iem) + font-weight:600
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — level 默认尺寸/字重映射[2m > [22m[2mlevel=6 → font-size:calc(1 * iem) + font-weight:600
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — level 默认尺寸/字重映射[2m > [22m[2m默认 line-height:1.25(标题紧凑)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-select.spec.ts[2m > [22m[2mZSelect — 打开 / 关闭[2m > [22m[2m点击触发器 → aria-expanded=true,下拉渲染 listbox
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-checkbox.spec.ts[2m > [22m[2mZCheckbox 单独[2m > [22m[2m点击 → update:checked + change
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-checkbox.spec.ts[2m > [22m[2mZCheckbox 单独[2m > [22m[2mdisabled → 不 emit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — level 默认尺寸/字重映射[2m > [22m[2m默认 margin:0(重置浏览器 h{N} margin)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — props 覆盖默认[2m > [22m[2msize factory 覆盖 level 默认 fontSize
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — props 覆盖默认[2m > [22m[2mweight factory 覆盖 level 默认 fontWeight
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-checkbox.spec.ts[2m > [22m[2mZCheckbox 单独[2m > [22m[2mindeterminate → aria-checked=mixed
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-select.spec.ts[2m > [22m[2mZSelect — 打开 / 关闭[2m > [22m[2mEscape → 关闭下拉
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-checkbox.spec.ts[2m > [22m[2mZCheckboxGroup[2m > [22m[2moptions 数组渲染 + role=group
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-checkbox.spec.ts[2m > [22m[2mZCheckboxGroup[2m > [22m[2m选中某项 → update:value 包含该值
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — props 覆盖默认[2m > [22m[2mleading factory 覆盖 level 默认 lineHeight
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — ZText 共享维度透传[2m > [22m[2mitalic prop 生效
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — ZText 共享维度透传[2m > [22m[2mcolor factory 生效
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/title.spec.ts[2m > [22m[2mZTitle — ZText 共享维度透传[2m > [22m[2mellipsis=true → 单行截断
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/title.spec.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 443[2mms[22m[39m
+[90mstderr[2m | tests/z-checkbox.spec.ts[2m > [22m[2mZCheckboxGroup[2m > [22m[2mgroup disabled → 子项继承
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-checkbox.spec.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 257[2mms[22m[39m
+[90mstderr[2m | tests/z-select.spec.ts[2m > [22m[2mZSelect — 选中[2m > [22m[2m点选项 → update:value + 关闭
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-select.spec.ts[2m > [22m[2mZSelect — 选中[2m > [22m[2mdisabled 选项点击 → 不 emit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZTimeline[2m > [22m[2mitems 渲染 + role=list
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZTimeline[2m > [22m[2mstatus 应用对应颜色
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-select.spec.ts[2m > [22m[2mZSelect — clearable / disabled[2m > [22m[2mclearable + 有值 → 显示清空按钮,点击 emit update:value(null)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-select.spec.ts[2m > [22m[2mZSelect — clearable / disabled[2m > [22m[2mdisabled → 点击不打开
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZSteps[2m > [22m[2mcurrent=1 → 第 2 步 process
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-select.spec.ts[2m > [22m[2mZSelect — filterable[2m > [22m[2mfilterable + 输入过滤 → 只显示匹配项
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-select.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 567[2mms[22m[39m
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZSteps[2m > [22m[2m已完成的步骤显示 check 图标
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZSteps[2m > [22m[2mstatus=error → 当前步骤红色
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZSteps[2m > [22m[2mdirection=vertical → flex-direction:column
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZAffix[2m > [22m[2m渲染 wrapper + slot
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — 渲染[2m > [22m[2m默认 tag 是 <a>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — 渲染[2m > [22m[2m渲染 default slot
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZStatistic[2m > [22m[2mvalue 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — 组件默认[2m > [22m[2m默认颜色 _primary
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZStatistic[2m > [22m[2mprecision=2 → 小数
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — 组件默认[2m > [22m[2m默认 cursor:pointer
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — 组件默认[2m > [22m[2m默认 underline=hover → 嵌套 :hover 块
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — href / target / rel[2m > [22m[2mhref 属性写入 DOM
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZStatistic[2m > [22m[2mtitle + prefix + suffix
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — href / target / rel[2m > [22m[2mtarget 属性写入 DOM
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — href / target / rel[2m > [22m[2mtarget=_blank 自动补 rel=noopener noreferrer
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZStatistic[2m > [22m[2mseparator 自定义
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — href / target / rel[2m > [22m[2m用户传 rel 接管自动 rel
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZStatistic[2m > [22m[2mstring value 原样输出(不格式化)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — href / target / rel[2m > [22m[2m非 _blank target 不自动补 rel
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZLoadingBar[2m > [22m[2mvalue=null → 不渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — disabled 态[2m > [22m[2mdisabled=true → href 被屏蔽
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — disabled 态[2m > [22m[2mdisabled=true → aria-disabled="true"
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZLoadingBar[2m > [22m[2mvalue=50 → 渲染 + aria-valuenow=50
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-phase-beta-batch-3.spec.ts[2m > [22m[2mZLoadingBar[2m > [22m[2merror=true → 红色
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — disabled 态[2m > [22m[2mdisabled=true → tabindex=-1
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-phase-beta-batch-3.spec.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 413[2mms[22m[39m
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — disabled 态[2m > [22m[2mdisabled=true → opacity + pointer-events:none + cursor:not-allowed
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — disabled 态[2m > [22m[2mdisabled=false(默认)→ 无 aria-disabled / tabindex
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — 用户覆盖默认[2m > [22m[2mcolor factory 覆盖默认 _primary
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/link.spec.ts[2m > [22m[2mZLink — 用户覆盖默认[2m > [22m[2munderline=always 覆盖默认 hover
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/link.spec.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 236[2mms[22m[39m
+[90mstderr[2m | tests/z-message.spec.ts[2m > [22m[2mZMessage — 组件模式[2m > [22m[2m渲染 messages 数组
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-message.spec.ts[2m > [22m[2mZMessage — 组件模式[2m > [22m[2mduration > 0 → 时间到 emit close
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-message.spec.ts[2m > [22m[2mZMessage — 组件模式[2m > [22m[2mduration=0(loading 默认)→ 不自动关闭
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-message.spec.ts[2m > [22m[2mcreateMessageApi[2m > [22m[2m调用 success → 在 body 注入容器 + 显示内容
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-message.spec.ts[2m > [22m[2mcreateMessageApi[2m > [22m[2m调用 success → 在 body 注入容器 + 显示内容
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-message.spec.ts[2m > [22m[2mcreateMessageApi[2m > [22m[2m多种类型
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-message.spec.ts[2m > [22m[2mcreateMessageApi[2m > [22m[2m多种类型
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-message.spec.ts[2m > [22m[2mcreateMessageApi[2m > [22m[2mclose(id) → 立即关闭某条
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-message.spec.ts[2m > [22m[2mcreateMessageApi[2m > [22m[2mclose(id) → 立即关闭某条
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-message.spec.ts[2m > [22m[2mcreateMessageApi[2m > [22m[2mdestroyAll → 卸载容器
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-message.spec.ts[2m > [22m[2mcreateMessageApi[2m > [22m[2mdestroyAll → 卸载容器
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-message.spec.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 150[2mms[22m[39m
+[90mstderr[2m | tests/z-form.spec.ts[2m > [22m[2mZForm — 渲染[2m > [22m[2m渲染为 <form>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-form.spec.ts[2m > [22m[2mZFormItem — 标签 + control slot[2m > [22m[2mlabel 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-form.spec.ts[2m > [22m[2mZFormItem — 标签 + control slot[2m > [22m[2mrequired=true → label 前显示 *
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-form.spec.ts[2m > [22m[2mZFormItem — 校验[2m > [22m[2mrequired + 空值 → validate 失败 + errorMsg 写入 DOM
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-form.spec.ts[2m > [22m[2mZFormItem — 校验[2m > [22m[2mrequired + 空值 → validate 失败 + errorMsg 写入 DOM
+[22m[39masync-validator: [ [32m'name is required'[39m ]
+
+[90mstderr[2m | tests/z-form.spec.ts[2m > [22m[2mZFormItem — 校验[2m > [22m[2mvalidate 通过 → 不写错误
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-form.spec.ts[2m > [22m[2mZFormItem — 校验[2m > [22m[2mrule 自定义校验 — 最小长度
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-form.spec.ts[2m > [22m[2mZFormItem — 校验[2m > [22m[2mrule 自定义校验 — 最小长度
+[22m[39masync-validator: [ [32m'name must be at least 3 characters'[39m ]
+
+[90mstderr[2m | tests/z-form.spec.ts[2m > [22m[2mZFormItem — 校验[2m > [22m[2mreset → 清空错误
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-form.spec.ts[2m > [22m[2mZFormItem — 校验[2m > [22m[2mreset → 清空错误
+[22m[39masync-validator: [ [32m'name is required'[39m ]
+
+[90mstderr[2m | tests/z-menu.spec.ts[2m > [22m[2mZMenu[2m > [22m[2mrole=menu + 渲染 items
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-form.spec.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 201[2mms[22m[39m
+[90mstderr[2m | tests/z-menu.spec.ts[2m > [22m[2mZMenu[2m > [22m[2m点 leaf → update:value + select
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-menu.spec.ts[2m > [22m[2mZMenu[2m > [22m[2mdisabled 项点击不 emit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-menu.spec.ts[2m > [22m[2mZMenu[2m > [22m[2msubmenu 点击 → toggle expand,不 emit select
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-menu.spec.ts[2m > [22m[2mZMenu[2m > [22m[2m展开后点 leaf child → emit select 子 key
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-menu.spec.ts[2m > [22m[2mZMenu[2m > [22m[2mcollapsed=true → 不显示 label 文本
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-menu.spec.ts[2m > [22m[2mZMenu[2m > [22m[2mvalue=home → 高亮当前选中
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-menu.spec.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 320[2mms[22m[39m
+[90mstderr[2m | tests/z-input-number.spec.ts[2m > [22m[2mZInputNumber[2m > [22m[2m显示 number → input.value 是字符串
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input-number.spec.ts[2m > [22m[2mZInputNumber[2m > [22m[2m点 + → update:value 加 step
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input-number.spec.ts[2m > [22m[2mZInputNumber[2m > [22m[2m点 - → update:value 减 step
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/paragraph.spec.ts[2m > [22m[2mZParagraph — 渲染[2m > [22m[2m默认 tag 是 <p>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input-number.spec.ts[2m > [22m[2mZInputNumber[2m > [22m[2mclamp 到 max
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/paragraph.spec.ts[2m > [22m[2mZParagraph — 渲染[2m > [22m[2mtag prop 切换
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input-number.spec.ts[2m > [22m[2mZInputNumber[2m > [22m[2mclamp 到 min
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input-number.spec.ts[2m > [22m[2mZInputNumber[2m > [22m[2mprecision=2 → 显示两位小数
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input-number.spec.ts[2m > [22m[2mZInputNumber[2m > [22m[2minput 空字符串 → update:value(null)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/paragraph.spec.ts[2m > [22m[2mZParagraph — 渲染[2m > [22m[2m渲染 default slot
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input-number.spec.ts[2m > [22m[2mZInputNumber[2m > [22m[2mdisabled → 上下按钮失效
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-input-number.spec.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 188[2mms[22m[39m
+[90mstderr[2m | tests/z-table.spec.ts[2m > [22m[2mZTable[2m > [22m[2m渲染 <table> 结构
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/paragraph.spec.ts[2m > [22m[2mZParagraph — 组件默认[2m > [22m[2mdisplay:block
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/paragraph.spec.ts[2m > [22m[2mZParagraph — 组件默认[2m > [22m[2mmargin:0(重置浏览器 <p> 默认)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-table.spec.ts[2m > [22m[2mZTable[2m > [22m[2m表头文字
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/paragraph.spec.ts[2m > [22m[2mZParagraph — 组件默认[2m > [22m[2mmargin-bottom 走 schema spacing._middle(默认 1iem = 16px)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-table.spec.ts[2m > [22m[2mZTable[2m > [22m[2m数据渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/paragraph.spec.ts[2m > [22m[2mZParagraph — 组件默认[2m > [22m[2m默认 line-height:1.5(_normal)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-table.spec.ts[2m > [22m[2mZTable[2m > [22m[2mdataIndex 不同于 key
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/paragraph.spec.ts[2m > [22m[2mZParagraph — props 覆盖[2m > [22m[2mleading factory 覆盖默认 line-height
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/paragraph.spec.ts[2m > [22m[2mZParagraph — props 覆盖[2m > [22m[2msize factory 透传
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-table.spec.ts[2m > [22m[2mZTable[2m > [22m[2m自定义 render
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/paragraph.spec.ts[2m > [22m[2mZParagraph — props 覆盖[2m > [22m[2mcss 可覆盖默认 margin-bottom
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-table.spec.ts[2m > [22m[2mZTable[2m > [22m[2m空数据 → emptyText
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/paragraph.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 167[2mms[22m[39m
+[90mstderr[2m | tests/z-table.spec.ts[2m > [22m[2mZTable[2m > [22m[2mrowKey 函数
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-table.spec.ts[2m > [22m[2mZTable[2m > [22m[2mbordered=true 写入 border 样式
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-table.spec.ts[2m > [22m[2mZTable[2m > [22m[2malign=right 写入 text-align
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-table.spec.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 207[2mms[22m[39m
+[90mstderr[2m | tests/z-modal.spec.ts[2m > [22m[2mZModal — 渲染[2m > [22m[2mvisible=false → 不渲染 dialog
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-modal.spec.ts[2m > [22m[2mZModal — 渲染[2m > [22m[2mvisible=true → portal 渲染 dialog + role=dialog + aria-modal
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-modal.spec.ts[2m > [22m[2mZModal — 关闭[2m > [22m[2m点击关闭按钮 → update:visible(false) + close
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-drawer.spec.ts[2m > [22m[2mZDrawer[2m > [22m[2mvisible=false → 不渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-modal.spec.ts[2m > [22m[2mZModal — 关闭[2m > [22m[2mEscape 键 → 关闭
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-modal.spec.ts[2m > [22m[2mZModal — 关闭[2m > [22m[2mclosable=false → 不渲染关闭按钮
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-modal.spec.ts[2m > [22m[2mZModal — body scroll lock[2m > [22m[2mvisible=true 时 body overflow=hidden
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-modal.spec.ts[2m > [22m[2mZModal — body scroll lock[2m > [22m[2mvisible 切换 → body overflow 切换
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-modal.spec.ts[2m > [22m[2mZModal — body scroll lock[2m > [22m[2mvisible 切换 → body overflow 切换
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-modal.spec.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 332[2mms[22m[39m
+[90mstderr[2m | tests/z-drawer.spec.ts[2m > [22m[2mZDrawer[2m > [22m[2mvisible=true → portal 渲染 + body 锁滚动
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-drawer.spec.ts[2m > [22m[2mZDrawer[2m > [22m[2m点击关闭按钮 → update:visible(false)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-drawer.spec.ts[2m > [22m[2mZDrawer[2m > [22m[2mEscape → 关闭
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-breadcrumb.spec.ts[2m > [22m[2mZBreadcrumb[2m > [22m[2mnav aria-label=breadcrumb
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-breadcrumb.spec.ts[2m > [22m[2mZBreadcrumb[2m > [22m[2mitems 渲染 + 分隔符
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-breadcrumb.spec.ts[2m > [22m[2mZBreadcrumb[2m > [22m[2m最后项 aria-current=page,非 link
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-breadcrumb.spec.ts[2m > [22m[2mZBreadcrumb[2m > [22m[2mhref 透传到 <a>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-breadcrumb.spec.ts[2m > [22m[2mZBreadcrumb[2m > [22m[2monClick 回调
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-breadcrumb.spec.ts[2m > [22m[2mZBreadcrumb[2m > [22m[2m自定义 separator
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-breadcrumb.spec.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 78[2mms[22m[39m
+[90mstderr[2m | tests/z-drawer.spec.ts[2m > [22m[2mZDrawer[2m > [22m[2mclosable=false → 无关闭按钮
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-pagination.spec.ts[2m > [22m[2mZPagination[2m > [22m[2mnav aria-label=pagination
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-drawer.spec.ts[2m > [22m[2mZDrawer[2m > [22m[2mplacement=left → drawer 在左侧(left:0 写入 style)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-pagination.spec.ts[2m > [22m[2mZPagination[2m > [22m[2m总页数 = ceil(total / pageSize)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-drawer.spec.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 521[2mms[22m[39m
+[90mstderr[2m | tests/z-pagination.spec.ts[2m > [22m[2mZPagination[2m > [22m[2m当前页 aria-current=page
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-pagination.spec.ts[2m > [22m[2mZPagination[2m > [22m[2m点页码 → update:page + change
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-pagination.spec.ts[2m > [22m[2mZPagination[2m > [22m[2m上一页按钮 page=1 disabled
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-pagination.spec.ts[2m > [22m[2mZPagination[2m > [22m[2m页码 > 5 + 2*siblings → 显示省略号
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-pagination.spec.ts[2m > [22m[2mZPagination[2m > [22m[2mshowTotal=true 显示总数文本
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-pagination.spec.ts[2m > [22m[2mZPagination[2m > [22m[2mdisabled → 所有页码按钮 disabled
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-pagination.spec.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 445[2mms[22m[39m
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — 渲染[2m > [22m[2m默认 type=button
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — 渲染[2m > [22m[2mdefault slot 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — 渲染[2m > [22m[2mtype=submit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — variant[2m > [22m[2mfilled 默认 → 注入 box-shadow + primary 背景 + 反色文字
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — variant[2m > [22m[2moutlined → border-color currentColor + 透明背景
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — variant[2m > [22m[2mtext → 透明背景 + hover state layer
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — variant[2m > [22m[2mghost → 半透明 primary 背景
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — variant[2m > [22m[2mlink → 透明 + hover underline
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — 状态[2m > [22m[2mdisabled → button 禁用 + aria-disabled
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — 状态[2m > [22m[2mloading → aria-busy + button 禁用
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — 状态[2m > [22m[2mloading 显示旋转图标
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — 状态[2m > [22m[2mblock=true → width:100%
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — 状态[2m > [22m[2m点击 → emit click
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — 状态[2m > [22m[2mdisabled 点击 → 不 emit
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — focus-visible + ripple[2m > [22m[2m:focus-visible 注入 outline 规则
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — focus-visible + ripple[2m > [22m[2mripple=true(默认)+ pointerdown → 注入 .zui-ripple
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — focus-visible + ripple[2m > [22m[2mripple=false → 不注入 ripple
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — icon slots[2m > [22m[2mprefixIcon slot 渲染(非 loading)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-button.spec.ts[2m > [22m[2mZButton — icon slots[2m > [22m[2mloading 时 prefixIcon 被替换为 loading 图标
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-button.spec.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 251[2mms[22m[39m
+[90mstderr[2m | tests/z-spin.spec.ts[2m > [22m[2mZSpin — 默认[2m > [22m[2m默认 spinning=true,role=status,aria-busy=true
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spin.spec.ts[2m > [22m[2mZSpin — 默认[2m > [22m[2mspinning=false → aria-busy=false
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spin.spec.ts[2m > [22m[2mZSpin — 纯 indicator 模式(无 slot)[2m > [22m[2m无 slot → inline-flex 容器
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spin.spec.ts[2m > [22m[2mZSpin — 纯 indicator 模式(无 slot)[2m > [22m[2m无 slot + spinning=false → 不渲染 indicator
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spin.spec.ts[2m > [22m[2mZSpin — 包裹模式(有 slot)[2m > [22m[2m有 slot → position:relative + slot 内容渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spin.spec.ts[2m > [22m[2mZSpin — 包裹模式(有 slot)[2m > [22m[2mspinning=true → overlay div 存在
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spin.spec.ts[2m > [22m[2mZSpin — 包裹模式(有 slot)[2m > [22m[2mtip 文字渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spin.spec.ts[2m > [22m[2mZSpin — size + sx[2m > [22m[2msize=large → indicator 走 iem(2)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spin.spec.ts[2m > [22m[2mZSpin — size + sx[2m > [22m[2msxIndicator.css 写入 indicator class
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-spin.spec.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 127[2mms[22m[39m
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 渲染[2m > [22m[2m默认 tag=div
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 渲染[2m > [22m[2mrole=separator
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 渲染[2m > [22m[2m默认 aria-orientation=horizontal
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 渲染[2m > [22m[2morientation=vertical → aria-orientation=vertical
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 水平单线(无 slot)[2m > [22m[2mdisplay:block + width:100% + border-top
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 水平单线(无 slot)[2m > [22m[2mdashed=true → border-top-style:dashed
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 水平单线(无 slot)[2m > [22m[2mthickness 自定义
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 水平单线(无 slot)[2m > [22m[2m默认 color:_border
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 水平单线(无 slot)[2m > [22m[2mcolor factory 覆盖默认
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 水平 + 文字(有 slot)[2m > [22m[2mdisplay:flex + ::before + ::after
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 水平 + 文字(有 slot)[2m > [22m[2malign=center(默认)→ before/after 都 flex:1
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 水平 + 文字(有 slot)[2m > [22m[2malign=left → before 短(0 0 10%),after 长(1)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 水平 + 文字(有 slot)[2m > [22m[2malign=right → before 长(1),after 短(0 0 10%)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 水平 + 文字(有 slot)[2m > [22m[2mslot 内容渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 垂直[2m > [22m[2morientation=vertical → border-left
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — 垂直[2m > [22m[2mvertical + dashed
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/divider.spec.ts[2m > [22m[2mZDivider — css[2m > [22m[2mcss 可覆盖默认样式
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/divider.spec.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 156[2mms[22m[39m
+[90mstderr[2m | tests/z-flex.spec.ts[2m > [22m[2mZFlex — 默认[2m > [22m[2m默认 display:flex + row + nowrap + stretch + flex-start
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-flex.spec.ts[2m > [22m[2mZFlex — 默认[2m > [22m[2m默认 tag=div
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-flex.spec.ts[2m > [22m[2mZFlex — 默认[2m > [22m[2mtag prop 切换根元素
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-flex.spec.ts[2m > [22m[2mZFlex — 布局 props[2m > [22m[2mdirection=column → flex-direction:column
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-switch.spec.ts[2m > [22m[2mZSwitch[2m > [22m[2mrole=switch + aria-checked
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-switch.spec.ts[2m > [22m[2mZSwitch[2m > [22m[2m点击 → update:value 取反 + change
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-flex.spec.ts[2m > [22m[2mZFlex — 布局 props[2m > [22m[2mwrap=true → flex-wrap:wrap
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-flex.spec.ts[2m > [22m[2mZFlex — 布局 props[2m > [22m[2mwrap=reverse → wrap-reverse
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-switch.spec.ts[2m > [22m[2mZSwitch[2m > [22m[2mdisabled → 点击无效
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-flex.spec.ts[2m > [22m[2mZFlex — 布局 props[2m > [22m[2mjustify=between → space-between
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-flex.spec.ts[2m > [22m[2mZFlex — 布局 props[2m > [22m[2malign=center → center
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-switch.spec.ts[2m > [22m[2mZSwitch[2m > [22m[2mloading → 点击无效
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input.spec.ts[2m > [22m[2mZInput — 渲染[2m > [22m[2m渲染 <input>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input.spec.ts[2m > [22m[2mZInput — 渲染[2m > [22m[2mplaceholder 应用
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-switch.spec.ts[2m > [22m[2mZSwitch[2m > [22m[2mSpace 键切换
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input.spec.ts[2m > [22m[2mZInput — 渲染[2m > [22m[2mdisabled 透传到 input
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-flex.spec.ts[2m > [22m[2mZFlex — 布局 props[2m > [22m[2mgap factory → gap CSS
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input.spec.ts[2m > [22m[2mZInput — 渲染[2m > [22m[2mtype=password 透传
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-flex.spec.ts[2m > [22m[2mZFlex — 布局 props[2m > [22m[2minline=true → inline-flex
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-switch.spec.ts[2m > [22m[2mZSwitch[2m > [22m[2mcheckedLabel 在 value=true 时显示
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-switch.spec.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 117[2mms[22m[39m
+[90mstderr[2m | tests/z-flex.spec.ts[2m > [22m[2mZFlex — css 兜底[2m > [22m[2mcss 可加任意样式
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input.spec.ts[2m > [22m[2mZInput — v-model[2m > [22m[2minput 事件 → update:value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input.spec.ts[2m > [22m[2mZInput — v-model[2m > [22m[2m回车 → pressEnter
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input.spec.ts[2m > [22m[2mZInput — clearable / showCount / slots[2m > [22m[2mclearable + 有值 → 显示清空按钮,点击 emit clear + update:value=""
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input.spec.ts[2m > [22m[2mZInput — clearable / showCount / slots[2m > [22m[2mclearable + 空值 → 无清空按钮
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-flex.spec.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 126[2mms[22m[39m
+[90mstderr[2m | tests/z-input.spec.ts[2m > [22m[2mZInput — clearable / showCount / slots[2m > [22m[2mshowCount + maxlength → 显示 n/max
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-input.spec.ts[2m > [22m[2mZInput — clearable / showCount / slots[2m > [22m[2mprefix slot 渲染
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/use-ripple.spec.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 102[2mms[22m[39m
+ [32m✓[39m tests/z-input.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 149[2mms[22m[39m
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — 渲染[2m > [22m[2mslot 模式:渲染 default slot 内容
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — 渲染[2m > [22m[2mcomponent prop 模式:渲染传入组件
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — 渲染[2m > [22m[2mslot 优先于 component prop
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — 渲染[2m > [22m[2m默认根元素是 <i>
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — 渲染[2m > [22m[2mtag prop 切换根元素
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } tag="span" ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — size factory(width carrier,height 自动镜像)[2m > [22m[2mdefault(未传 size)→ width:1iem / height:1iem(calc(1 * var(--zui-iem, 16px)))
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — size factory(width carrier,height 自动镜像)[2m > [22m[2msize factory → w.iem(1.25) → width + height 都 1.25iem(镜像)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } size=fn<size> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — size factory(width carrier,height 自动镜像)[2m > [22m[2msize factory → w.em(0.75) → width + height 都 0.75em(镜像)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } size=fn<size> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — size factory(width carrier,height 自动镜像)[2m > [22m[2msize factory → w.em(1.5) → 镜像
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } size=fn<size> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — size factory(width carrier,height 自动镜像)[2m > [22m[2msize factory → w.em(1.125) 任意倍率镜像
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } size=fn<size> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — size factory(width carrier,height 自动镜像)[2m > [22m[2msize factory → w.iem(1.5) 跟随 :iem 基准(width + height 同一 calc)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } size=fn<size> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — size factory(width carrier,height 自动镜像)[2m > [22m[2msize factory → w.em(1.25) 跟父字号(em 而非 iem)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } size=fn<size> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — size factory(width carrier,height 自动镜像)[2m > [22m[2msize factory → w.px(20) 字面量镜像
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } size=fn<size> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — size factory(width carrier,height 自动镜像)[2m > [22m[2mcss 单独覆盖 width / height(非正方形)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } css=fn<css> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — color factory(color carrier)[2m > [22m[2mdefault(未传 color)→ currentColor
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — color factory(color carrier)[2m > [22m[2mcolor factory → schema token c => c._primary
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } color=fn<color> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — color factory(color carrier)[2m > [22m[2mcolor factory → c => c._danger
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } color=fn<color> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — color factory(color carrier)[2m > [22m[2mcolor factory → token + modifier c => c._primary.alpha(50)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } color=fn<color> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — color factory(color carrier)[2m > [22m[2mcolor factory → 字面量 c => c("#ff00aa")
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } color=fn<color> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — depth factory(opacity carrier)[2m > [22m[2mdefault(未传 depth)→ className 不含 opacity rule
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — depth factory(opacity carrier)[2m > [22m[2mdepth factory → 字面量 o => o(0.8)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } depth=fn<depth> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — depth factory(opacity carrier)[2m > [22m[2mdepth factory → schema token o => o._half
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } depth=fn<depth> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — depth factory(opacity carrier)[2m > [22m[2mdepth factory → schema token o => o._strong
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } depth=fn<depth> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — spin factory(animationDuration carrier;自动加 name + iteration + timing)[2m > [22m[2mdefault(未传 spin)→ className 不含 animation
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — spin factory(animationDuration carrier;自动加 name + iteration + timing)[2m > [22m[2mspin factory → d => d.s(1):自动加 name / iteration / timing,duration=1s
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } spin=fn<spin> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — spin factory(animationDuration carrier;自动加 name + iteration + timing)[2m > [22m[2mspin factory → d => d.ms(300)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } spin=fn<spin> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — spin factory(animationDuration carrier;自动加 name + iteration + timing)[2m > [22m[2mspin factory → d => d._middle schema token(300ms)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } spin=fn<spin> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — spin factory(animationDuration carrier;自动加 name + iteration + timing)[2m > [22m[2mspin factory → d => d.s(3) 最慢
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } spin=fn<spin> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — spin factory(animationDuration carrier;自动加 name + iteration + timing)[2m > [22m[2mcss 覆盖 spin 的 timing(自定义 easing)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } spin=fn<spin> css=fn<css>  ... > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — css factory(逃生口)[2m > [22m[2m在根元素写任意 CSS 属性
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } css=fn<css> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — css factory(逃生口)[2m > [22m[2m支持 _hover 伪类
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } css=fn<css> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — css factory(逃生口)[2m > [22m[2m覆盖 color factory(css 后置优先)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } color=fn<color> css=fn<css>  ... > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — css factory(逃生口)[2m > [22m[2mcss 内嵌套 color factory:_hover(h => h.color(c => c._danger))
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } css=fn<css> ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — a11y[2m > [22m[2m未传 label → aria-hidden="true"
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+[90mstderr[2m | tests/icon.spec.ts[2m > [22m[2mZIcon — a11y[2m > [22m[2m传 label → aria-label + role="img",去掉 aria-hidden
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+[Vue warn]: Vue received a Component that was made a reactive object. This can lead to unnecessary performance overhead and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`. 
+Component that was made reactive:  { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } 
+  at <ZIcon component= { name: [32m'DummyIcon'[39m, setup: [36m[Function: setup][39m } label="删除" ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+ [32m✓[39m tests/icon.spec.ts [2m([22m[2m35 tests[22m[2m)[22m[32m 215[2mms[22m[39m
+[90mstderr[2m | tests/z-space.spec.ts[2m > [22m[2mZSpace — 默认[2m > [22m[2m默认 display:flex + row + nowrap + align center + gap _small
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-space.spec.ts[2m > [22m[2mZSpace — direction[2m > [22m[2mdirection=vertical → flex-direction:column
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-space.spec.ts[2m > [22m[2mZSpace — size factory 覆盖默认 gap[2m > [22m[2msize 自定义 → 覆盖默认 _small
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-space.spec.ts[2m > [22m[2mZSpace — 其它 props[2m > [22m[2mwrap=true → flex-wrap:wrap
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-space.spec.ts[2m > [22m[2mZSpace — 其它 props[2m > [22m[2malign=start → flex-start
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-space.spec.ts[2m > [22m[2mZSpace — 其它 props[2m > [22m[2minline=true → inline-flex
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-space.spec.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 66[2mms[22m[39m
+[90mstderr[2m | tests/z-spacer.spec.ts[2m > [22m[2mZSpacer — 默认[2m > [22m[2m默认 flex-grow:1 + flex-shrink:1 + flex-basis:auto
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spacer.spec.ts[2m > [22m[2mZSpacer — 默认[2m > [22m[2maria-hidden=true(语义化占位元素,屏读器跳过)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spacer.spec.ts[2m > [22m[2mZSpacer — props[2m > [22m[2mgrow=2 → flex-grow:2
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spacer.spec.ts[2m > [22m[2mZSpacer — props[2m > [22m[2mshrink=0 → flex-shrink:0(不可压缩)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spacer.spec.ts[2m > [22m[2mZSpacer — props[2m > [22m[2mbasis factory → flex-basis 自定义
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-spacer.spec.ts[2m > [22m[2mZSpacer — css 兜底[2m > [22m[2mcss 加 background
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-spacer.spec.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 55[2mms[22m[39m
+[90mstderr[2m | tests/z-textarea.spec.ts[2m > [22m[2mZTextarea[2m > [22m[2m渲染 <textarea>,value 透传
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-textarea.spec.ts[2m > [22m[2mZTextarea[2m > [22m[2mrows 默认 3
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-textarea.spec.ts[2m > [22m[2mZTextarea[2m > [22m[2minput → update:value
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-textarea.spec.ts[2m > [22m[2mZTextarea[2m > [22m[2mdisabled / readonly 透传
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-textarea.spec.ts[2m > [22m[2mZTextarea[2m > [22m[2mshowCount + maxlength → 字数显示
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-textarea.spec.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 64[2mms[22m[39m
+[90mstderr[2m | tests/z-grid.spec.ts[2m > [22m[2mZGrid — 默认[2m > [22m[2m默认 display:grid + justifyItems:stretch + alignItems:stretch
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-grid.spec.ts[2m > [22m[2mZGrid — cols / rows[2m > [22m[2mcols=3 → grid-template-columns:repeat(3, minmax(0, 1fr))
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-grid.spec.ts[2m > [22m[2mZGrid — cols / rows[2m > [22m[2mcols 字符串 → 直接作 grid-template-columns
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-grid.spec.ts[2m > [22m[2mZGrid — cols / rows[2m > [22m[2mcols 响应式对象 → 最小断点为 base,其它进 @media
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-grid.spec.ts[2m > [22m[2mZGrid — cols / rows[2m > [22m[2mrows=2 → grid-template-rows:repeat(2, ...)
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-grid.spec.ts[2m > [22m[2mZGrid — gap + 对齐[2m > [22m[2mgap factory → gap CSS
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-grid.spec.ts[2m > [22m[2mZGrid — gap + 对齐[2m > [22m[2mjustifyItems=center
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-grid.spec.ts[2m > [22m[2mZGrid — gap + 对齐[2m > [22m[2minline=true → inline-grid
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+[90mstderr[2m | tests/z-grid.spec.ts[2m > [22m[2mZGrid — css 兜底[2m > [22m[2mcss 可覆盖 padding
+[22m[39m[zui-vue/useZTheme] 调用点不在 <ZBox> 子树内，回落 zuiLight。
+  请在根组件外包一层 <ZBox :theme="zuiLight">。
+
+ [32m✓[39m tests/z-grid.spec.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 91[2mms[22m[39m
+ [32m✓[39m tests/use-portal.spec.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 40[2mms[22m[39m
+ [32m✓[39m tests/use-z-id.spec.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m tests/use-popper.spec.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m tests/use-escape-stack.spec.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m tests/z-gene-phase-beta.spec.ts[2m > [22mZAvatar[2m > [22msize 数字 → px
+[31m[1mTypeError[22m: size is not a function[39m
+[36m [2m❯[22m applySizeProp src/_internal/size-prop.ts:[2m92:5[22m[39m
+    [90m 90|[39m     map[size](target)
+    [90m 91|[39m   } [35melse[39m {
+    [90m 92|[39m     [34msize[39m(target)
+    [90m   |[39m     [31m^[39m
+    [90m 93|[39m   }
+    [90m 94|[39m }
+[90m [2m❯[22m src/gene/ZAvatar.vue:[2m85:5[22m[39m
+[90m [2m❯[22m icss ../core/src/icss.ts:[2m20:3[22m[39m
+[90m [2m❯[22m ComputedRefImpl.fn src/gene/ZAvatar.vue:[2m79:3[22m[39m
+[90m [2m❯[22m refreshComputed ../../node_modules/.pnpm/@vue+reactivity@3.5.34/node_modules/@vue/reactivity/dist/reactivity.cjs.js:[2m418:28[22m[39m
+[90m [2m❯[22m ComputedRefImpl.get value [as value] ../../node_modules/.pnpm/@vue+reactivity@3.5.34/node_modules/@vue/reactivity/dist/reactivity.cjs.js:[2m1739:5[22m[39m
+[90m [2m❯[22m unref ../../node_modules/.pnpm/@vue+reactivity@3.5.34/node_modules/@vue/reactivity/dist/reactivity.cjs.js:[2m1564:45[22m[39m
+[90m [2m❯[22m Object.get ../../node_modules/.pnpm/@vue+reactivity@3.5.34/node_modules/@vue/reactivity/dist/reactivity.cjs.js:[2m1570:64[22m[39m
+[90m [2m❯[22m Proxy._sfc_render src/gene/ZAvatar.vue:[2m116:17[22m[39m
+[90m [2m❯[22m renderComponentRoot ../../node_modules/.pnpm/@vue+runtime-core@3.5.34/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:[2m4543:16[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m47 passed[39m[22m[90m (48)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m539 passed[39m[22m[90m (540)[39m
+[2m   Start at [22m 15:39:07
+[2m   Duration [22m 247.97s[2m (transform 77.35s, setup 0ms, import 2398.56s, tests 14.20s, environment 87.32s)[22m
+
+undefined
+C:\code\zui\packages\ui-vue:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run

@@ -2,6 +2,40 @@
 
 ## Unreleased
 
+### BREAKING — props 形态统一为 `factory | Size5 | undefined` union(2026-05-22 修订)
+
+撤销 roadmap §1 L15 + skill §13.0 ① "chain factory only" 锁定决策。承认实际现状:
+大部分组件偷偷回退到枚举档位,新方案正式统一为 union。
+
+**决策文档**:`.claude/decisions/2026-05-22-prop-shape-union.md`
+
+**新基础设施**:
+- `src/_internal/size-prop.ts`:`Size5` / `SizeProp<K>` / `SizePropMulti` / `SizeMap<T>`
+  类型 + `applySizeProp` / `makeSizeMap` helper(3 阶 → 5 阶自动 fallback)
+- `src/_internal/component-sizes.ts`:`INPUT_SIZE_MAP`(输入框尺寸:fontSize +
+  padding-y,8 组件共享)+ `COMPACT_PADDING_MAP`(列表/卡片紧凑 padding)
+
+**改造组件清单**(共 25 个 SFC):
+
+- **gene**:ZIcon(默认 `size: 'small'` 保兼容)/ ZText / ZTitle / ZParagraph / ZLink(共享 `_typography-base.ts` 升级)/ ZSpace / ZAvatar(**BREAKING:`number` 字面量移除**,改 `(w) => w.px(N)`)/ ZTag / ZSegmented / ZButton
+- **input**:ZInput / ZInputNumber / ZSelect / ZAutoComplete / ZDatePicker / ZTimePicker / ZTreeSelect(8 个复用 INPUT_SIZE_MAP)/ ZSwitch(rail size 5 阶,iem 联动)/ ZRate(star size 5 阶)/ ZFormItem(**新增 `sxControl` 节点**)
+- **feedback**:ZSpin / ZDrawer(`size` 支持 `Size5` 字符串 → iem 映射:tiny=8iem / small=12iem / middle=20iem / large=28iem / huge=40iem)
+- **display**:ZProgress / ZList / ZDescriptions / ZTable
+- **navigation**:ZPagination
+
+**搭车技术债务修复**:
+- ZPopconfirm:删除错误的 `aria-modal="false"`(W3C 规范:Popconfirm 不是模态,该属性不应设置)
+- ZInput:删除 dead code `useSlots` 未使用 import
+- ZTable / ZTreeSelect:修复 `s.color('_primary')` / `s.borderColor('_primary')` 字符串调用 bug(carrier 不接字符串 token)
+
+**兼容性**:
+- `<ZInput size="middle">` / `<ZIcon :size="(w) => w.iem(1)">` 等所有 happy path 不变
+- ZAvatar `:size="number"` 是唯一 BREAKING:改 `:size="(w) => w.px(N)"`
+- 5 阶档位新增 `tiny` / `huge`(原 3 阶组件)— 不实现的档位自动 fallback 到最近实现(`tiny → small`, `huge → large`)
+- 视觉变化:ZProgress / ZPagination 等新加的 tiny/huge 档位(原仅 3 阶)
+
+---
+
 ### 🎉 Phase α/β/γ 全部完成 — 80+ 组件 / 540 tests / 全绿
 
 roadmap §7(Phase β)+ §8(Phase γ)全部交付,Stage 9(Phase δ:VirtualList / 富文本 /

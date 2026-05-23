@@ -14,10 +14,12 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
+import type { SizeProp } from '../_internal/size-prop'
 
 /** ZParagraph 完整 props。**继承 ZText 全部维度**(同 props 接口,默认值不同)。 */
 export interface ZParagraphProps {
-  size?: ((f: Chain<ZuiSchema>['fontSize']) => void) | undefined
+  /** 字号(factory|Size5|undefined union)。默认不传 = 继承父字号。 */
+  size?: SizeProp<'fontSize'> | undefined
   weight?: ((w: Chain<ZuiSchema>['fontWeight']) => void) | undefined
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   depth?: ((o: Chain<ZuiSchema>['opacity']) => void) | undefined

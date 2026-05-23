@@ -188,7 +188,6 @@ const warningIcon = computed(() => h(ZIcon, { component: BuiltinIcons.warning })
       :class="popperClass"
       :style="floatingStyles"
       role="dialog"
-      aria-modal="false"
     >
       <div :class="headRowClass">
         <span :class="iconClass">

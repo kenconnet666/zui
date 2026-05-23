@@ -26,7 +26,11 @@ export interface ZFormItemProps {
   required?: boolean
   validateTrigger?: 'change' | 'blur' | 'submit'
   labelWidth?: string | number
+  /** label 节点 sx 配置(class/style/attrs/css)。 */
   sxLabel?: SxObject
+  /** 控件包裹节点 sx 配置(slot 容器)。 */
+  sxControl?: SxObject
+  /** 错误信息节点 sx 配置。 */
   sxError?: SxObject
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -163,8 +167,10 @@ const controlClass = computed(() =>
     s.display.flex
     s.flexDirection.column
     s.gap._tiny
+    applySx(s, props.sxControl)
   }),
 )
+const sxControlAttrs = computed(() => extractSxAttrs(props.sxControl))
 
 const errorClass = computed(() =>
   icss(theme.value, (s) => {
@@ -190,7 +196,11 @@ defineExpose({ validate, reset })
       <span v-if="required" :class="requiredMarkClass">*</span>
       <slot name="label">{{ label }}</slot>
     </label>
-    <div :class="controlClass">
+    <div
+      :class="[controlClass, sxControlAttrs.class]"
+      :style="sxControlAttrs.style"
+      v-bind="sxControlAttrs.attrs"
+    >
       <slot />
       <div
         v-if="errorMsg"
