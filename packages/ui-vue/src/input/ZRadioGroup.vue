@@ -68,7 +68,8 @@ const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
     s.flexDirection(props.direction === 'vertical' ? 'column' : 'row')
-    s.gap(props.buttonStyle ? '0' : 'calc(0.5 * var(--zui-iem, 16px))')
+    if (props.buttonStyle) s.gap.px(0)
+    else s.gap.iem(0.5)
     s.flexWrap.wrap
     if (props.buttonStyle) {
       // button 模式下子按钮间不留 gap,但首尾圆角处理通过 css 自定义,这里仅基础

@@ -63,13 +63,14 @@ const emit = defineEmits<ZPaginationEmits>()
 const theme = useZTheme()
 const locale = useZLocale('pagination')
 
-const totalPages = computed(() => Math.max(1, Math.ceil(props.total / props.pageSize)))
+const pageRef = computed<number>(() => props.page ?? 1)
+const totalPages = computed(() => Math.max(1, Math.ceil(props.total / (props.pageSize ?? 10))))
 
 /** 生成页码序列 + '...' 占位。 */
 const pageList = computed<(number | 'dots')[]>(() => {
   const total = totalPages.value
-  const cur = props.page
-  const sib = props.siblings
+  const cur = pageRef.value
+  const sib = props.siblings ?? 1
   const list: (number | 'dots')[] = []
   if (total <= 5 + 2 * sib) {
     for (let i = 1; i <= total; i++) list.push(i)
@@ -172,6 +173,18 @@ const disabledClass = computed(() =>
   }),
 )
 
+const dotsClass = computed(() =>
+  icss(theme.value, (s) => {
+    const dim = SIZE_DIM[props.size ?? 'middle']
+    s.display.inlineFlex
+    s.alignItems.center
+    s.justifyContent.center
+    s.minWidth.iem(dim)
+    s.height.iem(dim)
+    s.color._textSecondary
+  }),
+)
+
 const totalTextClass = computed(() =>
   icss(theme.value, (s) => {
     s.color._textSecondary
@@ -182,16 +195,16 @@ const totalTextClass = computed(() =>
 
 function go(p: number): void {
   if (props.disabled) return
-  if (p < 1 || p > totalPages.value || p === props.page) return
+  if (p < 1 || p > totalPages.value || p === pageRef.value) return
   emit('update:page', p)
   emit('change', p)
 }
 
 function prev(): void {
-  go(props.page - 1)
+  go(pageRef.value - 1)
 }
 function next(): void {
-  go(props.page + 1)
+  go(pageRef.value + 1)
 }
 
 const prevIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }))
@@ -211,9 +224,9 @@ const nextAriaLabel = computed(() => locale.value?.next ?? '下一页')
     <span v-if="showTotal" :class="totalTextClass">{{ totalText }}</span>
     <button
       type="button"
-      :class="[itemClass, sxItemAttrs.class, page <= 1 || disabled ? disabledClass : '']"
+      :class="[itemClass, sxItemAttrs.class, pageRef <= 1 || disabled ? disabledClass : '']"
       :style="sxItemAttrs.style"
-      :disabled="page <= 1 || disabled"
+      :disabled="pageRef <= 1 || disabled"
       :aria-label="prevAriaLabel"
       v-bind="sxItemAttrs.attrs"
       @click="prev"
@@ -221,14 +234,9 @@ const nextAriaLabel = computed(() => locale.value?.next ?? '下一页')
       <component :is="prevIcon" />
     </button>
     <template v-for="(p, i) in pageList" :key="`${p}-${i}`">
-      <span
-        v-if="p === 'dots'"
-        :class="itemClass"
-        aria-hidden="true"
-        style="border: none; background: transparent"
-      >…</span>
+      <span v-if="p === 'dots'" :class="dotsClass" aria-hidden="true">…</span>
       <button
-        v-else-if="p === page"
+        v-else-if="p === pageRef"
         type="button"
         :class="currentItemClass"
         :aria-current="'page'"
@@ -250,9 +258,9 @@ const nextAriaLabel = computed(() => locale.value?.next ?? '下一页')
     </template>
     <button
       type="button"
-      :class="[itemClass, sxItemAttrs.class, page >= totalPages || disabled ? disabledClass : '']"
+      :class="[itemClass, sxItemAttrs.class, pageRef >= totalPages || disabled ? disabledClass : '']"
       :style="sxItemAttrs.style"
-      :disabled="page >= totalPages || disabled"
+      :disabled="pageRef >= totalPages || disabled"
       :aria-label="nextAriaLabel"
       v-bind="sxItemAttrs.attrs"
       @click="next"

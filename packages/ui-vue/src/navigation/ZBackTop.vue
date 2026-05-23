@@ -91,11 +91,25 @@ const btnClass = computed(() =>
 )
 
 const upIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronUp }))
+
+const fadeActiveClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.transitionProperty._opacity
+    s.transitionDuration._small
+    s.transitionTimingFunction.ease
+  }),
+)
+const fadeBoundaryClass = computed(() => icss(theme.value, (s) => s.opacity._none))
 </script>
 
 <template>
   <Teleport to="body">
-    <Transition name="zui-backtop">
+    <Transition
+      :enter-from-class="fadeBoundaryClass"
+      :enter-active-class="fadeActiveClass"
+      :leave-active-class="fadeActiveClass"
+      :leave-to-class="fadeBoundaryClass"
+    >
       <button
         v-if="visible"
         type="button"
@@ -108,14 +122,3 @@ const upIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronUp }))
     </Transition>
   </Teleport>
 </template>
-
-<style>
-.zui-backtop-enter-active,
-.zui-backtop-leave-active {
-  transition: opacity 200ms ease;
-}
-.zui-backtop-enter-from,
-.zui-backtop-leave-to {
-  opacity: 0;
-}
-</style>

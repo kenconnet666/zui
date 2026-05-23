@@ -42,7 +42,7 @@ export interface ZSpinProps {
 </script>
 
 <script lang="ts" setup>
-import { computed, h, useSlots } from 'vue'
+import { computed, h, useSlots, type Slots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
@@ -55,10 +55,10 @@ const props = withDefaults(defineProps<ZSpinProps>(), {
   tag: 'div',
 })
 
-const slots = useSlots()
+const slots: Slots = useSlots()
 const theme = useZTheme()
 
-const hasDefaultSlot = computed(() => !!slots.default)
+const hasDefaultSlot = computed<boolean>(() => !!slots.default)
 
 /** ZSpin indicator 尺寸 —— ZSpin 默认 middle 比 ZIcon 默认大一档(spinner 通常更醒目)。 */
 const SPIN_SIZE_MAP: SizeMap<Chain<ZuiSchema>['width']> = {

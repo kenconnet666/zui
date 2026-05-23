@@ -85,7 +85,15 @@ const valueTextClass = computed(() =>
   }),
 )
 
-const hiddenInputStyle = 'position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0;'
+const hiddenInputClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.position.absolute
+    s.opacity._none
+    s.pointerEvents.none
+    s.width.px(0)
+    s.height.px(0)
+  }),
+)
 
 function onInput(e: Event): void {
   const t = e.target as HTMLInputElement
@@ -104,7 +112,7 @@ function onChange(e: Event): void {
       type="color"
       :value="value"
       :disabled="disabled"
-      :style="hiddenInputStyle"
+      :class="hiddenInputClass"
       @input="onInput"
       @change="onChange"
     />

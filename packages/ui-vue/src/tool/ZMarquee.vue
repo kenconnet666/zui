@@ -19,7 +19,7 @@ export interface ZMarqueeProps {
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { icss } from '@kenconnet666/zui-core'
+import { icss, ikeyframes } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
 const props = withDefaults(defineProps<ZMarqueeProps>(), {
@@ -30,22 +30,14 @@ const props = withDefaults(defineProps<ZMarqueeProps>(), {
 
 const theme = useZTheme()
 
-const MARQUEE_STYLE_ID = 'zui-marquee-keyframes'
-if (typeof document !== 'undefined' && !document.getElementById(MARQUEE_STYLE_ID)) {
-  const style = document.createElement('style')
-  style.id = MARQUEE_STYLE_ID
-  style.textContent = `
-@keyframes zui-marquee-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-@keyframes zui-marquee-right {
-  from { transform: translateX(-50%); }
-  to { transform: translateX(0); }
-}
-`
-  document.head.appendChild(style)
-}
+const marqueeLeft = ikeyframes((k) => {
+  k.from({ transform: 'translateX(0)' })
+  k.to({ transform: 'translateX(-50%)' })
+})
+const marqueeRight = ikeyframes((k) => {
+  k.from({ transform: 'translateX(-50%)' })
+  k.to({ transform: 'translateX(0)' })
+})
 
 const wrapClass = computed(() =>
   icss(theme.value, (s) => {
@@ -54,7 +46,9 @@ const wrapClass = computed(() =>
     s.whiteSpace.nowrap
     if (props.pauseOnHover) {
       s._hover((h) => {
-        h.animationPlayState.paused
+        h._selector('& > div', (c) => {
+          c.animationPlayState.paused
+        })
       })
     }
     props.css?.(s)
@@ -64,10 +58,10 @@ const wrapClass = computed(() =>
 const trackClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
-    s.animation(`zui-marquee-${props.direction} ${props.duration}ms linear infinite`)
-    if (props.pauseOnHover) {
-      // 让 hover 暂停传递到子级 animation
-    }
+    s.animationName(props.direction === 'left' ? marqueeLeft : marqueeRight)
+    s.animationDuration.ms(props.duration)
+    s.animationTimingFunction.linear
+    s.animationIterationCount.infinite
   }),
 )
 </script>
@@ -84,9 +78,3 @@ const trackClass = computed(() =>
     </div>
   </div>
 </template>
-
-<style scoped>
-:hover > div {
-  animation-play-state: paused;
-}
-</style>

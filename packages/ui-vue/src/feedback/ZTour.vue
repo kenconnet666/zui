@@ -54,7 +54,8 @@ const theme = useZTheme()
 const targetRect = ref<DOMRect | null>(null)
 const cardRef = ref<HTMLElement | null>(null)
 
-const currentStep = computed<ZTourStep | undefined>(() => props.steps[props.current])
+const currentRef = computed<number>(() => props.current ?? 0)
+const currentStep = computed<ZTourStep | undefined>(() => props.steps[currentRef.value])
 
 function updateTargetRect(): void {
   if (!currentStep.value) {
@@ -86,15 +87,15 @@ function gotoStep(idx: number): void {
   emit('update:current', idx)
 }
 function prev(): void {
-  gotoStep(props.current - 1)
+  gotoStep(currentRef.value - 1)
 }
 function next(): void {
-  if (props.current + 1 >= props.steps.length) {
+  if (currentRef.value + 1 >= props.steps.length) {
     emit('finish')
     emit('update:open', false)
     return
   }
-  gotoStep(props.current + 1)
+  gotoStep(currentRef.value + 1)
 }
 
 function close(): void {
@@ -102,7 +103,7 @@ function close(): void {
   emit('close')
 }
 
-const isLast = computed(() => props.current >= props.steps.length - 1)
+const isLast = computed(() => currentRef.value >= props.steps.length - 1)
 
 // mask:用 4 个矩形挖出 target 区域(避免 box-shadow 范围限制)
 const maskTopStyle = computed(() => {
@@ -141,15 +142,15 @@ const cardStyle = computed(() => {
   const top = r.bottom + 12
   const left = Math.max(8, r.left)
   return {
-    position: 'fixed' as const,
     top: `${top}px`,
     left: `${left}px`,
-    zIndex: 'var(--zui-zIndex-modal, 1000)',
   }
 })
 
 const cardClass = computed(() =>
   icss(theme.value, (s) => {
+    s.position.fixed
+    s.zIndex._modal
     s.backgroundColor._bg
     s.color._text
     s.borderRadius._small
@@ -241,10 +242,10 @@ function btnClass(primary: boolean): string {
         <div v-if="currentStep.description" :class="descClass">{{ currentStep.description }}</div>
         <div :class="footerClass">
           <span :class="stepIndicatorClass">
-            {{ current + 1 }} / {{ steps.length }}
+            {{ currentRef + 1 }} / {{ steps.length }}
           </span>
           <div :class="btnGroupClass">
-            <button v-if="current > 0" type="button" :class="btnClass(false)" @click="prev">上一步</button>
+            <button v-if="currentRef > 0" type="button" :class="btnClass(false)" @click="prev">上一步</button>
             <button type="button" :class="btnClass(true)" @click="next">
               {{ isLast ? '完成' : '下一步' }}
             </button>

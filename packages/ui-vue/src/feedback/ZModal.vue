@@ -183,6 +183,15 @@ const closeBtnClass = computed(() =>
   }),
 )
 
+const fadeActiveClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.transitionProperty._opacity
+    s.transitionDuration._small
+    s.transitionTimingFunction._default
+  }),
+)
+const fadeBoundaryClass = computed(() => icss(theme.value, (s) => s.opacity._none))
+
 function onMaskClick(e: MouseEvent): void {
   if (e.target !== e.currentTarget) return
   emit('mask-click')
@@ -223,7 +232,12 @@ const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
 
 <template>
   <Teleport :to="to">
-    <Transition name="zui-modal-fade">
+    <Transition
+      :enter-from-class="fadeBoundaryClass"
+      :enter-active-class="fadeActiveClass"
+      :leave-active-class="fadeActiveClass"
+      :leave-to-class="fadeBoundaryClass"
+    >
       <div
         v-if="visible"
         :class="[maskClass, sxMaskAttrs.class]"
@@ -281,14 +295,3 @@ const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
     </Transition>
   </Teleport>
 </template>
-
-<style>
-.zui-modal-fade-enter-active,
-.zui-modal-fade-leave-active {
-  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-.zui-modal-fade-enter-from,
-.zui-modal-fade-leave-to {
-  opacity: 0;
-}
-</style>

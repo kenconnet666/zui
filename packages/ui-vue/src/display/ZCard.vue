@@ -48,7 +48,7 @@ export interface ZCardProps {
 </script>
 
 <script lang="ts" setup>
-import { computed, useSlots } from 'vue'
+import { computed, useSlots, type Slots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
@@ -59,11 +59,11 @@ const props = withDefaults(defineProps<ZCardProps>(), {
   tag: 'div',
 })
 
-const slots = useSlots()
+const slots: Slots = useSlots()
 const theme = useZTheme()
 
-const hasHead = computed(() => !!props.title || !!slots.head || !!slots.extra)
-const hasFoot = computed(() => !!slots.foot)
+const hasHead = computed<boolean>(() => !!props.title || !!slots.head || !!slots.extra)
+const hasFoot = computed<boolean>(() => !!slots.foot)
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {

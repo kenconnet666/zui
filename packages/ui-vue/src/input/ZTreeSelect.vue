@@ -243,7 +243,7 @@ const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
       <ZTree
         :data="data"
         :expanded-keys="expandedKeys"
-        :selected-key="value"
+        :selected-key="value ?? null"
         @update:expanded-keys="expandedKeys = $event"
         @select="onSelectNode"
       />

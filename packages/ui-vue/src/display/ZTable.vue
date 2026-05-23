@@ -94,6 +94,10 @@ const props = withDefaults(defineProps<ZTableProps<T>>(), {
   sortState: () => ({ column: null, order: null }),
 })
 
+const sortStateRef = computed<ZTableSortState>(
+  () => props.sortState ?? { column: null, order: null },
+)
+
 const emit = defineEmits<ZTableEmits>()
 
 const theme = useZTheme()
@@ -359,7 +363,7 @@ const totalColspan = computed(() => props.columns.length + (props.selectable ? 1
           @click="toggleSort(col)"
         >
           {{ col.title }}
-          <span v-if="col.sortable" :class="sortIconClass(sortState.column === col.key)">
+          <span v-if="col.sortable" :class="sortIconClass(sortStateRef.column === col.key)">
             <component :is="sortIconFor(col)" />
           </span>
         </th>

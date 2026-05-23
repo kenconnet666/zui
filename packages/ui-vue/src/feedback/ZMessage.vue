@@ -109,6 +109,26 @@ function bodyClass(): string {
   })
 }
 
+const transitionActiveClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.transitionProperty.all
+    s.transitionDuration._small
+    s.transitionTimingFunction._default
+  }),
+)
+const enterFromClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.opacity._none
+    s.transform('translateY(-0.75em)')
+  }),
+)
+const leaveToClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.opacity._none
+    s.transform('translateY(-0.5em)')
+  }),
+)
+
 // timers —— 闭包 Map(不放 reactive,跟 ZNotification 一致)
 const timers = new Map<ZMessageItem['id'], ReturnType<typeof setTimeout>>()
 
@@ -172,7 +192,13 @@ function renderIcon(item: ZMessageItem) {
 <template>
   <Teleport to="body">
     <div :class="containerClass" role="status" aria-live="polite">
-      <TransitionGroup name="zui-msg" tag="div">
+      <TransitionGroup
+        :enter-from-class="enterFromClass"
+        :enter-active-class="transitionActiveClass"
+        :leave-active-class="transitionActiveClass"
+        :leave-to-class="leaveToClass"
+        tag="div"
+      >
         <div v-for="item in messages" :key="item.id" :class="itemClass(item.type)">
           <component :is="renderIcon(item)" />
           <span :class="bodyClass()">{{ item.content }}</span>
@@ -181,18 +207,3 @@ function renderIcon(item: ZMessageItem) {
     </div>
   </Teleport>
 </template>
-
-<style>
-.zui-msg-enter-active,
-.zui-msg-leave-active {
-  transition: all 240ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-.zui-msg-enter-from {
-  opacity: 0;
-  transform: translateY(-12px);
-}
-.zui-msg-leave-to {
-  opacity: 0;
-  transform: translateY(-8px);
-}
-</style>

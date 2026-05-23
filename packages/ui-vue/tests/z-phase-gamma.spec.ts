@@ -1,7 +1,7 @@
 /**
  * Phase γ spec:ZSegmented / ZGradientText / ZCountdown / ZNumberAnimation / ZMarquee / ZSplit.
  */
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import {
   ZSegmented,
@@ -118,9 +118,12 @@ describe('ZMarquee', () => {
     expect(w.html().match(/hello/g)!.length).toBe(2)
   })
 
-  it('注入 keyframes 样式', () => {
+  it('注入 keyframes 样式(走 emotion)', () => {
     mount(ZMarquee, { slots: { default: () => 'x' } })
-    expect(document.getElementById('zui-marquee-keyframes')).not.toBeNull()
+    // ikeyframes 走 emotion 注入 <style data-emotion>,包含 @keyframes 定义
+    const emotionStyles = Array.from(document.querySelectorAll('style[data-emotion]'))
+    const css = emotionStyles.map((el) => el.textContent ?? '').join('\n')
+    expect(css).toMatch(/@keyframes/)
   })
 })
 

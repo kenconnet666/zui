@@ -46,6 +46,8 @@ const emit = defineEmits<ZTransferEmits>()
 
 const theme = useZTheme()
 
+const titlesRef = computed<[string, string]>(() => props.titles ?? ['源', '目标'])
+
 // 2026-05-23 技术债务修复:Set 改为 string[](避免 Vue test-utils weak map key 问题)
 const leftChecked = ref<string[]>([])
 const rightChecked = ref<string[]>([])
@@ -191,7 +193,7 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
   <div :class="rootClass">
     <div :class="panelClass">
       <div :class="panelHeadClass">
-        {{ titles[0] }} ({{ leftItems.length }})
+        {{ titlesRef[0] }} ({{ leftItems.length }})
       </div>
       <div :class="listClass">
         <template v-if="leftItems.length > 0">
@@ -237,7 +239,7 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
 
     <div :class="panelClass">
       <div :class="panelHeadClass">
-        {{ titles[1] }} ({{ rightItems.length }})
+        {{ titlesRef[1] }} ({{ rightItems.length }})
       </div>
       <div :class="listClass">
         <template v-if="rightItems.length > 0">

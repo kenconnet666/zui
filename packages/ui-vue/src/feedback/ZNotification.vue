@@ -199,12 +199,32 @@ function renderIcon(item: ZNotificationItem) {
 }
 
 const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
+
+const transitionActiveClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.transitionProperty.all
+    s.transitionDuration._middle
+    s.transitionTimingFunction._default
+  }),
+)
+const slideBoundaryClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.opacity._none
+    s.transform('translateX(1.25em)')
+  }),
+)
 </script>
 
 <template>
   <Teleport to="body">
     <div :class="containerClass" role="status" aria-live="polite">
-      <TransitionGroup name="zui-notify" tag="div">
+      <TransitionGroup
+        :enter-from-class="slideBoundaryClass"
+        :enter-active-class="transitionActiveClass"
+        :leave-active-class="transitionActiveClass"
+        :leave-to-class="slideBoundaryClass"
+        tag="div"
+      >
         <div v-for="item in items" :key="item.id" :class="itemClass(item.type)">
           <span :class="iconClass(item.type)">
             <component :is="renderIcon(item)" />
@@ -227,18 +247,3 @@ const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
     </div>
   </Teleport>
 </template>
-
-<style>
-.zui-notify-enter-active,
-.zui-notify-leave-active {
-  transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-.zui-notify-enter-from {
-  opacity: 0;
-  transform: translateX(20px);
-}
-.zui-notify-leave-to {
-  opacity: 0;
-  transform: translateX(20px);
-}
-</style>

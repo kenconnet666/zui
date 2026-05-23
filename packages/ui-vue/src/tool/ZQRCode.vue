@@ -62,15 +62,17 @@ const wrapClass = computed(() =>
   }),
 )
 
-const imgStyle = computed(() => ({
-  width: '100%',
-  height: '100%',
-  display: 'block',
-}))
+const imgClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.width.pct(100)
+    s.height.pct(100)
+    s.display.block
+  }),
+)
 </script>
 
 <template>
   <div :class="wrapClass">
-    <img :src="qrSrc" :alt="`QR code for ${value}`" :style="imgStyle" />
+    <img :src="qrSrc" :alt="`QR code for ${value}`" :class="imgClass" />
   </div>
 </template>
