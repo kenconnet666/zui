@@ -66,8 +66,8 @@ const rootClass = computed(() =>
 
 const avatarClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('width', 'calc(2.5 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(2.5 * var(--zui-iem, 16px))')
+    s.width.iem(2.5)
+    s.height.iem(2.5)
     s.borderRadius._full
     s.backgroundColor._bgMuted
     s.flexShrink(0)
@@ -86,8 +86,8 @@ const linesContainerClass = computed(() =>
 
 const titleBarClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('height', 'calc(1.25 * var(--zui-iem, 16px))')
-    s._prop('width', '40%')
+    s.height.iem(1.25)
+    s.width.pct(40)
     s.borderRadius._tiny
     s.backgroundColor._bgMuted
     s.marginBottom._tiny
@@ -97,8 +97,8 @@ const titleBarClass = computed(() =>
 
 function rowClass(isLast: boolean): string {
   return icss(theme.value, (s) => {
-    s._prop('height', 'calc(0.875 * var(--zui-iem, 16px))')
-    s._prop('width', isLast ? '60%' : '100%')
+    s.height.iem(0.875)
+    s.width.pct(isLast ? 60 : 100)
     s.borderRadius._tiny
     s.backgroundColor._bgMuted
     if (props.animated) applyShimmer(s)
@@ -106,12 +106,11 @@ function rowClass(isLast: boolean): string {
 }
 
 function applyShimmer(s: Chain<ZuiSchema>): void {
-  s._prop(
-    'backgroundImage',
+  s.backgroundImage(
     'linear-gradient(90deg, rgba(0,0,0,0) 25%, rgba(255,255,255,0.4) 50%, rgba(0,0,0,0) 75%)',
   )
-  s._prop('backgroundSize', '200% 100%')
-  s._prop('animation', 'zui-skeleton-shimmer 1.4s ease-in-out infinite')
+  s.backgroundSize('200% 100%')
+  s.animation('zui-skeleton-shimmer 1.4s ease-in-out infinite')
 }
 </script>
 

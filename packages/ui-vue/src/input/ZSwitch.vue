@@ -69,24 +69,24 @@ const SIZE_HEIGHT_IEM: Record<Size5, number> = {
 /** ZSwitch rail size 档位 —— width=2*height(rail 宽高比)。 */
 const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
   tiny: (s) => {
-    s._prop('height', `calc(${SIZE_HEIGHT_IEM.tiny} * var(--zui-iem, 16px))`)
-    s._prop('width', `calc(${SIZE_HEIGHT_IEM.tiny * 2} * var(--zui-iem, 16px))`)
+    s.height.iem(SIZE_HEIGHT_IEM.tiny)
+    s.width.iem(SIZE_HEIGHT_IEM.tiny * 2)
   },
   small: (s) => {
-    s._prop('height', `calc(${SIZE_HEIGHT_IEM.small} * var(--zui-iem, 16px))`)
-    s._prop('width', `calc(${SIZE_HEIGHT_IEM.small * 2} * var(--zui-iem, 16px))`)
+    s.height.iem(SIZE_HEIGHT_IEM.small)
+    s.width.iem(SIZE_HEIGHT_IEM.small * 2)
   },
   middle: (s) => {
-    s._prop('height', `calc(${SIZE_HEIGHT_IEM.middle} * var(--zui-iem, 16px))`)
-    s._prop('width', `calc(${SIZE_HEIGHT_IEM.middle * 2} * var(--zui-iem, 16px))`)
+    s.height.iem(SIZE_HEIGHT_IEM.middle)
+    s.width.iem(SIZE_HEIGHT_IEM.middle * 2)
   },
   large: (s) => {
-    s._prop('height', `calc(${SIZE_HEIGHT_IEM.large} * var(--zui-iem, 16px))`)
-    s._prop('width', `calc(${SIZE_HEIGHT_IEM.large * 2} * var(--zui-iem, 16px))`)
+    s.height.iem(SIZE_HEIGHT_IEM.large)
+    s.width.iem(SIZE_HEIGHT_IEM.large * 2)
   },
   huge: (s) => {
-    s._prop('height', `calc(${SIZE_HEIGHT_IEM.huge} * var(--zui-iem, 16px))`)
-    s._prop('width', `calc(${SIZE_HEIGHT_IEM.huge * 2} * var(--zui-iem, 16px))`)
+    s.height.iem(SIZE_HEIGHT_IEM.huge)
+    s.width.iem(SIZE_HEIGHT_IEM.huge * 2)
   },
 })
 
@@ -100,20 +100,20 @@ const railClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
-    s._prop('position', 'relative')
+    s.position.relative
     applySizeProp(props.size, SIZE_MAP, s)
     s.borderRadius._full
     s.transitionProperty._colors
     s.transitionDuration._small
     s.cursor.pointer
-    s._prop('borderStyle', 'none')
-    s._prop('padding', '0')
-    s._prop('outline', 'none')
+    s.borderStyle.none
+    s.padding.px(0)
+    s.outline('none')
     if (props.value) s.backgroundColor._primary
     else s.backgroundColor._border
     if (props.disabled || props.loading) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
     applySx(s, props.sxRail)
     props.css?.(s)
@@ -125,16 +125,15 @@ const thumbClass = computed(() =>
   icss(theme.value, (s) => {
     const h = sizeIemRef.value
     const thumb = h * 0.8
-    s._prop('position', 'absolute')
-    s._prop('top', `calc(${(h - thumb) / 2} * var(--zui-iem, 16px))`)
-    s._prop(
-      'left',
+    s.position.absolute
+    s.top.iem((h - thumb) / 2)
+    s.left.iem(
       props.value
-        ? `calc(${h * 2 - thumb - (h - thumb) / 2} * var(--zui-iem, 16px))`
-        : `calc(${(h - thumb) / 2} * var(--zui-iem, 16px))`,
+        ? h * 2 - thumb - (h - thumb) / 2
+        : (h - thumb) / 2,
     )
-    s._prop('width', `calc(${thumb} * var(--zui-iem, 16px))`)
-    s._prop('height', `calc(${thumb} * var(--zui-iem, 16px))`)
+    s.width.iem(thumb)
+    s.height.iem(thumb)
     s.borderRadius._full
     s.backgroundColor._bg
     s.boxShadow._small
@@ -147,11 +146,10 @@ const sxThumbAttrs = computed(() => extractSxAttrs(props.sxThumb))
 
 const labelClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('position', 'absolute')
-    s._prop(
-      props.value ? 'left' : 'right',
-      `calc(${sizeIemRef.value * 0.25} * var(--zui-iem, 16px))`,
-    )
+    s.position.absolute
+    const offset = sizeIemRef.value * 0.25
+    if (props.value) s.left.iem(offset)
+    else s.right.iem(offset)
     s.color._bg
     s.fontSize._tiny
     s.pointerEvents.none

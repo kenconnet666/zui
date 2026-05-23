@@ -168,9 +168,9 @@ const dropdownClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._tiny
-    s._prop('minWidth', 'calc(12 * var(--zui-iem, 16px))')
-    s._prop('maxHeight', '300px')
-    s._prop('overflowY', 'auto')
+    s.minWidth.iem(12)
+    s.maxHeight.iem(18.75)
+    s.overflowY.auto
   }),
 )
 
@@ -179,7 +179,7 @@ const arrowClass = computed(() =>
     s.color._textSecondary
     s.transitionProperty._transform
     s.transitionDuration._small
-    s._prop('transform', open.value ? 'rotate(180deg)' : 'rotate(0deg)')
+    s.transform(open.value ? 'rotate(180deg)' : 'rotate(0deg)')
   }),
 )
 

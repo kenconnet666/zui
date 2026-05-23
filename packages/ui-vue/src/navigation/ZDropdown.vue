@@ -137,7 +137,7 @@ const menuClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._tiny
-    s._prop('minWidth', 'calc(8 * var(--zui-iem, 16px))')
+    s.minWidth.iem(8)
     s.display.flex
     s.flexDirection.column
     applySx(s, props.sxMenu)
@@ -161,7 +161,7 @@ function itemClass(item: ZDropdownItem): string {
     else s.color._text
     if (item.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     } else {
       s._hover((h2) => {
         h2.backgroundColor._textSecondary.alpha(8)

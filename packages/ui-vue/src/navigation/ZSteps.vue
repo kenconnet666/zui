@@ -71,7 +71,7 @@ function stepClass(): string {
     s.alignItems(props.direction === 'vertical' ? 'flex-start' : 'center')
     s.gap._small
     s.flexGrow(props.direction === 'vertical' ? 0 : 1)
-    s._prop('minWidth', '0')
+    s.minWidth.px(0)
   })
 }
 
@@ -82,8 +82,8 @@ function indicatorClass(state: ReturnType<typeof stepState>): string {
     s.alignItems.center
     s.justifyContent.center
     s.flexShrink(0)
-    s._prop('width', 'calc(2 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(2 * var(--zui-iem, 16px))')
+    s.width.iem(2)
+    s.height.iem(2)
     s.borderRadius._full
     s.fontWeight._semibold
     s.fontSize._small
@@ -92,7 +92,7 @@ function indicatorClass(state: ReturnType<typeof stepState>): string {
     if (state === 'finish' || state === 'process' || state === 'error') {
       s.backgroundColor[`_${colorKey}` as const]
       s.color._bg
-      s._prop('borderColor', 'transparent')
+      s.borderColor.transparent
     } else {
       s.backgroundColor.transparent
       s.color._textSecondary
@@ -106,7 +106,7 @@ const titleWrapClass = computed(() =>
     s.display.flex
     s.flexDirection.column
     s.gap._tiny
-    s._prop('minWidth', '0')
+    s.minWidth.px(0)
   }),
 )
 const titleClass = computed(() =>

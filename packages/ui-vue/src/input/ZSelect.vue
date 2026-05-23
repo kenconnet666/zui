@@ -150,7 +150,7 @@ const triggerClass = computed(() =>
     if (open.value) s.borderColor._primary
     if (props.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
       s.backgroundColor._bgMuted
     }
     applySx(s, props.sxTrigger)
@@ -162,9 +162,9 @@ const sxTriggerAttrs = computed(() => extractSxAttrs(props.sxTrigger))
 const triggerTextClass = computed(() =>
   icss(theme.value, (s) => {
     s.flexGrow(1)
-    s._prop('overflow', 'hidden')
-    s._prop('whiteSpace', 'nowrap')
-    s._prop('textOverflow', 'ellipsis')
+    s.overflow.hidden
+    s.whiteSpace.nowrap
+    s.textOverflow.ellipsis
     if (!selectedLabel.value && !search.value) s.color._textSecondary
   }),
 )
@@ -176,8 +176,8 @@ const triggerInputClass = computed(() =>
     s.backgroundColor.transparent
     s.color.currentColor
     s.fontSize.inherit
-    s._prop('outline', 'none')
-    s._prop('minWidth', '0')
+    s.outline('none')
+    s.minWidth.px(0)
     s.width.pct(100)
   }),
 )
@@ -191,8 +191,8 @@ const dropdownClass = computed(() =>
     s.padding._tiny
     s.zIndex._popover
     s.minWidth.iem(8)
-    s._prop('maxHeight', '240px')
-    s._prop('overflowY', 'auto')
+    s.maxHeight.iem(15)
+    s.overflowY.auto
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
@@ -219,7 +219,7 @@ const optionClass = (opt: ZSelectOption): string =>
     }
     if (opt.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     } else {
       s._hover((h2) => {
         h2.backgroundColor._textSecondary.alpha(8)
@@ -237,7 +237,7 @@ const clearBtnClass = computed(() =>
     s.cursor.pointer
     s.backgroundColor.transparent
     s.borderStyle.none
-    s.padding('0')
+    s.padding.px(0)
     s.color._textSecondary
     s._hover((h2) => {
       h2.color._text
@@ -250,7 +250,7 @@ const arrowClass = computed(() =>
     s.color._textSecondary
     s.transitionProperty._transform
     s.transitionDuration._small
-    s._prop('transform', open.value ? 'rotate(180deg)' : 'rotate(0deg)')
+    s.transform(open.value ? 'rotate(180deg)' : 'rotate(0deg)')
   }),
 )
 
@@ -311,7 +311,7 @@ const emptyClass = computed(() =>
     s.padding._small
     s.color._textSecondary
     s.fontSize._small
-    s._prop('textAlign', 'center')
+    s.textAlign.center
   }),
 )
 

@@ -106,7 +106,7 @@ const wrapperClass = computed(() =>
     }
     if (props.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
       s.backgroundColor._bgMuted
     }
 
@@ -122,11 +122,11 @@ const inputClass = computed(() =>
     s.color.currentColor
     s.fontSize.inherit
     s.lineHeight.inherit
-    s._prop('outline', 'none')
+    s.outline('none')
     s.width.pct(100)
-    s._prop('minWidth', '0')
+    s.minWidth.px(0)
     if (props.disabled) {
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
     applySx(s, props.sxInput)
   }),
@@ -150,7 +150,7 @@ const clearBtnClass = computed(() =>
     s.cursor.pointer
     s.backgroundColor.transparent
     s.borderStyle.none
-    s.padding('0')
+    s.padding.px(0)
     s.color._textSecondary
     s._hover((h2) => {
       h2.color._text

@@ -49,8 +49,8 @@ const imgClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
     s.color._border
-    s._prop('width', `${props.imageSize}px`)
-    s._prop('height', `${props.imageSize}px`)
+    s.width.px(props.imageSize)
+    s.height.px(props.imageSize)
   }),
 )
 

@@ -100,7 +100,7 @@ const rootClass = computed(() =>
     s.gap._small
     // 语义色 + alpha 衍生:背景浅色、边框淡色、文字主色
     s.color[colorKey]
-    s._prop('borderColor', 'currentColor')
+    s.borderColor.currentColor
     s.backgroundColor[colorKey].alpha(8)
 
     props.css?.(s)

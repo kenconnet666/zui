@@ -109,19 +109,19 @@ const arrowClass = (expanded: boolean): string =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s._prop('width', 'calc(1 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(1 * var(--zui-iem, 16px))')
+    s.width.iem(1)
+    s.height.iem(1)
     s.flexShrink(0)
     s.color._textSecondary
     s.transitionProperty._transform
     s.transitionDuration._small
-    s._prop('transform', expanded ? 'rotate(90deg)' : 'rotate(0deg)')
+    s.transform(expanded ? 'rotate(90deg)' : 'rotate(0deg)')
   })
 
 const arrowSpacerClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineBlock
-    s._prop('width', 'calc(1 * var(--zui-iem, 16px))')
+    s.width.iem(1)
     s.flexShrink(0)
   }),
 )

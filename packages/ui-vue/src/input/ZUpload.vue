@@ -139,7 +139,7 @@ const dropZoneClass = computed(() =>
     s.padding._huge
     s.borderRadius._small
     s.borderWidth._thin
-    s._prop('borderStyle', 'dashed')
+    s.borderStyle.dashed
     s.borderColor(dragOver.value ? '_primary' : '_border')
     s.backgroundColor(dragOver.value ? '_bgMuted' : '_bg')
     s.color._textSecondary

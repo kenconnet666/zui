@@ -80,13 +80,12 @@ const className = computed(() =>
   icss(theme.value, (s) => {
     if (props.inline) s.display.inlineFlex
     else s.display.flex
-    s._prop('flexDirection', props.direction)
-    s._prop(
-      'flexWrap',
+    s.flexDirection(props.direction)
+    s.flexWrap(
       props.wrap === true ? 'wrap' : props.wrap === 'reverse' ? 'wrap-reverse' : 'nowrap',
     )
-    s._prop('justifyContent', JUSTIFY_MAP[props.justify])
-    s._prop('alignItems', ALIGN_MAP[props.align])
+    s.justifyContent(JUSTIFY_MAP[props.justify])
+    s.alignItems(ALIGN_MAP[props.align])
     if (props.gap) s.gap(props.gap)
 
     props.css?.(s)

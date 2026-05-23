@@ -64,7 +64,7 @@ const shouldShow = computed(() => {
 const wrapperClass = computed(() =>
   icss(theme.value, (s) => {
     if (hasSlot.value) {
-      s._prop('position', 'relative')
+      s.position.relative
       s.display.inlineFlex
     } else {
       s.display.inlineFlex
@@ -83,14 +83,14 @@ const badgeClass = computed(() =>
     else s.backgroundColor._danger
 
     if (props.dot) {
-      s._prop('width', 'calc(0.5 * var(--zui-iem, 16px))')
-      s._prop('height', 'calc(0.5 * var(--zui-iem, 16px))')
+      s.width.iem(0.5)
+      s.height.iem(0.5)
       s.borderRadius._full
     } else {
       s.paddingLeft._tiny
       s.paddingRight._tiny
-      s._prop('minWidth', 'calc(1.125 * var(--zui-iem, 16px))')
-      s._prop('height', 'calc(1.125 * var(--zui-iem, 16px))')
+      s.minWidth.iem(1.125)
+      s.height.iem(1.125)
       s.borderRadius._full
       s.fontSize._tiny
       s.fontWeight._semibold
@@ -98,12 +98,12 @@ const badgeClass = computed(() =>
     }
 
     if (hasSlot.value) {
-      s._prop('position', 'absolute')
+      s.position.absolute
       const x = props.offset?.[0] ?? 0
       const y = props.offset?.[1] ?? 0
-      s._prop('top', `calc(0px + ${y}px)`)
-      s._prop('right', `calc(0px - ${x}px)`)
-      s._prop('transform', 'translate(50%, -50%)')
+      s.top.px(y)
+      s.right.px(-x)
+      s.transform('translate(50%, -50%)')
       s.zIndex._tiny
     }
   }),

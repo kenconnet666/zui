@@ -59,7 +59,7 @@ const className = computed(() =>
   icss(theme.value, (s) => {
     // ─── 组件默认(放最前,后续 applyTypographyBase 中传 props 时会覆盖) ───
     s.display.block
-    s.margin('0') // 重置浏览器默认 <p> margin-block,统一由 schema spacing 接管
+    s.margin.px(0) // 重置浏览器默认 <p> margin-block,统一由 schema spacing 接管
     s.marginBottom._middle // 默认 16px(schema spacing token,Provider 联动)
     if (!props.leading) s.lineHeight._normal // 段落舒适行高 1.5
 

@@ -90,8 +90,8 @@ const railClass = computed(() =>
     s.flexGrow(1)
     s.backgroundColor._bgMuted
     s.borderRadius._full
-    s._prop('overflow', 'hidden')
-    s._prop('height', `${SIZE_HEIGHT[props.size]}px`)
+    s.overflow.hidden
+    s.height.px(SIZE_HEIGHT[props.size])
   }),
 )
 
@@ -103,8 +103,8 @@ const fillClass = computed(() =>
     } else if (!applyAsBg(s, props.color)) {
       s.backgroundColor._primary
     }
-    s._prop('height', '100%')
-    s._prop('width', `${clampedValue.value}%`)
+    s.height.pct(100)
+    s.width.pct(clampedValue.value)
     s.transitionProperty._sizes
     s.transitionDuration._small
   }),
@@ -115,8 +115,8 @@ const textClass = computed(() =>
     s.color._textSecondary
     s.fontSize._small
     s.flexShrink(0)
-    s._prop('minWidth', '3em')
-    s._prop('textAlign', 'right')
+    s.minWidth.em(3)
+    s.textAlign.right
   }),
 )
 
@@ -128,19 +128,19 @@ const dashOffset = computed(() => circumference.value * (1 - clampedValue.value 
 
 const circleRootClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('position', 'relative')
+    s.position.relative
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s._prop('width', `${circleDiameter.value}px`)
-    s._prop('height', `${circleDiameter.value}px`)
+    s.width.px(circleDiameter.value)
+    s.height.px(circleDiameter.value)
     props.css?.(s)
   }),
 )
 
 const circleTextClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('position', 'absolute')
+    s.position.absolute
     s.color._text
     s.fontWeight._semibold
     s.fontSize._large

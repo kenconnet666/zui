@@ -66,14 +66,16 @@ const containerClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed
     const [vert, horiz] = props.placement.split('-') as ['top' | 'bottom', 'left' | 'right']
-    s._prop(vert, '24px')
-    s._prop(horiz, '24px')
+    if (vert === 'top') s.top.iem(1.5)
+    else s.bottom.iem(1.5)
+    if (horiz === 'left') s.left.iem(1.5)
+    else s.right.iem(1.5)
     s.display.flex
     s.flexDirection.column
     s.gap._small
     s.zIndex._toast
     s.pointerEvents.none
-    s._prop('maxWidth', '360px')
+    s.maxWidth.iem(22.5)
     props.css?.(s)
   }),
 )
@@ -129,7 +131,7 @@ const closeBtnClass = computed(() =>
     s.cursor.pointer
     s.backgroundColor.transparent
     s.borderStyle.none
-    s.padding('0')
+    s.padding.px(0)
     s.color._textSecondary
     s.flexShrink(0)
     s.marginLeft._small

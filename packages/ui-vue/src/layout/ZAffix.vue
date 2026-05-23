@@ -59,7 +59,7 @@ onScopeDispose(() => {
 const wrapperClass = computed(() =>
   icss(theme.value, (s) => {
     if (fixed.value) {
-      s._prop('height', `${placeholderHeight.value}px`)
+      s.height.px(placeholderHeight.value)
     }
     props.css?.(s)
   }),
@@ -69,8 +69,8 @@ const innerClass = computed(() =>
   icss(theme.value, (s) => {
     if (fixed.value) {
       s.position.fixed
-      s._prop('top', `${props.offsetTop}px`)
-      s._prop('width', `${placeholderWidth.value}px`)
+      s.top.px(props.offsetTop)
+      s.width.px(placeholderWidth.value)
       s.zIndex._small
     }
   }),

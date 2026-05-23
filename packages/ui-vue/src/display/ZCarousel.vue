@@ -32,7 +32,7 @@ export interface ZCarouselEmits {
 </script>
 
 <script lang="ts" setup generic="T">
-import { computed, h, onMounted, onScopeDispose, ref } from 'vue'
+import { computed, h, onMounted, onScopeDispose } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
@@ -91,9 +91,9 @@ onScopeDispose(() => stopTimer())
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('position', 'relative')
+    s.position.relative
     s.display.block
-    s._prop('overflow', 'hidden')
+    s.overflow.hidden
     s.borderRadius._small
     s.backgroundColor._bgMuted
     props.css?.(s)
@@ -103,32 +103,33 @@ const rootClass = computed(() =>
 const trackClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.flex
-    s._prop('width', `${total.value * 100}%`)
-    s._prop('transform', `translateX(-${(props.current / total.value) * 100}%)`)
+    s.width.pct(total.value * 100)
+    s.transform(`translateX(-${(props.current / total.value) * 100}%)`)
     s.transitionProperty._transform
     s.transitionDuration._middle
-    s._prop('transitionTimingFunction', 'cubic-bezier(0.4, 0, 0.2, 1)')
+    s.transitionTimingFunction('cubic-bezier(0.4, 0, 0.2, 1)')
   }),
 )
 
 const slideClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('width', `${100 / total.value}%`)
+    s.width.pct(100 / total.value)
     s.flexShrink(0)
   }),
 )
 
 function arrowClass(side: 'left' | 'right'): string {
   return icss(theme.value, (s) => {
-    s._prop('position', 'absolute')
-    s._prop('top', '50%')
-    s._prop(side, '8px')
-    s._prop('transform', 'translateY(-50%)')
+    s.position.absolute
+    s.top.pct(50)
+    if (side === 'left') s.left.iem(0.5)
+    else s.right.iem(0.5)
+    s.transform('translateY(-50%)')
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s._prop('width', 'calc(2 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(2 * var(--zui-iem, 16px))')
+    s.width.iem(2)
+    s.height.iem(2)
     s.borderRadius._full
     s.backgroundColor._bg
     s.color._text
@@ -144,10 +145,10 @@ function arrowClass(side: 'left' | 'right'): string {
 
 const dotsClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('position', 'absolute')
-    s._prop('bottom', '12px')
-    s._prop('left', '50%')
-    s._prop('transform', 'translateX(-50%)')
+    s.position.absolute
+    s.bottom.iem(0.75)
+    s.left.pct(50)
+    s.transform('translateX(-50%)')
     s.display.flex
     s.gap._tiny
     s.zIndex._small
@@ -156,17 +157,17 @@ const dotsClass = computed(() =>
 
 function dotClass(active: boolean): string {
   return icss(theme.value, (s) => {
-    s._prop('width', '8px')
-    s._prop('height', '8px')
+    s.width.iem(0.5)
+    s.height.iem(0.5)
     s.borderRadius._full
     s.borderStyle.none
     s.cursor.pointer
-    s.padding('0')
+    s.padding.px(0)
     s.transitionProperty._sizes
     s.transitionDuration._small
     if (active) {
       s.backgroundColor._bg
-      s._prop('width', '20px')
+      s.width.iem(1.25)
     } else {
       s.backgroundColor._bg.alpha(50)
     }

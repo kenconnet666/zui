@@ -86,9 +86,9 @@ const className = computed(() =>
       s.display.inlineBlock
       s.width('0')
       s.alignSelf.stretch
-      s._prop('borderLeftWidth', props.thickness)
-      s._prop('borderLeftStyle', lineStyle.value)
-      s._prop('borderLeftColor', 'currentColor')
+      s.borderLeftWidth(props.thickness)
+      s.borderLeftStyle(lineStyle.value)
+      s.borderLeftColor.currentColor
     } else if (hasSlot.value) {
       // ─── 水平 + 中间文字 ───
       s.display.flex
@@ -117,9 +117,9 @@ const className = computed(() =>
       // ─── 水平单线 ───
       s.display.block
       s.width.pct(100)
-      s._prop('borderTopWidth', props.thickness)
-      s._prop('borderTopStyle', lineStyle.value)
-      s._prop('borderTopColor', 'currentColor')
+      s.borderTopWidth(props.thickness)
+      s.borderTopStyle(lineStyle.value)
+      s.borderTopColor.currentColor
     }
 
     props.css?.(s)

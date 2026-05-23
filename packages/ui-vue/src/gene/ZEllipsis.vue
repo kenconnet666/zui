@@ -34,16 +34,16 @@ const rootClass = computed(() =>
   icss(theme.value, (s) => {
     if (props.lines === 1) {
       s.display.inlineBlock
-      s._prop('overflow', 'hidden')
-      s._prop('textOverflow', 'ellipsis')
-      s._prop('whiteSpace', 'nowrap')
-      s._prop('maxWidth', '100%')
+      s.overflow.hidden
+      s.textOverflow.ellipsis
+      s.whiteSpace.nowrap
+      s.maxWidth.pct(100)
     } else {
       s.display('-webkit-box' as never)
-      s._prop('overflow', 'hidden')
-      s._prop('textOverflow', 'ellipsis')
-      s._prop('WebkitLineClamp', String(props.lines))
-      s._prop('WebkitBoxOrient', 'vertical')
+      s.overflow.hidden
+      s.textOverflow.ellipsis
+      s.WebkitLineClamp(String(props.lines))
+      s.WebkitBoxOrient('vertical')
     }
     props.css?.(s)
   }),

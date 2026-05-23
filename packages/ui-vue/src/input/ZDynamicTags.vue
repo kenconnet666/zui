@@ -149,14 +149,14 @@ const addBtnClass = computed(() =>
     s.fontSize._small
     s.borderRadius._tiny
     s.borderWidth._thin
-    s._prop('borderStyle', 'dashed')
+    s.borderStyle.dashed
     s.borderColor._border
     s.backgroundColor.transparent
     s.color._textSecondary
     s.cursor.pointer
     if (props.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     } else {
       s._hover((h) => {
         h.color._primary
@@ -168,7 +168,7 @@ const addBtnClass = computed(() =>
 
 const inputClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('width', '6em')
+    s.width.em(6)
     s.fontSize._small
     s.borderRadius._tiny
     s.borderWidth._thin
@@ -180,7 +180,7 @@ const inputClass = computed(() =>
     s.paddingRight._tiny
     s.paddingTop.iem(0.125)
     s.paddingBottom.iem(0.125)
-    s._prop('outline', 'none')
+    s.outline('none')
   }),
 )
 

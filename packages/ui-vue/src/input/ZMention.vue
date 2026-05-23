@@ -96,8 +96,8 @@ function pickMention(name: string): void {
 const wrapperClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.block
-    s._prop('position', 'relative')
-    s._prop('width', '100%')
+    s.position.relative
+    s.width.pct(100)
     props.css?.(s)
   }),
 )
@@ -113,23 +113,23 @@ const taClass = computed(() =>
     s.color._text
     s.fontSize._middle
     s.padding._small
-    s._prop('outline', 'none')
-    s._prop('resize', 'vertical')
-    s._prop('fontFamily', 'inherit')
+    s.outline('none')
+    s.resize.vertical
+    s.fontFamily('inherit')
     if (props.disabled) {
       s.opacity._dim
       s.backgroundColor._bgMuted
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
   }),
 )
 
 const dropdownClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('position', 'absolute')
-    s._prop('top', '100%')
-    s._prop('left', '0')
-    s._prop('right', '0')
+    s.position.absolute
+    s.top.pct(100)
+    s.left.px(0)
+    s.right.px(0)
     s.zIndex._popover
     s.backgroundColor._bg
     s.borderRadius._small
@@ -138,8 +138,8 @@ const dropdownClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._tiny
-    s._prop('maxHeight', '240px')
-    s._prop('overflowY', 'auto')
+    s.maxHeight.iem(15)
+    s.overflowY.auto
     s.marginTop._tiny
   }),
 )

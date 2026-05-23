@@ -144,8 +144,8 @@ const labelClass = computed(() =>
       s.flexShrink(0)
       if (props.labelWidth !== undefined) {
         const w = typeof props.labelWidth === 'number' ? `${props.labelWidth}px` : props.labelWidth
-        s._prop('width', w)
-        s._prop('textAlign', 'right')
+        s.width(w)
+        s.textAlign.right
       }
       s.paddingTop.iem(0.375)
     }

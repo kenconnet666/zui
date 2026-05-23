@@ -33,10 +33,10 @@ const rootClass = computed(() =>
     const info = getThemeColor(theme.value, 'info', '#0288d1')
     const defaultGradient = `linear-gradient(135deg, ${primary}, ${info})`
     const grad = props.gradient ?? defaultGradient
-    s._prop('backgroundImage', grad)
-    s._prop('WebkitBackgroundClip', 'text')
-    s._prop('backgroundClip', 'text')
-    s._prop('WebkitTextFillColor', 'transparent')
+    s.backgroundImage(grad)
+    s.WebkitBackgroundClip('text')
+    s.backgroundClip.text
+    s.WebkitTextFillColor('transparent')
     s.color.transparent
     s.fontWeight._semibold
     s.display.inlineBlock

@@ -48,20 +48,20 @@ const rootClass = computed(() =>
 
 function itemClass(): string {
   return icss(theme.value, (s) => {
-    s._prop('position', 'relative')
+    s.position.relative
     s.paddingLeft._huge
     s.paddingBottom._middle
-    s._prop('minHeight', 'calc(2 * var(--zui-iem, 16px))')
+    s.minHeight.iem(2)
   })
 }
 
 function dotClass(status: ZTimelineStatus): string {
   return icss(theme.value, (s) => {
-    s._prop('position', 'absolute')
-    s._prop('left', '0')
-    s._prop('top', '4px')
-    s._prop('width', 'calc(0.625 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(0.625 * var(--zui-iem, 16px))')
+    s.position.absolute
+    s.left.px(0)
+    s.top.iem(0.25)
+    s.width.iem(0.625)
+    s.height.iem(0.625)
     s.borderRadius._full
     s.backgroundColor[`_${STATUS_COLOR[status]}` as const]
   })
@@ -69,11 +69,12 @@ function dotClass(status: ZTimelineStatus): string {
 
 function lineClass(): string {
   return icss(theme.value, (s) => {
-    s._prop('position', 'absolute')
-    s._prop('left', 'calc(0.3125 * var(--zui-iem, 16px) - 1px)')
-    s._prop('top', '12px')
-    s._prop('bottom', '0')
-    s._prop('width', '2px')
+    // 线宽 0.125iem(2px @ 默认 iem=16px),left 取 dot 中心(0.3125iem)- 线宽半值(0.0625iem)= 0.25iem
+    s.position.absolute
+    s.left.iem(0.25)
+    s.top.iem(0.75)
+    s.bottom.px(0)
+    s.width.iem(0.125)
     s.backgroundColor._border
   })
 }

@@ -77,7 +77,7 @@ const titleClass = computed(() =>
     s.fontSize._huge
     s.fontWeight._semibold
     s.color._text
-    s._prop('textAlign', 'center')
+    s.textAlign.center
   }),
 )
 
@@ -85,8 +85,8 @@ const descClass = computed(() =>
   icss(theme.value, (s) => {
     s.fontSize._middle
     s.color._textSecondary
-    s._prop('textAlign', 'center')
-    s._prop('maxWidth', '480px')
+    s.textAlign.center
+    s.maxWidth.iem(30)
   }),
 )
 

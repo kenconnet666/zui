@@ -63,7 +63,7 @@ const itemClass = computed(() =>
     s.alignItems.center
     s.color.currentColor
     s.cursor.pointer
-    s._prop('textDecoration', 'none')
+    s.textDecorationLine.none
     s._hover((h) => {
       h.color._primary
     })
@@ -76,7 +76,7 @@ const lastItemClass = computed(() =>
   icss(theme.value, (s) => {
     s.color._text
     s.fontWeight._medium
-    s._prop('cursor', 'default')
+    s.cursor.default
     applySx(s, props.sxItem)
   }),
 )
@@ -84,7 +84,7 @@ const lastItemClass = computed(() =>
 const separatorClass = computed(() =>
   icss(theme.value, (s) => {
     s.color._textSecondary
-    s._prop('userSelect', 'none')
+    s.userSelect.none
     s.opacity._strong
     applySx(s, props.sxSeparator)
   }),

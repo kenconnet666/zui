@@ -69,7 +69,7 @@ const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.backgroundColor._bg
     s.borderRadius._middle
-    s._prop('overflow', 'hidden')
+    s.overflow.hidden
     if (props.bordered) {
       s.borderWidth._thin
       s.borderStyle.solid

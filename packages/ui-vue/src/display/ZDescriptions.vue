@@ -71,7 +71,7 @@ const rootClass = computed(() =>
       s.borderStyle.solid
       s.borderColor._border
       s.borderRadius._small
-      s._prop('overflow', 'hidden')
+      s.overflow.hidden
     }
     props.css?.(s)
   }),
@@ -98,9 +98,11 @@ const titleClass = computed(() =>
 const gridClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.grid
-    s._prop('gridTemplateColumns', `repeat(${props.column}, minmax(0, 1fr))`)
+    s.gridTemplateColumns(`repeat(${props.column}, minmax(0, 1fr))`)
     if (props.bordered) {
-      s._prop('borderTop', `1px solid var(--zui-color-border, transparent)`)
+      s.borderTopWidth.px(1)
+      s.borderTopStyle.solid
+      s.borderTopColor._border
     }
   }),
 )

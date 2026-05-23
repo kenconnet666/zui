@@ -118,8 +118,8 @@ const className = computed(() =>
     if (props.cols !== undefined) applyResponsive(s, props.cols, 'gridTemplateColumns')
     if (props.rows !== undefined) applyResponsive(s, props.rows, 'gridTemplateRows')
     if (props.gap) s.gap(props.gap)
-    s._prop('justifyItems', ITEM_ALIGN_MAP[props.justifyItems])
-    s._prop('alignItems', ITEM_ALIGN_MAP[props.alignItems])
+    s.justifyItems(ITEM_ALIGN_MAP[props.justifyItems])
+    s.alignItems(ITEM_ALIGN_MAP[props.alignItems])
 
     props.css?.(s)
   }),

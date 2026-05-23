@@ -96,18 +96,18 @@ export function applyTypographyBase(
   if (props.leading) s.lineHeight(props.leading)
   if (props.tracking) s.letterSpacing(props.tracking)
 
-  // ─── 斜体 ─── fontStyle 不在 ENHANCED_PROPS,走 _prop 逃生舱
-  if (props.italic) s._prop('fontStyle', 'italic')
+  // ─── 斜体 ─── fontStyle 不在 ENHANCED_PROPS,走 PropFn 函数调用
+  if (props.italic) s.fontStyle('italic')
 
   // ─── 装饰线(underline + strikethrough 可叠加,空格分隔多值) ───
   const baseLines: string[] = []
   if (props.underline === 'always') baseLines.push('underline')
   if (props.strikethrough) baseLines.push('line-through')
-  if (baseLines.length > 0) s._prop('textDecorationLine', baseLines.join(' '))
+  if (baseLines.length > 0) s.textDecorationLine(baseLines.join(' '))
   if (props.underline === 'hover') {
     const hoverLines = [...baseLines, 'underline'].join(' ')
     s._hover((h) => {
-      h._prop('textDecorationLine', hoverLines)
+      h.textDecorationLine(hoverLines)
     })
   }
 

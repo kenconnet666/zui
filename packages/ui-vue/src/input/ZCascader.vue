@@ -172,7 +172,7 @@ const triggerTextClass = computed(() =>
 
 const popperClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('position', 'absolute')
+    s.position.absolute
     s.zIndex._popover
     s.backgroundColor._bg
     s.borderRadius._small
@@ -186,14 +186,16 @@ const popperClass = computed(() =>
 
 const columnClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('minWidth', 'calc(8 * var(--zui-iem, 16px))')
-    s._prop('maxHeight', '280px')
-    s._prop('overflowY', 'auto')
+    s.minWidth.iem(8)
+    s.maxHeight.iem(17.5)
+    s.overflowY.auto
     s.borderRightWidth._thin
     s.borderRightStyle.solid
     s.borderRightColor._border
     s.padding._tiny
-    s._prop('lastChild', '')
+    s._lastChild((c) => {
+      c.borderRightStyle.none
+    })
   }),
 )
 
@@ -229,7 +231,7 @@ const arrowClass = computed(() =>
     s.color._textSecondary
     s.transitionProperty._transform
     s.transitionDuration._small
-    s._prop('transform', open.value ? 'rotate(180deg)' : 'rotate(0deg)')
+    s.transform(open.value ? 'rotate(180deg)' : 'rotate(0deg)')
   }),
 )
 

@@ -51,7 +51,7 @@ const rootClass = computed(() =>
       s.borderStyle.solid
       s.borderColor._border
       s.borderRadius._small
-      s._prop('overflow', 'hidden')
+      s.overflow.hidden
     }
     props.css?.(s)
   }),
@@ -97,7 +97,7 @@ const emptyClass = computed(() =>
     s.padding._large
     s.color._textSecondary
     s.fontSize._small
-    s._prop('textAlign', 'center')
+    s.textAlign.center
   }),
 )
 </script>

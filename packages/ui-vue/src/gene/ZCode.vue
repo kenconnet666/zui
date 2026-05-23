@@ -47,8 +47,8 @@ const rootClass = computed(() =>
     } else {
       s.display.block
       s.padding._small
-      s._prop('overflowX', 'auto')
-      s._prop('whiteSpace', 'pre')
+      s.overflowX.auto
+      s.whiteSpace.pre
       s.fontSize._small
       s.lineHeight._normal
     }

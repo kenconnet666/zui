@@ -37,10 +37,10 @@ const widthPct = computed(() => Math.max(0, Math.min(100, props.value ?? 0)))
 const wrapClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed
-    s._prop('top', '0')
-    s._prop('left', '0')
-    s._prop('right', '0')
-    s._prop('height', '2px')
+    s.top.px(0)
+    s.left.px(0)
+    s.right.px(0)
+    s.height.iem(0.125)
     s.zIndex._toast
     s.pointerEvents.none
     props.css?.(s)
@@ -49,8 +49,8 @@ const wrapClass = computed(() =>
 
 const fillClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('height', '100%')
-    s._prop('width', `${widthPct.value}%`)
+    s.height.pct(100)
+    s.width.pct(widthPct.value)
     if (props.error) s.backgroundColor._danger
     else s.backgroundColor._primary
     s.transitionProperty._sizes

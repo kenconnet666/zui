@@ -127,9 +127,9 @@ const itemClass = computed(() =>
     s.backgroundColor._bg
     s.color._text
     s.borderRadius._small
-    s._prop('minWidth', `calc(${dim} * var(--zui-iem, 16px))`)
-    s._prop('height', `calc(${dim} * var(--zui-iem, 16px))`)
-    s.padding('0')
+    s.minWidth.iem(dim)
+    s.height.iem(dim)
+    s.padding.px(0)
     s.paddingLeft._tiny
     s.paddingRight._tiny
     s.transitionProperty._colors
@@ -155,9 +155,9 @@ const currentItemClass = computed(() =>
     s.backgroundColor._primary
     s.color._bg
     s.borderRadius._small
-    s._prop('minWidth', `calc(${dim} * var(--zui-iem, 16px))`)
-    s._prop('height', `calc(${dim} * var(--zui-iem, 16px))`)
-    s.padding('0')
+    s.minWidth.iem(dim)
+    s.height.iem(dim)
+    s.padding.px(0)
     s.paddingLeft._tiny
     s.paddingRight._tiny
     s.fontWeight._semibold
@@ -168,7 +168,7 @@ const currentItemClass = computed(() =>
 const disabledClass = computed(() =>
   icss(theme.value, (s) => {
     s.opacity._dim
-    s._prop('cursor', 'not-allowed')
+    s.cursor.notAllowed
   }),
 )
 

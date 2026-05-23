@@ -209,7 +209,7 @@ function colWidth(col: ZTableColumn<T>): string | undefined {
 const tableClass = computed(() =>
   icss(theme.value, (s) => {
     s.width.pct(100)
-    s._prop('borderCollapse', 'collapse')
+    s.borderCollapse.collapse
     s.fontSize._middle
     s.color._text
     s.backgroundColor._bg
@@ -258,7 +258,7 @@ const cellClass = (col: ZTableColumn<T>): string =>
     applySizeProp(props.size, SIZE_MAP, s)
     s.paddingLeft._middle
     s.paddingRight._middle
-    s._prop('textAlign', col.align ?? 'left')
+    s.textAlign(col.align ?? 'left')
     if (props.bordered) {
       s.borderRightWidth._thin
       s.borderRightStyle.solid
@@ -273,8 +273,8 @@ const selectCellClass = computed(() =>
     applySizeProp(props.size, SIZE_MAP, s)
     s.paddingLeft._small
     s.paddingRight._small
-    s._prop('textAlign', 'center')
-    s._prop('width', 'calc(2 * var(--zui-iem, 16px))')
+    s.textAlign.center
+    s.width.iem(2)
   }),
 )
 
@@ -304,7 +304,7 @@ const emptyClass = computed(() =>
     s.padding._large
     s.color._textSecondary
     s.fontSize._small
-    s._prop('textAlign', 'center')
+    s.textAlign.center
   }),
 )
 

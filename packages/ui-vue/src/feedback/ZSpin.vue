@@ -97,7 +97,7 @@ const rootClass = computed(() =>
 const overlayClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute
-    s._prop('inset', '0')
+    s.inset.px(0)
     s.display.flex
     s.flexDirection.column
     s.alignItems.center
@@ -150,7 +150,7 @@ const wrapContentClass = computed(() =>
     if (props.spinning) {
       s.opacity._dim
       s.pointerEvents.none
-      s._prop('userSelect', 'none')
+      s.userSelect.none
     }
   }),
 )

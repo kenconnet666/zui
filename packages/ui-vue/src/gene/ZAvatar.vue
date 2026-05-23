@@ -84,10 +84,11 @@ const rootClass = computed(() =>
     // size:union(width carrier;height 镜像 width 保证正方形头像)
     applySizeProp(props.size, SIZE_MAP, s.width)
     if (s._node.width !== undefined) s._node.height = s._node.width
-    s._prop('overflow', 'hidden')
-    s._prop('verticalAlign', 'middle')
-    s._prop('userSelect', 'none')
-    s.borderRadius(props.shape === 'circle' ? '9999px' : 'calc(0.375 * var(--zui-iem, 16px))')
+    s.overflow.hidden
+    s.verticalAlign('middle')
+    s.userSelect.none
+    if (props.shape === 'circle') s.borderRadius._full
+    else s.borderRadius.iem(0.375)
     if (!showImage.value) {
       if (props.color) s.backgroundColor(props.color)
       else s.backgroundColor._textSecondary
@@ -101,9 +102,9 @@ const rootClass = computed(() =>
 
 const imgClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('width', '100%')
-    s._prop('height', '100%')
-    s._prop('objectFit', 'cover')
+    s.width.pct(100)
+    s.height.pct(100)
+    s.objectFit.cover
   }),
 )
 

@@ -96,7 +96,7 @@ const starClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s._prop('position', 'relative')
+    s.position.relative
     applySizeProp(props.size, SIZE_MAP, s.width)
     // height 镜像 width(保证星星方形)
     if (s._node.width !== undefined) s._node.height = s._node.width
@@ -107,12 +107,12 @@ const starClass = computed(() =>
 
 const filledStarClass = (filledRatio: number): string =>
   icss(theme.value, (s) => {
-    s._prop('position', 'absolute')
-    s._prop('left', '0')
-    s._prop('top', '0')
-    s._prop('width', `${filledRatio * 100}%`)
-    s._prop('height', '100%')
-    s._prop('overflow', 'hidden')
+    s.position.absolute
+    s.left.px(0)
+    s.top.px(0)
+    s.width.pct(filledRatio * 100)
+    s.height.pct(100)
+    s.overflow.hidden
     s.color.currentColor
   })
 

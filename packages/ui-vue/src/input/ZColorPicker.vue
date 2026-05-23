@@ -53,7 +53,7 @@ const wrapperClass = computed(() =>
     s.fontSize._middle
     if (props.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     } else {
       s.cursor.pointer
       s._hover((h) => {
@@ -67,13 +67,13 @@ const wrapperClass = computed(() =>
 const swatchClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineBlock
-    s._prop('width', 'calc(1.25 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(1.25 * var(--zui-iem, 16px))')
+    s.width.iem(1.25)
+    s.height.iem(1.25)
     s.borderRadius._tiny
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
-    s._prop('flexShrink', '0')
+    s.flexShrink(0)
   }),
 )
 

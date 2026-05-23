@@ -126,11 +126,11 @@ const buttonClass = computed(() =>
     s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid
-    s._prop('borderColor', 'transparent')
+    s.borderColor.transparent
     s.cursor.pointer
-    s._prop('userSelect', 'none')
-    s._prop('overflow', 'hidden')
-    s._prop('position', 'relative')
+    s.userSelect.none
+    s.overflow.hidden
+    s.position.relative
     s.transitionProperty._default
     s.transitionDuration._small
     if (props.block) s.width.pct(100)
@@ -162,7 +162,7 @@ const buttonClass = computed(() =>
         })
         break
       case 'outlined':
-        s._prop('borderColor', 'currentColor')
+        s.borderColor.currentColor
         s.backgroundColor.transparent
         if (!hasUserColor) {
           s._hover((h2) => {
@@ -188,11 +188,11 @@ const buttonClass = computed(() =>
         // 用 ::before 伪元素做 state layer,避免 opacity 整体淡化(包括文字/图标)。
         // user color 时降级:背景不变(透明),仅靠 ::before 颜色由 currentColor 提供。
         s.backgroundColor.transparent
-        s._prop('position', 'relative')
+        s.position.relative
         s._before((b) => {
           b.content("''")
-          b._prop('position', 'absolute')
-          b._prop('inset', '0')
+          b.position.absolute
+          b.inset.px(0)
           b.backgroundColor.currentColor
           b.opacity(0.08)
           b.borderRadius.inherit
@@ -207,25 +207,25 @@ const buttonClass = computed(() =>
         break
       case 'link':
         s.backgroundColor.transparent
-        s._prop('textDecoration', 'none')
+        s.textDecorationLine.none
         s.borderRadius._tiny
         s._hover((h2) => {
-          h2._prop('textDecoration', 'underline')
+          h2.textDecorationLine('underline')
         })
         break
     }
 
     // :focus-visible outline ring(M3 模式)── 用户 color 时走 _primary 备份
     s._focusVisible((f) => {
-      f._prop('outlineWidth', '2px')
-      f._prop('outlineStyle', 'solid')
+      f.outlineWidth._middle
+      f.outlineStyle.solid
       f.outlineColor._focusRing.alpha(40)
-      f._prop('outlineOffset', '2px')
+      f.outlineOffset.px(2)
     })
 
     if (isClickDisabled.value) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
 
     props.css?.(s)

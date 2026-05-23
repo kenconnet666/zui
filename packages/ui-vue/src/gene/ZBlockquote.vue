@@ -37,14 +37,14 @@ const rootClass = computed(() =>
     s.color._text
     s.backgroundColor._bgMuted
     s.borderRadius._tiny
-    s._prop('fontStyle', 'italic')
+    s.fontStyle('italic')
     s.lineHeight._relaxed
     s.paddingLeft._middle
     s.paddingRight._small
     s.paddingTop._small
     s.paddingBottom._small
-    s._prop('borderLeftWidth', '4px')
-    s._prop('borderLeftStyle', 'solid')
+    s.borderLeftWidth.px(4)
+    s.borderLeftStyle.solid
     // border-left 用 user color 或 _primary;不影响文字
     if (props.color) {
       s.borderLeftColor(props.color)

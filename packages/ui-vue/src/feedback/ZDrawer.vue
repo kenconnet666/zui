@@ -108,7 +108,7 @@ const sizeValue = computed(() => {
 const maskClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed
-    s._prop('inset', '0')
+    s.inset.px(0)
     s.backgroundColor._overlayBg.alpha(50)
     s.zIndex._modal
     applySx(s, props.sxMask)
@@ -128,28 +128,28 @@ const drawerClass = computed(() =>
 
     switch (props.placement) {
       case 'left':
-        s._prop('top', '0')
-        s._prop('left', '0')
-        s._prop('bottom', '0')
-        s._prop('width', sizeValue.value)
+        s.top.px(0)
+        s.left.px(0)
+        s.bottom.px(0)
+        s.width(sizeValue.value)
         break
       case 'right':
-        s._prop('top', '0')
-        s._prop('right', '0')
-        s._prop('bottom', '0')
-        s._prop('width', sizeValue.value)
+        s.top.px(0)
+        s.right.px(0)
+        s.bottom.px(0)
+        s.width(sizeValue.value)
         break
       case 'top':
-        s._prop('top', '0')
-        s._prop('left', '0')
-        s._prop('right', '0')
-        s._prop('height', sizeValue.value)
+        s.top.px(0)
+        s.left.px(0)
+        s.right.px(0)
+        s.height(sizeValue.value)
         break
       case 'bottom':
-        s._prop('bottom', '0')
-        s._prop('left', '0')
-        s._prop('right', '0')
-        s._prop('height', sizeValue.value)
+        s.bottom.px(0)
+        s.left.px(0)
+        s.right.px(0)
+        s.height(sizeValue.value)
         break
     }
     props.css?.(s)
@@ -178,7 +178,7 @@ const bodyClass = computed(() =>
   icss(theme.value, (s) => {
     s.padding._middle
     s.flexGrow(1)
-    s._prop('overflowY', 'auto')
+    s.overflowY.auto
     applySx(s, props.sxBody)
   }),
 )

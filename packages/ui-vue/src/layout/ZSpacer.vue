@@ -56,7 +56,7 @@ const className = computed(() =>
     s.flexGrow(props.grow)
     s.flexShrink(props.shrink)
     if (props.basis) s.flexBasis(props.basis)
-    else s._prop('flexBasis', 'auto')
+    else s.flexBasis.auto
 
     props.css?.(s)
   }),

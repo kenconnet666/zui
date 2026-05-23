@@ -71,7 +71,7 @@ const rootClass = computed(() =>
     s.fontSize._middle
     if (isDisabled.value) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
     props.css?.(s)
   }),
@@ -82,8 +82,8 @@ const boxClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s._prop('width', 'calc(1 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(1 * var(--zui-iem, 16px))')
+    s.width.iem(1)
+    s.height.iem(1)
     s.borderRadius._tiny
     s.borderWidth._thin
     s.borderStyle.solid

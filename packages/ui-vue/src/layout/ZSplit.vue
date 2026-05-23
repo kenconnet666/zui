@@ -86,30 +86,30 @@ const containerClass = computed(() =>
     s.flexDirection(props.direction === 'vertical' ? 'column' : 'row')
     s.width.pct(100)
     s.height.pct(100)
-    s._prop('overflow', 'hidden')
+    s.overflow.hidden
     props.css?.(s)
   }),
 )
 
 const firstClass = computed(() =>
   icss(theme.value, (s) => {
-    const pct = `${props.size * 100}%`
+    const pct = props.size * 100
     if (props.direction === 'horizontal') {
-      s._prop('width', pct)
-      s._prop('height', '100%')
+      s.width.pct(pct)
+      s.height.pct(100)
     } else {
-      s._prop('height', pct)
-      s._prop('width', '100%')
+      s.height.pct(pct)
+      s.width.pct(100)
     }
     s.flexShrink(0)
-    s._prop('overflow', 'auto')
+    s.overflow.auto
   }),
 )
 
 const secondClass = computed(() =>
   icss(theme.value, (s) => {
     s.flexGrow(1)
-    s._prop('overflow', 'auto')
+    s.overflow.auto
   }),
 )
 
@@ -120,11 +120,11 @@ const dividerClass = computed(() =>
     s.transitionProperty._colors
     s.transitionDuration._small
     if (props.direction === 'horizontal') {
-      s._prop('width', '4px')
-      s._prop('cursor', props.disabled ? 'default' : 'col-resize')
+      s.width.px(4)
+      s.cursor(props.disabled ? 'default' : 'col-resize')
     } else {
-      s._prop('height', '4px')
-      s._prop('cursor', props.disabled ? 'default' : 'row-resize')
+      s.height.px(4)
+      s.cursor(props.disabled ? 'default' : 'row-resize')
     }
     if (!props.disabled) {
       s._hover((h) => {

@@ -85,7 +85,7 @@ const wrapperClass = computed(() =>
     }
     if (props.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
       s.backgroundColor._bgMuted
     }
 
@@ -101,11 +101,11 @@ const textareaClass = computed(() =>
     s.fontSize.inherit
     s.lineHeight.inherit
     s.fontFamily.inherit
-    s._prop('outline', 'none')
+    s.outline('none')
     s.width.pct(100)
-    s._prop('resize', props.autosize ? 'none' : 'vertical')
+    s.resize(props.autosize ? 'none' : 'vertical')
     if (props.disabled) {
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
     applySx(s, props.sxTextarea)
   }),

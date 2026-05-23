@@ -83,7 +83,7 @@ const rootClass = computed(() =>
       s.borderStyle.solid
       s.borderColor._border
       s.borderRadius._small
-      s._prop('overflow', 'hidden')
+      s.overflow.hidden
     }
     props.css?.(s)
   }),
@@ -103,7 +103,7 @@ function headerClass(item: ZCollapseItem, idx: number): string {
     s.color._text
     s.fontSize._middle
     s.fontWeight._medium
-    s._prop('textAlign', 'left')
+    s.textAlign.left
     if (idx > 0 && props.bordered) {
       s.borderTopWidth._thin
       s.borderTopStyle.solid
@@ -114,7 +114,7 @@ function headerClass(item: ZCollapseItem, idx: number): string {
     })
     if (item.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
   })
 }
@@ -134,7 +134,7 @@ const arrowClass = (expanded: boolean): string =>
     s.color._textSecondary
     s.transitionProperty._transform
     s.transitionDuration._small
-    s._prop('transform', expanded ? 'rotate(180deg)' : 'rotate(0deg)')
+    s.transform(expanded ? 'rotate(180deg)' : 'rotate(0deg)')
   })
 
 const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }))

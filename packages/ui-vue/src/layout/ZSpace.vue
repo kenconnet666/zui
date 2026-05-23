@@ -97,9 +97,11 @@ const className = computed(() =>
   icss(theme.value, (s) => {
     if (props.inline) s.display.inlineFlex
     else s.display.flex
-    s._prop('flexDirection', props.direction === 'vertical' ? 'column' : 'row')
-    s._prop('flexWrap', props.wrap ? 'wrap' : 'nowrap')
-    s._prop('alignItems', ALIGN_MAP[props.align])
+    if (props.direction === 'vertical') s.flexDirection.column
+    else s.flexDirection.row
+    if (props.wrap) s.flexWrap.wrap
+    else s.flexWrap.nowrap
+    s.alignItems(ALIGN_MAP[props.align])
 
     // gap:union(string 走 SIZE_MAP / factory 直接调)
     applySizeProp(props.size, SIZE_MAP, s.gap)

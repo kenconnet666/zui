@@ -160,9 +160,10 @@ const tooltipClass = computed(() =>
     s.paddingRight._small
     s.borderRadius._tiny
     s.boxShadow._small
-    s._prop('pointerEvents', props.trigger === 'hover' ? 'auto' : 'none')
-    s._prop('maxWidth', '320px')
-    s._prop('wordBreak', 'break-word')
+    if (props.trigger === 'hover') s.pointerEvents.auto
+    else s.pointerEvents.none
+    s.maxWidth.iem(20)
+    s.wordBreak.breakWord
     applySx(s, props.sxContent)
     props.css?.(s)
   }),

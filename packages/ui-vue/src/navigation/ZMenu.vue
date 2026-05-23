@@ -102,7 +102,7 @@ function itemClass(item: ZMenuItem, isActive: boolean, depth: number): string {
     s.borderRadius._small
     s.transitionProperty._colors
     s.transitionDuration._small
-    s._prop('textAlign', 'left')
+    s.textAlign.left
     s.width.pct(100)
     if (isActive) {
       s.color._primary
@@ -114,7 +114,7 @@ function itemClass(item: ZMenuItem, isActive: boolean, depth: number): string {
     })
     if (item.disabled || props.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
     applySx(s, props.sxItem)
   })
@@ -134,9 +134,9 @@ const sxSubmenuAttrs = computed(() => extractSxAttrs(props.sxSubmenu))
 const labelClass = computed(() =>
   icss(theme.value, (s) => {
     s.flexGrow(1)
-    s._prop('overflow', 'hidden')
-    s._prop('whiteSpace', 'nowrap')
-    s._prop('textOverflow', 'ellipsis')
+    s.overflow.hidden
+    s.whiteSpace.nowrap
+    s.textOverflow.ellipsis
     applySx(s, props.sxLabel)
   }),
 )
@@ -147,7 +147,7 @@ const arrowClass = (expanded: boolean): string =>
     s.color._textSecondary
     s.transitionProperty._transform
     s.transitionDuration._small
-    s._prop('transform', expanded ? 'rotate(180deg)' : 'rotate(0deg)')
+    s.transform(expanded ? 'rotate(180deg)' : 'rotate(0deg)')
   })
 
 function isExpanded(key: string): boolean {

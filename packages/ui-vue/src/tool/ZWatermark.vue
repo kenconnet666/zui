@@ -59,19 +59,19 @@ const watermarkDataUrl = computed(() => {
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('position', 'relative')
+    s.position.relative
     props.css?.(s)
   }),
 )
 
 const overlayClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('position', 'absolute')
-    s._prop('inset', '0')
-    s._prop('pointerEvents', 'none')
-    s._prop('backgroundImage', `url(${watermarkDataUrl.value})`)
-    s._prop('backgroundRepeat', 'repeat')
-    s._prop('backgroundSize', `${props.gap}px ${props.gap}px`)
+    s.position.absolute
+    s.inset.px(0)
+    s.pointerEvents.none
+    s.backgroundImage(`url(${watermarkDataUrl.value})`)
+    s.backgroundRepeat.repeat
+    s.backgroundSize(`${props.gap}px ${props.gap}px`)
     s.zIndex._small
   }),
 )

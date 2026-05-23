@@ -50,11 +50,11 @@ if (typeof document !== 'undefined' && !document.getElementById(MARQUEE_STYLE_ID
 const wrapClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.block
-    s._prop('overflow', 'hidden')
-    s._prop('whiteSpace', 'nowrap')
+    s.overflow.hidden
+    s.whiteSpace.nowrap
     if (props.pauseOnHover) {
       s._hover((h) => {
-        h._prop('animationPlayState', 'paused')
+        h.animationPlayState.paused
       })
     }
     props.css?.(s)
@@ -64,10 +64,7 @@ const wrapClass = computed(() =>
 const trackClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
-    s._prop(
-      'animation',
-      `zui-marquee-${props.direction} ${props.duration}ms linear infinite`,
-    )
+    s.animation(`zui-marquee-${props.direction} ${props.duration}ms linear infinite`)
     if (props.pauseOnHover) {
       // 让 hover 暂停传递到子级 animation
     }

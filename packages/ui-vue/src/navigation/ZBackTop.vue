@@ -65,13 +65,13 @@ onScopeDispose(() => {
 const btnClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed
-    s._prop('right', typeof props.right === 'number' ? `${props.right}px` : props.right)
-    s._prop('bottom', typeof props.bottom === 'number' ? `${props.bottom}px` : props.bottom)
+    s.right(typeof props.right === 'number' ? `${props.right}px` : props.right)
+    s.bottom(typeof props.bottom === 'number' ? `${props.bottom}px` : props.bottom)
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s._prop('width', 'calc(2.5 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(2.5 * var(--zui-iem, 16px))')
+    s.width.iem(2.5)
+    s.height.iem(2.5)
     s.borderRadius._full
     s.backgroundColor._bg
     s.color._primary

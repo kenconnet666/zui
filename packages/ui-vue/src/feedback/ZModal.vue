@@ -91,7 +91,7 @@ const widthValue = computed(() =>
 const maskClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed
-    s._prop('inset', '0')
+    s.inset.px(0)
     s.display.flex
     s.justifyContent.center
     s.alignItems(props.centered ? 'center' : 'flex-start')
@@ -111,9 +111,9 @@ const dialogClass = computed(() =>
     s.boxShadow._huge
     s.display.flex
     s.flexDirection.column
-    s._prop('maxHeight', 'calc(100vh - 32px)')
-    s._prop('width', widthValue.value)
-    s._prop('maxWidth', 'calc(100vw - 32px)')
+    s.maxHeight('calc(100vh - calc(2 * var(--zui-iem, 16px)))')
+    s.width(widthValue.value)
+    s.maxWidth('calc(100vw - calc(2 * var(--zui-iem, 16px)))')
     if (!props.centered) s.marginTop._huge
     if (props.zIndex !== undefined) s.zIndex(props.zIndex + 1)
     else s.zIndex._modal
@@ -145,7 +145,7 @@ const bodyClass = computed(() =>
   icss(theme.value, (s) => {
     s.padding._middle
     s.flexGrow(1)
-    s._prop('overflowY', 'auto')
+    s.overflowY.auto
     applySx(s, props.sxBody)
   }),
 )

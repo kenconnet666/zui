@@ -82,7 +82,7 @@ const rootClass = computed(() =>
     s.fontWeight._semibold
     s.color._text
     s.display.inlineBlock
-    s._prop('fontVariantNumeric', 'tabular-nums')
+    s.fontVariantNumeric('tabular-nums')
     props.css?.(s)
   }),
 )

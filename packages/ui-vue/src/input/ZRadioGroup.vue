@@ -72,8 +72,8 @@ const rootClass = computed(() =>
     s.flexWrap.wrap
     if (props.buttonStyle) {
       // button 模式下子按钮间不留 gap,但首尾圆角处理通过 css 自定义,这里仅基础
-      s._prop('borderRadius', 'calc(0.5 * var(--zui-iem, 16px))')
-      s._prop('overflow', 'hidden')
+      s.borderRadius.iem(0.5)
+      s.overflow.hidden
     }
     props.css?.(s)
   }),

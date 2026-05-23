@@ -142,8 +142,8 @@ const popperClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._middle
-    s._prop('minWidth', 'calc(8 * var(--zui-iem, 16px))')
-    s._prop('maxWidth', '480px')
+    s.minWidth.iem(8)
+    s.maxWidth.iem(30)
     applySx(s, props.sxContent)
     props.css?.(s)
   }),

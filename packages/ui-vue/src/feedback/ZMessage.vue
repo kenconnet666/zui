@@ -66,9 +66,9 @@ const TYPE_COLOR_MAP: Record<ZMessageType, 'info' | 'success' | 'warning' | 'dan
 const containerClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed
-    s._prop('top', '24px')
-    s._prop('left', '50%')
-    s._prop('transform', 'translateX(-50%)')
+    s.top.iem(1.5)
+    s.left.pct(50)
+    s.transform('translateX(-50%)')
     s.display.flex
     s.flexDirection.column
     s.alignItems.center
@@ -97,7 +97,7 @@ function itemClass(type: ZMessageType): string {
     s.pointerEvents.auto
     s.borderWidth._thin
     s.borderStyle.solid
-    s._prop('borderColor', 'transparent')
+    s.borderColor.transparent
     // 左侧 icon 颜色
     s.color[colorKey]
   })

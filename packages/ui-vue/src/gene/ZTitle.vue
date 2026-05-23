@@ -101,7 +101,7 @@ const className = computed(() =>
     s.fontSize.iem(LEVEL_FONT_SIZE[props.level])
     s.fontWeight(LEVEL_FONT_WEIGHT[props.level])
     s.lineHeight(LEVEL_LINE_HEIGHT)
-    s.margin('0') // 重置浏览器默认 h{N} margin,块级布局由父容器掌控
+    s.margin.px(0) // 重置浏览器默认 h{N} margin,块级布局由父容器掌控
 
     applyTypographyBase(s, props)
     props.css?.(s)

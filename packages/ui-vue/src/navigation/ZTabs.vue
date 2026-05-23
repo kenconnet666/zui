@@ -93,7 +93,7 @@ const listClass = computed(() =>
       s.borderBottomStyle.solid
       s.borderBottomColor._border
     } else if (props.type === 'card') {
-      s._prop('marginBottom', '-1px')
+      s.marginBottom.px(-1)
     } else if (props.type === 'segment') {
       s.padding._tiny
       s.backgroundColor._bgMuted
@@ -123,8 +123,8 @@ function tabClass(tab: ZTabItem, isActive: boolean): string {
     if (props.type === 'line') {
       s.borderBottomWidth._thick
       s.borderBottomStyle.solid
-      s._prop('borderBottomColor', 'transparent')
-      s._prop('marginBottom', '-1px')
+      s.borderBottomColor.transparent
+      s.marginBottom.px(-1)
       if (isActive) {
         s.color._primary
         s.borderBottomColor._primary
@@ -138,7 +138,7 @@ function tabClass(tab: ZTabItem, isActive: boolean): string {
       if (isActive) {
         s.color._text
         s.backgroundColor._bg
-        s._prop('borderBottomColor', 'transparent')
+        s.borderBottomColor.transparent
       } else {
         s.backgroundColor._bgMuted
       }
@@ -156,7 +156,7 @@ function tabClass(tab: ZTabItem, isActive: boolean): string {
     })
     if (tab.disabled || props.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
     applySx(s, props.sxTab)
   })

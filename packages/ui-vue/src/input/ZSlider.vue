@@ -107,10 +107,10 @@ const inputClass = computed(() =>
     const primary = getThemeColor(theme.value, 'primary', '#1976d2')
     const bgMuted = getThemeColor(theme.value, 'bgMuted', '#e5e7eb')
     const bg = getThemeColor(theme.value, 'bg', '#fff')
-    s._prop(
-      'background',
+    s.background(
       `linear-gradient(to right, ${primary} 0%, ${primary} ${percent.value}%, ${bgMuted} ${percent.value}%, ${bgMuted} 100%)`,
     )
+    // CSS custom properties —— chain 无对应 carrier,保留 _prop
     s._prop('--zui-slider-thumb-border', primary)
     s._prop('--zui-slider-thumb-bg', bg)
   }),
@@ -121,8 +121,8 @@ const valueLabelClass = computed(() =>
     s.flexShrink(0)
     s.color._textSecondary
     s.fontSize._small
-    s._prop('minWidth', '3em')
-    s._prop('textAlign', 'right')
+    s.minWidth.em(3)
+    s.textAlign.right
   }),
 )
 

@@ -100,12 +100,12 @@ const panelClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.flex
     s.flexDirection.column
-    s._prop('width', '200px')
+    s.width.iem(12.5)
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
     s.borderRadius._small
-    s._prop('overflow', 'hidden')
+    s.overflow.hidden
     s.backgroundColor._bg
   }),
 )
@@ -123,8 +123,8 @@ const panelHeadClass = computed(() =>
 
 const listClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('maxHeight', '240px')
-    s._prop('overflowY', 'auto')
+    s.maxHeight.iem(15)
+    s.overflowY.auto
     s.padding._tiny
   }),
 )
@@ -161,8 +161,8 @@ function arrowBtnClass(enabled: boolean): string {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s._prop('width', 'calc(2 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(2 * var(--zui-iem, 16px))')
+    s.width.iem(2)
+    s.height.iem(2)
     s.borderRadius._tiny
     s.borderWidth._thin
     s.borderStyle.solid
@@ -177,7 +177,7 @@ function arrowBtnClass(enabled: boolean): string {
 const emptyClass = computed(() =>
   icss(theme.value, (s) => {
     s.padding._small
-    s._prop('textAlign', 'center')
+    s.textAlign.center
     s.color._textSecondary
     s.fontSize._small
   }),

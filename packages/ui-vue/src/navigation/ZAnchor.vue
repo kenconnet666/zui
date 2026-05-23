@@ -83,14 +83,14 @@ function linkClass(active: boolean): string {
     s.display.block
     s.padding._tiny
     s.fontSize._small
-    s._prop('textDecoration', 'none')
+    s.textDecorationLine.none
     s.color(active ? '_primary' : '_textSecondary')
     if (active) {
       s.fontWeight._medium
-      s._prop('marginLeft', '-9px')
-      s._prop('borderLeftWidth', '2px')
-      s._prop('borderLeftStyle', 'solid')
-      s._prop('borderLeftColor', 'currentColor')
+      s.marginLeft.px(-9)
+      s.borderLeftWidth.px(2)
+      s.borderLeftStyle.solid
+      s.borderLeftColor.currentColor
       s.paddingLeft._small
     }
     s._hover((h) => {

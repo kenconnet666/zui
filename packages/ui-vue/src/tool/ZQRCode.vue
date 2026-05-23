@@ -54,8 +54,8 @@ const qrSrc = computed(() => useQRCode(props.value, qrOptions.value).value)
 const wrapClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineBlock
-    s._prop('width', `${props.size}px`)
-    s._prop('height', `${props.size}px`)
+    s.width.px(props.size)
+    s.height.px(props.size)
     s.backgroundColor(props.bgColor)
     s.borderRadius._tiny
     props.css?.(s)

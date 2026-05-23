@@ -97,8 +97,8 @@ const popperClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._middle
-    s._prop('minWidth', 'calc(12 * var(--zui-iem, 16px))')
-    s._prop('maxWidth', '320px')
+    s.minWidth.iem(12)
+    s.maxWidth.iem(20)
     s.fontSize._small
     s.display.flex
     s.flexDirection.column
@@ -164,7 +164,7 @@ function btnClass(primary: boolean): string {
     if (primary) {
       s.backgroundColor._primary
       s.color._bg
-      s._prop('borderColor', 'transparent')
+      s.borderColor.transparent
     } else {
       s.backgroundColor.transparent
       s.color._text

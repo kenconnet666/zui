@@ -158,8 +158,8 @@ const cardClass = computed(() =>
     s.borderColor._border
     s.boxShadow._huge
     s.padding._middle
-    s._prop('minWidth', 'calc(15 * var(--zui-iem, 16px))')
-    s._prop('maxWidth', '360px')
+    s.minWidth.iem(15)
+    s.maxWidth.iem(22.5)
     props.css?.(s)
   }),
 )
@@ -217,7 +217,7 @@ function btnClass(primary: boolean): string {
     if (primary) {
       s.backgroundColor._primary
       s.color._bg
-      s._prop('borderColor', 'transparent')
+      s.borderColor.transparent
     } else {
       s.backgroundColor.transparent
       s.color._text

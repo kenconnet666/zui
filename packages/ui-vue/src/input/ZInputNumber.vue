@@ -132,10 +132,10 @@ const inputClass = computed(() =>
     s.backgroundColor.transparent
     s.color.currentColor
     s.fontSize.inherit
-    s._prop('outline', 'none')
-    s._prop('minWidth', '0')
+    s.outline('none')
+    s.minWidth.px(0)
     s.width.pct(100)
-    s._prop('textAlign', 'left')
+    s.textAlign.left
     applySx(s, props.sxInput)
   }),
 )
@@ -159,9 +159,9 @@ const btnClass = computed(() =>
     s.backgroundColor.transparent
     s.color._textSecondary
     s.cursor.pointer
-    s._prop('width', 'calc(1 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(0.625 * var(--zui-iem, 16px))')
-    s.padding('0')
+    s.width.iem(1)
+    s.height.iem(0.625)
+    s.padding.px(0)
     s.fontSize._small
     s.borderRadius._tiny
     s._hover((h2) => {
@@ -169,7 +169,7 @@ const btnClass = computed(() =>
       h2.backgroundColor._primary.alpha(8)
     })
     if (props.disabled) {
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
     applySx(s, props.sxButton)
   }),

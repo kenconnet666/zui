@@ -95,10 +95,10 @@ const inputClass = computed(() =>
     s.paddingLeft._small
     s.paddingRight._small
     s.width.pct(100)
-    s._prop('outline', 'none')
+    s.outline('none')
     if (props.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
       s.backgroundColor._bgMuted
     }
     props.css?.(s)
@@ -118,9 +118,9 @@ const dropdownClass = computed(() =>
     s.padding._tiny
     s.display.flex
     s.flexDirection.column
-    s._prop('maxHeight', '240px')
-    s._prop('overflowY', 'auto')
-    s._prop('minWidth', 'calc(8 * var(--zui-iem, 16px))')
+    s.maxHeight.iem(15)
+    s.overflowY.auto
+    s.minWidth.iem(8)
   }),
 )
 

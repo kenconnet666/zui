@@ -57,13 +57,13 @@ const inputClass = computed(() =>
     applySizeProp(props.size, INPUT_SIZE_MAP, s)
     s.paddingLeft._small
     s.paddingRight._small
-    s._prop('outline', 'none')
+    s.outline('none')
     s._hover((h) => {
       if (!props.disabled) h.borderColor._primary
     })
     if (props.disabled) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
       s.backgroundColor._bgMuted
     }
     props.css?.(s)

@@ -125,7 +125,7 @@ const rootClass = computed(() =>
     s.borderStyle.solid
     s.borderColor._border
     s.padding._small
-    s._prop('width', 'fit-content')
+    s.width.fitContent
     props.css?.(s)
   }),
 )
@@ -161,7 +161,7 @@ const navBtnClass = computed(() =>
 const gridClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.grid
-    s._prop('gridTemplateColumns', 'repeat(7, 32px)')
+    s.gridTemplateColumns('repeat(7, 32px)')
     s.gap._tiny
     s.marginTop._tiny
   }),
@@ -171,7 +171,7 @@ const weekdayClass = computed(() =>
   icss(theme.value, (s) => {
     s.color._textSecondary
     s.fontSize._small
-    s._prop('textAlign', 'center')
+    s.textAlign.center
     s.paddingTop._tiny
     s.paddingBottom._tiny
   }),
@@ -184,7 +184,7 @@ function dayClass(d: { key: string; outOfMonth: boolean }): string {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s._prop('height', '32px')
+    s.height.iem(2)
     s.borderRadius._tiny
     s.fontSize._small
     s.cursor.pointer
@@ -197,8 +197,9 @@ function dayClass(d: { key: string; outOfMonth: boolean }): string {
       s.color._bg
       s.fontWeight._semibold
     } else if (isToday) {
-      s._prop('outline', '1px solid')
-      s._prop('outlineColor', 'currentColor')
+      s.outlineWidth.px(1)
+      s.outlineStyle.solid
+      s.outlineColor.currentColor
       s.color._primary
     } else {
       s._hover((h2) => {

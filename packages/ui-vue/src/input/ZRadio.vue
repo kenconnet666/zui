@@ -49,7 +49,7 @@ const dotRootClass = computed(() =>
     s.fontSize._middle
     if (isDisabled.value) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
     props.css?.(s)
   }),
@@ -60,8 +60,8 @@ const dotClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s._prop('width', 'calc(1 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(1 * var(--zui-iem, 16px))')
+    s.width.iem(1)
+    s.height.iem(1)
     s.borderRadius._full
     s.borderWidth._thin
     s.borderStyle.solid
@@ -79,11 +79,11 @@ const sxDotAttrs = computed(() => extractSxAttrs(props.sxDot))
 
 const innerDotClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('width', 'calc(0.5 * var(--zui-iem, 16px))')
-    s._prop('height', 'calc(0.5 * var(--zui-iem, 16px))')
+    s.width.iem(0.5)
+    s.height.iem(0.5)
     s.borderRadius._full
     s.backgroundColor._primary
-    s._prop('transform', isChecked.value ? 'scale(1)' : 'scale(0)')
+    s.transform(isChecked.value ? 'scale(1)' : 'scale(0)')
     s.transitionProperty._transform
     s.transitionDuration._small
   }),
@@ -113,7 +113,7 @@ const buttonClass = computed(() =>
     }
     if (isDisabled.value) {
       s.opacity._dim
-      s._prop('cursor', 'not-allowed')
+      s.cursor.notAllowed
     }
     props.css?.(s)
   }),

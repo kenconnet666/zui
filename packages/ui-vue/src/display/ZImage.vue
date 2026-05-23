@@ -53,9 +53,9 @@ const sizeStyle = computed(() => {
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineBlock
-    s._prop('position', 'relative')
+    s.position.relative
     s.backgroundColor._bgMuted
-    s._prop('overflow', 'hidden')
+    s.overflow.hidden
     s.borderRadius._tiny
     props.css?.(s)
   }),
@@ -68,8 +68,8 @@ const errorClass = computed(() =>
     s.justifyContent.center
     s.color._textSecondary
     s.fontSize._small
-    s._prop('width', '100%')
-    s._prop('height', '100%')
+    s.width.pct(100)
+    s.height.pct(100)
   }),
 )
 

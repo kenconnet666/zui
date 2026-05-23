@@ -62,12 +62,10 @@ if (typeof document !== 'undefined' && !document.getElementById(SCROLLBAR_STYLE_
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
-    s._prop('overflow', 'auto')
+    s.overflow.auto
     if (props.maxHeight !== undefined) {
-      s._prop(
-        'maxHeight',
-        typeof props.maxHeight === 'number' ? `${props.maxHeight}px` : props.maxHeight,
-      )
+      if (typeof props.maxHeight === 'number') s.maxHeight.px(props.maxHeight)
+      else s.maxHeight(props.maxHeight)
     }
     props.css?.(s)
   }),

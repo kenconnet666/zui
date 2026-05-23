@@ -80,10 +80,11 @@ const rootClass = computed(() =>
     applySizeProp(props.size, SIZE_MAP, s)
     s.paddingLeft._small
     s.paddingRight._small
-    s.borderRadius(props.round ? '9999px' : 'calc(0.25 * var(--zui-iem, 16px))')
+    if (props.round) s.borderRadius._full
+    else s.borderRadius.iem(0.25)
     s.borderWidth._thin
     s.borderStyle.solid
-    s._prop('whiteSpace', 'nowrap')
+    s.whiteSpace.nowrap
 
     // 2026-05-23 技术债务修复:filled 不用 `backgroundColor.currentColor` 桥接(避免 currentColor
     // 在 paint 时被后续 color 改写);soft 不用 `opacity` 整体淡化(会让文字/图标一起淡)。
@@ -98,11 +99,11 @@ const rootClass = computed(() =>
           s.backgroundColor._textSecondary
         }
         s.color._bg
-        s._prop('borderColor', 'transparent')
+        s.borderColor.transparent
         break
       case 'outlined':
         s.backgroundColor.transparent
-        s._prop('borderColor', 'currentColor')
+        s.borderColor.currentColor
         break
       case 'soft':
         // 默认 color → 走 alpha 浅背景 + 主色文字;user color 时降级为透明背景 + 文字(像 outlined 无边框)
@@ -111,7 +112,7 @@ const rootClass = computed(() =>
         } else {
           s.backgroundColor._textSecondary.alpha(12)
         }
-        s._prop('borderColor', 'transparent')
+        s.borderColor.transparent
         break
     }
     props.css?.(s)
@@ -126,7 +127,7 @@ const closeBtnClass = computed(() =>
     s.cursor.pointer
     s.backgroundColor.transparent
     s.borderStyle.none
-    s.padding('0')
+    s.padding.px(0)
     s.color.currentColor
     s.opacity._strong
     s._hover((h2) => {
