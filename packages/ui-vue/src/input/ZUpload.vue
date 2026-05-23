@@ -183,6 +183,22 @@ const listClass = computed(() =>
   }),
 )
 
+const fileNameClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.flexGrow(1)
+    s.overflow.hidden
+    s.textOverflow.ellipsis
+    s.whiteSpace.nowrap
+  }),
+)
+
+const fileSizeClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.color._textSecondary
+    s.flexShrink(0)
+  }),
+)
+
 const fileRowClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.flex
@@ -256,10 +272,8 @@ const uploadIcon = computed(() => h(ZIcon, { component: BuiltinIcons.add }))
 
     <div v-if="showFileList && internalList.length > 0" :class="listClass">
       <div v-for="f in internalList" :key="f.uid" :class="fileRowClass">
-        <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
-          {{ f.name }}
-        </span>
-        <span style="color: var(--zui-color-textSecondary); flex-shrink: 0">{{ formatSize(f.size) }}</span>
+        <span :class="fileNameClass">{{ f.name }}</span>
+        <span :class="fileSizeClass">{{ formatSize(f.size) }}</span>
         <button type="button" :class="removeBtnClass" aria-label="移除" @click="removeFile(f)">
           <component :is="closeIcon" />
         </button>

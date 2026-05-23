@@ -33,7 +33,7 @@ const theme = useZTheme()
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.block
-    s.margin('0')
+    s.margin.px(0)
     s.color._text
     s.backgroundColor._bgMuted
     s.borderRadius._tiny

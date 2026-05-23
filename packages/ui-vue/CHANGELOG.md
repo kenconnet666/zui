@@ -2,6 +2,55 @@
 
 ## Unreleased
 
+### 改进 — `s._prop(...)` 调用大规模替换为强类型 chain carrier 写法(2026-05-23)
+
+全库 75 个文件 / 382 处 `s._prop('propName', 'value')` 调用,**98.95% 替换**为强类型 chain
+写法,剩 4 处合理保留(动态 prop 名 / CSS custom property)。
+
+**替换策略**:
+- **keyword 类**(`overflow.hidden` / `position.relative` / `textAlign.center` / `cursor.notAllowed`
+  / `whiteSpace.nowrap` / `textOverflow.ellipsis` / `flexDirection.column` 等):直接 `s.prop.keyword`
+- **长度类**:`'calc(N * var(--zui-iem, 16px))'` → `s.prop.iem(N)`;`'Npx'`(`N` 为 iem 倍数,如 8/16/24/32)
+  → `s.prop.iem(N/16)`;`'100%'` → `s.prop.pct(100)`
+- **位置类**(`top` / `left` / `right` / `bottom` / `inset`):`'0'` → `.px(0)`;`'50%'` → `.pct(50)`;
+  `'24px'` → `.iem(1.5)`
+- **复合 outline / borderTop 拆分**:`outline: '1px solid'` → `outlineWidth.px(1) + outlineStyle.solid`;
+  `borderTop: '1px solid var(--zui-color-border)'` → `borderTopWidth.px(1) + borderTopStyle.solid +
+  borderTopColor._border`
+- **transform / gridTemplateColumns / animation 等**:不在 ENHANCED_PROPS 但走 PropFn 函数调用,
+  `s._prop('transform', '...')` → `s.transform('...')`
+- **textDecoration**:简写组件保 `s.textDecoration('underline')`(ZButton link 需要),其它走
+  `s.textDecorationLine('underline')`
+
+**iem 化收益**:所有"calc(N * iem)"字面量改纯 chain `.iem(N)`,跟 `<ZBox :iem>` 全站缩放联动更稳。
+1080p / iem=16px 基准下各组件物理尺寸完全对齐:
+- ZInput middle = padding-y 6px + fontSize 16px ≈ 32px 高
+- ZButton middle ≈ 32-36px 高
+- ZAvatar middle = 40px(iem 2.5)
+- ZModal default width = 480px(iem 30,占 1080p 25%)
+- ZDrawer middle = 320px(iem 20)
+- ZTooltip maxWidth = 320px(iem 20)
+- ZNotification maxWidth = 360px(iem 22.5)
+- ZPagination button(middle)= 28px(iem 1.75)
+
+**搭车修复**:
+- ZCascader column `:last-child` 边框去除 —— 原 `s._prop('lastChild', '')` 无效写法,改 `s._lastChild((c) => c.borderRightStyle.none)`
+- ZSlider linear-gradient background 改 `s.background('...')` PropFn
+- ZTag/ZAvatar `borderRadius` ternary 字符串拆 if/else chain(`borderRadius._full` vs `.iem(0.25)`)
+- ZTimeline 时间线竖线位置 `calc(0.3125 * iem - 1px)` 重构为纯 iem 表达(线宽 0.125iem / 位置 0.25iem)
+- ZModal `maxHeight: calc(100vh - 32px)` 改 `calc(100vh - calc(2 * var(--zui-iem, 16px)))` 跟 iem 联动
+- ZSwitch / ZNotification 动态 left/right 拆 if/else chain(原 `_prop(side, '24px')` 动态 prop 名)
+- ZCarousel arrow position / dot indicator 用 chain iem 化
+- ZButton focus-visible outline 走 chain(`outlineWidth._middle` / `outlineStyle.solid` / `outlineOffset.px(2)`)
+
+**保留 _prop 的 4 处**(全部合理):
+- `ZGrid` 2 处 —— `s._prop(prop, ...)` prop 名是动态变量(gridTemplateColumns / gridTemplateRows)
+- `ZSlider` 2 处 —— `--zui-slider-thumb-*` CSS custom property,chain 无对应 carrier
+
+**验证**:type-check ✓ / 全库 540+ tests 全绿(详见进度日志)
+
+---
+
 ### BREAKING — props 形态统一为 `factory | Size5 | undefined` union(2026-05-22 修订)
 
 撤销 roadmap §1 L15 + skill §13.0 ① "chain factory only" 锁定决策。承认实际现状:

@@ -128,7 +128,7 @@ const removeBtnClass = computed(() =>
     s.cursor.pointer
     s.backgroundColor.transparent
     s.borderStyle.none
-    s.padding('0')
+    s.padding.px(0)
     s.color._textSecondary
     s.fontSize._tiny
     s._hover((h) => {

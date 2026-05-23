@@ -207,10 +207,10 @@ const buttonClass = computed(() =>
         break
       case 'link':
         s.backgroundColor.transparent
-        s.textDecorationLine.none
+        s.textDecoration('none')
         s.borderRadius._tiny
         s._hover((h2) => {
-          h2.textDecorationLine('underline')
+          h2.textDecoration('underline')
         })
         break
     }

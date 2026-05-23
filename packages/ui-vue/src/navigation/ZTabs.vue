@@ -179,7 +179,7 @@ const closeBtnClass = computed(() =>
     s.cursor.pointer
     s.backgroundColor.transparent
     s.borderStyle.none
-    s.padding('0')
+    s.padding.px(0)
     s.fontSize._small
     s.color._textSecondary
     s._hover((h2) => {

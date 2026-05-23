@@ -762,6 +762,33 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 
 > 每个 Stage / 子段完成后追加一条。
 
+### 2026-05-23 `s._prop` 调用大规模强类型化 + iem 统一(主程 + 3 Agent 并行)
+
+**目标**:把全库 `s._prop('propName', 'value')` 这类弱类型字符串调用替换为 chain carrier 强类型写法,并统一 px 字面量为 iem 单位(跟 ZBox iem 联动)。
+
+**改动统计**:
+- 75 个 SFC / 382 处 `_prop` 调用 → **378 处替换为强类型 chain**(98.95%)
+- 剩 4 处合理保留:`ZGrid` 2 处(动态 prop 名)/ `ZSlider` 2 处(CSS custom property)
+- 并行实施:3 个 general-purpose Agent 各负责一组(gene+layout+tool+display 36 文件 / input 21 文件 / feedback+navigation 17 文件)+ 主程收尾(ZButton focusVisible / ZTag/ZAvatar borderRadius / ZTimeline 竖线 / ZSwitch 动态 left/right / ZNotification 动态 vert/horiz / ZModal calc 公式 iem 化 / ZCascader `:last-child` bug 修)
+
+**iem 化收益**:
+- `'calc(N * var(--zui-iem, 16px))'` 字面量 → 纯 chain `s.prop.iem(N)`
+- `'Npx'` 字面量(N 是 iem 倍数:8/12/16/20/24/32/40/48...)→ `s.prop.iem(N/16)`
+- 1080p / iem=16px 基准下各组件物理尺寸合理性验证:ZInput middle 32px / ZButton middle 32-36px / ZAvatar middle 40px / ZModal width 480px / ZDrawer 320px / ZTooltip maxWidth 320px
+
+**搭车修复**:
+- ZCascader `_prop('lastChild', '')` 无效写法 → `_lastChild((c) => c.borderRightStyle.none)`
+- ZSlider linear-gradient `_prop('background', ...)` → `s.background('...')`
+- ZUpload inline `var(--zui-color-textSecondary)` 不存在的 CSS var → 改 chain class
+- ZButton focus-visible outline 走完整 chain(`outlineWidth._middle + outlineStyle.solid + outlineOffset.px(2)`)
+- ZButton link variant `textDecoration` 改回简写(spec 检查 `text-decoration:` 而非 `text-decoration-line:`)
+
+**验证**:type-check ✓ / mcp__idea__get_file_problems 全部 errors=[] / tests 待确认
+
+**下一步**:跑全套测试确认 + 用户审 + commit
+
+---
+
 ### 2026-05-22 BREAKING — props 形态统一为 union(撤销 L15)
 
 **决策文档**:`.claude/decisions/2026-05-22-prop-shape-union.md`(撤销"chain factory only",改 `factory | Size5 | undefined` union)
