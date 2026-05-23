@@ -65,3 +65,15 @@ export type {
   ZAutoCompleteEmits,
   ZAutoCompleteSize,
 } from './ZAutoComplete.vue'
+
+export { default as ZUpload } from './ZUpload.vue'
+export type { ZUploadProps, ZUploadEmits, ZUploadedFile } from './ZUpload.vue'
+
+export { default as ZDatePicker } from './ZDatePicker.vue'
+export type { ZDatePickerProps, ZDatePickerEmits, ZDatePickerSize } from './ZDatePicker.vue'
+
+export { default as ZTimePicker } from './ZTimePicker.vue'
+export type { ZTimePickerProps, ZTimePickerEmits, ZTimePickerSize } from './ZTimePicker.vue'
+
+export { default as ZColorPicker } from './ZColorPicker.vue'
+export type { ZColorPickerProps, ZColorPickerEmits } from './ZColorPicker.vue'
