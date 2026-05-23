@@ -35,3 +35,7 @@ export type { ZBackTopProps } from './ZBackTop.vue'
 
 export { default as ZAnchor } from './ZAnchor.vue'
 export type { ZAnchorProps, ZAnchorItem } from './ZAnchor.vue'
+
+// ─── Phase γ ───
+export { default as ZPageHeader } from './ZPageHeader.vue'
+export type { ZPageHeaderProps, ZPageHeaderEmits } from './ZPageHeader.vue'

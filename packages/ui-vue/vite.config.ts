@@ -41,6 +41,7 @@ export default defineConfig({
         'date-fns-tz',
         /^date-fns-tz\//,
         '@vicons/material',
+        'qrcode',
       ],
       output: {
         preserveModules: true,

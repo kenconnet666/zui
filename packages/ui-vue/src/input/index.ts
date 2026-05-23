@@ -77,3 +77,10 @@ export type { ZTimePickerProps, ZTimePickerEmits, ZTimePickerSize } from './ZTim
 
 export { default as ZColorPicker } from './ZColorPicker.vue'
 export type { ZColorPickerProps, ZColorPickerEmits } from './ZColorPicker.vue'
+
+// ─── Phase γ ───
+export { default as ZDynamicTags } from './ZDynamicTags.vue'
+export type { ZDynamicTagsProps, ZDynamicTagsEmits } from './ZDynamicTags.vue'
+
+export { default as ZTransfer } from './ZTransfer.vue'
+export type { ZTransferProps, ZTransferEmits, ZTransferItem } from './ZTransfer.vue'

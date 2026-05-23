@@ -55,3 +55,14 @@ export type { ZImageProps } from './ZImage.vue'
 
 export { default as ZTree } from './ZTree.vue'
 export type { ZTreeProps, ZTreeEmits, ZTreeNode } from './ZTree.vue'
+
+// ─── Phase γ ───
+export { default as ZCarousel } from './ZCarousel.vue'
+export type { ZCarouselProps, ZCarouselEmits } from './ZCarousel.vue'
+
+export { default as ZDescriptions } from './ZDescriptions.vue'
+export type {
+  ZDescriptionsProps,
+  ZDescriptionsItem,
+  ZDescriptionsSize,
+} from './ZDescriptions.vue'
