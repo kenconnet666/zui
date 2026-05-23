@@ -34,7 +34,7 @@ export interface ZNotificationEmits {
 </script>
 
 <script lang="ts" setup>
-import { computed, h, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, h, onMounted, onUnmounted, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
@@ -93,7 +93,7 @@ function itemClass(type: ZNotificationType): string {
     s.fontSize._small
     s.lineHeight._normal
     s.pointerEvents.auto
-    void type
+    void type // 未在 style 中使用,保留参数语义
   })
 }
 
@@ -139,17 +139,17 @@ const closeBtnClass = computed(() =>
   }),
 )
 
-// timers
-const timers = ref<Map<ZNotificationItem['id'], ReturnType<typeof setTimeout>>>(new Map())
+// timers —— 不放在 reactive(Map 在 Vue reactivity 中有边界问题);仅闭包变量
+const timers = new Map<ZNotificationItem['id'], ReturnType<typeof setTimeout>>()
 
 function scheduleClose(item: ZNotificationItem): void {
   const duration = item.duration ?? (item.type === 'loading' ? 0 : 4500)
   if (duration <= 0) return
   const t = setTimeout(() => {
     emit('close', item.id)
-    timers.value.delete(item.id)
+    timers.delete(item.id)
   }, duration)
-  timers.value.set(item.id, t)
+  timers.set(item.id, t)
 }
 
 onMounted(() => {
@@ -161,15 +161,15 @@ watch(
   (newIds, oldIds) => {
     for (const id of oldIds ?? []) {
       if (!newIds.includes(id)) {
-        const t = timers.value.get(id)
+        const t = timers.get(id)
         if (t) {
           clearTimeout(t)
-          timers.value.delete(id)
+          timers.delete(id)
         }
       }
     }
     for (const id of newIds) {
-      if (!timers.value.has(id)) {
+      if (!timers.has(id)) {
         const item = props.items.find((m) => m.id === id)
         if (item) scheduleClose(item)
       }
@@ -178,8 +178,8 @@ watch(
 )
 
 onUnmounted(() => {
-  for (const t of timers.value.values()) clearTimeout(t)
-  timers.value.clear()
+  for (const t of timers.values()) clearTimeout(t)
+  timers.clear()
 })
 
 function renderIcon(item: ZNotificationItem) {

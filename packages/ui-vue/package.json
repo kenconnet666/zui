@@ -63,11 +63,16 @@
     "color2k": "^2.0.3",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
+    "qrcode": "^1.5.4",
     "vue": "^3.5.0"
   },
+  "peerDependenciesMeta": {
+    "qrcode": {
+      "optional": true
+    }
+  },
   "dependencies": {
-    "@kenconnet666/zui-core": "workspace:*",
-    "qrcode": "^1.5.4"
+    "@kenconnet666/zui-core": "workspace:*"
   },
   "devDependencies": {
     "@emotion/css": "^11.13.5",

@@ -46,15 +46,17 @@ const emit = defineEmits<ZCollapseEmits>()
 
 const theme = useZTheme()
 
-const expandedKeys = computed<Set<string>>(() => {
+// 2026-05-23 技术债务修复:不用 reactive Set(Vue test-utils 在 SFC 组件实例化时
+// 可能触发 "Invalid value used as weak map key");改为 array.includes。
+const expandedList = computed<string[]>(() => {
   const v = props.value
-  if (v == null) return new Set()
-  if (Array.isArray(v)) return new Set(v)
-  return new Set([v])
+  if (v == null) return []
+  if (Array.isArray(v)) return v
+  return [v]
 })
 
 function isExpanded(key: string): boolean {
-  return expandedKeys.value.has(key)
+  return expandedList.value.includes(key)
 }
 
 function toggle(item: ZCollapseItem): void {
@@ -62,10 +64,11 @@ function toggle(item: ZCollapseItem): void {
   if (props.accordion) {
     emit('update:value', isExpanded(item.key) ? '' : item.key)
   } else {
-    const next = new Set(expandedKeys.value)
-    if (next.has(item.key)) next.delete(item.key)
-    else next.add(item.key)
-    emit('update:value', Array.from(next))
+    const cur = expandedList.value
+    const next = cur.includes(item.key)
+      ? cur.filter((k) => k !== item.key)
+      : [...cur, item.key]
+    emit('update:value', next)
   }
 }
 

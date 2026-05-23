@@ -34,6 +34,7 @@ export interface ZProgressProps {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applyAsBg, getThemeColor } from '../_internal/color-bridge'
 
 const props = withDefaults(defineProps<ZProgressProps>(), {
   type: 'line',
@@ -90,11 +91,7 @@ const fillClass = computed(() =>
     const statusKey = STATUS_COLOR[props.status]
     if (statusKey) {
       s.backgroundColor[`_${statusKey}` as const]
-    } else if (props.color) {
-      // 把 color factory 应用到 backgroundColor
-      type BgFactory = (b: Chain<ZuiSchema>['backgroundColor']) => void
-      s.backgroundColor(props.color as unknown as BgFactory)
-    } else {
+    } else if (!applyAsBg(s, props.color)) {
       s.backgroundColor._primary
     }
     s._prop('height', '100%')
@@ -141,16 +138,12 @@ const circleTextClass = computed(() =>
   }),
 )
 
-const trackColor = computed(() => {
-  const resolved = theme.value as unknown as { color: Record<string, string> }
-  return resolved.color.bgMuted ?? '#e5e7eb'
-})
+const trackColor = computed(() => getThemeColor(theme.value, 'bgMuted', '#e5e7eb'))
 
 const fillColor = computed(() => {
-  const resolved = theme.value as unknown as { color: Record<string, string> }
   const statusKey = STATUS_COLOR[props.status]
-  if (statusKey) return resolved.color[statusKey] ?? resolved.color.primary
-  return resolved.color.primary ?? '#1976d2'
+  if (statusKey) return getThemeColor(theme.value, statusKey, '#1976d2')
+  return getThemeColor(theme.value, 'primary', '#1976d2')
 })
 </script>
 

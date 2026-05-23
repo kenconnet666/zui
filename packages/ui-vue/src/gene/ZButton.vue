@@ -60,6 +60,7 @@ import { computed, h, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applyAsBg } from '../_internal/color-bridge'
 import { useRipple } from '../_hooks'
 import { BuiltinIcons } from './icons'
 import ZIcon from './ZIcon.vue'
@@ -138,16 +139,12 @@ const buttonClass = computed(() =>
     // 因为 currentColor 在 CSS paint 时 resolve 当前 color,而后续 `color._bg` 又改了 color,
     // 导致 filled 按钮变白底白字。改为直接独立设置 backgroundColor)。
     //
-    // user color 处理:把 props.color factory 通过类型 cast 当 backgroundColor factory 用,
-    // 因为 color/backgroundColor 共享 schema color token,carrier 行为一致。
+    // user color 处理:通过 `applyAsBg` helper 把 color factory 桥接到 backgroundColor carrier。
     const hasUserColor = !!props.color
-    type BgFactory = (b: Chain<ZuiSchema>['backgroundColor']) => void
 
     switch (props.variant) {
       case 'filled':
-        if (hasUserColor) {
-          s.backgroundColor(props.color as unknown as BgFactory)
-        } else {
+        if (!applyAsBg(s, props.color)) {
           s.backgroundColor._primary
         }
         s.color._bg

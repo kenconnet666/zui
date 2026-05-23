@@ -46,8 +46,9 @@ const emit = defineEmits<ZTransferEmits>()
 
 const theme = useZTheme()
 
-const leftChecked = ref<Set<string>>(new Set())
-const rightChecked = ref<Set<string>>(new Set())
+// 2026-05-23 技术债务修复:Set 改为 string[](避免 Vue test-utils weak map key 问题)
+const leftChecked = ref<string[]>([])
+const rightChecked = ref<string[]>([])
 
 const leftItems = computed(() =>
   props.dataSource.filter((it) => !props.targetKeys.includes(it.key)),
@@ -57,33 +58,31 @@ const rightItems = computed(() =>
 )
 
 function moveRight(): void {
-  const next = [...props.targetKeys, ...Array.from(leftChecked.value)]
+  const next = [...props.targetKeys, ...leftChecked.value]
   emit('update:targetKeys', next)
   emit('change', next)
-  leftChecked.value = new Set()
+  leftChecked.value = []
 }
 
 function moveLeft(): void {
-  const checked = rightChecked.value
-  const next = props.targetKeys.filter((k) => !checked.has(k))
+  const checkedKeys = rightChecked.value
+  const next = props.targetKeys.filter((k) => !checkedKeys.includes(k))
   emit('update:targetKeys', next)
   emit('change', next)
-  rightChecked.value = new Set()
+  rightChecked.value = []
 }
 
 function toggleLeft(key: string, disabled: boolean): void {
   if (disabled) return
-  const next = new Set(leftChecked.value)
-  if (next.has(key)) next.delete(key)
-  else next.add(key)
-  leftChecked.value = next
+  leftChecked.value = leftChecked.value.includes(key)
+    ? leftChecked.value.filter((k) => k !== key)
+    : [...leftChecked.value, key]
 }
 function toggleRight(key: string, disabled: boolean): void {
   if (disabled) return
-  const next = new Set(rightChecked.value)
-  if (next.has(key)) next.delete(key)
-  else next.add(key)
-  rightChecked.value = next
+  rightChecked.value = rightChecked.value.includes(key)
+    ? rightChecked.value.filter((k) => k !== key)
+    : [...rightChecked.value, key]
 }
 
 const rootClass = computed(() =>
@@ -199,12 +198,12 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
           <div
             v-for="item in leftItems"
             :key="item.key"
-            :class="itemRowClass(leftChecked.has(item.key), !!item.disabled)"
+            :class="itemRowClass(leftChecked.includes(item.key), !!item.disabled)"
             @click="toggleLeft(item.key, !!item.disabled)"
           >
             <input
               type="checkbox"
-              :checked="leftChecked.has(item.key)"
+              :checked="leftChecked.includes(item.key)"
               :disabled="item.disabled"
               @click.stop="toggleLeft(item.key, !!item.disabled)"
             />
@@ -218,8 +217,8 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
     <div :class="arrowsClass">
       <button
         type="button"
-        :class="arrowBtnClass(leftChecked.size > 0)"
-        :disabled="leftChecked.size === 0"
+        :class="arrowBtnClass(leftChecked.length > 0)"
+        :disabled="leftChecked.length === 0"
         aria-label="移到右侧"
         @click="moveRight"
       >
@@ -227,8 +226,8 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
       </button>
       <button
         type="button"
-        :class="arrowBtnClass(rightChecked.size > 0)"
-        :disabled="rightChecked.size === 0"
+        :class="arrowBtnClass(rightChecked.length > 0)"
+        :disabled="rightChecked.length === 0"
         aria-label="移到左侧"
         @click="moveLeft"
       >
@@ -245,12 +244,12 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
           <div
             v-for="item in rightItems"
             :key="item.key"
-            :class="itemRowClass(rightChecked.has(item.key), !!item.disabled)"
+            :class="itemRowClass(rightChecked.includes(item.key), !!item.disabled)"
             @click="toggleRight(item.key, !!item.disabled)"
           >
             <input
               type="checkbox"
-              :checked="rightChecked.has(item.key)"
+              :checked="rightChecked.includes(item.key)"
               :disabled="item.disabled"
               @click.stop="toggleRight(item.key, !!item.disabled)"
             />

@@ -35,6 +35,7 @@ import { computed, h } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applyAsBg } from '../_internal/color-bridge'
 import { BuiltinIcons } from './icons'
 import ZIcon from './ZIcon.vue'
 
@@ -79,7 +80,6 @@ const rootClass = computed(() =>
 
     // 2026-05-23 技术债务修复:filled 不用 `backgroundColor.currentColor` 桥接(避免 currentColor
     // 在 paint 时被后续 color 改写);soft 不用 `opacity` 整体淡化(会让文字/图标一起淡)。
-    type BgFactory = (b: Chain<ZuiSchema>['backgroundColor']) => void
     const hasUserColor = !!props.color
 
     if (hasUserColor) s.color(props.color)
@@ -87,9 +87,7 @@ const rootClass = computed(() =>
 
     switch (props.variant) {
       case 'filled':
-        if (hasUserColor) {
-          s.backgroundColor(props.color as unknown as BgFactory)
-        } else {
+        if (!applyAsBg(s, props.color)) {
           s.backgroundColor._textSecondary
         }
         s.color._bg

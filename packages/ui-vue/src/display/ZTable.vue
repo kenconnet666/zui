@@ -59,7 +59,7 @@ export interface ZTableProps<T = Record<string, unknown>> {
 </script>
 
 <script lang="ts" setup generic="T extends Record<string, unknown>">
-import { computed, h } from 'vue'
+import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
@@ -175,8 +175,6 @@ function colWidth(col: ZTableColumn<T>): string | undefined {
   return typeof col.width === 'number' ? `${col.width}px` : col.width
 }
 
-// 让 unused warning 不报
-void h
 </script>
 
 <template>

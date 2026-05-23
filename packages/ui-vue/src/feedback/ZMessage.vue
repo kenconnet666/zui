@@ -37,7 +37,7 @@ export interface ZMessageEmits {
 </script>
 
 <script lang="ts" setup>
-import { computed, h, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, h, onMounted, onUnmounted, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
@@ -109,16 +109,17 @@ function bodyClass(): string {
   })
 }
 
-const timers = ref<Map<ZMessageItem['id'], ReturnType<typeof setTimeout>>>(new Map())
+// timers —— 闭包 Map(不放 reactive,跟 ZNotification 一致)
+const timers = new Map<ZMessageItem['id'], ReturnType<typeof setTimeout>>()
 
 function scheduleClose(item: ZMessageItem): void {
   const duration = item.duration ?? (item.type === 'loading' ? 0 : 3000)
   if (duration <= 0) return
   const t = setTimeout(() => {
     emit('close', item.id)
-    timers.value.delete(item.id)
+    timers.delete(item.id)
   }, duration)
-  timers.value.set(item.id, t)
+  timers.set(item.id, t)
 }
 
 onMounted(() => {
@@ -129,19 +130,17 @@ onMounted(() => {
 watch(
   () => props.messages.map((m) => m.id),
   (newIds, oldIds) => {
-    // 清理已移除的
     for (const id of oldIds ?? []) {
       if (!newIds.includes(id)) {
-        const t = timers.value.get(id)
+        const t = timers.get(id)
         if (t) {
           clearTimeout(t)
-          timers.value.delete(id)
+          timers.delete(id)
         }
       }
     }
-    // 给新加的设置 timer
     for (const id of newIds) {
-      if (!timers.value.has(id)) {
+      if (!timers.has(id)) {
         const item = props.messages.find((m) => m.id === id)
         if (item) scheduleClose(item)
       }
@@ -151,8 +150,8 @@ watch(
 )
 
 onUnmounted(() => {
-  for (const t of timers.value.values()) clearTimeout(t)
-  timers.value.clear()
+  for (const t of timers.values()) clearTimeout(t)
+  timers.clear()
 })
 
 function renderIcon(item: ZMessageItem) {

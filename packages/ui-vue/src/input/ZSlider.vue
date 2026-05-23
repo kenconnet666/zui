@@ -31,6 +31,7 @@ export interface ZSliderEmits {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { getThemeColor } from '../_internal/color-bridge'
 
 const props = withDefaults(defineProps<ZSliderProps>(), {
   value: 0,
@@ -103,15 +104,15 @@ const wrapperClass = computed(() =>
 const inputClass = computed(() =>
   icss(theme.value, (s) => {
     s.flexGrow(1)
-    const resolved = theme.value as unknown as { color: Record<string, string> }
-    const primary = resolved.color.primary
-    const bgMuted = resolved.color.bgMuted
+    const primary = getThemeColor(theme.value, 'primary', '#1976d2')
+    const bgMuted = getThemeColor(theme.value, 'bgMuted', '#e5e7eb')
+    const bg = getThemeColor(theme.value, 'bg', '#fff')
     s._prop(
       'background',
       `linear-gradient(to right, ${primary} 0%, ${primary} ${percent.value}%, ${bgMuted} ${percent.value}%, ${bgMuted} 100%)`,
     )
     s._prop('--zui-slider-thumb-border', primary)
-    s._prop('--zui-slider-thumb-bg', resolved.color.bg ?? '#fff')
+    s._prop('--zui-slider-thumb-bg', bg)
   }),
 )
 
