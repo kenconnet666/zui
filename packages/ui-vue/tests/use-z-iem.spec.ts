@@ -136,7 +136,9 @@ describe('useZIem — 非法值兜底', () => {
 
   it('非法字符串 → fallback 16 + warn', async () => {
     const v = mountWithIem((slot) =>
-      h(ZBox, { iem: '1em' }, { default: slot }),  // em 已被禁用
+      // `'1em'` 在 v0.2 后已不在 `ZIem` 类型范围内,这里故意传非法值测 fallback,
+      // 用 `as never` 绕开 TS 类型检查(运行时分支才是测试目标)。
+      h(ZBox, { iem: '1em' as never }, { default: slot }),
     )
     await nextTick()
     expect(v.value).toBe(16)
