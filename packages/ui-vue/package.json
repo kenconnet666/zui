@@ -64,10 +64,14 @@
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "qrcode": "^1.5.4",
+    "shiki": "^3.13.0",
     "vue": "^3.5.0"
   },
   "peerDependenciesMeta": {
     "qrcode": {
+      "optional": true
+    },
+    "shiki": {
       "optional": true
     }
   },
@@ -88,6 +92,7 @@
     "date-fns": "^4.2.1",
     "date-fns-tz": "^3.2.0",
     "happy-dom": "^15.11.7",
+    "shiki": "^3.13.0",
     "vue": "^3.5.32"
   },
   "publishConfig": {
