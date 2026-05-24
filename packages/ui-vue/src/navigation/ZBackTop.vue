@@ -4,7 +4,7 @@
  *
  * - `visibilityHeight?: number` —— 触发显示的滚动距离,默认 400
  * - `target?: () => Element | Window` —— 监听 scroll 的容器,默认 window
- * - `right?: string | number` / `bottom?: string | number` —— 定位
+ * - `right?: factory` / `bottom?: factory` —— 定位 carrier factory(2026-05-24 B7:数字尺寸 → factory)
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -12,8 +12,21 @@ import type { ZuiSchema } from '../provider/theme'
 export interface ZBackTopProps {
   visibilityHeight?: number
   target?: () => Element | Window
-  right?: string | number
-  bottom?: string | number
+  /**
+   * 右边距 factory —— 接 `right` carrier。默认 `(r) => r.iem(1.5)`。
+   *
+   * @example
+   * <ZBackTop :right="(r) => r.iem(2)" />
+   * <ZBackTop :right="(r) => r.px(40)" />
+   */
+  right?: ((c: Chain<ZuiSchema>['right']) => void) | undefined
+  /**
+   * 下边距 factory —— 接 `bottom` carrier。默认 `(b) => b.iem(3)`。
+   *
+   * @example
+   * <ZBackTop :bottom="(b) => b.iem(4)" />
+   */
+  bottom?: ((c: Chain<ZuiSchema>['bottom']) => void) | undefined
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 </script>
@@ -26,8 +39,12 @@ import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZBackTopProps>(), {
   visibilityHeight: 400,
-  right: '24px',
-  bottom: '48px',
+  right: () => (r: Chain<ZuiSchema>['right']) => {
+    r.iem(1.5)
+  },
+  bottom: () => (b: Chain<ZuiSchema>['bottom']) => {
+    b.iem(3)
+  },
 })
 
 const theme = useZTheme()
@@ -62,11 +79,17 @@ onScopeDispose(() => {
   t.removeEventListener('scroll', onScroll)
 })
 
+/**
+ * 圆形按钮盒子模型(iem):
+ * - width/height: 2.5iem,正圆(borderRadius._full)
+ * - border: _thin(由 token 决定)
+ * - fixed 定位,默认 right/bottom 用 px 字面量(props 可覆盖)
+ */
 const btnClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed
-    s.right(typeof props.right === 'number' ? `${props.right}px` : props.right)
-    s.bottom(typeof props.bottom === 'number' ? `${props.bottom}px` : props.bottom)
+    if (props.right) s.right(props.right)
+    if (props.bottom) s.bottom(props.bottom)
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center

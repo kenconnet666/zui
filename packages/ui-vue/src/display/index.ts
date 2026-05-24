@@ -16,10 +16,10 @@ export type {
 
 // ─── Phase β 浮层(usePopper)───
 export { default as ZTooltip } from './ZTooltip.vue'
-export type { ZTooltipProps, ZTooltipEmits, ZTooltipTrigger } from './ZTooltip.vue'
+export type { ZTooltipProps, ZTooltipEmits } from './ZTooltip.vue'
 
 export { default as ZPopover } from './ZPopover.vue'
-export type { ZPopoverProps, ZPopoverEmits, ZPopoverTrigger } from './ZPopover.vue'
+export type { ZPopoverProps, ZPopoverEmits } from './ZPopover.vue'
 
 // ─── Phase β 第二批 ───
 export { default as ZEmpty } from './ZEmpty.vue'
@@ -29,25 +29,20 @@ export { default as ZSkeleton } from './ZSkeleton.vue'
 export type { ZSkeletonProps } from './ZSkeleton.vue'
 
 export { default as ZResult } from './ZResult.vue'
-export type { ZResultProps, ZResultStatus } from './ZResult.vue'
+export type { ZResultProps } from './ZResult.vue'
 
 export { default as ZList } from './ZList.vue'
 export type { ZListProps } from './ZList.vue'
 
 export { default as ZProgress } from './ZProgress.vue'
-export type {
-  ZProgressProps,
-  ZProgressType,
-  ZProgressSize,
-  ZProgressStatus,
-} from './ZProgress.vue'
+export type { ZProgressProps } from './ZProgress.vue'
 
 export { default as ZCollapse } from './ZCollapse.vue'
 export type { ZCollapseProps, ZCollapseEmits, ZCollapseItem } from './ZCollapse.vue'
 
 // ─── Phase β 第三批 ───
 export { default as ZTimeline } from './ZTimeline.vue'
-export type { ZTimelineProps, ZTimelineItem, ZTimelineStatus } from './ZTimeline.vue'
+export type { ZTimelineProps, ZTimelineItem } from './ZTimeline.vue'
 
 export { default as ZStatistic } from './ZStatistic.vue'
 export type { ZStatisticProps } from './ZStatistic.vue'

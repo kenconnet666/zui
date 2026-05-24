@@ -5,7 +5,7 @@
  * **API**(跟 ZModal 类似):
  * - `v-model:visible`
  * - `placement?: 'left' | 'right' | 'top' | 'bottom'` —— 默认 `'right'`
- * - `size?: string | number` —— 宽度(left/right)或高度(top/bottom),默认 `'320px'`
+ * - `size?: SizePropMulti` —— 尺寸 factory,用户自己写 `s.width.iem(...)` 或 `s.height.iem(...)`(placement 决定哪条轴)。默认等价 20iem(left/right=width,top/bottom=height)。
  * - `title?: string`
  * - `closable?: boolean`
  * - `maskClosable?: boolean`
@@ -16,24 +16,28 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-import type { Size5 } from '../_internal/size-prop'
-
-export type ZDrawerPlacement = 'left' | 'right' | 'top' | 'bottom'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZDrawerProps {
   visible?: boolean
-  placement?: ZDrawerPlacement
+  placement?: 'left' | 'right' | 'top' | 'bottom'
   /**
-   * 抽屉宽度(left/right)或高度(top/bottom)。
+   * 抽屉宽度(left/right placement)或高度(top/bottom placement)的 chain factory。
    *
-   * 接受 3 种形态:
-   * - **`Size5` 档位字符串**(`'tiny'`/`'small'`/`'middle'`(默认)/`'large'`/`'huge'`)→ iem 联动 8/12/20/28/40iem(128/192/320/448/640px @ 默认 iem)
-   * - **`number`** → `${N}px` 字面量
-   * - **其它字符串** → 原样作为 CSS 值(如 `'50%'` / `'30vw'`)
+   * **签名**:`((s: Chain<ZuiSchema>) => void) | undefined`
    *
-   * **不接 factory**(placement 决定 width vs height,factory 表达不直观;复杂控制走 `css`)。
+   * `placement` 决定哪条轴生效。用户应在 factory 内写 `s.width.iem(...)` 或 `s.height.iem(...)`
+   * 与 placement 对应。未传时走默认 20iem(left/right=width,top/bottom=height)。
+   *
+   * @example
+   * ```vue
+   * <!-- left/right:20iem 宽 -->
+   * <ZDrawer :size="(s) => s.width.iem(20)" />
+   * <!-- top/bottom:50% 高 -->
+   * <ZDrawer placement="top" :size="(s) => s.height.pct(50)" />
+   * ```
    */
-  size?: Size5 | number | string
+  size?: SizePropMulti
   title?: string
   closable?: boolean
   maskClosable?: boolean
@@ -64,7 +68,6 @@ import { BuiltinIcons, ZIcon } from '../gene'
 const props = withDefaults(defineProps<ZDrawerProps>(), {
   visible: false,
   placement: 'right',
-  size: 'middle',
   closable: true,
   maskClosable: true,
 })
@@ -84,26 +87,6 @@ useEscapeStack(
   },
   { enabled: visibleRef },
 )
-
-/** Size5 → iem 倍率(数值=iem 倍数,默认 16px 基准 = 128/192/320/448/640px)。 */
-const SIZE_IEM: Record<Size5, number> = {
-  tiny: 8,
-  small: 12,
-  middle: 20,
-  large: 28,
-  huge: 40,
-}
-
-function isSize5(v: string): v is Size5 {
-  return v === 'tiny' || v === 'small' || v === 'middle' || v === 'large' || v === 'huge'
-}
-
-const sizeValue = computed(() => {
-  const s = props.size
-  if (typeof s === 'number') return `${s}px`
-  if (isSize5(s)) return `calc(${SIZE_IEM[s]} * var(--zui-iem, 16px))`
-  return s
-})
 
 const maskClass = computed(() =>
   icss(theme.value, (s) => {
@@ -131,25 +114,29 @@ const drawerClass = computed(() =>
         s.top.px(0)
         s.left.px(0)
         s.bottom.px(0)
-        s.width(sizeValue.value)
+        if (props.size) props.size(s)
+        else s.width.iem(20)
         break
       case 'right':
         s.top.px(0)
         s.right.px(0)
         s.bottom.px(0)
-        s.width(sizeValue.value)
+        if (props.size) props.size(s)
+        else s.width.iem(20)
         break
       case 'top':
         s.top.px(0)
         s.left.px(0)
         s.right.px(0)
-        s.height(sizeValue.value)
+        if (props.size) props.size(s)
+        else s.height.iem(20)
         break
       case 'bottom':
         s.bottom.px(0)
         s.left.px(0)
         s.right.px(0)
-        s.height(sizeValue.value)
+        if (props.size) props.size(s)
+        else s.height.iem(20)
         break
     }
     props.css?.(s)

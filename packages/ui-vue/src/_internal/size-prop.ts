@@ -1,13 +1,13 @@
 /**
- * size prop 形态:`factory | Size5 枚举档位 | undefined` union 的类型 + 应用 helper。
+ * size prop 形态:**纯 chain factory**(2026-05-23 撤销 Size5 union)。
  *
- * **设计哲学**(2026-05-22 决策,撤销 roadmap §1 L15 "chain factory only"):
- * - happy path:99% 的业务方写 `<ZInput size="middle">`,一行表达
- * - 逃生口:复杂需求走 `(s) => { s.height.iem(2.5); s.fontSize.iem(1.1) }`
- * - theme 干净:档位值写在组件内 const map,不污染主题 schema
- * - iem 联动:枚举档位内部用 `s.height.iem(N)`,ZBox `:iem` 全站缩放生效
+ * **设计哲学**:
+ * - 用户接口只接 factory:`((c: Chain) => void) | undefined`
+ * - 组件 default 提供一个 factory(等价旧 'middle' 档位)
+ * - schema sizes token 仍可访问:`(w) => w._middle` 走 schema sizes.middle
+ * - 组件内部档位走 makeSizeMap 提供 5 阶 fallback,只在 default factory 中使用
  *
- * 决策文档:`.claude/decisions/2026-05-22-prop-shape-union.md`
+ * 决策文档:`.claude/decisions/2026-05-23-prop-shape-pure-factory.md`
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -16,34 +16,34 @@ import type { ZuiSchema } from '../provider/theme'
 // 类型
 // ════════════════════════════════════════════════════════════════════════
 
-/** 5 阶 size 枚举档位通用类型,跟 theme schema 5 阶 size scale 对齐。 */
+/** 5 阶 size 枚举档位通用类型 —— **仅用于组件内部 SIZE_MAP**,不暴露给用户 props。 */
 export type Size5 = 'tiny' | 'small' | 'middle' | 'large' | 'huge'
 
 /**
- * 单 carrier 维度 size prop 类型 helper。
+ * 单 carrier 维度 size prop 类型 helper(纯 factory)。
  *
  * 用于 ZIcon / ZAvatar 等"size 只影响一个 CSS 属性"的场景。
  *
  * @example
- * size?: SizeProp<'width'>  // ((w: Chain<ZuiSchema>['width']) => void) | Size5
+ * size?: SizeProp<'width'>  // ((w: Chain<ZuiSchema>['width']) => void) | undefined
  */
 export type SizeProp<K extends keyof Chain<ZuiSchema>> =
   | ((c: Chain<ZuiSchema>[K]) => void)
-  | Size5
+  | undefined
 
 /**
- * 多 carrier 维度 size prop 类型 helper。
+ * 多 carrier 维度 size prop 类型 helper(纯 factory)。
  *
  * 用于 ZInput / ZButton / ZSelect 等"size 同时影响多个 CSS 属性"的场景。
  * factory 接整个 `Chain<ZuiSchema>`,用户可在 callback 内多行 setter。
  *
  * @example
  * size?: SizePropMulti
- * // ((s: Chain<ZuiSchema>) => void) | Size5
+ * // ((s: Chain<ZuiSchema>) => void) | undefined
  */
-export type SizePropMulti = ((s: Chain<ZuiSchema>) => void) | Size5
+export type SizePropMulti = ((s: Chain<ZuiSchema>) => void) | undefined
 
-/** 5 阶 size 档位 → factory 的映射表类型。 */
+/** 5 阶 size 档位 → factory 的映射表类型(组件内部 SIZE_MAP 用)。 */
 export type SizeMap<T> = Record<Size5, (target: T) => void>
 
 // ════════════════════════════════════════════════════════════════════════
@@ -51,46 +51,25 @@ export type SizeMap<T> = Record<Size5, (target: T) => void>
 // ════════════════════════════════════════════════════════════════════════
 
 /**
- * 应用 size prop —— 字符串档位走 map,factory 直接调。
+ * 应用 size factory —— 有 size 则调用,无则跳过。
  *
- * @param size - size prop 值(`Size5` 字符串 或 factory 函数)
- * @param map - 5 阶档位 → factory 映射表(组件内 const 定义)
+ * 用于组件实现里统一处理 `if (props.size) target(props.size)` 写法。
+ *
+ * @param size - size factory 函数(`undefined` 表示不写)
  * @param target - 应用目标(单 carrier 或整个 chain)
  *
  * @example
  * ```ts
- * // 单 carrier 维度(ZIcon)
- * const SIZE_MAP_WIDTH: SizeMap<Chain<ZuiSchema>['width']> = {
- *   tiny:   (w) => { w.iem(0.75) },
- *   small:  (w) => { w.iem(1) },
- *   middle: (w) => { w.iem(1.25) },
- *   large:  (w) => { w.iem(1.5) },
- *   huge:   (w) => { w.iem(2) },
- * }
- * applySizeProp(props.size, SIZE_MAP_WIDTH, s.width)
- *
- * // 多 carrier 维度(ZInput)
- * const SIZE_MAP_INPUT: SizeMap<Chain<ZuiSchema>> = {
- *   tiny:   (s) => { s.paddingTop.iem(0.125); s.fontSize._tiny },
- *   small:  (s) => { s.paddingTop.iem(0.25);  s.fontSize._small },
- *   middle: (s) => { s.paddingTop.iem(0.375); s.fontSize._middle },
- *   large:  (s) => { s.paddingTop.iem(0.5);   s.fontSize._large },
- *   huge:   (s) => { s.paddingTop.iem(0.625); s.fontSize._huge },
- * }
- * applySizeProp(props.size, SIZE_MAP_INPUT, s)
+ * applySizeProp(props.size, s.width)        // 单 carrier(width + height 镜像参见 ZIcon)
+ * applySizeProp(props.size, s)              // 多 carrier(整个 chain)
  * ```
  */
 export function applySizeProp<T>(
-  size: ((target: T) => void) | Size5 | undefined,
-  map: SizeMap<T>,
+  size: ((target: T) => void) | undefined,
   target: T,
 ): void {
   if (size === undefined) return
-  if (typeof size === 'string') {
-    map[size](target)
-  } else {
-    size(target)
-  }
+  size(target)
 }
 
 // ════════════════════════════════════════════════════════════════════════

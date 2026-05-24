@@ -104,6 +104,10 @@ function nodeRowClass(node: ZTreeNode, depth: number): string {
   })
 }
 
+/**
+ * 展开/收起箭头图标盒子模型(iem):
+ * - width/height: 1iem,正方形(放置 chevron 旋转动画)
+ */
 const arrowClass = (expanded: boolean): string =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
@@ -118,6 +122,9 @@ const arrowClass = (expanded: boolean): string =>
     s.transform(expanded ? 'rotate(90deg)' : 'rotate(0deg)')
   })
 
+/**
+ * 无子节点时的占位:width = 1iem(与 arrow 同宽,保证层级对齐)。
+ */
 const arrowSpacerClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineBlock

@@ -18,16 +18,16 @@ import { applySizeProp, type SizeMap, type SizeProp } from '../_internal/size-pr
 /**
  * Typography 组件共享 props —— 6 维度 carrier factory + 5 状态布尔/枚举。
  *
- * `size` 走 union 范式(2026-05-22 修订):`factory | Size5 | undefined`,
- * 字符串档位映射到 schema fontSize token(`_tiny` / `_small` / `_middle` / `_large` / `_huge`)。
+ * `size` 走 **纯 factory**(2026-05-23 撤销 Size5 union):`((f: Chain<ZuiSchema>['fontSize']) => void) | undefined`。
+ * 业务想走 5 阶档位可以复用 `TYPOGRAPHY_SIZE_MAP.middle` 等导出。
  *
  * 各 SFC 在 `export interface Z<Component>Props` 中**重复展开这些字段**(而不是 extends),
  * 这样 IDE 悬停看 props 类型时一眼看到全集,符合 ZIcon 范式。
  */
 export interface ZTypographyBaseProps {
   /**
-   * 字号 —— `factory | Size5 | undefined` union。字符串档位映射 schema fontSize token。
-   * 默认不传 = 继承父字号。
+   * 字号 —— 纯 factory(`SizeProp<'fontSize'>`)。默认不传 = 继承父字号。
+   * 想走 5 阶 token 复用 `TYPOGRAPHY_SIZE_MAP.middle`(_middle)等。
    */
   size?: SizeProp<'fontSize'> | undefined
   weight?: ((w: Chain<ZuiSchema>['fontWeight']) => void) | undefined
@@ -36,7 +36,10 @@ export interface ZTypographyBaseProps {
   leading?: ((l: Chain<ZuiSchema>['lineHeight']) => void) | undefined
   tracking?: ((t: Chain<ZuiSchema>['letterSpacing']) => void) | undefined
   italic?: boolean
-  underline?: 'always' | 'hover' | 'none'
+  /** 始终下划线,默认 `false`。 */
+  underline?: boolean
+  /** 仅 hover 时下划线,默认 `false`。 */
+  underlineOnHover?: boolean
   strikethrough?: boolean
   mono?: boolean
   ellipsis?: boolean | number
@@ -88,8 +91,8 @@ export function applyTypographyBase(
   s: Chain<ZuiSchema>,
   props: ZTypographyBaseProps,
 ): void {
-  // ─── size: union(string 走 TYPOGRAPHY_SIZE_MAP / factory 直接调) ───
-  applySizeProp(props.size, TYPOGRAPHY_SIZE_MAP, s.fontSize)
+  // ─── size: 纯 factory(2026-05-23 撤销字符串 union)。用户可直接复用 TYPOGRAPHY_SIZE_MAP.middle 等。 ───
+  applySizeProp(props.size, s.fontSize)
   if (props.weight) s.fontWeight(props.weight)
   if (props.color) s.color(props.color)
   if (props.depth) s.opacity(props.depth)
@@ -101,10 +104,10 @@ export function applyTypographyBase(
 
   // ─── 装饰线(underline + strikethrough 可叠加,空格分隔多值) ───
   const baseLines: string[] = []
-  if (props.underline === 'always') baseLines.push('underline')
+  if (props.underline) baseLines.push('underline')
   if (props.strikethrough) baseLines.push('line-through')
   if (baseLines.length > 0) s.textDecorationLine(baseLines.join(' '))
-  if (props.underline === 'hover') {
+  if (props.underlineOnHover) {
     const hoverLines = [...baseLines, 'underline'].join(' ')
     s._hover((h) => {
       h.textDecorationLine(hoverLines)

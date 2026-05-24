@@ -55,6 +55,11 @@ const dotRootClass = computed(() =>
   }),
 )
 
+/**
+ * 单选外圈盒子模型(iem):
+ * - width/height: 1iem,正圆(borderRadius._full)
+ * - border: _thin
+ */
 const dotClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
@@ -77,6 +82,11 @@ const dotClass = computed(() =>
 )
 const sxDotAttrs = computed(() => extractSxAttrs(props.sxDot))
 
+/**
+ * 单选内圆点盒子模型(iem):
+ * - width/height: 0.5iem(外圈一半),正圆
+ * - 选中时 scale(1),否则 scale(0)折叠
+ */
 const innerDotClass = computed(() =>
   icss(theme.value, (s) => {
     s.width.iem(0.5)

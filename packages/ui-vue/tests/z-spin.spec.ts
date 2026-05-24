@@ -61,8 +61,15 @@ describe('ZSpin — 包裹模式(有 slot)', () => {
 })
 
 describe('ZSpin — size + sx', () => {
-  it('size=large → indicator 走 iem(2)', () => {
-    mount(ZSpin, { props: { size: 'large' } })
+  it('size factory iem(2) → indicator 走 calc(2 * var(--zui-iem))', () => {
+    // v2 BREAKING:size 不再接 'large' 字面量,改 factory 表达 iem(2)
+    mount(ZSpin, {
+      props: {
+        size: (w: Chain<ZuiSchema>['width']) => {
+          w.iem(2)
+        },
+      },
+    })
     expect(getInjectedCss()).toMatch(/width:calc\(2 \* var\(--zui-iem,/)
   })
 

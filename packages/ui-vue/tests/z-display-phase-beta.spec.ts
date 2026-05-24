@@ -56,28 +56,42 @@ describe('ZSkeleton', () => {
 })
 
 describe('ZResult', () => {
-  it('default status=info + title', () => {
+  it('默认 (no color) + title', () => {
     const w = mount(ZResult, { props: { title: '操作完成' } })
     expect(w.attributes('role')).toBe('status')
     expect(w.text()).toContain('操作完成')
   })
 
-  it('status=success → success 色图标', () => {
-    mount(ZResult, { props: { status: 'success', title: '成功' } })
+  it('color factory → 应用到大图标色', () => {
+    mount(ZResult, {
+      props: {
+        color: (c: any) => c._success,
+        title: '成功',
+      },
+    })
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
       .join('\n')
-    // success 色应出现(_2e7d32 M2 Green 700 in light)
+    // _success 走 schema(_2e7d32 in light)
     expect(css.toLowerCase()).toMatch(/#2e7d32|color:rgb\(46/)
   })
 
   it('description + actions slot', () => {
     const w = mount(ZResult, {
-      props: { status: 'error', title: 'T', description: 'D' },
+      props: {
+        color: (c: any) => c._danger,
+        title: 'T',
+        description: 'D',
+      },
       slots: { default: () => '[BTN]' },
     })
     expect(w.text()).toContain('D')
     expect(w.text()).toContain('[BTN]')
+  })
+
+  it('notFound=true → 默认图标走 search 语义(不抛错)', () => {
+    const w = mount(ZResult, { props: { notFound: true, title: '404' } })
+    expect(w.text()).toContain('404')
   })
 })
 
@@ -145,8 +159,13 @@ describe('ZProgress', () => {
     expect(w.find('svg').exists()).toBe(true)
   })
 
-  it('status=success → success 色', () => {
-    mount(ZProgress, { props: { value: 100, status: 'success' } })
+  it('color factory → 应用到 fill 背景色', () => {
+    mount(ZProgress, {
+      props: {
+        value: 100,
+        color: (c: any) => c._success,
+      },
+    })
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
       .join('\n')

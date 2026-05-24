@@ -28,8 +28,8 @@ describe('ZTimeline', () => {
     const w = mount(ZTimeline, {
       props: {
         items: [
-          { title: 'Step 1', description: 'desc', status: 'success' },
-          { title: 'Step 2', status: 'primary' },
+          { title: 'Step 1', description: 'desc', color: (c: any) => c._success },
+          { title: 'Step 2', color: (c: any) => c._primary },
           { title: 'Step 3' },
         ],
       },
@@ -41,9 +41,9 @@ describe('ZTimeline', () => {
     expect(w.text()).toContain('desc')
   })
 
-  it('status 应用对应颜色', () => {
+  it('item.color factory 应用到 dot 背景色', () => {
     mount(ZTimeline, {
-      props: { items: [{ title: 'ok', status: 'danger' }] },
+      props: { items: [{ title: 'ok', color: (c: any) => c._danger }] },
     })
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
@@ -66,25 +66,40 @@ describe('ZSteps', () => {
     expect(w.text()).toContain('B')
   })
 
-  it('已完成的步骤显示 check 图标', () => {
+  it('已完成的步骤显示 check 图标(_success 色)', () => {
     mount(ZSteps, { props: { current: 2, items: ITEMS } })
-    // 前两步 finish 状态
+    // 前两步 finish 状态走 _success
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
       .join('\n')
     expect(css.toLowerCase()).toMatch(/#2e7d32|background-color:rgb\(46/)
   })
 
-  it('status=error → 当前步骤红色', () => {
-    mount(ZSteps, { props: { current: 1, items: ITEMS, status: 'error' } })
+  it('errored=true → 当前步骤红色(_danger)', () => {
+    mount(ZSteps, { props: { current: 1, items: ITEMS, errored: true } })
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
       .join('\n')
     expect(css.toLowerCase()).toMatch(/#d32f2f/)
   })
 
-  it('direction=vertical → flex-direction:column', () => {
-    mount(ZSteps, { props: { current: 0, items: ITEMS, direction: 'vertical' } })
+  it('currentColor factory → 当前步颜色覆盖默认 _primary', () => {
+    mount(ZSteps, {
+      props: {
+        current: 1,
+        items: ITEMS,
+        currentColor: (c: any) => c._warning,
+      },
+    })
+    const css = Array.from(document.querySelectorAll('style'))
+      .map((el) => el.textContent ?? '')
+      .join('\n')
+    // _warning 在 light theme 走橙色系
+    expect(css.toLowerCase()).toMatch(/#ed6c02|#ff9800|background-color:rgb\(/)
+  })
+
+  it('vertical=true → flex-direction:column', () => {
+    mount(ZSteps, { props: { current: 0, items: ITEMS, vertical: true } })
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
       .join('\n')

@@ -8,8 +8,8 @@
  * - `src?: string` —— 图片地址
  * - `alt?: string` —— 图片 alt(默认空)
  * - `text?: string` —— 文字 fallback(可以是 "AB" 缩写)
- * - `size?: number | 'small' | 'middle' | 'large'` —— 尺寸(数字按 px / 档位走 iem)
- * - `shape?: 'circle' | 'square'` —— 形状,默认 `'circle'`
+ * - `size?: factory` —— 尺寸(走 width carrier;height 镜像)
+ * - `square?: boolean` —— 方形,默认 `false`(圆形)
  * - `color` carrier factory —— 文字模式背景色,默认 `_textSecondary`
  */
 import type { Chain } from '@kenconnet666/zui-core'
@@ -21,17 +21,22 @@ export interface ZAvatarProps {
   alt?: string
   text?: string
   /**
-   * 头像尺寸 —— `factory | Size5 | undefined` union(2026-05-22 修订)。
+   * 头像尺寸 —— **纯 chain factory**(2026-05-23 撤销 Size5 union)。
    *
-   * **默认**:`'middle'`(2.5iem,默认 40px,iem 联动)。
+   * **默认**:`(w) => w.iem(2.5)`(等价旧 middle 档位,40px,iem 联动)。
    *
-   * **5 阶档位**:tiny(1.5iem/24px) / small(2iem/32px) / middle(2.5iem/40px) /
+   * **参考档位**:tiny(1.5iem/24px) / small(2iem/32px) / middle(2.5iem/40px) /
    * large(3iem/48px) / huge(4iem/64px)。
    *
-   * **BREAKING**(v0.3 移除):不再支持 `number` 字面量;用 factory 表达 `:size="(w) => w.px(N)"`。
+   * height 自动镜像 width(头像始终正方形)。
+   *
+   * @example
+   * <ZAvatar :size="(w) => w.iem(3)" />       <!-- 等价 large -->
+   * <ZAvatar :size="(w) => w.px(48)" />       <!-- 字面量 -->
    */
-  size?: SizeProp<'width'> | undefined
-  shape?: 'circle' | 'square'
+  size?: SizeProp<'width'>
+  /** 方形头像,默认 `false`(圆形)。 */
+  square?: boolean
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -41,36 +46,19 @@ export interface ZAvatarProps {
 import { computed, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { applySizeProp, type SizeMap } from '../_internal/size-prop'
 
 const props = withDefaults(defineProps<ZAvatarProps>(), {
   alt: '',
-  size: 'middle',
-  shape: 'circle',
+  // 默认等价旧 middle 档位:2.5iem(40px,iem 联动)
+  size: (w: Chain<ZuiSchema>['width']) => {
+    w.iem(2.5)
+  },
+  square: false,
 })
 
 const theme = useZTheme()
 
 const imgFailed = ref(false)
-
-/** ZAvatar size 档位 → iem 倍率(width carrier;height 自动镜像)。 */
-const SIZE_MAP: SizeMap<Chain<ZuiSchema>['width']> = {
-  tiny: (w) => {
-    w.iem(1.5)
-  },
-  small: (w) => {
-    w.iem(2)
-  },
-  middle: (w) => {
-    w.iem(2.5)
-  },
-  large: (w) => {
-    w.iem(3)
-  },
-  huge: (w) => {
-    w.iem(4)
-  },
-}
 
 const showImage = computed(() => !!props.src && !imgFailed.value)
 const showText = computed(() => !showImage.value && !!props.text)
@@ -81,14 +69,14 @@ const rootClass = computed(() =>
     s.alignItems.center
     s.justifyContent.center
     s.flexShrink(0)
-    // size:union(width carrier;height 镜像 width 保证正方形头像)
-    applySizeProp(props.size, SIZE_MAP, s.width)
-    if (s._node.width !== undefined) s._node.height = s._node.width
+    // size(Type C):同一 factory 应用到 width + height,保证正方形头像
+    s.width(props.size)
+    s.height(props.size)
     s.overflow.hidden
     s.verticalAlign('middle')
     s.userSelect.none
-    if (props.shape === 'circle') s.borderRadius._full
-    else s.borderRadius.iem(0.375)
+    if (props.square) s.borderRadius.iem(0.375)
+    else s.borderRadius._full
     if (!showImage.value) {
       if (props.color) s.backgroundColor(props.color)
       else s.backgroundColor._textSecondary

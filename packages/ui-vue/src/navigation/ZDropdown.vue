@@ -24,12 +24,10 @@ export interface ZDropdownItem {
   danger?: boolean
 }
 
-export type ZDropdownTrigger = 'click' | 'hover' | 'manual'
-
 export interface ZDropdownProps {
   items: ZDropdownItem[]
   placement?: Placement
-  trigger?: ZDropdownTrigger
+  trigger?: 'click' | 'hover' | 'manual'
   visible?: boolean
   disabled?: boolean
   sxMenu?: SxObject
@@ -125,6 +123,12 @@ const triggerWrapClass = computed(() =>
   }),
 )
 
+/**
+ * 菜单容器盒子模型(iem):
+ * - min-width: 8iem
+ * - border: _thin
+ * - padding: _tiny
+ */
 const menuClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

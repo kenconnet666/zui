@@ -6,9 +6,9 @@
  * 因此放在 gene/ 目录。**独立 props 集**。
  *
  * **形态**:
- * - `orientation: 'horizontal'`(默认)+ 无 slot → 单条横线
- * - `orientation: 'horizontal'` + 有 slot → flex 横向,左右两段 border + 中间文字
- * - `orientation: 'vertical'` → 单条竖线(inline,需要父容器有高度)
+ * - 默认(`vertical: false`)+ 无 slot → 单条横线
+ * - 默认(`vertical: false`)+ 有 slot → flex 横向,左右两段 border + 中间文字
+ * - `vertical: true` → 单条竖线(inline,需要父容器有高度)
  *
  * **样式 prop**:
  * - `color` carrier factory 默认 `_border`(schema color token);线条与文字共用此色
@@ -16,17 +16,17 @@
  * - `dashed: boolean` —— 虚线
  * - `align: 'left' | 'center' | 'right'`(默认 `'center'`)—— 仅横向带文字时生效
  *
- * **a11y**:`role="separator"` + `aria-orientation`,屏读器能跳读。
+ * **a11y**:`role="separator"` + `aria-orientation`(从 `vertical` 推导),屏读器能跳读。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
 export interface ZDividerProps {
-  /** 方向,默认 `'horizontal'`。垂直需父容器有高度(否则 0px)。 */
-  orientation?: 'horizontal' | 'vertical'
+  /** 纵向分隔(`inline-block` 竖线),需父容器有高度。默认 `false`(横向)。 */
+  vertical?: boolean
   /** 虚线。 */
   dashed?: boolean
-  /** 中间文字位置(仅 horizontal + 有 slot 时生效)。默认 `'center'`。 */
+  /** 中间文字位置(仅横向 + 有 slot 时生效)。默认 `'center'`。 */
   align?: 'left' | 'center' | 'right'
   /**
    * 颜色 factory —— 接 `color` carrier。**默认**:`(c) => c._border`。
@@ -59,7 +59,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
 const props = withDefaults(defineProps<ZDividerProps>(), {
-  orientation: 'horizontal',
+  vertical: false,
   dashed: false,
   align: 'center',
   thickness: '1px',
@@ -81,7 +81,7 @@ const className = computed(() =>
     if (props.color) s.color(props.color)
     else s.color._border
 
-    if (props.orientation === 'vertical') {
+    if (props.vertical) {
       // ─── 垂直单线 ───
       s.display.inlineBlock
       s.width('0')
@@ -132,7 +132,7 @@ const className = computed(() =>
     :is="tag"
     :class="className"
     role="separator"
-    :aria-orientation="orientation"
+    :aria-orientation="vertical ? 'vertical' : 'horizontal'"
   >
     <slot />
   </component>

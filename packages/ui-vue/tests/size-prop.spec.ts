@@ -1,79 +1,42 @@
 /**
  * `_internal/size-prop` —— 类型 helper + `applySizeProp` / `makeSizeMap` 行为测试。
  *
+ * 2026-05-23 撤销 Size5 union 后:
+ * - `applySizeProp(size, target)` 仅 2 参,size = factory 或 undefined
+ * - SizeMap 仍存在,组件内部定义 5 阶 fallback;用户层不再传 string
+ *
  * 验证:
- * - applySizeProp(string, MAP, target) → 走 map[size](target)
- * - applySizeProp(factory, MAP, target) → 直接调 factory(target)
- * - applySizeProp(undefined, ...) → 跳过
+ * - applySizeProp(factory, target) → 直接调 factory(target)
+ * - applySizeProp(undefined, target) → 跳过
  * - makeSizeMap 自动 fallback(tiny→small→middle, huge→large→middle)
+ * - 组件内常用 pattern:`size: undefined` default 用 `MAP.middle` 等价 factory
  */
 import { describe, expect, it } from 'vitest'
-import { applySizeProp, makeSizeMap, type Size5, type SizeMap } from '../src/_internal/size-prop'
+import { applySizeProp, makeSizeMap, type Size5 } from '../src/_internal/size-prop'
 
-describe('size-prop — applySizeProp', () => {
-  it('string 档位 → 走 map[size]', () => {
-    let called: Size5 | null = null
-    const map: SizeMap<unknown> = {
-      tiny: () => {
-        called = 'tiny'
-      },
-      small: () => {
-        called = 'small'
-      },
-      middle: () => {
-        called = 'middle'
-      },
-      large: () => {
-        called = 'large'
-      },
-      huge: () => {
-        called = 'huge'
-      },
-    }
-    applySizeProp('large', map, {} as unknown)
-    expect(called).toBe('large')
-  })
-
+describe('size-prop — applySizeProp(纯 factory 签名)', () => {
   it('factory 函数 → 直接调 factory(target)', () => {
     let receivedTarget: unknown = null
     const factory = (t: unknown): void => {
       receivedTarget = t
     }
-    const map: SizeMap<unknown> = {
-      tiny: () => {},
-      small: () => {},
-      middle: () => {},
-      large: () => {},
-      huge: () => {},
-    }
     const target = { marker: 42 }
-    applySizeProp(factory, map, target)
+    applySizeProp(factory, target)
     expect(receivedTarget).toBe(target)
   })
 
-  it('undefined → 不调用 map 也不调用 factory', () => {
-    let calledMap = 0
+  it('undefined → 不调用 factory(空操作)', () => {
     let calledFactory = 0
-    const map: SizeMap<unknown> = {
-      tiny: () => {
-        calledMap++
-      },
-      small: () => {
-        calledMap++
-      },
-      middle: () => {
-        calledMap++
-      },
-      large: () => {
-        calledMap++
-      },
-      huge: () => {
-        calledMap++
-      },
+    const target = {}
+    // 写一个仅在被调用时累加的 factory(实际不会传给 applySizeProp,只是对照组)
+    const factoryRef = (_: unknown): void => {
+      calledFactory++
     }
-    applySizeProp(undefined, map, {} as unknown)
-    expect(calledMap).toBe(0)
+    applySizeProp(undefined, target)
     expect(calledFactory).toBe(0)
+    // sanity:实际调用 factory 时确实会累加
+    factoryRef(target)
+    expect(calledFactory).toBe(1)
   })
 })
 
@@ -125,14 +88,27 @@ describe('size-prop — makeSizeMap 自动 fallback', () => {
 })
 
 describe('size-prop — applySizeProp + makeSizeMap 组合', () => {
-  it('用 makeSizeMap 构造的 map 兼容 applySizeProp', () => {
+  it('组件 default 用 MAP.middle 作为 factory,applySizeProp 透传 target', () => {
     let result = ''
     const map = makeSizeMap<unknown>({
       middle: () => {
         result = 'middle-applied'
       },
     })
-    applySizeProp('tiny', map, {})
-    expect(result).toBe('middle-applied') // tiny fallback 到 middle
+    // 模拟组件 default factory = MAP.middle
+    applySizeProp(map.middle, {})
+    expect(result).toBe('middle-applied')
+  })
+
+  it('tiny fallback 到 middle 也仍然可作为 factory 直接传 applySizeProp', () => {
+    let result = ''
+    const map = makeSizeMap<unknown>({
+      middle: () => {
+        result = 'middle-fallback'
+      },
+    })
+    // tiny fallback 链 → middle
+    applySizeProp(map.tiny, {})
+    expect(result).toBe('middle-fallback')
   })
 })

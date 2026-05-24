@@ -5,7 +5,7 @@
  * **API**:
  * - `v-model`(`value` + `update:value`)—— 双向绑定
  * - `type?: string` —— HTML input type,默认 `'text'`
- * - `size?: 'small' | 'middle' | 'large'` —— 尺寸档位(默认 `'middle'`)
+ * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 `INPUT_SIZE_MAP.middle`)
  * - `disabled` / `readonly` —— 标准 HTML 状态
  * - `placeholder` —— 占位文字
  * - `clearable` —— 显示清空按钮(有值时)
@@ -26,7 +26,7 @@ import type { SizePropMulti } from '../_internal/size-prop'
 export interface ZInputProps {
   value?: string | number
   type?: string
-  /** 尺寸 —— `factory | Size5 | undefined` union(默认 `'middle'`)。 */
+  /** 尺寸 —— 纯 factory(默认 `INPUT_SIZE_MAP.middle`)。 */
   size?: SizePropMulti
   disabled?: boolean
   readonly?: boolean
@@ -65,7 +65,7 @@ import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZInputProps>(), {
   type: 'text',
-  size: 'middle',
+  size: INPUT_SIZE_MAP.middle,
   disabled: false,
   readonly: false,
   clearable: false,
@@ -89,7 +89,7 @@ const wrapperClass = computed(() =>
     s.gap._tiny
     s.paddingLeft._small
     s.paddingRight._small
-    applySizeProp(props.size, INPUT_SIZE_MAP, s)
+    applySizeProp(props.size, s)
     s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid

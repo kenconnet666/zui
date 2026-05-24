@@ -34,6 +34,11 @@ const theme = useZTheme()
 const visible = computed(() => props.value !== null)
 const widthPct = computed(() => Math.max(0, Math.min(100, props.value ?? 0)))
 
+/**
+ * 进度条容器盒子模型(iem):
+ * - height: 0.125iem(细线进度条)
+ * - fixed 定位在 viewport top:0,横跨整宽
+ */
 const wrapClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed

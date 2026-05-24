@@ -64,6 +64,11 @@ const wrapperClass = computed(() =>
   }),
 )
 
+/**
+ * 色块预览盒子模型(iem):
+ * - width/height: 1.25iem,正方形(略大于复选框)
+ * - border: _thin,圆角 _tiny
+ */
 const swatchClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineBlock

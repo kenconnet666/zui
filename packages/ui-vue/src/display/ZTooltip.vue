@@ -20,12 +20,10 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
-export type ZTooltipTrigger = 'hover' | 'click' | 'focus' | 'manual'
-
 export interface ZTooltipProps {
   content?: string
   placement?: Placement
-  trigger?: ZTooltipTrigger
+  trigger?: 'hover' | 'click' | 'focus' | 'manual'
   visible?: boolean
   delay?: number
   disabled?: boolean
@@ -146,6 +144,13 @@ const contentHandlers = computed(() => {
   return {}
 })
 
+/**
+ * tooltip 内容盒子模型(iem):
+ * - padding-y: 0.25iem × 2 = 0.5iem 总垂直内边距
+ * - padding-x 走 _small token
+ * - maxWidth: 20iem(超长文本换行 wordBreak.breakWord)
+ * - 反色:bg = _text,color = _bg
+ */
 const tooltipClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

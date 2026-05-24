@@ -19,12 +19,10 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
-export type ZPopoverTrigger = 'click' | 'hover' | 'manual'
-
 export interface ZPopoverProps {
   title?: string
   placement?: Placement
-  trigger?: ZPopoverTrigger
+  trigger?: 'click' | 'hover' | 'manual'
   visible?: boolean
   disabled?: boolean
   sxTrigger?: SxObject
@@ -130,6 +128,12 @@ const triggerWrapClass = computed(() =>
 )
 const sxTriggerAttrs = computed(() => extractSxAttrs(props.sxTrigger))
 
+/**
+ * 弹层内容盒子模型(iem):
+ * - minWidth: 8iem(避免极窄)
+ * - maxWidth: 30iem(防止超长内容横铺)
+ * - padding: _middle,圆角 _small,middle shadow
+ */
 const popperClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

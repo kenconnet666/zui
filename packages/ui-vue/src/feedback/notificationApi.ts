@@ -1,9 +1,28 @@
 /**
  * `createNotificationApi` —— 通知工厂(类 createMessageApi)。
  */
-import { createApp, reactive, type App } from 'vue'
+import { createApp, reactive, type App, type Component } from 'vue'
+import type { Chain } from '@kenconnet666/zui-core'
 import ZNotification from './ZNotification.vue'
-import type { ZNotificationItem, ZNotificationType } from './ZNotification.vue'
+import type { ZNotificationItem } from './ZNotification.vue'
+import type { ZuiSchema } from '../provider/theme'
+import { BuiltinIcons } from '../gene/icons'
+
+type SemanticType = 'info' | 'success' | 'warning' | 'danger' | 'loading'
+const SEMANTIC_COLOR: Record<SemanticType, (c: Chain<ZuiSchema>['color']) => void> = {
+  info: (c) => { c._info },
+  success: (c) => { c._success },
+  warning: (c) => { c._warning },
+  danger: (c) => { c._danger },
+  loading: (c) => { c._info },
+}
+const SEMANTIC_ICON: Record<SemanticType, Component> = {
+  info: BuiltinIcons.info,
+  success: BuiltinIcons.success,
+  warning: BuiltinIcons.warning,
+  danger: BuiltinIcons.error,
+  loading: BuiltinIcons.refresh,
+}
 
 export interface ZNotificationApi {
   info: (title: string, description?: string, duration?: number) => ZNotificationItem['id']
@@ -41,14 +60,20 @@ export function createNotificationApi(opts: CreateNotificationApiOptions = {}): 
   }
 
   function push(
-    type: ZNotificationType,
+    type: SemanticType,
     title: string,
     description?: string,
     duration?: number,
   ): ZNotificationItem['id'] {
     ensureMounted()
     const id = ++nextId
-    const item: ZNotificationItem = { id, type, title }
+    const item: ZNotificationItem = {
+      id,
+      title,
+      color: SEMANTIC_COLOR[type],
+      icon: SEMANTIC_ICON[type],
+      loading: type === 'loading',
+    }
     if (description !== undefined) item.description = description
     if (duration !== undefined) item.duration = duration
     items.push(item)

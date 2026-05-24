@@ -13,14 +13,21 @@ function getInjectedCss(): string {
 }
 
 describe('ZFlex — 默认', () => {
-  it('默认 display:flex + row + nowrap + stretch + flex-start', () => {
-    mount(ZFlex, { slots: { default: () => 'x' } })
+  it('默认 display:flex(不带 direction/wrap/justify/align,留给浏览器默认)', () => {
+    const w = mount(ZFlex, { slots: { default: () => 'x' } })
     const css = getInjectedCss()
     expect(css).toMatch(/display:flex/)
-    expect(css).toMatch(/flex-direction:row/)
-    expect(css).toMatch(/flex-wrap:nowrap/)
-    expect(css).toMatch(/justify-content:flex-start/)
-    expect(css).toMatch(/align-items:stretch/)
+    // 默认不主动写 direction/wrap/justify/align —— 验证本组件 class 的规则里没这些
+    const cls = w.classes().find((c) => c.startsWith('css-'))
+    expect(cls).toBeTruthy()
+    const re = new RegExp(`\\.${cls}\\s*\\{([^}]*)\\}`)
+    const m = css.match(re)
+    expect(m).toBeTruthy()
+    const ownRule = m![1]
+    expect(ownRule).not.toMatch(/flex-direction/)
+    expect(ownRule).not.toMatch(/flex-wrap/)
+    expect(ownRule).not.toMatch(/justify-content/)
+    expect(ownRule).not.toMatch(/align-items/)
   })
 
   it('默认 tag=div', () => {
@@ -36,27 +43,42 @@ describe('ZFlex — 默认', () => {
 
 describe('ZFlex — 布局 props', () => {
   it('direction=column → flex-direction:column', () => {
-    mount(ZFlex, { props: { direction: 'column' }, slots: { default: () => 'x' } })
+    mount(ZFlex, {
+      props: { direction: (d: Chain<ZuiSchema>['flexDirection']) => { d.column } },
+      slots: { default: () => 'x' },
+    })
     expect(getInjectedCss()).toMatch(/flex-direction:column/)
   })
 
   it('wrap=true → flex-wrap:wrap', () => {
-    mount(ZFlex, { props: { wrap: true }, slots: { default: () => 'x' } })
+    mount(ZFlex, {
+      props: { wrap: (w: Chain<ZuiSchema>['flexWrap']) => { w.wrap } },
+      slots: { default: () => 'x' },
+    })
     expect(getInjectedCss()).toMatch(/flex-wrap:wrap[;}]/)
   })
 
   it('wrap=reverse → wrap-reverse', () => {
-    mount(ZFlex, { props: { wrap: 'reverse' }, slots: { default: () => 'x' } })
+    mount(ZFlex, {
+      props: { wrap: (w: Chain<ZuiSchema>['flexWrap']) => { w.wrapReverse } },
+      slots: { default: () => 'x' },
+    })
     expect(getInjectedCss()).toMatch(/flex-wrap:wrap-reverse/)
   })
 
   it('justify=between → space-between', () => {
-    mount(ZFlex, { props: { justify: 'between' }, slots: { default: () => 'x' } })
+    mount(ZFlex, {
+      props: { justify: (j: Chain<ZuiSchema>['justifyContent']) => { j.spaceBetween } },
+      slots: { default: () => 'x' },
+    })
     expect(getInjectedCss()).toMatch(/justify-content:space-between/)
   })
 
   it('align=center → center', () => {
-    mount(ZFlex, { props: { align: 'center' }, slots: { default: () => 'x' } })
+    mount(ZFlex, {
+      props: { align: (a: Chain<ZuiSchema>['alignItems']) => { a.center } },
+      slots: { default: () => 'x' },
+    })
     expect(getInjectedCss()).toMatch(/align-items:center/)
   })
 

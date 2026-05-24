@@ -5,7 +5,7 @@
  * **API**:
  * - `v-model:visible` —— 双向绑定开关
  * - `title?: string` —— 头部标题(`#head` slot 优先)
- * - `width?: string | number` —— 默认 `'480px'`(数字按 px)
+ * - `width?: factory` —— 宽度 carrier factory,默认 `(w) => w.iem(30)`(2026-05-24 B7:数字尺寸 → factory,等价 30iem = 480px)
  * - `centered?: boolean` —— 垂直居中,默认 `true`
  * - `closable?: boolean` —— 头部关闭按钮,默认 `true`
  * - `maskClosable?: boolean` —— 点击 mask 关闭,默认 `true`
@@ -25,7 +25,15 @@ export interface ZModalProps {
   /** 是否显示(`v-model:visible` 推荐)。 */
   visible?: boolean
   title?: string
-  width?: string | number
+  /**
+   * 宽度 factory —— 接 `width` carrier。默认 `(w) => w.iem(30)`(30iem = 480px 等价)。
+   *
+   * @example
+   * <ZModal :width="(w) => w.iem(40)" />     <!-- 40iem -->
+   * <ZModal :width="(w) => w.px(600)" />     <!-- 600px -->
+   * <ZModal :width="(w) => w.pct(80)" />     <!-- 视口 80% -->
+   */
+  width?: ((c: Chain<ZuiSchema>['width']) => void) | undefined
   centered?: boolean
   closable?: boolean
   maskClosable?: boolean
@@ -61,7 +69,10 @@ import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZModalProps>(), {
   visible: false,
-  width: '480px',
+  // 默认 30iem = 480px(原始字面量),走 factory 让 Provider 字号联动
+  width: () => (w: Chain<ZuiSchema>['width']) => {
+    w.iem(30)
+  },
   centered: true,
   closable: true,
   maskClosable: true,
@@ -82,10 +93,6 @@ useEscapeStack(
     }
   },
   { enabled: visibleRef },
-)
-
-const widthValue = computed(() =>
-  typeof props.width === 'number' ? `${props.width}px` : props.width,
 )
 
 const maskClass = computed(() =>
@@ -112,7 +119,7 @@ const dialogClass = computed(() =>
     s.display.flex
     s.flexDirection.column
     s.maxHeight('calc(100vh - calc(2 * var(--zui-iem, 16px)))')
-    s.width(widthValue.value)
+    if (props.width) s.width(props.width)
     s.maxWidth('calc(100vw - calc(2 * var(--zui-iem, 16px)))')
     if (!props.centered) s.marginTop._huge
     if (props.zIndex !== undefined) s.zIndex(props.zIndex + 1)

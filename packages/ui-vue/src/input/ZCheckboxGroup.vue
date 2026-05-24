@@ -24,8 +24,8 @@ export interface ZCheckboxGroupProps {
   value?: ZCheckboxValue[]
   disabled?: boolean
   options?: ZCheckboxOption[]
-  /** 排列方向,默认 `'horizontal'`。 */
-  direction?: 'horizontal' | 'vertical'
+  /** 排列方向 carrier factory(`flexDirection`)。默认不写 = 浏览器原生 `row`(横排)。 */
+  direction?: ((c: Chain<ZuiSchema>['flexDirection']) => void) | undefined
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -44,7 +44,6 @@ import { Z_CHECKBOX_GROUP_KEY, type CheckboxGroupCtx } from './_checkbox-group'
 
 const props = withDefaults(defineProps<ZCheckboxGroupProps>(), {
   disabled: false,
-  direction: 'horizontal',
 })
 
 const emit = defineEmits<ZCheckboxGroupEmits>()
@@ -75,7 +74,7 @@ provide(Z_CHECKBOX_GROUP_KEY, ctx)
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
-    s.flexDirection(props.direction === 'vertical' ? 'column' : 'row')
+    if (props.direction) s.flexDirection(props.direction)
     s.gap._small
     s.flexWrap.wrap
     props.css?.(s)

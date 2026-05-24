@@ -14,7 +14,7 @@ export interface ZTimePickerProps {
   step?: number
   disabled?: boolean
   placeholder?: string
-  /** 尺寸 —— `factory | Size5 | undefined` union(复用 INPUT_SIZE_MAP)。 */
+  /** 尺寸 —— 纯 factory(默认 `INPUT_SIZE_MAP.middle`,复用 INPUT_SIZE_MAP)。 */
   size?: SizePropMulti
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -35,7 +35,7 @@ import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
 const props = withDefaults(defineProps<ZTimePickerProps>(), {
   step: 60,
   disabled: false,
-  size: 'middle',
+  size: INPUT_SIZE_MAP.middle,
 })
 
 const emit = defineEmits<ZTimePickerEmits>()
@@ -50,7 +50,7 @@ const inputClass = computed(() =>
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    applySizeProp(props.size, INPUT_SIZE_MAP, s)
+    applySizeProp(props.size, s)
     s.paddingLeft._small
     s.paddingRight._small
     s.outline('none')

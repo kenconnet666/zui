@@ -138,13 +138,13 @@ describe('ZText — 状态 prop', () => {
     expect(getInjectedCss()).toMatch(/font-style:italic/)
   })
 
-  it('underline=always → text-decoration-line:underline', () => {
-    mount(ZText, { props: { underline: 'always' }, slots: { default: () => 'x' } })
+  it('underline=true → text-decoration-line:underline', () => {
+    mount(ZText, { props: { underline: true }, slots: { default: () => 'x' } })
     expect(getInjectedCss()).toMatch(/text-decoration-line:underline/)
   })
 
-  it('underline=hover → 嵌套 &:hover 块包含 underline', () => {
-    mount(ZText, { props: { underline: 'hover' }, slots: { default: () => 'x' } })
+  it('underlineOnHover=true → 嵌套 &:hover 块包含 underline', () => {
+    mount(ZText, { props: { underlineOnHover: true }, slots: { default: () => 'x' } })
     const css = getInjectedCss()
     expect(css).toMatch(/:hover\s*\{[^}]*text-decoration-line:underline/)
   })
@@ -156,7 +156,7 @@ describe('ZText — 状态 prop', () => {
 
   it('underline=always + strikethrough → 多值叠加', () => {
     mount(ZText, {
-      props: { underline: 'always', strikethrough: true },
+      props: { underline: true, strikethrough: true },
       slots: { default: () => 'x' },
     })
     const css = getInjectedCss()

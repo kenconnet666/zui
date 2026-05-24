@@ -104,13 +104,10 @@ export interface ZTextProps {
   /** 斜体(`font-style: italic`)。 */
   italic?: boolean
 
-  /**
-   * 下划线模式:
-   * - `'always'` —— 常显
-   * - `'hover'`  —— 悬停时显
-   * - `'none'`   —— 不显(默认)
-   */
-  underline?: 'always' | 'hover' | 'none'
+  /** 始终下划线,默认 `false`。 */
+  underline?: boolean
+  /** 仅 hover 时下划线,默认 `false`。 */
+  underlineOnHover?: boolean
 
   /** 删除线(`text-decoration-line: line-through`),可与 underline 叠加。 */
   strikethrough?: boolean
@@ -160,7 +157,8 @@ import { applyTypographyBase } from './_typography-base'
 
 const props = withDefaults(defineProps<ZTextProps>(), {
   italic: false,
-  underline: 'none',
+  underline: false,
+  underlineOnHover: false,
   strikethrough: false,
   mono: false,
   ellipsis: false,

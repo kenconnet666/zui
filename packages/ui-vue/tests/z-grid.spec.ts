@@ -13,12 +13,19 @@ function getInjectedCss(): string {
 }
 
 describe('ZGrid — 默认', () => {
-  it('默认 display:grid + justifyItems:stretch + alignItems:stretch', () => {
-    mount(ZGrid, { slots: { default: () => 'x' } })
+  it('默认 display:grid(不主动写 justifyItems/alignItems)', () => {
+    const w = mount(ZGrid, { slots: { default: () => 'x' } })
     const css = getInjectedCss()
     expect(css).toMatch(/display:grid/)
-    expect(css).toMatch(/justify-items:stretch/)
-    expect(css).toMatch(/align-items:stretch/)
+    // 默认不写 justify-items/align-items —— 仅验证本组件 class 规则
+    const cls = w.classes().find((c) => c.startsWith('css-'))
+    expect(cls).toBeTruthy()
+    const re = new RegExp(`\\.${cls}\\s*\\{([^}]*)\\}`)
+    const m = css.match(re)
+    expect(m).toBeTruthy()
+    const ownRule = m![1]
+    expect(ownRule).not.toMatch(/justify-items/)
+    expect(ownRule).not.toMatch(/align-items/)
   })
 })
 
@@ -61,7 +68,10 @@ describe('ZGrid — gap + 对齐', () => {
   })
 
   it('justifyItems=center', () => {
-    mount(ZGrid, { props: { justifyItems: 'center' }, slots: { default: () => 'x' } })
+    mount(ZGrid, {
+      props: { justifyItems: (j: Chain<ZuiSchema>['justifyItems']) => { j.center } },
+      slots: { default: () => 'x' },
+    })
     expect(getInjectedCss()).toMatch(/justify-items:center/)
   })
 

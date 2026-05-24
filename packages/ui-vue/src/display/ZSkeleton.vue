@@ -64,6 +64,9 @@ const rootClass = computed(() =>
   }),
 )
 
+/**
+ * 头像骨架:width/height = 2.5iem,正圆。
+ */
 const avatarClass = computed(() =>
   icss(theme.value, (s) => {
     s.width.iem(2.5)
@@ -84,6 +87,9 @@ const linesContainerClass = computed(() =>
   }),
 )
 
+/**
+ * 标题条骨架:height = 1.25iem,width = 40%。
+ */
 const titleBarClass = computed(() =>
   icss(theme.value, (s) => {
     s.height.iem(1.25)
@@ -95,6 +101,9 @@ const titleBarClass = computed(() =>
   }),
 )
 
+/**
+ * 文本行骨架:height = 0.875iem;最后一行 width=60%,其它 100%。
+ */
 function rowClass(isLast: boolean): string {
   return icss(theme.value, (s) => {
     s.height.iem(0.875)

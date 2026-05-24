@@ -124,6 +124,13 @@ const taClass = computed(() =>
   }),
 )
 
+/**
+ * mention 候选浮层盒子模型(iem):
+ * - 横向贴齐 textarea(left/right: 0)
+ * - top: 100%(textarea 正下方)
+ * - maxHeight: 15iem,超出滚动
+ * - marginTop: _tiny 与 textarea 留间距
+ */
 const dropdownClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

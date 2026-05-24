@@ -8,7 +8,7 @@
  * - `rowKey: string | ((row: T) => string | number)` —— 行 key,默认 `'id'`
  * - `bordered?: boolean` —— 边框,默认 `false`
  * - `striped?: boolean` —— 斑马纹,默认 `false`
- * - `size?: 'small' | 'middle' | 'large'` —— 内边距档位
+ * - `size?: SizePropMulti` —— 内边距 factory(默认等价 `TABLE_SIZE_MAP.middle`)
  * - `emptyText?: string` —— 空数据文案,默认 "暂无数据"
  *
  * **Phase β 升级**:
@@ -24,6 +24,7 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 import type { SizePropMulti } from '../_internal/size-prop'
+import { makeSizeMap } from '../_internal/size-prop'
 import type { VNodeChild } from 'vue'
 
 export type ZTableAlign = 'left' | 'center' | 'right'
@@ -54,7 +55,7 @@ export interface ZTableProps<T = Record<string, unknown>> {
   rowKey?: string | ((row: T) => string | number)
   bordered?: boolean
   striped?: boolean
-  /** 尺寸 —— `factory | Size5 | undefined` union(影响 cell padding-y)。 */
+  /** 尺寸 —— 纯 factory(默认等价 `TABLE_SIZE_MAP.middle`,影响 cell padding-y)。 */
   size?: SizePropMulti
   emptyText?: string
   /** 行选择 ── `v-model:selectedKeys` 配合用。 */
@@ -73,37 +74,9 @@ export interface ZTableEmits {
   (e: 'update:selectedKeys', keys: (string | number)[]): void
   (e: 'update:sortState', state: ZTableSortState): void
 }
-</script>
-
-<script lang="ts" setup generic="T extends Record<string, unknown>">
-import { computed, h } from 'vue'
-import { icss } from '@kenconnet666/zui-core'
-import { useZTheme } from '../provider'
-import { applySx, extractSxAttrs } from '../_internal/sx'
-import { applySizeProp, makeSizeMap } from '../_internal/size-prop'
-import { BuiltinIcons, ZIcon } from '../gene'
-
-const props = withDefaults(defineProps<ZTableProps<T>>(), {
-  rowKey: 'id',
-  bordered: false,
-  striped: false,
-  size: 'middle',
-  emptyText: '暂无数据',
-  selectable: false,
-  selectedKeys: () => [],
-  sortState: () => ({ column: null, order: null }),
-})
-
-const sortStateRef = computed<ZTableSortState>(
-  () => props.sortState ?? { column: null, order: null },
-)
-
-const emit = defineEmits<ZTableEmits>()
-
-const theme = useZTheme()
 
 /** cell padding-y(影响行高,3 阶实现 + tiny/huge fallback)。 */
-const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
+const TABLE_SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
   small: (s) => {
     s.paddingTop.iem(0.375)
     s.paddingBottom.iem(0.375)
@@ -117,6 +90,34 @@ const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
     s.paddingBottom.iem(0.875)
   },
 })
+</script>
+
+<script lang="ts" setup generic="T extends Record<string, unknown>">
+import { computed, h } from 'vue'
+import { icss } from '@kenconnet666/zui-core'
+import { useZTheme } from '../provider'
+import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applySizeProp } from '../_internal/size-prop'
+import { BuiltinIcons, ZIcon } from '../gene'
+
+const props = withDefaults(defineProps<ZTableProps<T>>(), {
+  rowKey: 'id',
+  bordered: false,
+  striped: false,
+  size: TABLE_SIZE_MAP.middle,
+  emptyText: '暂无数据',
+  selectable: false,
+  selectedKeys: () => [],
+  sortState: () => ({ column: null, order: null }),
+})
+
+const sortStateRef = computed<ZTableSortState>(
+  () => props.sortState ?? { column: null, order: null },
+)
+
+const emit = defineEmits<ZTableEmits>()
+
+const theme = useZTheme()
 
 // ─── 排序 ───
 const sortedData = computed<T[]>(() => {
@@ -259,7 +260,7 @@ const sxRowAttrs = computed(() => extractSxAttrs(props.sxRow))
 
 const cellClass = (col: ZTableColumn<T>): string =>
   icss(theme.value, (s) => {
-    applySizeProp(props.size, SIZE_MAP, s)
+    applySizeProp(props.size, s)
     s.paddingLeft._middle
     s.paddingRight._middle
     s.textAlign(col.align ?? 'left')
@@ -274,7 +275,7 @@ const sxCellAttrs = computed(() => extractSxAttrs(props.sxCell))
 
 const selectCellClass = computed(() =>
   icss(theme.value, (s) => {
-    applySizeProp(props.size, SIZE_MAP, s)
+    applySizeProp(props.size, s)
     s.paddingLeft._small
     s.paddingRight._small
     s.textAlign.center

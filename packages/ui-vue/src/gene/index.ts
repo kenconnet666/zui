@@ -25,18 +25,14 @@ export { default as ZDivider } from './ZDivider.vue'
 export type { ZDividerProps } from './ZDivider.vue'
 
 export { default as ZButton } from './ZButton.vue'
-export type {
-  ZButtonProps,
-  ZButtonEmits,
-  ZButtonVariant,
-} from './ZButton.vue'
+export type { ZButtonProps, ZButtonEmits } from './ZButton.vue'
 
 // ─── Phase β gene 补全 ───
 export { default as ZAvatar } from './ZAvatar.vue'
 export type { ZAvatarProps } from './ZAvatar.vue'
 
 export { default as ZTag } from './ZTag.vue'
-export type { ZTagProps, ZTagEmits, ZTagVariant } from './ZTag.vue'
+export type { ZTagProps, ZTagEmits } from './ZTag.vue'
 
 export { default as ZBadge } from './ZBadge.vue'
 export type { ZBadgeProps } from './ZBadge.vue'

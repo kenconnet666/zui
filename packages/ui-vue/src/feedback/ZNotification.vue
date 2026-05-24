@@ -6,20 +6,27 @@
  * 1. 组件模式:`<ZNotification :items />` 业务方自管 items 数组
  * 2. 工厂模式:`createNotificationApi()` 见 `notificationApi.ts`
  *
- * **types**:info / success / warning / danger / loading
+ * **API**(2026-05-23 撤销 item.type 字面量):
+ * - item.color?: factory(颜色,工厂 wrap)
+ * - item.icon?: Component(图标,工厂 wrap)
+ * - item.loading?: boolean(默认 `false`)
  */
+import type { Component } from 'vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
-export type ZNotificationType = 'info' | 'success' | 'warning' | 'danger' | 'loading'
-
 export interface ZNotificationItem {
   id: string | number
-  type: ZNotificationType
   title: string
   description?: string
   duration?: number
   closable?: boolean
+  /** 颜色 factory(图标 + 内联色)。默认 `_info`。 */
+  color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
+  /** 图标组件(传给 ZIcon 的 component)。默认 `BuiltinIcons.info`。 */
+  icon?: Component
+  /** 旋转 loading 图标。默认 `false`。 */
+  loading?: boolean
 }
 
 export interface ZNotificationProps {
@@ -46,22 +53,11 @@ const emit = defineEmits<ZNotificationEmits>()
 
 const theme = useZTheme()
 
-const TYPE_ICON: Record<ZNotificationType, keyof typeof BuiltinIcons> = {
-  info: 'info',
-  success: 'success',
-  warning: 'warning',
-  danger: 'error',
-  loading: 'refresh',
-}
-
-const TYPE_COLOR: Record<ZNotificationType, 'success' | 'warning' | 'danger' | 'info'> = {
-  info: 'info',
-  success: 'success',
-  warning: 'warning',
-  danger: 'danger',
-  loading: 'info',
-}
-
+/**
+ * 通知容器盒子模型(iem):
+ * - 屏幕边距 offset: 1.5iem(top/bottom + left/right)
+ * - max-width: 22.5iem
+ */
 const containerClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed
@@ -80,7 +76,7 @@ const containerClass = computed(() =>
   }),
 )
 
-function itemClass(type: ZNotificationType): string {
+function itemClass(): string {
   return icss(theme.value, (s) => {
     s.display.flex
     s.gap._small
@@ -95,13 +91,13 @@ function itemClass(type: ZNotificationType): string {
     s.fontSize._small
     s.lineHeight._normal
     s.pointerEvents.auto
-    void type // 未在 style 中使用,保留参数语义
   })
 }
 
-function iconClass(type: ZNotificationType): string {
+function iconClass(item: ZNotificationItem): string {
   return icss(theme.value, (s) => {
-    s.color[`_${TYPE_COLOR[type]}` as const]
+    if (item.color) s.color(item.color)
+    else s.color._info
     s.fontSize._large
     s.flexShrink(0)
   })
@@ -145,7 +141,7 @@ const closeBtnClass = computed(() =>
 const timers = new Map<ZNotificationItem['id'], ReturnType<typeof setTimeout>>()
 
 function scheduleClose(item: ZNotificationItem): void {
-  const duration = item.duration ?? (item.type === 'loading' ? 0 : 4500)
+  const duration = item.duration ?? (item.loading ? 0 : 4500)
   if (duration <= 0) return
   const t = setTimeout(() => {
     emit('close', item.id)
@@ -185,10 +181,9 @@ onUnmounted(() => {
 })
 
 function renderIcon(item: ZNotificationItem) {
-  const isLoading = item.type === 'loading'
   return h(ZIcon, {
-    component: BuiltinIcons[TYPE_ICON[item.type]],
-    ...(isLoading
+    component: item.icon ?? BuiltinIcons.info,
+    ...(item.loading
       ? {
           spin: (d: Chain<ZuiSchema>['animationDuration']) => {
             d.s(1)
@@ -225,8 +220,8 @@ const slideBoundaryClass = computed(() =>
         :leave-to-class="slideBoundaryClass"
         tag="div"
       >
-        <div v-for="item in items" :key="item.id" :class="itemClass(item.type)">
-          <span :class="iconClass(item.type)">
+        <div v-for="item in items" :key="item.id" :class="itemClass()">
+          <span :class="iconClass(item)">
             <component :is="renderIcon(item)" />
           </span>
           <div style="flex: 1; min-width: 0">

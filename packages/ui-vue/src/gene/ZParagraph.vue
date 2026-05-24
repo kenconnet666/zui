@@ -27,7 +27,8 @@ export interface ZParagraphProps {
   tracking?: ((t: Chain<ZuiSchema>['letterSpacing']) => void) | undefined
 
   italic?: boolean
-  underline?: 'always' | 'hover' | 'none'
+  underline?: boolean
+  underlineOnHover?: boolean
   strikethrough?: boolean
   mono?: boolean
   ellipsis?: boolean | number
@@ -46,7 +47,8 @@ import { applyTypographyBase } from './_typography-base'
 
 const props = withDefaults(defineProps<ZParagraphProps>(), {
   italic: false,
-  underline: 'none',
+  underline: false,
+  underlineOnHover: false,
   strikethrough: false,
   mono: false,
   ellipsis: false,

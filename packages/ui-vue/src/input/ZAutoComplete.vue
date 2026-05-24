@@ -22,7 +22,7 @@ export interface ZAutoCompleteProps {
   options: string[]
   placeholder?: string
   disabled?: boolean
-  /** 尺寸 —— `factory | Size5 | undefined` union(复用 INPUT_SIZE_MAP)。 */
+  /** 尺寸 —— 纯 factory(默认 `INPUT_SIZE_MAP.middle`,复用 INPUT_SIZE_MAP)。 */
   size?: SizePropMulti
   filter?: (input: string, opt: string) => boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -45,7 +45,7 @@ import { usePopper, useEscapeStack } from '../_hooks'
 
 const props = withDefaults(defineProps<ZAutoCompleteProps>(), {
   disabled: false,
-  size: 'middle',
+  size: INPUT_SIZE_MAP.middle,
   filter: (input: string, opt: string) => opt.toLowerCase().includes(input.toLowerCase()),
 })
 
@@ -91,7 +91,7 @@ const inputClass = computed(() =>
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    applySizeProp(props.size, INPUT_SIZE_MAP, s)
+    applySizeProp(props.size, s)
     s.paddingLeft._small
     s.paddingRight._small
     s.width.pct(100)
@@ -105,6 +105,12 @@ const inputClass = computed(() =>
   }),
 )
 
+/**
+ * 候选下拉盒子模型(iem):
+ * - minWidth: 8iem(与触发器对齐)
+ * - maxHeight: 15iem,超出滚动
+ * - padding: _tiny,圆角 _small,middle shadow
+ */
 const dropdownClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

@@ -39,8 +39,10 @@ export interface ZLinkProps {
   tracking?: ((t: Chain<ZuiSchema>['letterSpacing']) => void) | undefined
 
   italic?: boolean
-  /** 下划线模式,默认 `'hover'`(链接惯例:鼠标悬停才显)。 */
-  underline?: 'always' | 'hover' | 'none'
+  /** 始终下划线,默认 `false`。 */
+  underline?: boolean
+  /** 仅 hover 时下划线,默认 `true`(链接惯例)。 */
+  underlineOnHover?: boolean
   strikethrough?: boolean
   mono?: boolean
   ellipsis?: boolean | number
@@ -60,7 +62,8 @@ import { applyTypographyBase } from './_typography-base'
 const props = withDefaults(defineProps<ZLinkProps>(), {
   disabled: false,
   italic: false,
-  underline: 'hover',
+  underline: false,
+  underlineOnHover: true,
   strikethrough: false,
   mono: false,
   ellipsis: false,

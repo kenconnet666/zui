@@ -177,6 +177,10 @@ const weekdayClass = computed(() =>
   }),
 )
 
+/**
+ * 日历单元格盒子模型(iem):
+ * - height: 2iem(单格高度,配合外层 32px 列宽形成近似正方形格子)
+ */
 function dayClass(d: { key: string; outOfMonth: boolean }): string {
   const isSelected = props.value === d.key
   const isToday = todayKey === d.key

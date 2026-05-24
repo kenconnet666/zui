@@ -22,7 +22,8 @@ export interface ZRadioGroupProps {
   disabled?: boolean
   buttonStyle?: boolean
   options?: ZRadioOption[]
-  direction?: 'horizontal' | 'vertical'
+  /** 排列方向 carrier factory(`flexDirection`)。默认不写 = 浏览器原生 `row`(横排)。 */
+  direction?: ((c: Chain<ZuiSchema>['flexDirection']) => void) | undefined
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -43,7 +44,6 @@ const props = withDefaults(defineProps<ZRadioGroupProps>(), {
   value: null,
   disabled: false,
   buttonStyle: false,
-  direction: 'horizontal',
 })
 
 const emit = defineEmits<ZRadioGroupEmits>()
@@ -67,7 +67,7 @@ provide(Z_RADIO_GROUP_KEY, ctx)
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
-    s.flexDirection(props.direction === 'vertical' ? 'column' : 'row')
+    if (props.direction) s.flexDirection(props.direction)
     if (props.buttonStyle) s.gap.px(0)
     else s.gap.iem(0.5)
     s.flexWrap.wrap

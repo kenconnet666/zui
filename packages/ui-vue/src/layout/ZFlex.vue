@@ -2,21 +2,27 @@
 /**
  * `ZFlex` —— Flexbox 布局容器。
  *
- * **6 个布局 prop**(枚举形式 + gap carrier factory):
- * - `direction`:`'row'` / `'column'` / `'row-reverse'` / `'column-reverse'`(默认 `'row'`)
- * - `wrap`:`true`(→ wrap)/ `false`(→ nowrap,默认)/ `'reverse'`(→ wrap-reverse)
- * - `justify`:`'start'` / `'center'` / `'end'` / `'between'` / `'around'` / `'evenly'`(默认 `'start'`)
- * - `align`:`'start'` / `'center'` / `'end'` / `'stretch'` / `'baseline'`(默认 `'stretch'`)
- * - `gap`:carrier factory → `gap` carrier(spacing token / iem / 字面量)
- * - `inline`:`true` → `display: inline-flex`,默认 `false` 走 `display: flex`
- *
- * **css 兜底**:逃生口,任意 chain 表达式。
+ * **API**(全 chain factory,Type A);默认行为对齐浏览器原生(row / nowrap / flex-start / stretch):
+ * - `direction?: factory` —— `flexDirection` carrier
+ * - `wrap?: factory` —— `flexWrap` carrier
+ * - `justify?: factory` —— `justifyContent` carrier
+ * - `align?: factory` —— `alignItems` carrier
+ * - `gap?: factory` —— `gap` carrier
+ * - `inline?: boolean` —— `true` → `display: inline-flex`,默认 `false` 走 `display: flex`
  *
  * @example
  * ```vue
- * <ZFlex justify="between" align="center" :gap="(g) => g._middle">
+ * <ZFlex
+ *   :justify="(j) => j.spaceBetween"
+ *   :align="(a) => a.center"
+ *   :gap="(g) => g._middle"
+ * >
  *   <Title />
  *   <Actions />
+ * </ZFlex>
+ *
+ * <ZFlex :direction="(d) => d.column" :gap="(g) => g.iem(1.5)">
+ *   <Item />
  * </ZFlex>
  * ```
  */
@@ -24,14 +30,14 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
 export interface ZFlexProps {
-  /** `flex-direction`,默认 `'row'`。 */
-  direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse'
-  /** `flex-wrap`:`true`→wrap / `false`→nowrap(默认)/ `'reverse'`→wrap-reverse。 */
-  wrap?: boolean | 'reverse'
-  /** `justify-content`(主轴对齐),默认 `'start'`。 */
-  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
-  /** `align-items`(交叉轴对齐),默认 `'stretch'`。 */
-  align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'
+  /** `flex-direction` carrier factory。 */
+  direction?: ((c: Chain<ZuiSchema>['flexDirection']) => void) | undefined
+  /** `flex-wrap` carrier factory。 */
+  wrap?: ((c: Chain<ZuiSchema>['flexWrap']) => void) | undefined
+  /** `justify-content` carrier factory。 */
+  justify?: ((c: Chain<ZuiSchema>['justifyContent']) => void) | undefined
+  /** `align-items` carrier factory。 */
+  align?: ((c: Chain<ZuiSchema>['alignItems']) => void) | undefined
   /** `gap` carrier factory。例:`(g) => g._middle` / `(g) => g.iem(0.5)` / `(g) => g.px(8)`。 */
   gap?: ((g: Chain<ZuiSchema>['gap']) => void) | undefined
   /** `display: inline-flex`(默认 `flex`)。 */
@@ -49,43 +55,20 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
 const props = withDefaults(defineProps<ZFlexProps>(), {
-  direction: 'row',
-  wrap: false,
-  justify: 'start',
-  align: 'stretch',
   inline: false,
   tag: 'div',
 })
 
 const theme = useZTheme()
 
-const JUSTIFY_MAP: Record<NonNullable<ZFlexProps['justify']>, string> = {
-  start: 'flex-start',
-  center: 'center',
-  end: 'flex-end',
-  between: 'space-between',
-  around: 'space-around',
-  evenly: 'space-evenly',
-}
-
-const ALIGN_MAP: Record<NonNullable<ZFlexProps['align']>, string> = {
-  start: 'flex-start',
-  center: 'center',
-  end: 'flex-end',
-  stretch: 'stretch',
-  baseline: 'baseline',
-}
-
 const className = computed(() =>
   icss(theme.value, (s) => {
     if (props.inline) s.display.inlineFlex
     else s.display.flex
-    s.flexDirection(props.direction)
-    s.flexWrap(
-      props.wrap === true ? 'wrap' : props.wrap === 'reverse' ? 'wrap-reverse' : 'nowrap',
-    )
-    s.justifyContent(JUSTIFY_MAP[props.justify])
-    s.alignItems(ALIGN_MAP[props.align])
+    if (props.direction) s.flexDirection(props.direction)
+    if (props.wrap) s.flexWrap(props.wrap)
+    if (props.justify) s.justifyContent(props.justify)
+    if (props.align) s.alignItems(props.align)
     if (props.gap) s.gap(props.gap)
 
     props.css?.(s)

@@ -4,7 +4,7 @@
  *
  * - `color` carrier factory —— 主色(默认 `_textSecondary`)
  * - `variant: 'filled' | 'outlined' | 'soft'`(默认 `'soft'`)
- * - `size: 'small' | 'middle' | 'large'`
+ * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 `TAG_SIZE_MAP.middle`)
  * - `closable: boolean` —— 关闭按钮 + emit close
  * - `round: boolean` —— 圆角胶囊形
  */
@@ -12,13 +12,12 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 import type { SizePropMulti } from '../_internal/size-prop'
-
-export type ZTagVariant = 'filled' | 'outlined' | 'soft'
+import { makeSizeMap } from '../_internal/size-prop'
 
 export interface ZTagProps {
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
-  variant?: ZTagVariant
-  /** 尺寸 —— `factory | Size5 | undefined` union(原 3 阶 → 5 阶,tiny/huge fallback)。 */
+  variant?: 'filled' | 'outlined' | 'soft'
+  /** 尺寸 —— 纯 factory(默认等价 `TAG_SIZE_MAP.middle`,影响 fontSize + padding-y 双轴)。 */
   size?: SizePropMulti
   closable?: boolean
   round?: boolean
@@ -29,31 +28,9 @@ export interface ZTagProps {
 export interface ZTagEmits {
   (e: 'close', evt: MouseEvent): void
 }
-</script>
-
-<script lang="ts" setup>
-import { computed, h } from 'vue'
-import { icss } from '@kenconnet666/zui-core'
-import { useZTheme } from '../provider'
-import { applySx, extractSxAttrs } from '../_internal/sx'
-import { applyAsBg } from '../_internal/color-bridge'
-import { applySizeProp, makeSizeMap } from '../_internal/size-prop'
-import { BuiltinIcons } from './icons'
-import ZIcon from './ZIcon.vue'
-
-const props = withDefaults(defineProps<ZTagProps>(), {
-  variant: 'soft',
-  size: 'middle',
-  closable: false,
-  round: false,
-})
-
-const emit = defineEmits<ZTagEmits>()
-
-const theme = useZTheme()
 
 /** ZTag size 档位 —— 同时影响 fontSize + padding-y(多 carrier 维度,3 阶实现 + fallback)。 */
-const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
+const TAG_SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
   small: (s) => {
     s.fontSize._tiny
     s.paddingTop.iem(0.125)
@@ -70,6 +47,28 @@ const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
     s.paddingBottom.iem(0.375)
   },
 })
+</script>
+
+<script lang="ts" setup>
+import { computed, h } from 'vue'
+import { icss } from '@kenconnet666/zui-core'
+import { useZTheme } from '../provider'
+import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applyAsBg } from '../_internal/color-bridge'
+import { applySizeProp } from '../_internal/size-prop'
+import { BuiltinIcons } from './icons'
+import ZIcon from './ZIcon.vue'
+
+const props = withDefaults(defineProps<ZTagProps>(), {
+  variant: 'soft',
+  size: TAG_SIZE_MAP.middle,
+  closable: false,
+  round: false,
+})
+
+const emit = defineEmits<ZTagEmits>()
+
+const theme = useZTheme()
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
@@ -77,7 +76,7 @@ const rootClass = computed(() =>
     s.alignItems.center
     s.gap._tiny
     s.lineHeight._tight
-    applySizeProp(props.size, SIZE_MAP, s)
+    applySizeProp(props.size, s)
     s.paddingLeft._small
     s.paddingRight._small
     if (props.round) s.borderRadius._full

@@ -27,8 +27,8 @@ describe('ZAvatar', () => {
     expect(w.text()).not.toContain('X')
   })
 
-  it('shape=square → 方形圆角(非完全圆)', () => {
-    mount(ZAvatar, { props: { shape: 'square', text: 'A' } })
+  it('square=true → 方形圆角(非完全圆)', () => {
+    mount(ZAvatar, { props: { square: true, text: 'A' } })
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
       .join('\n')

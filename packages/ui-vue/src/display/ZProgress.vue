@@ -5,30 +5,29 @@
  * **API**:
  * - `value: number` —— 0~100(超出自动 clamp)
  * - `type?: 'line' | 'circle'` —— 默认 `'line'`
- * - `size?: 'small' | 'middle' | 'large'` —— 线性高度 / 环形直径档位
- * - `color` carrier factory —— 进度色(默认 `_primary`)
+ * - `size?: SizePropMulti` —— 尺寸 factory;line 模式覆盖 rail 高度,circle 模式覆盖外层 width/height。默认等价 middle(line=8px / circle=100px)。
+ * - `color?: factory` —— 进度色 carrier factory(默认 `_primary`)。
+ *   - B6:删除原 `status?: 'normal'|'success'|'warning'|'danger'`,合并到 `color` factory,
+ *     用户直接 `color={(c) => c._success}` 即可。
  * - `showText?: boolean` —— 显示百分比文字(line 在右,circle 在中)
- * - `status?: 'normal' | 'success' | 'warning' | 'danger'` —— 覆盖 color(优先)
+ *
+ * **size factory 限制**:仅覆盖 CSS 端高度/直径,内部 SVG viewBox 始终 100x100(circle 模式)。
+ * 想缩放 SVG 直径,用 factory 同时改 width + height(SVG 自动 scale 跟随容器)。
  *
  * **a11y**:`role="progressbar"` + `aria-valuenow / aria-valuemin / aria-valuemax`。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { Size5 } from '../_internal/size-prop'
-
-export type ZProgressType = 'line' | 'circle'
-/** ZProgress size 仅接 Size5 档位(尺寸是 px 数字,factory 路径无意义)。 */
-export type ZProgressSize = Size5
-export type ZProgressStatus = 'normal' | 'success' | 'warning' | 'danger'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZProgressProps {
   value: number
-  type?: ZProgressType
-  /** 尺寸档位(`Size5`,影响 line 高度 / circle 直径)。 */
-  size?: ZProgressSize
+  type?: 'line' | 'circle'
+  /** 尺寸 —— 纯 factory(line=rail height,circle=容器 width+height)。默认等价 middle(line 8px / circle 100px)。 */
+  size?: SizePropMulti
+  /** 进度色 carrier factory,默认 `_primary`。 */
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   showText?: boolean
-  status?: ZProgressStatus
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 </script>
@@ -41,39 +40,17 @@ import { applyAsBg, getThemeColor } from '../_internal/color-bridge'
 
 const props = withDefaults(defineProps<ZProgressProps>(), {
   type: 'line',
-  size: 'middle',
   showText: false,
-  status: 'normal',
 })
 
 const theme = useZTheme()
 
 const clampedValue = computed(() => Math.max(0, Math.min(100, props.value)))
 
-/** line 高度 px(5 阶,tiny/huge 各加一档)。 */
-const SIZE_HEIGHT: Record<ZProgressSize, number> = {
-  tiny: 2,
-  small: 4,
-  middle: 8,
-  large: 12,
-  huge: 16,
-}
-
-/** circle 直径 px(5 阶)。 */
-const CIRCLE_DIAMETER: Record<ZProgressSize, number> = {
-  tiny: 40,
-  small: 60,
-  middle: 100,
-  large: 140,
-  huge: 180,
-}
-
-const STATUS_COLOR: Record<ZProgressStatus, 'success' | 'warning' | 'danger' | null> = {
-  normal: null,
-  success: 'success',
-  warning: 'warning',
-  danger: 'danger',
-}
+/** line 默认高度 px(等价旧 middle 档位)。size factory 可覆盖。 */
+const DEFAULT_LINE_HEIGHT_PX = 8
+/** circle 默认直径 px(等价旧 middle 档位)。size factory 可覆盖容器,但 SVG viewBox 始终 100x100。 */
+const DEFAULT_CIRCLE_DIAMETER_PX = 100
 
 const trackClass = computed(() =>
   icss(theme.value, (s) => {
@@ -91,16 +68,14 @@ const railClass = computed(() =>
     s.backgroundColor._bgMuted
     s.borderRadius._full
     s.overflow.hidden
-    s.height.px(SIZE_HEIGHT[props.size])
+    s.height.px(DEFAULT_LINE_HEIGHT_PX)
+    if (props.size) props.size(s)
   }),
 )
 
 const fillClass = computed(() =>
   icss(theme.value, (s) => {
-    const statusKey = STATUS_COLOR[props.status]
-    if (statusKey) {
-      s.backgroundColor[`_${statusKey}` as const]
-    } else if (!applyAsBg(s, props.color)) {
+    if (!applyAsBg(s, props.color)) {
       s.backgroundColor._primary
     }
     s.height.pct(100)
@@ -120,11 +95,11 @@ const textClass = computed(() =>
   }),
 )
 
-// circle 模式
-const circleDiameter = computed(() => CIRCLE_DIAMETER[props.size])
-const circleRadius = computed(() => circleDiameter.value / 2 - 6)
-const circumference = computed(() => 2 * Math.PI * circleRadius.value)
-const dashOffset = computed(() => circumference.value * (1 - clampedValue.value / 100))
+// circle 模式 —— SVG viewBox 始终 100x100,容器尺寸由 size factory(或默认 100px)决定
+const circleDiameter = DEFAULT_CIRCLE_DIAMETER_PX
+const circleRadius = circleDiameter / 2 - 6
+const circumference = 2 * Math.PI * circleRadius
+const dashOffset = computed(() => circumference * (1 - clampedValue.value / 100))
 
 const circleRootClass = computed(() =>
   icss(theme.value, (s) => {
@@ -132,8 +107,9 @@ const circleRootClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.width.px(circleDiameter.value)
-    s.height.px(circleDiameter.value)
+    s.width.px(circleDiameter)
+    s.height.px(circleDiameter)
+    if (props.size) props.size(s)
     props.css?.(s)
   }),
 )
@@ -149,11 +125,15 @@ const circleTextClass = computed(() =>
 
 const trackColor = computed(() => getThemeColor(theme.value, 'bgMuted', '#e5e7eb'))
 
-const fillColor = computed(() => {
-  const statusKey = STATUS_COLOR[props.status]
-  if (statusKey) return getThemeColor(theme.value, statusKey, '#1976d2')
-  return getThemeColor(theme.value, 'primary', '#1976d2')
-})
+/**
+ * circle 模式 stroke 色:用户传 `color` factory 时无法直接 sample(carrier 抽象不返色串),
+ * 仍读 theme.primary。要自定义 circle stroke 走 `css` 覆盖或自渲。
+ *
+ * TODO:理想方案是把 color factory 投射到一个 probe schema 后取出色值。当前简化:
+ * - 用户传 `color` factory → fill 应用到 `backgroundColor` carrier(line OK)
+ * - circle SVG stroke 暂仍走 primary 主色(后续 follow-up)
+ */
+const fillColor = computed(() => getThemeColor(theme.value, 'primary', '#1976d2'))
 </script>
 
 <template>
@@ -165,11 +145,11 @@ const fillColor = computed(() => {
   </div>
 
   <div v-else :class="circleRootClass" role="progressbar" :aria-valuenow="clampedValue" aria-valuemin="0" aria-valuemax="100">
-    <svg :width="circleDiameter" :height="circleDiameter" viewBox="0 0 100 100">
+    <svg width="100%" height="100%" viewBox="0 0 100 100">
       <circle
         cx="50"
         cy="50"
-        :r="circleRadius / (circleDiameter / 100)"
+        :r="circleRadius"
         fill="none"
         :stroke="trackColor"
         stroke-width="8"
@@ -177,13 +157,13 @@ const fillColor = computed(() => {
       <circle
         cx="50"
         cy="50"
-        :r="circleRadius / (circleDiameter / 100)"
+        :r="circleRadius"
         fill="none"
         :stroke="fillColor"
         stroke-width="8"
         stroke-linecap="round"
-        :stroke-dasharray="circumference / (circleDiameter / 100)"
-        :stroke-dashoffset="dashOffset / (circleDiameter / 100)"
+        :stroke-dasharray="circumference"
+        :stroke-dashoffset="dashOffset"
         transform="rotate(-90 50 50)"
         style="transition: stroke-dashoffset 300ms ease"
       />

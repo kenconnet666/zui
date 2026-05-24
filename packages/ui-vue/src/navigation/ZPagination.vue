@@ -9,7 +9,10 @@
  * - `siblings?: number` —— 当前页两侧显示多少页码(默认 `1`)
  * - `showTotal?: boolean` —— 显示总数文本
  * - `disabled?: boolean`
- * - `size?: 'small' | 'middle' | 'large'`
+ * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 middle:fontSize._middle)
+ *
+ * **size 策略**:factory 应用到 root,主要改 `fontSize`;item 尺寸用 `iem(1.75)` 跟 fontSize 联动自动 scale,
+ * 用户改 fontSize 即可整体缩放。
  *
  * **算法**:Always 显示首/末页 + 当前 ±siblings + 省略号。
  *
@@ -18,10 +21,8 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-import type { Size5 } from '../_internal/size-prop'
-
-/** ZPagination size 仅接 Size5 档位(影响 button 尺寸数字 + 字号,factory 路径无意义)。 */
-export type ZPaginationSize = Size5
+import type { SizePropMulti } from '../_internal/size-prop'
+import { makeSizeMap } from '../_internal/size-prop'
 
 export interface ZPaginationProps {
   page?: number
@@ -30,8 +31,8 @@ export interface ZPaginationProps {
   siblings?: number
   showTotal?: boolean
   disabled?: boolean
-  /** 尺寸档位(`Size5`)。 */
-  size?: ZPaginationSize
+  /** 尺寸 —— 纯 factory(默认等价 `PAGINATION_SIZE_MAP.middle`,改 fontSize,item 通过 iem 自动联动)。 */
+  size?: SizePropMulti
   sxItem?: SxObject
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -40,6 +41,22 @@ export interface ZPaginationEmits {
   (e: 'update:page', value: number): void
   (e: 'change', value: number): void
 }
+
+/** ZPagination size 档位 —— 仅影响 fontSize;item 尺寸走 `iem(1.75)` 自动跟随。 */
+const PAGINATION_SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
+  small: (s) => {
+    s.fontSize._small
+  },
+  middle: (s) => {
+    s.fontSize._middle
+  },
+  large: (s) => {
+    s.fontSize._large
+  },
+})
+
+/** Pagination item 尺寸 iem 倍率(跟 fontSize 联动,用户改 fontSize 自动 scale)。 */
+const ITEM_IEM = 1.75
 </script>
 
 <script lang="ts" setup>
@@ -55,7 +72,7 @@ const props = withDefaults(defineProps<ZPaginationProps>(), {
   siblings: 1,
   showTotal: false,
   disabled: false,
-  size: 'middle',
+  size: PAGINATION_SIZE_MAP.middle,
 })
 
 const emit = defineEmits<ZPaginationEmits>()
@@ -86,38 +103,19 @@ const pageList = computed<(number | 'dots')[]>(() => {
   return list
 })
 
-/** 字号档位 —— 跟 schema fontSize 对齐。 */
-const SIZE_FONT: Record<ZPaginationSize, 'tiny' | 'small' | 'middle' | 'large' | 'huge'> = {
-  tiny: 'tiny',
-  small: 'small',
-  middle: 'middle',
-  large: 'large',
-  huge: 'huge',
-}
-
-/** button 尺寸 iem 倍率(5 阶,tiny/huge 各加一档)。 */
-const SIZE_DIM: Record<ZPaginationSize, number> = {
-  tiny: 1.25,
-  small: 1.5,
-  middle: 1.75,
-  large: 2,
-  huge: 2.5,
-}
-
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
     s.color._text
-    s.fontSize[`_${SIZE_FONT[props.size]}`]
+    if (props.size) props.size(s)
     props.css?.(s)
   }),
 )
 
 const itemClass = computed(() =>
   icss(theme.value, (s) => {
-    const dim = SIZE_DIM[props.size]
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -128,8 +126,8 @@ const itemClass = computed(() =>
     s.backgroundColor._bg
     s.color._text
     s.borderRadius._small
-    s.minWidth.iem(dim)
-    s.height.iem(dim)
+    s.minWidth.iem(ITEM_IEM)
+    s.height.iem(ITEM_IEM)
     s.padding.px(0)
     s.paddingLeft._tiny
     s.paddingRight._tiny
@@ -146,7 +144,6 @@ const sxItemAttrs = computed(() => extractSxAttrs(props.sxItem))
 
 const currentItemClass = computed(() =>
   icss(theme.value, (s) => {
-    const dim = SIZE_DIM[props.size]
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -156,8 +153,8 @@ const currentItemClass = computed(() =>
     s.backgroundColor._primary
     s.color._bg
     s.borderRadius._small
-    s.minWidth.iem(dim)
-    s.height.iem(dim)
+    s.minWidth.iem(ITEM_IEM)
+    s.height.iem(ITEM_IEM)
     s.padding.px(0)
     s.paddingLeft._tiny
     s.paddingRight._tiny
@@ -175,12 +172,11 @@ const disabledClass = computed(() =>
 
 const dotsClass = computed(() =>
   icss(theme.value, (s) => {
-    const dim = SIZE_DIM[props.size ?? 'middle']
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.minWidth.iem(dim)
-    s.height.iem(dim)
+    s.minWidth.iem(ITEM_IEM)
+    s.height.iem(ITEM_IEM)
     s.color._textSecondary
   }),
 )

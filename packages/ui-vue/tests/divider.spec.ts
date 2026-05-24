@@ -36,8 +36,8 @@ describe('ZDivider — 渲染', () => {
     expect(w.attributes('aria-orientation')).toBe('horizontal')
   })
 
-  it('orientation=vertical → aria-orientation=vertical', () => {
-    const w = mount(ZDivider, { props: { orientation: 'vertical' } })
+  it('vertical=true → aria-orientation=vertical', () => {
+    const w = mount(ZDivider, { props: { vertical: true } })
     expect(w.attributes('aria-orientation')).toBe('vertical')
   })
 })
@@ -128,8 +128,8 @@ describe('ZDivider — 水平 + 文字(有 slot)', () => {
 })
 
 describe('ZDivider — 垂直', () => {
-  it('orientation=vertical → border-left', () => {
-    mount(ZDivider, { props: { orientation: 'vertical' } })
+  it('vertical=true → border-left', () => {
+    mount(ZDivider, { props: { vertical: true } })
     const css = getInjectedCss()
     expect(css).toMatch(/display:inline-block/)
     expect(css).toMatch(/border-left-width:1px/)
@@ -138,7 +138,7 @@ describe('ZDivider — 垂直', () => {
   })
 
   it('vertical + dashed', () => {
-    mount(ZDivider, { props: { orientation: 'vertical', dashed: true } })
+    mount(ZDivider, { props: { vertical: true, dashed: true } })
     expect(getInjectedCss()).toMatch(/border-left-style:dashed/)
   })
 })

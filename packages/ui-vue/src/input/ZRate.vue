@@ -23,7 +23,18 @@ export interface ZRateProps {
   disabled?: boolean
   readonly?: boolean
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
-  /** 星星尺寸 —— `factory | Size5 | undefined` union(单 carrier:width / height 镜像)。 */
+  /**
+   * 星星尺寸 —— **纯 chain factory**(2026-05-23 撤销 Size5 union)。
+   *
+   * **默认**:`(w) => w.iem(1.25)`(等价旧 middle 档位)。
+   *
+   * **参考档位**:tiny(0.75iem) / small(1iem) / middle(1.25iem) / large(1.5iem) / huge(2iem)。
+   *
+   * height 自动镜像 width(星星始终方形)。
+   *
+   * @example
+   * <ZRate :size="(w) => w.iem(2)" />        <!-- 等价 huge -->
+   */
   size?: SizeProp<'width'>
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -38,7 +49,6 @@ export interface ZRateEmits {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { applySizeProp, type SizeMap } from '../_internal/size-prop'
 
 const props = withDefaults(defineProps<ZRateProps>(), {
   value: 0,
@@ -46,31 +56,15 @@ const props = withDefaults(defineProps<ZRateProps>(), {
   allowHalf: false,
   disabled: false,
   readonly: false,
-  size: 'middle',
+  // 默认等价旧 middle 档位:1.25iem
+  size: (w: Chain<ZuiSchema>['width']) => {
+    w.iem(1.25)
+  },
 })
 
 const emit = defineEmits<ZRateEmits>()
 
 const theme = useZTheme()
-
-/** 单 carrier width 维度(height 镜像)。 */
-const SIZE_MAP: SizeMap<Chain<ZuiSchema>['width']> = {
-  tiny: (w) => {
-    w.iem(0.75)
-  },
-  small: (w) => {
-    w.iem(1)
-  },
-  middle: (w) => {
-    w.iem(1.25)
-  },
-  large: (w) => {
-    w.iem(1.5)
-  },
-  huge: (w) => {
-    w.iem(2)
-  },
-}
 
 const isInteractive = computed(() => !props.disabled && !props.readonly)
 
@@ -97,9 +91,9 @@ const starClass = computed(() =>
     s.alignItems.center
     s.justifyContent.center
     s.position.relative
-    applySizeProp(props.size, SIZE_MAP, s.width)
-    // height 镜像 width(保证星星方形)
-    if (s._node.width !== undefined) s._node.height = s._node.width
+    // size(Type C):同一 factory 应用到 width + height,保证星星方形
+    s.width(props.size)
+    s.height(props.size)
     s.cursor(isInteractive.value ? 'pointer' : 'default')
     s.color._border
   }),

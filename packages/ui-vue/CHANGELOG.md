@@ -2,6 +2,61 @@
 
 ## Unreleased
 
+### BREAKING — props 全 chain factory 化(2026-05-23 / 2026-05-24,B0-B8 八批改造)
+
+撤销 2026-05-22 的 `factory | Size5 | undefined` union 范式,改为**纯 chain factory**。详见
+`.claude/decisions/2026-05-23-prop-shape-pure-factory.md`。
+
+**5 种 prop 形态**:
+- **Type A** 单属性 factory:`color?: ((c) => void)` → `s.color(props.color)`
+- **Type B** 复合 wire factory(关键参数 expose):如 `spin?: ((d: AnimationDuration) => void)` →
+  启用即自动 wire `animationName / iterationCount / timingFunction`,用户只控速度
+- **Type C** 一对多 factory:如 `size?: ((w: Width) => void)` → `s.width(factory); s.height(factory)`
+- **Type V** variant 字符串字面量(内联,不导出独立 type alias):`variant?: 'filled' | 'outlined'`
+- **Type N** 保留形态:真二态 boolean / JS 逻辑字符串(`trigger`)/ 原生 HTML 属性 / 第三方继承类型
+
+**禁忌**(违反必改):
+- ❌ 字符串枚举 MAP 翻译(`justify='between' → 'space-between'`)
+- ❌ 组件 size 字面量枚举(`size?: 'small' | 'middle' | 'large'`)
+- ❌ 颜色/语义字面量(`color?: 'primary' | 'danger'`)
+- ❌ 自定义命名空间字符串(`placement?: 'top-right'`,非 floating-ui 标准)
+- ❌ `export type ZXxxVariant = '...'` 单独 type alias(内联到 props interface)
+
+**改造分批**(8 批):
+- **B0**:写 `.claude/decisions/2026-05-23-prop-shape-pure-factory.md` 决策文档 + `.claude/skills/zui.md §13.0` 总纲更新 + `zui-vue-roadmap.md` L16 引用
+- **B1**:验证 chain `PropFn` 接 factory 重载(`tests/chain-factory-prop.spec.ts` 6/6)
+- **B2**:补 ~25 处 iem 盒子模型 JSDoc(只写 iem,不写 px,因 iem 由 Provider 控制)
+- **B3**:删 8 个 type alias 内联(ZButtonVariant / ZTabsType / ZTagVariant / ZProgressType /
+  ZDrawerPlacement / ZDropdownTrigger / ZPopoverTrigger / ZTooltipTrigger);ZAvatar `shape: 'circle' | 'square'` → `square?: boolean`
+- **B4**:Layout enum → factory(ZFlex / ZGrid / ZSpace 的 direction/wrap/justify/align/justifyItems/alignItems);ZRadioGroup / ZCheckboxGroup direction → factory;ZSteps `direction` → `vertical?: boolean`;ZMenu `mode` 拆 `vertical?: boolean` + `inline?: boolean`;ZDivider `orientation` → `vertical?: boolean`
+- **B5**:size 字面量全去除 → 纯 factory(`_internal/size-prop.ts` 简化 `applySizeProp(size, target)` 两参签名;ZIcon / ZAvatar / ZSegmented / ZSwitch / ZRate / ZSpin / ZButton / ZTag / ZDrawer / ZProgress / ZPagination / ZInput / ZTextarea / ZInputNumber / ZSelect / ZAutoComplete / ZTreeSelect / ZDatePicker / ZTimePicker / ZList / ZDescriptions / ZTable 全部走 default factory)
+- **B6**:type/status 业务语义 → `color?: factory` + slot/icon(ZAlert / ZMessage(`item.color` + `icon` + `loading`)/ ZNotification(同 ZMessage)/ ZResult(+ `notFound?: boolean`)/ ZProgress(删 status)/ ZSteps(`currentColor?: factory` + `errored?: boolean`)/ ZTimeline `item.color?: factory`);messageApi / notificationApi 内部 wrap 语义保持 happy path API
+- **B7**:ZImage `fit / width / height` → factory;ZScrollbar `maxHeight` → factory;ZModal `width` → factory;ZBackTop `right / bottom` → factory;`_typography-base.ts` `underline?: 'always' | 'hover' | 'none'` → 拆 `underline?: boolean` + `underlineOnHover?: boolean`(ZLink 默认 `underlineOnHover=true`)
+- **B8**:CHANGELOG + roadmap 进度日志 + 三件套全绿(type-check ✓ / 556 tests ✓ / build ✓)
+
+**新 vs 旧用法对比**:
+```vue
+<!-- 旧 -->
+<ZFlex justify="between" align="center" :gap="(g) => g._middle">
+<ZIcon size="middle" :color="(c) => c._primary" />
+<ZAlert type="success">操作成功</ZAlert>
+<ZButton size="large" variant="filled">提交</ZButton>
+
+<!-- 新 -->
+<ZFlex :justify="(j) => j.spaceBetween" :align="(a) => a.center" :gap="(g) => g._middle">
+<ZIcon :size="(w) => w.iem(1.25)" :color="(c) => c._primary" />
+<ZAlert :color="(c) => c._success">
+  <template #icon><ZIcon :component="BuiltinIcons.success" /></template>
+  操作成功
+</ZAlert>
+<ZButton :size="BUTTON_SIZE_MAP.large" variant="filled">提交</ZButton>
+```
+
+**验证**(2026-05-24):
+- type-check ✓ (exit 0)
+- 556/556 tests ✓ (50/50 spec files)
+- build ✓ (exit 0,218 modules,dist/zui-vue.css 不再生成)
+
 ### 改进 — `s._prop(...)` 调用大规模替换为强类型 chain carrier 写法(2026-05-23)
 
 全库 75 个文件 / 382 处 `s._prop('propName', 'value')` 调用,**98.95% 替换**为强类型 chain

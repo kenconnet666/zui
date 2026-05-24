@@ -53,7 +53,7 @@ describe('ZMessage — 组件模式', () => {
   it('duration=0(loading 默认)→ 不自动关闭', async () => {
     vi.useFakeTimers()
     try {
-      const messages = reactive<ZMessageItem[]>([{ id: 1, type: 'loading', content: 'x' }])
+      const messages = reactive<ZMessageItem[]>([{ id: 1, loading: true, content: 'x' }])
       let closedId: ZMessageItem['id'] | null = null
       const Host = defineComponent({
         setup() {

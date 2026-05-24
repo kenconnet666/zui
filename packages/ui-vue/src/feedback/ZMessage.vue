@@ -7,21 +7,30 @@
  * 2. 工厂模式 ── `createMessageApi()` 返回 `{ info, success, warning, error, loading, destroyAll }`
  *    在 body 创建一个临时容器自动 mount,业务方任意位置调 `messageApi.success('保存成功')`
  *
- * 两种模式共用同一个 SFC,区别在容器挂载方式。
+ * **API**(2026-05-23 撤销 item.type 字面量,改 color factory + icon):
+ * - item.color?: factory —— 颜色(messageApi 内部按语义 fill)
+ * - item.icon?: Component —— 图标组件(messageApi 内部 fill BuiltinIcons.{ success / warning / ... })
+ * - item.loading?: boolean —— 是否旋转 loading 图标(默认 false)
+ *
+ * 两种模式共用同一个 SFC。
  */
+import type { Component } from 'vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-
-export type ZMessageType = 'info' | 'success' | 'warning' | 'danger' | 'loading'
 
 /** 单条 message 数据。 */
 export interface ZMessageItem {
   /** 唯一 id,业务方提供;工厂模式自动生成。 */
   id: string | number
-  type: ZMessageType
   content: string
   /** 持续时间 ms,`0` 表示不自动关闭(loading 默认 0)。默认 3000。 */
   duration?: number
+  /** 颜色 factory(图标 + 内联色)。默认 `_info`。 */
+  color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
+  /** 图标组件(传给 ZIcon 的 component)。默认 `BuiltinIcons.info`。 */
+  icon?: Component
+  /** 旋转 loading 图标(spin 1s linear infinite),默认 `false`。 */
+  loading?: boolean
 }
 
 export interface ZMessageProps {
@@ -47,22 +56,6 @@ const emit = defineEmits<ZMessageEmits>()
 
 const theme = useZTheme()
 
-const TYPE_ICON_MAP: Record<ZMessageType, keyof typeof BuiltinIcons> = {
-  info: 'info',
-  success: 'success',
-  warning: 'warning',
-  danger: 'error',
-  loading: 'refresh',
-}
-
-const TYPE_COLOR_MAP: Record<ZMessageType, 'info' | 'success' | 'warning' | 'danger'> = {
-  info: 'info',
-  success: 'success',
-  warning: 'warning',
-  danger: 'danger',
-  loading: 'info',
-}
-
 const containerClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed
@@ -79,8 +72,7 @@ const containerClass = computed(() =>
   }),
 )
 
-function itemClass(type: ZMessageType): string {
-  const colorKey = `_${TYPE_COLOR_MAP[type]}` as const
+function itemClass(item: ZMessageItem): string {
   return icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
@@ -98,8 +90,9 @@ function itemClass(type: ZMessageType): string {
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor.transparent
-    // 左侧 icon 颜色
-    s.color[colorKey]
+    // 左侧 icon 颜色:走用户 color factory 或默认 _info
+    if (item.color) s.color(item.color)
+    else s.color._info
   })
 }
 
@@ -133,7 +126,7 @@ const leaveToClass = computed(() =>
 const timers = new Map<ZMessageItem['id'], ReturnType<typeof setTimeout>>()
 
 function scheduleClose(item: ZMessageItem): void {
-  const duration = item.duration ?? (item.type === 'loading' ? 0 : 3000)
+  const duration = item.duration ?? (item.loading ? 0 : 3000)
   if (duration <= 0) return
   const t = setTimeout(() => {
     emit('close', item.id)
@@ -175,10 +168,9 @@ onUnmounted(() => {
 })
 
 function renderIcon(item: ZMessageItem) {
-  const isSpinning = item.type === 'loading'
   return h(ZIcon, {
-    component: BuiltinIcons[TYPE_ICON_MAP[item.type]],
-    ...(isSpinning
+    component: item.icon ?? BuiltinIcons.info,
+    ...(item.loading
       ? {
           spin: (d: Chain<ZuiSchema>['animationDuration']) => {
             d.s(1)
@@ -199,7 +191,7 @@ function renderIcon(item: ZMessageItem) {
         :leave-to-class="leaveToClass"
         tag="div"
       >
-        <div v-for="item in messages" :key="item.id" :class="itemClass(item.type)">
+        <div v-for="item in messages" :key="item.id" :class="itemClass(item)">
           <component :is="renderIcon(item)" />
           <span :class="bodyClass()">{{ item.content }}</span>
         </div>

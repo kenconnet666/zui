@@ -29,14 +29,13 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 import type { SizePropMulti } from '../_internal/size-prop'
-
-export type ZButtonVariant = 'filled' | 'outlined' | 'text' | 'ghost' | 'link'
+import { makeSizeMap } from '../_internal/size-prop'
 
 export interface ZButtonProps {
-  variant?: ZButtonVariant
+  variant?: 'filled' | 'outlined' | 'text' | 'ghost' | 'link'
   /** 主色 factory(默认 `_primary`)。可写 `(c) => c._danger` 等。 */
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
-  /** 尺寸 —— `factory | Size5 | undefined` union(影响 fontSize + padding 双轴)。 */
+  /** 尺寸 —— 纯 factory(默认等价 `BUTTON_SIZE_MAP.middle`,影响 fontSize + padding 双轴)。 */
   size?: SizePropMulti
   loading?: boolean
   disabled?: boolean
@@ -54,36 +53,9 @@ export interface ZButtonProps {
 export interface ZButtonEmits {
   (e: 'click', evt: MouseEvent): void
 }
-</script>
-
-<script lang="ts" setup>
-import { computed, h, ref } from 'vue'
-import { icss } from '@kenconnet666/zui-core'
-import { useZTheme } from '../provider'
-import { applySx, extractSxAttrs } from '../_internal/sx'
-import { applyAsBg } from '../_internal/color-bridge'
-import { applySizeProp, makeSizeMap } from '../_internal/size-prop'
-import { useRipple } from '../_hooks'
-import { BuiltinIcons } from './icons'
-import ZIcon from './ZIcon.vue'
-
-const props = withDefaults(defineProps<ZButtonProps>(), {
-  variant: 'filled',
-  size: 'middle',
-  loading: false,
-  disabled: false,
-  block: false,
-  ripple: true,
-  type: 'button',
-})
-
-const emit = defineEmits<ZButtonEmits>()
-
-const theme = useZTheme()
-const btnRef = ref<HTMLButtonElement | null>(null)
 
 /** ZButton size 档位 —— 影响 fontSize + padding 双轴(3 阶实现 + tiny/huge fallback)。 */
-const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
+const BUTTON_SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
   small: (s) => {
     s.fontSize._small
     s.paddingTop.iem(0.25)
@@ -106,6 +78,33 @@ const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
     s.paddingRight._large
   },
 })
+</script>
+
+<script lang="ts" setup>
+import { computed, h, ref } from 'vue'
+import { icss } from '@kenconnet666/zui-core'
+import { useZTheme } from '../provider'
+import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applyAsBg } from '../_internal/color-bridge'
+import { applySizeProp } from '../_internal/size-prop'
+import { useRipple } from '../_hooks'
+import { BuiltinIcons } from './icons'
+import ZIcon from './ZIcon.vue'
+
+const props = withDefaults(defineProps<ZButtonProps>(), {
+  variant: 'filled',
+  size: BUTTON_SIZE_MAP.middle,
+  loading: false,
+  disabled: false,
+  block: false,
+  ripple: true,
+  type: 'button',
+})
+
+const emit = defineEmits<ZButtonEmits>()
+
+const theme = useZTheme()
+const btnRef = ref<HTMLButtonElement | null>(null)
 
 const isClickDisabled = computed(() => props.disabled || props.loading)
 
@@ -122,7 +121,7 @@ const buttonClass = computed(() =>
     s.gap._tiny
     s.fontWeight._medium
     s.lineHeight._tight
-    applySizeProp(props.size, SIZE_MAP, s)
+    applySizeProp(props.size, s)
     s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid

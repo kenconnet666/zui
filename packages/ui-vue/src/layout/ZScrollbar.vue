@@ -2,14 +2,22 @@
 /**
  * `ZScrollbar` —— 美化滚动条容器(走 webkit-scrollbar 样式 + Firefox scrollbar-width)。
  *
- * - `maxHeight?: string | number` —— 容器最大高度,默认无(由父级决定)
+ * - `maxHeight?: factory` —— 容器最大高度 carrier factory(2026-05-24 B7:数字尺寸 → factory)
  * - `thin?: boolean` —— 细滚动条,默认 true
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
 export interface ZScrollbarProps {
-  maxHeight?: string | number
+  /**
+   * 最大高度 factory —— 接 `maxHeight` carrier。默认无(由父级决定)。
+   *
+   * @example
+   * <ZScrollbar :max-height="(h) => h.px(200)" />
+   * <ZScrollbar :max-height="(h) => h.iem(20)" />
+   * <ZScrollbar :max-height="(h) => h.pct(80)" />
+   */
+  maxHeight?: ((c: Chain<ZuiSchema>['maxHeight']) => void) | undefined
   thin?: boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -63,10 +71,7 @@ if (typeof document !== 'undefined' && !document.getElementById(SCROLLBAR_STYLE_
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.overflow.auto
-    if (props.maxHeight !== undefined) {
-      if (typeof props.maxHeight === 'number') s.maxHeight.px(props.maxHeight)
-      else s.maxHeight(props.maxHeight)
-    }
+    if (props.maxHeight) s.maxHeight(props.maxHeight)
     props.css?.(s)
   }),
 )

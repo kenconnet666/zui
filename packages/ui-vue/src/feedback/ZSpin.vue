@@ -26,7 +26,18 @@ import type { SizeProp } from '../_internal/size-prop'
 export interface ZSpinProps {
   /** 是否加载中,默认 `true`(因为通常 v-if/外控,组件内不需 false 时仍渲染)。 */
   spinning?: boolean
-  /** indicator 尺寸 —— `factory | Size5 | undefined` union。 */
+  /**
+   * indicator 尺寸 —— **纯 chain factory**(2026-05-23 撤销 Size5 union)。
+   *
+   * **默认**:`(w) => w.iem(1.5)`(等价旧 middle 档位,比 ZIcon 默认大一档,spinner 更醒目)。
+   *
+   * **参考档位**:tiny(0.875iem) / small(1iem) / middle(1.5iem) / large(2iem) / huge(2.5iem)。
+   *
+   * 直接透传给内部 ZIcon 的 size,height 由 ZIcon 镜像 width。
+   *
+   * @example
+   * <ZSpin :size="(w) => w.iem(2)" />     <!-- 等价 large -->
+   */
   size?: SizeProp<'width'>
   /** 加载文字(包裹模式下显示在 indicator 下方)。 */
   tip?: string
@@ -46,12 +57,14 @@ import { computed, h, useSlots, type Slots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
-import type { SizeMap } from '../_internal/size-prop'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZSpinProps>(), {
   spinning: true,
-  size: 'middle',
+  // 默认等价旧 middle 档位:1.5iem(比 ZIcon 默认 1iem 大一档,spinner 更醒目)
+  size: (w: Chain<ZuiSchema>['width']) => {
+    w.iem(1.5)
+  },
   tag: 'div',
 })
 
@@ -59,25 +72,6 @@ const slots: Slots = useSlots()
 const theme = useZTheme()
 
 const hasDefaultSlot = computed<boolean>(() => !!slots.default)
-
-/** ZSpin indicator 尺寸 —— ZSpin 默认 middle 比 ZIcon 默认大一档(spinner 通常更醒目)。 */
-const SPIN_SIZE_MAP: SizeMap<Chain<ZuiSchema>['width']> = {
-  tiny: (w) => {
-    w.iem(0.875)
-  },
-  small: (w) => {
-    w.iem(1)
-  },
-  middle: (w) => {
-    w.iem(1.5)
-  },
-  large: (w) => {
-    w.iem(2)
-  },
-  huge: (w) => {
-    w.iem(2.5)
-  },
-}
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
@@ -129,19 +123,14 @@ const tipClass = computed(() =>
   }),
 )
 
-/** 规范化 size 为 factory(传给 ZIcon size)。 */
-const indicatorSize = computed(() => {
-  if (typeof props.size === 'string') return SPIN_SIZE_MAP[props.size]
-  return props.size
-})
-
 const defaultIndicator = computed(() =>
   h(ZIcon, {
     component: BuiltinIcons.refresh,
     spin: (d: Chain<ZuiSchema>['animationDuration']) => {
       d.s(1)
     },
-    size: indicatorSize.value,
+    // size 现在是纯 factory,直接透传给 ZIcon
+    size: props.size,
   }),
 )
 

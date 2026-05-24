@@ -38,6 +38,7 @@
 | L12 | **取消所有 subpath exports**,只暴露主入口 `@kenconnet666/zui-vue` | `package.json/exports` 与 `vite.config.ts/entry` 单入口化 |
 | L13 | **工具 hooks 优先 VueUse,不够包装,最后自写** | 自写仅限 `useRipple`(其它包装 floating-ui/Teleport/onKeyStroke 等)。放 `src/_hooks/` |
 | L14 | **i18n 沿用 ZLocale**(不引 vue-i18n) | 现有 namespace 已就位,新组件加 namespace 时增量补 |
+| L16 | **全 chain factory props 范式(2026-05-23 撤销 Size5 union)** | 见 `.claude/decisions/2026-05-23-prop-shape-pure-factory.md`。所有 size/color/spacing/layout 类 props 一律 chain factory(Type A/B/C);variant 类保留字面量(Type V)但内联到 props 不导出独立 alias;真二态 boolean / JS 逻辑字符串 / 原生 HTML 属性 / 第三方继承类型保留(Type N) |
 | L15 | ~~**6 维度 carrier factory + cssRoot(改 `css`) 范式**~~ **[已撤销 2026-05-22]** | 现行:`factory \| Size5 \| undefined` union(决策文档 `.claude/decisions/2026-05-22-prop-shape-union.md`)。`css` 兜底口保留。 |
 | L16 | **状态色衍生**(hover/active/disabled 等)走 chain modifier(`.darken/.lighten/.alpha`),不进 schema | 独立语义色(如 textSecondary)才进 schema |
 | L17 | **size 维度** | 交互组件有(Button/Input/Select),展示组件按需(Card/Tag 可省) |

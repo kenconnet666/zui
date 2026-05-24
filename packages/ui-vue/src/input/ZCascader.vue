@@ -154,6 +154,8 @@ const triggerClass = computed(() =>
     s.paddingTop.iem(0.375)
     s.paddingBottom.iem(0.375)
     s.cursor(props.disabled ? 'not-allowed' : 'pointer')
+    // 触发器 minWidth: 12iem(级联路径文本一般较长)
+    // paddingTop/Bottom: 0.375iem × 2 = 0.75iem 总垂直内边距
     s.minWidth.iem(12)
     if (props.disabled) {
       s.opacity._dim
@@ -184,6 +186,12 @@ const popperClass = computed(() =>
   }),
 )
 
+/**
+ * 单列(每一层 children)盒子模型(iem):
+ * - minWidth: 8iem,与 ZSelect 下拉同档
+ * - maxHeight: 17.5iem,超出滚动
+ * - 每列右侧 _thin 分隔线,最后一列除外
+ */
 const columnClass = computed(() =>
   icss(theme.value, (s) => {
     s.minWidth.iem(8)

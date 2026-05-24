@@ -11,9 +11,29 @@
  * - 不传 `appendTo`,默认 `document.body`
  * - 主题:目前用 `zuiLight` 兜底(脱离 `<ZBox>` 注入树。后续 phase 接 `themeRef` 参数)
  */
-import { createApp, reactive, type App } from 'vue'
+import { createApp, reactive, type App, type Component } from 'vue'
+import type { Chain } from '@kenconnet666/zui-core'
 import ZMessage from './ZMessage.vue'
-import type { ZMessageItem, ZMessageType } from './ZMessage.vue'
+import type { ZMessageItem } from './ZMessage.vue'
+import type { ZuiSchema } from '../provider/theme'
+import { BuiltinIcons } from '../gene/icons'
+
+/** 语义类型 → color factory + icon component(messageApi 内部 wrap)。 */
+type SemanticType = 'info' | 'success' | 'warning' | 'danger' | 'loading'
+const SEMANTIC_COLOR: Record<SemanticType, (c: Chain<ZuiSchema>['color']) => void> = {
+  info: (c) => { c._info },
+  success: (c) => { c._success },
+  warning: (c) => { c._warning },
+  danger: (c) => { c._danger },
+  loading: (c) => { c._info },
+}
+const SEMANTIC_ICON: Record<SemanticType, Component> = {
+  info: BuiltinIcons.info,
+  success: BuiltinIcons.success,
+  warning: BuiltinIcons.warning,
+  danger: BuiltinIcons.error,
+  loading: BuiltinIcons.refresh,
+}
 
 /** message 工厂返回的 API 对象。 */
 export interface ZMessageApi {
@@ -56,10 +76,16 @@ export function createMessageApi(opts: CreateMessageApiOptions = {}): ZMessageAp
     app.mount(host)
   }
 
-  function push(type: ZMessageType, content: string, duration?: number): ZMessageItem['id'] {
+  function push(type: SemanticType, content: string, duration?: number): ZMessageItem['id'] {
     ensureMounted()
     const id = ++nextId
-    const item: ZMessageItem = { id, type, content }
+    const item: ZMessageItem = {
+      id,
+      content,
+      color: SEMANTIC_COLOR[type],
+      icon: SEMANTIC_ICON[type],
+      loading: type === 'loading',
+    }
     if (duration !== undefined) item.duration = duration
     messages.push(item)
     return id

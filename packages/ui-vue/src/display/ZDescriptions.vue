@@ -7,13 +7,14 @@
  * - `title?: string` —— 顶部标题
  * - `column?: number` —— 列数,默认 3
  * - `bordered?: boolean` —— 边框
- * - `size?: 'small' | 'middle' | 'large'`
+ * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 `DESC_SIZE_MAP.middle`)
  *
  * slot:`title` / 每个 item 的 `value` 走 `#item-{label}`(本 v1 简化:仅配置式)
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SizePropMulti } from '../_internal/size-prop'
+import { makeSizeMap } from '../_internal/size-prop'
 
 export interface ZDescriptionsItem {
   label: string
@@ -27,28 +28,13 @@ export interface ZDescriptionsProps {
   title?: string
   column?: number
   bordered?: boolean
-  /** 尺寸 —— `factory | Size5 | undefined` union(影响 label / value 内边距,偏紧)。 */
+  /** 尺寸 —— 纯 factory(默认等价 `DESC_SIZE_MAP.middle`,影响 label / value 内边距,偏紧)。 */
   size?: SizePropMulti
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
-</script>
-
-<script lang="ts" setup>
-import { computed } from 'vue'
-import { icss } from '@kenconnet666/zui-core'
-import { useZTheme } from '../provider'
-import { applySizeProp, makeSizeMap } from '../_internal/size-prop'
-
-const props = withDefaults(defineProps<ZDescriptionsProps>(), {
-  column: 3,
-  bordered: false,
-  size: 'middle',
-})
-
-const theme = useZTheme()
 
 /** ZDescriptions 偏紧 padding(label/value 表格风),3 阶 + tiny/huge fallback。 */
-const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
+const DESC_SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
   small: (s) => {
     s.padding._tiny
   },
@@ -59,6 +45,21 @@ const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
     s.padding._middle
   },
 })
+</script>
+
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { icss } from '@kenconnet666/zui-core'
+import { useZTheme } from '../provider'
+import { applySizeProp } from '../_internal/size-prop'
+
+const props = withDefaults(defineProps<ZDescriptionsProps>(), {
+  column: 3,
+  bordered: false,
+  size: DESC_SIZE_MAP.middle,
+})
+
+const theme = useZTheme()
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
@@ -111,7 +112,7 @@ const labelClass = computed(() =>
   icss(theme.value, (s) => {
     s.color._textSecondary
     s.fontWeight._medium
-    applySizeProp(props.size, SIZE_MAP, s)
+    applySizeProp(props.size, s)
     if (props.bordered) {
       s.backgroundColor._bgMuted
       s.borderRightWidth._thin
@@ -124,7 +125,7 @@ const labelClass = computed(() =>
 const valueClass = computed(() =>
   icss(theme.value, (s) => {
     s.color._text
-    applySizeProp(props.size, SIZE_MAP, s)
+    applySizeProp(props.size, s)
     if (props.bordered) {
       s.borderRightWidth._thin
       s.borderRightStyle.solid

@@ -22,8 +22,6 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
-export type ZTabsType = 'line' | 'card' | 'segment'
-
 export interface ZTabItem {
   name: string
   label: string
@@ -34,7 +32,7 @@ export interface ZTabItem {
 export interface ZTabsProps {
   value?: string
   tabs: ZTabItem[]
-  type?: ZTabsType
+  type?: 'line' | 'card' | 'segment'
   closable?: boolean
   addable?: boolean
   disabled?: boolean

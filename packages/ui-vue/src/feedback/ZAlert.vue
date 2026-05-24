@@ -2,11 +2,19 @@
 /**
  * `ZAlert` —— 警示横幅(类 antd Alert)。
  *
- * **5 个语义类型**(对应 schema 语义色):
- * - `info` —— 普通信息(默认)
- * - `success` —— 成功提示
- * - `warning` —— 警告
- * - `danger` —— 错误
+ * **API**(2026-05-23 撤销 type 字面量,改 color factory + icon slot):
+ * - `color?: factory` —— 警示色,默认 `_info`。常用:`_success` / `_warning` / `_danger`
+ * - `title?: string` / `description?: string`
+ * - `showIcon?: boolean`(默认 `true`)+ `#icon` slot 自定义图标
+ * - `closable?: boolean`(默认 `false`)
+ * - sx:sxIcon / sxBody / sxClose
+ *
+ * **典型用法**(语义色 → 内置图标走 `#icon` slot 用户自选):
+ * ```vue
+ * <ZAlert :color="(c) => c._success" title="保存成功">
+ *   <template #icon><ZIcon :component="BuiltinIcons.success" /></template>
+ * </ZAlert>
+ * ```
  *
  * **结构**:
  * ```
@@ -14,27 +22,20 @@
  *        | description
  * ```
  *
- * **子节点 sx 配置**:
- * - `sxIcon` —— 左侧 icon 容器
- * - `sxBody` —— 中间标题 + 描述区
- * - `sxClose` —— 右侧关闭按钮
- *
  * **a11y**:`role="alert"`(屏读器立即朗读)。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
-export type ZAlertType = 'info' | 'success' | 'warning' | 'danger'
-
 export interface ZAlertProps {
-  /** 语义类型,默认 `'info'`。 */
-  type?: ZAlertType
+  /** 警示色 factory,默认 `_info`。常用:`_success` / `_warning` / `_danger` / `_info`。 */
+  color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   /** 标题(主信息)。 */
   title?: string
   /** 描述(详细信息)。 */
   description?: string
-  /** 是否显示左侧 icon,默认 `true`。 */
+  /** 是否显示左侧 icon,默认 `true`。图标内容通过 `#icon` slot 提供。 */
   showIcon?: boolean
   /** 是否显示关闭按钮,默认 `false`。 */
   closable?: boolean
@@ -62,7 +63,6 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZAlertProps>(), {
-  type: 'info',
   showIcon: true,
   closable: false,
   tag: 'div',
@@ -72,25 +72,8 @@ const emit = defineEmits<ZAlertEmits>()
 
 const theme = useZTheme()
 
-/** type → BuiltinIcons key 映射。 */
-const TYPE_ICON_MAP: Record<ZAlertType, keyof typeof BuiltinIcons> = {
-  info: 'info',
-  success: 'success',
-  warning: 'warning',
-  danger: 'error',
-}
-
-/** type → schema color token key 映射。 */
-const TYPE_COLOR_MAP: Record<ZAlertType, 'info' | 'success' | 'warning' | 'danger'> = {
-  info: 'info',
-  success: 'success',
-  warning: 'warning',
-  danger: 'danger',
-}
-
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
-    const colorKey = `_${TYPE_COLOR_MAP[props.type]}` as const
     s.display.flex
     s.alignItems.flexStart
     s.padding._small
@@ -98,10 +81,22 @@ const rootClass = computed(() =>
     s.borderWidth._thin
     s.borderStyle.solid
     s.gap._small
-    // 语义色 + alpha 衍生:背景浅色、边框淡色、文字主色
-    s.color[colorKey]
+    s.position.relative
+    s.overflow.hidden
+    // color factory 决定文字 + 边框色
+    if (props.color) s.color(props.color)
+    else s.color._info
     s.borderColor.currentColor
-    s.backgroundColor[colorKey].alpha(8)
+    // 背景走 ::before 伪元素 8% currentColor 叠层(避免 backgroundColor.alpha 不可链式问题)
+    s._before((b) => {
+      b.content("''")
+      b.position.absolute
+      b.inset.px(0)
+      b.backgroundColor.currentColor
+      b.opacity(0.08)
+      b.pointerEvents.none
+      b.zIndex(-1)
+    })
 
     props.css?.(s)
   }),
@@ -154,9 +149,9 @@ function onCloseClick(e: MouseEvent): void {
   emit('close', e)
 }
 
-// 渲染 icon —— 走 BuiltinIcons 语义图标
-const iconNode = computed(() =>
-  h(ZIcon, { component: BuiltinIcons[TYPE_ICON_MAP[props.type]] }),
+// icon 默认 fallback:info 图标(用户走 `#icon` slot 自定义)
+const defaultIconNode = computed(() =>
+  h(ZIcon, { component: BuiltinIcons.info }),
 )
 
 const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
@@ -171,7 +166,7 @@ const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
       v-bind="sxIconAttrs.attrs"
     >
       <slot name="icon">
-        <component :is="iconNode" />
+        <component :is="defaultIconNode" />
       </slot>
     </div>
 

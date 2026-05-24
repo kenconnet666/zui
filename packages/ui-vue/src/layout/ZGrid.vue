@@ -41,10 +41,10 @@ export interface ZGridProps {
   rows?: ZGridColsValue
   /** `gap` carrier factory。 */
   gap?: ((g: Chain<ZuiSchema>['gap']) => void) | undefined
-  /** `justify-items`,默认 `'stretch'`。 */
-  justifyItems?: 'start' | 'center' | 'end' | 'stretch'
-  /** `align-items`,默认 `'stretch'`。 */
-  alignItems?: 'start' | 'center' | 'end' | 'stretch'
+  /** `justify-items` carrier factory。 */
+  justifyItems?: ((c: Chain<ZuiSchema>['justifyItems']) => void) | undefined
+  /** `align-items` carrier factory。 */
+  alignItems?: ((c: Chain<ZuiSchema>['alignItems']) => void) | undefined
   /** `display: inline-grid`(默认 `grid`)。 */
   inline?: boolean
   /** 根元素二次精细覆盖。 */
@@ -60,20 +60,11 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
 const props = withDefaults(defineProps<ZGridProps>(), {
-  justifyItems: 'stretch',
-  alignItems: 'stretch',
   inline: false,
   tag: 'div',
 })
 
 const theme = useZTheme()
-
-const ITEM_ALIGN_MAP: Record<'start' | 'center' | 'end' | 'stretch', string> = {
-  start: 'start',
-  center: 'center',
-  end: 'end',
-  stretch: 'stretch',
-}
 
 function resolveTemplate(v: number | string): string {
   return typeof v === 'number' ? `repeat(${v}, minmax(0, 1fr))` : v
@@ -118,8 +109,8 @@ const className = computed(() =>
     if (props.cols !== undefined) applyResponsive(s, props.cols, 'gridTemplateColumns')
     if (props.rows !== undefined) applyResponsive(s, props.rows, 'gridTemplateRows')
     if (props.gap) s.gap(props.gap)
-    s.justifyItems(ITEM_ALIGN_MAP[props.justifyItems])
-    s.alignItems(ITEM_ALIGN_MAP[props.alignItems])
+    if (props.justifyItems) s.justifyItems(props.justifyItems)
+    if (props.alignItems) s.alignItems(props.alignItems)
 
     props.css?.(s)
   }),

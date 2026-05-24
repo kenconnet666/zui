@@ -31,15 +31,29 @@ describe('ZAlert — 渲染', () => {
   })
 })
 
-describe('ZAlert — type 配色', () => {
-  it('type=success → 使用 success 语义色', () => {
-    mount(ZAlert, { props: { type: 'success', title: 'ok' } })
+describe('ZAlert — color factory', () => {
+  it('color=_success factory → 使用 success 语义色', () => {
+    mount(ZAlert, {
+      props: {
+        color: (c: { _success: void }) => {
+          c._success
+        },
+        title: 'ok',
+      },
+    })
     const success = String((zuiLight.resolve() as { color: Record<string, string> }).color.success)
     expect(getInjectedCss().toLowerCase()).toContain(success.toLowerCase())
   })
 
-  it('type=danger → 使用 danger 语义色', () => {
-    mount(ZAlert, { props: { type: 'danger', title: 'err' } })
+  it('color=_danger factory → 使用 danger 语义色', () => {
+    mount(ZAlert, {
+      props: {
+        color: (c: { _danger: void }) => {
+          c._danger
+        },
+        title: 'err',
+      },
+    })
     const danger = String((zuiLight.resolve() as { color: Record<string, string> }).color.danger)
     expect(getInjectedCss().toLowerCase()).toContain(danger.toLowerCase())
   })

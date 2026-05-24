@@ -526,73 +526,100 @@ partial 应基于已解析的字面量。dev 模式扫到 function 会 warn，�
 
 **所有 ui-vue 组件必须遵守的四条原则**。Button / Input / Dialog / Tabs / Select / ... 一概按此画。`ZIcon` 是首个参照实现（§13.10）。
 
-**① ★ props 形态:`factory | Size5 | undefined` union 范式(2026-05-22 修订)**
+**① ★ props 形态:全 chain factory 范式(2026-05-23 修订,撤销 Size5 union)**
 
-外观 props 同时接受 **chain factory** 和 **5 阶枚举档位字符串** —— happy path 用枚举档位,需要超出预设的精细控制走 factory 逃生口。
+外观 props 一律走 **chain factory**,**不再接受 Size5 字面量字符串**。所有"档位"通过 schema token 在 factory 内表达(`(s) => s._middle`)。详见 `.claude/decisions/2026-05-23-prop-shape-pure-factory.md`。
+
+**5 种 prop 形态**:
 
 ```ts
-import type { SizeProp, SizePropMulti, Size5 } from '../_internal/size-prop'
-
 export interface ZxxxProps {
-  // 单 carrier 维度(只影响一个 CSS 属性)
-  size?: SizeProp<'width'>      // ((w: Chain<ZuiSchema>['width']) => void) | Size5
-  color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined  // 颜色仍纯 factory(无连续档位语义)
+  // Type A:单属性 factory —— prop 名 ≈ CSS 属性名
+  color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
+  // 实现:s.color(props.color)
 
-  // 多 carrier 维度(同时影响多个 CSS 属性)
-  // ZInput size 同时影响 padding + fontSize
-  // ZButton size 同时影响 height + padding + fontSize
-  spacing?: SizePropMulti        // ((s: Chain<ZuiSchema>) => void) | Size5
+  // Type B:复合 wire factory —— 启用即 wire 一组规则,用户只控关键参数
+  spin?: ((d: Chain<ZuiSchema>['animationDuration']) => void) | undefined
+  // 实现:if (props.spin) { s.animationName(...); s.animationIterationCount.infinite; ...; s.animationDuration(props.spin) }
 
-  // 兜底逃生口(不变)
+  // Type C:一对多 factory —— 同一 factory 作用到多个 CSS 属性
+  size?: ((w: Chain<ZuiSchema>['width']) => void) | undefined
+  // 实现:if (props.size) { s.width(props.size); s.height(props.size) }
+
+  // Type V:variant 视觉变体 —— 内联字符串字面量,不导出独立 type alias
+  variant?: 'filled' | 'outlined' | 'text' | 'ghost' | 'link'
+
+  // Type N:真二态 boolean / 业务字符串 / 原生 HTML / 第三方继承(保留)
+  disabled?: boolean
+  trigger?: 'hover' | 'click'
+  type?: 'button' | 'submit' | 'reset'
+  placement?: Placement   // floating-ui 自带类型
+
+  // 兜底逃生口
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
-
-  // 不动:variant / type / shape 等"完全不同样式结构"的枚举,无 factory 等价物
-  variant?: 'filled' | 'outlined' | 'text'
 }
 ```
 
 **用户写法**:
 
 ```vue
-<!-- happy path,99% 的场景 -->
-<ZInput size="middle" />
-<ZIcon size="large" :color="(c) => c._primary" />
+<!-- Type A 单属性 -->
+<ZIcon :color="(c) => c._primary" />
+<ZIcon :color="(c) => c._danger.alpha(50)" />     <!-- modifier 链 -->
+<ZFlex :justify="(j) => j.spaceBetween" :align="(a) => a.center">...</ZFlex>
 
-<!-- factory 逃生口,精细控制 -->
-<ZInput :size="(s) => { s.height.iem(2.5); s.fontSize.iem(1.1) }" />
-<ZIcon :size="(w) => w.em(1.25)" />           <!-- em 跟父字号(罕见) -->
-<ZIcon :color="(c) => c._danger.alpha(50)" /> <!-- modifier 链 -->
+<!-- Type B 复合 wire -->
+<ZIcon :spin="(d) => d.s(1)" />                   <!-- 1 秒一圈;name/iteration/timing 自动 -->
+
+<!-- Type C 一对多 -->
+<ZIcon :size="(w) => w.iem(1.25)" />              <!-- 显式 iem,width+height 同步 -->
+<ZIcon :size="(w) => w._middle" />                <!-- 走 schema sizes token -->
+
+<!-- Type V variant -->
+<ZButton variant="outlined" />
+
+<!-- 逃生口 -->
+<ZIcon :css="(s) => { s.cursor.pointer; s._hover(h => h.color(c => c._primary)) }" />
 ```
 
-**为什么用 union 而不是"只 factory"或"只枚举"**:
-- **happy path 简洁** —— 业务方写 `size="middle"` 一行表达,不需要每次写 factory
-- **逃生口完整** —— 超出预设的需求走 factory,不阻塞高级用户
-- **theme 干净** —— 档位映射在组件内 const map,不污染主题 schema(不需要塞 `inputSizeSmall`、`buttonHeightMiddle` 等破碎 token)
-- **iem 联动保持** —— 枚举档位内部用 `s.height.iem(N)` 实现,ZBox `:iem` 全站缩放仍生效
+**禁忌**(违反必须改):
 
-**粒度选择**:
-- 维度只影响**一个 CSS 属性** → `SizeProp<K>`(K 是该 CSS 属性 carrier 名),IDE 补全聚焦该 carrier 能力
-- 维度涉及**多个属性** → `SizePropMulti`(factory 接整个 `Chain<S>`,用户在 callback 内多行 setter)
+| ❌ 错误形态 | ✅ 正确形态 |
+|---|---|
+| `justify?: 'between'` 配 MAP 翻译表 | `justify?: factory` (Type A) |
+| `size?: 'small' \| 'middle' \| 'large'`(纯字面量枚举) | `size?: factory` (Type C) |
+| `color?: 'primary' \| 'danger'`(颜色字面量) | `color?: factory` (Type A) |
+| `direction?: 'horizontal' \| 'vertical'`(布局方向,无 JS 逻辑耦合) | `direction?: factory` (Type A 操作 `flexDirection`) |
+| `export type ZXxxVariant = ...` 单独 type alias | 内联到 props interface (Type V) |
+| 组件内 `XXX_MAP: Record<keyword, css-value>` 翻译表 | 直接走 factory + chain token access |
 
-**默认值**:
-- `size: 'middle'` —— 字符串简洁可读,统一所有组件 happy path
-- 颜色类(`color: (c) => c.currentColor`)/ 装饰类(`depth: (o) => o._half`)等纯 factory 维度:仍按需给默认 factory
+**iem 盒子模型 JSDoc 规范**:任何使用 iem 单位的尺寸 prop / 内部默认值,JSDoc **必须**标注 iem 盒子模型(**只写 iem,不写 px**,iem 物理意义由 ZBox Provider 控制):
 
-**禁止**:
-- ~~纯离散字符串枚举~~ —— 缺逃生口,旧约定已废除
-- ~~纯 chain factory only~~ —— 缺 happy path,2026-05-22 已撤销
-- **混合 `number` 字面量** —— 除 ZQRCode/ZSplit 等"尺寸=px 数字"语义清晰的组件外,不要在 size union 里加 number(用户可走 `(w) => w.px(N)` 表达)
+```ts
+/**
+ * 高度 2iem(默认)
+ * - padding-y: 0.25iem × 2
+ * - border: 0.0625iem × 2
+ * - 内容区:1.5iem
+ */
+```
 
-**实现规范**:
-- 每组件文件内一个 `SIZE_MAP: SizeMap<T>`(T 是 carrier 或 Chain),走 `applySizeProp(props.size, SIZE_MAP, target)` 应用
-- 不再用 `typeof props.size === 'string' ? MAP[size] : props.size` 这种散落 ternary
-- 3 阶 → 5 阶迁移用 `makeSizeMap(...)` 自动 fallback tiny→small/huge→large
+或更简洁:
+
+```ts
+/**
+ * 默认尺寸:width/height = 1iem,正方形。
+ */
+```
 
 **实现选择**(按组件复杂度二选一,不变):
-- **极简组件**(ZIcon / Spinner / Badge 等):setup 内一个 `icss(themed.value, s => { ... })`,内联 base + 维度 + `applySizeProp` + 末尾 `props.css?.(s)`。**无** `defineVariants` 工厂、**无** `cx` 拼接。
-- **复杂组件**(Button / Input / Dialog —— 含 hover/focus/disabled 状态笛卡尔积):用 `defineVariants` / `defineParts`;但**外观维度 props 仍然走 union 范式**,只是内部 className 拆 base / 状态 / variants 多层。
+- **极简组件**(ZIcon / Spinner / Badge 等):setup 内一个 `icss(themed.value, s => { ... })`,内联 base + 维度 + 末尾 `props.css?.(s)`。**无** `defineVariants` 工厂、**无** `cx` 拼接。
+- **复杂组件**(Button / Input / Dialog —— 含 hover/focus/disabled 状态笛卡尔积):用 `defineVariants` / `defineParts`;但**外观维度 props 仍然全 factory**,只是内部 className 拆 base / 状态 / variants 多层。
 
-详见 `.claude/decisions/2026-05-22-prop-shape-union.md`(本次修订)+ `.claude/decisions/2026-05-22-carrier-factory-prop.md`(历史)。
+历史决策:
+- `2026-05-22-carrier-factory-prop.md` —— 首次引入 factory props
+- `2026-05-22-prop-shape-union.md` —— Size5 union(已被 2026-05-23 撤销)
+- `2026-05-23-prop-shape-pure-factory.md` —— 当前规范(全 factory)
 
 **② iem 单位优先 · `<ZBox :iem>` 全站切换基准 · 罕见局部用 em**
 

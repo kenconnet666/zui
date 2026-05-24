@@ -5,7 +5,7 @@
  * **API**:
  * - `items: T[]` —— 数据数组
  * - `bordered?: boolean` —— 外框 + 内部分割线
- * - `size?: 'small' | 'middle' | 'large'`
+ * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 `COMPACT_PADDING_MAP.middle`)
  * - `header?: string` / `footer?: string` —— 头尾文字(slot `#header` / `#footer` 优先)
  * - slot `default`:scope `{ item, index }` 自定义渲染每行
  */
@@ -16,7 +16,7 @@ import type { SizePropMulti } from '../_internal/size-prop'
 export interface ZListProps<T = unknown> {
   items: T[]
   bordered?: boolean
-  /** 尺寸 —— `factory | Size5 | undefined` union(影响 header / footer / item padding)。 */
+  /** 尺寸 —— 纯 factory(默认 `COMPACT_PADDING_MAP.middle`,影响 header / footer / item padding)。 */
   size?: SizePropMulti
   header?: string
   footer?: string
@@ -34,7 +34,7 @@ import { COMPACT_PADDING_MAP } from '../_internal/component-sizes'
 
 const props = withDefaults(defineProps<ZListProps<T>>(), {
   bordered: false,
-  size: 'middle',
+  size: COMPACT_PADDING_MAP.middle,
   emptyText: '暂无数据',
 })
 
@@ -59,7 +59,7 @@ const rootClass = computed(() =>
 
 const headerClass = computed(() =>
   icss(theme.value, (s) => {
-    applySizeProp(props.size, COMPACT_PADDING_MAP, s)
+    applySizeProp(props.size, s)
     s.fontWeight._semibold
     s.borderBottomWidth._thin
     s.borderBottomStyle.solid
@@ -69,7 +69,7 @@ const headerClass = computed(() =>
 
 const footerClass = computed(() =>
   icss(theme.value, (s) => {
-    applySizeProp(props.size, COMPACT_PADDING_MAP, s)
+    applySizeProp(props.size, s)
     s.color._textSecondary
     s.fontSize._small
     s.borderTopWidth._thin
@@ -80,7 +80,7 @@ const footerClass = computed(() =>
 
 const itemClass = computed(() =>
   icss(theme.value, (s) => {
-    applySizeProp(props.size, COMPACT_PADDING_MAP, s)
+    applySizeProp(props.size, s)
   }),
 )
 

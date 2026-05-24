@@ -85,6 +85,13 @@ function onCancel(): void {
 
 const triggerWrapClass = computed(() => icss(theme.value, (s) => s.display.inlineFlex))
 
+/**
+ * popper 容器盒子模型(iem):
+ * - min-width: 12iem
+ * - max-width: 20iem
+ * - border: _thin
+ * - padding: _middle
+ */
 const popperClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

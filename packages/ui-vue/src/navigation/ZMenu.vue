@@ -1,26 +1,25 @@
 <script lang="ts">
 /**
- * `ZMenu` —— 菜单(horizontal / vertical / inline)。
+ * `ZMenu` —— 菜单(横向 / 纵向 / inline)。
  *
- * **API**:
+ * **API**(2026-05-23 拆 mode → 双 boolean):
  * - `v-model:value`(当前选中项 key)
  * - `items: MenuItem[]` —— 树形或扁平。`children` 数组表示 submenu。
- * - `mode?: 'horizontal' | 'vertical' | 'inline'` —— 默认 `'vertical'`
+ * - `vertical?: boolean` —— 纵向,默认 `true`。`false` → 横向菜单
+ * - `inline?: boolean` —— submenu 内联展开(只对纵向有效),默认 `false`(弹出)
  * - `collapsed?: boolean` —— inline 模式下收起(只显示 icon)
  * - `disabled?: boolean`
  * - sx:sxItem / sxSubmenu / sxLabel
  *
  * **submenu 行为**:
- * - inline 模式 → 内联展开(点击 toggle children)
- * - horizontal/vertical 模式 → hover/click 弹出浮层(本 v1 简化只支持 inline expand 风格)
+ * - `inline=true` → 内联展开(点击 toggle children)
+ * - `inline=false` → hover/click 弹出浮层(本 v1 简化也走内联展开)
  *
  * **a11y**:`role="menu"` / `role="menuitem"` / `aria-expanded`(submenu)。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-
-export type ZMenuMode = 'horizontal' | 'vertical' | 'inline'
 
 export interface ZMenuItem {
   key: string
@@ -35,7 +34,10 @@ export interface ZMenuItem {
 export interface ZMenuProps {
   value?: string | null
   items: ZMenuItem[]
-  mode?: ZMenuMode
+  /** 纵向菜单,默认 `true`。`false` → 横向。 */
+  vertical?: boolean
+  /** submenu 内联展开(仅 vertical=true 生效),默认 `false`(弹出)。 */
+  inline?: boolean
   collapsed?: boolean
   disabled?: boolean
   sxItem?: SxObject
@@ -58,7 +60,8 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZMenuProps>(), {
-  mode: 'vertical',
+  vertical: true,
+  inline: false,
   collapsed: false,
   disabled: false,
 })
@@ -72,13 +75,12 @@ const expandedKeys = ref<Set<string>>(new Set())
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.flex
-    if (props.mode === 'horizontal') {
-      s.flexDirection.row
-      s.gap._tiny
-    } else {
+    if (props.vertical) {
       s.flexDirection.column
-      s.gap._tiny
+    } else {
+      s.flexDirection.row
     }
+    s.gap._tiny
     s.color._text
     s.fontSize._middle
     s.backgroundColor._bg

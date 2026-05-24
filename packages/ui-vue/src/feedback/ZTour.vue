@@ -147,6 +147,13 @@ const cardStyle = computed(() => {
   }
 })
 
+/**
+ * 引导卡片盒子模型(iem):
+ * - min-width: 15iem
+ * - max-width: 22.5iem
+ * - border: _thin
+ * - padding: _middle
+ */
 const cardClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed

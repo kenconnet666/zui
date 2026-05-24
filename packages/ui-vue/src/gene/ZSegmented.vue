@@ -20,7 +20,16 @@ export interface ZSegmentedOption {
 export interface ZSegmentedProps {
   value?: string | number
   options: ZSegmentedOption[]
-  /** 尺寸 —— `factory | Size5 | undefined` union(影响每项的 padding-y)。 */
+  /**
+   * 尺寸 —— **纯 chain factory**(2026-05-23 撤销 Size5 union),影响每项的 padding-y。
+   *
+   * **默认**:`(s) => { s.paddingTop.iem(0.25); s.paddingBottom.iem(0.25) }`(等价旧 middle)。
+   *
+   * **参考档位**:small(0.125iem) / middle(0.25iem) / large(0.375iem)。
+   *
+   * @example
+   * <ZSegmented :size="(s) => { s.paddingTop.iem(0.5); s.paddingBottom.iem(0.5) }" />
+   */
   size?: SizePropMulti
   block?: boolean
   disabled?: boolean
@@ -37,10 +46,13 @@ export interface ZSegmentedEmits {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { applySizeProp, makeSizeMap } from '../_internal/size-prop'
 
 const props = withDefaults(defineProps<ZSegmentedProps>(), {
-  size: 'middle',
+  // 默认等价旧 middle 档位:paddingTop/Bottom 0.25iem
+  size: (s: Chain<ZuiSchema>) => {
+    s.paddingTop.iem(0.25)
+    s.paddingBottom.iem(0.25)
+  },
   block: false,
   disabled: false,
 })
@@ -48,22 +60,6 @@ const props = withDefaults(defineProps<ZSegmentedProps>(), {
 const emit = defineEmits<ZSegmentedEmits>()
 
 const theme = useZTheme()
-
-/** ZSegmented size 档位 —— 每项的 padding-y(3 阶实现 + tiny/huge fallback)。 */
-const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
-  small: (s) => {
-    s.paddingTop.iem(0.125)
-    s.paddingBottom.iem(0.125)
-  },
-  middle: (s) => {
-    s.paddingTop.iem(0.25)
-    s.paddingBottom.iem(0.25)
-  },
-  large: (s) => {
-    s.paddingTop.iem(0.375)
-    s.paddingBottom.iem(0.375)
-  },
-})
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
@@ -92,7 +88,8 @@ function itemClass(opt: ZSegmentedOption): string {
     s.fontWeight._medium
     s.paddingLeft._middle
     s.paddingRight._middle
-    applySizeProp(props.size, SIZE_MAP, s)
+    // size(纯 factory,多 carrier):user factory 接整个 chain 自行写 padding
+    props.size?.(s)
     s.transitionProperty._colors
     s.transitionDuration._small
     if (props.block) s.flexGrow(1)

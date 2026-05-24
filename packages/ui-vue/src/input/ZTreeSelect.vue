@@ -7,7 +7,7 @@
  * - `data: ZTreeNode[]` —— 树数据
  * - `defaultExpandedKeys?: string[]`
  * - `placeholder?: string` / `disabled?: boolean` / `clearable?: boolean`
- * - `size?: 'small' | 'middle' | 'large'`
+ * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 `INPUT_SIZE_MAP.middle`)
  */
 import type { Placement } from '@floating-ui/vue'
 import type { Chain } from '@kenconnet666/zui-core'
@@ -22,7 +22,7 @@ export interface ZTreeSelectProps {
   placeholder?: string
   disabled?: boolean
   clearable?: boolean
-  /** 尺寸 —— `factory | Size5 | undefined` union(复用 INPUT_SIZE_MAP)。 */
+  /** 尺寸 —— 纯 factory(默认 `INPUT_SIZE_MAP.middle`,复用 INPUT_SIZE_MAP)。 */
   size?: SizePropMulti
   placement?: Placement
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<ZTreeSelectProps>(), {
   placeholder: '请选择',
   disabled: false,
   clearable: false,
-  size: 'middle',
+  size: INPUT_SIZE_MAP.middle,
   placement: 'bottom-start',
 })
 
@@ -137,10 +137,11 @@ const triggerClass = computed(() =>
     else s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    applySizeProp(props.size, INPUT_SIZE_MAP, s)
+    applySizeProp(props.size, s)
     s.paddingLeft._small
     s.paddingRight._small
     s.cursor(props.disabled ? 'not-allowed' : 'pointer')
+    // 触发器 minWidth: 10iem(略宽于 ZSelect 8iem,树标签通常更长)
     s.minWidth.iem(10)
     if (props.disabled) {
       s.opacity._dim
@@ -157,6 +158,12 @@ const textClass = computed(() =>
   }),
 )
 
+/**
+ * 树下拉浮层盒子模型(iem):
+ * - minWidth: 12iem(容纳缩进层级)
+ * - maxHeight: 18.75iem,超出滚动
+ * - padding: _tiny,圆角 _small,middle shadow
+ */
 const dropdownClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

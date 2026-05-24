@@ -6,7 +6,7 @@
  * - `v-model:value`(单选,Phase β 支持多选)
  * - `options: Array<{ value, label, disabled? }>` —— 必填
  * - `placeholder?: string` —— 未选时占位
- * - `disabled` / `clearable` / `size`(small/middle/large)
+ * - `disabled` / `clearable` / `size`(SizePropMulti factory)
  * - `filterable: boolean` —— 启用搜索过滤(默认 `false`)
  * - sx:sxTrigger / sxDropdown / sxOption
  *
@@ -41,7 +41,7 @@ export interface ZSelectProps {
   filterable?: boolean
   /** 多选模式;value 期望是 `ZSelectValue[]`(2026-05-23 Phase β 升级)。 */
   multiple?: boolean
-  /** 尺寸 —— `factory | Size5 | undefined` union(同 ZInput,复用 INPUT_SIZE_MAP)。 */
+  /** 尺寸 —— 纯 factory(默认 `INPUT_SIZE_MAP.middle`,同 ZInput)。 */
   size?: SizePropMulti
   sxTrigger?: SxObject
   sxDropdown?: SxObject
@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<ZSelectProps>(), {
   clearable: false,
   filterable: false,
   multiple: false,
-  size: 'middle',
+  size: INPUT_SIZE_MAP.middle,
 })
 
 const emit = defineEmits<ZSelectEmits>()
@@ -129,6 +129,12 @@ const filteredOptions = computed(() => {
   return props.options.filter((o) => o.label.toLowerCase().includes(q))
 })
 
+/**
+ * 触发器盒子模型(iem):
+ * - minWidth: 8iem,保证窄触发器不至于贴文字
+ * - 高度走 INPUT_SIZE_MAP(small/middle/large 三档)
+ * - border: _thin,圆角 _small
+ */
 const triggerClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
@@ -140,7 +146,7 @@ const triggerClass = computed(() =>
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    applySizeProp(props.size, INPUT_SIZE_MAP, s)
+    applySizeProp(props.size, s)
     s.paddingLeft._small
     s.paddingRight._small
     s.cursor.pointer
@@ -182,6 +188,12 @@ const triggerInputClass = computed(() =>
   }),
 )
 
+/**
+ * 下拉浮层盒子模型(iem):
+ * - minWidth: 8iem(与触发器同步)
+ * - maxHeight: 15iem,超出滚动
+ * - padding: _tiny,圆角 _small,middle shadow
+ */
 const dropdownClass = computed(() =>
   icss(theme.value, (s) => {
     s.backgroundColor._bg

@@ -13,15 +13,23 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-import type { Size5, SizePropMulti } from '../_internal/size-prop'
+import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZSwitchProps {
   value?: boolean
   /**
-   * 尺寸 —— `factory | Size5 | undefined` union。
+   * 尺寸 —— **纯 chain factory**(2026-05-23 撤销 Size5 union)。
    *
-   * **注意**:`factory` 路径只控制 rail 的 width/height,thumb 位置走 `'middle'` 兜底
+   * **默认**:`(s) => { s.height.iem(1.25); s.width.iem(2.5) }`(等价旧 middle 档位)。
+   *
+   * **参考档位**(width 总是 2*height):tiny(0.875iem) / small(1iem) / middle(1.25iem) /
+   * large(1.5iem) / huge(1.75iem)。
+   *
+   * **注意**:factory 只控制 rail 的 width/height,thumb 位置按 middle 档位(1.25iem)兜底
    * 计算(thumb 想差异化定位走 `sxThumb` 覆盖)。
+   *
+   * @example
+   * <ZSwitch :size="(s) => { s.height.iem(1.5); s.width.iem(3) }" />
    */
   size?: SizePropMulti
   disabled?: boolean
@@ -44,11 +52,14 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
-import { applySizeProp, makeSizeMap } from '../_internal/size-prop'
 
 const props = withDefaults(defineProps<ZSwitchProps>(), {
   value: false,
-  size: 'middle',
+  // 默认等价旧 middle 档位:height=1.25iem,width=2.5iem(rail 宽高比 2:1)
+  size: (s: Chain<ZuiSchema>) => {
+    s.height.iem(1.25)
+    s.width.iem(2.5)
+  },
   disabled: false,
   loading: false,
 })
@@ -57,51 +68,19 @@ const emit = defineEmits<ZSwitchEmits>()
 
 const theme = useZTheme()
 
-/** rail iem 倍率(height,width 总是 height*2)。 */
-const SIZE_HEIGHT_IEM: Record<Size5, number> = {
-  tiny: 0.875,
-  small: 1,
-  middle: 1.25,
-  large: 1.5,
-  huge: 1.75,
-}
-
-/** ZSwitch rail size 档位 —— width=2*height(rail 宽高比)。 */
-const SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
-  tiny: (s) => {
-    s.height.iem(SIZE_HEIGHT_IEM.tiny)
-    s.width.iem(SIZE_HEIGHT_IEM.tiny * 2)
-  },
-  small: (s) => {
-    s.height.iem(SIZE_HEIGHT_IEM.small)
-    s.width.iem(SIZE_HEIGHT_IEM.small * 2)
-  },
-  middle: (s) => {
-    s.height.iem(SIZE_HEIGHT_IEM.middle)
-    s.width.iem(SIZE_HEIGHT_IEM.middle * 2)
-  },
-  large: (s) => {
-    s.height.iem(SIZE_HEIGHT_IEM.large)
-    s.width.iem(SIZE_HEIGHT_IEM.large * 2)
-  },
-  huge: (s) => {
-    s.height.iem(SIZE_HEIGHT_IEM.huge)
-    s.width.iem(SIZE_HEIGHT_IEM.huge * 2)
-  },
-})
-
-/** thumb / label 位置计算用的 height iem 数字(factory 模式兜底用 middle)。 */
-const sizeIemRef = computed<number>(() => {
-  if (typeof props.size === 'string') return SIZE_HEIGHT_IEM[props.size]
-  return SIZE_HEIGHT_IEM.middle
-})
+/**
+ * thumb / label 位置计算用的 height iem 数字 —— **factory 模式无法读出实际尺寸**,
+ * 统一按 middle(1.25iem)兜底,thumb 想差异化定位走 `sxThumb` 覆盖。
+ */
+const sizeIemRef = computed<number>(() => 1.25)
 
 const railClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.position.relative
-    applySizeProp(props.size, SIZE_MAP, s)
+    // size(纯 factory,多 carrier):user factory 接整个 chain 自行写 width + height
+    props.size?.(s)
     s.borderRadius._full
     s.transitionProperty._colors
     s.transitionDuration._small

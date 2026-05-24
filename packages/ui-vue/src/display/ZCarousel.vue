@@ -118,6 +118,11 @@ const slideClass = computed(() =>
   }),
 )
 
+/**
+ * 左右箭头盒子模型(iem):
+ * - width/height: 2iem,正圆
+ * - 距容器边: 0.5iem(left 或 right)
+ */
 function arrowClass(side: 'left' | 'right'): string {
   return icss(theme.value, (s) => {
     s.position.absolute
@@ -143,6 +148,9 @@ function arrowClass(side: 'left' | 'right'): string {
   })
 }
 
+/**
+ * 指示点容器:bottom = 0.75iem(距底部偏移)。
+ */
 const dotsClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute
@@ -155,6 +163,11 @@ const dotsClass = computed(() =>
   }),
 )
 
+/**
+ * 指示点盒子模型(iem):
+ * - 默认: width/height = 0.5iem,正圆
+ * - active: width = 1.25iem(变为胶囊状高亮)
+ */
 function dotClass(active: boolean): string {
   return icss(theme.value, (s) => {
     s.width.iem(0.5)

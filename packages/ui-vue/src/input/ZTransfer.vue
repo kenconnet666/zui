@@ -98,6 +98,12 @@ const rootClass = computed(() =>
   }),
 )
 
+/**
+ * 左右面板盒子模型(iem):
+ * - width: 12.5iem,固定宽
+ * - border: _thin,圆角 _small
+ * - 内部纵向布局:head + list
+ */
 const panelClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.flex
@@ -123,6 +129,11 @@ const panelHeadClass = computed(() =>
   }),
 )
 
+/**
+ * 列表容器盒子模型(iem):
+ * - maxHeight: 15iem,超出滚动
+ * - padding: _tiny
+ */
 const listClass = computed(() =>
   icss(theme.value, (s) => {
     s.maxHeight.iem(15)
@@ -158,6 +169,11 @@ const arrowsClass = computed(() =>
   }),
 )
 
+/**
+ * 中间方向按钮盒子模型(iem):
+ * - width/height: 2iem,正方形
+ * - border: _thin,圆角 _tiny
+ */
 function arrowBtnClass(enabled: boolean): string {
   return icss(theme.value, (s) => {
     s.display.inlineFlex

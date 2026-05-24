@@ -77,6 +77,11 @@ const rootClass = computed(() =>
   }),
 )
 
+/**
+ * 复选框方框盒子模型(iem):
+ * - width/height: 1iem,正方形
+ * - border: _thin,内部图标 0.75em 跟随字号缩放
+ */
 const boxClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex

@@ -8,7 +8,7 @@
  * - `min?: number` / `max?: number` —— 边界
  * - `precision?: number` —— 小数位数(`undefined` 不限制)
  * - `disabled` / `readonly`
- * - `size: 'small' | 'middle' | 'large'`
+ * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 `INPUT_SIZE_MAP.middle`)
  *
  * **emit**:`update:value` / `change` / `focus` / `blur`
  */
@@ -25,7 +25,7 @@ export interface ZInputNumberProps {
   precision?: number
   disabled?: boolean
   readonly?: boolean
-  /** 尺寸 —— `factory | Size5 | undefined` union(同 ZInput,复用 INPUT_SIZE_MAP)。 */
+  /** 尺寸 —— 纯 factory(默认 `INPUT_SIZE_MAP.middle`,复用 INPUT_SIZE_MAP)。 */
   size?: SizePropMulti
   placeholder?: string
   sxInput?: SxObject
@@ -54,7 +54,7 @@ const props = withDefaults(defineProps<ZInputNumberProps>(), {
   step: 1,
   disabled: false,
   readonly: false,
-  size: 'middle',
+  size: INPUT_SIZE_MAP.middle,
 })
 
 const emit = defineEmits<ZInputNumberEmits>()
@@ -114,7 +114,7 @@ const wrapperClass = computed(() =>
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    applySizeProp(props.size, INPUT_SIZE_MAP, s)
+    applySizeProp(props.size, s)
     s.paddingLeft._small
     s.paddingRight._tiny
     if (props.disabled) {
@@ -150,6 +150,11 @@ const btnGroupClass = computed(() =>
   }),
 )
 
+/**
+ * 上下增减按钮盒子模型(iem):
+ * - width: 1iem
+ * - height: 0.625iem(两按钮垂直堆叠 ≈ 1.25iem,与输入高度匹配)
+ */
 const btnClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
