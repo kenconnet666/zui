@@ -40,6 +40,9 @@ export type { ZBadgeProps } from './ZBadge.vue'
 export { default as ZCode } from './ZCode.vue'
 export type { ZCodeProps } from './ZCode.vue'
 
+export { default as ZCodeCard, stripImports } from './ZCodeCard.vue'
+export type { ZCodeCardProps, ZCodeCardEmits } from './ZCodeCard.vue'
+
 export { default as ZBlockquote } from './ZBlockquote.vue'
 export type { ZBlockquoteProps } from './ZBlockquote.vue'
 
