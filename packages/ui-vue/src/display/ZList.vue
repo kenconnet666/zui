@@ -71,7 +71,7 @@ export interface ZListExpose {
 import { computed, ref, useSlots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import ZVirtualList from './ZVirtualList.vue'
+import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -156,7 +156,7 @@ const emptyClass = computed(() =>
   }),
 )
 
-const vlRef = ref<InstanceType<typeof ZVirtualList> | null>(null)
+const vlRef = ref<ZVirtualListExpose | null>(null)
 
 defineExpose<ZListExpose>({
   scrollToIndex: (i, align) => vlRef.value?.scrollToIndex(i, align),

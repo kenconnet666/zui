@@ -118,11 +118,11 @@ export interface ZDataTableExpose {
 </script>
 
 <script lang="ts" setup generic="T">
-import { computed, h, ref, useSlots, type VNode } from 'vue'
+import { computed, h, ref, useSlots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useZIem } from '../_hooks/useZIem'
-import ZVirtualList from './ZVirtualList.vue'
+import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -335,7 +335,7 @@ const headerClass = computed(() =>
     s.color._text
     s.position.sticky
     s.top.px(0)
-    s.zIndex._sticky
+    s.zIndex(1)
   }),
 )
 
@@ -448,7 +448,7 @@ const vlHeight = computed<string>(() => {
 })
 
 // ─── ZVirtualList ref ───
-const vlRef = ref<InstanceType<typeof ZVirtualList> | null>(null)
+const vlRef = ref<ZVirtualListExpose | null>(null)
 
 defineExpose<ZDataTableExpose>({
   scrollToIndex: (i, align) => vlRef.value?.scrollToIndex(i, align),

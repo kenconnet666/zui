@@ -82,7 +82,7 @@ import { computed, ref, shallowRef, toRef, useSlots, watch, type Ref } from 'vue
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useZIem } from '../_hooks/useZIem'
-import { useZVirtualScroll, type ItemSizeArg } from '../_hooks/useZVirtualScroll'
+import { useZVirtualScroll } from '../_hooks/useZVirtualScroll'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -249,8 +249,8 @@ const visibleItems = computed(() => {
 const isEmpty = computed(() => props.items.length === 0)
 
 function setItemRef(i: number) {
-  return (el: Element | null): void => {
-    vs.measureElement(i, el as HTMLElement | null)
+  return (el: unknown): void => {
+    vs.measureElement(i, (el as HTMLElement | null) ?? null)
   }
 }
 

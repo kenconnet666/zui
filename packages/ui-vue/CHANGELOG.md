@@ -2,6 +2,54 @@
 
 ## Unreleased
 
+### BREAKING — vw-first 单位 + 虚拟列表全栈接入(2026-05-24,S0-S9)
+
+**核心动机**:
+1. **响应式默认**:`ZIemPreset.default` 改为 `'0.8333vw'`(5/6vw,= 16px @ 1920 屏),整站 vw 等比缩放,16:9 屏跨屏宽视觉一致。
+2. **JS 算法层拿到 iem px 值**:虚拟列表 / 滚动计算等需要数值,以前要 DOM probe,现在 `useZIem()` 一行拿到响应式像素值。
+3. **接入虚拟列表**:大数据组件(`ZList` / `ZDataTable` / `ZSelect` / `ZAutoComplete` / `ZMention` / `ZTransfer` / `ZTree` / `ZTreeSelect` / `ZCascader`)统一用 `ZVirtualList` 渲染长列表,数据量任意,DOM 恒定。
+
+**BREAKING 详情**:
+
+- **`ZIemPreset.default`**:`'16px'` → **`'0.8333vw'`**(响应式 5/6vw)
+- **`ZIemPreset.large`**:`'20px'` → **`'1.0417vw'`**(同比例)
+- **`ZIemPreset.compact`**:`'14px'` → **`'0.7292vw'`**(同比例)
+- **`ZIemPreset.fixed`**:**新增** `'16px'`(opt-out 固定 px)
+- **`ZIemPreset.em` / `.rem`**:**删除**(`<ZBox :iem>` 只接受 `px` / `vw` 字面或 number)
+- **`<ZBox :iem>`**:类型收窄为 ``${number}px` | `${number}vw` | number``,非法值 dev 抛错 + 生产 fallback 16
+- **`ZList` 重写**:`itemSize` `height` 必传(iem 倍数),内部走 ZVirtualList,**不再支持非虚拟模式**
+- **`ZTree` 重写**:`height` 必传(iem 倍数),内部扁平化 + 虚拟
+- **`ZSelect` / `ZAutoComplete` / `ZMention`**:浮层新增 `optionSize`/`dropdownMaxHeight` props(iem 倍数,默认 2/15)
+- **`ZTransfer`**:新增 `itemSize`/`listHeight` props(iem 倍数,默认 2/15)
+- **`ZCascader`**:新增 `optionSize`/`columnMaxHeight` props(iem 倍数,默认 2/17.5)
+- **`ZTreeSelect`**:新增 `treeItemSize`/`treeHeight` props(iem 倍数,默认 2/18)
+
+**新增**:
+
+- **`useZIem(): Ref<number>`** —— 子组件取最近祖先 `ZBox` iem 当前像素值(响应式跟随 viewport resize / iem 切换)。`Z_IEM_PX_KEY` provide 自动响应式
+- **`useZVirtualScroll<T>(opts)`** —— 通用虚拟滚动算法 hook(px 算法层,固定/可变行高、prefixSum + 二分、rAF 节流 + 大跨度同步、ResizeObserver autoMeasure、scrollToIndex)
+- **`<ZVirtualList>`** —— 通用虚拟滚动列表组件(iem 对外、px 对内、scoped slot `{ item, index, size }` + `#empty` / `#header` / `#footer`)
+- **`<ZDataTable>`** —— 数据表格(行虚拟 + sticky header + 列定义 + 单/多选 + 排序 + loading + 空态 + 斑马纹/边框)。`ZTable` 保留作简单展示场景
+
+**执行 sprint**:
+- **S0** 单位基础设施(ZIemPreset / ZBox 解析 / useZIem)
+- **S1** ZVirtualList(iem 倍数对外,内部走 useZIem)
+- **S2** ZList 重写
+- **S3** ZDataTable 新建
+- **S4** ZSelect 浮层接入
+- **S5** ZAutoComplete + ZMention 接入
+- **S6** ZTransfer 接入
+- **S7** ZCascader 各级 panel 接入
+- **S8** ZTree + ZTreeSelect 接入(已有扁平化算法,加 ZVirtualList 渲染)
+- **S9** 总验证 + CHANGELOG
+
+**验证**:
+- zui-core `628/628` ✓
+- zui-vue 全套 spec `655/655` ✓(53 文件)
+- type-check ✓ / build ✓
+
+---
+
 ### BREAKING — 数值尺寸 props 从 chain factory 改 `number`(iem 倍数)(2026-05-24,R0-R11)
 
 撤销 B5 的"size 全 factory"决策(数值类),改为**数字 = iem 倍数**,组件内能读到数值后按比例算所有相关维度,全维度走 iem(Provider 联动)。其他类型 prop(color / variant / direction / css 等)保持 chain factory 不变。
