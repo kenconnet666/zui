@@ -53,6 +53,28 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────┐
+ *   │ rail  inline-flex / center / relative│   默认 height: 1.25iem
+ *   │   width: 2.5iem  height: 1.25iem     │   默认 width: 2.5iem(rail 宽高比 2:1)
+ *   │   border-radius: _full(胶囊)       │   value=true → bg _primary
+ *   │   bg: _primary(开) / _border(关)  │   value=false → bg _border
+ *   │   pad 0  border-style none           │
+ *   │                                      │
+ *   │  ┌────────┐ ┌──────┐                 │   thumb(value 切换位置):
+ *   │  │label   │ │thumb │                 │     width/height: 0.8 * height
+ *   │  │( inset)│ │圆形  │                 │     bg: _bg  boxShadow: _small
+ *   │  │ _tiny  │ │_full │                 │     border-radius: _full
+ *   │  └────────┘ │_small│                 │     top: (h-thumb)/2
+ *   │             └──────┘                 │     left: 切换时滑动
+ *   │                                      │
+ *   │  label(选填,inset 在 thumb 外侧)  │   fontSize _tiny  color _bg
+ *   └──────────────────────────────────────┘
+ *
+ * disabled / loading 时 opacity _dim,cursor not-allowed。
+ */
 const props = withDefaults(defineProps<ZSwitchProps>(), {
   value: false,
   // 默认等价旧 middle 档位:height=1.25iem,width=2.5iem(rail 宽高比 2:1)

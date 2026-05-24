@@ -50,6 +50,26 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ ZRate root  inline-flex / gap 0.125iem           │   color: 用户 color factory 或 _warning
+ *   │   color: _warning(默认,star fill)             │   非交互态 opacity _strong
+ *   │                                                  │
+ *   │  ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐             │   star button(count 个,默认 5):
+ *   │  │ ★  │ │ ★  │ │ ☆  │ │ ☆  │ │ ☆  │             │     width: 1.25iem(默认 middle,可改)
+ *   │  │1.25│ │1.25│ │1.25│ │1.25│ │1.25│             │     height: 1.25iem(镜像 width)
+ *   │  │iem │ │iem │ │iem │ │iem │ │iem │             │     color: _border(空星底色)
+ *   │  └────┘ └────┘ └────┘ └────┘ └────┘             │
+ *   │     ↑                                            │   filled star(覆盖层):
+ *   │     value 决定每颗 fill 比率(0 / 0.5 / 1)     │     position absolute / inset 0
+ *   │                                                  │     width: filledRatio * 100%
+ *   │                                                  │     overflow hidden / currentColor
+ *   └──────────────────────────────────────────────────┘
+ *
+ * allowHalf=true 时点击星左半 → 0.5 颗,右半 → 1 颗。
+ */
 const props = withDefaults(defineProps<ZRateProps>(), {
   value: 0,
   count: 5,
@@ -59,6 +79,10 @@ const props = withDefaults(defineProps<ZRateProps>(), {
   // 默认等价旧 middle 档位:1.25iem
   size: (w: Chain<ZuiSchema>['width']) => {
     w.iem(1.25)
+  },
+  // 星色默认 `_warning`(M2 orange,适合星)
+  color: (c: Chain<ZuiSchema>['color']) => {
+    c._warning
   },
 })
 
@@ -78,8 +102,7 @@ const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
     s.gap.iem(0.125)
-    if (props.color) s.color(props.color)
-    else s.color._warning
+    s.color(props.color)
     if (!isInteractive.value) s.opacity._strong
     props.css?.(s)
   }),

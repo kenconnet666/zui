@@ -2,6 +2,57 @@
 
 ## Unreleased
 
+### 改进 — 默认值审计 + 盒子图 JSDoc 迁移 + helper className 规范化(2026-05-24,T1-T3 + Q4-Q5 + B9)
+
+**5 类改动**:
+
+#### T1 — withDefaults Function 类型 default 修 double-wrap(3 处)
+ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double-wrap,改成 ZIcon 范式直接给函数:`(w) => {...}`。
+
+#### T2 — helper className 整理(27 处,22 文件)
+- **5 个零参数 helper** → `computed`(`ZSteps.stepClass / ZTimeline.itemClass / lineClass / ZMessage.bodyClass / ZNotification.itemClass`),template 改 `xxx` 裸名调用
+- **22 个有参数 helper** → `const xxx = (...args): string => icss(...)` 箭头风格(跟 computed 形式一致),调用方式不变
+
+#### T3 — ZSlider 性能优化(CSS var 注入)
+拖动时 `percent.value` 内嵌 `linear-gradient` 字符串 → 每帧重新生成 className(性能差)。改:
+- `inputClass` 不依赖 percent,用 `var(--zui-slider-fill / track / bg / percent)`
+- `inputStyle` computed 注入 CSS var 到 `:style`
+- 结果:**className 稳定,只更新 inline style CSS var**,拖动零 className 重生成
+
+#### Q4 — 默认值审计 + 补全(12 个组件)
+把藏在 className computed 里 `if (props.color) ...; else <token>` 隐式 fallback 提到 `withDefaults` 显式声明:
+
+| 组件 | Prop | 默认 factory |
+|---|---|---|
+| ZAlert | color | `(c) => c._info` |
+| ZAvatar | color | `(c) => c._textSecondary`(桥接 bg) |
+| ZBadge | color | `(c) => c._danger`(桥接 bg) |
+| ZBlockquote | color | `(c) => c._primary`(桥接 border-l) |
+| ZCode | color | `(c) => c._text` |
+| ZDivider | color | `(c) => c._border` |
+| ZRate | color | `(c) => c._warning` |
+| ZResult | color | `(c) => c._info` |
+| ZSpace | size / align | `(g) => g._small` / `(c) => c.center` |
+| ZSpacer | basis | `(b) => b.auto` |
+| ZStatistic | color | `(c) => c._text` |
+| ZSteps | currentColor | `(c) => c._primary` |
+
+**保留隐式 fallback**(合理):ZButton variant state layer 桥接;ZProgress `applyAsBg` 区分 user/默认色源切换;item 数据 prop(ZMessage / ZNotification / ZTimeline `item.color`);ZSlider inline 读 theme;ZImage `fit` 字面量枚举。
+
+#### Q5 — 盒子图 JSDoc 迁移 + 画完整嵌套图(43 个组件)
+- **位置统一**:所有 iem 默认尺寸组件的盒子图 JSDoc 集中到 `withDefaults / defineProps` 上一行(IDE hover defineProps 时一眼看到完整结构)
+- **形式**:box-drawing ASCII 完整嵌套图(`┌┐└┘─│`),标注节点尺寸 + 关键属性
+- **清理**:删除 B2 阶段散落在 computed 上的 30 处旧盒子注释
+- **范围**:gene(4)+ display(12)+ feedback(7)+ input(13)+ navigation(5)+ tool(2)= 43 个组件
+- **不画**:布局组件(ZFlex / ZGrid / ZSpace / ZSplit / ZSpacer / ZScrollbar / ZAffix)— 无固定尺寸
+
+#### B9 — 验证三件套全绿
+- type-check ✓ (vue-tsc exit 0)
+- 556/556 tests ✓ (50/50 spec files)
+- build ✓ (exit 0,218 modules,dist/zui-vue.css 不再生成)
+
+---
+
 ### BREAKING — props 全 chain factory 化(2026-05-23 / 2026-05-24,B0-B8 八批改造)
 
 撤销 2026-05-22 的 `factory | Size5 | undefined` union 范式,改为**纯 chain factory**。详见

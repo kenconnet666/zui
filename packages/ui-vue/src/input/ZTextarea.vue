@@ -45,6 +45,29 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ wrapper  inline-flex column / gap _tiny          │   padding: _small
+ *   │   padding _small  border _thin solid _border     │   border-radius: _small
+ *   │   border-radius _small  bg _bg  color _text      │   fontSize: _middle
+ *   │   fontSize _middle  lineHeight _normal           │   width: 100%
+ *   │   focused: borderColor _primary                  │
+ *   │   disabled: opacity _dim / bg _bgMuted           │
+ *   │                                                  │
+ *   │  ┌────────────────────────────────────────────┐  │
+ *   │  │ <textarea>                                 │  │   rows 默认 3
+ *   │  │  bg transparent / outline none             │  │   autosize=true → resize none + JS 高度
+ *   │  │  resize: autosize→none / 否则 vertical    │  │   autosize=false → resize vertical
+ *   │  │  width 100%  fontSize/lineHeight inherit  │  │
+ *   │  └────────────────────────────────────────────┘  │
+ *   │                              ┌──────────┐        │   counter(showCount=true):
+ *   │                              │ N/M _tiny│        │     alignSelf flexEnd
+ *   │                              │ _textSec │        │     fontSize _tiny
+ *   │                              └──────────┘        │
+ *   └──────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZTextareaProps>(), {
   rows: 3,
   autosize: false,

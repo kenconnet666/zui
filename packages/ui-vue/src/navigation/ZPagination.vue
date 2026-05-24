@@ -66,6 +66,31 @@ import { useZTheme, useZLocale } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────────┐
+ *   │ <nav> root  inline-flex / center / gap _tiny         │   size 档:
+ *   │   color: _text  fontSize: size factory(_small/middle/large)│   small: fontSize _small
+ *   │                                                      │   middle: fontSize _middle
+ *   │  ┌───────────┐ ┌────┐ ┌────┐ ┌────┐ ┌───┐ ┌────┐ ┌────┐ ┌───────────┐│   large: fontSize _large
+ *   │  │ "总数:N"  │ │  ◀ │ │ 1  │ │ 2 │ │ … │ │ 5  │ │ 6  │ │     ▶     ││
+ *   │  │ (条件)    │ │prev│ │    │ │cur│ │dot│ │    │ │    │ │   next    ││
+ *   │  │ _textSec  │ │item│ │item│ │ent│ │ _ │ │item│ │item│ │   item    ││
+ *   │  │ _small    │ │    │ │    │ │   │ │tex│ │    │ │    │ │           ││
+ *   │  └───────────┘ └────┘ └────┘ └────┘ └───┘ └────┘ └────┘ └───────────┘│
+ *   │                                                      │
+ *   │  item: min-w 1.75iem  height 1.75iem(跟 fontSize 联动)│   border _thin _border
+ *   │   border _thin solid _border  border-radius _small  │   border-radius: _small
+ *   │   pad-x _tiny  bg _bg                                │   hover: borderColor _primary
+ *   │   hover: borderColor _primary,color _primary       │
+ *   │  current: bg _primary,color _bg,_semibold,border _primary│
+ *   │  dots: 1.75iem 占位,_textSecondary                  │
+ *   │  disabled: opacity _dim / cursor notAllowed         │
+ *   └──────────────────────────────────────────────────────┘
+ *
+ * 算法: 首尾恒显示 + 当前页 ±siblings + 省略号。
+ */
 const props = withDefaults(defineProps<ZPaginationProps>(), {
   page: 1,
   pageSize: 10,

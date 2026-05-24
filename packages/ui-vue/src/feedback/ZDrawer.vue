@@ -65,6 +65,41 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { lockBodyScroll } from '../_internal/body-scroll-lock'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌─────────────────────────────────────────────────────┐
+ *   │ mask  position fixed inset 0  z-index _modal        │   bg _overlayBg.alpha(50)
+ *   │                                                     │
+ *   │   ┌──────────────────────────────────────┐ (right) │   drawer:
+ *   │   │ drawer                               │         │     position fixed
+ *   │   │   right placement:                   │         │     bg _bg / color _text
+ *   │   │     top 0  right 0  bottom 0         │         │     boxShadow _huge
+ *   │   │     width 20iem(默认,size 覆盖)   │         │     flex column
+ *   │   │   left  placement: top 0/left 0/bottom 0      │
+ *   │   │   top   placement: top 0/left 0/right 0 / h 20iem │
+ *   │   │   bottom placement: bottom 0/left 0/right 0       │
+ *   │   │                                      │         │
+ *   │   │  ┌────────────────────────────────┐  │         │   head(条件):
+ *   │   │  │ head: title + close            │  │         │     pad _middle
+ *   │   │  │   pad _middle  border-b _thin  │  │         │     border-b _thin _border
+ *   │   │  │   fontSize _large  _semibold   │  │         │
+ *   │   │  └────────────────────────────────┘  │         │
+ *   │   │  ┌────────────────────────────────┐  │         │   body:
+ *   │   │  │ body: #default                 │  │         │     pad _middle
+ *   │   │  │   pad _middle  flex-grow 1     │  │         │     overflow-y auto
+ *   │   │  │   overflow-y auto              │  │         │
+ *   │   │  └────────────────────────────────┘  │         │
+ *   │   │  ┌────────────────────────────────┐  │         │   foot(条件):
+ *   │   │  │ foot(条件):#foot slot         │  │         │     pad _middle
+ *   │   │  │   pad _middle  border-t _thin  │  │         │     border-t _thin _border
+ *   │   │  │   flex-end gap _small          │  │         │
+ *   │   │  └────────────────────────────────┘  │         │
+ *   │   └──────────────────────────────────────┘         │
+ *   └─────────────────────────────────────────────────────┘
+ *
+ * size factory 决定 width(left/right)或 height(top/bottom)。
+ */
 const props = withDefaults(defineProps<ZDrawerProps>(), {
   visible: false,
   placement: 'right',

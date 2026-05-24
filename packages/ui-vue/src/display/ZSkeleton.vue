@@ -31,6 +31,28 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ ZSkeleton root                                   │   flex / gap _middle / alignFlexStart
+ *   │                                                  │
+ *   │  ┌────────┐  ┌──────────────────────────────┐    │
+ *   │  │ avatar │  │ lines container              │    │   avatar(条件渲染):
+ *   │  │ 2.5iem │  │  ┌────────────────────────┐  │    │     width/height 2.5iem
+ *   │  │ 正圆   │  │  │ title bar(条件)      │  │    │     border-radius _full
+ *   │  └────────┘  │  │  height 1.25iem        │  │    │     bg _bgMuted
+ *   │              │  │  width 40%             │  │    │
+ *   │              │  └────────────────────────┘  │    │   text rows:
+ *   │              │  ┌────────────────────────┐  │    │     height 0.875iem
+ *   │              │  │ row 1...n              │  │    │     最后一行 width 60%
+ *   │              │  │  (最后行 width 60%)    │  │    │     其它 width 100%
+ *   │              │  └────────────────────────┘  │    │
+ *   │              └──────────────────────────────┘    │
+ *   └──────────────────────────────────────────────────┘
+ *
+ * animated=true → 给所有骨架元素叠 shimmer 渐变背景动画(1.4s 循环)。
+ */
 const props = withDefaults(defineProps<ZSkeletonProps>(), {
   loading: true,
   rows: 3,
@@ -64,9 +86,6 @@ const rootClass = computed(() =>
   }),
 )
 
-/**
- * 头像骨架:width/height = 2.5iem,正圆。
- */
 const avatarClass = computed(() =>
   icss(theme.value, (s) => {
     s.width.iem(2.5)
@@ -87,9 +106,6 @@ const linesContainerClass = computed(() =>
   }),
 )
 
-/**
- * 标题条骨架:height = 1.25iem,width = 40%。
- */
 const titleBarClass = computed(() =>
   icss(theme.value, (s) => {
     s.height.iem(1.25)
@@ -101,18 +117,14 @@ const titleBarClass = computed(() =>
   }),
 )
 
-/**
- * 文本行骨架:height = 0.875iem;最后一行 width=60%,其它 100%。
- */
-function rowClass(isLast: boolean): string {
-  return icss(theme.value, (s) => {
+const rowClass = (isLast: boolean): string =>
+  icss(theme.value, (s) => {
     s.height.iem(0.875)
     s.width.pct(isLast ? 60 : 100)
     s.borderRadius._tiny
     s.backgroundColor._bgMuted
     if (props.animated) applyShimmer(s)
   })
-}
 
 function applyShimmer(s: Chain<ZuiSchema>): void {
   s.backgroundImage(

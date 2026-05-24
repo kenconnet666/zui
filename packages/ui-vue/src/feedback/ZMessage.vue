@@ -51,6 +51,29 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   顶部居中容器:
+ *   ┌─────────────────────────────────────────────────────┐
+ *   │ container(Teleport body,position fixed)          │   top: 1.5iem
+ *   │   top: 1.5iem  left: 50%  translateX(-50%)         │   z-index: _toast
+ *   │   flex column / alignItems center / gap _small     │   pointer-events: none
+ *   │                                                     │
+ *   │      ┌──────────────────────────────────────┐      │   message item:
+ *   │      │ ● icon  content text                 │      │     inline-flex / center
+ *   │      │   pad _small  pad-x _middle          │      │     gap _small
+ *   │      │   bg _bg  boxShadow _middle          │      │     pad _small,pad-x _middle
+ *   │      │   border-radius _small               │      │     border-radius _small
+ *   │      │   fontSize _small  lineHeight _normal│      │     bg _bg / boxShadow _middle
+ *   │      │   color: item.color factory 或 _info │      │     pointer-events: auto
+ *   │      └──────────────────────────────────────┘      │
+ *   │      (TransitionGroup: enter translateY(-0.75em))  │
+ *   │      (循环 messages.length 个 item)                │
+ *   └─────────────────────────────────────────────────────┘
+ *
+ * duration 默认 3000ms,loading=true 默认 0(不自动关)。
+ */
 const props = defineProps<ZMessageProps>()
 const emit = defineEmits<ZMessageEmits>()
 
@@ -72,8 +95,8 @@ const containerClass = computed(() =>
   }),
 )
 
-function itemClass(item: ZMessageItem): string {
-  return icss(theme.value, (s) => {
+const itemClass = (item: ZMessageItem): string =>
+  icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._small
@@ -94,13 +117,12 @@ function itemClass(item: ZMessageItem): string {
     if (item.color) s.color(item.color)
     else s.color._info
   })
-}
 
-function bodyClass(): string {
-  return icss(theme.value, (s) => {
+const bodyClass = computed(() =>
+  icss(theme.value, (s) => {
     s.color._text
-  })
-}
+  }),
+)
 
 const transitionActiveClass = computed(() =>
   icss(theme.value, (s) => {
@@ -193,7 +215,7 @@ function renderIcon(item: ZMessageItem) {
       >
         <div v-for="item in messages" :key="item.id" :class="itemClass(item)">
           <component :is="renderIcon(item)" />
-          <span :class="bodyClass()">{{ item.content }}</span>
+          <span :class="bodyClass">{{ item.content }}</span>
         </div>
       </TransitionGroup>
     </div>

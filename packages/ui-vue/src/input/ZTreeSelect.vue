@@ -45,6 +45,33 @@ import { usePopper, useEscapeStack } from '../_hooks'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZTree from '../display/ZTree.vue'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ trigger  inline-flex / center / gap _tiny        │   min-width: 10iem(略宽,容纳层级标签)
+ *   │   border _thin solid _border  border-radius _small│   高度: INPUT_SIZE_MAP(small/middle/large)
+ *   │   pad-x _small  bg _bg  color _text              │   open: borderColor _primary
+ *   │   open: borderColor _primary                     │
+ *   │                                                  │
+ *   │  ┌────────────────┐ ┌─────┐ ┌────────┐           │
+ *   │  │ text 选中 label │ │clear│ │ arrow ▼│           │   text: 无选中时 _textSecondary
+ *   │  │ flex-grow 1     │ │  ×  │ │ rotate │           │
+ *   │  └────────────────┘ └─────┘ └────────┘           │
+ *   └──────────────────────────────────────────────────┘
+ *           │ floating-ui 定位(offset 4)
+ *           ▼
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ dropdown(Teleport body)                        │   min-width: 12iem(容纳层级缩进)
+ *   │   min-width: 12iem  max-height: 18.75iem        │   max-height: 18.75iem
+ *   │   pad _tiny  border _thin _border  boxShadow _middle│   overflow-y auto
+ *   │  ┌──────────────────────────────────────────┐   │
+ *   │  │ <ZTree>                                  │   │   ZTree 节点:
+ *   │  │  data / expandedKeys / selectedKey 透传  │   │     仅 leaf 触发 commit
+ *   │  │  @select → onSelectNode(仅 leaf 提交)  │   │
+ *   │  └──────────────────────────────────────────┘   │
+ *   └──────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZTreeSelectProps>(), {
   value: null,
   defaultExpandedKeys: () => [],
@@ -158,12 +185,6 @@ const textClass = computed(() =>
   }),
 )
 
-/**
- * 树下拉浮层盒子模型(iem):
- * - minWidth: 12iem(容纳缩进层级)
- * - maxHeight: 18.75iem,超出滚动
- * - padding: _tiny,圆角 _small,middle shadow
- */
 const dropdownClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

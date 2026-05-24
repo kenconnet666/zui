@@ -43,6 +43,38 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useEscapeStack } from '../_hooks'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────────┐
+ *   │ mask(4 块矩形挖洞 target 周围)position fixed     │   bg _overlayBg.alpha(50)
+ *   │   top / bottom / left / right 4 块包围 target       │   z-index _modal
+ *   │   pointer-events: auto  → 点击 mask 关闭            │
+ *   │                                                      │
+ *   │       ┌────────────────┐                            │
+ *   │       │ target element │ (high-light 区,无 mask)  │
+ *   │       └────────────────┘                            │
+ *   │           │ 12px offset                             │
+ *   │           ▼                                         │
+ *   │   ┌──────────────────────────────────────┐          │   tour card:
+ *   │   │ tour card  position fixed            │          │     min-width 15iem
+ *   │   │   min-width: 15iem                   │          │     max-width 22.5iem
+ *   │   │   max-width: 22.5iem                 │          │     bg _bg / color _text
+ *   │   │   pad: _middle  border-radius _small │          │     border _thin _border
+ *   │   │   border _thin solid _border         │          │     boxShadow _huge
+ *   │   │   boxShadow _huge                    │          │     z-index _modal
+ *   │   │                                      │          │
+ *   │   │  title    fontSize _large _semibold  │          │
+ *   │   │  desc     _textSecondary _small      │          │
+ *   │   │  ┌────────────────────────────────┐  │          │   footer:
+ *   │   │  │ N/M    [prev] [next/finish]    │  │          │     flex spaceBetween
+ *   │   │  │  _textSecondary _small           │          │     btn: pad-y 0.25iem
+ *   │   │  └────────────────────────────────┘  │          │     primary bg _primary
+ *   │   └──────────────────────────────────────┘          │
+ *   └──────────────────────────────────────────────────────┘
+ *
+ * ESC 关。
+ */
 const props = withDefaults(defineProps<ZTourProps>(), {
   current: 0,
 })
@@ -147,13 +179,6 @@ const cardStyle = computed(() => {
   }
 })
 
-/**
- * 引导卡片盒子模型(iem):
- * - min-width: 15iem
- * - max-width: 22.5iem
- * - border: _thin
- * - padding: _middle
- */
 const cardClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed
@@ -207,8 +232,8 @@ const btnGroupClass = computed(() =>
     s.gap._tiny
   }),
 )
-function btnClass(primary: boolean): string {
-  return icss(theme.value, (s) => {
+const btnClass = (primary: boolean): string =>
+  icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -232,7 +257,6 @@ function btnClass(primary: boolean): string {
       s.borderColor._border
     }
   })
-}
 </script>
 
 <template>

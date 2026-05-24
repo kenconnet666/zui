@@ -59,6 +59,34 @@ import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ <ul> root  flex column(vertical=true) 或 row    │   gap _tiny
+ *   │   color _text  fontSize _middle  bg _bg          │
+ *   │                                                  │
+ *   │  ┌────────────────────────────────────────────┐  │   menu item:
+ *   │  │ menuitem  flex / center / gap _small        │  │     pad _small
+ *   │  │   pad _small                                │  │     pad-left: 0.75 + depth*0.75 iem
+ *   │  │   pad-left: 0.75 + depth*0.75 iem(层级缩进)│  │     pad-right _small
+ *   │  │   pad-right _small  border-radius _small    │  │     active: bg _primary.alpha(8)
+ *   │  │   active: bg _primary.alpha(8) + _primary  │  │            color _primary _medium
+ *   │  │   hover: bg _textSecondary.alpha(8)        │  │
+ *   │  │   disabled: opacity _dim                    │  │
+ *   │  │  ┌─────┐ ┌──────────┐ ┌──────┐             │  │
+ *   │  │  │icon │ │ label    │ │arrow │             │  │   icon(可选)/ label flex-grow /
+ *   │  │  │     │ │ ellipsis │ │ ▼    │             │  │   arrow(有 children + 非 collapsed):
+ *   │  │  └─────┘ └──────────┘ └──────┘             │  │     rotate 180 on expanded
+ *   │  └────────────────────────────────────────────┘  │
+ *   │  │                                              │  │
+ *   │  └──── submenu(展开时,内嵌 <ul>) ──────────┐  │   submenu:
+ *   │                                              │  │     flex column gap _tiny
+ *   │  (循环 items,有 children 内联展开 toggle)  │  │
+ *   └──────────────────────────────────────────────────┘
+ *
+ * collapsed=true 时只显示 icon,隐藏 label 和 arrow。
+ */
 const props = withDefaults(defineProps<ZMenuProps>(), {
   vertical: true,
   inline: false,
@@ -88,8 +116,8 @@ const rootClass = computed(() =>
   }),
 )
 
-function itemClass(item: ZMenuItem, isActive: boolean, depth: number): string {
-  return icss(theme.value, (s) => {
+const itemClass = (item: ZMenuItem, isActive: boolean, depth: number): string =>
+  icss(theme.value, (s) => {
     s.display.flex
     s.alignItems.center
     s.gap._small
@@ -120,7 +148,6 @@ function itemClass(item: ZMenuItem, isActive: boolean, depth: number): string {
     }
     applySx(s, props.sxItem)
   })
-}
 const sxItemAttrs = computed(() => extractSxAttrs(props.sxItem))
 
 const submenuClass = computed(() =>

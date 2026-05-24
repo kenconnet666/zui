@@ -33,6 +33,28 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { getThemeColor } from '../_internal/color-bridge'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ wrapper  flex / center / gap _small              │   width: 100%
+ *   │                                                  │
+ *   │  ┌────────────────────────────────────┐ ┌──────┐ │
+ *   │  │ <input type="range">               │ │label │ │   input range:
+ *   │  │  height: 4px(轨道)                │ │ value│ │     width 100% / flex-grow 1
+ *   │  │  border-radius: _full              │ │ _2nd │ │     height: 4px
+ *   │  │  margin-y: 8px(thumb 16px 居中)   │ │_small│ │     border-radius: _full
+ *   │  │  bg: 线性渐变 fill 至 percent%     │ └──────┘ │     margin-y: 8px
+ *   │  │  track: _bgMuted / fill: _primary  │          │
+ *   │  │                                    │          │   thumb(::-webkit-slider-thumb):
+ *   │  │   ●                                │          │     width/height: 16px
+ *   │  │   ↑ thumb                          │          │     border-radius: _full
+ *   │  │   16px 圆,white bg + 2px border    │          │     border: 2px solid fill
+ *   │  │   cursor: grab                     │          │     bg: white / boxShadow
+ *   │  └────────────────────────────────────┘          │   value label(showValue=true):
+ *   │                                                  │     min-width: 3em
+ *   └──────────────────────────────────────────────────┘     _textSecondary _small
+ */
 const props = withDefaults(defineProps<ZSliderProps>(), {
   value: 0,
   min: 0,
@@ -62,11 +84,10 @@ const wrapperClass = computed(() =>
   }),
 )
 
+// inputClass 不依赖 percent —— 用 CSS var 在 :style 注入,
+// 拖动时只更新 inline style,className 稳定不重新生成(性能优化)
 const inputClass = computed(() =>
   icss(theme.value, (s) => {
-    const primary = getThemeColor(theme.value, 'primary', '#1976d2')
-    const bgMuted = getThemeColor(theme.value, 'bgMuted', '#e5e7eb')
-    const bg = getThemeColor(theme.value, 'bg', '#fff')
     s.flexGrow(1)
     s.appearance.none
     s.width.pct(100)
@@ -77,7 +98,7 @@ const inputClass = computed(() =>
     s.marginTop.px(8)
     s.marginBottom.px(8)
     s.background(
-      `linear-gradient(to right, ${primary} 0%, ${primary} ${percent.value}%, ${bgMuted} ${percent.value}%, ${bgMuted} 100%)`,
+      'linear-gradient(to right, var(--zui-slider-fill) 0%, var(--zui-slider-fill) var(--zui-slider-percent), var(--zui-slider-track) var(--zui-slider-percent), var(--zui-slider-track) 100%)',
     )
     s._disabled((d) => {
       d.cursor.notAllowed
@@ -91,8 +112,8 @@ const inputClass = computed(() =>
       t.cursor('grab')
       t.borderWidth.px(2)
       t.borderStyle.solid
-      t.borderColor(primary)
-      t.background(bg)
+      t.borderColor('var(--zui-slider-fill)')
+      t.background('var(--zui-slider-bg)')
       t.boxShadow('0 1px 3px rgba(0,0,0,0.2)')
     })
     s._selector('&::-moz-range-thumb', (t) => {
@@ -102,11 +123,19 @@ const inputClass = computed(() =>
       t.cursor('grab')
       t.borderWidth.px(2)
       t.borderStyle.solid
-      t.borderColor(primary)
-      t.background(bg)
+      t.borderColor('var(--zui-slider-fill)')
+      t.background('var(--zui-slider-bg)')
     })
   }),
 )
+
+// 持续变化的响应式变量走 :style + CSS var(避免每帧生成新 className)
+const inputStyle = computed(() => ({
+  '--zui-slider-fill': getThemeColor(theme.value, 'primary', '#1976d2'),
+  '--zui-slider-track': getThemeColor(theme.value, 'bgMuted', '#e5e7eb'),
+  '--zui-slider-bg': getThemeColor(theme.value, 'bg', '#fff'),
+  '--zui-slider-percent': `${percent.value}%`,
+}))
 
 const valueLabelClass = computed(() =>
   icss(theme.value, (s) => {
@@ -133,6 +162,7 @@ function onChange(e: Event): void {
   <div :class="wrapperClass">
     <input
       :class="inputClass"
+      :style="inputStyle"
       type="range"
       :min="min"
       :max="max"

@@ -44,6 +44,30 @@ import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { usePopper, useZId } from '../_hooks'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌─────────────────┐
+ *   │ trigger wrap    │   inline-flex(包裹 default slot)
+ *   │ #default slot   │
+ *   └─────────────────┘
+ *           │ floating-ui 定位(offset 6)
+ *           ▼
+ *   ┌────────────────────────────────────────┐
+ *   │ tooltip(Teleport to body)            │   bg: _text(反色)
+ *   │   pad-y: 0.25iem × 2 = 0.5iem 总高度  │   color: _bg(反色)
+ *   │   pad-x: _small(token)               │   fontSize: _small
+ *   │   max-width: 20iem(超长换行)         │   line-height: _tight
+ *   │   border-radius: _tiny                 │   boxShadow: _small
+ *   │   word-break: break-word               │   z-index: _tooltip
+ *   │   pointer-events: hover 模式 auto      │
+ *   │  ┌──────────────────────────────────┐  │
+ *   │  │ content(content prop 或 #content)│
+ *   │  └──────────────────────────────────┘  │
+ *   └────────────────────────────────────────┘
+ *
+ * trigger: hover / click / focus / manual。hover/focus 模式有 enter/leave delay(默认 100ms)。
+ */
 const props = withDefaults(defineProps<ZTooltipProps>(), {
   placement: 'top',
   trigger: 'hover',
@@ -144,13 +168,6 @@ const contentHandlers = computed(() => {
   return {}
 })
 
-/**
- * tooltip 内容盒子模型(iem):
- * - padding-y: 0.25iem × 2 = 0.5iem 总垂直内边距
- * - padding-x 走 _small token
- * - maxWidth: 20iem(超长文本换行 wordBreak.breakWord)
- * - 反色:bg = _text,color = _bg
- */
 const tooltipClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

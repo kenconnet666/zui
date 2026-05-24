@@ -46,6 +46,30 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌─────────────────────────────────────────────────────┐
+ *   │ container(Teleport body,position fixed)          │   屏幕边距 1.5iem
+ *   │   top-right(默认): top 1.5iem  right 1.5iem      │   max-width: 22.5iem
+ *   │   top-left / bottom-right / bottom-left 同理        │   z-index: _toast
+ *   │   flex column  gap _small  z-index _toast          │
+ *   │                                                     │
+ *   │  ┌───────────────────────────────────────────────┐  │   item:
+ *   │  │ ● icon  title (强)        × close            │  │     flex / gap _small
+ *   │  │         description                            │  │     pad _middle
+ *   │  │   pad _middle  border-radius _small           │  │     border _thin _border
+ *   │  │   bg _bg  border _thin  boxShadow _middle     │  │     boxShadow _middle
+ *   │  │   fontSize _small  lineHeight _normal         │  │     bg _bg
+ *   │  │   icon: color factory 或 _info,fontSize _large│ │     pointer-events: auto
+ *   │  │   title: _semibold fontSize _middle           │  │
+ *   │  │   desc:  _textSecondary _small  marginTop _tiny│ │
+ *   │  └───────────────────────────────────────────────┘  │
+ *   │  (TransitionGroup: enter translateX(1.25em))       │
+ *   └─────────────────────────────────────────────────────┘
+ *
+ * duration 默认 4500ms,loading=true 默认 0(不自动关)。
+ */
 const props = withDefaults(defineProps<ZNotificationProps>(), {
   placement: 'top-right',
 })
@@ -53,11 +77,6 @@ const emit = defineEmits<ZNotificationEmits>()
 
 const theme = useZTheme()
 
-/**
- * 通知容器盒子模型(iem):
- * - 屏幕边距 offset: 1.5iem(top/bottom + left/right)
- * - max-width: 22.5iem
- */
 const containerClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed
@@ -76,8 +95,8 @@ const containerClass = computed(() =>
   }),
 )
 
-function itemClass(): string {
-  return icss(theme.value, (s) => {
+const itemClass = computed(() =>
+  icss(theme.value, (s) => {
     s.display.flex
     s.gap._small
     s.padding._middle
@@ -91,17 +110,16 @@ function itemClass(): string {
     s.fontSize._small
     s.lineHeight._normal
     s.pointerEvents.auto
-  })
-}
+  }),
+)
 
-function iconClass(item: ZNotificationItem): string {
-  return icss(theme.value, (s) => {
+const iconClass = (item: ZNotificationItem): string =>
+  icss(theme.value, (s) => {
     if (item.color) s.color(item.color)
     else s.color._info
     s.fontSize._large
     s.flexShrink(0)
   })
-}
 
 const titleClass = computed(() =>
   icss(theme.value, (s) => {
@@ -220,7 +238,7 @@ const slideBoundaryClass = computed(() =>
         :leave-to-class="slideBoundaryClass"
         tag="div"
       >
-        <div v-for="item in items" :key="item.id" :class="itemClass()">
+        <div v-for="item in items" :key="item.id" :class="itemClass">
           <span :class="iconClass(item)">
             <component :is="renderIcon(item)" />
           </span>

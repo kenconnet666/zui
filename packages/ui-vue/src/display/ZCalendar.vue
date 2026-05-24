@@ -27,6 +27,31 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌───────────────────────────────────────────────────────┐
+ *   │ ZCalendar root                                        │   flex column
+ *   │   bg: _bg  border _thin solid _border                 │   border-radius: _small
+ *   │   padding: _small  width: fit-content                 │
+ *   │                                                       │
+ *   │  ┌─────────────────────────────────────────────────┐  │
+ *   │  │ header                                          │  │   flex / spaceBetween
+ *   │  │  ◀ prev   {Y 年 M 月}   ▶ next                  │  │   pad _tiny  _semibold
+ *   │  │  nav btn: pad _tiny  hover bg _bgMuted          │  │
+ *   │  └─────────────────────────────────────────────────┘  │
+ *   │  ┌─────────────────────────────────────────────────┐  │
+ *   │  │ grid  display: grid  7 列 × 32px               │  │   gap: _tiny
+ *   │  │  weekday label 行(7 个 _textSecondary _small) │  │
+ *   │  │  ┌──┐┌──┐┌──┐┌──┐┌──┐┌──┐┌──┐                  │  │
+ *   │  │  │..││..││..││..││..││..││..│ × 6 周           │  │   day cell:
+ *   │  │  └──┘└──┘└──┘└──┘└──┘└──┘└──┘                  │  │     height 2iem
+ *   │  │  selected → bg _primary,color _bg              │  │     border-radius _tiny
+ *   │  │  today → outline currentColor,color _primary   │  │     fontSize _small
+ *   │  │  outOfMonth → color _textSecondary             │  │
+ *   │  └─────────────────────────────────────────────────┘  │
+ *   └───────────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZCalendarProps>(), {
   firstDayOfWeek: 0,
 })
@@ -177,11 +202,7 @@ const weekdayClass = computed(() =>
   }),
 )
 
-/**
- * 日历单元格盒子模型(iem):
- * - height: 2iem(单格高度,配合外层 32px 列宽形成近似正方形格子)
- */
-function dayClass(d: { key: string; outOfMonth: boolean }): string {
+const dayClass = (d: { key: string; outOfMonth: boolean }): string => {
   const isSelected = props.value === d.key
   const isToday = todayKey === d.key
   return icss(theme.value, (s) => {

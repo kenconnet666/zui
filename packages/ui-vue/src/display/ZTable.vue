@@ -100,6 +100,39 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applySizeProp } from '../_internal/size-prop'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────────────┐
+ *   │ <table>                                                  │   width: 100%
+ *   │   borderCollapse: collapse                               │   fontSize: _middle
+ *   │   bordered=true → border _thin solid _border             │   bg: _bg
+ *   │                                                          │
+ *   │  ┌────────────────────────────────────────────────────┐  │
+ *   │  │ <thead>  bg: _bgMuted  fontWeight: _semibold       │  │
+ *   │  │  ┌──────────────────────────────────────────────┐  │  │
+ *   │  │  │ <th> cell                                    │  │  │
+ *   │  │  │   pad-y: 0.375 / 0.625 / 0.875iem(size 档) │  │  │
+ *   │  │  │   pad-x: _middle                             │  │  │
+ *   │  │  │   sortable → cursor pointer + 排序图标       │  │  │
+ *   │  │  └──────────────────────────────────────────────┘  │  │
+ *   │  │  selectable 首列 <th>: width 2iem,pad-x _small    │  │
+ *   │  └────────────────────────────────────────────────────┘  │
+ *   │  ┌────────────────────────────────────────────────────┐  │
+ *   │  │ <tbody>                                            │  │
+ *   │  │  ┌──────────────────────────────────────────────┐  │  │
+ *   │  │  │ <tr> row  border-t: _thin solid _border      │  │  │
+ *   │  │  │   selected → bg _primary.alpha(8)            │  │  │
+ *   │  │  │   striped 偶 → bg _bgMuted.alpha(50)         │  │  │
+ *   │  │  │   hover → bg _primary.alpha(4)               │  │  │
+ *   │  │  │  ┌────────────────────────────────────────┐  │  │  │
+ *   │  │  │  │ <td> cell  (同 thead cell padding)     │  │  │  │
+ *   │  │  │  └────────────────────────────────────────┘  │  │  │
+ *   │  │  └──────────────────────────────────────────────┘  │  │
+ *   │  │  empty row: pad _large,fontSize _small,centered  │  │
+ *   │  └────────────────────────────────────────────────────┘  │
+ *   └──────────────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZTableProps<T>>(), {
   rowKey: 'id',
   bordered: false,
@@ -293,8 +326,8 @@ const sortableHeadClass = computed(() =>
   }),
 )
 
-function sortIconClass(active: boolean): string {
-  return icss(theme.value, (s) => {
+const sortIconClass = (active: boolean): string =>
+  icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.marginLeft._tiny
@@ -302,7 +335,6 @@ function sortIconClass(active: boolean): string {
     else s.color._textSecondary
     s.opacity(active ? 1 : 0.6)
   })
-}
 
 const emptyClass = computed(() =>
   icss(theme.value, (s) => {

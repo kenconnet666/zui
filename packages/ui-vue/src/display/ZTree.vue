@@ -41,6 +41,28 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌────────────────────────────────────────────────────┐
+ *   │ ZTree root  flex column / _text / fontSize _middle │
+ *   │                                                    │
+ *   │  ┌─────────────────────────────────────────────┐   │
+ *   │  │ node row(每个 visibleNode)                │   │   pad-y: _tiny
+ *   │  │   pad-l: 0.5iem + depth * 1iem(层级缩进) │   │   pad-r: _small
+ *   │  │   pad-r: _small,border-radius _tiny        │   │   selected:
+ *   │  │   flex / center / gap _tiny                 │   │     bg _primary.alpha(8)
+ *   │  │                                             │   │     color _primary
+ *   │  │  ┌────┐ ┌─────────┐                         │   │   hover(非 disabled):
+ *   │  │  │ ▶  │ │ label   │                         │   │     bg _textSecondary.alpha(8)
+ *   │  │  │1iem│ │ #text   │                         │   │
+ *   │  │  └────┘ └─────────┘                         │   │   arrow: 1iem 正方形
+ *   │  │   ↑                                         │   │     transform rotate 0/90
+ *   │  │   有子节点 chevron(旋转) / 无 spacer 占位 │   │     无子: spacer 1iem 宽
+ *   │  └─────────────────────────────────────────────┘   │
+ *   │  (扁平化展开后逐行渲染,disabled → opacity _dim)  │
+ *   └────────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZTreeProps>(), {
   expandedKeys: () => [],
   selectedKey: null,
@@ -77,7 +99,7 @@ const rootClass = computed(() =>
   }),
 )
 
-function nodeRowClass(node: ZTreeNode, depth: number): string {
+const nodeRowClass = (node: ZTreeNode, depth: number): string => {
   const isSelected = props.selectedKey === node.key
   return icss(theme.value, (s) => {
     s.display.flex
@@ -104,10 +126,6 @@ function nodeRowClass(node: ZTreeNode, depth: number): string {
   })
 }
 
-/**
- * 展开/收起箭头图标盒子模型(iem):
- * - width/height: 1iem,正方形(放置 chevron 旋转动画)
- */
 const arrowClass = (expanded: boolean): string =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
@@ -122,9 +140,6 @@ const arrowClass = (expanded: boolean): string =>
     s.transform(expanded ? 'rotate(90deg)' : 'rotate(0deg)')
   })
 
-/**
- * 无子节点时的占位:width = 1iem(与 arrow 同宽,保证层级对齐)。
- */
 const arrowSpacerClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineBlock

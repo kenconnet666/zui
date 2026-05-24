@@ -41,10 +41,36 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────────┐
+ *   │ ZSteps root  flex(row 或 column)  gap _middle      │   color: _text / fontSize _small
+ *   │                                                      │
+ *   │  step(每项 flex-grow 1 在 horizontal):              │
+ *   │  ┌──────────────────────────────────────────────┐    │
+ *   │  │ ● indicator     title (semibold _text)       │    │   indicator:
+ *   │  │ 2iem            description (_textSecondary) │    │     width/height 2iem
+ *   │  │ 正圆             _small                       │    │     border-radius _full
+ *   │  │ border _thin                                  │    │     border _thin solid
+ *   │  │ finish: bg _success / 前景 _bg + ✓ check     │    │
+ *   │  │ process: bg currentColor(默认 _primary)+ 序号│   │   gap _small
+ *   │  │ error:  bg _danger / 前景 _bg + × close      │    │   align: vertical → flexStart
+ *   │  │ wait:   transparent / _textSecondary / _border│   │          horizontal → center
+ *   │  └──────────────────────────────────────────────┘    │
+ *   │  (循环 items.length 个)                             │
+ *   └──────────────────────────────────────────────────────┘
+ *
+ * stepState 由 idx vs current + errored 决定 4 态。
+ */
 const props = withDefaults(defineProps<ZStepsProps>(), {
   current: 0,
   vertical: false,
   errored: false,
+  // 当前步色默认 `_primary`(`errored=true` 时被忽略,改走 `_danger`)
+  currentColor: (c: Chain<ZuiSchema>['color']) => {
+    c._primary
+  },
 })
 
 const theme = useZTheme()
@@ -68,29 +94,18 @@ const rootClass = computed(() =>
   }),
 )
 
-function stepClass(): string {
-  return icss(theme.value, (s) => {
+const stepClass = computed(() =>
+  icss(theme.value, (s) => {
     s.display.flex
     s.alignItems(props.vertical ? 'flex-start' : 'center')
     s.gap._small
     s.flexGrow(props.vertical ? 0 : 1)
     s.minWidth.px(0)
-  })
-}
+  }),
+)
 
-/**
- * 步骤圆形指示器盒子模型(iem):
- * - width/height: 2iem,正圆
- * - border: _thin
- *
- * 颜色规则:
- * - finish → `_success` 背景 + `_bg` 前景
- * - process → `currentColor` factory(默认 `_primary`)填充背景 + `_bg` 前景
- * - error → `_danger` 背景 + `_bg` 前景
- * - wait → 透明背景 + `_textSecondary` 前景 + `_border` 边框
- */
-function indicatorClass(state: StepState): string {
-  return icss(theme.value, (s) => {
+const indicatorClass = (state: StepState): string =>
+  icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -111,12 +126,8 @@ function indicatorClass(state: StepState): string {
       s.color._bg
       s.borderColor.transparent
     } else if (state === 'process') {
-      // 当前步:用户 currentColor factory 优先;否则默认 _primary
-      if (props.currentColor) {
-        props.currentColor(s.backgroundColor as unknown as Chain<ZuiSchema>['color'])
-      } else {
-        s.backgroundColor._primary
-      }
+      // 当前步:currentColor factory(默认 `_primary`,从 withDefaults 提供)桥接到 backgroundColor carrier
+      props.currentColor(s.backgroundColor as unknown as Chain<ZuiSchema>['color'])
       s.color._bg
       s.borderColor.transparent
     } else {
@@ -125,7 +136,6 @@ function indicatorClass(state: StepState): string {
       s.borderColor._border
     }
   })
-}
 
 const titleWrapClass = computed(() =>
   icss(theme.value, (s) => {
@@ -154,7 +164,7 @@ const errorIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
 
 <template>
   <div :class="rootClass" role="list">
-    <div v-for="(item, i) in items" :key="i" :class="stepClass()" role="listitem">
+    <div v-for="(item, i) in items" :key="i" :class="stepClass" role="listitem">
       <span :class="indicatorClass(stepState(i))">
         <component v-if="stepState(i) === 'finish'" :is="checkIcon" />
         <component v-else-if="stepState(i) === 'error'" :is="errorIcon" />

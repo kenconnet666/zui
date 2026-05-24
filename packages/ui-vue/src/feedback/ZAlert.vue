@@ -62,10 +62,34 @@ import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌─────────────────────────────────────────────────────┐
+ *   │ ZAlert root                                         │   flex / alignFlexStart / gap _small
+ *   │   padding: _small  border-radius: _small            │   border _thin solid currentColor
+ *   │   color: 用户 color factory 或 _info                │   position: relative / overflow hidden
+ *   │                                                     │   ::before: bg currentColor opacity 0.08
+ *   │                                                     │     (8% 主色叠层背景,不影响文字)
+ *   │  ┌─────┐  ┌────────────────────────┐  ┌────────┐   │
+ *   │  │ icon│  │ body                   │  │ close  │   │   icon(showIcon=true,条件渲染):
+ *   │  │     │  │  title(条件)         │  │ (条件) │   │     inline-flex / fontSize _middle
+ *   │  │  i  │  │  description(条件)   │  │   ×    │   │     #icon slot 覆盖
+ *   │  │     │  │  默认 slot             │  │        │   │   body:
+ *   │  │ _mid│  │   color: _text         │  │ _small │   │     flex-grow 1 / color _text
+ *   │  │     │  │   fontSize: _small     │  │        │   │     fontSize _small lineHeight _normal
+ *   │  └─────┘  └────────────────────────┘  └────────┘   │   close(closable=true,条件):
+ *   │                                                     │     inline-flex / pad _tiny
+ *   └─────────────────────────────────────────────────────┘     hover bg _textSecondary.alpha(8)
+ */
 const props = withDefaults(defineProps<ZAlertProps>(), {
   showIcon: true,
   closable: false,
   tag: 'div',
+  // 警示色默认 `_info`(常用覆盖:`_success` / `_warning` / `_danger`)
+  color: (c: Chain<ZuiSchema>['color']) => {
+    c._info
+  },
 })
 
 const emit = defineEmits<ZAlertEmits>()
@@ -83,9 +107,8 @@ const rootClass = computed(() =>
     s.gap._small
     s.position.relative
     s.overflow.hidden
-    // color factory 决定文字 + 边框色
-    if (props.color) s.color(props.color)
-    else s.color._info
+    // color factory 决定文字 + 边框色(默认 `_info`,从 withDefaults 提供)
+    s.color(props.color)
     s.borderColor.currentColor
     // 背景走 ::before 伪元素 8% currentColor 叠层(避免 backgroundColor.alpha 不可链式问题)
     s._before((b) => {

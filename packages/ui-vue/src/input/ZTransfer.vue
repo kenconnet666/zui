@@ -37,6 +37,36 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────────────┐
+ *   │ ZTransfer root  flex / center / gap _middle              │   color: _text / fontSize _small
+ *   │                                                          │
+ *   │  ┌──────────────┐    ┌────┐    ┌──────────────┐         │
+ *   │  │ left panel   │    │ →  │    │ right panel  │         │   panel:
+ *   │  │  width 12.5iem│    │ ←  │    │  width 12.5iem│         │     width: 12.5iem
+ *   │  │  border _thin│    │_2iem    │  border _thin│         │     border _thin _border
+ *   │  │  border-radius│    │ 圆角│    │  border-radius│         │     border-radius _small
+ *   │  │   _small     │    │_tiny│    │   _small     │         │     flex column
+ *   │  │  bg _bg      │    │ btn │    │  bg _bg      │         │
+ *   │  │              │    └────┘    │              │         │   panel head:
+ *   │  │ ┌──────────┐ │   arrow btn: │ ┌──────────┐ │         │     pad _small
+ *   │  │ │ head     │ │   width/h 2iem│ │ head     │ │         │     bg _bgMuted
+ *   │  │ │ pad _small│ │   ←→ icons   │ │ pad _small│ │         │     fontWeight _semibold
+ *   │  │ │ bg _bgMutd│ │              │ │ bg _bgMutd│ │         │
+ *   │  │ │ _semibold │ │              │ │ _semibold │ │         │   list:
+ *   │  │ │ border-b _thin              │ │ border-b _thin│         │     max-height 15iem
+ *   │  │ └──────────┘ │              │ └──────────┘ │         │     overflow-y auto
+ *   │  │ ┌──────────┐ │              │ ┌──────────┐ │         │     pad _tiny
+ *   │  │ │ list     │ │              │ │ list     │ │         │
+ *   │  │ │ max-h 15 │ │              │ │ max-h 15 │ │         │   item row:
+ *   │  │ │ overflow │ │              │ │ overflow │ │         │     checkbox + label
+ *   │  │ │ pad _tiny │ │              │ │ pad _tiny │ │         │     checked: bg _primary.alpha(8)
+ *   │  │ └──────────┘ │              │ └──────────┘ │         │
+ *   │  └──────────────┘              └──────────────┘         │
+ *   └──────────────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZTransferProps>(), {
   targetKeys: () => [],
   titles: () => ['源', '目标'],
@@ -98,12 +128,6 @@ const rootClass = computed(() =>
   }),
 )
 
-/**
- * 左右面板盒子模型(iem):
- * - width: 12.5iem,固定宽
- * - border: _thin,圆角 _small
- * - 内部纵向布局:head + list
- */
 const panelClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.flex
@@ -129,11 +153,6 @@ const panelHeadClass = computed(() =>
   }),
 )
 
-/**
- * 列表容器盒子模型(iem):
- * - maxHeight: 15iem,超出滚动
- * - padding: _tiny
- */
 const listClass = computed(() =>
   icss(theme.value, (s) => {
     s.maxHeight.iem(15)
@@ -142,8 +161,8 @@ const listClass = computed(() =>
   }),
 )
 
-function itemRowClass(checked: boolean, disabled: boolean): string {
-  return icss(theme.value, (s) => {
+const itemRowClass = (checked: boolean, disabled: boolean): string =>
+  icss(theme.value, (s) => {
     s.display.flex
     s.alignItems.center
     s.gap._tiny
@@ -159,7 +178,6 @@ function itemRowClass(checked: boolean, disabled: boolean): string {
         if (!checked) h2.backgroundColor._textSecondary.alpha(8)
       })
   })
-}
 
 const arrowsClass = computed(() =>
   icss(theme.value, (s) => {
@@ -169,13 +187,8 @@ const arrowsClass = computed(() =>
   }),
 )
 
-/**
- * 中间方向按钮盒子模型(iem):
- * - width/height: 2iem,正方形
- * - border: _thin,圆角 _tiny
- */
-function arrowBtnClass(enabled: boolean): string {
-  return icss(theme.value, (s) => {
+const arrowBtnClass = (enabled: boolean): string =>
+  icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -190,7 +203,6 @@ function arrowBtnClass(enabled: boolean): string {
     s.color(enabled ? '_primary' : '_textSecondary')
     if (!enabled) s.opacity._dim
   })
-}
 
 const emptyClass = computed(() =>
   icss(theme.value, (s) => {

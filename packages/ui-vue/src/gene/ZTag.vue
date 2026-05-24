@@ -59,6 +59,24 @@ import { applySizeProp } from '../_internal/size-prop'
 import { BuiltinIcons } from './icons'
 import ZIcon from './ZIcon.vue'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────┐
+ *   │ ZTag                                     │   inline-flex,gap: _tiny
+ *   │   small : pad-y 0.125iem  fontSize _tiny│   pad-x: _small(固定)
+ *   │   middle: pad-y 0.25iem   fontSize _small  border-radius:
+ *   │   large : pad-y 0.375iem  fontSize _middle  round=true → _full
+ *   │                                          │   round=false → 0.25iem
+ *   │  ┌─────────┐ ┌────────────┐             │   border-width: _thin
+ *   │  │  slot   │ │ close btn  │(closable)   │
+ *   │  │ default │ │ ZIcon close│             │
+ *   │  └─────────┘ └────────────┘             │
+ *   └──────────────────────────────────────────┘
+ *
+ * 3 个 variant: filled(bg color + 反色文字) / outlined(透明 bg + 主色边框文字) /
+ * soft(主色 alpha(12) 浅 bg + 主色文字)。
+ */
 const props = withDefaults(defineProps<ZTagProps>(), {
   variant: 'soft',
   size: TAG_SIZE_MAP.middle,

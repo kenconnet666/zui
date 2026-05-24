@@ -47,6 +47,10 @@ const props = withDefaults(defineProps<ZSpacerProps>(), {
   grow: 1,
   shrink: 1,
   tag: 'div',
+  // flex-basis 默认 `auto`(占位推开行为)
+  basis: (b: Chain<ZuiSchema>['flexBasis']) => {
+    b.auto
+  },
 })
 
 const theme = useZTheme()
@@ -55,8 +59,8 @@ const className = computed(() =>
   icss(theme.value, (s) => {
     s.flexGrow(props.grow)
     s.flexShrink(props.shrink)
-    if (props.basis) s.flexBasis(props.basis)
-    else s.flexBasis.auto
+    // basis 默认 `auto`(从 withDefaults 提供)
+    s.flexBasis(props.basis)
 
     props.css?.(s)
   }),

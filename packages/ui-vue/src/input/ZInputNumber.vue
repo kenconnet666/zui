@@ -50,6 +50,27 @@ import { applySizeProp } from '../_internal/size-prop'
 import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ wrapper  inline-flex / center                    │   border _thin solid _border
+ *   │   border _thin solid _border  border-radius _small│   border-radius: _small
+ *   │   bg _bg  color _text                            │   bg: _bg
+ *   │   pad-l _small  pad-r _tiny  size 档(同 ZInput)│   pad-l _small,pad-r _tiny
+ *   │   disabled: opacity _dim / bg _bgMuted           │
+ *   │                                                  │
+ *   │  ┌────────────────────────┐  ┌────────────────┐  │   btn group(垂直堆叠):
+ *   │  │ <input> text 数字       │  │ ┌────────────┐ │  │     ┌──────┐
+ *   │  │  inputmode numeric      │  │ │ ▲ inc btn  │ │  │     │ inc  │  width 1iem
+ *   │  │  flex-grow 1            │  │ │ 1iem×0.625 │ │  │     │ 0.625│  height 0.625iem
+ *   │  │  bg transparent         │  │ ├────────────┤ │  │     ├──────┤  hover color _primary
+ *   │  │  outline none           │  │ │ ▼ dec btn  │ │  │     │ dec  │
+ *   │  │  textAlign left         │  │ │ 1iem×0.625 │ │  │     │ 0.625│
+ *   │  └────────────────────────┘  │ └────────────┘ │  │     └──────┘
+ *   │                               └────────────────┘  │
+ *   └──────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZInputNumberProps>(), {
   step: 1,
   disabled: false,
@@ -150,11 +171,6 @@ const btnGroupClass = computed(() =>
   }),
 )
 
-/**
- * 上下增减按钮盒子模型(iem):
- * - width: 1iem
- * - height: 0.625iem(两按钮垂直堆叠 ≈ 1.25iem,与输入高度匹配)
- */
 const btnClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex

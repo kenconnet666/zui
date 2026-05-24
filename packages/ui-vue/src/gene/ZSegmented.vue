@@ -74,7 +74,7 @@ const rootClass = computed(() =>
   }),
 )
 
-function itemClass(opt: ZSegmentedOption): string {
+const itemClass = (opt: ZSegmentedOption): string => {
   const isActive = props.value === opt.value
   const isDisabled = opt.disabled || props.disabled
   return icss(theme.value, (s) => {

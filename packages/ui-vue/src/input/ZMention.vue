@@ -32,6 +32,36 @@ import { computed, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ wrapper  position: relative  width: 100%         │
+ *   │                                                  │
+ *   │  ┌────────────────────────────────────────────┐  │
+ *   │  │ <textarea>                                 │  │   rows 默认 3
+ *   │  │  border _thin solid _border  border-radius _small│  pad _small
+ *   │  │  pad _small  bg _bg  color _text          │  │   bg _bg
+ *   │  │  fontSize _middle  resize vertical        │  │   resize vertical
+ *   │  │  width 100%  outline none                 │  │
+ *   │  └────────────────────────────────────────────┘  │
+ *   │                                                  │
+ *   │  ┌────────────────────────────────────────────┐  │   dropdown(@xxx 触发,绝对定位):
+ *   │  │ dropdown(条件渲染,贴在 textarea 下方)   │  │     top 100% / left 0 right 0
+ *   │  │  top 100%  left 0  right 0                │  │     marginTop _tiny
+ *   │  │  marginTop _tiny  border _thin _border    │  │     pad _tiny / max-height 15iem
+ *   │  │  pad _tiny  max-height 15iem               │  │     overflow-y auto
+ *   │  │  boxShadow _middle  border-radius _small  │  │     boxShadow _middle
+ *   │  │  ┌──────────────────────────────────────┐  │  │
+ *   │  │  │ @option string                       │  │  │   option:
+ *   │  │  │   pad _tiny pad-x _small  fontSize _middle│ │     hover bg _primary.alpha(8)
+ *   │  │  │   hover: bg _primary.alpha(8)        │  │  │
+ *   │  │  └──────────────────────────────────────┘  │  │
+ *   │  └────────────────────────────────────────────┘  │
+ *   └──────────────────────────────────────────────────┘
+ *
+ * 输入到 `@` 时(且前置为空白或起首)开启候选,按 currentSegment 过滤。
+ */
 const props = withDefaults(defineProps<ZMentionProps>(), {
   prefix: '@',
   disabled: false,
@@ -124,13 +154,6 @@ const taClass = computed(() =>
   }),
 )
 
-/**
- * mention 候选浮层盒子模型(iem):
- * - 横向贴齐 textarea(left/right: 0)
- * - top: 100%(textarea 正下方)
- * - maxHeight: 15iem,超出滚动
- * - marginTop: _tiny 与 textarea 留间距
- */
 const dropdownClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

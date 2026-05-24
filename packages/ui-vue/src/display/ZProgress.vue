@@ -38,6 +38,34 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyAsBg, getThemeColor } from '../_internal/color-bridge'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   line 模式:
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ track  flex / center / gap _small / width 100%   │
+ *   │  ┌────────────────────────────────────┐ ┌──────┐ │
+ *   │  │ rail  height: 8px(默认 middle)    │ │ text │ │   rail:
+ *   │  │   bg _bgMuted  border-radius _full │ │ N%   │ │     bg _bgMuted,_full
+ *   │  │  ┌──────────────────┐              │ │ _small│ │     size factory 改 height
+ *   │  │  │ fill  width: N%  │              │ └──────┘ │   fill:
+ *   │  │  │ bg: _primary 或 color factory   │          │     bg color factory 或 _primary
+ *   │  │  └──────────────────┘              │          │
+ *   │  └────────────────────────────────────┘          │
+ *   └──────────────────────────────────────────────────┘
+ *
+ *   circle 模式:
+ *   ┌──────────────────────┐
+ *   │ circle root          │   width/height: 100px(默认),size factory 覆盖
+ *   │  inline-flex center  │   SVG viewBox 100x100
+ *   │   ╭─────────────╮    │
+ *   │   │   SVG ring  │    │   track stroke: _bgMuted 8px
+ *   │   │  ┌───────┐  │    │   fill stroke: _primary 8px round
+ *   │   │  │  N%   │  │    │   text(条件): position absolute,_large _semibold
+ *   │   │  └───────┘  │    │
+ *   │   ╰─────────────╯    │
+ *   └──────────────────────┘
+ */
 const props = withDefaults(defineProps<ZProgressProps>(), {
   type: 'line',
   showText: false,

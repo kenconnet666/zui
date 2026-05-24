@@ -37,12 +37,32 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ (页面 / target 容器)                           │
+ *   │                                                  │
+ *   │                                                  │
+ *   │                          ┌──────┐                │   按钮:
+ *   │                          │  ▲  │                │     width/height 2.5iem
+ *   │                          │      │                │     正圆 _full
+ *   │                          │ 2.5  │                │     bg _bg color _primary
+ *   │                          │ iem  │                │     border _thin solid _border
+ *   │                          └──────┘                │     boxShadow _middle
+ *   │                            ↑                     │     fixed,right/bottom factory
+ *   │                            right 1.5iem(默认)  │     hover boxShadow _large
+ *   │                            bottom 3iem(默认)   │
+ *   └──────────────────────────────────────────────────┘
+ *
+ * scrollY >= visibilityHeight 时显示(默认 400px),Teleport to body。
+ */
 const props = withDefaults(defineProps<ZBackTopProps>(), {
   visibilityHeight: 400,
-  right: () => (r: Chain<ZuiSchema>['right']) => {
+  right: (r: Chain<ZuiSchema>['right']) => {
     r.iem(1.5)
   },
-  bottom: () => (b: Chain<ZuiSchema>['bottom']) => {
+  bottom: (b: Chain<ZuiSchema>['bottom']) => {
     b.iem(3)
   },
 })
@@ -79,12 +99,6 @@ onScopeDispose(() => {
   t.removeEventListener('scroll', onScroll)
 })
 
-/**
- * 圆形按钮盒子模型(iem):
- * - width/height: 2.5iem,正圆(borderRadius._full)
- * - border: _thin(由 token 决定)
- * - fixed 定位,默认 right/bottom 用 px 字面量(props 可覆盖)
- */
 const btnClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.fixed

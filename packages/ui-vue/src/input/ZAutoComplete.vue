@@ -43,6 +43,34 @@ import { applySizeProp } from '../_internal/size-prop'
 import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
 import { usePopper, useEscapeStack } from '../_hooks'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ <input>                                          │   border _thin solid _border
+ *   │   border _thin solid _border  border-radius _small│   border-radius: _small
+ *   │   pad-x _small  bg _bg  color _text              │   bg: _bg
+ *   │   size 档: INPUT_SIZE_MAP(small/middle/large)  │   pad-x: _small
+ *   │   width: 100%  outline none                      │   width: 100%
+ *   │   disabled: opacity _dim / bg _bgMuted           │
+ *   └──────────────────────────────────────────────────┘
+ *           │ floating-ui 定位(offset 4)
+ *           ▼
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ dropdown(Teleport body,仅有过滤项时显示)     │   min-width: 8iem
+ *   │   min-width: 8iem  max-height: 15iem            │   max-height: 15iem
+ *   │   pad _tiny  border _thin _border  boxShadow _middle│   overflow-y auto
+ *   │   flex column                                    │
+ *   │  ┌──────────────────────────────────────────┐   │   option:
+ *   │  │ option string                            │   │     pad _tiny pad-x _small
+ *   │  │   pad _tiny pad-x _small  fontSize _middle│  │     hover: bg _primary.alpha(8)
+ *   │  │   hover: bg _primary.alpha(8)            │   │
+ *   │  └──────────────────────────────────────────┘   │
+ *   │  (循环 filtered options)                        │
+ *   └──────────────────────────────────────────────────┘
+ *
+ * filter 默认 includes(input,opt);可自定义。
+ */
 const props = withDefaults(defineProps<ZAutoCompleteProps>(), {
   disabled: false,
   size: INPUT_SIZE_MAP.middle,
@@ -105,12 +133,6 @@ const inputClass = computed(() =>
   }),
 )
 
-/**
- * 候选下拉盒子模型(iem):
- * - minWidth: 8iem(与触发器对齐)
- * - maxHeight: 15iem,超出滚动
- * - padding: _tiny,圆角 _small,middle shadow
- */
 const dropdownClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

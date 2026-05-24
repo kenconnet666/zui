@@ -38,6 +38,10 @@ const props = withDefaults(defineProps<ZBadgeProps>(), {
   dot: false,
   max: 99,
   showZero: false,
+  // 徽标背景默认 `_danger`(角标常用红色)
+  color: (c: Chain<ZuiSchema>['color']) => {
+    c._danger
+  },
 })
 
 const slots = useSlots()
@@ -79,8 +83,8 @@ const badgeClass = computed(() =>
     s.alignItems.center
     s.justifyContent.center
     s.color._bg
-    if (props.color) s.backgroundColor(props.color)
-    else s.backgroundColor._danger
+    // color factory(默认 `_danger`,从 withDefaults 提供)桥接到 backgroundColor carrier
+    s.backgroundColor(props.color)
 
     if (props.dot) {
       s.width.iem(0.5)

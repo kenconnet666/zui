@@ -28,6 +28,31 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyAsBg } from '../_internal/color-bridge'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ ZTimeline root  flex column  fontSize _small     │
+ *   │                                                  │
+ *   │  ┌────────────────────────────────────────────┐  │
+ *   │  │ item  position: relative                   │  │   每项:
+ *   │  │   padding-left: _huge                      │  │     min-height: 2iem
+ *   │  │   padding-bottom: _middle                  │  │     padding-left: _huge
+ *   │  │   min-height: 2iem                         │  │
+ *   │  │                                            │  │
+ *   │  │  ● dot 圆点                                │  │   dot: 0.625iem 正圆
+ *   │  │    width/height: 0.625iem,_full           │  │     left:0,top:0.25iem
+ *   │  │    bg: item.color factory 或 _textSecondary│  │
+ *   │  │                                            │  │
+ *   │  │  │ line 连接线(非最后一项)               │  │   line: 0.125iem 宽
+ *   │  │    width: 0.125iem,bg _border              │  │     left:0.25iem,top:0.75iem→bottom
+ *   │  │                                            │  │
+ *   │  │  title    fontWeight: _semibold,color _text│  │
+ *   │  │  desc     color _textSecondary  _small     │  │
+ *   │  └────────────────────────────────────────────┘  │
+ *   │  (循环 items.length 个)                         │
+ *   └──────────────────────────────────────────────────┘
+ */
 const props = defineProps<ZTimelineProps>()
 
 const theme = useZTheme()
@@ -42,28 +67,17 @@ const rootClass = computed(() =>
   }),
 )
 
-/**
- * 节点行盒子模型(iem):
- * - min-height: 2iem(保证连接线有最小高度)
- */
-function itemClass(): string {
-  return icss(theme.value, (s) => {
+const itemClass = computed(() =>
+  icss(theme.value, (s) => {
     s.position.relative
     s.paddingLeft._huge
     s.paddingBottom._middle
     s.minHeight.iem(2)
-  })
-}
+  }),
+)
 
-/**
- * 节点圆点盒子模型(iem):
- * - width/height: 0.625iem,正圆
- * - top: 0.25iem(对齐文字基线)
- *
- * 颜色:用户传 `item.color` factory → 应用到 backgroundColor;否则默认 `_textSecondary`。
- */
-function dotClass(color?: ZTimelineItem['color']): string {
-  return icss(theme.value, (s) => {
+const dotClass = (color?: ZTimelineItem['color']): string =>
+  icss(theme.value, (s) => {
     s.position.absolute
     s.left.px(0)
     s.top.iem(0.25)
@@ -74,24 +88,17 @@ function dotClass(color?: ZTimelineItem['color']): string {
       s.backgroundColor._textSecondary
     }
   })
-}
 
-/**
- * 连接线盒子模型(iem):
- * - width: 0.125iem(线宽)
- * - left: 0.25iem(dot 中心 0.3125iem 减去线宽半值 0.0625iem,使连接线对齐圆点中心)
- * - top: 0.75iem(从 dot 下沿延伸)
- */
-function lineClass(): string {
-  return icss(theme.value, (s) => {
+const lineClass = computed(() =>
+  icss(theme.value, (s) => {
     s.position.absolute
     s.left.iem(0.25)
     s.top.iem(0.75)
     s.bottom.px(0)
     s.width.iem(0.125)
     s.backgroundColor._border
-  })
-}
+  }),
+)
 
 const titleClass = computed(() =>
   icss(theme.value, (s) => {
@@ -110,8 +117,8 @@ const descClass = computed(() =>
 
 <template>
   <div :class="rootClass" role="list">
-    <div v-for="(item, i) in items" :key="i" :class="itemClass()" role="listitem">
-      <span v-if="i < items.length - 1" :class="lineClass()" />
+    <div v-for="(item, i) in items" :key="i" :class="itemClass" role="listitem">
+      <span v-if="i < items.length - 1" :class="lineClass" />
       <span :class="dotClass(item.color)" />
       <div v-if="item.title" :class="titleClass">{{ item.title }}</div>
       <div v-if="item.description" :class="descClass">{{ item.description }}</div>

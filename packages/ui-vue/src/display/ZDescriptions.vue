@@ -53,6 +53,30 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySizeProp } from '../_internal/size-prop'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌────────────────────────────────────────────────────┐
+ *   │ ZDescriptions root  flex column                    │   bordered=true:
+ *   │   color: _text  fontSize: _middle                  │     border _thin solid _border
+ *   │                                                    │     border-radius _small
+ *   │  ┌──────────────────────────────────────────────┐  │     overflow hidden
+ *   │  │ title(条件渲染)                            │  │
+ *   │  │   pad-y _middle/_small  pad-x _middle        │  │   title:
+ *   │  │   fontSize _large  fontWeight _semibold      │  │     bordered → bg _bgMuted
+ *   │  └──────────────────────────────────────────────┘  │     border-b _thin
+ *   │  ┌──────────────────────────────────────────────┐  │
+ *   │  │ grid  display: grid  column 列(默认 3)    │  │   每格 padding(size 档):
+ *   │  │   gridTemplateColumns: repeat(N, minmax(0,1fr))│   small  → _tiny
+ *   │  │  ┌──────┐┌──────┐┌──────┐┌──────┐...        │  │   middle → _small
+ *   │  │  │ label││ value││ label││ value│            │  │   large  → _middle
+ *   │  │  │ _textSecondary │  _text │                 │  │
+ *   │  │  │ _medium    bordered: 单元格 border-r _thin│  │
+ *   │  │  │   bordered: bg _bgMuted │                 │  │
+ *   │  │  └──────┘└──────┘└──────┘└──────┘...        │  │
+ *   │  └──────────────────────────────────────────────┘  │
+ *   └────────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZDescriptionsProps>(), {
   column: 3,
   bordered: false,

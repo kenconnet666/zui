@@ -37,6 +37,28 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────────┐
+ *   │ ZCarousel root                                       │   position: relative
+ *   │   bg: _bgMuted  border-radius: _small                │   overflow: hidden
+ *   │                                                      │
+ *   │  ┌────────────────────────────────────────────────┐  │
+ *   │  │ track  flex  width: total*100%                 │  │   translateX 滑动切换
+ *   │  │  ┌────────┐ ┌────────┐ ┌────────┐             │  │
+ *   │  │  │ slide  │ │ slide  │ │ slide  │  (...)      │  │   各 width: 100%/total
+ *   │  │  │ #default scope { item, index }              │  │
+ *   │  │  └────────┘ └────────┘ └────────┘             │  │
+ *   │  └────────────────────────────────────────────────┘  │
+ *   │                                                      │
+ *   │  ◀ arrow left   width/height: 2iem  圆形 _full      │   left:0.5iem,top:50%
+ *   │  ▶ arrow right  bg: _bg  boxShadow: _small          │   right:0.5iem
+ *   │                                                      │
+ *   │  ●●○○ dots  bottom:0.75iem,flex gap _tiny          │   dot: 0.5iem 圆形
+ *   │                                                      │   active: width 1.25iem 胶囊
+ *   └──────────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZCarouselProps<T>>(), {
   current: 0,
   autoplay: false,
@@ -118,13 +140,8 @@ const slideClass = computed(() =>
   }),
 )
 
-/**
- * 左右箭头盒子模型(iem):
- * - width/height: 2iem,正圆
- * - 距容器边: 0.5iem(left 或 right)
- */
-function arrowClass(side: 'left' | 'right'): string {
-  return icss(theme.value, (s) => {
+const arrowClass = (side: 'left' | 'right'): string =>
+  icss(theme.value, (s) => {
     s.position.absolute
     s.top.pct(50)
     if (side === 'left') s.left.iem(0.5)
@@ -146,11 +163,7 @@ function arrowClass(side: 'left' | 'right'): string {
       h2.boxShadow._middle
     })
   })
-}
 
-/**
- * 指示点容器:bottom = 0.75iem(距底部偏移)。
- */
 const dotsClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute
@@ -163,13 +176,8 @@ const dotsClass = computed(() =>
   }),
 )
 
-/**
- * 指示点盒子模型(iem):
- * - 默认: width/height = 0.5iem,正圆
- * - active: width = 1.25iem(变为胶囊状高亮)
- */
-function dotClass(active: boolean): string {
-  return icss(theme.value, (s) => {
+const dotClass = (active: boolean): string =>
+  icss(theme.value, (s) => {
     s.width.iem(0.5)
     s.height.iem(0.5)
     s.borderRadius._full
@@ -185,7 +193,6 @@ function dotClass(active: boolean): string {
       s.backgroundColor._bg.alpha(50)
     }
   })
-}
 
 const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }))
 const rightIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronRight }))

@@ -89,8 +89,8 @@ const rootClass = computed(() =>
   }),
 )
 
-function headerClass(item: ZCollapseItem, idx: number): string {
-  return icss(theme.value, (s) => {
+const headerClass = (item: ZCollapseItem, idx: number): string =>
+  icss(theme.value, (s) => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.spaceBetween
@@ -117,7 +117,6 @@ function headerClass(item: ZCollapseItem, idx: number): string {
       s.cursor.notAllowed
     }
   })
-}
 
 const bodyClass = computed(() =>
   icss(theme.value, (s) => {

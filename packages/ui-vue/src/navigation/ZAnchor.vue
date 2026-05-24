@@ -78,8 +78,8 @@ const rootClass = computed(() =>
   }),
 )
 
-function linkClass(active: boolean): string {
-  return icss(theme.value, (s) => {
+const linkClass = (active: boolean): string =>
+  icss(theme.value, (s) => {
     s.display.block
     s.padding._tiny
     s.fontSize._small
@@ -97,7 +97,6 @@ function linkClass(active: boolean): string {
       h.color._primary
     })
   })
-}
 </script>
 
 <template>

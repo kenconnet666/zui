@@ -28,6 +28,22 @@ import { computed, onMounted, onScopeDispose, ref, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────┐
+ *   │ <span> root  inline      │   fontFamily: _mono(等宽)
+ *   │   fontFamily: _mono      │   fontWeight: _semibold
+ *   │   fontWeight: _semibold  │   color: _text
+ *   │   fontSize: _large       │   fontSize: _large
+ *   │   color: _text           │
+ *   │                          │
+ *   │   {h}:{m}:{s} 等显示文本 │   format 默认 '{h}:{m}:{s}'
+ *   │   每秒(或每 50ms)刷新  │   占位: {d} 天 / {h} 时 / {m} 分 / {s} 秒
+ *   └──────────────────────────┘
+ *
+ * precision: 'second' → 1s 刷新一次;'ms' → 50ms 刷新一次。归零 emit('finish')。
+ */
 const props = withDefaults(defineProps<ZCountdownProps>(), {
   format: '{h}:{m}:{s}',
   precision: 'second',

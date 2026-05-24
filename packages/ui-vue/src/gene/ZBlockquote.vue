@@ -26,7 +26,12 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
-const props = defineProps<ZBlockquoteProps>()
+const props = withDefaults(defineProps<ZBlockquoteProps>(), {
+  // border-left 颜色默认 `_primary`(可被 user factory 覆盖)
+  color: (c: Chain<ZuiSchema>['color']) => {
+    c._primary
+  },
+})
 
 const theme = useZTheme()
 
@@ -45,12 +50,8 @@ const rootClass = computed(() =>
     s.paddingBottom._small
     s.borderLeftWidth.px(4)
     s.borderLeftStyle.solid
-    // border-left 用 user color 或 _primary;不影响文字
-    if (props.color) {
-      s.borderLeftColor(props.color)
-    } else {
-      s.borderLeftColor._primary
-    }
+    // border-left 用 user color factory(默认 `_primary`,从 withDefaults 提供),桥接到 borderLeftColor;不影响文字
+    s.borderLeftColor(props.color)
     props.css?.(s)
   }),
 )

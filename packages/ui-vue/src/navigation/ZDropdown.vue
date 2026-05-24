@@ -49,6 +49,36 @@ import { useZTheme } from '../provider'
 import { usePopper, useEscapeStack } from '../_hooks'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌─────────────────┐
+ *   │ trigger wrap    │   inline-flex(包裹 default slot)
+ *   │ #default slot   │
+ *   └─────────────────┘
+ *           │ floating-ui(offset 4)
+ *           ▼
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ menu(Teleport body)                            │   min-width: 8iem
+ *   │   min-width: 8iem                               │   bg _bg / color _text
+ *   │   border _thin solid _border                    │   border _thin _border
+ *   │   border-radius _small  boxShadow _middle       │   border-radius _small
+ *   │   pad _tiny  flex column                        │   boxShadow _middle
+ *   │   z-index _popover                              │
+ *   │                                                  │
+ *   │  ┌────────────────────────────────────────────┐  │
+ *   │  │ menuitem  flex / center / gap _small       │  │   menu item:
+ *   │  │   pad _tiny pad-x _small  border-radius _tiny│ │     pad _tiny pad-x _small
+ *   │  │   fontSize _middle                          │  │     fontSize _middle
+ *   │  │   danger=true → color _danger              │  │     danger → color _danger
+ *   │  │   disabled → opacity _dim,cursor notAllowed│  │     hover: bg _textSecondary.alpha(8)
+ *   │  │   hover: bg _textSecondary.alpha(8)        │  │
+ *   │  └────────────────────────────────────────────┘  │
+ *   │  (循环 items)                                    │
+ *   └──────────────────────────────────────────────────┘
+ *
+ * trigger: click / hover / manual。
+ */
 const props = withDefaults(defineProps<ZDropdownProps>(), {
   placement: 'bottom-start',
   trigger: 'click',
@@ -123,12 +153,6 @@ const triggerWrapClass = computed(() =>
   }),
 )
 
-/**
- * 菜单容器盒子模型(iem):
- * - min-width: 8iem
- * - border: _thin
- * - padding: _tiny
- */
 const menuClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute
@@ -150,8 +174,8 @@ const menuClass = computed(() =>
 )
 const sxMenuAttrs = computed(() => extractSxAttrs(props.sxMenu))
 
-function itemClass(item: ZDropdownItem): string {
-  return icss(theme.value, (s) => {
+const itemClass = (item: ZDropdownItem): string =>
+  icss(theme.value, (s) => {
     s.display.flex
     s.alignItems.center
     s.gap._small
@@ -173,7 +197,6 @@ function itemClass(item: ZDropdownItem): string {
     }
     applySx(s, props.sxItem)
   })
-}
 const sxItemAttrs = computed(() => extractSxAttrs(props.sxItem))
 </script>
 

@@ -53,6 +53,29 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌─────────────────────────────────────┐
+ *   │ ZCard                               │   bg: _bg
+ *   │   border-radius: _middle            │   bordered=true → border _thin solid _border
+ *   │   overflow: hidden                  │   bordered=false → boxShadow _small
+ *   │                                     │   hoverable=true → hover boxShadow _middle
+ *   │  ┌───────────────────────────────┐  │
+ *   │  │ head(条件渲染)               │   padding: _middle
+ *   │  │  title / #head    + #extra    │   border-b: _thin solid _border
+ *   │  │  fontWeight: _semibold        │   flex / spaceBetween / gap _small
+ *   │  └───────────────────────────────┘  │
+ *   │  ┌───────────────────────────────┐  │
+ *   │  │ body(默认 slot)              │   padding: _middle
+ *   │  │  color: _text                 │
+ *   │  └───────────────────────────────┘  │
+ *   │  ┌───────────────────────────────┐  │
+ *   │  │ foot(条件渲染)               │   padding: _middle
+ *   │  │  #foot                        │   border-t: _thin solid _border
+ *   │  └───────────────────────────────┘  │
+ *   └─────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZCardProps>(), {
   bordered: true,
   hoverable: false,

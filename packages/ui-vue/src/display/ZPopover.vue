@@ -44,6 +44,33 @@ import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { usePopper, useEscapeStack } from '../_hooks'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌─────────────────┐
+ *   │ trigger wrap    │   inline-flex(包裹 default slot)
+ *   │ #default slot   │
+ *   └─────────────────┘
+ *           │ floating-ui 定位(offset 8)
+ *           ▼
+ *   ┌─────────────────────────────────────────┐
+ *   │ popper(Teleport to body)              │   bg: _bg
+ *   │   min-width: 8iem(避免极窄)           │   color: _text
+ *   │   max-width: 30iem(防超长横铺)        │   border: _thin solid _border
+ *   │   padding: _middle                      │   border-radius: _small
+ *   │   border-radius: _small                 │   boxShadow: _middle
+ *   │   z-index: _popover                     │
+ *   │  ┌─────────────────────────────────┐    │
+ *   │  │ title(条件 title 或 #title)   │    │   fontWeight: _semibold
+ *   │  │  fontSize: _middle              │    │   marginBottom: _tiny
+ *   │  └─────────────────────────────────┘    │
+ *   │  ┌─────────────────────────────────┐    │
+ *   │  │ #content slot                   │    │
+ *   │  └─────────────────────────────────┘    │
+ *   └─────────────────────────────────────────┘
+ *
+ * trigger: click / hover / manual;click 模式接 onClickOutside;visible 时 ESC 关。
+ */
 const props = withDefaults(defineProps<ZPopoverProps>(), {
   placement: 'bottom',
   trigger: 'click',
@@ -128,12 +155,6 @@ const triggerWrapClass = computed(() =>
 )
 const sxTriggerAttrs = computed(() => extractSxAttrs(props.sxTrigger))
 
-/**
- * 弹层内容盒子模型(iem):
- * - minWidth: 8iem(避免极窄)
- * - maxWidth: 30iem(防止超长内容横铺)
- * - padding: _middle,圆角 _small,middle shadow
- */
 const popperClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute

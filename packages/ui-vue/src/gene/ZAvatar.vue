@@ -47,6 +47,20 @@ import { computed, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────┐
+ *   │ ZAvatar          │   width: 2.5iem(默认 middle,可改)
+ *   │ inline-flex      │   height: 2.5iem(自动镜像 width,正方形)
+ *   │ border-radius:   │   round 模式: _full(圆形,默认)
+ *   │   _full / 0.375i │   square 模式: 0.375iem
+ *   │ overflow: hidden │   bg: _textSecondary(text/icon 模式)
+ *   │                  │   fontSize: 0.875iem(text 模式)
+ *   └──────────────────┘
+ *
+ * 内容优先级:default slot > img(src) > text(首字母缩写) > 占位。
+ */
 const props = withDefaults(defineProps<ZAvatarProps>(), {
   alt: '',
   // 默认等价旧 middle 档位:2.5iem(40px,iem 联动)
@@ -54,6 +68,10 @@ const props = withDefaults(defineProps<ZAvatarProps>(), {
     w.iem(2.5)
   },
   square: false,
+  // 文字 / icon 模式背景色默认 `_textSecondary`
+  color: (c: Chain<ZuiSchema>['color']) => {
+    c._textSecondary
+  },
 })
 
 const theme = useZTheme()
@@ -78,8 +96,8 @@ const rootClass = computed(() =>
     if (props.square) s.borderRadius.iem(0.375)
     else s.borderRadius._full
     if (!showImage.value) {
-      if (props.color) s.backgroundColor(props.color)
-      else s.backgroundColor._textSecondary
+      // color factory(默认 `_textSecondary`,从 withDefaults 提供)桥接到 backgroundColor carrier
+      s.backgroundColor(props.color)
       s.color._bg
       s.fontWeight._semibold
       s.fontSize.iem(0.875)

@@ -32,8 +32,34 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ ZResult root  flex column / center / center      │   gap: _small
+ *   │   padding: _huge  fontSize: _middle              │   color: _text
+ *   │                                                  │
+ *   │  ┌─────────┐                                     │   icon wrap:
+ *   │  │  icon   │   fontSize 4iem(撑起 icon 字体)  │     inline-flex
+ *   │  │  4iem   │   color: _info(默认),可被覆盖   │     fontSize 4iem
+ *   │  └─────────┘                                     │
+ *   │                                                  │
+ *   │  title       fontSize _huge / _semibold / centered│
+ *   │                                                  │
+ *   │  description max-width: 30iem(限段落宽度)      │   fontSize _middle
+ *   │              color _textSecondary / centered     │
+ *   │                                                  │
+ *   │  ┌──────────────────────────────┐                │   actions(default slot):
+ *   │  │ [btn] [btn] flex gap _small  │                │     marginTop _small
+ *   │  └──────────────────────────────┘                │
+ *   └──────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZResultProps>(), {
   notFound: false,
+  // 大图标颜色默认 `_info`(可被 user factory 覆盖)
+  color: (c: Chain<ZuiSchema>['color']) => {
+    c._info
+  },
 })
 
 const theme = useZTheme()
@@ -52,18 +78,10 @@ const rootClass = computed(() =>
   }),
 )
 
-/**
- * 大图标 wrap 盒子模型(iem):font-size = 4iem(撑起 icon 字体)。
- * color 默认 `_info`,可被 `color` factory 覆盖。
- */
 const iconWrapClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
-    if (props.color) {
-      props.color(s.color)
-    } else {
-      s.color._info
-    }
+    s.color(props.color)
     s.fontSize.iem(4)
   }),
 )
@@ -77,10 +95,6 @@ const titleClass = computed(() =>
   }),
 )
 
-/**
- * 描述文字盒子模型(iem):
- * - max-width: 30iem(限制段落宽度便于阅读)
- */
 const descClass = computed(() =>
   icss(theme.value, (s) => {
     s.fontSize._middle

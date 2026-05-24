@@ -43,6 +43,37 @@ import { useZTheme } from '../provider'
 import { usePopper, useEscapeStack } from '../_hooks'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ trigger  inline-flex / center / gap _tiny        │   min-width: 12iem(路径文本通常较长)
+ *   │   border _thin solid (_primary open / _border)   │   pad-y: 0.375iem × 2 = 0.75iem
+ *   │   pad-y 0.375iem  pad-x _small                   │   pad-x: _small
+ *   │   bg _bg color _text  fontSize _middle           │   border-radius: _small
+ *   │   border-radius _small                           │
+ *   │  ┌──────────────────────────┐ ┌────────┐         │
+ *   │  │ 文本(路径 separator)   │ │ arrow ▼│         │   text: 无值 _textSecondary
+ *   │  │  无选中 _textSecondary  │ │ rotate │         │
+ *   │  └──────────────────────────┘ └────────┘         │
+ *   └──────────────────────────────────────────────────┘
+ *           │ floating-ui(offset 4)
+ *           ▼
+ *   ┌──────────────────────────────────────────────────────┐
+ *   │ popper(Teleport body)flex 横向多列                │   bg _bg / border _thin _border
+ *   │   ┌─────────┐ ┌─────────┐ ┌─────────┐               │   boxShadow _middle
+ *   │   │ col 0   │ │ col 1   │ │ col 2 …  │              │   border-radius _small
+ *   │   │ min 8iem│ │ min 8iem│ │ min 8iem │              │   每列:
+ *   │   │ max 17.5│ │ max 17.5│ │ max 17.5 │              │     min-width 8iem
+ *   │   │ pad _tiny│ │border-r │ │ 最后无 br│              │     max-height 17.5iem
+ *   │   │ border-r │ │ _thin   │ │           │              │     overflow-y auto
+ *   │   │  ┌────┐ │ │  ┌────┐  │ │           │              │     border-r _thin _border
+ *   │   │  │opt │ │ │  │opt │  │ │           │              │
+ *   │   │  │ ▶ │ │ │  │ ▶ │  │ │           │              │   option:
+ *   │   │  └────┘ │ │  └────┘  │ │           │              │     active: bg _primary.alpha(8)
+ *   │   └─────────┘ └─────────┘ └─────────┘               │     非叶子右侧 chevronRight
+ *   └──────────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZCascaderProps>(), {
   placeholder: '请选择',
   disabled: false,
@@ -186,12 +217,6 @@ const popperClass = computed(() =>
   }),
 )
 
-/**
- * 单列(每一层 children)盒子模型(iem):
- * - minWidth: 8iem,与 ZSelect 下拉同档
- * - maxHeight: 17.5iem,超出滚动
- * - 每列右侧 _thin 分隔线,最后一列除外
- */
 const columnClass = computed(() =>
   icss(theme.value, (s) => {
     s.minWidth.iem(8)
@@ -207,8 +232,8 @@ const columnClass = computed(() =>
   }),
 )
 
-function optionClass(opt: ZCascaderOption, isActive: boolean): string {
-  return icss(theme.value, (s) => {
+const optionClass = (opt: ZCascaderOption, isActive: boolean): string =>
+  icss(theme.value, (s) => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.spaceBetween
@@ -232,7 +257,6 @@ function optionClass(opt: ZCascaderOption, isActive: boolean): string {
     }
     if (opt.disabled) s.opacity._dim
   })
-}
 
 const arrowClass = computed(() =>
   icss(theme.value, (s) => {

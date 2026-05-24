@@ -67,10 +67,44 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { lockBodyScroll } from '../_internal/body-scroll-lock'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌─────────────────────────────────────────────────────┐
+ *   │ mask  position fixed inset 0  z-index _modal        │   bg _overlayBg.alpha(50)
+ *   │   flex / center(centered=true) 或 flex-start       │
+ *   │                                                     │
+ *   │   ┌───────────────────────────────────────────┐     │
+ *   │   │ dialog                                    │     │   width: 30iem(默认,可改)
+ *   │   │   max-w: 100vw - 2iem(留白)             │     │   max-h: 100vh - 2iem
+ *   │   │   border-radius: _large                   │     │   bg: _bg
+ *   │   │   boxShadow: _huge                        │     │   z-index: _modal (+1)
+ *   │   │   flex column                             │     │
+ *   │   │                                           │     │
+ *   │   │  ┌─────────────────────────────────────┐  │     │   head(条件渲染):
+ *   │   │  │ head: title  + close btn           │  │     │     padding _middle
+ *   │   │  │   pad _middle  border-b _thin       │  │     │     border-b _thin _border
+ *   │   │  │   fontSize _large  _semibold        │  │     │
+ *   │   │  └─────────────────────────────────────┘  │     │
+ *   │   │  ┌─────────────────────────────────────┐  │     │
+ *   │   │  │ body: #default                      │  │     │   body:
+ *   │   │  │   pad _middle  flex-grow 1          │  │     │     padding _middle
+ *   │   │  │   overflow-y: auto                  │  │     │     overflow-y auto
+ *   │   │  └─────────────────────────────────────┘  │     │
+ *   │   │  ┌─────────────────────────────────────┐  │     │
+ *   │   │  │ foot(条件,#foot slot)            │  │     │   foot(条件渲染):
+ *   │   │  │   pad _middle  border-t _thin       │  │     │     padding _middle
+ *   │   │  │   flex-end  gap _small              │  │     │     border-t _thin _border
+ *   │   │  └─────────────────────────────────────┘  │     │
+ *   │   └───────────────────────────────────────────┘     │
+ *   └─────────────────────────────────────────────────────┘
+ *
+ * ESC 关 / mask 点击关(maskClosable) / body scroll lock(多实例共享)。
+ */
 const props = withDefaults(defineProps<ZModalProps>(), {
   visible: false,
-  // 默认 30iem = 480px(原始字面量),走 factory 让 Provider 字号联动
-  width: () => (w: Chain<ZuiSchema>['width']) => {
+  // 默认 30iem,跟 Provider 字号联动
+  width: (w: Chain<ZuiSchema>['width']) => {
     w.iem(30)
   },
   centered: true,

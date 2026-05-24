@@ -142,6 +142,17 @@ export interface ZIconProps {
 import { computed } from 'vue'
 import { useZTheme } from '../provider'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌────────────┐
+ *   │ ZIcon      │   width: 1iem(默认,可改)
+ *   │ inline-flex│   height: 1iem(自动镜像 width,正方形)
+ *   │            │   line-height: 1
+ *   └────────────┘
+ *
+ * 用户传 `size` factory 覆盖默认 1iem,如 `(w) => w.iem(1.25)`。
+ */
 const props = withDefaults(defineProps<ZIconProps>(), {
   // Vue defineProps:Function 类型 prop 的 default 直接给函数本身(不需 () => 工厂)
   size: (w: Chain<ZuiSchema>['width']) => {

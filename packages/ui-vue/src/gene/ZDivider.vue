@@ -64,6 +64,10 @@ const props = withDefaults(defineProps<ZDividerProps>(), {
   align: 'center',
   thickness: '1px',
   tag: 'div',
+  // 线条与中间文字共用色,默认 `_border`(中性灰)
+  color: (c: Chain<ZuiSchema>['color']) => {
+    c._border
+  },
 })
 
 const slots = useSlots()
@@ -77,9 +81,8 @@ const EDGE_RATIO = '10%'
 
 const className = computed(() =>
   icss(theme.value, (s) => {
-    // 颜色:默认 _border,用户 factory 覆盖。线 + 文字同色(border 走 currentColor 联动)
-    if (props.color) s.color(props.color)
-    else s.color._border
+    // 颜色:默认 `_border`(从 withDefaults 提供),用户 factory 覆盖。线 + 文字同色(border 走 currentColor 联动)
+    s.color(props.color)
 
     if (props.vertical) {
       // ─── 垂直单线 ───

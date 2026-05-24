@@ -53,6 +53,14 @@ import { useZTheme } from '../provider'
 const props = withDefaults(defineProps<ZSpaceProps>(), {
   inline: false,
   tag: 'div',
+  // gap 默认 `_small`(ZSpace 卖点是等间距)
+  size: (g: Chain<ZuiSchema>['gap']) => {
+    g._small
+  },
+  // 交叉轴默认 `center`(ZSpace 卖点是行内对齐)
+  align: (c: Chain<ZuiSchema>['alignItems']) => {
+    c.center
+  },
 })
 
 const theme = useZTheme()
@@ -63,12 +71,10 @@ const className = computed(() =>
     else s.display.flex
     if (props.direction) s.flexDirection(props.direction)
     if (props.wrap) s.flexWrap(props.wrap)
-    // align 默认 center(ZSpace 的卖点是行内对齐)
-    if (props.align) s.alignItems(props.align)
-    else s.alignItems.center
-    // gap 默认 _small(ZSpace 是"等间距")
-    if (props.size) s.gap(props.size)
-    else s.gap._small
+    // align 默认 `center`(从 withDefaults 提供)
+    s.alignItems(props.align)
+    // gap 默认 `_small`(从 withDefaults 提供)
+    s.gap(props.size)
 
     props.css?.(s)
   }),

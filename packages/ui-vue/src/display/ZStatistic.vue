@@ -31,6 +31,10 @@ import { useZTheme } from '../provider'
 
 const props = withDefaults(defineProps<ZStatisticProps>(), {
   separator: ',',
+  // 数值颜色默认 `_text`(可被 user factory 覆盖)
+  color: (c: Chain<ZuiSchema>['color']) => {
+    c._text
+  },
 })
 
 const theme = useZTheme()
@@ -62,8 +66,7 @@ const titleClass = computed(() =>
 
 const valueClass = computed(() =>
   icss(theme.value, (s) => {
-    if (props.color) s.color(props.color)
-    else s.color._text
+    s.color(props.color)
     s.fontSize._huge
     s.fontWeight._semibold
     s.lineHeight._tight

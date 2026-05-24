@@ -37,6 +37,35 @@ import { useZTheme } from '../provider'
 import { usePopper, useEscapeStack } from '../_hooks'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌─────────────────┐
+ *   │ trigger wrap    │   inline-flex(包裹 default slot,toggle 点击)
+ *   │ #default slot   │
+ *   └─────────────────┘
+ *           │ floating-ui 定位(offset 8)
+ *           ▼
+ *   ┌──────────────────────────────────────────────┐
+ *   │ popper(Teleport body)                      │   min-width: 12iem
+ *   │   min-width: 12iem  max-width: 20iem        │   max-width: 20iem
+ *   │   pad _middle  border _thin solid _border    │   bg _bg color _text
+ *   │   border-radius _small  boxShadow _middle    │   flex column gap _small
+ *   │   fontSize _small                            │
+ *   │                                              │
+ *   │  ┌────────────────────────────────────────┐  │   head row:
+ *   │  │ ⚠ icon(_warning,_middle)             │  │     flex alignFlexStart
+ *   │  │       title(_semibold _text)         │  │     gap _small
+ *   │  │       desc(_textSecondary _small)    │  │
+ *   │  └────────────────────────────────────────┘  │
+ *   │  ┌────────────────────────────────────────┐  │   actions:
+ *   │  │              [cancel] [ok]            │  │     flex flexEnd gap _tiny
+ *   │  │  cancel: 透明 + _border  ok: _primary │  │     btn pad-y 0.25iem
+ *   │  └────────────────────────────────────────┘  │
+ *   └──────────────────────────────────────────────┘
+ *
+ * 点击外部 / ESC 关闭。
+ */
 const props = withDefaults(defineProps<ZPopconfirmProps>(), {
   okText: '确定',
   cancelText: '取消',
@@ -85,13 +114,6 @@ function onCancel(): void {
 
 const triggerWrapClass = computed(() => icss(theme.value, (s) => s.display.inlineFlex))
 
-/**
- * popper 容器盒子模型(iem):
- * - min-width: 12iem
- * - max-width: 20iem
- * - border: _thin
- * - padding: _middle
- */
 const popperClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute
@@ -153,8 +175,8 @@ const actionsClass = computed(() =>
   }),
 )
 
-function btnClass(primary: boolean): string {
-  return icss(theme.value, (s) => {
+const btnClass = (primary: boolean): string =>
+  icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -178,7 +200,6 @@ function btnClass(primary: boolean): string {
       s.borderColor._border
     }
   })
-}
 
 const warningIcon = computed(() => h(ZIcon, { component: BuiltinIcons.warning }))
 </script>

@@ -91,6 +91,25 @@ import { useRipple } from '../_hooks'
 import { BuiltinIcons } from './icons'
 import ZIcon from './ZIcon.vue'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────┐
+ *   │ ZButton                                  │   inline-flex,gap: _tiny
+ *   │   small : pad-y 0.25iem  pad-x _small   │   fontSize: _small / _middle / _large
+ *   │   middle: pad-y 0.5iem   pad-x _middle  │   border-radius: _small
+ *   │   large : pad-y 0.75iem  pad-x _large   │   border-width: _thin
+ *   │                                          │   block=true → width: 100%
+ *   │  ┌──────┐ ┌──────────┐ ┌──────┐         │
+ *   │  │prefix│ │  slot    │ │suffix│         │   prefix/suffix slot 各占 inline-flex
+ *   │  │ Icon │ │ default  │ │ Icon │         │   loading 时 prefix 位置渲染 spin Icon
+ *   │  └──────┘ └──────────┘ └──────┘         │
+ *   └──────────────────────────────────────────┘
+ *
+ * 5 个 variant: filled / outlined / text / ghost / link(详见 props.variant)。
+ * Material state layer: hover/active 通过 ::before 伪元素叠 8%/12% alpha。
+ * focus-visible: outline _middle solid _focusRing.alpha(40),offset 2px。
+ */
 const props = withDefaults(defineProps<ZButtonProps>(), {
   variant: 'filled',
   size: BUTTON_SIZE_MAP.middle,

@@ -102,8 +102,8 @@ const listClass = computed(() =>
 )
 const sxListAttrs = computed(() => extractSxAttrs(props.sxList))
 
-function tabClass(tab: ZTabItem, isActive: boolean): string {
-  return icss(theme.value, (s) => {
+const tabClass = (tab: ZTabItem, isActive: boolean): string =>
+  icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -158,7 +158,6 @@ function tabClass(tab: ZTabItem, isActive: boolean): string {
     }
     applySx(s, props.sxTab)
   })
-}
 const sxTabAttrs = computed(() => extractSxAttrs(props.sxTab))
 
 const panelClass = computed(() =>

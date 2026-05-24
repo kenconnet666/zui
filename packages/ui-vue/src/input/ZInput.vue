@@ -63,6 +63,28 @@ import { applySizeProp } from '../_internal/size-prop'
 import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌─────────────────────────────────────────────────────┐
+ *   │ wrapper  inline-flex / center / gap _tiny           │   pad-x: _small
+ *   │   pad-x _small  border _thin solid _border          │   size 档:
+ *   │   border-radius _small  bg _bg  color _text         │     small: pad-y 0.125 / fontSize _small
+ *   │   width 100%  lineHeight _normal                    │     middle: pad-y 0.25 / fontSize _middle
+ *   │   focused: borderColor _primary + boxShadow _tiny   │     large: pad-y 0.375 / fontSize _large
+ *   │   disabled: opacity _dim / bg _bgMuted              │
+ *   │                                                     │
+ *   │  ┌────┐ ┌───────────────┐ ┌─────┐ ┌────┐ ┌────┐    │
+ *   │  │prfx│ │ <input>       │ │clear│ │N/M │ │sufx│    │
+ *   │  │slot│ │  flex-grow 1  │ │ ×   │ │_tiny│ │slot│    │
+ *   │  │_2nd│ │  bg transp    │ │ _2nd│ │_2nd │ │_2nd│    │
+ *   │  └────┘ │  outline none │ └─────┘ └────┘ └────┘    │
+ *   │         └───────────────┘                           │
+ *   └─────────────────────────────────────────────────────┘
+ *
+ * 各小元素: prefix/suffix slot (inline-flex / _textSecondary),clear btn(条件 clearable + 有值),
+ * counter(条件 showCount)。
+ */
 const props = withDefaults(defineProps<ZInputProps>(), {
   type: 'text',
   size: INPUT_SIZE_MAP.middle,

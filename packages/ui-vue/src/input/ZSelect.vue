@@ -66,6 +66,39 @@ import { BuiltinIcons, ZIcon } from '../gene'
 import { usePopper, useEscapeStack } from '../_hooks'
 import { onClickOutside } from '@vueuse/core'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ trigger  inline-flex / center / gap _tiny        │   min-width: 8iem
+ *   │   border _thin solid _border  border-radius _small│   高度: INPUT_SIZE_MAP(small/middle/large)
+ *   │   pad-x _small  bg _bg  color _text              │   open: borderColor _primary
+ *   │   size 档: pad-y 0.125 / 0.25 / 0.375iem         │   disabled: opacity _dim / bg _bgMuted
+ *   │                                                   │
+ *   │  ┌────────────────┐ ┌─────┐ ┌────────┐           │
+ *   │  │ text / input   │ │clear│ │ arrow ▼│           │   text: flex-grow 1 / ellipsis
+ *   │  │ flex-grow 1    │ │  ×  │ │ rotate │           │   arrow: open 180deg 旋转
+ *   │  │ ellipsis       │ │_2nd │ │ on open│           │
+ *   │  └────────────────┘ └─────┘ └────────┘           │
+ *   └──────────────────────────────────────────────────┘
+ *           │ floating-ui 定位(offset 4)
+ *           ▼
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ dropdown(Teleport body)                        │   min-width: 8iem
+ *   │   min-width: 8iem  max-height: 15iem            │   max-height: 15iem
+ *   │   pad _tiny  border _thin _border  boxShadow _middle│ overflow-y auto
+ *   │   border-radius _small                          │
+ *   │  ┌──────────────────────────────────────────┐   │   option:
+ *   │  │ option ✓ label                          │   │     pad _tiny pad-x _small
+ *   │  │   pad _tiny pad-x _small                 │   │     selected: bg _primary.alpha(8)
+ *   │  │   selected: bg _primary.alpha(8) / _primary│ │     disabled: opacity _dim
+ *   │  │   hover: bg _textSecondary.alpha(8)      │   │     hover: bg _textSecondary.alpha(8)
+ *   │  └──────────────────────────────────────────┘   │   empty: pad _small / centered
+ *   │  (循环 filteredOptions,空 → 显"无匹配项")      │
+ *   └──────────────────────────────────────────────────┘
+ *
+ * filterable=true 时触发器位置渲染 input,实时过滤选项;multiple=true 选项前 checkbox。
+ */
 const props = withDefaults(defineProps<ZSelectProps>(), {
   disabled: false,
   clearable: false,
@@ -129,12 +162,6 @@ const filteredOptions = computed(() => {
   return props.options.filter((o) => o.label.toLowerCase().includes(q))
 })
 
-/**
- * 触发器盒子模型(iem):
- * - minWidth: 8iem,保证窄触发器不至于贴文字
- * - 高度走 INPUT_SIZE_MAP(small/middle/large 三档)
- * - border: _thin,圆角 _small
- */
 const triggerClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
@@ -188,12 +215,6 @@ const triggerInputClass = computed(() =>
   }),
 )
 
-/**
- * 下拉浮层盒子模型(iem):
- * - minWidth: 8iem(与触发器同步)
- * - maxHeight: 15iem,超出滚动
- * - padding: _tiny,圆角 _small,middle shadow
- */
 const dropdownClass = computed(() =>
   icss(theme.value, (s) => {
     s.backgroundColor._bg

@@ -30,6 +30,24 @@ import { useQRCode } from '@vueuse/integrations/useQRCode'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────┐
+ *   │ wrap  inline-block   │   width/height: size px(默认 160,prop 可改)
+ *   │   width:  size px    │   bg: bgColor prop(默认 #fff)
+ *   │   height: size px    │   border-radius: _tiny
+ *   │   bg: bgColor        │
+ *   │   border-radius _tiny│
+ *   │  ┌────────────────┐  │
+ *   │  │  <img> QR data │  │   img: width 100% / height 100% / display block
+ *   │  │   100% × 100%  │  │
+ *   │  │   useQRCode    │  │   useQRCode @vueuse/integrations 生成 data URL
+ *   │  └────────────────┘  │
+ *   └──────────────────────┘
+ *
+ * 尺寸走 px(QR 编码本身基于像素)而非 iem。
+ */
 const props = withDefaults(defineProps<ZQRCodeProps>(), {
   size: 160,
   color: '#000000',

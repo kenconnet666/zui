@@ -53,6 +53,38 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
+/**
+ * 盒子模型(iem,Provider 控制基准):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ <input type="file" hidden>(隐藏触发器)         │
+ *   │                                                  │
+ *   │  dragDrop=true(默认):                          │   drop zone:
+ *   │  ┌────────────────────────────────────────────┐  │     flex column / center / center
+ *   │  │ drop zone                                  │  │     pad _huge
+ *   │  │   pad _huge  border-radius _small          │  │     border _thin DASHED _border
+ *   │  │   border _thin DASHED _border              │  │     dragOver → border _primary
+ *   │  │   bg _bg  color _textSecondary             │  │     bg dragOver→_bgMuted / 默认 _bg
+ *   │  │   dragOver: border _primary / bg _bgMuted  │  │
+ *   │  │   flex column / center / gap _small        │  │
+ *   │  │   ┌──────┐                                 │  │
+ *   │  │   │ icon │ + "点击或拖拽文件…"            │  │
+ *   │  │   └──────┘                                 │  │
+ *   │  └────────────────────────────────────────────┘  │
+ *   │                                                  │
+ *   │  dragDrop=false:                                 │   picker btn:
+ *   │  ┌─────────────────────┐                         │     pad _small,pad-x _middle
+ *   │  │ [+] 选择文件         │  pad-y _small          │     border _thin solid _border
+ *   │  └─────────────────────┘  border _thin           │     hover: borderColor _primary
+ *   │                                                  │
+ *   │  file list(showFileList && 有文件):            │   file row:
+ *   │  ┌────────────────────────────────────────────┐  │     border _thin _border
+ *   │  │ ▢ name.ext (ellipsis)   12.3 KB    × close│  │     border-radius _tiny
+ *   │  │   pad _tiny pad-x _small  border _thin     │  │     pad _tiny pad-x _small
+ *   │  └────────────────────────────────────────────┘  │     fontSize _small
+ *   │  (列表 flex column gap _tiny  marginTop _small)│
+ *   └──────────────────────────────────────────────────┘
+ */
 const props = withDefaults(defineProps<ZUploadProps>(), {
   multiple: false,
   disabled: false,
