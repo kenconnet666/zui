@@ -269,11 +269,19 @@ const arrowClass = computed(() =>
 
 const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }))
 const rightIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronRight }))
+
+const rootRef = ref<HTMLDivElement | null>(null)
+function bindRoot(el: unknown): void {
+  const node = (el as HTMLDivElement | null) ?? null
+  rootRef.value = node
+  triggerRef.value = node
+}
+defineExpose({ rootRef })
 </script>
 
 <template>
   <div
-    ref="triggerRef"
+    :ref="bindRoot"
     :class="triggerClass"
     role="combobox"
     :aria-expanded="open"

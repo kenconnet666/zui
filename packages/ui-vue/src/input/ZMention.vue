@@ -188,10 +188,13 @@ const optionClass = computed(() =>
     })
   }),
 )
+
+const rootRef = ref<HTMLDivElement | null>(null)
+defineExpose({ rootRef })
 </script>
 
 <template>
-  <div :class="wrapperClass">
+  <div ref="rootRef" :class="wrapperClass">
     <textarea
       ref="taRef"
       :class="taClass"

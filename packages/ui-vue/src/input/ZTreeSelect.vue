@@ -233,11 +233,19 @@ const showClear = computed(
 
 const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }))
 const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
+
+const rootRef = ref<HTMLDivElement | null>(null)
+function bindRoot(el: unknown): void {
+  const node = (el as HTMLDivElement | null) ?? null
+  rootRef.value = node
+  triggerRef.value = node
+}
+defineExpose({ rootRef })
 </script>
 
 <template>
   <div
-    ref="triggerRef"
+    :ref="bindRoot"
     :class="triggerClass"
     role="combobox"
     :aria-expanded="open"

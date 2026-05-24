@@ -79,7 +79,8 @@ function reset(): void {
   items.value.forEach((i) => i.reset())
 }
 
-defineExpose<ZFormExpose>({ validate, reset })
+const rootRef = ref<HTMLFormElement | null>(null)
+defineExpose<ZFormExpose & { rootRef: typeof rootRef }>({ validate, reset, rootRef })
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
@@ -93,7 +94,7 @@ const rootClass = computed(() =>
 </script>
 
 <template>
-  <form :class="rootClass" @submit.prevent>
+  <form ref="rootRef" :class="rootClass" @submit.prevent>
     <slot />
   </form>
 </template>

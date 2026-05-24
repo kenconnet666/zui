@@ -179,12 +179,28 @@ watch(() => props.value, () => nextTick(adjustHeight))
 onMounted(() => {
   if (props.autosize) nextTick(adjustHeight)
 })
+
+const rootRef = ref<HTMLDivElement | null>(null)
+/**
+ * textarea 元素 ref 合并器 —— 同时写入内部 `textareaRef`(autosize 计算等内部用)
+ * 与用户传入的 `sxTextarea.ref`(string / function / Ref 对象,VNodeRef 形式)。
+ */
+function bindTextarea(el: unknown): void {
+  const node = (el as HTMLTextAreaElement | null) ?? null
+  textareaRef.value = node
+  const userRef = sxTextareaAttrs.value.ref
+  if (typeof userRef === 'function') userRef(node, {})
+  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
+    ;(userRef as { value: unknown }).value = node
+  }
+}
+defineExpose({ rootRef })
 </script>
 
 <template>
-  <div :class="wrapperClass">
+  <div ref="rootRef" :class="wrapperClass">
     <textarea
-      ref="textareaRef"
+      :ref="bindTextarea"
       :class="[textareaClass, sxTextareaAttrs.class]"
       :style="sxTextareaAttrs.style"
       :value="innerValue"

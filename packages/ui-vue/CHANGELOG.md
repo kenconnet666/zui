@@ -2,6 +2,54 @@
 
 ## Unreleased
 
+### 改进 — sx 透传完善:SxObject 加 ref + 类型放宽 + 根 DOM 暴露(2026-05-24,U1-U4)
+
+**4 类改动**:
+
+#### U1 — `_internal/sx.ts` 扩展 SxObject
+
+- 加 `ref?: VNodeRef`(template ref,让用户拿到子节点 DOM)
+- 类型放宽:`& Record<string, unknown>` 兜底任意自定义 attr(`data-*` / 第三方库自定义属性等)
+- `extractSxAttrs` 返回值多 `ref` 字段
+
+#### U2 — 23 个组件的 sx 子节点 template 加 `:ref` 绑定(~62 处)
+
+所有 sxXxxAttrs 使用处加 `:ref="sxXxxAttrs.ref"`:
+
+ZCard / ZPopover / ZTable / ZTooltip / ZAlert / ZDrawer / ZModal / ZSpin / ZButton / ZTag / ZCheckbox / ZFormItem / ZInput / ZInputNumber / ZRadio / ZSelect / ZSwitch / ZTextarea / ZBreadcrumb / ZDropdown / ZMenu / ZPagination / ZTabs
+
+**冲突处理 — 8 个 bindXxx helper**:子节点已有内部 ref(`triggerRef` / `inputRef` 等)的,合并用户 `sx*.ref` + 内部 ref 到一个函数 ref:
+- ZModal/ZDrawer `bindMask`
+- ZTooltip/ZPopover `bindTrigger` + `bindFloating`
+- ZInput `bindInput` / ZTextarea `bindTextarea` / ZSelect `bindRoot` + `bindDropdown`
+- ZDropdown `bindMenu` / ZTabs `bindList`
+
+#### U3 — 12 个组件 `defineExpose({ rootRef })`
+
+让用户用 `<ZComp ref="r">` → `r.rootRef` 拿到根 DOM:
+
+| 组件 | 根元素 | rootRef 类型 |
+|---|---|---|
+| ZModal / ZDrawer | mask `<div>` | `HTMLElement \| null` |
+| ZInput / ZTextarea / ZMention | wrapper `<div>` | `HTMLDivElement \| null` |
+| ZSelect / ZTreeSelect / ZCascader | trigger `<div>` | `HTMLDivElement \| null` |
+| ZAutoComplete | `<input>` 根 | `HTMLInputElement \| null` |
+| ZTabs | tablist `<div>` | `HTMLDivElement \| null` |
+| ZForm | `<form>` | `HTMLFormElement \| null`(合并 `validate` / `reset`) |
+| ZFormItem | `<div>` | `HTMLDivElement \| null`(合并 `validate` / `reset`) |
+
+跟内部 `triggerRef` / `inputRef` 共享 DOM 的组件用 `bindRoot` function ref 同时回填两侧。
+
+#### U4 — 验证三件套
+
+- type-check ✓ (vue-tsc exit 0)
+- 556/556 tests ✓
+- build ✓
+
+**已知限制**:v-for 内子节点的 `sx*.ref` 共享同一 ref(每次循环覆盖,最终只持有最后一个 element)。用户在 v-for 内拿子节点应自己用函数 ref 收集所有节点 — 这是 sx 字段语义的固有限制。
+
+---
+
 ### 改进 — 默认值审计 + 盒子图 JSDoc 迁移 + helper className 规范化(2026-05-24,T1-T3 + Q4-Q5 + B9)
 
 **5 类改动**:

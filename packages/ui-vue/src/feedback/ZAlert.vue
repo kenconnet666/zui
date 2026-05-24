@@ -184,6 +184,7 @@ const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
   <component :is="tag" :class="rootClass" role="alert">
     <div
       v-if="showIcon"
+      :ref="sxIconAttrs.ref"
       :class="[iconClass, sxIconAttrs.class]"
       :style="sxIconAttrs.style"
       v-bind="sxIconAttrs.attrs"
@@ -194,6 +195,7 @@ const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
     </div>
 
     <div
+      :ref="sxBodyAttrs.ref"
       :class="[bodyClass, sxBodyAttrs.class]"
       :style="sxBodyAttrs.style"
       v-bind="sxBodyAttrs.attrs"
@@ -210,6 +212,7 @@ const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
     <button
       v-if="closable"
       type="button"
+      :ref="sxCloseAttrs.ref"
       :class="[closeClass, sxCloseAttrs.class]"
       :style="sxCloseAttrs.style"
       aria-label="关闭"

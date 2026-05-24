@@ -350,11 +350,37 @@ const emptyClass = computed(() =>
 
 const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }))
 const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
+
+const rootRef = ref<HTMLDivElement | null>(null)
+function bindRoot(el: unknown): void {
+  const node = (el as HTMLDivElement | null) ?? null
+  rootRef.value = node
+  triggerRef.value = node
+  const userRef = sxTriggerAttrs.value.ref
+  if (typeof userRef === 'function') userRef(node, {})
+  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
+    ;(userRef as { value: unknown }).value = node
+  }
+}
+/**
+ * dropdown 元素 ref 合并器 —— 同时写入内部 `dropdownRef`(usePopper / onClickOutside)
+ * 与用户传入的 `sxDropdown.ref`。
+ */
+function bindDropdown(el: unknown): void {
+  const node = (el as HTMLElement | null) ?? null
+  dropdownRef.value = node
+  const userRef = sxDropdownAttrs.value.ref
+  if (typeof userRef === 'function') userRef(node, {})
+  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
+    ;(userRef as { value: unknown }).value = node
+  }
+}
+defineExpose({ rootRef })
 </script>
 
 <template>
   <div
-    ref="triggerRef"
+    :ref="bindRoot"
     :class="[triggerClass, sxTriggerAttrs.class]"
     :style="sxTriggerAttrs.style"
     role="combobox"
@@ -394,7 +420,7 @@ const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
   <Teleport to="body">
     <div
       v-if="open"
-      ref="dropdownRef"
+      :ref="bindDropdown"
       :class="[dropdownClass, sxDropdownAttrs.class]"
       :style="[floatingStyles, sxDropdownAttrs.style]"
       role="listbox"
@@ -403,6 +429,7 @@ const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
       <div
         v-for="opt in filteredOptions"
         :key="String(opt.value)"
+        :ref="sxOptionAttrs.ref"
         :class="[optionClass(opt), sxOptionAttrs.class]"
         :style="sxOptionAttrs.style"
         role="option"

@@ -154,11 +154,13 @@ const wrapContentClass = computed(() =>
       </div>
       <div
         v-if="spinning"
+        :ref="sxOverlayAttrs.ref"
         :class="[overlayClass, sxOverlayAttrs.class]"
         :style="sxOverlayAttrs.style"
         v-bind="sxOverlayAttrs.attrs"
       >
         <div
+          :ref="sxIndicatorAttrs.ref"
           :class="[indicatorClass, sxIndicatorAttrs.class]"
           :style="sxIndicatorAttrs.style"
           v-bind="sxIndicatorAttrs.attrs"
@@ -175,6 +177,7 @@ const wrapContentClass = computed(() =>
       <!-- 纯 indicator 模式 -->
       <div
         v-if="spinning"
+        :ref="sxIndicatorAttrs.ref"
         :class="[indicatorClass, sxIndicatorAttrs.class]"
         :style="sxIndicatorAttrs.style"
         v-bind="sxIndicatorAttrs.attrs"

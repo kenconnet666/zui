@@ -371,6 +371,7 @@ const totalColspan = computed(() => props.columns.length + (props.selectable ? 1
 <template>
   <table :class="tableClass">
     <thead
+      :ref="sxHeadAttrs.ref"
       :class="[theadClass, sxHeadAttrs.class]"
       :style="sxHeadAttrs.style"
       v-bind="sxHeadAttrs.attrs"
@@ -388,6 +389,7 @@ const totalColspan = computed(() => props.columns.length + (props.selectable ? 1
         <th
           v-for="col in columns"
           :key="col.key"
+          :ref="sxCellAttrs.ref"
           :class="[cellClass(col), col.sortable ? sortableHeadClass : '', sxCellAttrs.class]"
           :style="[sxCellAttrs.style, colWidth(col) ? { width: colWidth(col) } : {}]"
           :aria-sort="ariaSort(col)"
@@ -403,6 +405,7 @@ const totalColspan = computed(() => props.columns.length + (props.selectable ? 1
       </tr>
     </thead>
     <tbody
+      :ref="sxBodyAttrs.ref"
       :class="[tbodyClass, sxBodyAttrs.class]"
       :style="sxBodyAttrs.style"
       v-bind="sxBodyAttrs.attrs"
@@ -413,6 +416,7 @@ const totalColspan = computed(() => props.columns.length + (props.selectable ? 1
       <tr
         v-for="(row, idx) in sortedData"
         :key="getRowKey(row, idx)"
+        :ref="sxRowAttrs.ref"
         :class="[rowClass(idx, isRowSelected(getRowKey(row, idx))), sxRowAttrs.class]"
         :style="sxRowAttrs.style"
         v-bind="sxRowAttrs.attrs"
@@ -428,6 +432,7 @@ const totalColspan = computed(() => props.columns.length + (props.selectable ? 1
         <td
           v-for="col in columns"
           :key="col.key"
+          :ref="sxCellAttrs.ref"
           :class="[cellClass(col), sxCellAttrs.class]"
           :style="sxCellAttrs.style"
           v-bind="sxCellAttrs.attrs"

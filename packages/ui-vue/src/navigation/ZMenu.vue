@@ -208,6 +208,7 @@ const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }
     <li v-for="item in items" :key="item.key" role="none" style="list-style: none">
       <button
         type="button"
+        :ref="sxItemAttrs.ref"
         :class="[
           itemClass(item, value === item.key, 0),
           sxItemAttrs.class,
@@ -222,6 +223,7 @@ const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }
         <component v-if="item.icon" :is="h(ZIcon, { component: item.icon })" />
         <span
           v-if="!collapsed"
+          :ref="sxLabelAttrs.ref"
           :class="[labelClass, sxLabelAttrs.class]"
           :style="sxLabelAttrs.style"
           v-bind="sxLabelAttrs.attrs"
@@ -237,6 +239,7 @@ const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }
       </button>
       <ul
         v-if="item.children && item.children.length > 0 && isExpanded(item.key) && !collapsed"
+        :ref="sxSubmenuAttrs.ref"
         :class="[submenuClass, sxSubmenuAttrs.class]"
         :style="sxSubmenuAttrs.style"
         role="menu"
@@ -245,6 +248,7 @@ const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }
         <li v-for="child in item.children" :key="child.key" role="none" style="list-style: none">
           <button
             type="button"
+            :ref="sxItemAttrs.ref"
             :class="[itemClass(child, value === child.key, 1), sxItemAttrs.class]"
             :style="sxItemAttrs.style"
             role="menuitem"
@@ -254,6 +258,7 @@ const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }
           >
             <component v-if="child.icon" :is="h(ZIcon, { component: child.icon })" />
             <span
+              :ref="sxLabelAttrs.ref"
               :class="[labelClass, sxLabelAttrs.class]"
               :style="sxLabelAttrs.style"
               v-bind="sxLabelAttrs.attrs"

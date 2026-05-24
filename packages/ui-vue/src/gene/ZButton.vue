@@ -287,6 +287,7 @@ const loadingIcon = computed(() =>
   >
     <span
       v-if="loading"
+      :ref="sxIconAttrs.ref"
       :class="[iconClass, sxIconAttrs.class]"
       :style="sxIconAttrs.style"
       v-bind="sxIconAttrs.attrs"
@@ -295,6 +296,7 @@ const loadingIcon = computed(() =>
     </span>
     <span
       v-else-if="$slots.prefixIcon"
+      :ref="sxIconAttrs.ref"
       :class="[iconClass, sxIconAttrs.class]"
       :style="sxIconAttrs.style"
       v-bind="sxIconAttrs.attrs"
@@ -304,6 +306,7 @@ const loadingIcon = computed(() =>
     <slot />
     <span
       v-if="$slots.suffixIcon"
+      :ref="sxIconAttrs.ref"
       :class="[iconClass, sxIconAttrs.class]"
       :style="sxIconAttrs.style"
       v-bind="sxIconAttrs.attrs"

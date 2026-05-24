@@ -185,11 +185,39 @@ const titleClass = computed(() =>
   }),
 )
 const sxTitleAttrs = computed(() => extractSxAttrs(props.sxTitle))
+
+/**
+ * trigger 元素 ref 合并器 —— 同时写入内部 `triggerRef`(usePopper + onClickOutside)
+ * 与用户传入的 `sxTrigger.ref`(string / function / Ref 对象,VNodeRef 形式)。
+ */
+function bindTrigger(el: unknown): void {
+  const node = (el as HTMLElement | null) ?? null
+  triggerRef.value = node
+  const userRef = sxTriggerAttrs.value.ref
+  if (typeof userRef === 'function') userRef(node, {})
+  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
+    ;(userRef as { value: unknown }).value = node
+  }
+}
+
+/**
+ * floating popper 元素 ref 合并器 —— 同时写入内部 `floatingRef`(usePopper)
+ * 与用户传入的 `sxContent.ref`。
+ */
+function bindFloating(el: unknown): void {
+  const node = (el as HTMLElement | null) ?? null
+  floatingRef.value = node
+  const userRef = sxContentAttrs.value.ref
+  if (typeof userRef === 'function') userRef(node, {})
+  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
+    ;(userRef as { value: unknown }).value = node
+  }
+}
 </script>
 
 <template>
   <span
-    ref="triggerRef"
+    :ref="bindTrigger"
     :class="[triggerWrapClass, sxTriggerAttrs.class]"
     :style="sxTriggerAttrs.style"
     v-bind="{ ...sxTriggerAttrs.attrs, ...triggerHandlers }"
@@ -200,7 +228,7 @@ const sxTitleAttrs = computed(() => extractSxAttrs(props.sxTitle))
   <Teleport to="body">
     <div
       v-if="actualVisible"
-      ref="floatingRef"
+      :ref="bindFloating"
       :class="[popperClass, sxContentAttrs.class]"
       :style="[floatingStyles, sxContentAttrs.style]"
       role="dialog"
@@ -208,6 +236,7 @@ const sxTitleAttrs = computed(() => extractSxAttrs(props.sxTitle))
     >
       <div
         v-if="title || $slots.title"
+        :ref="sxTitleAttrs.ref"
         :class="[titleClass, sxTitleAttrs.class]"
         :style="sxTitleAttrs.style"
         v-bind="sxTitleAttrs.attrs"

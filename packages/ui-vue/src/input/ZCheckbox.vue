@@ -137,6 +137,7 @@ const innerSvg = computed(() => {
 <template>
   <label :class="rootClass">
     <span
+      :ref="sxBoxAttrs.ref"
       :class="[boxClass, sxBoxAttrs.class]"
       :style="sxBoxAttrs.style"
       v-bind="sxBoxAttrs.attrs"
@@ -152,6 +153,7 @@ const innerSvg = computed(() => {
     />
     <span
       v-if="label || $slots.default"
+      :ref="sxLabelAttrs.ref"
       :class="[labelClass, sxLabelAttrs.class]"
       :style="sxLabelAttrs.style"
       v-bind="sxLabelAttrs.attrs"

@@ -182,13 +182,15 @@ const errorClass = computed(() =>
 )
 const sxErrorAttrs = computed(() => extractSxAttrs(props.sxError))
 
-defineExpose({ validate, reset })
+const rootRef = ref<HTMLDivElement | null>(null)
+defineExpose({ validate, reset, rootRef })
 </script>
 
 <template>
-  <div :class="rootClass">
+  <div ref="rootRef" :class="rootClass">
     <label
       v-if="label || $slots.label || required"
+      :ref="sxLabelAttrs.ref"
       :class="[labelClass, sxLabelAttrs.class]"
       :style="sxLabelAttrs.style"
       v-bind="sxLabelAttrs.attrs"
@@ -197,6 +199,7 @@ defineExpose({ validate, reset })
       <slot name="label">{{ label }}</slot>
     </label>
     <div
+      :ref="sxControlAttrs.ref"
       :class="[controlClass, sxControlAttrs.class]"
       :style="sxControlAttrs.style"
       v-bind="sxControlAttrs.attrs"
@@ -204,6 +207,7 @@ defineExpose({ validate, reset })
       <slot />
       <div
         v-if="errorMsg"
+        :ref="sxErrorAttrs.ref"
         :class="[errorClass, sxErrorAttrs.class]"
         :style="sxErrorAttrs.style"
         role="alert"

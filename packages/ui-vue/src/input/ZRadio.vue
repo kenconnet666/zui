@@ -154,6 +154,7 @@ function onSelect(): void {
   <template v-else>
     <label :class="dotRootClass">
       <span
+        :ref="sxDotAttrs.ref"
         :class="[dotClass, sxDotAttrs.class]"
         :style="sxDotAttrs.style"
         v-bind="sxDotAttrs.attrs"
@@ -170,6 +171,7 @@ function onSelect(): void {
       />
       <span
         v-if="label || $slots.default"
+        :ref="sxLabelAttrs.ref"
         :style="sxLabelAttrs.style"
         v-bind="sxLabelAttrs.attrs"
       >

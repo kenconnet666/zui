@@ -180,11 +180,19 @@ function onSelect(opt: string): void {
   emit('select', opt)
   open.value = false
 }
+
+const rootRef = ref<HTMLInputElement | null>(null)
+function bindRoot(el: unknown): void {
+  const node = (el as HTMLInputElement | null) ?? null
+  rootRef.value = node
+  inputRef.value = node
+}
+defineExpose({ rootRef })
 </script>
 
 <template>
   <input
-    ref="inputRef"
+    :ref="bindRoot"
     :class="inputClass"
     type="text"
     :value="value"

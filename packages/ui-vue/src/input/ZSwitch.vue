@@ -175,6 +175,7 @@ function onKeydown(e: KeyboardEvent): void {
 <template>
   <button
     type="button"
+    :ref="sxRailAttrs.ref"
     :class="[railClass, sxRailAttrs.class]"
     :style="sxRailAttrs.style"
     role="switch"
@@ -194,6 +195,7 @@ function onKeydown(e: KeyboardEvent): void {
       :class="labelClass"
     >{{ uncheckedLabel }}</span>
     <span
+      :ref="sxThumbAttrs.ref"
       :class="[thumbClass, sxThumbAttrs.class]"
       :style="sxThumbAttrs.style"
       v-bind="sxThumbAttrs.attrs"

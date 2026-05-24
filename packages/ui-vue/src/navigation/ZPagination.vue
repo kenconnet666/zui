@@ -245,6 +245,7 @@ const nextAriaLabel = computed(() => locale.value?.next ?? '下一页')
     <span v-if="showTotal" :class="totalTextClass">{{ totalText }}</span>
     <button
       type="button"
+      :ref="sxItemAttrs.ref"
       :class="[itemClass, sxItemAttrs.class, pageRef <= 1 || disabled ? disabledClass : '']"
       :style="sxItemAttrs.style"
       :disabled="pageRef <= 1 || disabled"
@@ -268,6 +269,7 @@ const nextAriaLabel = computed(() => locale.value?.next ?? '下一页')
       <button
         v-else
         type="button"
+        :ref="sxItemAttrs.ref"
         :class="[itemClass, sxItemAttrs.class, disabled ? disabledClass : '']"
         :style="sxItemAttrs.style"
         :disabled="disabled"
@@ -279,6 +281,7 @@ const nextAriaLabel = computed(() => locale.value?.next ?? '下一页')
     </template>
     <button
       type="button"
+      :ref="sxItemAttrs.ref"
       :class="[itemClass, sxItemAttrs.class, pageRef >= totalPages || disabled ? disabledClass : '']"
       :style="sxItemAttrs.style"
       :disabled="pageRef >= totalPages || disabled"

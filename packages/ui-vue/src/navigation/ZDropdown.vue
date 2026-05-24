@@ -147,6 +147,20 @@ function selectItem(item: ZDropdownItem): void {
   setVisible(false)
 }
 
+/**
+ * menu 元素 ref 合并器 —— 同时写入内部 `menuRef`(usePopper + onClickOutside)
+ * 与用户传入的 `sxMenu.ref`(string / function / Ref 对象,VNodeRef 形式)。
+ */
+function bindMenu(el: unknown): void {
+  const node = (el as HTMLElement | null) ?? null
+  menuRef.value = node
+  const userRef = sxMenuAttrs.value.ref
+  if (typeof userRef === 'function') userRef(node, {})
+  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
+    ;(userRef as { value: unknown }).value = node
+  }
+}
+
 const triggerWrapClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
@@ -216,7 +230,7 @@ const sxItemAttrs = computed(() => extractSxAttrs(props.sxItem))
   <Teleport to="body">
     <div
       v-if="actualVisible"
-      ref="menuRef"
+      :ref="bindMenu"
       :class="[menuClass, sxMenuAttrs.class]"
       :style="[floatingStyles, sxMenuAttrs.style]"
       role="menu"
@@ -225,6 +239,7 @@ const sxItemAttrs = computed(() => extractSxAttrs(props.sxItem))
       <div
         v-for="item in items"
         :key="item.key"
+        :ref="sxItemAttrs.ref"
         :class="[itemClass(item), sxItemAttrs.class]"
         :style="sxItemAttrs.style"
         role="menuitem"

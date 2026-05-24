@@ -57,7 +57,7 @@ export interface ZDrawerEmits {
 </script>
 
 <script lang="ts" setup>
-import { computed, h, onScopeDispose, watch } from 'vue'
+import { computed, h, onScopeDispose, ref, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useEscapeStack } from '../_hooks'
@@ -272,13 +272,30 @@ onScopeDispose(() => {
 })
 
 const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
+
+const rootRef = ref<HTMLElement | null>(null)
+/**
+ * mask 元素 ref 合并器 —— 同时写入内部 `rootRef`(defineExpose 暴露)与
+ * 用户传入的 `sxMask.ref`(string / function / Ref 对象,VNodeRef 形式)。
+ */
+function bindMask(el: unknown): void {
+  const node = (el as HTMLElement | null) ?? null
+  rootRef.value = node
+  const userRef = sxMaskAttrs.value.ref
+  if (typeof userRef === 'function') userRef(node, {})
+  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
+    ;(userRef as { value: unknown }).value = node
+  }
+}
+defineExpose({ rootRef })
 </script>
 
 <template>
   <Teleport to="body">
-    <div v-if="visible" :class="[maskClass, sxMaskAttrs.class]" :style="sxMaskAttrs.style" v-bind="sxMaskAttrs.attrs" @click.self="onMaskClick" />
+    <div v-if="visible" :ref="bindMask" :class="[maskClass, sxMaskAttrs.class]" :style="sxMaskAttrs.style" v-bind="sxMaskAttrs.attrs" @click.self="onMaskClick" />
     <div
       v-if="visible"
+      :ref="sxDrawerAttrs.ref"
       :class="[drawerClass, sxDrawerAttrs.class]"
       :style="sxDrawerAttrs.style"
       role="dialog"
@@ -287,6 +304,7 @@ const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
     >
       <div
         v-if="title || $slots.head || closable"
+        :ref="sxHeadAttrs.ref"
         :class="[headClass, sxHeadAttrs.class]"
         :style="sxHeadAttrs.style"
         v-bind="sxHeadAttrs.attrs"
@@ -299,6 +317,7 @@ const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
         </button>
       </div>
       <div
+        :ref="sxBodyAttrs.ref"
         :class="[bodyClass, sxBodyAttrs.class]"
         :style="sxBodyAttrs.style"
         v-bind="sxBodyAttrs.attrs"
@@ -307,6 +326,7 @@ const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
       </div>
       <div
         v-if="$slots.foot"
+        :ref="sxFootAttrs.ref"
         :class="[footClass, sxFootAttrs.class]"
         :style="sxFootAttrs.style"
         v-bind="sxFootAttrs.attrs"

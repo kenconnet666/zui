@@ -51,7 +51,7 @@ export interface ZTabsEmits {
 </script>
 
 <script lang="ts" setup>
-import { computed, h } from 'vue'
+import { computed, h, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
@@ -226,11 +226,28 @@ const addIcon = computed(() => h(ZIcon, { component: BuiltinIcons.add }))
 function isTabClosable(t: ZTabItem): boolean {
   return t.closable ?? props.closable
 }
+
+const rootRef = ref<HTMLDivElement | null>(null)
+/**
+ * tab list 元素 ref 合并器 —— 同时写入内部 `rootRef`(defineExpose 暴露)
+ * 与用户传入的 `sxList.ref`(string / function / Ref 对象,VNodeRef 形式)。
+ */
+function bindList(el: unknown): void {
+  const node = (el as HTMLDivElement | null) ?? null
+  rootRef.value = node
+  const userRef = sxListAttrs.value.ref
+  if (typeof userRef === 'function') userRef(node, {})
+  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
+    ;(userRef as { value: unknown }).value = node
+  }
+}
+defineExpose({ rootRef })
 </script>
 
 <template>
   <div :class="rootClass">
     <div
+      :ref="bindList"
       :class="[listClass, sxListAttrs.class]"
       :style="sxListAttrs.style"
       role="tablist"
@@ -240,6 +257,7 @@ function isTabClosable(t: ZTabItem): boolean {
         v-for="tab in tabs"
         :key="tab.name"
         type="button"
+        :ref="sxTabAttrs.ref"
         :class="[tabClass(tab, tab.name === activeName), sxTabAttrs.class]"
         :style="sxTabAttrs.style"
         role="tab"
@@ -272,6 +290,7 @@ function isTabClosable(t: ZTabItem): boolean {
       </button>
     </div>
     <div
+      :ref="sxPanelAttrs.ref"
       :class="[panelClass, sxPanelAttrs.class]"
       :style="sxPanelAttrs.style"
       role="tabpanel"

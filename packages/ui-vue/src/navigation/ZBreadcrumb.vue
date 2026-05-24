@@ -104,6 +104,7 @@ function onItemClick(item: ZBreadcrumbItem, e: MouseEvent): void {
       <template v-for="(item, i) in safeItems" :key="i">
         <a
           v-if="i < safeItems.length - 1"
+          :ref="sxItemAttrs.ref"
           :class="[itemClass, sxItemAttrs.class]"
           :style="sxItemAttrs.style"
           :href="item.href"
@@ -114,6 +115,7 @@ function onItemClick(item: ZBreadcrumbItem, e: MouseEvent): void {
         </a>
         <span
           v-else
+          :ref="sxItemAttrs.ref"
           :class="[lastItemClass, sxItemAttrs.class]"
           :style="sxItemAttrs.style"
           aria-current="page"
@@ -123,6 +125,7 @@ function onItemClick(item: ZBreadcrumbItem, e: MouseEvent): void {
         </span>
         <span
           v-if="i < safeItems.length - 1"
+          :ref="sxSeparatorAttrs.ref"
           :class="[separatorClass, sxSeparatorAttrs.class]"
           :style="sxSeparatorAttrs.style"
           aria-hidden="true"

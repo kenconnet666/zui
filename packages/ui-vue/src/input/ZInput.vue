@@ -224,12 +224,29 @@ const showClear = computed(
 const showCounter = computed(() => props.showCount)
 
 const clearIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
+
+const rootRef = ref<HTMLDivElement | null>(null)
+/**
+ * input 元素 ref 合并器 —— 同时写入内部 `inputRef`(focus 等内部用)与
+ * 用户传入的 `sxInput.ref`(string / function / Ref 对象,VNodeRef 形式)。
+ */
+function bindInput(el: unknown): void {
+  const node = (el as HTMLInputElement | null) ?? null
+  inputRef.value = node
+  const userRef = sxInputAttrs.value.ref
+  if (typeof userRef === 'function') userRef(node, {})
+  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
+    ;(userRef as { value: unknown }).value = node
+  }
+}
+defineExpose({ rootRef })
 </script>
 
 <template>
-  <div :class="wrapperClass">
+  <div ref="rootRef" :class="wrapperClass">
     <span
       v-if="$slots.prefix"
+      :ref="sxPrefixAttrs.ref"
       :class="[affixClass, sxPrefixAttrs.class]"
       :style="sxPrefixAttrs.style"
       v-bind="sxPrefixAttrs.attrs"
@@ -238,7 +255,7 @@ const clearIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
     </span>
 
     <input
-      ref="inputRef"
+      :ref="bindInput"
       :class="[inputClass, sxInputAttrs.class]"
       :style="sxInputAttrs.style"
       :type="type"
@@ -259,6 +276,7 @@ const clearIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
     <button
       v-if="showClear"
       type="button"
+      :ref="sxClearAttrs.ref"
       :class="[clearBtnClass, sxClearAttrs.class]"
       :style="sxClearAttrs.style"
       aria-label="清空"
@@ -275,6 +293,7 @@ const clearIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
 
     <span
       v-if="$slots.suffix"
+      :ref="sxSuffixAttrs.ref"
       :class="[affixClass, sxSuffixAttrs.class]"
       :style="sxSuffixAttrs.style"
       v-bind="sxSuffixAttrs.attrs"

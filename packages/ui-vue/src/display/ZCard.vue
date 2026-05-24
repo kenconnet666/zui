@@ -155,6 +155,7 @@ const sxFootAttrs = computed(() => extractSxAttrs(props.sxFoot))
   <component :is="tag" :class="rootClass">
     <div
       v-if="hasHead"
+      :ref="sxHeadAttrs.ref"
       :class="[headClass, sxHeadAttrs.class]"
       :style="sxHeadAttrs.style"
       v-bind="sxHeadAttrs.attrs"
@@ -168,6 +169,7 @@ const sxFootAttrs = computed(() => extractSxAttrs(props.sxFoot))
     </div>
 
     <div
+      :ref="sxBodyAttrs.ref"
       :class="[bodyClass, sxBodyAttrs.class]"
       :style="sxBodyAttrs.style"
       v-bind="sxBodyAttrs.attrs"
@@ -177,6 +179,7 @@ const sxFootAttrs = computed(() => extractSxAttrs(props.sxFoot))
 
     <div
       v-if="hasFoot"
+      :ref="sxFootAttrs.ref"
       :class="[footClass, sxFootAttrs.class]"
       :style="sxFootAttrs.style"
       v-bind="sxFootAttrs.attrs"

@@ -204,6 +204,7 @@ const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }
 <template>
   <div :class="wrapperClass">
     <input
+      :ref="sxInputAttrs.ref"
       :class="[inputClass, sxInputAttrs.class]"
       :style="sxInputAttrs.style"
       type="text"
@@ -220,6 +221,7 @@ const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }
     <span :class="btnGroupClass">
       <button
         type="button"
+        :ref="sxButtonAttrs.ref"
         :class="[btnClass, sxButtonAttrs.class]"
         :style="sxButtonAttrs.style"
         aria-label="增加"
@@ -232,6 +234,7 @@ const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }
       </button>
       <button
         type="button"
+        :ref="sxButtonAttrs.ref"
         :class="[btnClass, sxButtonAttrs.class]"
         :style="sxButtonAttrs.style"
         aria-label="减少"

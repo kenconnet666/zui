@@ -169,6 +169,7 @@ const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
     <button
       v-if="closable"
       type="button"
+      :ref="sxCloseAttrs.ref"
       :class="[closeBtnClass, sxCloseAttrs.class]"
       :style="sxCloseAttrs.style"
       aria-label="关闭"
