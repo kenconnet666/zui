@@ -50,7 +50,7 @@
     "url": "https://github.com/kenconnet666/zui/issues"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "peerDependencies": {
     "@emotion/css": "^11.13.5",
@@ -91,7 +91,7 @@
     "color2k": "^2.0.3",
     "date-fns": "^4.2.1",
     "date-fns-tz": "^3.2.0",
-    "happy-dom": "^15.11.7",
+    "happy-dom": "^20.9.0",
     "shiki": "^3.13.0",
     "vue": "^3.5.32"
   },
