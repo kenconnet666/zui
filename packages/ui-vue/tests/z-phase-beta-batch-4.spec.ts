@@ -60,6 +60,38 @@ describe('ZAnchor', () => {
     expect(links.length).toBe(2)
     expect(links[0].attributes('href')).toBe('#a')
   })
+
+  it('level=2/3 → 按 indentStep 递增缩进', () => {
+    mount(ZAnchor, {
+      props: {
+        items: [
+          { href: '#a', title: 'A', level: 1 },
+          { href: '#b', title: 'B', level: 2 },
+          { href: '#c', title: 'C', level: 3 },
+        ],
+      },
+    })
+    const css = Array.from(document.querySelectorAll('style'))
+      .map((el) => el.textContent ?? '')
+      .join('\n')
+    // level=2 → padding-left 0.75iem;level=3 → 1.5iem
+    expect(css).toMatch(/padding-left:calc\(0\.75 \* var\(--zui-iem/)
+    expect(css).toMatch(/padding-left:calc\(1\.5 \* var\(--zui-iem/)
+  })
+
+  it('点击 link → emit click + preventDefault', async () => {
+    // mount 到 body,真实触发 anchor 点击;jsdom/happy-dom 都不会跳页
+    const target = document.createElement('h2')
+    target.id = 'target-section'
+    document.body.appendChild(target)
+    const w = mount(ZAnchor, {
+      props: { items: [{ href: '#target-section', title: 'T' }] },
+    })
+    await w.find('a').trigger('click')
+    expect(w.emitted('click')?.length).toBe(1)
+    expect(w.emitted('click')?.[0]?.[0]).toBe('#target-section')
+    document.body.removeChild(target)
+  })
 })
 
 describe('ZScrollbar', () => {

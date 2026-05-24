@@ -28,9 +28,7 @@
  *   (按钮文字 "复制" → "已复制" 1.5s 始终生效)
  * - `css?: factory` —— 根元素覆盖
  *
- * **复制反馈**:
- * 1. 按钮文字立即从 "复制" 切到 "已复制",1.5s 自动恢复
- * 2. 模块级 lazy `messageApi` 单例(首个 ZCodeCard 触发时创建)弹顶部 toast
+ * **复制反馈**:全部委托给 `ZCopyButton`(按钮文字临时切换 + 可选 toast)。
  *
  * **折叠**:`v-show` + Vue `<Transition>` 简单 opacity/transform 过渡,
  * 折叠态完全 `display:none`,不占视觉空间。
@@ -47,8 +45,13 @@ export interface ZCodeCardProps {
   lang?: string
   /** 默认是否展开代码区。默认 `false`。 */
   defaultExpanded?: boolean
-  /** 受控展开态(传则走 `v-model:expanded`)。 */
-  expanded?: boolean
+  /**
+   * 受控展开态(传 `true`/`false` 走 `v-model:expanded`,默认 `null` 非受控)。
+   *
+   * 用 `null` 而非 `undefined` 区分:Vue runtime 把 absent boolean prop coerce
+   * 为 `false`,无法靠 `=== undefined` 判断是否受控。
+   */
+  expanded?: boolean | null
   /** 显示源码中的 `import` 语句。默认 `false`(文档场景剥除)。 */
   showImports?: boolean
   /** shiki 双主题对。 */
@@ -82,14 +85,13 @@ export function stripImports(source: string): string {
 </script>
 
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, ref, watch } from 'vue'
-import { ContentCopyOutlined } from '@vicons/material'
+import { computed, ref, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import ZCode from './ZCode.vue'
 import ZIcon from './ZIcon.vue'
+import ZCopyButton from './ZCopyButton.vue'
 import { BuiltinIcons } from './icons'
-import { createMessageApi, type ZMessageApi } from '../feedback/messageApi'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -121,6 +123,7 @@ import { createMessageApi, type ZMessageApi } from '../feedback/messageApi'
 const props = withDefaults(defineProps<ZCodeCardProps>(), {
   lang: 'vue',
   defaultExpanded: false,
+  expanded: null,
   showImports: false,
   themes: () => ({ light: 'vitesse-light', dark: 'vitesse-dark' }),
   colorScheme: 'auto',
@@ -131,9 +134,11 @@ const emit = defineEmits<ZCodeCardEmits>()
 const theme = useZTheme()
 
 // ─── 受控/非受控展开 ───
+// 用 `expanded === null` 而非 `=== undefined` 判断未受控:Vue 把 absent boolean
+// prop coerce 为 false,会让 `=== undefined` 判断永远 false。
 const internalExpanded = ref(props.defaultExpanded)
-const isControlled = computed(() => props.expanded !== undefined)
-const expandedState = computed(() => (isControlled.value ? props.expanded! : internalExpanded.value))
+const isControlled = computed(() => props.expanded !== null)
+const expandedState = computed(() => (isControlled.value ? !!props.expanded : internalExpanded.value))
 
 function toggle(): void {
   const next = !expandedState.value
@@ -141,43 +146,15 @@ function toggle(): void {
   emit('update:expanded', next)
 }
 
-// ─── 复制 ───
-const copied = ref(false)
-let copiedTimer: ReturnType<typeof setTimeout> | null = null
-
-async function handleCopy(): Promise<void> {
-  const code = props.source
-  let success = false
-  try {
-    if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(code)
-      success = true
-    }
-  } catch {
-    success = false
-  }
-  copied.value = success
-  if (copiedTimer) clearTimeout(copiedTimer)
-  copiedTimer = setTimeout(() => {
-    copied.value = false
-  }, 1500)
-  if (success && props.copyToastDuration > 0) {
-    getMsgApi().success('已复制', props.copyToastDuration)
-  }
-  emit('copy', success, code)
+// ─── 复制 emit 透传(行为完全由 ZCopyButton 承担)───
+function onCopy(success: boolean, text: string): void {
+  emit('copy', success, text)
 }
 
 // ─── 处理后的源码(可选剥 import)───
 const processedSource = computed(() =>
   props.showImports ? props.source : stripImports(props.source),
 )
-
-// 跨实例共享:首个 ZCodeCard 触发复制时 lazy 创建 messageApi
-let msgApi: ZMessageApi | null = null
-function getMsgApi(): ZMessageApi {
-  if (!msgApi) msgApi = createMessageApi()
-  return msgApi
-}
 
 // ─── className ───
 const rootClass = computed(() =>
@@ -298,16 +275,11 @@ const leaveToClass = computed(() =>
   }),
 )
 
-// 卸载时清理 copied timer(messageApi 跨实例共享,不在此处 destroy)
-onBeforeUnmount(() => {
-  if (copiedTimer) clearTimeout(copiedTimer)
-})
-
 // 监听受控 expanded 变化,保持 internal 同步(便于切换受控/非受控)
 watch(
   () => props.expanded,
   (v) => {
-    if (v !== undefined) internalExpanded.value = v
+    if (v !== null && v !== undefined) internalExpanded.value = v
   },
 )
 </script>
@@ -319,15 +291,13 @@ watch(
         <slot name="header">{{ title ?? '' }}</slot>
       </div>
       <div :class="actionsClass">
-        <button
-          type="button"
-          :class="buttonClass"
-          :aria-label="copied ? '已复制' : '复制代码'"
-          @click="handleCopy"
-        >
-          <ZIcon :component="ContentCopyOutlined" :size="0.875" />
-          <span>{{ copied ? '已复制' : '复制' }}</span>
-        </button>
+        <ZCopyButton
+          :text="source"
+          label="复制"
+          copied-label="已复制"
+          :toast-duration="copyToastDuration"
+          @copy="onCopy"
+        />
         <button
           type="button"
           :class="buttonClass"

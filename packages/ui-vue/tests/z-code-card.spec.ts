@@ -82,7 +82,7 @@ describe('ZCodeCard', () => {
   it('点击复制 → 调 clipboard.writeText + emit copy(true, code)', async () => {
     const code = 'const a = 1'
     const w = mount(ZCodeCard, { props: { source: code, copyToastDuration: 0 } })
-    await w.find('button[aria-label="复制代码"]').trigger('click')
+    await w.find('button[aria-label="复制"]').trigger('click')
     await flushPromises()
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(code)
     expect(w.emitted('copy')?.[0]).toEqual([true, code])
@@ -91,7 +91,7 @@ describe('ZCodeCard', () => {
   it('复制成功 → 按钮文字 1.5s 内显示「已复制」', async () => {
     vi.useFakeTimers()
     const w = mount(ZCodeCard, { props: { source: 'x', copyToastDuration: 0 } })
-    const btn = w.find('button[aria-label="复制代码"]')
+    const btn = w.find('button[aria-label="复制"]')
     await btn.trigger('click')
     await vi.advanceTimersByTimeAsync(0)
     await nextTick()
@@ -99,7 +99,7 @@ describe('ZCodeCard', () => {
 
     await vi.advanceTimersByTimeAsync(1500)
     await nextTick()
-    expect(w.find('button[aria-label="复制代码"]').exists()).toBe(true)
+    expect(w.find('button[aria-label="复制"]').exists()).toBe(true)
   })
 
   it('剥 import 默认开:processedSource 不含 import 行', () => {

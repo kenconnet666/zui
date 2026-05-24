@@ -43,6 +43,9 @@ export type { ZCodeProps } from './ZCode.vue'
 export { default as ZCodeCard, stripImports } from './ZCodeCard.vue'
 export type { ZCodeCardProps, ZCodeCardEmits } from './ZCodeCard.vue'
 
+export { default as ZCopyButton } from './ZCopyButton.vue'
+export type { ZCopyButtonProps, ZCopyButtonEmits } from './ZCopyButton.vue'
+
 export { default as ZBlockquote } from './ZBlockquote.vue'
 export type { ZBlockquoteProps } from './ZBlockquote.vue'
 
