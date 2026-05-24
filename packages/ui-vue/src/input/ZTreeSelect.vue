@@ -26,6 +26,15 @@ export interface ZTreeSelectProps {
   /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
   height?: number
   placement?: Placement
+  /**
+   * 单个 tree 节点行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 透传给内嵌 `ZTree`(2026-05-24 v2)。
+   */
+  treeItemSize?: number
+  /**
+   * 浮层 tree 区域高度 —— iem 倍数。默认 `18`(18iem = 288px @ 16px iem)。
+   */
+  treeHeight?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -86,6 +95,8 @@ const props = withDefaults(defineProps<ZTreeSelectProps>(), {
   clearable: false,
   size: 1,
   placement: 'bottom-start',
+  treeItemSize: 2,
+  treeHeight: 18,
 })
 
 const emit = defineEmits<ZTreeSelectEmits>()
@@ -200,8 +211,6 @@ const dropdownClass = computed(() =>
     s.boxShadow._middle
     s.padding._tiny
     s.minWidth.iem(12)
-    s.maxHeight.iem(18.75)
-    s.overflowY.auto
   }),
 )
 
@@ -283,6 +292,8 @@ defineExpose({ rootRef })
         :data="data"
         :expanded-keys="expandedKeys"
         :selected-key="value ?? null"
+        :item-size="treeItemSize"
+        :height="treeHeight"
         @update:expanded-keys="expandedKeys = $event"
         @select="onSelectNode"
       />

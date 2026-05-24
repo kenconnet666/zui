@@ -32,7 +32,7 @@ export { default as ZResult } from './ZResult.vue'
 export type { ZResultProps } from './ZResult.vue'
 
 export { default as ZList } from './ZList.vue'
-export type { ZListProps } from './ZList.vue'
+export type { ZListProps, ZListEmits, ZListExpose } from './ZList.vue'
 
 export { default as ZProgress } from './ZProgress.vue'
 export type { ZProgressProps } from './ZProgress.vue'
@@ -65,3 +65,19 @@ export type {
 
 export { default as ZCalendar } from './ZCalendar.vue'
 export type { ZCalendarProps, ZCalendarEmits } from './ZCalendar.vue'
+
+export { default as ZVirtualList } from './ZVirtualList.vue'
+export type {
+  ZVirtualListProps,
+  ZVirtualListEmits,
+  ZVirtualListExpose,
+} from './ZVirtualList.vue'
+
+export { default as ZDataTable } from './ZDataTable.vue'
+export type {
+  ZDataTableProps,
+  ZDataTableEmits,
+  ZDataTableExpose,
+  ZDataTableColumn,
+  ZDataTableSort,
+} from './ZDataTable.vue'

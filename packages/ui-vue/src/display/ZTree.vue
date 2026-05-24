@@ -25,6 +25,17 @@ export interface ZTreeProps {
   expandedKeys?: string[]
   selectedKey?: string | null
   selectable?: boolean
+  /**
+   * 单节点行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 扁平化展开后用 `ZVirtualList` 渲染(2026-05-24 v2)。
+   */
+  itemSize?: number
+  /**
+   * 容器高度 —— iem 倍数或 CSS 字面字符串(`'60vh'` / `'400px'`)。**必传**。
+   */
+  height: number | string
+  /** 预渲染缓冲项数。默认 `5`。 */
+  overscan?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -40,6 +51,7 @@ import { computed, h } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import ZVirtualList from './ZVirtualList.vue'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -67,6 +79,8 @@ const props = withDefaults(defineProps<ZTreeProps>(), {
   expandedKeys: () => [],
   selectedKey: null,
   selectable: true,
+  itemSize: 2,
+  overscan: 5,
 })
 
 const emit = defineEmits<ZTreeEmits>()
@@ -182,21 +196,29 @@ function onNodeClick(node: ZTreeNode): void {
 
 <template>
   <div :class="rootClass" role="tree">
-    <div
-      v-for="{ node, depth } in visibleNodes"
-      :key="node.key"
-      :class="nodeRowClass(node, depth)"
-      role="treeitem"
-      :aria-expanded="hasChildren(node) ? isExpanded(node.key) : undefined"
-      :aria-selected="selectedKey === node.key"
-      :aria-disabled="node.disabled"
-      @click="onNodeClick(node)"
+    <ZVirtualList
+      :items="visibleNodes"
+      :item-size="itemSize"
+      :height="height"
+      :overscan="overscan"
+      key-field="key"
     >
-      <span v-if="hasChildren(node)" :class="arrowClass(isExpanded(node.key))">
-        <component :is="rightIcon" />
-      </span>
-      <span v-else :class="arrowSpacerClass" />
-      <span>{{ node.label }}</span>
-    </div>
+      <template #default="{ item }">
+        <div
+          :class="nodeRowClass(item.node, item.depth)"
+          role="treeitem"
+          :aria-expanded="hasChildren(item.node) ? isExpanded(item.node.key) : undefined"
+          :aria-selected="selectedKey === item.node.key"
+          :aria-disabled="item.node.disabled"
+          @click="onNodeClick(item.node)"
+        >
+          <span v-if="hasChildren(item.node)" :class="arrowClass(isExpanded(item.node.key))">
+            <component :is="rightIcon" />
+          </span>
+          <span v-else :class="arrowSpacerClass" />
+          <span>{{ item.node.label }}</span>
+        </div>
+      </template>
+    </ZVirtualList>
   </div>
 </template>

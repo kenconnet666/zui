@@ -29,6 +29,19 @@ export const Z_LOCALE_KEY: InjectionKey<Ref<ZLocale>> = Symbol('zui:locale')
 export const Z_DATE_KEY: InjectionKey<Ref<ZDateConfig>> = Symbol('zui:date')
 
 /**
+ * **iem 当前像素值**(响应式)。
+ *
+ * ZBox 解析 `:iem` 字面值(只支持 `px` / `vw`)后 provide 出去,子树通过
+ * `useZIem()` 拿到实际 px 数值(数字),用于虚拟列表等需要 JS 算法层的场景
+ * (`scrollTop` / `clientHeight` 都是 px,需要 px 数值做计算)。
+ *
+ * **响应式**:vw 模式下跟随 `useWindowSize()`,resize 自动更新。
+ * **嵌套继承**:子 ZBox 不传 `:iem` 时透传父 ZBox 的 iemPx(Vue inject 链路 +
+ * CSS cascade 双重正确)。
+ */
+export const Z_IEM_PX_KEY: InjectionKey<Ref<number>> = Symbol('zui:iem-px')
+
+/**
  * Dev fallback 标记 —— Provider 未传 theme 且无 parent 时 inject 的 sentinel；
  * 子组件可借此检测是否处在 Provider 之外。
  *

@@ -22,6 +22,13 @@ export interface ZTransferProps {
   dataSource: ZTransferItem[]
   targetKeys?: string[]
   titles?: [string, string]
+  /**
+   * 单个 item 行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 左右两列 list 由 `ZVirtualList` 渲染(2026-05-24 v2)。
+   */
+  itemSize?: number
+  /** list 容器高度 —— iem 倍数。默认 `15`(15iem = 240px @ 16px iem)。 */
+  listHeight?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -36,6 +43,7 @@ import { computed, h, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import ZVirtualList from '../display/ZVirtualList.vue'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -70,6 +78,8 @@ import { BuiltinIcons, ZIcon } from '../gene'
 const props = withDefaults(defineProps<ZTransferProps>(), {
   targetKeys: () => [],
   titles: () => ['源', '目标'],
+  itemSize: 2,
+  listHeight: 15,
 })
 
 const emit = defineEmits<ZTransferEmits>()
@@ -155,8 +165,6 @@ const panelHeadClass = computed(() =>
 
 const listClass = computed(() =>
   icss(theme.value, (s) => {
-    s.maxHeight.iem(15)
-    s.overflowY.auto
     s.padding._tiny
   }),
 )
@@ -224,23 +232,29 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
         {{ titlesRef[0] }} ({{ leftItems.length }})
       </div>
       <div :class="listClass">
-        <template v-if="leftItems.length > 0">
-          <div
-            v-for="item in leftItems"
-            :key="item.key"
-            :class="itemRowClass(leftChecked.includes(item.key), !!item.disabled)"
-            @click="toggleLeft(item.key, !!item.disabled)"
-          >
-            <input
-              type="checkbox"
-              :checked="leftChecked.includes(item.key)"
-              :disabled="item.disabled"
-              @click.stop="toggleLeft(item.key, !!item.disabled)"
-            />
-            <span>{{ item.label }}</span>
-          </div>
-        </template>
-        <div v-else :class="emptyClass">无数据</div>
+        <div v-if="leftItems.length === 0" :class="emptyClass">无数据</div>
+        <ZVirtualList
+          v-else
+          :items="leftItems"
+          :item-size="itemSize"
+          :height="listHeight"
+          key-field="key"
+        >
+          <template #default="{ item }">
+            <div
+              :class="itemRowClass(leftChecked.includes(item.key), !!item.disabled)"
+              @click="toggleLeft(item.key, !!item.disabled)"
+            >
+              <input
+                type="checkbox"
+                :checked="leftChecked.includes(item.key)"
+                :disabled="item.disabled"
+                @click.stop="toggleLeft(item.key, !!item.disabled)"
+              />
+              <span>{{ item.label }}</span>
+            </div>
+          </template>
+        </ZVirtualList>
       </div>
     </div>
 
@@ -270,23 +284,29 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
         {{ titlesRef[1] }} ({{ rightItems.length }})
       </div>
       <div :class="listClass">
-        <template v-if="rightItems.length > 0">
-          <div
-            v-for="item in rightItems"
-            :key="item.key"
-            :class="itemRowClass(rightChecked.includes(item.key), !!item.disabled)"
-            @click="toggleRight(item.key, !!item.disabled)"
-          >
-            <input
-              type="checkbox"
-              :checked="rightChecked.includes(item.key)"
-              :disabled="item.disabled"
-              @click.stop="toggleRight(item.key, !!item.disabled)"
-            />
-            <span>{{ item.label }}</span>
-          </div>
-        </template>
-        <div v-else :class="emptyClass">无数据</div>
+        <div v-if="rightItems.length === 0" :class="emptyClass">无数据</div>
+        <ZVirtualList
+          v-else
+          :items="rightItems"
+          :item-size="itemSize"
+          :height="listHeight"
+          key-field="key"
+        >
+          <template #default="{ item }">
+            <div
+              :class="itemRowClass(rightChecked.includes(item.key), !!item.disabled)"
+              @click="toggleRight(item.key, !!item.disabled)"
+            >
+              <input
+                type="checkbox"
+                :checked="rightChecked.includes(item.key)"
+                :disabled="item.disabled"
+                @click.stop="toggleRight(item.key, !!item.disabled)"
+              />
+              <span>{{ item.label }}</span>
+            </div>
+          </template>
+        </ZVirtualList>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
  * Phase γ 批 3:ZMention / ZCalendar / ZCascader.
  */
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { defineComponent, h, ref } from 'vue'
+import { defineComponent, h, nextTick, ref } from 'vue'
 import { mount, type VueWrapper } from '@vue/test-utils'
 import { ZMention, ZCalendar, ZCascader, type ZCascaderOption } from '../src'
 
@@ -115,18 +115,59 @@ describe('ZCascader', () => {
   })
 
   it('点第一列选项 → 展开第二列', async () => {
+    class StubRO {
+      observe(): void {}
+      unobserve(): void {}
+      disconnect(): void {}
+    }
+    ;(globalThis as unknown as { ResizeObserver: typeof StubRO }).ResizeObserver = StubRO
     const w = mount(ZCascader, {
       props: { value: [], options: OPTS },
       attachTo: document.body,
     })
     wrappers.push(w)
     await w.find('[role="combobox"]').trigger('click')
+    // 激活 panel 虚拟列表
+    document.querySelectorAll('[data-zv-wrapper]').forEach((wrap) => {
+      const root = wrap.parentElement as HTMLElement | null
+      if (root) {
+        Object.defineProperty(root, 'clientHeight', { configurable: true, value: 300 })
+        root.dispatchEvent(new Event('scroll'))
+      }
+    })
+    await nextTick()
     const items = document.querySelectorAll('[role="option"]')
     ;(items[0] as HTMLElement).click()
     await w.vm.$nextTick()
-    // 现在应该多一列(包含 杭州)
+    // 现在应该多一列(包含 杭州)— 也需要再次激活
+    document.querySelectorAll('[data-zv-wrapper]').forEach((wrap) => {
+      const root = wrap.parentElement as HTMLElement | null
+      if (root) {
+        Object.defineProperty(root, 'clientHeight', { configurable: true, value: 300 })
+        root.dispatchEvent(new Event('scroll'))
+      }
+    })
+    await nextTick()
     expect(document.body.textContent).toContain('杭州')
   })
+
+  /** 激活所有虚拟列表(注入 clientHeight + dispatch scroll)。 */
+  async function activateVirtualPanels(): Promise<void> {
+    class StubRO {
+      observe(): void {}
+      unobserve(): void {}
+      disconnect(): void {}
+    }
+    ;(globalThis as unknown as { ResizeObserver: typeof StubRO }).ResizeObserver = StubRO
+    document.querySelectorAll('[data-zv-wrapper]').forEach((wrap) => {
+      const root = wrap.parentElement as HTMLElement | null
+      if (root) {
+        Object.defineProperty(root, 'clientHeight', { configurable: true, value: 300 })
+        root.dispatchEvent(new Event('scroll'))
+      }
+    })
+    await nextTick()
+  }
 
   it('点叶子 → 完整路径 emit', async () => {
     const value = ref<string[]>([])
@@ -143,14 +184,18 @@ describe('ZCascader', () => {
     const w = mount(Host, { attachTo: document.body })
     wrappers.push(w)
     await w.find('[role="combobox"]').trigger('click')
+    await activateVirtualPanels()
     // 点浙江
     ;(document.querySelectorAll('[role="option"]')[0] as HTMLElement).click()
     await w.vm.$nextTick()
-    // 点杭州
-    const cols = document.querySelectorAll('[role="listbox"] > div')
-    const hzBtn = Array.from(cols[1].children).find((el) => el.textContent?.includes('杭州'))!
+    await activateVirtualPanels()
+    // 点杭州(此时第二列已激活)
+    const hzBtn = Array.from(document.querySelectorAll('[role="option"]')).find((el) =>
+      el.textContent?.includes('杭州'),
+    )!
     ;(hzBtn as HTMLElement).click()
     await w.vm.$nextTick()
+    await activateVirtualPanels()
     // 点西湖区
     const xhBtn = Array.from(document.querySelectorAll('[role="option"]')).find((el) =>
       el.textContent?.includes('西湖'),

@@ -20,6 +20,15 @@ export interface ZMentionProps {
   rows?: number
   /** 字号尺寸 —— `number`(iem 倍数,默认 1)。**不接 height**(rows 决定高度)。2026-05-24 B7。 */
   size?: number
+  /**
+   * 单个候选行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 浮层 suggestions 由 `ZVirtualList` 渲染(2026-05-24 v2)。
+   */
+  optionSize?: number
+  /**
+   * 浮层最大高度 —— iem 倍数。默认 `15`(15iem = 240px @ 16px iem)。
+   */
+  dropdownMaxHeight?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -34,6 +43,8 @@ import { computed, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyInputSizeNoHeight } from '../_internal/input-size'
+import { useZIem } from '../_hooks'
+import ZVirtualList from '../display/ZVirtualList.vue'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -73,6 +84,8 @@ const props = withDefaults(defineProps<ZMentionProps>(), {
   disabled: false,
   rows: 3,
   size: 1,
+  optionSize: 2,
+  dropdownMaxHeight: 15,
 })
 
 const emit = defineEmits<ZMentionEmits>()
@@ -173,11 +186,16 @@ const dropdownClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._tiny
-    s.maxHeight.iem(15)
-    s.overflowY.auto
     s.marginTop._tiny
   }),
 )
+
+const iemPx = useZIem()
+const dropdownListHeight = computed<string>(() => {
+  const totalPx = filtered.value.length * props.optionSize * iemPx.value
+  const maxPx = props.dropdownMaxHeight * iemPx.value
+  return `${Math.min(totalPx, maxPx)}px`
+})
 
 const optionClass = computed(() =>
   icss(theme.value, (s) => {
@@ -210,15 +228,18 @@ defineExpose({ rootRef })
       @input="onInput"
     />
     <div v-if="showDropdown && filtered.length > 0" :class="dropdownClass" role="listbox">
-      <div
-        v-for="opt in filtered"
-        :key="opt"
-        :class="optionClass"
-        role="option"
-        @click="pickMention(opt)"
+      <ZVirtualList
+        :items="filtered"
+        :item-size="optionSize"
+        :height="dropdownListHeight"
+        key-field="value"
       >
-        {{ prefix }}{{ opt }}
-      </div>
+        <template #default="{ item: opt }">
+          <div :class="optionClass" role="option" @click="pickMention(opt)">
+            {{ prefix }}{{ opt }}
+          </div>
+        </template>
+      </ZVirtualList>
     </div>
   </div>
 </template>

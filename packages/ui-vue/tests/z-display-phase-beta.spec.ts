@@ -2,7 +2,7 @@
  * Phase β display 批 2:ZEmpty / ZSkeleton / ZResult / ZList / ZProgress / ZCollapse。
  */
 import { describe, expect, it } from 'vitest'
-import { defineComponent, h, ref } from 'vue'
+import { defineComponent, h, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { ZEmpty, ZSkeleton, ZResult, ZList, ZProgress, ZCollapse } from '../src'
 
@@ -96,13 +96,19 @@ describe('ZResult', () => {
 })
 
 describe('ZList', () => {
-  it('items 渲染 + role=list', () => {
+  it('items + scoped slot 渲染(强制 viewport via scroll)', async () => {
+    class StubRO {
+      observe(): void {}
+      unobserve(): void {}
+      disconnect(): void {}
+    }
+    ;(globalThis as unknown as { ResizeObserver: typeof StubRO }).ResizeObserver = StubRO
     const Host = defineComponent({
       setup() {
         return () =>
           h(
             ZList,
-            { items: ['A', 'B', 'C'] },
+            { items: ['A', 'B', 'C'], itemSize: 3, height: 12 },
             {
               default: ({ item, index }: { item: string; index: number }) => `${index}:${item}`,
             },
@@ -111,19 +117,25 @@ describe('ZList', () => {
     })
     const w = mount(Host)
     expect(w.attributes('role')).toBe('list')
+    const vl = w.element.querySelector('[data-zv-wrapper]')?.parentElement as HTMLElement
+    Object.defineProperty(vl, 'clientHeight', { configurable: true, value: 192 })
+    vl.dispatchEvent(new Event('scroll'))
+    await nextTick()
     expect(w.text()).toContain('0:A')
     expect(w.text()).toContain('2:C')
   })
 
   it('header / footer / 空数据 emptyText', () => {
-    const w = mount(ZList, { props: { items: [], header: 'H', footer: 'F' } })
+    const w = mount(ZList, {
+      props: { items: [], itemSize: 3, height: 12, header: 'H', footer: 'F' },
+    })
     expect(w.text()).toContain('H')
     expect(w.text()).toContain('F')
     expect(w.text()).toContain('暂无数据')
   })
 
   it('bordered=true → 注入边框样式', () => {
-    mount(ZList, { props: { items: [1, 2], bordered: true } })
+    mount(ZList, { props: { items: [1, 2], itemSize: 3, height: 12, bordered: true } })
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
       .join('\n')

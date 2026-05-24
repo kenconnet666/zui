@@ -30,6 +30,15 @@ export interface ZCascaderProps {
   size?: number
   /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
   height?: number
+  /**
+   * 单个 option 行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 每级 panel 由 `ZVirtualList` 渲染(2026-05-24 v2)。
+   */
+  optionSize?: number
+  /**
+   * 每级 panel 最大高度 —— iem 倍数。默认 `17.5`(17.5iem = 280px @ 16px iem)。
+   */
+  columnMaxHeight?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -45,8 +54,9 @@ import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyInputSize } from '../_internal/input-size'
-import { usePopper, useEscapeStack } from '../_hooks'
+import { usePopper, useEscapeStack, useZIem } from '../_hooks'
 import { BuiltinIcons, ZIcon } from '../gene'
+import ZVirtualList from '../display/ZVirtualList.vue'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -91,6 +101,8 @@ const props = withDefaults(defineProps<ZCascaderProps>(), {
   placement: 'bottom-start',
   separator: ' / ',
   size: 1,
+  optionSize: 2,
+  columnMaxHeight: 17.5,
 })
 
 const emit = defineEmits<ZCascaderEmits>()
@@ -226,8 +238,6 @@ const popperClass = computed(() =>
 const columnClass = computed(() =>
   icss(theme.value, (s) => {
     s.minWidth.iem(8)
-    s.maxHeight.iem(17.5)
-    s.overflowY.auto
     s.borderRightWidth._thin
     s.borderRightStyle.solid
     s.borderRightColor._border
@@ -237,6 +247,14 @@ const columnClass = computed(() =>
     })
   }),
 )
+
+const iemPx = useZIem()
+/** 每列虚拟列表实际高度。 */
+function columnHeight(col: ZCascaderOption[]): string {
+  const totalPx = col.length * props.optionSize * iemPx.value
+  const maxPx = props.columnMaxHeight * iemPx.value
+  return `${Math.min(totalPx, maxPx)}px`
+}
 
 const optionClass = (opt: ZCascaderOption, isActive: boolean): string =>
   icss(theme.value, (s) => {
@@ -309,20 +327,27 @@ defineExpose({ rootRef })
       role="listbox"
     >
       <div v-for="(col, ci) in columns" :key="ci" :class="columnClass">
-        <div
-          v-for="opt in col"
-          :key="opt.value"
-          :class="optionClass(opt, activePath[ci] === opt.value)"
-          role="option"
-          :aria-selected="activePath[ci] === opt.value"
-          :aria-disabled="opt.disabled"
-          @click="pickInColumn(ci, opt)"
+        <ZVirtualList
+          :items="col"
+          :item-size="optionSize"
+          :height="columnHeight(col)"
+          key-field="value"
         >
-          <span>{{ opt.label }}</span>
-          <span v-if="opt.children && opt.children.length > 0">
-            <component :is="rightIcon" />
-          </span>
-        </div>
+          <template #default="{ item: opt }">
+            <div
+              :class="optionClass(opt, activePath[ci] === opt.value)"
+              role="option"
+              :aria-selected="activePath[ci] === opt.value"
+              :aria-disabled="opt.disabled"
+              @click="pickInColumn(ci, opt)"
+            >
+              <span>{{ opt.label }}</span>
+              <span v-if="opt.children && opt.children.length > 0">
+                <component :is="rightIcon" />
+              </span>
+            </div>
+          </template>
+        </ZVirtualList>
       </div>
     </div>
   </Teleport>

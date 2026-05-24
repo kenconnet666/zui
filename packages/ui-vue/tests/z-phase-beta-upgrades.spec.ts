@@ -50,6 +50,23 @@ describe('ZTreeSelect', () => {
     expect(document.querySelector('[role="listbox"]')).toBeNull()
   })
 
+  /** 激活 ZTree 内部虚拟列表(stub RO + 注入 clientHeight + scroll)。 */
+  async function activateTree(): Promise<void> {
+    class StubRO {
+      observe(): void {}
+      unobserve(): void {}
+      disconnect(): void {}
+    }
+    ;(globalThis as unknown as { ResizeObserver: typeof StubRO }).ResizeObserver = StubRO
+    document.querySelectorAll('[data-zv-wrapper]').forEach((wrap) => {
+      const root = wrap.parentElement as HTMLElement | null
+      if (root) {
+        Object.defineProperty(root, 'clientHeight', { configurable: true, value: 400 })
+        root.dispatchEvent(new Event('scroll'))
+      }
+    })
+  }
+
   it('点触发器 → 展开下拉 + 显示 ZTree', async () => {
     const w = mount(ZTreeSelect, {
       props: { data: TREE, defaultExpandedKeys: ['root'] },
@@ -57,6 +74,8 @@ describe('ZTreeSelect', () => {
     })
     wrappers.push(w)
     await w.find('[role="combobox"]').trigger('click')
+    await activateTree()
+    await w.vm.$nextTick()
     expect(document.querySelector('[role="listbox"]')).not.toBeNull()
     expect(document.body.textContent).toContain('Leaf 1')
   })
@@ -77,6 +96,8 @@ describe('ZTreeSelect', () => {
     const w = mount(Host, { attachTo: document.body })
     wrappers.push(w)
     await w.find('[role="combobox"]').trigger('click')
+    await activateTree()
+    await w.vm.$nextTick()
     // 找 Leaf 1
     const leaf = Array.from(document.querySelectorAll('[role="treeitem"]')).find((el) =>
       el.textContent?.includes('Leaf 1'),

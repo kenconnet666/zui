@@ -48,6 +48,16 @@ export interface ZSelectProps {
   size?: number
   /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
   height?: number
+  /**
+   * 单个 option 行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 浮层 options 由 `ZVirtualList` 渲染(2026-05-24 v2),需要明确行高。
+   */
+  optionSize?: number
+  /**
+   * 浮层最大高度 —— iem 倍数。默认 `15`(15iem = 240px @ 16px iem)。
+   * options 不足时容器自适应,超过则封顶。
+   */
+  dropdownMaxHeight?: number
   sxTrigger?: SxObject
   sxDropdown?: SxObject
   sxOption?: SxObject
@@ -67,8 +77,9 @@ import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyInputSize } from '../_internal/input-size'
 import { BuiltinIcons, ZIcon } from '../gene'
-import { usePopper, useEscapeStack } from '../_hooks'
+import { usePopper, useEscapeStack, useZIem } from '../_hooks'
 import { onClickOutside } from '@vueuse/core'
+import ZVirtualList from '../display/ZVirtualList.vue'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -115,6 +126,8 @@ const props = withDefaults(defineProps<ZSelectProps>(), {
   filterable: false,
   multiple: false,
   size: 1,
+  optionSize: 2,
+  dropdownMaxHeight: 15,
 })
 
 const emit = defineEmits<ZSelectEmits>()
@@ -231,14 +244,20 @@ const dropdownClass = computed(() =>
     s.padding._tiny
     s.zIndex._popover
     s.minWidth.iem(8)
-    s.maxHeight.iem(15)
-    s.overflowY.auto
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
     applySx(s, props.sxDropdown)
   }),
 )
+
+const iemPx = useZIem()
+/** 浮层虚拟列表实际高度:options 不足时按 totalSize,超过则封顶 dropdownMaxHeight。 */
+const dropdownListHeight = computed<string>(() => {
+  const totalPx = filteredOptions.value.length * props.optionSize * iemPx.value
+  const maxPx = props.dropdownMaxHeight * iemPx.value
+  return `${Math.min(totalPx, maxPx)}px`
+})
 const sxDropdownAttrs = computed(() => extractSxAttrs(props.sxDropdown))
 
 const optionClass = (opt: ZSelectOption): string =>
@@ -433,30 +452,37 @@ defineExpose({ rootRef })
       role="listbox"
       v-bind="sxDropdownAttrs.attrs"
     >
-      <div
-        v-for="opt in filteredOptions"
-        :key="String(opt.value)"
-        :ref="sxOptionAttrs.ref"
-        :class="[optionClass(opt), sxOptionAttrs.class]"
-        :style="sxOptionAttrs.style"
-        role="option"
-        :aria-selected="isOptionSelected(opt)"
-        :aria-disabled="opt.disabled"
-        v-bind="sxOptionAttrs.attrs"
-        @click="selectOption(opt)"
-      >
-        <input
-          v-if="multiple"
-          type="checkbox"
-          :checked="isOptionSelected(opt)"
-          :disabled="opt.disabled"
-          aria-hidden="true"
-          tabindex="-1"
-          @click.stop="selectOption(opt)"
-        />
-        <span>{{ opt.label }}</span>
-      </div>
       <div v-if="filteredOptions.length === 0" :class="emptyClass">无匹配项</div>
+      <ZVirtualList
+        v-else
+        :items="filteredOptions"
+        :item-size="optionSize"
+        :height="dropdownListHeight"
+        key-field="value"
+      >
+        <template #default="{ item: opt }">
+          <div
+            :class="[optionClass(opt), sxOptionAttrs.class]"
+            :style="sxOptionAttrs.style"
+            role="option"
+            :aria-selected="isOptionSelected(opt)"
+            :aria-disabled="opt.disabled"
+            v-bind="sxOptionAttrs.attrs"
+            @click="selectOption(opt)"
+          >
+            <input
+              v-if="multiple"
+              type="checkbox"
+              :checked="isOptionSelected(opt)"
+              :disabled="opt.disabled"
+              aria-hidden="true"
+              tabindex="-1"
+              @click.stop="selectOption(opt)"
+            />
+            <span>{{ opt.label }}</span>
+          </div>
+        </template>
+      </ZVirtualList>
     </div>
   </Teleport>
 </template>

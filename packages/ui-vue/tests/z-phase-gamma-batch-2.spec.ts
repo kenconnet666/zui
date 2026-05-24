@@ -3,7 +3,7 @@
  * 不测 ZQRCode(依赖外部 qrcode 包,业务方需自装)。
  */
 import { describe, expect, it } from 'vitest'
-import { defineComponent, h, ref } from 'vue'
+import { defineComponent, h, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import {
   ZCarousel,
@@ -213,8 +213,28 @@ describe('ZTransfer', () => {
     { key: '3', label: 'C' },
   ]
 
-  it('左右两栏渲染 + title', () => {
+  /** 激活 ZTransfer 内部所有 ZVirtualList(注入 viewport 高度并触发 scroll)。 */
+  function activateVirtual(w: ReturnType<typeof mount>): Promise<void> {
+    class StubRO {
+      observe(): void {}
+      unobserve(): void {}
+      disconnect(): void {}
+    }
+    ;(globalThis as unknown as { ResizeObserver: typeof StubRO }).ResizeObserver = StubRO
+    const wrappers = w.element.querySelectorAll('[data-zv-wrapper]')
+    wrappers.forEach((wrap: Element) => {
+      const root = wrap.parentElement as HTMLElement
+      if (root) {
+        Object.defineProperty(root, 'clientHeight', { configurable: true, value: 300 })
+        root.dispatchEvent(new Event('scroll'))
+      }
+    })
+    return nextTick()
+  }
+
+  it('左右两栏渲染 + title', async () => {
     const w = mount(ZTransfer, { props: { dataSource: DATA, targetKeys: ['2'] } })
+    await activateVirtual(w)
     expect(w.text()).toContain('源')
     expect(w.text()).toContain('目标')
     expect(w.text()).toContain('A')
@@ -244,9 +264,11 @@ describe('ZTransfer', () => {
       },
     })
     const w = mount(Host)
+    await activateVirtual(w)
     // 勾左侧第一个 (A,key=1)
     const checkboxes = w.findAll('input[type="checkbox"]')
-    await checkboxes[0].trigger('click')
+    expect(checkboxes.length).toBeGreaterThan(0)
+    await checkboxes[0]!.trigger('click')
     const rightBtn = w.find('button[aria-label="移到右侧"]')
     await rightBtn.trigger('click')
     expect(target.value).toContain('1')

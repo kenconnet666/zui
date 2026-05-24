@@ -26,6 +26,15 @@ export interface ZAutoCompleteProps {
   /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
   height?: number
   filter?: (input: string, opt: string) => boolean
+  /**
+   * 单个建议行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 浮层 suggestions 由 `ZVirtualList` 渲染(2026-05-24 v2)。
+   */
+  optionSize?: number
+  /**
+   * 浮层最大高度 —— iem 倍数。默认 `15`(15iem = 240px @ 16px iem)。
+   */
+  dropdownMaxHeight?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -41,7 +50,8 @@ import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyInputSize } from '../_internal/input-size'
-import { usePopper, useEscapeStack } from '../_hooks'
+import { usePopper, useEscapeStack, useZIem } from '../_hooks'
+import ZVirtualList from '../display/ZVirtualList.vue'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -78,6 +88,8 @@ const props = withDefaults(defineProps<ZAutoCompleteProps>(), {
   disabled: false,
   size: 1,
   filter: (input: string, opt: string) => opt.toLowerCase().includes(input.toLowerCase()),
+  optionSize: 2,
+  dropdownMaxHeight: 15,
 })
 
 const emit = defineEmits<ZAutoCompleteEmits>()
@@ -144,13 +156,16 @@ const dropdownClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._tiny
-    s.display.flex
-    s.flexDirection.column
-    s.maxHeight.iem(15)
-    s.overflowY.auto
     s.minWidth.iem(8)
   }),
 )
+
+const iemPx = useZIem()
+const dropdownListHeight = computed<string>(() => {
+  const totalPx = filtered.value.length * props.optionSize * iemPx.value
+  const maxPx = props.dropdownMaxHeight * iemPx.value
+  return `${Math.min(totalPx, maxPx)}px`
+})
 
 const optionClass = computed(() =>
   icss(theme.value, (s) => {
@@ -213,15 +228,18 @@ defineExpose({ rootRef })
       :style="floatingStyles"
       role="listbox"
     >
-      <div
-        v-for="opt in filtered"
-        :key="opt"
-        :class="optionClass"
-        role="option"
-        @click="onSelect(opt)"
+      <ZVirtualList
+        :items="filtered"
+        :item-size="optionSize"
+        :height="dropdownListHeight"
+        key-field="value"
       >
-        {{ opt }}
-      </div>
+        <template #default="{ item: opt }">
+          <div :class="optionClass" role="option" @click="onSelect(opt)">
+            {{ opt }}
+          </div>
+        </template>
+      </ZVirtualList>
     </div>
   </Teleport>
 </template>

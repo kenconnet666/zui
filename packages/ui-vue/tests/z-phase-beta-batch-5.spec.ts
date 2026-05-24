@@ -1,8 +1,8 @@
 /**
  * Phase β 批 5 spec:ZTree / ZUpload / ZDatePicker / ZTimePicker / ZColorPicker.
  */
-import { describe, expect, it } from 'vitest'
-import { defineComponent, h, ref } from 'vue'
+import { beforeAll, describe, expect, it } from 'vitest'
+import { defineComponent, h, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import {
   ZTree,
@@ -27,17 +27,38 @@ const TREE_DATA: ZTreeNode[] = [
 ]
 
 describe('ZTree', () => {
-  it('role=tree + 顶层节点渲染', () => {
-    const w = mount(ZTree, { props: { data: TREE_DATA } })
+  beforeAll(() => {
+    class StubRO {
+      observe(): void {}
+      unobserve(): void {}
+      disconnect(): void {}
+    }
+    ;(globalThis as unknown as { ResizeObserver: typeof StubRO }).ResizeObserver = StubRO
+  })
+
+  /** 激活 ZTree 内部 ZVirtualList(注入 clientHeight + dispatch scroll)。 */
+  async function activateTree(w: ReturnType<typeof mount>): Promise<void> {
+    const wrap = w.element.querySelector('[data-zv-wrapper]')
+    const root = wrap?.parentElement as HTMLElement | null
+    if (root) {
+      Object.defineProperty(root, 'clientHeight', { configurable: true, value: 400 })
+      root.dispatchEvent(new Event('scroll'))
+    }
+    await nextTick()
+  }
+
+  it('role=tree + 顶层节点渲染', async () => {
+    const w = mount(ZTree, { props: { data: TREE_DATA, height: 20 } })
     expect(w.attributes('role')).toBe('tree')
+    await activateTree(w)
     expect(w.text()).toContain('A')
     expect(w.text()).toContain('B')
-    // 默认未展开,A1 / A2 不可见
     expect(w.text()).not.toContain('A1')
   })
 
-  it('expandedKeys 控制展开 → 渲染子节点', () => {
-    const w = mount(ZTree, { props: { data: TREE_DATA, expandedKeys: ['a'] } })
+  it('expandedKeys 控制展开 → 渲染子节点', async () => {
+    const w = mount(ZTree, { props: { data: TREE_DATA, expandedKeys: ['a'], height: 20 } })
+    await activateTree(w)
     expect(w.text()).toContain('A1')
     expect(w.text()).toContain('A2')
   })
@@ -50,13 +71,16 @@ describe('ZTree', () => {
           h(ZTree, {
             data: TREE_DATA,
             expandedKeys: expanded.value,
+            height: 20,
             'onUpdate:expandedKeys': (k: string[]) => (expanded.value = k),
           })
       },
     })
     const w = mount(Host)
+    await activateTree(w)
     const items = w.findAll('[role="treeitem"]')
-    await items[0].trigger('click')
+    expect(items.length).toBeGreaterThan(0)
+    await items[0]!.trigger('click')
     expect(expanded.value).toEqual(['a'])
   })
 
@@ -69,23 +93,25 @@ describe('ZTree', () => {
             data: TREE_DATA,
             expandedKeys: ['a'],
             selectedKey: selected.value,
+            height: 20,
             'onUpdate:selectedKey': (k: string | null) => (selected.value = k),
           })
       },
     })
     const w = mount(Host)
+    await activateTree(w)
     const items = w.findAll('[role="treeitem"]')
     // items[0]=A, [1]=A1, [2]=A2, [3]=B
-    await items[1].trigger('click')
+    await items[1]!.trigger('click')
     expect(selected.value).toBe('a1')
   })
 
   it('disabled 节点 → aria-disabled=true', async () => {
-    const w = mount(ZTree, { props: { data: TREE_DATA, expandedKeys: ['a'] } })
+    const w = mount(ZTree, { props: { data: TREE_DATA, expandedKeys: ['a'], height: 20 } })
+    await activateTree(w)
     const items = w.findAll('[role="treeitem"]')
     expect(items.length).toBe(4)
-    // items[2] 是 A2(disabled)
-    expect(items[2].attributes('aria-disabled')).toBe('true')
+    expect(items[2]!.attributes('aria-disabled')).toBe('true')
   })
 })
 
