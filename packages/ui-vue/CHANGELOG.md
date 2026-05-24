@@ -2,6 +2,46 @@
 
 ## Unreleased
 
+### BREAKING — 数值尺寸 props 从 chain factory 改 `number`(iem 倍数)(2026-05-24,R0-R11)
+
+撤销 B5 的"size 全 factory"决策(数值类),改为**数字 = iem 倍数**,组件内能读到数值后按比例算所有相关维度,全维度走 iem(Provider 联动)。其他类型 prop(color / variant / direction / css 等)保持 chain factory 不变。
+
+详见 `.claude/decisions/2026-05-24-size-prop-number-iem.md`。
+
+**核心动机**:chain factory 是黑盒 callback,组件无法读取用户写入的具体数值 → 无法按比例算其他维度 → "整体保持比例" 无法实现。改 `number` 解决。
+
+**用户接口对比**:
+```vue
+<!-- 旧 -->
+<ZButton :size="BUTTON_SIZE_MAP.middle" />
+<ZIcon :size="(w) => w.iem(1.5)" />
+<ZModal :width="(w) => w.iem(40)" />
+
+<!-- 新 -->
+<ZButton :size="1" />          <!-- size=1 → fontSize 1iem,height 2iem,padding 0.5/1iem 等比缩 -->
+<ZIcon :size="1.5" />           <!-- 1.5iem 正方形 -->
+<ZModal :width="40" />          <!-- 40iem = 640px @ 1080p -->
+
+<!-- 非 iem 单位走 css 兜底 -->
+<ZButton :size="1" :css="(s) => { s.height.vh(5) }" />
+```
+
+**改造批次**:
+- **R0**:写 ADR + 更新 `.claude/skills/zui.md §13.0`
+- **R1**:删 `_internal/size-prop.ts` + `_internal/component-sizes.ts` + 所有组件内 `*_SIZE_MAP`(13+ 处);新建 `_internal/input-size.ts` helper(`applyInputSize` / `applyInputSizeNoHeight`)
+- **R2-R7**:~40 组件改造(A 文字 8 / B 盒子 4 / C 输入 10 / D 按钮 2 / E 容器 8 / F 特殊 8)
+- **R8 1080p 尺寸合理性 audit**:对照 antd / arco / naive,调整 5 个组件默认值
+  - ZTooltip maxWidth 20 → 16(对齐 antd 250px)
+  - ZTour minWidth/maxWidth 15/22.5 → 20/32(对齐 antd panelWidth 520)
+  - ZProgress circle 6 → 7.5(对齐 antd 120px)
+  - ZPagination itemSize size*1.75 → size*2(对齐 antd 32×32)
+  - ZDrawer size 20 → 24(对齐 antd 378)
+- **R9 JSDoc 盒子图全更新**:~40 组件 `defineProps` 上一行完整嵌套图,标 number iem 倍数 + 内部相对公式 + 1080p px 参考
+- **R10 spec 修复**:200+ 处 `:size="(w) => w.iem(N)"` → `:size="N"`,删 `tests/size-prop.spec.ts`
+- **R11**:三件套全绿(type-check ✓ / 548 tests ✓ / build ✓)
+
+**不撤销的 B5 决策**:颜色 / 布局方向 / variant 字面量内联 / 视觉变体 / 复合 wire / css 兜底 等保持 chain factory。
+
 ### 改进 — sx 透传完善:SxObject 加 ref + 类型放宽 + 根 DOM 暴露(2026-05-24,U1-U4)
 
 **4 类改动**:

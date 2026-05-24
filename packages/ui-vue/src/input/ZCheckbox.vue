@@ -25,6 +25,8 @@ export interface ZCheckboxProps {
   label?: string
   disabled?: boolean
   indeterminate?: boolean
+  /** 复选框方框尺寸 —— `number`(iem 倍数,默认 1 = 16px @ 16px iem)。2026-05-24 B7。 */
+  size?: number
   sxBox?: SxObject
   sxLabel?: SxObject
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -43,10 +45,32 @@ import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { Z_CHECKBOX_GROUP_KEY, type CheckboxGroupCtx } from './_checkbox-group'
 
+/**
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ *
+ *   ┌──────────────────────────────────────────┐
+ *   │ root <label>  inline-flex / center        │
+ *   │   gap _tiny  cursor pointer / color _text │
+ *   │   fontSize _middle                        │   disabled → opacity _dim
+ *   │                                           │
+ *   │  ┌──────┐  ┌────────────────────┐        │   box(方框):
+ *   │  │  ✓   │  │ label / slot       │        │     width: `size` iem
+ *   │  │ size │  │  文字标签          │        │     height: `size` iem
+ *   │  │ iem  │  │                    │        │       默认 size=1(16px @ 1080p)
+ *   │  └──────┘  └────────────────────┘        │     border-radius: size*0.125 iem
+ *   │                                           │       = 0.125iem(2px)
+ *   │                                           │     border _thin solid _border / bg _bg
+ *   │                                           │     checked → border + bg _primary / color _bg
+ *   └──────────────────────────────────────────┘     内部 ✓ SVG = 0.75em(跟字号联动)
+ *
+ * 用户改 size 数字 → 方框 width / height / border-radius 等比缩(始终正方形)。
+ * 内部 ✓ / – 图标用 em 单位跟字号联动。非 iem 单位走 `:css` 兜底。
+ */
 const props = withDefaults(defineProps<ZCheckboxProps>(), {
   checked: false,
   disabled: false,
   indeterminate: false,
+  size: 1,
 })
 
 const emit = defineEmits<ZCheckboxEmits>()
@@ -84,12 +108,13 @@ const rootClass = computed(() =>
  */
 const boxClass = computed(() =>
   icss(theme.value, (s) => {
+    const size = props.size ?? 1
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.width.iem(1)
-    s.height.iem(1)
-    s.borderRadius._tiny
+    s.width.iem(size)
+    s.height.iem(size)
+    s.borderRadius.iem(size * 0.125)
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border

@@ -35,20 +35,18 @@ describe('ZAvatar', () => {
     expect(css).toMatch(/border-radius:calc/)
   })
 
-  it('size factory → 自定义 px', () => {
-    // v2 BREAKING:size 不再接 number 字面量,改 factory 表达 px
+  it('size=3 → 自定义尺寸(等价 48px @ 16px iem)', () => {
+    // R10:size 是 number(iem 倍数),3 等价 48px @ default 16px iem
     mount(ZAvatar, {
       props: {
-        size: (w: { px: (n: number) => void }) => {
-          w.px(48)
-        },
+        size: 3,
         text: 'X',
       },
     })
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
       .join('\n')
-    expect(css).toMatch(/width:48px/)
+    expect(css).toMatch(/width:calc\(3 \* var\(--zui-iem/)
   })
 })
 
@@ -149,12 +147,12 @@ describe('ZBlockquote', () => {
     expect(w.text()).toContain('quote')
   })
 
-  it('左侧 border-left 4px', () => {
+  it('左侧 border-left 0.25iem(默认 size=1 → size * 0.25)', () => {
     mount(ZBlockquote, { slots: { default: () => 'q' } })
     const css = Array.from(document.querySelectorAll('style'))
       .map((el) => el.textContent ?? '')
       .join('\n')
-    expect(css).toMatch(/border-left-width:4px/)
+    expect(css).toMatch(/border-left-width:calc\(0\.25 \* var\(--zui-iem/)
   })
 })
 

@@ -13,8 +13,6 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { SizePropMulti } from '../_internal/size-prop'
-import { makeSizeMap } from '../_internal/size-prop'
 
 export interface ZDescriptionsItem {
   label: string
@@ -28,30 +26,20 @@ export interface ZDescriptionsProps {
   title?: string
   column?: number
   bordered?: boolean
-  /** 尺寸 —— 纯 factory(默认等价 `DESC_SIZE_MAP.middle`,影响 label / value 内边距,偏紧)。 */
-  size?: SizePropMulti
+  /**
+   * 字号尺寸 —— `number`(iem 倍数,默认 1)。2026-05-24 B7。
+   *
+   * label/value padding = `size * 0.5`(偏紧表格风)。
+   */
+  size?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
-
-/** ZDescriptions 偏紧 padding(label/value 表格风),3 阶 + tiny/huge fallback。 */
-const DESC_SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
-  small: (s) => {
-    s.padding._tiny
-  },
-  middle: (s) => {
-    s.padding._small
-  },
-  large: (s) => {
-    s.padding._middle
-  },
-})
 </script>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { applySizeProp } from '../_internal/size-prop'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -80,7 +68,7 @@ import { applySizeProp } from '../_internal/size-prop'
 const props = withDefaults(defineProps<ZDescriptionsProps>(), {
   column: 3,
   bordered: false,
-  size: DESC_SIZE_MAP.middle,
+  size: 1,
 })
 
 const theme = useZTheme()
@@ -90,7 +78,7 @@ const rootClass = computed(() =>
     s.display.flex
     s.flexDirection.column
     s.color._text
-    s.fontSize._middle
+    s.fontSize.iem(props.size ?? 1)
     if (props.bordered) {
       s.borderWidth._thin
       s.borderStyle.solid
@@ -136,7 +124,7 @@ const labelClass = computed(() =>
   icss(theme.value, (s) => {
     s.color._textSecondary
     s.fontWeight._medium
-    applySizeProp(props.size, s)
+    s.padding.iem((props.size ?? 1) * 0.5)
     if (props.bordered) {
       s.backgroundColor._bgMuted
       s.borderRightWidth._thin
@@ -149,7 +137,7 @@ const labelClass = computed(() =>
 const valueClass = computed(() =>
   icss(theme.value, (s) => {
     s.color._text
-    applySizeProp(props.size, s)
+    s.padding.iem((props.size ?? 1) * 0.5)
     if (props.bordered) {
       s.borderRightWidth._thin
       s.borderRightStyle.solid

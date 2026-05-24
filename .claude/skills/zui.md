@@ -526,9 +526,13 @@ partial 应基于已解析的字面量。dev 模式扫到 function 会 warn，�
 
 **所有 ui-vue 组件必须遵守的四条原则**。Button / Input / Dialog / Tabs / Select / ... 一概按此画。`ZIcon` 是首个参照实现（§13.10）。
 
-**① ★ props 形态:全 chain factory 范式(2026-05-23 修订,撤销 Size5 union)**
+**① ★ props 形态:数值尺寸 `number`(iem 倍数)+ 其他 chain factory(2026-05-24 修订)**
 
-外观 props 一律走 **chain factory**,**不再接受 Size5 字面量字符串**。所有"档位"通过 schema token 在 factory 内表达(`(s) => s._middle`)。详见 `.claude/decisions/2026-05-23-prop-shape-pure-factory.md`。
+**数值尺寸 prop**(size / height / width / maxHeight 等)用 `number`(iem 倍数,默认 1iem=16px by Provider)。组件内部按数字计算所有相关维度(padding / border-radius / 等),**全 iem 联动**。
+
+**其他外观 prop**(color / direction / justify / css 等)保持 chain factory(B5 决策保留)。
+
+详见 `.claude/decisions/2026-05-24-size-prop-number-iem.md`(撤销 B5 size factory 部分)+ `.claude/decisions/2026-05-23-prop-shape-pure-factory.md`(其他类型保留)。
 
 **5 种 prop 形态**:
 

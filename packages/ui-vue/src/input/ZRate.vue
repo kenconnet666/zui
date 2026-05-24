@@ -14,7 +14,6 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { SizeProp } from '../_internal/size-prop'
 
 export interface ZRateProps {
   value?: number
@@ -24,18 +23,17 @@ export interface ZRateProps {
   readonly?: boolean
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   /**
-   * 星星尺寸 —— **纯 chain factory**(2026-05-23 撤销 Size5 union)。
+   * 星星尺寸 —— `number`(iem 倍数,默认 1.5 = 24px @ 16px iem)。
    *
-   * **默认**:`(w) => w.iem(1.25)`(等价旧 middle 档位)。
-   *
-   * **参考档位**:tiny(0.75iem) / small(1iem) / middle(1.25iem) / large(1.5iem) / huge(2iem)。
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    *
    * height 自动镜像 width(星星始终方形)。
    *
    * @example
-   * <ZRate :size="(w) => w.iem(2)" />        <!-- 等价 huge -->
+   * <ZRate :size="2" />        <!-- 2iem 大星 -->
+   * <ZRate :size="1" />        <!-- 1iem 小 -->
    */
-  size?: SizeProp<'width'>
+  size?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -51,24 +49,26 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ ZRate root  inline-flex / gap 0.125iem           │   color: 用户 color factory 或 _warning
- *   │   color: _warning(默认,star fill)             │   非交互态 opacity _strong
+ *   │                                                  │   非交互态 opacity _strong
  *   │                                                  │
  *   │  ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐             │   star button(count 个,默认 5):
- *   │  │ ★  │ │ ★  │ │ ☆  │ │ ☆  │ │ ☆  │             │     width: 1.25iem(默认 middle,可改)
- *   │  │1.25│ │1.25│ │1.25│ │1.25│ │1.25│             │     height: 1.25iem(镜像 width)
- *   │  │iem │ │iem │ │iem │ │iem │ │iem │             │     color: _border(空星底色)
- *   │  └────┘ └────┘ └────┘ └────┘ └────┘             │
- *   │     ↑                                            │   filled star(覆盖层):
- *   │     value 决定每颗 fill 比率(0 / 0.5 / 1)     │     position absolute / inset 0
+ *   │  │ ★  │ │ ★  │ │ ☆  │ │ ☆  │ │ ☆  │             │     width: `size` iem
+ *   │  │ size│ │size│ │size│ │size│ │size│             │     height: `size` iem(镜像)
+ *   │  │ iem │ │iem │ │iem │ │iem │ │iem │             │       默认 size=1.5(24px @ 1080p)
+ *   │  └────┘ └────┘ └────┘ └────┘ └────┘             │       传 size=2 → 2iem(32px)大星
+ *   │     ↑                                            │     color: _border(空星底色)
+ *   │     value 决定每颗 fill 比率(0 / 0.5 / 1)     │   filled star(覆盖层):
+ *   │                                                  │     position absolute / inset 0
  *   │                                                  │     width: filledRatio * 100%
  *   │                                                  │     overflow hidden / currentColor
  *   └──────────────────────────────────────────────────┘
  *
- * allowHalf=true 时点击星左半 → 0.5 颗,右半 → 1 颗。
+ * 用户改 size 数字 → 每颗 star width / height 等比缩(始终正方形)。
+ * allowHalf=true 时点击星左半 → 0.5 颗,右半 → 1 颗。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZRateProps>(), {
   value: 0,
@@ -76,10 +76,7 @@ const props = withDefaults(defineProps<ZRateProps>(), {
   allowHalf: false,
   disabled: false,
   readonly: false,
-  // 默认等价旧 middle 档位:1.25iem
-  size: (w: Chain<ZuiSchema>['width']) => {
-    w.iem(1.25)
-  },
+  size: 1.5,
   // 星色默认 `_warning`(M2 orange,适合星)
   color: (c: Chain<ZuiSchema>['color']) => {
     c._warning
@@ -110,13 +107,14 @@ const rootClass = computed(() =>
 
 const starClass = computed(() =>
   icss(theme.value, (s) => {
+    const size = props.size ?? 1.5
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
     s.position.relative
-    // size(Type C):同一 factory 应用到 width + height,保证星星方形
-    s.width(props.size)
-    s.height(props.size)
+    // size(number):iem 倍数,width + height 镜像保证星星方形
+    s.width.iem(size)
+    s.height.iem(size)
     s.cursor(isInteractive.value ? 'pointer' : 'default')
     s.color._border
   }),

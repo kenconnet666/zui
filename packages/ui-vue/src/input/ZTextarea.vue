@@ -27,6 +27,13 @@ export interface ZTextareaProps {
   maxlength?: number
   showCount?: boolean
   autofocus?: boolean
+  /**
+   * 字号尺寸 —— `number`(iem 倍数,默认 1)。
+   * **不接 `height`**(textarea 高度由 rows 决定)。
+   *
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。
+   */
+  size?: number
   sxTextarea?: SxObject
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -44,15 +51,19 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applyInputSizeNoHeight } from '../_internal/input-size'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────┐
- *   │ wrapper  inline-flex column / gap _tiny          │   padding: _small
- *   │   padding _small  border _thin solid _border     │   border-radius: _small
- *   │   border-radius _small  bg _bg  color _text      │   fontSize: _middle
- *   │   fontSize _middle  lineHeight _normal           │   width: 100%
+ *   │ wrapper  inline-flex column / gap _tiny          │
+ *   │   font-size: `size` iem                          │   默认 size=1(16px @ 1080p)
+ *   │   padding-y: size*0.375 iem                      │   = 0.375iem(6px)
+ *   │   padding-x: size*0.75 iem                       │   = 0.75iem(12px)
+ *   │   border-radius: size*0.25 iem                   │   = 0.25iem(4px)
+ *   │   (无 height —— 由 rows 决定 textarea 高度)     │
+ *   │   border _thin solid _border / bg _bg / color _text │ lineHeight _normal / width 100%
  *   │   focused: borderColor _primary                  │
  *   │   disabled: opacity _dim / bg _bgMuted           │
  *   │                                                  │
@@ -67,6 +78,9 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
  *   │                              │ _textSec │        │     fontSize _tiny
  *   │                              └──────────┘        │
  *   └──────────────────────────────────────────────────┘
+ *
+ * 用户改 size 数字 → padding / fontSize / border-radius 等比缩(整体比例不变,无 height)。
+ * 高度由 rows 决定。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZTextareaProps>(), {
   rows: 3,
@@ -75,6 +89,7 @@ const props = withDefaults(defineProps<ZTextareaProps>(), {
   readonly: false,
   showCount: false,
   autofocus: false,
+  size: 1,
 })
 
 const emit = defineEmits<ZTextareaEmits>()
@@ -91,14 +106,12 @@ const wrapperClass = computed(() =>
     s.display.inlineFlex
     s.flexDirection.column
     s.gap._tiny
-    s.padding._small
-    s.borderRadius._small
+    applyInputSizeNoHeight(s, props.size)
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    s.fontSize._middle
     s.lineHeight._normal
     s.width.pct(100)
     s.transitionProperty._colors

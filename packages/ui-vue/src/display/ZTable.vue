@@ -23,8 +23,6 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-import type { SizePropMulti } from '../_internal/size-prop'
-import { makeSizeMap } from '../_internal/size-prop'
 import type { VNodeChild } from 'vue'
 
 export type ZTableAlign = 'left' | 'center' | 'right'
@@ -55,8 +53,12 @@ export interface ZTableProps<T = Record<string, unknown>> {
   rowKey?: string | ((row: T) => string | number)
   bordered?: boolean
   striped?: boolean
-  /** 尺寸 —— 纯 factory(默认等价 `TABLE_SIZE_MAP.middle`,影响 cell padding-y)。 */
-  size?: SizePropMulti
+  /**
+   * 字号尺寸 —— `number`(iem 倍数,默认 1)。2026-05-24 B7。
+   *
+   * 内部按比例算 cell padding-y(`size * 0.625`)。
+   */
+  size?: number
   emptyText?: string
   /** 行选择 ── `v-model:selectedKeys` 配合用。 */
   selectable?: boolean
@@ -75,21 +77,6 @@ export interface ZTableEmits {
   (e: 'update:sortState', state: ZTableSortState): void
 }
 
-/** cell padding-y(影响行高,3 阶实现 + tiny/huge fallback)。 */
-const TABLE_SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
-  small: (s) => {
-    s.paddingTop.iem(0.375)
-    s.paddingBottom.iem(0.375)
-  },
-  middle: (s) => {
-    s.paddingTop.iem(0.625)
-    s.paddingBottom.iem(0.625)
-  },
-  large: (s) => {
-    s.paddingTop.iem(0.875)
-    s.paddingBottom.iem(0.875)
-  },
-})
 </script>
 
 <script lang="ts" setup generic="T extends Record<string, unknown>">
@@ -97,7 +84,6 @@ import { computed, h } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
-import { applySizeProp } from '../_internal/size-prop'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
@@ -137,7 +123,7 @@ const props = withDefaults(defineProps<ZTableProps<T>>(), {
   rowKey: 'id',
   bordered: false,
   striped: false,
-  size: TABLE_SIZE_MAP.middle,
+  size: 1,
   emptyText: '暂无数据',
   selectable: false,
   selectedKeys: () => [],
@@ -248,7 +234,7 @@ const tableClass = computed(() =>
   icss(theme.value, (s) => {
     s.width.pct(100)
     s.borderCollapse.collapse
-    s.fontSize._middle
+    s.fontSize.iem(props.size ?? 1)
     s.color._text
     s.backgroundColor._bg
     if (props.bordered) {
@@ -293,7 +279,9 @@ const sxRowAttrs = computed(() => extractSxAttrs(props.sxRow))
 
 const cellClass = (col: ZTableColumn<T>): string =>
   icss(theme.value, (s) => {
-    applySizeProp(props.size, s)
+    const size = props.size ?? 1
+    s.paddingTop.iem(size * 0.625)
+    s.paddingBottom.iem(size * 0.625)
     s.paddingLeft._middle
     s.paddingRight._middle
     s.textAlign(col.align ?? 'left')
@@ -308,7 +296,9 @@ const sxCellAttrs = computed(() => extractSxAttrs(props.sxCell))
 
 const selectCellClass = computed(() =>
   icss(theme.value, (s) => {
-    applySizeProp(props.size, s)
+    const size = props.size ?? 1
+    s.paddingTop.iem(size * 0.625)
+    s.paddingBottom.iem(size * 0.625)
     s.paddingLeft._small
     s.paddingRight._small
     s.textAlign.center

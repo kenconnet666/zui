@@ -76,13 +76,11 @@ describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
     expect(css).toMatch(/height:calc\(1 \* var\(--zui-iem,/)
   })
 
-  it('size factory → w.iem(1.25) → width + height 都 1.25iem(镜像)', () => {
+  it('size=1.25 → width + height 都 1.25iem(镜像)', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        size: (w: Chain<ZuiSchema>['width']) => {
-          w.iem(1.25)
-        },
+        size: 1.25,
       },
     })
     const css = getInjectedCss()
@@ -90,12 +88,13 @@ describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
     expect(css).toMatch(/height:calc\(1\.25 \* var\(--zui-iem,/)
   })
 
-  it('size factory → w.em(0.75) → width + height 都 0.75em(镜像)', () => {
+  it('css 兜底 → w.em(0.75) → width + height 都 0.75em(镜像)', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        size: (w: Chain<ZuiSchema>['width']) => {
-          w.em(0.75)
+        css: (s: Chain<ZuiSchema>) => {
+          s.width.em(0.75)
+          s.height.em(0.75)
         },
       },
     })
@@ -104,12 +103,13 @@ describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
     expect(css).toMatch(/height:0\.75em/)
   })
 
-  it('size factory → w.em(1.5) → 镜像', () => {
+  it('css 兜底 → w.em(1.5) → 镜像', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        size: (w: Chain<ZuiSchema>['width']) => {
-          w.em(1.5)
+        css: (s: Chain<ZuiSchema>) => {
+          s.width.em(1.5)
+          s.height.em(1.5)
         },
       },
     })
@@ -118,12 +118,13 @@ describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
     expect(css).toMatch(/height:1\.5em/)
   })
 
-  it('size factory → w.em(1.125) 任意倍率镜像', () => {
+  it('css 兜底 → w.em(1.125) 任意倍率镜像', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        size: (w: Chain<ZuiSchema>['width']) => {
-          w.em(1.125)
+        css: (s: Chain<ZuiSchema>) => {
+          s.width.em(1.125)
+          s.height.em(1.125)
         },
       },
     })
@@ -132,13 +133,11 @@ describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
     expect(css).toMatch(/height:1\.125em/)
   })
 
-  it('size factory → w.iem(1.5) 跟随 :iem 基准(width + height 同一 calc)', () => {
+  it('size=1.5 跟随 :iem 基准(width + height 同一 calc)', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        size: (w: Chain<ZuiSchema>['width']) => {
-          w.iem(1.5)
-        },
+        size: 1.5,
       },
     })
     const css = getInjectedCss()
@@ -151,12 +150,13 @@ describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
     expect(widthMatch![0].replace('width:', '')).toBe(heightMatch![0].replace('height:', ''))
   })
 
-  it('size factory → w.em(1.25) 跟父字号(em 而非 iem)', () => {
+  it('css 兜底 → w.em(1.25) 跟父字号(em 而非 iem)', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        size: (w: Chain<ZuiSchema>['width']) => {
-          w.em(1.25)
+        css: (s: Chain<ZuiSchema>) => {
+          s.width.em(1.25)
+          s.height.em(1.25)
         },
       },
     })
@@ -165,18 +165,16 @@ describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
     expect(css).toMatch(/height:1\.25em/)
   })
 
-  it('size factory → w.px(20) 字面量镜像', () => {
+  it('size=1.25 (20px @ 16px iem) → calc 镜像', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,
-        size: (w: Chain<ZuiSchema>['width']) => {
-          w.px(20)
-        },
+        size: 1.25,
       },
     })
     const css = getInjectedCss()
-    expect(css).toMatch(/width:20px/)
-    expect(css).toMatch(/height:20px/)
+    expect(css).toMatch(/width:calc\(1\.25 \* var\(--zui-iem,/)
+    expect(css).toMatch(/height:calc\(1\.25 \* var\(--zui-iem,/)
   })
 
   it('css 单独覆盖 width / height(非正方形)', () => {

@@ -13,7 +13,6 @@ import type { Placement } from '@floating-ui/vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { ZTreeNode } from '../display/ZTree.vue'
-import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZTreeSelectProps {
   value?: string | null
@@ -22,8 +21,10 @@ export interface ZTreeSelectProps {
   placeholder?: string
   disabled?: boolean
   clearable?: boolean
-  /** 尺寸 —— 纯 factory(默认 `INPUT_SIZE_MAP.middle`,复用 INPUT_SIZE_MAP)。 */
-  size?: SizePropMulti
+  /** 字号尺寸 —— `number`(iem 倍数,默认 1)。同 ZInput。2026-05-24 B7。 */
+  size?: number
+  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  height?: number
   placement?: Placement
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -39,20 +40,22 @@ import { computed, h, ref, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { applySizeProp } from '../_internal/size-prop'
-import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
+import { applyInputSize } from '../_internal/input-size'
 import { usePopper, useEscapeStack } from '../_hooks'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZTree from '../display/ZTree.vue'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ trigger  inline-flex / center / gap _tiny        │   min-width: 10iem(略宽,容纳层级标签)
- *   │   border _thin solid _border  border-radius _small│   高度: INPUT_SIZE_MAP(small/middle/large)
- *   │   pad-x _small  bg _bg  color _text              │   open: borderColor _primary
- *   │   open: borderColor _primary                     │
+ *   │   font-size: `size` iem                          │   默认 size=1(16px @ 1080p)
+ *   │   height: `height` iem                           │   默认 height=size*2=2iem(32px)
+ *   │   padding-y: size*0.375 iem                      │   = 0.375iem(6px)
+ *   │   padding-x: size*0.75 iem                       │   = 0.75iem(12px)
+ *   │   border-radius: size*0.25 iem                   │   = 0.25iem(4px)
+ *   │   border _thin solid _border / bg _bg / color _text │ open: borderColor _primary
  *   │                                                  │
  *   │  ┌────────────────┐ ┌─────┐ ┌────────┐           │
  *   │  │ text 选中 label │ │clear│ │ arrow ▼│           │   text: 无选中时 _textSecondary
@@ -71,6 +74,9 @@ import ZTree from '../display/ZTree.vue'
  *   │  │  @select → onSelectNode(仅 leaf 提交)  │   │
  *   │  └──────────────────────────────────────────┘   │
  *   └──────────────────────────────────────────────────┘
+ *
+ * 用户改 size 数字 → trigger 所有 iem 维度等比缩(dropdown 走固定 spacing token,不缩)。
+ * height 可独立覆盖。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZTreeSelectProps>(), {
   value: null,
@@ -78,7 +84,7 @@ const props = withDefaults(defineProps<ZTreeSelectProps>(), {
   placeholder: '请选择',
   disabled: false,
   clearable: false,
-  size: INPUT_SIZE_MAP.middle,
+  size: 1,
   placement: 'bottom-start',
 })
 
@@ -157,16 +163,13 @@ const triggerClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
-    s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid
     if (open.value) s.borderColor._primary
     else s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    applySizeProp(props.size, s)
-    s.paddingLeft._small
-    s.paddingRight._small
+    applyInputSize(s, props.size, props.height)
     s.cursor(props.disabled ? 'not-allowed' : 'pointer')
     // 触发器 minWidth: 10iem(略宽于 ZSelect 8iem,树标签通常更长)
     s.minWidth.iem(10)

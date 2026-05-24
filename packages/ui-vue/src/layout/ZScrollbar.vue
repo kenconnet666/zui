@@ -10,14 +10,15 @@ import type { ZuiSchema } from '../provider/theme'
 
 export interface ZScrollbarProps {
   /**
-   * 最大高度 factory —— 接 `maxHeight` carrier。默认无(由父级决定)。
+   * 最大高度 —— `number`(iem 倍数,默认 undefined = 由父级决定)。
+   *
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。非 iem 单位走 `css` 兜底。
    *
    * @example
-   * <ZScrollbar :max-height="(h) => h.px(200)" />
-   * <ZScrollbar :max-height="(h) => h.iem(20)" />
-   * <ZScrollbar :max-height="(h) => h.pct(80)" />
+   * <ZScrollbar :max-height="20" />          <!-- 20iem -->
+   * <ZScrollbar :css="(s) => s.maxHeight.px(200)" />   <!-- px 走 css -->
    */
-  maxHeight?: ((c: Chain<ZuiSchema>['maxHeight']) => void) | undefined
+  maxHeight?: number
   thin?: boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -28,6 +29,22 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
+/**
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ *
+ *   ┌────────────────────────────────────┐
+ *   │ ZScrollbar (div,overflow auto)     │
+ *   │   max-height: `maxHeight` iem      │   默认 maxHeight=undefined(由父级决定)
+ *   │                                    │   传 maxHeight=20 → 20iem(320px @ 1080p)
+ *   │  ┌──────────────────────────────┐  │
+ *   │  │ slot 内容(子元素自然撑高)  │  │   滚动条:thin → 8px,thick → 12px
+ *   │  │                              │  │   webkit + firefox 联动样式
+ *   │  └──────────────────────────────┘  │
+ *   └────────────────────────────────────┘
+ *
+ * 用户改 maxHeight 数字 → 容器最大高度等比缩(滚动条粗细固定不缩,跟随 thin 切)。
+ * 非 iem 单位(px / vh)走 `:css` 兜底:`(s) => s.maxHeight.px(200)`。
+ */
 const props = withDefaults(defineProps<ZScrollbarProps>(), {
   thin: true,
 })
@@ -71,7 +88,7 @@ if (typeof document !== 'undefined' && !document.getElementById(SCROLLBAR_STYLE_
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.overflow.auto
-    if (props.maxHeight) s.maxHeight(props.maxHeight)
+    if (props.maxHeight !== undefined) s.maxHeight.iem(props.maxHeight)
     props.css?.(s)
   }),
 )

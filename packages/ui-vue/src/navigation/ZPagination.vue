@@ -21,8 +21,6 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-import type { SizePropMulti } from '../_internal/size-prop'
-import { makeSizeMap } from '../_internal/size-prop'
 
 export interface ZPaginationProps {
   page?: number
@@ -31,8 +29,14 @@ export interface ZPaginationProps {
   siblings?: number
   showTotal?: boolean
   disabled?: boolean
-  /** 尺寸 —— 纯 factory(默认等价 `PAGINATION_SIZE_MAP.middle`,改 fontSize,item 通过 iem 自动联动)。 */
-  size?: SizePropMulti
+  /**
+   * 字号 —— `number`(iem 倍数,默认 1)。2026-05-24 B7。
+   *
+   * 影响 root 字号;item 默认通过 `itemSize` 派生 `size * 2`。
+   */
+  size?: number
+  /** item 尺寸(min-width + height)—— `number`(iem 倍数,可选,默认 `size * 2` = 32px,对齐 antd Pagination 32×32)。 */
+  itemSize?: number
   sxItem?: SxObject
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -41,22 +45,6 @@ export interface ZPaginationEmits {
   (e: 'update:page', value: number): void
   (e: 'change', value: number): void
 }
-
-/** ZPagination size 档位 —— 仅影响 fontSize;item 尺寸走 `iem(1.75)` 自动跟随。 */
-const PAGINATION_SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
-  small: (s) => {
-    s.fontSize._small
-  },
-  middle: (s) => {
-    s.fontSize._middle
-  },
-  large: (s) => {
-    s.fontSize._large
-  },
-})
-
-/** Pagination item 尺寸 iem 倍率(跟 fontSize 联动,用户改 fontSize 自动 scale)。 */
-const ITEM_IEM = 1.75
 </script>
 
 <script lang="ts" setup>
@@ -67,29 +55,33 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────────┐
- *   │ <nav> root  inline-flex / center / gap _tiny         │   size 档:
- *   │   color: _text  fontSize: size factory(_small/middle/large)│   small: fontSize _small
- *   │                                                      │   middle: fontSize _middle
- *   │  ┌───────────┐ ┌────┐ ┌────┐ ┌────┐ ┌───┐ ┌────┐ ┌────┐ ┌───────────┐│   large: fontSize _large
+ *   │ <nav> root  inline-flex / center / gap _tiny         │
+ *   │   font-size: `size` iem                              │   默认 size=1(16px @ 1080p)
+ *   │   color: _text                                       │
+ *   │                                                      │
+ *   │  ┌───────────┐ ┌────┐ ┌────┐ ┌────┐ ┌───┐ ┌────┐ ┌────┐ ┌───────────┐│
  *   │  │ "总数:N"  │ │  ◀ │ │ 1  │ │ 2 │ │ … │ │ 5  │ │ 6  │ │     ▶     ││
  *   │  │ (条件)    │ │prev│ │    │ │cur│ │dot│ │    │ │    │ │   next    ││
  *   │  │ _textSec  │ │item│ │item│ │ent│ │ _ │ │item│ │item│ │   item    ││
  *   │  │ _small    │ │    │ │    │ │   │ │tex│ │    │ │    │ │           ││
  *   │  └───────────┘ └────┘ └────┘ └────┘ └───┘ └────┘ └────┘ └───────────┘│
  *   │                                                      │
- *   │  item: min-w 1.75iem  height 1.75iem(跟 fontSize 联动)│   border _thin _border
- *   │   border _thin solid _border  border-radius _small  │   border-radius: _small
- *   │   pad-x _tiny  bg _bg                                │   hover: borderColor _primary
- *   │   hover: borderColor _primary,color _primary       │
- *   │  current: bg _primary,color _bg,_semibold,border _primary│
- *   │  dots: 1.75iem 占位,_textSecondary                  │
+ *   │  item:                                               │
+ *   │    min-width: `itemSize` iem                         │   默认 itemSize=size*2=2iem(32px)
+ *   │    height: `itemSize` iem                            │   传 itemSize=3 → 3iem(48px)
+ *   │    padding-x: _tiny / border-radius: _small          │   border _thin _border / bg _bg
+ *   │    hover: borderColor _primary,color _primary       │
+ *   │  current: bg _primary,color _bg,_semibold,border _primary
+ *   │  dots: itemSize 占位,_textSecondary                 │
  *   │  disabled: opacity _dim / cursor notAllowed         │
  *   └──────────────────────────────────────────────────────┘
  *
- * 算法: 首尾恒显示 + 当前页 ±siblings + 省略号。
+ * 用户改 size 数字 → root fontSize 等比缩(item 默认跟 size*2 联动)。
+ * 想独立控制 item 尺寸 → 传 itemSize 数字。算法:首尾恒显示 + 当前页 ±siblings + 省略号。
+ * 非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZPaginationProps>(), {
   page: 1,
@@ -97,8 +89,11 @@ const props = withDefaults(defineProps<ZPaginationProps>(), {
   siblings: 1,
   showTotal: false,
   disabled: false,
-  size: PAGINATION_SIZE_MAP.middle,
+  size: 1,
 })
+
+/** 计算每个 item 的 iem 尺寸(默认 `size * 2` = 32px @ size=1,对齐 antd Pagination 32×32,跟字号联动)。 */
+const itemIem = computed(() => props.itemSize ?? (props.size ?? 1) * 2)
 
 const emit = defineEmits<ZPaginationEmits>()
 
@@ -134,7 +129,7 @@ const rootClass = computed(() =>
     s.alignItems.center
     s.gap._tiny
     s.color._text
-    if (props.size) props.size(s)
+    s.fontSize.iem(props.size ?? 1)
     props.css?.(s)
   }),
 )
@@ -151,8 +146,8 @@ const itemClass = computed(() =>
     s.backgroundColor._bg
     s.color._text
     s.borderRadius._small
-    s.minWidth.iem(ITEM_IEM)
-    s.height.iem(ITEM_IEM)
+    s.minWidth.iem(itemIem.value)
+    s.height.iem(itemIem.value)
     s.padding.px(0)
     s.paddingLeft._tiny
     s.paddingRight._tiny
@@ -178,8 +173,8 @@ const currentItemClass = computed(() =>
     s.backgroundColor._primary
     s.color._bg
     s.borderRadius._small
-    s.minWidth.iem(ITEM_IEM)
-    s.height.iem(ITEM_IEM)
+    s.minWidth.iem(itemIem.value)
+    s.height.iem(itemIem.value)
     s.padding.px(0)
     s.paddingLeft._tiny
     s.paddingRight._tiny
@@ -200,8 +195,8 @@ const dotsClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.minWidth.iem(ITEM_IEM)
-    s.height.iem(ITEM_IEM)
+    s.minWidth.iem(itemIem.value)
+    s.height.iem(itemIem.value)
     s.color._textSecondary
   }),
 )

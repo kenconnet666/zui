@@ -23,6 +23,16 @@ export interface ZBadgeProps {
   dot?: boolean
   max?: number
   showZero?: boolean
+  /**
+   * 尺寸 —— `number`(iem 倍数,默认 0.75 = 12px @ 16px iem)。
+   *
+   * 内部按比例:
+   * - `padding-y` = `size * 0.25`
+   * - `padding-x` = `size * 0.5`
+   *
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。
+   */
+  size?: number
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   offset?: [number, number]
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -34,10 +44,34 @@ import { computed, useSlots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
+/**
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ *
+ *   ┌──────────────────────────────────────────────┐
+ *   │ ZBadge wrapper                               │   有 slot → inline-flex,position: relative
+ *   │  ┌────────────┐                              │   无 slot → inline-flex 仅渲染徽标
+ *   │  │ slot       │                              │
+ *   │  │ (子内容)   │                              │
+ *   │  └────────────┘                              │
+ *   │                       ┌──────┐               │
+ *   │                       │ N+/  │  徽标:        │
+ *   │                       │  •   │    font-size: `size` iem     默认 size=0.75(12px @ 1080p)
+ *   │                       └──────┘    padding-y: size*0.25 iem  ≈ 0.188iem(3px)
+ *   │                                   padding-x: size*0.5 iem   ≈ 0.375iem(6px)
+ *   │                                   min-width: size*1.5 iem   ≈ 1.125iem(18px)
+ *   │                                   height: size*1.5 iem      ≈ 1.125iem(18px)
+ *   │                       dot=true → width/height: size*0.667 iem(0.5iem,8px),圆点
+ *   │                       border-radius: _full
+ *   └──────────────────────────────────────────────┘
+ *
+ * 用户改 size 数字 → 徽标 padding / min-width / height / fontSize 等比缩(整体比例不变)。
+ * 非 iem 单位走 `:css` 兜底。
+ */
 const props = withDefaults(defineProps<ZBadgeProps>(), {
   dot: false,
   max: 99,
   showZero: false,
+  size: 0.75,
   // 徽标背景默认 `_danger`(角标常用红色)
   color: (c: Chain<ZuiSchema>['color']) => {
     c._danger
@@ -79,6 +113,7 @@ const wrapperClass = computed(() =>
 
 const badgeClass = computed(() =>
   icss(theme.value, (s) => {
+    const size = props.size ?? 0.75
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -87,16 +122,18 @@ const badgeClass = computed(() =>
     s.backgroundColor(props.color)
 
     if (props.dot) {
-      s.width.iem(0.5)
-      s.height.iem(0.5)
+      s.width.iem(size * 0.667)
+      s.height.iem(size * 0.667)
       s.borderRadius._full
     } else {
-      s.paddingLeft._tiny
-      s.paddingRight._tiny
-      s.minWidth.iem(1.125)
-      s.height.iem(1.125)
+      s.paddingTop.iem(size * 0.25)
+      s.paddingBottom.iem(size * 0.25)
+      s.paddingLeft.iem(size * 0.5)
+      s.paddingRight.iem(size * 0.5)
+      s.minWidth.iem(size * 1.5)
+      s.height.iem(size * 1.5)
       s.borderRadius._full
-      s.fontSize._tiny
+      s.fontSize.iem(size)
       s.fontWeight._semibold
       s.lineHeight._tight
     }

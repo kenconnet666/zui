@@ -26,6 +26,10 @@ export interface ZTourProps {
   current?: number
   steps: ZTourStep[]
   open: boolean
+  /** tour 卡片最小宽度 —— `number`(iem 倍数,默认 20 = 320px,对齐 antd Tour panelWidth)。2026-05-24 B7。 */
+  minWidth?: number
+  /** tour 卡片最大宽度 —— `number`(iem 倍数,默认 32 = 512px,对齐 antd Tour 520px)。 */
+  maxWidth?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -44,7 +48,7 @@ import { useZTheme } from '../provider'
 import { useEscapeStack } from '../_hooks'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────────┐
  *   │ mask(4 块矩形挖洞 target 周围)position fixed     │   bg _overlayBg.alpha(50)
@@ -57,13 +61,12 @@ import { useEscapeStack } from '../_hooks'
  *   │           │ 12px offset                             │
  *   │           ▼                                         │
  *   │   ┌──────────────────────────────────────┐          │   tour card:
- *   │   │ tour card  position fixed            │          │     min-width 15iem
- *   │   │   min-width: 15iem                   │          │     max-width 22.5iem
- *   │   │   max-width: 22.5iem                 │          │     bg _bg / color _text
- *   │   │   pad: _middle  border-radius _small │          │     border _thin _border
+ *   │   │ tour card  position fixed            │          │
+ *   │   │   min-width: `minWidth` iem          │          │     默认 minWidth=20(320px @ 1080p)
+ *   │   │   max-width: `maxWidth` iem          │          │     默认 maxWidth=32(512px @ 1080p)
+ *   │   │   pad: _middle  border-radius _small │          │     bg _bg / color _text
  *   │   │   border _thin solid _border         │          │     boxShadow _huge
- *   │   │   boxShadow _huge                    │          │     z-index _modal
- *   │   │                                      │          │
+ *   │   │                                      │          │     z-index _modal
  *   │   │  title    fontSize _large _semibold  │          │
  *   │   │  desc     _textSecondary _small      │          │
  *   │   │  ┌────────────────────────────────┐  │          │   footer:
@@ -73,10 +76,13 @@ import { useEscapeStack } from '../_hooks'
  *   │   └──────────────────────────────────────┘          │
  *   └──────────────────────────────────────────────────────┘
  *
- * ESC 关。
+ * 用户改 minWidth / maxWidth 数字 → tour card 宽度上下限等比缩(其它走固定 spacing token)。
+ * ESC 关。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZTourProps>(), {
   current: 0,
+  minWidth: 20,
+  maxWidth: 32,
 })
 
 const emit = defineEmits<ZTourEmits>()
@@ -191,8 +197,8 @@ const cardClass = computed(() =>
     s.borderColor._border
     s.boxShadow._huge
     s.padding._middle
-    s.minWidth.iem(15)
-    s.maxWidth.iem(22.5)
+    s.minWidth.iem(props.minWidth ?? 15)
+    s.maxWidth.iem(props.maxWidth ?? 22.5)
     props.css?.(s)
   }),
 )

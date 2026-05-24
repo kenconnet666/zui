@@ -11,14 +11,26 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-import type { SizePropMulti } from '../_internal/size-prop'
-import { makeSizeMap } from '../_internal/size-prop'
 
 export interface ZTagProps {
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   variant?: 'filled' | 'outlined' | 'soft'
-  /** 尺寸 —— 纯 factory(默认等价 `TAG_SIZE_MAP.middle`,影响 fontSize + padding-y 双轴)。 */
-  size?: SizePropMulti
+  /**
+   * 尺寸 —— `number`(iem 倍数,默认 0.875,等价旧 middle 档位 14px)。
+   *
+   * 内部按比例算其它维度:
+   * - `padding-y` = `size * 0.125`
+   * - `padding-x` = `size * 0.5`
+   * - `border-radius` = `size * 0.25`
+   *
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。
+   *
+   * @example
+   * <ZTag :size="0.875" />        <!-- 默认 -->
+   * <ZTag :size="1" />            <!-- 1iem -->
+   * <ZTag :size="1.25" />         <!-- 大号 -->
+   */
+  size?: number
   closable?: boolean
   round?: boolean
   sxClose?: SxObject
@@ -28,25 +40,6 @@ export interface ZTagProps {
 export interface ZTagEmits {
   (e: 'close', evt: MouseEvent): void
 }
-
-/** ZTag size 档位 —— 同时影响 fontSize + padding-y(多 carrier 维度,3 阶实现 + fallback)。 */
-const TAG_SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
-  small: (s) => {
-    s.fontSize._tiny
-    s.paddingTop.iem(0.125)
-    s.paddingBottom.iem(0.125)
-  },
-  middle: (s) => {
-    s.fontSize._small
-    s.paddingTop.iem(0.25)
-    s.paddingBottom.iem(0.25)
-  },
-  large: (s) => {
-    s.fontSize._middle
-    s.paddingTop.iem(0.375)
-    s.paddingBottom.iem(0.375)
-  },
-})
 </script>
 
 <script lang="ts" setup>
@@ -55,31 +48,33 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyAsBg } from '../_internal/color-bridge'
-import { applySizeProp } from '../_internal/size-prop'
 import { BuiltinIcons } from './icons'
 import ZIcon from './ZIcon.vue'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────┐
  *   │ ZTag                                     │   inline-flex,gap: _tiny
- *   │   small : pad-y 0.125iem  fontSize _tiny│   pad-x: _small(固定)
- *   │   middle: pad-y 0.25iem   fontSize _small  border-radius:
- *   │   large : pad-y 0.375iem  fontSize _middle  round=true → _full
- *   │                                          │   round=false → 0.25iem
- *   │  ┌─────────┐ ┌────────────┐             │   border-width: _thin
+ *   │   font-size: `size` iem                  │   默认 size=0.875(14px @ 1080p)
+ *   │   padding-y: size*0.125 iem              │   ≈ 0.109iem(1.75px)
+ *   │   padding-x: size*0.5 iem                │   ≈ 0.438iem(7px)
+ *   │   border-radius: size*0.25 iem           │   ≈ 0.219iem(3.5px)
+ *   │     round=true → _full                   │   border-width: _thin
+ *   │                                          │
+ *   │  ┌─────────┐ ┌────────────┐             │
  *   │  │  slot   │ │ close btn  │(closable)   │
  *   │  │ default │ │ ZIcon close│             │
  *   │  └─────────┘ └────────────┘             │
  *   └──────────────────────────────────────────┘
  *
+ * 用户改 size 数字 → 所有 iem 维度等比缩放(整体比例不变)。
  * 3 个 variant: filled(bg color + 反色文字) / outlined(透明 bg + 主色边框文字) /
- * soft(主色 alpha(12) 浅 bg + 主色文字)。
+ * soft(主色 alpha(12) 浅 bg + 主色文字)。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZTagProps>(), {
   variant: 'soft',
-  size: TAG_SIZE_MAP.middle,
+  size: 0.875,
   closable: false,
   round: false,
 })
@@ -90,15 +85,18 @@ const theme = useZTheme()
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
+    const size = props.size ?? 0.875
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
     s.lineHeight._tight
-    applySizeProp(props.size, s)
-    s.paddingLeft._small
-    s.paddingRight._small
+    s.fontSize.iem(size)
+    s.paddingTop.iem(size * 0.125)
+    s.paddingBottom.iem(size * 0.125)
+    s.paddingLeft.iem(size * 0.5)
+    s.paddingRight.iem(size * 0.5)
     if (props.round) s.borderRadius._full
-    else s.borderRadius.iem(0.25)
+    else s.borderRadius.iem(size * 0.25)
     s.borderWidth._thin
     s.borderStyle.solid
     s.whiteSpace.nowrap

@@ -26,6 +26,10 @@ export interface ZCascaderProps {
   expandTrigger?: 'click' | 'hover'
   placement?: Placement
   separator?: string
+  /** 字号尺寸 —— `number`(iem 倍数,默认 1)。同 ZInput。2026-05-24 B7。 */
+  size?: number
+  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  height?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -40,18 +44,21 @@ import { computed, h, ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applyInputSize } from '../_internal/input-size'
 import { usePopper, useEscapeStack } from '../_hooks'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ trigger  inline-flex / center / gap _tiny        │   min-width: 12iem(路径文本通常较长)
- *   │   border _thin solid (_primary open / _border)   │   pad-y: 0.375iem × 2 = 0.75iem
- *   │   pad-y 0.375iem  pad-x _small                   │   pad-x: _small
- *   │   bg _bg color _text  fontSize _middle           │   border-radius: _small
- *   │   border-radius _small                           │
+ *   │   font-size: `size` iem                          │   默认 size=1(16px @ 1080p)
+ *   │   height: `height` iem                           │   默认 height=size*2=2iem(32px)
+ *   │   padding-y: size*0.375 iem                      │   = 0.375iem(6px)
+ *   │   padding-x: size*0.75 iem                       │   = 0.75iem(12px)
+ *   │   border-radius: size*0.25 iem                   │   = 0.25iem(4px)
+ *   │   border _thin solid (_primary open / _border) / bg _bg / color _text
  *   │  ┌──────────────────────────┐ ┌────────┐         │
  *   │  │ 文本(路径 separator)   │ │ arrow ▼│         │   text: 无值 _textSecondary
  *   │  │  无选中 _textSecondary  │ │ rotate │         │
@@ -73,6 +80,9 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │   │  └────┘ │ │  └────┘  │ │           │              │     active: bg _primary.alpha(8)
  *   │   └─────────┘ └─────────┘ └─────────┘               │     非叶子右侧 chevronRight
  *   └──────────────────────────────────────────────────────┘
+ *
+ * 用户改 size 数字 → trigger 所有 iem 维度等比缩(popper 走固定 spacing token,不缩)。
+ * height 可独立覆盖。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZCascaderProps>(), {
   placeholder: '请选择',
@@ -80,6 +90,7 @@ const props = withDefaults(defineProps<ZCascaderProps>(), {
   expandTrigger: 'click',
   placement: 'bottom-start',
   separator: ' / ',
+  size: 1,
 })
 
 const emit = defineEmits<ZCascaderEmits>()
@@ -173,17 +184,12 @@ const triggerClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
-    s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor(open.value ? '_primary' : '_border')
     s.backgroundColor._bg
     s.color._text
-    s.fontSize._middle
-    s.paddingLeft._small
-    s.paddingRight._small
-    s.paddingTop.iem(0.375)
-    s.paddingBottom.iem(0.375)
+    applyInputSize(s, props.size, props.height)
     s.cursor(props.disabled ? 'not-allowed' : 'pointer')
     // 触发器 minWidth: 12iem(级联路径文本一般较长)
     // paddingTop/Bottom: 0.375iem × 2 = 0.75iem 总垂直内边距

@@ -35,6 +35,16 @@ export interface ZAlertProps {
   title?: string
   /** 描述(详细信息)。 */
   description?: string
+  /**
+   * 尺寸 —— `number`(iem 倍数,默认 0.875,等价旧 middle 档位 14px)。
+   *
+   * 内部按比例:
+   * - `padding` = `size * 0.625`
+   * - `gap` = `size * 0.5`
+   *
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。
+   */
+  size?: number
   /** 是否显示左侧 icon,默认 `true`。图标内容通过 `#icon` slot 提供。 */
   showIcon?: boolean
   /** 是否显示关闭按钮,默认 `false`。 */
@@ -63,13 +73,15 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌─────────────────────────────────────────────────────┐
- *   │ ZAlert root                                         │   flex / alignFlexStart / gap _small
- *   │   padding: _small  border-radius: _small            │   border _thin solid currentColor
- *   │   color: 用户 color factory 或 _info                │   position: relative / overflow hidden
- *   │                                                     │   ::before: bg currentColor opacity 0.08
+ *   │ ZAlert root                                         │   flex / alignFlexStart
+ *   │   font-size: `size` iem                             │   默认 size=0.875(14px @ 1080p)
+ *   │   padding: size*0.625 iem                           │   ≈ 0.547iem(8.75px)
+ *   │   gap: size*0.5 iem                                 │   ≈ 0.438iem(7px)
+ *   │   border-radius: _small  border-width: _thin        │
+ *   │   color: 用户 color factory 或 _info                │   ::before: bg currentColor 0.08
  *   │                                                     │     (8% 主色叠层背景,不影响文字)
  *   │  ┌─────┐  ┌────────────────────────┐  ┌────────┐   │
  *   │  │ icon│  │ body                   │  │ close  │   │   icon(showIcon=true,条件渲染):
@@ -81,10 +93,14 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │  └─────┘  └────────────────────────┘  └────────┘   │   close(closable=true,条件):
  *   │                                                     │     inline-flex / pad _tiny
  *   └─────────────────────────────────────────────────────┘     hover bg _textSecondary.alpha(8)
+ *
+ * 用户改 size 数字 → padding / gap / fontSize 等比缩(整体比例不变)。
+ * 非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZAlertProps>(), {
   showIcon: true,
   closable: false,
+  size: 0.875,
   tag: 'div',
   // 警示色默认 `_info`(常用覆盖:`_success` / `_warning` / `_danger`)
   color: (c: Chain<ZuiSchema>['color']) => {
@@ -98,13 +114,15 @@ const theme = useZTheme()
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
+    const size = props.size ?? 0.875
     s.display.flex
     s.alignItems.flexStart
-    s.padding._small
+    s.padding.iem(size * 0.625)
     s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid
-    s.gap._small
+    s.gap.iem(size * 0.5)
+    s.fontSize.iem(size)
     s.position.relative
     s.overflow.hidden
     // color factory 决定文字 + 边框色(默认 `_info`,从 withDefaults 提供)

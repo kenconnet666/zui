@@ -28,15 +28,27 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-import type { SizePropMulti } from '../_internal/size-prop'
-import { makeSizeMap } from '../_internal/size-prop'
 
 export interface ZButtonProps {
   variant?: 'filled' | 'outlined' | 'text' | 'ghost' | 'link'
   /** 主色 factory(默认 `_primary`)。可写 `(c) => c._danger` 等。 */
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
-  /** 尺寸 —— 纯 factory(默认等价 `BUTTON_SIZE_MAP.middle`,影响 fontSize + padding 双轴)。 */
-  size?: SizePropMulti
+  /**
+   * 字号尺寸 —— `number`(iem 倍数,默认 1)。
+   *
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`,组件按比例算所有维度。
+   *
+   * 内部公式:
+   * - `font-size` = `size` iem
+   * - `height` = `height ?? size * 2` iem
+   * - `padding-y` = `size * 0.5` iem
+   * - `padding-x` = `size * 1` iem
+   * - `border-radius` = `size * 0.375` iem
+   * - `gap` = `size * 0.5` iem
+   */
+  size?: number
+  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  height?: number
   loading?: boolean
   disabled?: boolean
   block?: boolean
@@ -53,31 +65,6 @@ export interface ZButtonProps {
 export interface ZButtonEmits {
   (e: 'click', evt: MouseEvent): void
 }
-
-/** ZButton size 档位 —— 影响 fontSize + padding 双轴(3 阶实现 + tiny/huge fallback)。 */
-const BUTTON_SIZE_MAP = makeSizeMap<Chain<ZuiSchema>>({
-  small: (s) => {
-    s.fontSize._small
-    s.paddingTop.iem(0.25)
-    s.paddingBottom.iem(0.25)
-    s.paddingLeft._small
-    s.paddingRight._small
-  },
-  middle: (s) => {
-    s.fontSize._middle
-    s.paddingTop.iem(0.5)
-    s.paddingBottom.iem(0.5)
-    s.paddingLeft._middle
-    s.paddingRight._middle
-  },
-  large: (s) => {
-    s.fontSize._large
-    s.paddingTop.iem(0.75)
-    s.paddingBottom.iem(0.75)
-    s.paddingLeft._large
-    s.paddingRight._large
-  },
-})
 </script>
 
 <script lang="ts" setup>
@@ -86,33 +73,38 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyAsBg } from '../_internal/color-bridge'
-import { applySizeProp } from '../_internal/size-prop'
 import { useRipple } from '../_hooks'
 import { BuiltinIcons } from './icons'
 import ZIcon from './ZIcon.vue'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
- *   ┌──────────────────────────────────────────┐
- *   │ ZButton                                  │   inline-flex,gap: _tiny
- *   │   small : pad-y 0.25iem  pad-x _small   │   fontSize: _small / _middle / _large
- *   │   middle: pad-y 0.5iem   pad-x _middle  │   border-radius: _small
- *   │   large : pad-y 0.75iem  pad-x _large   │   border-width: _thin
- *   │                                          │   block=true → width: 100%
- *   │  ┌──────┐ ┌──────────┐ ┌──────┐         │
- *   │  │prefix│ │  slot    │ │suffix│         │   prefix/suffix slot 各占 inline-flex
- *   │  │ Icon │ │ default  │ │ Icon │         │   loading 时 prefix 位置渲染 spin Icon
- *   │  └──────┘ └──────────┘ └──────┘         │
- *   └──────────────────────────────────────────┘
+ *   ┌────────────────────────────────────────────┐
+ *   │ ZButton                                    │   inline-flex,border-width: _thin
+ *   │   font-size: `size` iem                    │   默认 size=1(16px @ 1080p)
+ *   │   height: `height` iem                     │   默认 height=size*2=2iem(32px)
+ *   │   padding-y: size*0.5 iem                  │   = 0.5iem(8px)
+ *   │   padding-x: size*1 iem                    │   = 1iem(16px)
+ *   │   border-radius: size*0.375 iem            │   = 0.375iem(6px)
+ *   │   gap: size*0.5 iem                        │   = 0.5iem(8px)
+ *   │   block=true → width: 100%                 │
+ *   │                                            │
+ *   │  ┌──────┐ ┌──────────┐ ┌──────┐           │
+ *   │  │prefix│ │  slot    │ │suffix│           │   prefix/suffix slot 各占 inline-flex
+ *   │  │ Icon │ │ default  │ │ Icon │           │   loading 时 prefix 位置渲染 spin Icon
+ *   │  └──────┘ └──────────┘ └──────┘           │
+ *   └────────────────────────────────────────────┘
  *
+ * 用户改 size 数字 → 所有 iem 维度等比缩放(整体比例不变)。height 可独立覆盖。
  * 5 个 variant: filled / outlined / text / ghost / link(详见 props.variant)。
  * Material state layer: hover/active 通过 ::before 伪元素叠 8%/12% alpha。
  * focus-visible: outline _middle solid _focusRing.alpha(40),offset 2px。
+ * 非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZButtonProps>(), {
   variant: 'filled',
-  size: BUTTON_SIZE_MAP.middle,
+  size: 1,
   loading: false,
   disabled: false,
   block: false,
@@ -134,14 +126,21 @@ useRipple(btnRef, {
 
 const buttonClass = computed(() =>
   icss(theme.value, (s) => {
+    const size = props.size ?? 1
+    const height = props.height ?? size * 2
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.gap._tiny
+    s.gap.iem(size * 0.5)
     s.fontWeight._medium
     s.lineHeight._tight
-    applySizeProp(props.size, s)
-    s.borderRadius._small
+    s.fontSize.iem(size)
+    s.height.iem(height)
+    s.paddingTop.iem(size * 0.5)
+    s.paddingBottom.iem(size * 0.5)
+    s.paddingLeft.iem(size * 1)
+    s.paddingRight.iem(size * 1)
+    s.borderRadius.iem(size * 0.375)
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor.transparent
@@ -268,6 +267,7 @@ function onClick(e: MouseEvent): void {
 const loadingIcon = computed(() =>
   h(ZIcon, {
     component: BuiltinIcons.refresh,
+    size: props.size ?? 1,
     spin: (d: Chain<ZuiSchema>['animationDuration']) => {
       d.s(0.8)
     },

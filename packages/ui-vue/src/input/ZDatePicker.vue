@@ -11,7 +11,6 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZDatePickerProps {
   value?: string
@@ -19,8 +18,10 @@ export interface ZDatePickerProps {
   max?: string
   disabled?: boolean
   placeholder?: string
-  /** 尺寸 —— 纯 factory(默认 `INPUT_SIZE_MAP.middle`,复用 INPUT_SIZE_MAP)。 */
-  size?: SizePropMulti
+  /** 字号尺寸 —— `number`(iem 倍数,默认 1)。同 ZInput。2026-05-24 B7。 */
+  size?: number
+  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  height?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -34,12 +35,29 @@ export interface ZDatePickerEmits {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { applySizeProp } from '../_internal/size-prop'
-import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
+import { applyInputSize } from '../_internal/input-size'
 
+/**
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ *
+ *   ┌──────────────────────────────────────────────────┐
+ *   │ <input type="date">                              │
+ *   │   font-size: `size` iem                          │   默认 size=1(16px @ 1080p)
+ *   │   height: `height` iem                           │   默认 height=size*2=2iem(32px)
+ *   │   padding-y: size*0.375 iem                      │   = 0.375iem(6px)
+ *   │   padding-x: size*0.75 iem                       │   = 0.75iem(12px)
+ *   │   border-radius: size*0.25 iem                   │   = 0.25iem(4px)
+ *   │   border _thin solid _border / bg _bg / color _text │ outline none
+ *   │   hover: borderColor _primary                    │
+ *   │   disabled: opacity _dim / bg _bgMuted           │
+ *   └──────────────────────────────────────────────────┘
+ *
+ * 用户改 size 数字 → 所有 iem 维度等比缩(整体比例不变)。height 可独立覆盖。
+ * 日期选项 popup 走浏览器原生(Phase α 简化),不可样式化。非 iem 单位走 `:css` 兜底。
+ */
 const props = withDefaults(defineProps<ZDatePickerProps>(), {
   disabled: false,
-  size: INPUT_SIZE_MAP.middle,
+  size: 1,
 })
 
 const emit = defineEmits<ZDatePickerEmits>()
@@ -48,15 +66,12 @@ const theme = useZTheme()
 
 const inputClass = computed(() =>
   icss(theme.value, (s) => {
-    s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    applySizeProp(props.size, s)
-    s.paddingLeft._small
-    s.paddingRight._small
+    applyInputSize(s, props.size, props.height)
     s.outline('none')
     s._hover((h) => {
       if (!props.disabled) h.borderColor._primary

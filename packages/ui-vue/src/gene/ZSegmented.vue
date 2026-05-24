@@ -9,7 +9,6 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZSegmentedOption {
   value: string | number
@@ -21,16 +20,13 @@ export interface ZSegmentedProps {
   value?: string | number
   options: ZSegmentedOption[]
   /**
-   * 尺寸 —— **纯 chain factory**(2026-05-23 撤销 Size5 union),影响每项的 padding-y。
+   * 字号尺寸 —— `number`(iem 倍数,默认 1)。
    *
-   * **默认**:`(s) => { s.paddingTop.iem(0.25); s.paddingBottom.iem(0.25) }`(等价旧 middle)。
-   *
-   * **参考档位**:small(0.125iem) / middle(0.25iem) / large(0.375iem)。
-   *
-   * @example
-   * <ZSegmented :size="(s) => { s.paddingTop.iem(0.5); s.paddingBottom.iem(0.5) }" />
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`,组件按比例算所有维度(同 ZButton)。
    */
-  size?: SizePropMulti
+  size?: number
+  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  height?: number
   block?: boolean
   disabled?: boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -47,12 +43,29 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
+/**
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ *
+ *   ┌─────────────────────────────────────────────────────┐
+ *   │ root  inline-flex / pad _tiny / gap _tiny           │   bg _bgMuted / border-radius _small
+ *   │   block=true → width: 100%                          │   disabled → opacity _dim
+ *   │                                                     │
+ *   │  ┌──────────┐ ┌──────────┐ ┌──────────┐             │   每个 item(button):
+ *   │  │ option 1 │ │ option 2 │ │ option 3 │             │     font-size: `size` iem
+ *   │  │  active  │ │          │ │          │             │       默认 size=1(16px @ 1080p)
+ *   │  │  bg _bg  │ │ inactive │ │ disabled │             │     height: `height` iem
+ *   │  │  shadow  │ │ _2nd     │ │ opacity  │             │       默认 height=size*2=2iem(32px)
+ *   │  │  _tiny   │ │ hover    │ │   _dim   │             │     padding-y: size*0.5 iem    = 0.5iem(8px)
+ *   │  └──────────┘ └──────────┘ └──────────┘             │     padding-x: size*1 iem      = 1iem(16px)
+ *   │                                                     │     gap: size*0.5 iem          = 0.5iem(8px)
+ *   │                                                     │     border-radius: size*0.375  = 0.375iem(6px)
+ *   └─────────────────────────────────────────────────────┘     active → bg _bg + boxShadow _tiny
+ *
+ * 用户改 size 数字 → 每个 item 所有 iem 维度等比缩(整体比例不变)。height 可独立覆盖。
+ * 非 iem 单位走 `:css` 兜底。
+ */
 const props = withDefaults(defineProps<ZSegmentedProps>(), {
-  // 默认等价旧 middle 档位:paddingTop/Bottom 0.25iem
-  size: (s: Chain<ZuiSchema>) => {
-    s.paddingTop.iem(0.25)
-    s.paddingBottom.iem(0.25)
-  },
+  size: 1,
   block: false,
   disabled: false,
 })
@@ -77,19 +90,23 @@ const rootClass = computed(() =>
 const itemClass = (opt: ZSegmentedOption): string => {
   const isActive = props.value === opt.value
   const isDisabled = opt.disabled || props.disabled
+  const size = props.size ?? 1
+  const height = props.height ?? size * 2
   return icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
     s.borderStyle.none
     s.cursor(isDisabled ? 'not-allowed' : 'pointer')
-    s.borderRadius._tiny
-    s.fontSize._middle
+    s.borderRadius.iem(size * 0.375)
+    s.fontSize.iem(size)
     s.fontWeight._medium
-    s.paddingLeft._middle
-    s.paddingRight._middle
-    // size(纯 factory,多 carrier):user factory 接整个 chain 自行写 padding
-    props.size?.(s)
+    s.height.iem(height)
+    s.paddingTop.iem(size * 0.5)
+    s.paddingBottom.iem(size * 0.5)
+    s.paddingLeft.iem(size * 1)
+    s.paddingRight.iem(size * 1)
+    s.gap.iem(size * 0.5)
     s.transitionProperty._colors
     s.transitionDuration._small
     if (props.block) s.flexGrow(1)

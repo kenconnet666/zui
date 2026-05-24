@@ -11,13 +11,16 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZListProps<T = unknown> {
   items: T[]
   bordered?: boolean
-  /** 尺寸 —— 纯 factory(默认 `COMPACT_PADDING_MAP.middle`,影响 header / footer / item padding)。 */
-  size?: SizePropMulti
+  /**
+   * 字号尺寸 —— `number`(iem 倍数,默认 1)。2026-05-24 B7。
+   *
+   * header / footer / item padding = `size * 0.625`(类似 COMPACT_PADDING_MAP.middle)。
+   */
+  size?: number
   header?: string
   footer?: string
   emptyText?: string
@@ -29,12 +32,10 @@ export interface ZListProps<T = unknown> {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { applySizeProp } from '../_internal/size-prop'
-import { COMPACT_PADDING_MAP } from '../_internal/component-sizes'
 
 const props = withDefaults(defineProps<ZListProps<T>>(), {
   bordered: false,
-  size: COMPACT_PADDING_MAP.middle,
+  size: 1,
   emptyText: '暂无数据',
 })
 
@@ -45,7 +46,7 @@ const rootClass = computed(() =>
     s.display.flex
     s.flexDirection.column
     s.color._text
-    s.fontSize._middle
+    s.fontSize.iem(props.size ?? 1)
     if (props.bordered) {
       s.borderWidth._thin
       s.borderStyle.solid
@@ -59,7 +60,7 @@ const rootClass = computed(() =>
 
 const headerClass = computed(() =>
   icss(theme.value, (s) => {
-    applySizeProp(props.size, s)
+    s.padding.iem((props.size ?? 1) * 0.625)
     s.fontWeight._semibold
     s.borderBottomWidth._thin
     s.borderBottomStyle.solid
@@ -69,7 +70,7 @@ const headerClass = computed(() =>
 
 const footerClass = computed(() =>
   icss(theme.value, (s) => {
-    applySizeProp(props.size, s)
+    s.padding.iem((props.size ?? 1) * 0.625)
     s.color._textSecondary
     s.fontSize._small
     s.borderTopWidth._thin
@@ -80,7 +81,7 @@ const footerClass = computed(() =>
 
 const itemClass = computed(() =>
   icss(theme.value, (s) => {
-    applySizeProp(props.size, s)
+    s.padding.iem((props.size ?? 1) * 0.625)
   }),
 )
 

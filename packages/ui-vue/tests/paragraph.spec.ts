@@ -72,16 +72,14 @@ describe('ZParagraph — props 覆盖', () => {
     expect(getInjectedCss()).toMatch(/line-height:1\.8/)
   })
 
-  it('size factory 透传', () => {
+  it('size=0.9375 透传(等价 15px @ 16px iem)', () => {
     mount(ZParagraph, {
       props: {
-        size: (f: Chain<ZuiSchema>['fontSize']) => {
-          f.px(15)
-        },
+        size: 0.9375,
       },
       slots: { default: () => 'x' },
     })
-    expect(getInjectedCss()).toMatch(/font-size:15px/)
+    expect(getInjectedCss()).toMatch(/font-size:calc\(0\.9375 \* var\(--zui-iem/)
   })
 
   it('css 可覆盖默认 margin-bottom', () => {

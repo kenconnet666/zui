@@ -31,7 +31,6 @@ import type { Component } from 'vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import { icss, presetAnimations } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { SizeProp } from '../_internal/size-prop'
 
 // ═══════════════════════════════════════════════════════════════════════
 // 公开类型
@@ -42,26 +41,22 @@ import type { SizeProp } from '../_internal/size-prop'
  */
 export interface ZIconProps {
   /**
-   * 图标尺寸 —— `width` carrier factory。**height 自动镜像 width**(图标始终正方形)。
+   * 图标尺寸 —— `number`(iem 倍数,默认 1)。**height 自动镜像 width**(图标始终正方形)。
    *
-   * **默认**:1iem(等价旧 small 档位,跟 Provider 字号联动)。
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`,Provider 字号联动。
    *
-   * **常用尺寸参考**(iem 联动,Provider 一变全跟着变):
-   * - 0.75iem(小图标)
-   * - 1iem(默认)
-   * - 1.25iem(强调)
-   * - 1.5iem(大图标)
-   * - 2iem(超大)
+   * **常用尺寸参考**:
+   * - 0.75(小图标)/ 1(默认)/ 1.25(强调)/ 1.5(大图标)/ 2(超大)
    *
    * 想表达非正方形 → 走 `css` 兜底单独设 width / height。
-   * 想"跟父容器字号"(罕见)→ `:size="(w) => w.em(1)"` 显式 em。
+   * 想 em / px / vh 等其它单位 → 走 `css` 兜底。
    *
    * @example
-   * <ZIcon :size="(w) => w.iem(1.25)" />     <!-- 显式 iem -->
-   * <ZIcon :size="(w) => w.em(1.25)" />      <!-- 1.25em,跟父字号 -->
-   * <ZIcon :size="(w) => w.px(20)" />        <!-- 字面量 -->
+   * <ZIcon :size="1.25" />     <!-- 1.25iem -->
+   * <ZIcon :size="2" />        <!-- 2iem 超大 -->
+   * <ZIcon :css="(s) => { s.width.px(20); s.height.px(20) }" />
    */
-  size?: SizeProp<'width'>
+  size?: number
 
   /**
    * 图标颜色 factory —— 接 `color` carrier。
@@ -143,21 +138,19 @@ import { computed } from 'vue'
 import { useZTheme } from '../provider'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌────────────┐
- *   │ ZIcon      │   width: 1iem(默认,可改)
- *   │ inline-flex│   height: 1iem(自动镜像 width,正方形)
+ *   │ ZIcon      │   width: `size` iem            默认 size=1(16px @ 1080p)
+ *   │ inline-flex│   height: `size` iem(镜像)   正方形
  *   │            │   line-height: 1
  *   └────────────┘
  *
- * 用户传 `size` factory 覆盖默认 1iem,如 `(w) => w.iem(1.25)`。
+ * 用户改 size 数字 → width/height 等比缩(整体比例不变,始终正方形)。
+ * 非 iem 单位(em / px / vh)走 `:css` 兜底单独设 width / height。
  */
 const props = withDefaults(defineProps<ZIconProps>(), {
-  // Vue defineProps:Function 类型 prop 的 default 直接给函数本身(不需 () => 工厂)
-  size: (w: Chain<ZuiSchema>['width']) => {
-    w.iem(1)
-  },
+  size: 1,
   color: (c: Chain<ZuiSchema>['color']) => {
     c.currentColor
   },
@@ -169,6 +162,7 @@ const theme = useZTheme()
 // ─── 一个 className:base + 维度 + css ───
 const className = computed(() =>
   icss(theme.value, (s) => {
+    const size = props.size ?? 1
     // base
     s.display.inlineFlex
     s.alignItems.center
@@ -176,9 +170,9 @@ const className = computed(() =>
     s.flexShrink(0)
     s.lineHeight(1)
 
-    // size(Type C):同一 factory 作用到 width + height,保证图标正方形
-    s.width(props.size)
-    s.height(props.size)
+    // size(number):iem 倍数,width + height 镜像保证正方形
+    s.width.iem(size)
+    s.height.iem(size)
 
     // color:单 carrier factory(s.color 的 factory 重载吃 props.color)
     s.color(props.color)

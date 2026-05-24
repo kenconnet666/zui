@@ -26,14 +26,16 @@ export interface ZModalProps {
   visible?: boolean
   title?: string
   /**
-   * 宽度 factory —— 接 `width` carrier。默认 `(w) => w.iem(30)`(30iem = 480px 等价)。
+   * 对话框宽度 —— `number`(iem 倍数,默认 30 = 480px @ 16px iem)。
+   *
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。非 iem 单位走 `css` 兜底。
    *
    * @example
-   * <ZModal :width="(w) => w.iem(40)" />     <!-- 40iem -->
-   * <ZModal :width="(w) => w.px(600)" />     <!-- 600px -->
-   * <ZModal :width="(w) => w.pct(80)" />     <!-- 视口 80% -->
+   * <ZModal :width="40" />     <!-- 40iem -->
+   * <ZModal :width="20" />     <!-- 320px 小窗 -->
+   * <ZModal :css="(s) => s.width.pct(80)" />   <!-- 80% 视口走 css -->
    */
-  width?: ((c: Chain<ZuiSchema>['width']) => void) | undefined
+  width?: number
   centered?: boolean
   closable?: boolean
   maskClosable?: boolean
@@ -68,18 +70,18 @@ import { lockBodyScroll } from '../_internal/body-scroll-lock'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌─────────────────────────────────────────────────────┐
  *   │ mask  position fixed inset 0  z-index _modal        │   bg _overlayBg.alpha(50)
  *   │   flex / center(centered=true) 或 flex-start       │
  *   │                                                     │
  *   │   ┌───────────────────────────────────────────┐     │
- *   │   │ dialog                                    │     │   width: 30iem(默认,可改)
- *   │   │   max-w: 100vw - 2iem(留白)             │     │   max-h: 100vh - 2iem
- *   │   │   border-radius: _large                   │     │   bg: _bg
- *   │   │   boxShadow: _huge                        │     │   z-index: _modal (+1)
- *   │   │   flex column                             │     │
+ *   │   │ dialog                                    │     │   width: `width` iem
+ *   │   │   max-w: 100vw - 2iem(留白)             │     │     默认 width=30(480px @ 1080p)
+ *   │   │   max-h: 100vh - 2iem                     │     │     传 width=40 → 40iem(640px)
+ *   │   │   border-radius: _large                   │     │   bg: _bg / boxShadow: _huge
+ *   │   │   flex column                             │     │   z-index: _modal (+1)
  *   │   │                                           │     │
  *   │   │  ┌─────────────────────────────────────┐  │     │   head(条件渲染):
  *   │   │  │ head: title  + close btn           │  │     │     padding _middle
@@ -99,14 +101,13 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │   └───────────────────────────────────────────┘     │
  *   └─────────────────────────────────────────────────────┘
  *
+ * 用户改 width 数字 → dialog 宽度等比缩(其它布局走固定 spacing token,不缩)。
  * ESC 关 / mask 点击关(maskClosable) / body scroll lock(多实例共享)。
+ * 非 iem 单位(vh / pct)走 `:css` 兜底:`s.width.pct(80)`。
  */
 const props = withDefaults(defineProps<ZModalProps>(), {
   visible: false,
-  // 默认 30iem,跟 Provider 字号联动
-  width: (w: Chain<ZuiSchema>['width']) => {
-    w.iem(30)
-  },
+  width: 30,
   centered: true,
   closable: true,
   maskClosable: true,
@@ -153,7 +154,7 @@ const dialogClass = computed(() =>
     s.display.flex
     s.flexDirection.column
     s.maxHeight('calc(100vh - calc(2 * var(--zui-iem, 16px)))')
-    if (props.width) s.width(props.width)
+    if (props.width !== undefined) s.width.iem(props.width)
     s.maxWidth('calc(100vw - calc(2 * var(--zui-iem, 16px)))')
     if (!props.centered) s.marginTop._huge
     if (props.zIndex !== undefined) s.zIndex(props.zIndex + 1)

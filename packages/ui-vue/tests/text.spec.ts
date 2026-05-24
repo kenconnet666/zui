@@ -36,24 +36,20 @@ describe('ZText — 渲染', () => {
 })
 
 describe('ZText — 6 维度 carrier factory', () => {
-  it('size factory → fontSize', () => {
+  it('size=1.25 → fontSize calc', () => {
     mount(ZText, {
       props: {
-        size: (f: Chain<ZuiSchema>['fontSize']) => {
-          f.iem(1.25)
-        },
+        size: 1.25,
       },
       slots: { default: () => 'x' },
     })
     expect(getInjectedCss()).toMatch(/font-size:calc\(1\.25 \* var\(--zui-iem/)
   })
 
-  it('size factory → schema token _large', () => {
+  it('size=1.125 (等价 schema _large)', () => {
     mount(ZText, {
       props: {
-        size: (f: Chain<ZuiSchema>['fontSize']) => {
-          f._large
-        },
+        size: 1.125,
       },
       slots: { default: () => 'x' },
     })
@@ -189,9 +185,7 @@ describe('ZText — css 覆盖', () => {
   it('css 可覆盖维度属性', () => {
     mount(ZText, {
       props: {
-        size: (f: Chain<ZuiSchema>['fontSize']) => {
-          f.px(14)
-        },
+        size: 0.875,
         css: (s: Chain<ZuiSchema>) => {
           s.fontSize.px(18) // 覆盖
         },

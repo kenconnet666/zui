@@ -18,6 +18,8 @@ export interface ZMentionProps {
   placeholder?: string
   disabled?: boolean
   rows?: number
+  /** 字号尺寸 —— `number`(iem 倍数,默认 1)。**不接 height**(rows 决定高度)。2026-05-24 B7。 */
+  size?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -31,19 +33,22 @@ export interface ZMentionEmits {
 import { computed, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applyInputSizeNoHeight } from '../_internal/input-size'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ wrapper  position: relative  width: 100%         │
  *   │                                                  │
  *   │  ┌────────────────────────────────────────────┐  │
- *   │  │ <textarea>                                 │  │   rows 默认 3
- *   │  │  border _thin solid _border  border-radius _small│  pad _small
- *   │  │  pad _small  bg _bg  color _text          │  │   bg _bg
- *   │  │  fontSize _middle  resize vertical        │  │   resize vertical
- *   │  │  width 100%  outline none                 │  │
+ *   │  │ <textarea>                                 │  │
+ *   │  │   font-size: `size` iem                    │  │   默认 size=1(16px @ 1080p)
+ *   │  │   padding-y: size*0.375 iem                │  │   = 0.375iem(6px)
+ *   │  │   padding-x: size*0.75 iem                 │  │   = 0.75iem(12px)
+ *   │  │   border-radius: size*0.25 iem             │  │   = 0.25iem(4px)
+ *   │  │   (无 height —— rows 决定 textarea 高度)   │  │   rows 默认 3
+ *   │  │   border _thin solid _border / bg _bg      │  │   resize vertical / width 100%
  *   │  └────────────────────────────────────────────┘  │
  *   │                                                  │
  *   │  ┌────────────────────────────────────────────┐  │   dropdown(@xxx 触发,绝对定位):
@@ -60,12 +65,14 @@ import { useZTheme } from '../provider'
  *   │  └────────────────────────────────────────────┘  │
  *   └──────────────────────────────────────────────────┘
  *
- * 输入到 `@` 时(且前置为空白或起首)开启候选,按 currentSegment 过滤。
+ * 用户改 size 数字 → textarea padding / fontSize / border-radius 等比缩(无 height,rows 决定)。
+ * 输入 `@`(前置空白或起首)开启候选,按 currentSegment 过滤。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZMentionProps>(), {
   prefix: '@',
   disabled: false,
   rows: 3,
+  size: 1,
 })
 
 const emit = defineEmits<ZMentionEmits>()
@@ -135,14 +142,12 @@ const wrapperClass = computed(() =>
 const taClass = computed(() =>
   icss(theme.value, (s) => {
     s.width.pct(100)
-    s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    s.fontSize._middle
-    s.padding._small
+    applyInputSizeNoHeight(s, props.size)
     s.outline('none')
     s.resize.vertical
     s.fontFamily('inherit')

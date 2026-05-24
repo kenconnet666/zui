@@ -32,6 +32,8 @@ export interface ZNotificationItem {
 export interface ZNotificationProps {
   items: ZNotificationItem[]
   placement?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'
+  /** 通知容器最大宽度 —— `number`(iem 倍数,默认 22.5 = 360px)。2026-05-24 B7。 */
+  maxWidth?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -47,12 +49,12 @@ import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌─────────────────────────────────────────────────────┐
- *   │ container(Teleport body,position fixed)          │   屏幕边距 1.5iem
- *   │   top-right(默认): top 1.5iem  right 1.5iem      │   max-width: 22.5iem
- *   │   top-left / bottom-right / bottom-left 同理        │   z-index: _toast
+ *   │ container(Teleport body,position fixed)          │
+ *   │   top-right(默认): top 1.5iem  right 1.5iem      │
+ *   │   max-width: `maxWidth` iem                        │   默认 maxWidth=22.5(360px @ 1080p)
  *   │   flex column  gap _small  z-index _toast          │
  *   │                                                     │
  *   │  ┌───────────────────────────────────────────────┐  │   item:
@@ -68,10 +70,12 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │  (TransitionGroup: enter translateX(1.25em))       │
  *   └─────────────────────────────────────────────────────┘
  *
- * duration 默认 4500ms,loading=true 默认 0(不自动关)。
+ * 用户改 maxWidth 数字 → container 最大宽度等比缩(其它走固定 spacing token,不缩)。
+ * duration 默认 4500ms,loading=true 默认 0(不自动关)。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZNotificationProps>(), {
   placement: 'top-right',
+  maxWidth: 22.5,
 })
 const emit = defineEmits<ZNotificationEmits>()
 
@@ -90,7 +94,7 @@ const containerClass = computed(() =>
     s.gap._small
     s.zIndex._toast
     s.pointerEvents.none
-    s.maxWidth.iem(22.5)
+    s.maxWidth.iem(props.maxWidth ?? 22.5)
     props.css?.(s)
   }),
 )

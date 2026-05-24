@@ -13,25 +13,24 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZSwitchProps {
   value?: boolean
   /**
-   * 尺寸 —— **纯 chain factory**(2026-05-23 撤销 Size5 union)。
+   * 尺寸 —— `number`(iem 倍数,默认 2.5 = rail width)。
    *
-   * **默认**:`(s) => { s.height.iem(1.25); s.width.iem(2.5) }`(等价旧 middle 档位)。
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    *
-   * **参考档位**(width 总是 2*height):tiny(0.875iem) / small(1iem) / middle(1.25iem) /
-   * large(1.5iem) / huge(1.75iem)。
-   *
-   * **注意**:factory 只控制 rail 的 width/height,thumb 位置按 middle 档位(1.25iem)兜底
-   * 计算(thumb 想差异化定位走 `sxThumb` 覆盖)。
+   * 内部按比例:
+   * - `width` = `size`(iem)
+   * - `height` = `size * 0.6`(rail 宽高比 1.67:1)
+   * - thumb / label 位置自动按 height 计算
    *
    * @example
-   * <ZSwitch :size="(s) => { s.height.iem(1.5); s.width.iem(3) }" />
+   * <ZSwitch :size="3" />        <!-- 3iem 宽 -->
+   * <ZSwitch :size="2" />        <!-- 2iem 宽小开关 -->
    */
-  size?: SizePropMulti
+  size?: number
   disabled?: boolean
   loading?: boolean
   checkedLabel?: string
@@ -54,34 +53,31 @@ import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────┐
- *   │ rail  inline-flex / center / relative│   默认 height: 1.25iem
- *   │   width: 2.5iem  height: 1.25iem     │   默认 width: 2.5iem(rail 宽高比 2:1)
+ *   │ rail  inline-flex / center / relative│
+ *   │   width: `size` iem                  │   默认 size=2.5(40px @ 1080p)
+ *   │   height: size*0.6 iem               │   = 1.5iem(24px),宽高比 1.67:1
  *   │   border-radius: _full(胶囊)       │   value=true → bg _primary
  *   │   bg: _primary(开) / _border(关)  │   value=false → bg _border
- *   │   pad 0  border-style none           │
  *   │                                      │
  *   │  ┌────────┐ ┌──────┐                 │   thumb(value 切换位置):
- *   │  │label   │ │thumb │                 │     width/height: 0.8 * height
- *   │  │( inset)│ │圆形  │                 │     bg: _bg  boxShadow: _small
- *   │  │ _tiny  │ │_full │                 │     border-radius: _full
- *   │  └────────┘ │_small│                 │     top: (h-thumb)/2
+ *   │  │label   │ │thumb │                 │     width/height: height*0.8 iem
+ *   │  │( inset)│ │圆形  │                 │       = size*0.48 iem(1.2iem,19.2px)
+ *   │  │ _tiny  │ │_full │                 │     border-radius: _full / bg _bg
+ *   │  └────────┘ │_small│                 │     top: (height-thumb)/2
  *   │             └──────┘                 │     left: 切换时滑动
  *   │                                      │
  *   │  label(选填,inset 在 thumb 外侧)  │   fontSize _tiny  color _bg
  *   └──────────────────────────────────────┘
  *
- * disabled / loading 时 opacity _dim,cursor not-allowed。
+ * 用户改 size 数字 → rail 宽度 + height(0.6 倍) + thumb 位置等比缩(整体比例不变)。
+ * disabled / loading 时 opacity _dim,cursor not-allowed。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZSwitchProps>(), {
   value: false,
-  // 默认等价旧 middle 档位:height=1.25iem,width=2.5iem(rail 宽高比 2:1)
-  size: (s: Chain<ZuiSchema>) => {
-    s.height.iem(1.25)
-    s.width.iem(2.5)
-  },
+  size: 2.5,
   disabled: false,
   loading: false,
 })
@@ -90,19 +86,17 @@ const emit = defineEmits<ZSwitchEmits>()
 
 const theme = useZTheme()
 
-/**
- * thumb / label 位置计算用的 height iem 数字 —— **factory 模式无法读出实际尺寸**,
- * 统一按 middle(1.25iem)兜底,thumb 想差异化定位走 `sxThumb` 覆盖。
- */
-const sizeIemRef = computed<number>(() => 1.25)
+/** rail 高度 iem 数字(= size * 0.6,宽高比 1.67:1 接近旧 middle 1.25 / 2.5)。 */
+const railHeightIem = computed<number>(() => (props.size ?? 2.5) * 0.6)
+const railWidthIem = computed<number>(() => props.size ?? 2.5)
 
 const railClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
     s.position.relative
-    // size(纯 factory,多 carrier):user factory 接整个 chain 自行写 width + height
-    props.size?.(s)
+    s.width.iem(railWidthIem.value)
+    s.height.iem(railHeightIem.value)
     s.borderRadius._full
     s.transitionProperty._colors
     s.transitionDuration._small
@@ -124,15 +118,12 @@ const sxRailAttrs = computed(() => extractSxAttrs(props.sxRail))
 
 const thumbClass = computed(() =>
   icss(theme.value, (s) => {
-    const h = sizeIemRef.value
+    const h = railHeightIem.value
+    const w = railWidthIem.value
     const thumb = h * 0.8
     s.position.absolute
     s.top.iem((h - thumb) / 2)
-    s.left.iem(
-      props.value
-        ? h * 2 - thumb - (h - thumb) / 2
-        : (h - thumb) / 2,
-    )
+    s.left.iem(props.value ? w - thumb - (h - thumb) / 2 : (h - thumb) / 2)
     s.width.iem(thumb)
     s.height.iem(thumb)
     s.borderRadius._full
@@ -148,7 +139,7 @@ const sxThumbAttrs = computed(() => extractSxAttrs(props.sxThumb))
 const labelClass = computed(() =>
   icss(theme.value, (s) => {
     s.position.absolute
-    const offset = sizeIemRef.value * 0.25
+    const offset = railHeightIem.value * 0.25
     if (props.value) s.left.iem(offset)
     else s.right.iem(offset)
     s.color._bg

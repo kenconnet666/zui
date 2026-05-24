@@ -15,15 +15,16 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZAutoCompleteProps {
   value?: string
   options: string[]
   placeholder?: string
   disabled?: boolean
-  /** 尺寸 —— 纯 factory(默认 `INPUT_SIZE_MAP.middle`,复用 INPUT_SIZE_MAP)。 */
-  size?: SizePropMulti
+  /** 字号尺寸 —— `number`(iem 倍数,默认 1)。同 ZInput。2026-05-24 B7。 */
+  size?: number
+  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  height?: number
   filter?: (input: string, opt: string) => boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -39,19 +40,20 @@ import { computed, ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { applySizeProp } from '../_internal/size-prop'
-import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
+import { applyInputSize } from '../_internal/input-size'
 import { usePopper, useEscapeStack } from '../_hooks'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────┐
- *   │ <input>                                          │   border _thin solid _border
- *   │   border _thin solid _border  border-radius _small│   border-radius: _small
- *   │   pad-x _small  bg _bg  color _text              │   bg: _bg
- *   │   size 档: INPUT_SIZE_MAP(small/middle/large)  │   pad-x: _small
- *   │   width: 100%  outline none                      │   width: 100%
+ *   │ <input>                                          │
+ *   │   font-size: `size` iem                          │   默认 size=1(16px @ 1080p)
+ *   │   height: `height` iem                           │   默认 height=size*2=2iem(32px)
+ *   │   padding-y: size*0.375 iem                      │   = 0.375iem(6px)
+ *   │   padding-x: size*0.75 iem                       │   = 0.75iem(12px)
+ *   │   border-radius: size*0.25 iem                   │   = 0.25iem(4px)
+ *   │   border _thin solid _border  bg _bg color _text │   width: 100% / outline none
  *   │   disabled: opacity _dim / bg _bgMuted           │
  *   └──────────────────────────────────────────────────┘
  *           │ floating-ui 定位(offset 4)
@@ -69,11 +71,12 @@ import { usePopper, useEscapeStack } from '../_hooks'
  *   │  (循环 filtered options)                        │
  *   └──────────────────────────────────────────────────┘
  *
- * filter 默认 includes(input,opt);可自定义。
+ * 用户改 size 数字 → input 所有 iem 维度等比缩放(dropdown 固定 spacing token)。
+ * height 可独立覆盖。filter 默认 includes(input,opt);非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZAutoCompleteProps>(), {
   disabled: false,
-  size: INPUT_SIZE_MAP.middle,
+  size: 1,
   filter: (input: string, opt: string) => opt.toLowerCase().includes(input.toLowerCase()),
 })
 
@@ -113,15 +116,12 @@ onClickOutside(inputRef, (e: Event) => {
 
 const inputClass = computed(() =>
   icss(theme.value, (s) => {
-    s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    applySizeProp(props.size, s)
-    s.paddingLeft._small
-    s.paddingRight._small
+    applyInputSize(s, props.size, props.height)
     s.width.pct(100)
     s.outline('none')
     if (props.disabled) {

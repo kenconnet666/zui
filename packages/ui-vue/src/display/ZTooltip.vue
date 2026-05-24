@@ -27,6 +27,8 @@ export interface ZTooltipProps {
   visible?: boolean
   delay?: number
   disabled?: boolean
+  /** tooltip 最大宽度 —— `number`(iem 倍数,默认 16 = 256px,对齐 antd 250px)。2026-05-24 B7。 */
+  maxWidth?: number
   sxTrigger?: SxObject
   sxContent?: SxObject
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -45,7 +47,7 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { usePopper, useZId } from '../_hooks'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌─────────────────┐
  *   │ trigger wrap    │   inline-flex(包裹 default slot)
@@ -55,18 +57,20 @@ import { usePopper, useZId } from '../_hooks'
  *           ▼
  *   ┌────────────────────────────────────────┐
  *   │ tooltip(Teleport to body)            │   bg: _text(反色)
+ *   │   max-width: `maxWidth` iem            │     默认 maxWidth=16(256px @ 1080p)
  *   │   pad-y: 0.25iem × 2 = 0.5iem 总高度  │   color: _bg(反色)
  *   │   pad-x: _small(token)               │   fontSize: _small
- *   │   max-width: 20iem(超长换行)         │   line-height: _tight
- *   │   border-radius: _tiny                 │   boxShadow: _small
- *   │   word-break: break-word               │   z-index: _tooltip
+ *   │   border-radius: _tiny                 │   line-height: _tight
+ *   │   word-break: break-word               │   boxShadow: _small / z-index: _tooltip
  *   │   pointer-events: hover 模式 auto      │
  *   │  ┌──────────────────────────────────┐  │
  *   │  │ content(content prop 或 #content)│
  *   │  └──────────────────────────────────┘  │
  *   └────────────────────────────────────────┘
  *
+ * 用户改 maxWidth 数字 → tooltip 最大宽度等比缩(其它走固定 spacing token)。
  * trigger: hover / click / focus / manual。hover/focus 模式有 enter/leave delay(默认 100ms)。
+ * 非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZTooltipProps>(), {
   placement: 'top',
@@ -74,6 +78,7 @@ const props = withDefaults(defineProps<ZTooltipProps>(), {
   visible: false,
   delay: 100,
   disabled: false,
+  maxWidth: 16,
 })
 
 const emit = defineEmits<ZTooltipEmits>()
@@ -184,7 +189,7 @@ const tooltipClass = computed(() =>
     s.boxShadow._small
     if (props.trigger === 'hover') s.pointerEvents.auto
     else s.pointerEvents.none
-    s.maxWidth.iem(20)
+    s.maxWidth.iem(props.maxWidth ?? 20)
     s.wordBreak.breakWord
     applySx(s, props.sxContent)
     props.css?.(s)

@@ -31,6 +31,8 @@ export interface ZStepsProps {
   currentColor?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   /** 当前步为错误态,默认 false;true 时走 `_danger` + close 图标。 */
   errored?: boolean
+  /** indicator 圆边长 —— `number`(iem 倍数,默认 2 = 32px @ 16px iem)。2026-05-24 B7。 */
+  size?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 </script>
@@ -42,7 +44,7 @@ import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────────┐
  *   │ ZSteps root  flex(row 或 column)  gap _middle      │   color: _text / fontSize _small
@@ -50,23 +52,26 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │  step(每项 flex-grow 1 在 horizontal):              │
  *   │  ┌──────────────────────────────────────────────┐    │
  *   │  │ ● indicator     title (semibold _text)       │    │   indicator:
- *   │  │ 2iem            description (_textSecondary) │    │     width/height 2iem
- *   │  │ 正圆             _small                       │    │     border-radius _full
- *   │  │ border _thin                                  │    │     border _thin solid
- *   │  │ finish: bg _success / 前景 _bg + ✓ check     │    │
- *   │  │ process: bg currentColor(默认 _primary)+ 序号│   │   gap _small
- *   │  │ error:  bg _danger / 前景 _bg + × close      │    │   align: vertical → flexStart
- *   │  │ wait:   transparent / _textSecondary / _border│   │          horizontal → center
+ *   │  │   width: `size` iem                          │    │     默认 size=2(32px @ 1080p)
+ *   │  │   height: `size` iem(镜像,正圆)           │    │     传 size=2.5 → 2.5iem(40px)
+ *   │  │   border-radius: _full / border _thin solid  │    │
+ *   │  │   finish: bg _success / 前景 _bg + ✓ check  │    │
+ *   │  │   process: bg currentColor(默认 _primary)+ 序号│   gap _small
+ *   │  │   error:   bg _danger / 前景 _bg + × close  │    │   align: vertical → flexStart
+ *   │  │   wait:    transparent / _textSecondary / _border │      horizontal → center
+ *   │  │           title / description                │    │
  *   │  └──────────────────────────────────────────────┘    │
  *   │  (循环 items.length 个)                             │
  *   └──────────────────────────────────────────────────────┘
  *
- * stepState 由 idx vs current + errored 决定 4 态。
+ * 用户改 size 数字 → 每个 indicator width / height 等比缩(始终正圆)。
+ * stepState 由 idx vs current + errored 决定 4 态。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZStepsProps>(), {
   current: 0,
   vertical: false,
   errored: false,
+  size: 2,
   // 当前步色默认 `_primary`(`errored=true` 时被忽略,改走 `_danger`)
   currentColor: (c: Chain<ZuiSchema>['color']) => {
     c._primary
@@ -106,12 +111,13 @@ const stepClass = computed(() =>
 
 const indicatorClass = (state: StepState): string =>
   icss(theme.value, (s) => {
+    const size = props.size ?? 2
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
     s.flexShrink(0)
-    s.width.iem(2)
-    s.height.iem(2)
+    s.width.iem(size)
+    s.height.iem(size)
     s.borderRadius._full
     s.fontWeight._semibold
     s.fontSize._small

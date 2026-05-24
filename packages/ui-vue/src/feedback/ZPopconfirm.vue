@@ -20,6 +20,10 @@ export interface ZPopconfirmProps {
   cancelText?: string
   placement?: Placement
   disabled?: boolean
+  /** popper 最小宽度 —— `number`(iem 倍数,默认 12 = 192px)。2026-05-24 B7。 */
+  minWidth?: number
+  /** popper 最大宽度 —— `number`(iem 倍数,默认 20 = 320px)。 */
+  maxWidth?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -38,7 +42,7 @@ import { usePopper, useEscapeStack } from '../_hooks'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌─────────────────┐
  *   │ trigger wrap    │   inline-flex(包裹 default slot,toggle 点击)
@@ -47,8 +51,9 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *           │ floating-ui 定位(offset 8)
  *           ▼
  *   ┌──────────────────────────────────────────────┐
- *   │ popper(Teleport body)                      │   min-width: 12iem
- *   │   min-width: 12iem  max-width: 20iem        │   max-width: 20iem
+ *   │ popper(Teleport body)                      │
+ *   │   min-width: `minWidth` iem                  │   默认 minWidth=12(192px @ 1080p)
+ *   │   max-width: `maxWidth` iem                  │   默认 maxWidth=20(320px @ 1080p)
  *   │   pad _middle  border _thin solid _border    │   bg _bg color _text
  *   │   border-radius _small  boxShadow _middle    │   flex column gap _small
  *   │   fontSize _small                            │
@@ -64,13 +69,16 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │  └────────────────────────────────────────┘  │
  *   └──────────────────────────────────────────────┘
  *
- * 点击外部 / ESC 关闭。
+ * 用户改 minWidth / maxWidth 数字 → popper 宽度上下限等比缩。
+ * 点击外部 / ESC 关闭。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZPopconfirmProps>(), {
   okText: '确定',
   cancelText: '取消',
   placement: 'top',
   disabled: false,
+  minWidth: 12,
+  maxWidth: 20,
 })
 
 const emit = defineEmits<ZPopconfirmEmits>()
@@ -126,8 +134,8 @@ const popperClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._middle
-    s.minWidth.iem(12)
-    s.maxWidth.iem(20)
+    s.minWidth.iem(props.minWidth ?? 12)
+    s.maxWidth.iem(props.maxWidth ?? 20)
     s.fontSize._small
     s.display.flex
     s.flexDirection.column

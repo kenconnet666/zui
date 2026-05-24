@@ -76,17 +76,15 @@ describe('ZTitle — level 默认尺寸/字重映射', () => {
 })
 
 describe('ZTitle — props 覆盖默认', () => {
-  it('size factory 覆盖 level 默认 fontSize', () => {
+  it('size=3 覆盖 level 默认 fontSize(等价 48px @ 16px iem)', () => {
     mount(ZTitle, {
       props: {
         level: 1,
-        size: (f: Chain<ZuiSchema>['fontSize']) => {
-          f.px(48)
-        },
+        size: 3,
       },
       slots: { default: () => 'T' },
     })
-    expect(getInjectedCss()).toMatch(/font-size:48px/)
+    expect(getInjectedCss()).toMatch(/font-size:calc\(3 \* var\(--zui-iem/)
   })
 
   it('weight factory 覆盖 level 默认 fontWeight', () => {

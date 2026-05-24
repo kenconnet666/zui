@@ -61,13 +61,11 @@ describe('ZSpin — 包裹模式(有 slot)', () => {
 })
 
 describe('ZSpin — size + sx', () => {
-  it('size factory iem(2) → indicator 走 calc(2 * var(--zui-iem))', () => {
-    // v2 BREAKING:size 不再接 'large' 字面量,改 factory 表达 iem(2)
+  it('size=2 → indicator 走 calc(2 * var(--zui-iem))', () => {
+    // R10:size 是 number(iem 倍数),直接透传给 ZIcon
     mount(ZSpin, {
       props: {
-        size: (w: Chain<ZuiSchema>['width']) => {
-          w.iem(2)
-        },
+        size: 2,
       },
     })
     expect(getInjectedCss()).toMatch(/width:calc\(2 \* var\(--zui-iem,/)

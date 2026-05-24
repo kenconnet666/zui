@@ -15,7 +15,6 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZInputNumberProps {
   value?: number | null
@@ -25,8 +24,14 @@ export interface ZInputNumberProps {
   precision?: number
   disabled?: boolean
   readonly?: boolean
-  /** 尺寸 —— 纯 factory(默认 `INPUT_SIZE_MAP.middle`,复用 INPUT_SIZE_MAP)。 */
-  size?: SizePropMulti
+  /**
+   * 字号尺寸 —— `number`(iem 倍数,默认 1)。
+   *
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`,组件按比例算 height/padding/border-radius。
+   */
+  size?: number
+  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  height?: number
   placeholder?: string
   sxInput?: SxObject
   sxButton?: SxObject
@@ -46,19 +51,21 @@ import { computed, h } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
-import { applySizeProp } from '../_internal/size-prop'
-import { INPUT_SIZE_MAP } from '../_internal/component-sizes'
+import { applyInputSize } from '../_internal/input-size'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────┐
- *   │ wrapper  inline-flex / center                    │   border _thin solid _border
- *   │   border _thin solid _border  border-radius _small│   border-radius: _small
- *   │   bg _bg  color _text                            │   bg: _bg
- *   │   pad-l _small  pad-r _tiny  size 档(同 ZInput)│   pad-l _small,pad-r _tiny
- *   │   disabled: opacity _dim / bg _bgMuted           │
+ *   │ wrapper  inline-flex / center                    │
+ *   │   font-size: `size` iem                          │   默认 size=1(16px @ 1080p)
+ *   │   height: `height` iem                           │   默认 height=size*2=2iem(32px)
+ *   │   padding-y: size*0.375 iem                      │   = 0.375iem(6px)
+ *   │   padding-l: size*0.75 iem                       │   = 0.75iem(12px)
+ *   │   padding-r: _tiny(留出 btn 空间)              │
+ *   │   border-radius: size*0.25 iem                   │   = 0.25iem(4px)
+ *   │   border _thin solid _border / bg _bg            │   disabled: opacity _dim / bg _bgMuted
  *   │                                                  │
  *   │  ┌────────────────────────┐  ┌────────────────┐  │   btn group(垂直堆叠):
  *   │  │ <input> text 数字       │  │ ┌────────────┐ │  │     ┌──────┐
@@ -70,12 +77,15 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │  └────────────────────────┘  │ └────────────┘ │  │     └──────┘
  *   │                               └────────────────┘  │
  *   └──────────────────────────────────────────────────┘
+ *
+ * 用户改 size 数字 → input 所有 iem 维度等比缩(整体比例不变)。height 可独立覆盖。
+ * 非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZInputNumberProps>(), {
   step: 1,
   disabled: false,
   readonly: false,
-  size: INPUT_SIZE_MAP.middle,
+  size: 1,
 })
 
 const emit = defineEmits<ZInputNumberEmits>()
@@ -129,15 +139,12 @@ const wrapperClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
     s.alignItems.center
-    s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    applySizeProp(props.size, s)
-    s.paddingLeft._small
-    s.paddingRight._tiny
+    applyInputSize(s, props.size, props.height)
     if (props.disabled) {
       s.opacity._dim
       s.backgroundColor._bgMuted

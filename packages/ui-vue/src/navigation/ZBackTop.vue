@@ -13,6 +13,12 @@ export interface ZBackTopProps {
   visibilityHeight?: number
   target?: () => Element | Window
   /**
+   * 按钮边长 —— `number`(iem 倍数,默认 2.5 = 40px @ 16px iem)。width + height 镜像。
+   *
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。
+   */
+  size?: number
+  /**
    * 右边距 factory —— 接 `right` carrier。默认 `(r) => r.iem(1.5)`。
    *
    * @example
@@ -38,27 +44,29 @@ import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ (页面 / target 容器)                           │
  *   │                                                  │
- *   │                                                  │
  *   │                          ┌──────┐                │   按钮:
- *   │                          │  ▲  │                │     width/height 2.5iem
- *   │                          │      │                │     正圆 _full
- *   │                          │ 2.5  │                │     bg _bg color _primary
- *   │                          │ iem  │                │     border _thin solid _border
- *   │                          └──────┘                │     boxShadow _middle
- *   │                            ↑                     │     fixed,right/bottom factory
- *   │                            right 1.5iem(默认)  │     hover boxShadow _large
- *   │                            bottom 3iem(默认)   │
+ *   │                          │  ▲  │                │     inline-flex / fixed
+ *   │                          │      │                │     width: `size` iem
+ *   │                          │ size │                │     height: `size` iem
+ *   │                          │ iem  │                │     默认 size=2.5(40px @ 1080p)
+ *   │                          └──────┘                │     border-radius: _full(正圆)
+ *   │                            ↑                     │     bg _bg / color _primary
+ *   │                            right 1.5iem(默认)  │     boxShadow _middle
+ *   │                            bottom 3iem(默认)   │     hover → boxShadow _large
  *   └──────────────────────────────────────────────────┘
  *
- * scrollY >= visibilityHeight 时显示(默认 400px),Teleport to body。
+ * 用户改 size 数字 → width / height 等比缩(始终正方形)。
+ * right / bottom 走 factory 单独覆盖。scrollY >= visibilityHeight 时显示(默认 400px),
+ * Teleport to body。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZBackTopProps>(), {
   visibilityHeight: 400,
+  size: 2.5,
   right: (r: Chain<ZuiSchema>['right']) => {
     r.iem(1.5)
   },
@@ -101,14 +109,15 @@ onScopeDispose(() => {
 
 const btnClass = computed(() =>
   icss(theme.value, (s) => {
+    const size = props.size ?? 2.5
     s.position.fixed
     if (props.right) s.right(props.right)
     if (props.bottom) s.bottom(props.bottom)
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.width.iem(2.5)
-    s.height.iem(2.5)
+    s.width.iem(size)
+    s.height.iem(size)
     s.borderRadius._full
     s.backgroundColor._bg
     s.color._primary

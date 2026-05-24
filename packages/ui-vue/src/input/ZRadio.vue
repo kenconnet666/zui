@@ -14,6 +14,8 @@ export interface ZRadioProps {
   value: ZRadioValue
   label?: string
   disabled?: boolean
+  /** 单选外圈尺寸 —— `number`(iem 倍数,默认 1 = 16px @ 16px iem)。2026-05-24 B7。 */
+  size?: number
   sxDot?: SxObject
   sxLabel?: SxObject
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -27,8 +29,41 @@ import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { Z_RADIO_GROUP_KEY, type RadioGroupCtx } from './_radio-group'
 
+/**
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ *
+ *   dot 模式(默认):
+ *   ┌──────────────────────────────────────────┐
+ *   │ <label>  inline-flex / center             │
+ *   │   gap _tiny / cursor pointer / color _text│
+ *   │   fontSize _middle                        │   disabled → opacity _dim
+ *   │                                           │
+ *   │  ┌──────┐  ┌────────────────────┐        │   dot 外圈:
+ *   │  │  ●   │  │ label / slot       │        │     width: `size` iem
+ *   │  │ size │  │  文字标签          │        │     height: `size` iem
+ *   │  │ iem  │  │                    │        │       默认 size=1(16px @ 1080p)
+ *   │  └──────┘  └────────────────────┘        │     border-radius: _full(正圆)
+ *   │                                           │     border _thin solid _border
+ *   │   内圆点:                                │     checked → borderColor _primary
+ *   │     width/height: size*0.5 iem            │       = 0.5iem(8px)
+ *   │     bg: _primary  borderRadius _full      │
+ *   │     checked → scale(1) / 否则 scale(0)   │
+ *   └──────────────────────────────────────────┘
+ *
+ *   button 模式(group buttonStyle=true):
+ *   ┌────────────────────────┐
+ *   │ <button> inline-flex   │   pad _small + pad-x _middle
+ *   │   border _thin _border │   border-radius (group 包裹首末)
+ *   │   bg _bg / color _text │   checked → border + color _primary
+ *   │                        │             bg _primary.alpha(8)
+ *   └────────────────────────┘
+ *
+ * 用户改 size 数字 → dot 外圈 width / height + 内圆点等比缩。button 模式 size 不生效。
+ * 非 iem 单位走 `:css` 兜底。
+ */
 const props = withDefaults(defineProps<ZRadioProps>(), {
   disabled: false,
+  size: 1,
 })
 
 const theme = useZTheme()
@@ -62,11 +97,12 @@ const dotRootClass = computed(() =>
  */
 const dotClass = computed(() =>
   icss(theme.value, (s) => {
+    const size = props.size ?? 1
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.width.iem(1)
-    s.height.iem(1)
+    s.width.iem(size)
+    s.height.iem(size)
     s.borderRadius._full
     s.borderWidth._thin
     s.borderStyle.solid
@@ -89,8 +125,9 @@ const sxDotAttrs = computed(() => extractSxAttrs(props.sxDot))
  */
 const innerDotClass = computed(() =>
   icss(theme.value, (s) => {
-    s.width.iem(0.5)
-    s.height.iem(0.5)
+    const size = props.size ?? 1
+    s.width.iem(size * 0.5)
+    s.height.iem(size * 0.5)
     s.borderRadius._full
     s.backgroundColor._primary
     s.transform(isChecked.value ? 'scale(1)' : 'scale(0)')

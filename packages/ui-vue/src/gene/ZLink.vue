@@ -17,7 +17,6 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { SizeProp } from '../_internal/size-prop'
 
 /** ZLink 完整 props。**继承 ZText 全部维度 + 链接 4 字段**。 */
 export interface ZLinkProps {
@@ -30,8 +29,8 @@ export interface ZLinkProps {
   /** 禁用态:屏蔽点击 + 灰化 + a11y。 */
   disabled?: boolean
 
-  /** 字号(factory|Size5|undefined union)。默认不传 = 继承父字号。 */
-  size?: SizeProp<'fontSize'> | undefined
+  /** 字号 —— `number`(iem 倍数,默认 undefined = 继承父字号)。 */
+  size?: number
   weight?: ((w: Chain<ZuiSchema>['fontWeight']) => void) | undefined
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   depth?: ((o: Chain<ZuiSchema>['opacity']) => void) | undefined
@@ -59,6 +58,22 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyTypographyBase } from './_typography-base'
 
+/**
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ *
+ *   ┌──────────────────────────────┐
+ *   │ ZLink (inline,默认 <a>)      │
+ *   │   font-size: `size` iem      │   默认 size=undefined(继承父字号)
+ *   │                              │   传 size=1 → 1iem(16px @ 1080p)
+ *   │   color: _primary (默认)     │   用户传 color factory 覆盖
+ *   │   underlineOnHover: true     │   hover 时显示下划线(链接惯例)
+ *   │   cursor: pointer            │
+ *   │   disabled=true → opacity _dim + pointer-events: none + cursor: not-allowed
+ *   └──────────────────────────────┘
+ *
+ * 用户改 size 数字 → fontSize 等比缩(无其它 iem 维度)。
+ * 非 iem 单位走 `:css` 兜底:`(s) => s.fontSize.px(14)`。
+ */
 const props = withDefaults(defineProps<ZLinkProps>(), {
   disabled: false,
   italic: false,

@@ -14,27 +14,25 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { SizeProp } from '../_internal/size-prop'
 
 export interface ZAvatarProps {
   src?: string
   alt?: string
   text?: string
   /**
-   * 头像尺寸 —— **纯 chain factory**(2026-05-23 撤销 Size5 union)。
+   * 头像尺寸 —— `number`(iem 倍数,默认 2.5 = 40px @ 16px iem)。
    *
-   * **默认**:`(w) => w.iem(2.5)`(等价旧 middle 档位,40px,iem 联动)。
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    *
-   * **参考档位**:tiny(1.5iem/24px) / small(2iem/32px) / middle(2.5iem/40px) /
-   * large(3iem/48px) / huge(4iem/64px)。
+   * **参考档位**:1.5(24px tiny) / 2(32px small) / 2.5(40px middle) / 3(48px large) / 4(64px huge)。
    *
    * height 自动镜像 width(头像始终正方形)。
    *
    * @example
-   * <ZAvatar :size="(w) => w.iem(3)" />       <!-- 等价 large -->
-   * <ZAvatar :size="(w) => w.px(48)" />       <!-- 字面量 -->
+   * <ZAvatar :size="3" />        <!-- 3iem 大头像 -->
+   * <ZAvatar :size="1.5" />      <!-- 1.5iem 小 -->
    */
-  size?: SizeProp<'width'>
+  size?: number
   /** 方形头像,默认 `false`(圆形)。 */
   square?: boolean
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
@@ -48,25 +46,26 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────┐
- *   │ ZAvatar          │   width: 2.5iem(默认 middle,可改)
- *   │ inline-flex      │   height: 2.5iem(自动镜像 width,正方形)
- *   │ border-radius:   │   round 模式: _full(圆形,默认)
- *   │   _full / 0.375i │   square 模式: 0.375iem
- *   │ overflow: hidden │   bg: _textSecondary(text/icon 模式)
- *   │                  │   fontSize: 0.875iem(text 模式)
+ *   │ ZAvatar          │   inline-flex
+ *   │   width: `size`  │   默认 size=2.5(40px @ 1080p)
+ *   │   height: `size` │   镜像 width,正方形
+ *   │   border-radius:                          round 模式: _full(圆形,默认)
+ *   │     square=true → size*0.15 iem          ≈ 0.375iem(6px)@ size=2.5
+ *   │   font-size: size*0.35 iem(text 模式)   ≈ 0.875iem(14px)
+ *   │   bg: _textSecondary(text/icon 模式)
+ *   │   overflow: hidden
  *   └──────────────────┘
  *
+ * 用户改 size 数字 → width / height / 文字字号 / 方形圆角等比缩(整体比例不变)。
  * 内容优先级:default slot > img(src) > text(首字母缩写) > 占位。
+ * 非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZAvatarProps>(), {
   alt: '',
-  // 默认等价旧 middle 档位:2.5iem(40px,iem 联动)
-  size: (w: Chain<ZuiSchema>['width']) => {
-    w.iem(2.5)
-  },
+  size: 2.5,
   square: false,
   // 文字 / icon 模式背景色默认 `_textSecondary`
   color: (c: Chain<ZuiSchema>['color']) => {
@@ -83,24 +82,26 @@ const showText = computed(() => !showImage.value && !!props.text)
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
+    const size = props.size ?? 2.5
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
     s.flexShrink(0)
-    // size(Type C):同一 factory 应用到 width + height,保证正方形头像
-    s.width(props.size)
-    s.height(props.size)
+    // size(number):iem 倍数,width + height 镜像保证正方形
+    s.width.iem(size)
+    s.height.iem(size)
     s.overflow.hidden
     s.verticalAlign('middle')
     s.userSelect.none
-    if (props.square) s.borderRadius.iem(0.375)
+    if (props.square) s.borderRadius.iem(size * 0.15)
     else s.borderRadius._full
     if (!showImage.value) {
       // color factory(默认 `_textSecondary`,从 withDefaults 提供)桥接到 backgroundColor carrier
       s.backgroundColor(props.color)
       s.color._bg
       s.fontWeight._semibold
-      s.fontSize.iem(0.875)
+      // 文字字号按头像尺寸缩放(原先 0.875iem 是为 2.5iem 头像设计,比例 0.35)
+      s.fontSize.iem(size * 0.35)
     }
     props.css?.(s)
   }),

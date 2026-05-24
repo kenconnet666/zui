@@ -29,28 +29,25 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { SizeProp } from '../_internal/size-prop'
 
 /**
- * `ZText` 完整 props。**size 走 union(factory | Size5 | undefined),其它 5 维度纯 factory**。
+ * `ZText` 完整 props。**size 是 `number`(iem 倍数),其它 5 维度纯 factory**。
  */
 export interface ZTextProps {
   /**
-   * 字号 —— `factory | Size5 | undefined` union(2026-05-22 修订)。
+   * 字号 —— `number`(iem 倍数,默认 undefined = 继承父字号)。
    *
-   * **默认**:不传 = 继承父字号(等同 1em)。
-   *
-   * **5 阶档位**(映射 schema fontSize token):
-   * - `tiny` → `_tiny`(12px) / `small` → `_small`(14px) / `middle` → `_middle`(16px) /
-   *   `large` → `_large`(18px) / `huge` → `_huge`(20px)
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`,组件能读到数字按比例算其它维度。
    *
    * @example
-   * <ZText size="middle" />                   <!-- happy path -->
-   * <ZText :size="(f) => f._middle" />        <!-- factory(等价) -->
-   * <ZText :size="(f) => f.iem(1.125)" />     <!-- 1.125iem 自定义 -->
-   * <ZText :size="(f) => f.px(14)" />         <!-- 字面量 -->
+   * <ZText :size="1" />          <!-- 1iem 等于默认 16px -->
+   * <ZText :size="1.125" />      <!-- 1.125iem -->
+   * <ZText :size="0.875" />      <!-- 0.875iem 等价 _small -->
+   *
+   * 非 iem 单位 / 任意 CSS 走 css 兜底:
+   * <ZText :css="(s) => s.fontSize.px(14)" />
    */
-  size?: SizeProp<'fontSize'> | undefined
+  size?: number
 
   /**
    * 字重 factory —— 接 `fontWeight` carrier。
@@ -155,6 +152,20 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyTypographyBase } from './_typography-base'
 
+/**
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ *
+ *   ┌──────────────────────────────┐
+ *   │ ZText (inline,默认 <span>)   │
+ *   │   font-size: `size` iem      │   默认 size=undefined(继承父字号)
+ *   │                              │   传 size=1 → 1iem(16px @ 1080p)
+ *   │                              │   传 size=0.875 → 0.875iem(14px)
+ *   │                              │   line-height / letter-spacing: 不写(继承)
+ *   └──────────────────────────────┘
+ *
+ * 用户改 size 数字 → fontSize 等比缩(无其它 iem 维度)。
+ * 非 iem 单位 / 任意 CSS 走 `:css` 兜底:`(s) => s.fontSize.px(14)`。
+ */
 const props = withDefaults(defineProps<ZTextProps>(), {
   italic: false,
   underline: false,

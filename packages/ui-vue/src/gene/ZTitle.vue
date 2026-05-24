@@ -23,7 +23,6 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
-import type { SizeProp } from '../_internal/size-prop'
 
 /** ZTitle 支持的标题级别。 */
 export type ZTitleLevel = 1 | 2 | 3 | 4 | 5 | 6
@@ -33,8 +32,8 @@ export interface ZTitleProps {
   /** 标题级别(决定默认 tag = `h{level}` + 默认 fontSize/fontWeight)。默认 `1`。 */
   level?: ZTitleLevel
 
-  /** 字号(factory|Size5|undefined union)。**传了会覆盖 level 默认 fontSize**。 */
-  size?: SizeProp<'fontSize'> | undefined
+  /** 字号 —— `number`(iem 倍数,默认 undefined = 跟 level 默认)。**传了会覆盖 level 默认 fontSize**。 */
+  size?: number
   weight?: ((w: Chain<ZuiSchema>['fontWeight']) => void) | undefined
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   depth?: ((o: Chain<ZuiSchema>['opacity']) => void) | undefined
@@ -60,6 +59,25 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyTypographyBase } from './_typography-base'
 
+/**
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ *
+ *   ┌──────────────────────────────────────┐
+ *   │ ZTitle (块级,默认 <h{level}>)       │
+ *   │   font-size: `size` iem              │   默认 size=undefined → 走 level 映射:
+ *   │     level=1 → 2iem(32px @ 1080p)    │
+ *   │     level=2 → 1.75iem(28px)         │
+ *   │     level=3 → 1.5iem(24px)          │
+ *   │     level=4 → 1.25iem(20px)         │
+ *   │     level=5 → 1.125iem(18px)        │
+ *   │     level=6 → 1iem(16px)            │
+ *   │   line-height: 1.25(标题偏紧)       │   font-weight: 700/600 跟 level
+ *   │   margin: 0(重置浏览器默认)         │
+ *   └──────────────────────────────────────┘
+ *
+ * 用户传 size 数字 → 覆盖 level 默认 fontSize,等比缩(无其它 iem 维度)。
+ * 非 iem 单位走 `:css` 兜底:`(s) => s.fontSize.px(40)`。
+ */
 const props = withDefaults(defineProps<ZTitleProps>(), {
   level: 1,
   italic: false,

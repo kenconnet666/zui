@@ -16,28 +16,24 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
-import type { SizePropMulti } from '../_internal/size-prop'
 
 export interface ZDrawerProps {
   visible?: boolean
   placement?: 'left' | 'right' | 'top' | 'bottom'
   /**
-   * 抽屉宽度(left/right placement)或高度(top/bottom placement)的 chain factory。
+   * 抽屉宽度(left/right placement)或高度(top/bottom placement)—— `number`(iem 倍数,默认 24 = 384px,对齐 antd Drawer 378px)。
    *
-   * **签名**:`((s: Chain<ZuiSchema>) => void) | undefined`
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    *
-   * `placement` 决定哪条轴生效。用户应在 factory 内写 `s.width.iem(...)` 或 `s.height.iem(...)`
-   * 与 placement 对应。未传时走默认 20iem(left/right=width,top/bottom=height)。
+   * `placement` 决定 size 应用到哪条轴:left/right → width;top/bottom → height。
+   * 非 iem 单位(如 vh / pct)走 `css` 兜底。
    *
    * @example
-   * ```vue
-   * <!-- left/right:20iem 宽 -->
-   * <ZDrawer :size="(s) => s.width.iem(20)" />
-   * <!-- top/bottom:50% 高 -->
-   * <ZDrawer placement="top" :size="(s) => s.height.pct(50)" />
-   * ```
+   * <ZDrawer :size="25" />                 <!-- 25iem 宽抽屉 -->
+   * <ZDrawer placement="top" :size="20" /> <!-- 20iem 高顶部抽屉 -->
+   * <ZDrawer placement="top" :css="(s) => s.height.vh(50)" />  <!-- vh 走 css -->
    */
-  size?: SizePropMulti
+  size?: number
   title?: string
   closable?: boolean
   maskClosable?: boolean
@@ -66,19 +62,17 @@ import { lockBodyScroll } from '../_internal/body-scroll-lock'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌─────────────────────────────────────────────────────┐
  *   │ mask  position fixed inset 0  z-index _modal        │   bg _overlayBg.alpha(50)
  *   │                                                     │
  *   │   ┌──────────────────────────────────────┐ (right) │   drawer:
  *   │   │ drawer                               │         │     position fixed
- *   │   │   right placement:                   │         │     bg _bg / color _text
- *   │   │     top 0  right 0  bottom 0         │         │     boxShadow _huge
- *   │   │     width 20iem(默认,size 覆盖)   │         │     flex column
- *   │   │   left  placement: top 0/left 0/bottom 0      │
- *   │   │   top   placement: top 0/left 0/right 0 / h 20iem │
- *   │   │   bottom placement: bottom 0/left 0/right 0       │
+ *   │   │   left/right → width: `size` iem    │         │     bg _bg / color _text
+ *   │   │   top/bottom → height: `size` iem   │         │     boxShadow _huge
+ *   │   │     默认 size=24(384px @ 1080p)    │         │     flex column
+ *   │   │     传 size=20 → 20iem(320px)      │         │
  *   │   │                                      │         │
  *   │   │  ┌────────────────────────────────┐  │         │   head(条件):
  *   │   │  │ head: title + close            │  │         │     pad _middle
@@ -98,11 +92,14 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │   └──────────────────────────────────────┘         │
  *   └─────────────────────────────────────────────────────┘
  *
- * size factory 决定 width(left/right)或 height(top/bottom)。
+ * 用户改 size 数字 → drawer 宽/高等比缩(其它布局走固定 spacing token,不缩)。
+ * placement 决定 size 作用轴:left/right → width;top/bottom → height。
+ * 非 iem 单位(vh / pct)走 `:css` 兜底:`s.height.vh(50)`。
  */
 const props = withDefaults(defineProps<ZDrawerProps>(), {
   visible: false,
   placement: 'right',
+  size: 24,
   closable: true,
   maskClosable: true,
 })
@@ -144,34 +141,31 @@ const drawerClass = computed(() =>
     s.flexDirection.column
     s.zIndex._modal
 
+    const size = props.size ?? 20
     switch (props.placement) {
       case 'left':
         s.top.px(0)
         s.left.px(0)
         s.bottom.px(0)
-        if (props.size) props.size(s)
-        else s.width.iem(20)
+        s.width.iem(size)
         break
       case 'right':
         s.top.px(0)
         s.right.px(0)
         s.bottom.px(0)
-        if (props.size) props.size(s)
-        else s.width.iem(20)
+        s.width.iem(size)
         break
       case 'top':
         s.top.px(0)
         s.left.px(0)
         s.right.px(0)
-        if (props.size) props.size(s)
-        else s.height.iem(20)
+        s.height.iem(size)
         break
       case 'bottom':
         s.bottom.px(0)
         s.left.px(0)
         s.right.px(0)
-        if (props.size) props.size(s)
-        else s.height.iem(20)
+        s.height.iem(size)
         break
     }
     props.css?.(s)

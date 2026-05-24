@@ -25,6 +25,10 @@ export interface ZPopoverProps {
   trigger?: 'click' | 'hover' | 'manual'
   visible?: boolean
   disabled?: boolean
+  /** popper 最小宽度 —— `number`(iem 倍数,默认 8 = 128px)。2026-05-24 B7。 */
+  minWidth?: number
+  /** popper 最大宽度 —— `number`(iem 倍数,默认 30 = 480px)。 */
+  maxWidth?: number
   sxTrigger?: SxObject
   sxContent?: SxObject
   sxTitle?: SxObject
@@ -45,7 +49,7 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { usePopper, useEscapeStack } from '../_hooks'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌─────────────────┐
  *   │ trigger wrap    │   inline-flex(包裹 default slot)
@@ -55,11 +59,11 @@ import { usePopper, useEscapeStack } from '../_hooks'
  *           ▼
  *   ┌─────────────────────────────────────────┐
  *   │ popper(Teleport to body)              │   bg: _bg
- *   │   min-width: 8iem(避免极窄)           │   color: _text
- *   │   max-width: 30iem(防超长横铺)        │   border: _thin solid _border
- *   │   padding: _middle                      │   border-radius: _small
- *   │   border-radius: _small                 │   boxShadow: _middle
- *   │   z-index: _popover                     │
+ *   │   min-width: `minWidth` iem             │     默认 minWidth=8(128px @ 1080p)
+ *   │   max-width: `maxWidth` iem             │     默认 maxWidth=30(480px @ 1080p)
+ *   │   padding: _middle                      │   color: _text
+ *   │   border: _thin solid _border           │   border-radius: _small
+ *   │   boxShadow: _middle                    │   z-index: _popover
  *   │  ┌─────────────────────────────────┐    │
  *   │  │ title(条件 title 或 #title)   │    │   fontWeight: _semibold
  *   │  │  fontSize: _middle              │    │   marginBottom: _tiny
@@ -69,13 +73,17 @@ import { usePopper, useEscapeStack } from '../_hooks'
  *   │  └─────────────────────────────────┘    │
  *   └─────────────────────────────────────────┘
  *
+ * 用户改 minWidth / maxWidth 数字 → popper 宽度上下限等比缩(其它走固定 spacing token)。
  * trigger: click / hover / manual;click 模式接 onClickOutside;visible 时 ESC 关。
+ * 非 iem 单位(vw / pct)走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZPopoverProps>(), {
   placement: 'bottom',
   trigger: 'click',
   visible: false,
   disabled: false,
+  minWidth: 8,
+  maxWidth: 30,
 })
 
 const emit = defineEmits<ZPopoverEmits>()
@@ -167,8 +175,8 @@ const popperClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._middle
-    s.minWidth.iem(8)
-    s.maxWidth.iem(30)
+    s.minWidth.iem(props.minWidth ?? 8)
+    s.maxWidth.iem(props.maxWidth ?? 30)
     applySx(s, props.sxContent)
     props.css?.(s)
   }),
