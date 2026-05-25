@@ -4,16 +4,25 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "pnpm --filter @kenconnet666/docs dev",
     "build": "pnpm --filter @kenconnet666/zui-core build && pnpm --filter @kenconnet666/zui-vue build",
     "build:core": "pnpm --filter @kenconnet666/zui-core build",
     "build:vue": "pnpm --filter @kenconnet666/zui-vue build",
+    "build:docs": "pnpm --filter @kenconnet666/docs build",
+    "build:all": "pnpm run build && pnpm run build:docs",
+    "clean": "pnpm -r run clean --if-present",
     "generate": "node scripts/generate-properties.mjs",
-    "test": "pnpm -r run test",
-    "type-check": "pnpm -r run type-check",
+    "test": "pnpm -r run test --if-present",
+    "test:coverage": "pnpm --filter @kenconnet666/zui-core run test:coverage && pnpm --filter @kenconnet666/zui-vue run test:coverage",
+    "type-check": "pnpm -r run type-check --if-present",
     "lint": "run-s lint:*",
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
-    "format": "prettier --write --experimental-cli ."
+    "format": "prettier --write --experimental-cli .",
+    "format:check": "prettier --check --experimental-cli .",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "pnpm run type-check && pnpm run test && pnpm run build && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",

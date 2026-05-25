@@ -22,8 +22,10 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "type-check": "vue-tsc --noEmit -p tsconfig.json",
     "prepublishOnly": "pnpm run type-check && pnpm run test && pnpm run build"
   },
@@ -84,6 +86,7 @@
     "@floating-ui/vue": "^1.1.11",
     "@types/qrcode": "^1.5.6",
     "@vicons/material": "^0.13.0",
+    "@vitest/coverage-v8": "^4.1.4",
     "@vue/test-utils": "^2.4.6",
     "@vueuse/core": "^14.3.0",
     "@vueuse/integrations": "^14.3.0",
