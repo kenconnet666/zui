@@ -104,7 +104,7 @@ function scrollTo(id: string): void {
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.flexShrink(0)
-    s.width.iem(13)
+    s.width.pct(15)
     s.borderLeftWidth._thin
     s.borderLeftStyle.solid
     s.borderLeftColor._border

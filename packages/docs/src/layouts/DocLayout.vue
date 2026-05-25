@@ -88,7 +88,7 @@ const sidebarClass = computed(() =>
     s.flexShrink(0)
     s.display.flex
     s.flexDirection.column
-    s.width.iem(17)
+    s.width.pct(15)
     s.borderRightWidth._thin
     s.borderRightStyle.solid
     s.borderRightColor._border
@@ -201,11 +201,8 @@ const contentInnerClass = computed(() =>
   icss(theme.value, (s) => {
     s.paddingTop.iem(2)
     s.paddingBottom.iem(2)
-    s.paddingLeft.iem(2.5)
-    s.paddingRight.iem(2.5)
-    s.maxWidth.iem(70)
-    s.marginLeft.auto
-    s.marginRight.auto
+    s.paddingLeft.iem(2)
+    s.paddingRight.iem(2)
   }),
 )
 </script>
