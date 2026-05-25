@@ -6,7 +6,7 @@
 
 ## 立即做
 
-1. 调 `Skill(skill="zui")` 加载项目完整指南 — API / 陷阱 / ui-vue 约定 / 验证 / 发版全在那里。
+1. 用 `Read` 工具读取 `.claude/skills/zui.md` 加载项目完整指南 — API / 陷阱 / ui-vue 约定 / 验证 / 发版全在那里。
 2. 看 `.claude/AGENT.md` —— 验证铁律 + STOP 节点 + 严格禁止（精简版）。
 
 ---
