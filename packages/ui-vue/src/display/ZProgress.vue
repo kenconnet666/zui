@@ -42,7 +42,7 @@ export interface ZProgressProps {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { applyAsBg, getThemeColor } from '../_internal/color-bridge'
+import { applyAsBg, getThemeColor, resolveColor } from '../_internal/color-bridge'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -164,14 +164,15 @@ const circleTextClass = computed(() =>
 const trackColor = computed(() => getThemeColor(theme.value, 'bgMuted', '#e5e7eb'))
 
 /**
- * circle 模式 stroke 色:用户传 `color` factory 时无法直接 sample(carrier 抽象不返色串),
- * 仍读 theme.primary。要自定义 circle stroke 走 `css` 覆盖或自渲。
+ * circle 模式 stroke 色:SVG `stroke` 是 attribute 不是 CSS class,需要裸字符串。
  *
- * TODO:理想方案是把 color factory 投射到一个 probe schema 后取出色值。当前简化:
- * - 用户传 `color` factory → fill 应用到 `backgroundColor` carrier(line OK)
- * - circle SVG stroke 暂仍走 primary 主色(后续 follow-up)
+ * 2026-05-25(T1.A):用 `resolveCarrier(theme, 'color', factory)` 把用户传的
+ * `color` factory 投射一遍取出最终值串(支持 token / `.alpha(N)` modifier /
+ * keyword / 字面量 / 字符串逃生舱)。factory 未传时回退 theme.primary。
  */
-const fillColor = computed(() => getThemeColor(theme.value, 'primary', '#1976d2'))
+const fillColor = computed<string>(() =>
+  resolveColor(theme.value, props.color, getThemeColor(theme.value, 'primary', '#1976d2')),
+)
 </script>
 
 <template>

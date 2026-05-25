@@ -34,7 +34,6 @@ export interface ZTransferProps {
 
 export interface ZTransferEmits {
   (e: 'update:targetKeys', keys: string[]): void
-  (e: 'change', keys: string[]): void
 }
 </script>
 
@@ -102,7 +101,6 @@ const rightItems = computed(() =>
 function moveRight(): void {
   const next = [...props.targetKeys, ...leftChecked.value]
   emit('update:targetKeys', next)
-  emit('change', next)
   leftChecked.value = []
 }
 
@@ -110,7 +108,6 @@ function moveLeft(): void {
   const checkedKeys = rightChecked.value
   const next = props.targetKeys.filter((k) => !checkedKeys.includes(k))
   emit('update:targetKeys', next)
-  emit('change', next)
   rightChecked.value = []
 }
 

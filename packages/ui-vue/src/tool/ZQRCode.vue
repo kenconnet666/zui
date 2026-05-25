@@ -4,7 +4,8 @@
  *
  * **API**:
  * - `value: string` —— 二维码内容
- * - `size?: number` —— 尺寸 px(默认 160)
+ * - `pixelSize?: number` —— 尺寸 px(默认 160)。**故意不叫 `size`** —— zui 全栈 `size`
+ *   是 iem 倍率(响应式),但 QR 编码本身基于像素栅格,固定 px 才能保证码字清晰。
  * - `color?: string` —— 前景色,默认 `#000`
  * - `bgColor?: string` —— 背景色,默认 `#fff`
  * - `margin?: number` —— 边距 px,默认 4
@@ -16,7 +17,12 @@ import type { ZuiSchema } from '../provider/theme'
 
 export interface ZQRCodeProps {
   value: string
-  size?: number
+  /**
+   * 二维码物理像素尺寸(width = height = pixelSize px)。默认 `160`。
+   *
+   * 不使用 `size`(iem 倍率)是因为 QR 编码基于像素栅格,固定 px 保证扫码清晰。
+   */
+  pixelSize?: number
   color?: string
   bgColor?: string
   margin?: number
@@ -34,9 +40,9 @@ import { useZTheme } from '../provider'
  * 盒子模型(iem,Provider 控制基准):
  *
  *   ┌──────────────────────┐
- *   │ wrap  inline-block   │   width/height: size px(默认 160,prop 可改)
- *   │   width:  size px    │   bg: bgColor prop(默认 #fff)
- *   │   height: size px    │   border-radius: _tiny
+ *   │ wrap  inline-block   │   width/height: pixelSize px(默认 160,prop 可改)
+ *   │   width:  pixelSize px│   bg: bgColor prop(默认 #fff)
+ *   │   height: pixelSize px│   border-radius: _tiny
  *   │   bg: bgColor        │
  *   │   border-radius _tiny│
  *   │  ┌────────────────┐  │
@@ -49,7 +55,7 @@ import { useZTheme } from '../provider'
  * 尺寸走 px(QR 编码本身基于像素)而非 iem。
  */
 const props = withDefaults(defineProps<ZQRCodeProps>(), {
-  size: 160,
+  pixelSize: 160,
   color: '#000000',
   bgColor: '#ffffff',
   margin: 4,
@@ -58,7 +64,7 @@ const props = withDefaults(defineProps<ZQRCodeProps>(), {
 const theme = useZTheme()
 
 const qrOptions = computed(() => ({
-  width: props.size,
+  width: props.pixelSize,
   margin: props.margin,
   color: {
     dark: props.color,
@@ -72,8 +78,8 @@ const qrSrc = computed(() => useQRCode(props.value, qrOptions.value).value)
 const wrapClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineBlock
-    s.width.px(props.size)
-    s.height.px(props.size)
+    s.width.px(props.pixelSize)
+    s.height.px(props.pixelSize)
     s.backgroundColor(props.bgColor)
     s.borderRadius._tiny
     props.css?.(s)

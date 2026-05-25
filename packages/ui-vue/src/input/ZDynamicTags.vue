@@ -20,13 +20,13 @@ export interface ZDynamicTagsProps {
 }
 
 export interface ZDynamicTagsEmits {
+  /** 标签列表变化(支持 `v-model:value`)。v0.2 删除等价的 `change`。 */
   (e: 'update:value', value: string[]): void
-  (e: 'change', value: string[]): void
 }
 </script>
 
 <script lang="ts" setup>
-import { computed, h, ref } from 'vue'
+import { computed, h, nextTick, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
@@ -55,7 +55,8 @@ const canAdd = computed(() => {
 function startEdit(): void {
   if (!canAdd.value) return
   editing.value = true
-  setTimeout(() => inputRef.value?.focus(), 0)
+  // 等 input 渲染后再 focus(替代 setTimeout 0 work-around,Vue 原生 idiom)
+  nextTick(() => inputRef.value?.focus())
 }
 
 function commitInput(): void {
@@ -72,7 +73,6 @@ function commitInput(): void {
   }
   const next = [...props.value, v]
   emit('update:value', next)
-  emit('change', next)
   inputValue.value = ''
   editing.value = false
 }
@@ -81,7 +81,6 @@ function removeTag(tag: string): void {
   if (props.disabled) return
   const next = props.value.filter((t) => t !== tag)
   emit('update:value', next)
-  emit('change', next)
 }
 
 function onKey(e: KeyboardEvent): void {

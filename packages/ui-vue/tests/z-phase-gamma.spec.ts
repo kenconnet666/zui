@@ -25,12 +25,12 @@ describe('ZSegmented', () => {
     expect(w.findAll('[role="radio"]').length).toBe(3)
   })
 
-  it('点选项 → update:value + change', async () => {
+  it('点选项 → update:value(v0.2 已删除等价 change emit)', async () => {
     const w = mount(ZSegmented, { props: { value: 'a', options: OPTS } })
     const btns = w.findAll('[role="radio"]')
     await btns[1].trigger('click')
     expect(w.emitted('update:value')![0]).toEqual(['b'])
-    expect(w.emitted('change')![0]).toEqual(['b'])
+    expect(w.emitted('change')).toBeUndefined()
   })
 
   it('disabled 选项点击不 emit', async () => {

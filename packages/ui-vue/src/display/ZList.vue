@@ -59,6 +59,8 @@ export interface ZListEmits {
 }
 
 export interface ZListExpose {
+  /** 根 `<div role="list">` DOM(虚拟容器在内层,取 rootRef 拿外壳)。 */
+  rootRef: import('vue').Ref<HTMLElement | null>
   scrollToIndex: (i: number, align?: ScrollAlign) => void
   scrollToOffset: (px: number) => void
   getScroll: () => { offset: number; total: number; viewport: number }
@@ -157,8 +159,10 @@ const emptyClass = computed(() =>
 )
 
 const vlRef = ref<ZVirtualListExpose | null>(null)
+const rootRef = ref<HTMLElement | null>(null)
 
 defineExpose<ZListExpose>({
+  rootRef,
   scrollToIndex: (i, align) => vlRef.value?.scrollToIndex(i, align),
   scrollToOffset: (px) => vlRef.value?.scrollToOffset(px),
   getScroll: () =>
@@ -179,7 +183,7 @@ function onUpdate(start: number, end: number): void {
 </script>
 
 <template>
-  <div :class="rootClass" role="list">
+  <div ref="rootRef" :class="rootClass" role="list">
     <div v-if="header || slots.header" :class="headerClass">
       <slot name="header">{{ header }}</slot>
     </div>

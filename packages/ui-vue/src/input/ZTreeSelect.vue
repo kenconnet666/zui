@@ -51,6 +51,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyInputSize } from '../_internal/input-size'
 import { usePopper, useEscapeStack } from '../_hooks'
+import { useZLocale } from '../provider/locale/useZLocale'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZTree from '../display/ZTree.vue'
 
@@ -90,7 +91,6 @@ import ZTree from '../display/ZTree.vue'
 const props = withDefaults(defineProps<ZTreeSelectProps>(), {
   value: null,
   defaultExpandedKeys: () => [],
-  placeholder: '请选择',
   disabled: false,
   clearable: false,
   size: 1,
@@ -102,6 +102,8 @@ const props = withDefaults(defineProps<ZTreeSelectProps>(), {
 const emit = defineEmits<ZTreeSelectEmits>()
 
 const theme = useZTheme()
+const selectLocale = useZLocale('select')
+const effectivePlaceholder = computed(() => props.placeholder ?? selectLocale.value.placeholder)
 
 const triggerRef = ref<HTMLElement | null>(null)
 const dropdownRef = ref<HTMLElement | null>(null)
@@ -264,7 +266,7 @@ defineExpose({ rootRef })
     :aria-disabled="disabled"
     @click="toggleOpen"
   >
-    <span :class="textClass">{{ selectedLabel || placeholder }}</span>
+    <span :class="textClass">{{ selectedLabel || effectivePlaceholder }}</span>
     <button
       v-if="showClear"
       type="button"

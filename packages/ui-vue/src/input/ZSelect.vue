@@ -65,8 +65,8 @@ export interface ZSelectProps {
 }
 
 export interface ZSelectEmits {
+  /** 选中值变化(支持 `v-model:value`)。v0.2(2026-05-25)删除了等价的 `change`。 */
   (e: 'update:value', value: ZSelectValue | ZSelectValue[] | null): void
-  (e: 'change', value: ZSelectValue | ZSelectValue[] | null): void
 }
 </script>
 
@@ -74,6 +74,7 @@ export interface ZSelectEmits {
 import { computed, h, ref, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { useZLocale } from '../provider/locale/useZLocale'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyInputSize } from '../_internal/input-size'
 import { BuiltinIcons, ZIcon } from '../gene'
@@ -133,6 +134,7 @@ const props = withDefaults(defineProps<ZSelectProps>(), {
 const emit = defineEmits<ZSelectEmits>()
 
 const theme = useZTheme()
+const selectLocale = useZLocale('select')
 
 const triggerRef = ref<HTMLElement | null>(null)
 const dropdownRef = ref<HTMLElement | null>(null)
@@ -336,11 +338,9 @@ function selectOption(opt: ZSelectOption): void {
       ? cur.filter((v) => v !== opt.value)
       : [...cur, opt.value]
     emit('update:value', next)
-    emit('change', next)
     return
   }
   emit('update:value', opt.value)
-  emit('change', opt.value)
   open.value = false
   search.value = ''
 }
@@ -349,7 +349,6 @@ function onClear(e: Event): void {
   e.stopPropagation()
   const empty = props.multiple ? [] : null
   emit('update:value', empty)
-  emit('change', empty)
 }
 
 function onFilterInput(e: Event): void {
@@ -452,7 +451,9 @@ defineExpose({ rootRef })
       role="listbox"
       v-bind="sxDropdownAttrs.attrs"
     >
-      <div v-if="filteredOptions.length === 0" :class="emptyClass">无匹配项</div>
+      <div v-if="filteredOptions.length === 0" :class="emptyClass">
+        {{ selectLocale.noOptions }}
+      </div>
       <ZVirtualList
         v-else
         :items="filteredOptions"

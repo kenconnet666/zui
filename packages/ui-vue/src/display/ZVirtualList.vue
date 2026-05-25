@@ -69,6 +69,8 @@ export interface ZVirtualListEmits {
 }
 
 export interface ZVirtualListExpose {
+  /** 根滚动容器 DOM(`<div>`)。 */
+  rootRef: import('vue').Ref<HTMLElement | null>
   scrollToIndex: (i: number, align?: ScrollAlign) => void
   scrollToOffset: (px: number) => void
   getScroll: () => { offset: number; total: number; viewport: number }
@@ -255,6 +257,7 @@ function setItemRef(i: number) {
 }
 
 defineExpose<ZVirtualListExpose>({
+  rootRef: scrollEl,
   scrollToIndex: vs.scrollToIndex,
   scrollToOffset: vs.scrollToOffset,
   getScroll: () => ({

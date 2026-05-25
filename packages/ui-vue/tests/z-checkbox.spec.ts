@@ -12,13 +12,15 @@ describe('ZCheckbox 单独', () => {
     expect(w.text()).toContain('item1')
   })
 
-  it('点击 → update:checked + change', async () => {
+  it('点击 → update:checked', async () => {
     const w = mount(ZCheckbox, { props: { checked: false, label: 'x' } })
     const input = w.find('input[type="checkbox"]')
     ;(input.element as HTMLInputElement).checked = true
     await input.trigger('change')
     expect(w.emitted('update:checked')![0]).toEqual([true])
-    expect(w.emitted('change')![0]).toEqual([true])
+    // 说明:v0.2 已删除组件 emit('change');native input change 事件会被 Vue
+    // attrs fallthrough 冒泡(`emitted('change')` 仍可能拿到 Event 对象),
+    // 这不是 zui 显式 emit,业务方应该用 v-model:checked 或监听 update:checked。
   })
 
   it('disabled → 不 emit', async () => {

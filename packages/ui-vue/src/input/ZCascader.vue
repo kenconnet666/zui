@@ -55,6 +55,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyInputSize } from '../_internal/input-size'
 import { usePopper, useEscapeStack, useZIem } from '../_hooks'
+import { useZLocale } from '../provider/locale/useZLocale'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZVirtualList from '../display/ZVirtualList.vue'
 
@@ -95,7 +96,6 @@ import ZVirtualList from '../display/ZVirtualList.vue'
  * height 可独立覆盖。非 iem 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZCascaderProps>(), {
-  placeholder: '请选择',
   disabled: false,
   expandTrigger: 'click',
   placement: 'bottom-start',
@@ -108,6 +108,8 @@ const props = withDefaults(defineProps<ZCascaderProps>(), {
 const emit = defineEmits<ZCascaderEmits>()
 
 const theme = useZTheme()
+const selectLocale = useZLocale('select')
+const effectivePlaceholder = computed(() => props.placeholder ?? selectLocale.value.placeholder)
 
 const triggerRef = ref<HTMLElement | null>(null)
 const popperRef = ref<HTMLElement | null>(null)
@@ -312,7 +314,7 @@ defineExpose({ rootRef })
     :aria-disabled="disabled"
     @click="toggleOpen"
   >
-    <span :class="triggerTextClass">{{ displayText || placeholder }}</span>
+    <span :class="triggerTextClass">{{ displayText || effectivePlaceholder }}</span>
     <span :class="arrowClass">
       <component :is="downIcon" />
     </span>

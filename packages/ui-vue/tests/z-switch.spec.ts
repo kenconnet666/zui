@@ -12,11 +12,11 @@ describe('ZSwitch', () => {
     expect(w.attributes('aria-checked')).toBe('true')
   })
 
-  it('点击 → update:value 取反 + change', async () => {
+  it('点击 → update:value 取反(v0.2 已删除等价 change emit)', async () => {
     const w = mount(ZSwitch, { props: { value: false } })
     await w.trigger('click')
     expect(w.emitted('update:value')![0]).toEqual([true])
-    expect(w.emitted('change')![0]).toEqual([true])
+    expect(w.emitted('change')).toBeUndefined()
   })
 
   it('disabled → 点击无效', async () => {

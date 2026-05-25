@@ -41,8 +41,8 @@ export interface ZSwitchProps {
 }
 
 export interface ZSwitchEmits {
+  /** 状态变化(支持 `v-model:value`)。v0.2 删除等价的 `change`。 */
   (e: 'update:value', value: boolean): void
-  (e: 'change', value: boolean): void
 }
 </script>
 
@@ -152,7 +152,6 @@ function toggle(): void {
   if (props.disabled || props.loading) return
   const next = !props.value
   emit('update:value', next)
-  emit('change', next)
 }
 
 function onKeydown(e: KeyboardEvent): void {

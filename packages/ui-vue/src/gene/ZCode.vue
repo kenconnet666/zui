@@ -103,8 +103,10 @@ async function loadShiki(): Promise<{ codeToHtml: ShikiCodeToHtml } | null> {
     }
     shikiCache = { codeToHtml: mod.codeToHtml }
   } catch {
-    if (!warnedMissing) {
-
+    if (
+      !warnedMissing &&
+      (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production')
+    ) {
       console.warn(
         '[zui-vue/ZCode] `shiki` 未安装,回落纯文本渲染。' +
           '\n  启用代码高亮:`pnpm add shiki`(或 npm/yarn)',
@@ -178,8 +180,9 @@ export default defineComponent({
           })
         } catch (e) {
           // shiki 抛(未注册的 lang 等)→ fallback 纯文本
-
-          console.warn(`[zui-vue/ZCode] shiki 高亮失败 (lang=${lang}):`, e)
+          if (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production') {
+            console.warn(`[zui-vue/ZCode] shiki 高亮失败 (lang=${lang}):`, e)
+          }
           highlighted.value = null
         }
       },

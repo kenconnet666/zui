@@ -14,7 +14,7 @@
  * ```
  *
  * **API**:
- * - `title?: string` —— 头部标题(`#head` slot 优先)
+ * - `title?: string` —— 头部标题(`#header` slot 优先;`#head` 兼容别名将在下版本删除)
  * - `bordered?: boolean` —— 是否显示边框(默认 `true`);`false` 走 elevation shadow
  * - `hoverable?: boolean` —— 鼠标悬停加深 elevation(默认 `false`)
  * - `sxHead / sxBody / sxFoot` —— 三节点 sx 配置(`SxObject`)
@@ -30,7 +30,7 @@ import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
 export interface ZCardProps {
-  /** 头部标题(`#head` slot 优先于此)。 */
+  /** 头部标题(`#header` slot 优先于此;`#head` 旧别名兼容,下版本删除)。 */
   title?: string
   /** 是否显示边框,默认 `true`。 */
   bordered?: boolean
@@ -85,7 +85,10 @@ const props = withDefaults(defineProps<ZCardProps>(), {
 const slots: Slots = useSlots()
 const theme = useZTheme()
 
-const hasHead = computed<boolean>(() => !!props.title || !!slots.head || !!slots.extra)
+// `#header` 是统一约定;`#head` 旧别名仍兼容,下版本删除
+const hasHead = computed<boolean>(
+  () => !!props.title || !!slots.header || !!slots.head || !!slots.extra,
+)
 const hasFoot = computed<boolean>(() => !!slots.foot)
 
 const rootClass = computed(() =>
@@ -161,7 +164,7 @@ const sxFootAttrs = computed(() => extractSxAttrs(props.sxFoot))
       v-bind="sxHeadAttrs.attrs"
     >
       <div>
-        <slot name="head">{{ title }}</slot>
+        <slot name="header"><slot name="head">{{ title }}</slot></slot>
       </div>
       <div v-if="$slots.extra">
         <slot name="extra" />

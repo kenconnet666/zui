@@ -33,8 +33,8 @@ export interface ZSegmentedProps {
 }
 
 export interface ZSegmentedEmits {
+  /** 选中值变化(支持 `v-model:value`)。v0.2 删除等价的 `change`。 */
   (e: 'update:value', value: string | number): void
-  (e: 'change', value: string | number): void
 }
 </script>
 
@@ -129,7 +129,6 @@ function select(opt: ZSegmentedOption): void {
   if (opt.disabled || props.disabled) return
   if (props.value === opt.value) return
   emit('update:value', opt.value)
-  emit('change', opt.value)
 }
 </script>
 

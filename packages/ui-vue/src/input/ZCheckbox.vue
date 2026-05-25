@@ -33,8 +33,8 @@ export interface ZCheckboxProps {
 }
 
 export interface ZCheckboxEmits {
+  /** 勾选状态变化(支持 `v-model:checked`)。v0.2 删除等价的 `change`。 */
   (e: 'update:checked', checked: boolean): void
-  (e: 'change', checked: boolean): void
 }
 </script>
 
@@ -145,7 +145,6 @@ function onChange(e: Event): void {
     group.toggle(props.value as never, target.checked)
   } else {
     emit('update:checked', target.checked)
-    emit('change', target.checked)
   }
 }
 

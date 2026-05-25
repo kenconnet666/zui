@@ -2,6 +2,46 @@
 
 ## Unreleased
 
+### P0 工程债务清理 + T1.A introspect API(2026-05-25,P0.2-P0.10 + T1.A)
+
+**核心动机**:配合 zui-core 新增 `resolveCarrier` introspect API,清理审计报告 P0 档
+工程债务,提升一致性 + DX。
+
+**新能力**(配合 zui-core 0.7.1):
+- **`resolveCarrier(theme, prop, factory)`** 全局 helper(@kenconnet666/zui-core 新增)
+- **`resolveColor(theme, factory, fallback)`** —— ui-vue 在 `_internal/color-bridge.ts`
+  补的便利包装,SVG/canvas/ARIA 等"裸字符串"场景从 color factory 取最终色串
+  (支持 token / `.alpha(N)` modifier / 字面量 / 字符串逃生舱)
+- **ZProgress circle 模式 stroke 色**现在响应用户 `color` factory(原 TODO 解决)
+- **color-bridge 新增** `applyAsStroke / applyAsFill / applyAsCaret` 3 个 carrier 桥接
+- **虚拟列表家族新增 `rootRef` expose**(ZVirtualList / ZList / ZDataTable)
+
+**BREAKING**:
+- **`ZQRCode.size` → `ZQRCode.pixelSize`**:语义偏离(size 是 iem 倍率,QR 是物理 px),
+  显式拆名。迁移:`<ZQRCode :size="160" />` → `<ZQRCode :pixel-size="160" />`
+- **`ZSplit.size` / `update:size` → `ZSplit.ratio` / `update:ratio`**:size 是 iem 倍率,
+  ZSplit 用比例(0~1)不是物理长度。迁移:`<ZSplit v-model:size="x" />` → `<ZSplit v-model:ratio="x" />`
+- **删除冗余 `change` emit**(跟 `update:value` 完全等价):
+  - ZSelect / ZTransfer / ZSegmented / ZSwitch / ZRate / ZCheckbox / ZDynamicTags
+  - **保留 `change`**:ZInput / ZTextarea / ZInputNumber(blur 触发)/ ZSlider(mouseup)/
+    ZDatePicker / ZTimePicker(面板关闭)/ ZCascader / ZTreeSelect(带额外参数 labels/node)/
+    ZAnchor / ZTabs / ZPagination / ZUpload / ZCarousel(非 v-model 别名)
+
+**优化**(非破坏):
+- **ZCascader / ZTreeSelect `placeholder`** 默认从 `useZLocale('select').placeholder` 拿,
+  不再硬编码 `'请选择'`(支持 i18n 切换)
+- **ZSelect `'无匹配项'` → `useZLocale('select').noOptions`**
+- **ZCard `#header` slot 加入**(`#head` 别名兼容,下版本删)
+- **`console.warn` dev gate**(ZCode 加 `if (DEV)`,跟 core / 其他 hook 风格统一)
+- **ZSteps `currentColor` cast 改走 `applyAsBg` helper**(禁止内联 cast 散落)
+- **ZDynamicTags `setTimeout(fn, 0)` → `nextTick`**(Vue 原生 idiom)
+
+**验证**:
+- zui-core `640/640` ✓(+12 resolveCarrier spec)
+- zui-vue 受影响 spec 全套 ✓ / type-check ✓ / build ✓
+- 推迟到下一 sprint:**P0.1 usePopupTrigger hook**(8 个浮层组件去重,工作量 1-2 天,
+  风险高,适合独立 sprint)
+
 ### BREAKING — vw-first 单位 + 虚拟列表全栈接入(2026-05-24,S0-S9)
 
 **核心动机**:

@@ -111,6 +111,8 @@ export interface ZDataTableEmits<T = unknown> {
 }
 
 export interface ZDataTableExpose {
+  /** 根 `<div role="table">` DOM。 */
+  rootRef: import('vue').Ref<HTMLElement | null>
   scrollToIndex: (i: number, align?: ScrollAlign) => void
   scrollToOffset: (px: number) => void
   getScroll: () => { offset: number; total: number; viewport: number }
@@ -449,8 +451,10 @@ const vlHeight = computed<string>(() => {
 
 // ─── ZVirtualList ref ───
 const vlRef = ref<ZVirtualListExpose | null>(null)
+const rootRef = ref<HTMLElement | null>(null)
 
 defineExpose<ZDataTableExpose>({
+  rootRef,
   scrollToIndex: (i, align) => vlRef.value?.scrollToIndex(i, align),
   scrollToOffset: (px) => vlRef.value?.scrollToOffset(px),
   getScroll: () => vlRef.value?.getScroll() ?? { offset: 0, total: 0, viewport: 0 },
@@ -471,7 +475,7 @@ const isEmpty = computed(() => sortedRows.value.length === 0)
 </script>
 
 <template>
-  <div :class="rootClass" role="table">
+  <div ref="rootRef" :class="rootClass" role="table">
     <!-- header -->
     <div :class="headerClass" role="rowgroup">
       <!-- 多选 checkbox 列 -->

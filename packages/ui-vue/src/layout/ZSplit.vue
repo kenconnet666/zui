@@ -3,26 +3,34 @@
  * `ZSplit` —— 可拖拽分隔的两栏布局。
  *
  * - `direction?: 'horizontal' | 'vertical'` —— 默认 horizontal(左右分)
- * - `v-model:size` —— 第一栏尺寸百分比(0~1,默认 0.5)
- * - `min?: number` / `max?: number` —— 第一栏百分比限制
+ * - `v-model:ratio` —— 第一栏占比(0~1,默认 0.5)。**不叫 `size`** 是因为 zui 全栈
+ *   `size` 语义是 iem 倍率;`ZSplit` 用比例(没有"尺寸"单位),改名 `ratio` 避免歧义。
+ * - `min?: number` / `max?: number` —— 第一栏占比限制(0~1)
  * - `disabled?: boolean`
  *
- * slot `first` / `second` 或 `default`(逗号分隔不行;改成两个具名 slot)。
+ * slot `first` / `second`(分别填两栏内容)。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
 export interface ZSplitProps {
   direction?: 'horizontal' | 'vertical'
-  size?: number
+  /**
+   * 第一栏占容器的比例(0~1)。默认 `0.5`。**故意不叫 `size`** —— zui 全栈 `size`
+   * 是 iem 倍率(物理长度),`ZSplit` 这里是比例(无单位),命名拆分避免歧义。
+   */
+  ratio?: number
+  /** 第一栏占比下限(0~1)。默认 `0.1`。 */
   min?: number
+  /** 第一栏占比上限(0~1)。默认 `0.9`。 */
   max?: number
   disabled?: boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
 export interface ZSplitEmits {
-  (e: 'update:size', value: number): void
+  /** 第一栏占比变化(支持 `v-model:ratio`)。 */
+  (e: 'update:ratio', value: number): void
 }
 </script>
 
@@ -33,7 +41,7 @@ import { useZTheme } from '../provider'
 
 const props = withDefaults(defineProps<ZSplitProps>(), {
   direction: 'horizontal',
-  size: 0.5,
+  ratio: 0.5,
   min: 0.1,
   max: 0.9,
   disabled: false,
@@ -66,7 +74,7 @@ function onPointerMove(e: PointerEvent): void {
     props.direction === 'horizontal'
       ? (e.clientX - rect.left) / rect.width
       : (e.clientY - rect.top) / rect.height
-  emit('update:size', clamp(local))
+  emit('update:ratio', clamp(local))
 }
 
 function onPointerUp(): void {
@@ -93,7 +101,7 @@ const containerClass = computed(() =>
 
 const firstClass = computed(() =>
   icss(theme.value, (s) => {
-    const pct = props.size * 100
+    const pct = props.ratio * 100
     if (props.direction === 'horizontal') {
       s.width.pct(pct)
       s.height.pct(100)

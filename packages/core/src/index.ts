@@ -6,6 +6,7 @@ export { buildKeymap } from './theme/keymap'
 
 // ─── Chain ───
 export { Chain } from './chain/Chain'
+export { resolveCarrier } from './chain/resolveCarrier'
 
 // ─── 单位 helper ───
 export { iem, iemWith } from './chain/units'

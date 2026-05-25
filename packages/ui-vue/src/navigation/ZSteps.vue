@@ -42,6 +42,7 @@ import { computed, h } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import { applyAsBg } from '../_internal/color-bridge'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -133,7 +134,7 @@ const indicatorClass = (state: StepState): string =>
       s.borderColor.transparent
     } else if (state === 'process') {
       // 当前步:currentColor factory(默认 `_primary`,从 withDefaults 提供)桥接到 backgroundColor carrier
-      props.currentColor(s.backgroundColor as unknown as Chain<ZuiSchema>['color'])
+      applyAsBg(s, props.currentColor)
       s.color._bg
       s.borderColor.transparent
     } else {
