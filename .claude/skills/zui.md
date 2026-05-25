@@ -1127,4 +1127,97 @@ Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>
 
 ---
 
+---
+
+## 十七、docs 页写作规范
+
+> **参照实现**：`packages/docs/src/pages/components/ZButtonPage.vue`。
+
+### 17.1 页面结构（顺序固定）
+
+```
+1. ZTitle level="1"   组件中英文名（如"ZButton 按钮"）
+2. ZParagraph         一段话概述（变体数量、核心特性、Material 等关键词）
+3. 若干 Demo 节       每个 Demo：ZTitle level="2" + DemoBlock + #desc slot
+4. ZTitle level="2"   API
+   ZTitle level="3"   Props
+   ApiTable           Props 行
+   ZTitle level="3"   Emits（若组件有 emit）
+   ApiTable
+   ZTitle level="3"   Expose（若组件有 defineExpose）
+   ApiTable
+   ZTitle level="3"   Slots（若组件有 slot）
+   ApiTable
+   ZTitle level="3"   尺寸参考（iem = 16px）（若组件有 size prop）
+   ZParagraph         iem / vw 说明
+   ApiTable           size → px 换算表
+   ZParagraph         说明 ZIemPreset.fixed 用法
+```
+
+### 17.2 ApiTable 组件
+
+路径：`packages/docs/src/shared/ApiTable.vue`
+
+```ts
+import ApiTable from '../../shared/ApiTable.vue'
+```
+
+**columns 配置**：
+
+| key     | 作用 | mono? |
+|---------|------|-------|
+| name    | 属性 / 事件 / 插槽名 | ✅ |
+| type    | 类型描述 | ✅ |
+| default | 默认值 | ✅ |
+| desc    | 说明文字 | ❌ |
+
+`mono: true` → 等宽字体 + `_primary` 色；`mono: false/undefined` → 正文字体 + `_text` 色。
+
+**Props 表列顺序**：`name → type → default → desc`（宽度：160 / 280 / 120 / 自适应）。
+
+**Emits 表列顺序**：`event → payload → desc`（宽度：120 / 200 / 自适应）。
+
+**Slots 表列顺序**：`name → desc`（宽度：140 / 自适应）。
+
+### 17.3 尺寸参考表（size prop 组件必写）
+
+**表头固定列**：`size | font-size | height | padding-y | padding-x | border-radius | gap`（按实际有意义的列写，无意义的省略）。
+
+**档位固定写法**（iem = 16px 换算）：
+- `size = n` → 各维度 = `n × 比例系数 × 16` px；
+- 公式从组件源码的 iem 公式直接读取；
+- 默认档标注 `（默认）`，如 `1（默认）`。
+
+### 17.4 iem / vw 说明段（size prop 尺寸参考表前后各一段）
+
+**前置段**（说明换算基准）：
+> `size` 是 **iem 倍数**，1iem 的物理像素由 `<ZBox :iem>` 决定。
+> 默认使用 `ZIemPreset.default = '0.8333vw'`，在 1920px 宽屏下等于 16px，随视口宽度自适应缩放。
+> 下表以 **iem = 16px**（固定基准）为例换算各档位的 px 值：
+
+**后置段**（说明如何固定像素）：
+> 默认 `ZIemPreset.default` 下整体随视口等比缩放，无需媒体查询。
+> 需要固定像素尺寸时改用 `ZIemPreset.fixed`（= `'16px'`）或在外层 `<ZBox :iem="'16px'">` 。
+
+### 17.5 类型描述字符串约定
+
+| 场景 | 写法 |
+|------|------|
+| 字面量联合 | `'filled' \| 'outlined' \| 'text'` |
+| chain factory | `(c: ColorCarrier) => void` |
+| 整数倍数 | `number` |
+| 可选 boolean | `boolean` |
+| 无（未暴露） | `—` |
+
+**不要**写完整的 TypeScript 泛型（如 `((c: Chain<ZuiSchema>['color']) => void) | undefined`），截短到语义核心。
+
+### 17.6 DemoBlock #desc slot 写法
+
+- 简洁 1–3 句，说明 demo 展示的核心特性；
+- 代码关键词用 `<code>` 包裹；
+- 不复述标题、不写"如下所示"等废话；
+- `<strong>` 高亮 2–3 个最重要的关键词。
+
+---
+
 **skill 末**。所有 zui 项目知识集中在此；其它 .md 仅做精简介绍或入口。
