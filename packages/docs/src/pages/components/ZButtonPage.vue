@@ -97,9 +97,7 @@ import CssDemoSource from './demos/ZButton/CssDemo.vue?raw'
     </DemoBlock>
 
     <!-- ─── API ─── -->
-    <ZTitle :level="2">API</ZTitle>
-
-    <ZTitle :level="3">Props</ZTitle>
+    <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
         { key: 'name',    label: '属性',   mono: true, width: '160px' },
@@ -123,7 +121,7 @@ import CssDemoSource from './demos/ZButton/CssDemo.vue?raw'
       ]"
     />
 
-    <ZTitle :level="3">Emits</ZTitle>
+    <ZTitle :level="2">Emits</ZTitle>
     <ApiTable
       :columns="[
         { key: 'event',   label: '事件',  mono: true, width: '120px' },
@@ -135,7 +133,7 @@ import CssDemoSource from './demos/ZButton/CssDemo.vue?raw'
       ]"
     />
 
-    <ZTitle :level="3">Slots</ZTitle>
+    <ZTitle :level="2">Slots</ZTitle>
     <ApiTable
       :columns="[
         { key: 'name', label: '插槽',  mono: true, width: '140px' },
@@ -148,7 +146,7 @@ import CssDemoSource from './demos/ZButton/CssDemo.vue?raw'
       ]"
     />
 
-    <ZTitle :level="3">尺寸参考（iem = 16px）</ZTitle>
+    <ZTitle :level="2">尺寸参考（iem = 16px）</ZTitle>
     <ZParagraph>
       <code>size</code> 是 <strong>iem 倍数</strong>，1iem 的物理像素由 <code>&lt;ZBox :iem&gt;</code> 决定。
       默认使用 <code>ZIemPreset.default = '0.8333vw'</code>，在 1920px 宽屏下等于 16px，随视口宽度自适应缩放。

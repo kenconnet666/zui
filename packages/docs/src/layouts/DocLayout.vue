@@ -26,7 +26,7 @@ export interface DocLayoutEmits {
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   icss,
@@ -36,6 +36,7 @@ import {
   ZScrollbar,
 } from '@kenconnet666/zui-vue'
 import { docNav, docRouteMap } from '../data/nav'
+import DocToc from '../shared/DocToc.vue'
 
 const props = defineProps<DocLayoutProps>()
 const emit = defineEmits<DocLayoutEmits>()
@@ -184,6 +185,10 @@ function makeThemeBtnClass(scheme: ColorScheme) {
 const lightBtnClass = makeThemeBtnClass('light')
 const darkBtnClass = makeThemeBtnClass('dark')
 
+// ─── TOC：内容区滚动容器 ref ───
+const contentScrollRef = ref<{ $el: HTMLElement } | null>(null)
+const scrollEl = computed<HTMLElement | null>(() => contentScrollRef.value?.$el ?? null)
+
 const contentClass = computed(() =>
   icss(theme.value, (s) => {
     s.flexGrow(1)
@@ -237,12 +242,15 @@ const contentInnerClass = computed(() =>
 
       <!-- ─── 右侧内容区 ─── -->
       <div :class="contentClass">
-        <ZScrollbar :css="(s) => { s.height.pct(100) }">
+        <ZScrollbar ref="contentScrollRef" :css="(s) => { s.height.pct(100) }">
           <div :class="contentInnerClass">
             <slot />
           </div>
         </ZScrollbar>
       </div>
+
+      <!-- ─── 右侧 TOC ─── -->
+      <DocToc :scroll-el="scrollEl" />
 
     </ZFlex>
   </div>
