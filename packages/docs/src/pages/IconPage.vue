@@ -23,22 +23,20 @@ import {
   WarningOutlined as WarningOutline,
 } from '@vicons/material'
 
-// ─── 4 维度预定义 factory ─────────────────────────────────────────────────
-type SizeFactory = NonNullable<ZIconProps['size']>
+// ─── 4 维度预定义 ─────────────────────────────────────────────────
+// size 是 number(iem 倍数);color / depth / spin 仍是 carrier factory。
 type ColorFactory = NonNullable<ZIconProps['color']>
 type DepthFactory = NonNullable<ZIconProps['depth']>
 type SpinFactory = NonNullable<ZIconProps['spin']>
 
-/** size 预制:iem 倍率(默认基准)/ em(跟父字号)/ px 字面量。 */
-const sizes: Record<string, SizeFactory> = {
-  'iem(0.75)  极小(12px @ default)': (w) => w.iem(0.75),
-  'iem(0.875) 小(14px @ default)': (w) => w.iem(0.875),
-  'iem(1)     中(16px @ default,默认)': (w) => w.iem(1),
-  'iem(1.25)  大(20px @ default)': (w) => w.iem(1.25),
-  'iem(1.5)   极大(24px @ default)': (w) => w.iem(1.5),
-  'iem(2)     2 倍(32px @ default)': (w) => w.iem(2),
-  'em(1.25)   跟父字号(罕见)': (w) => w.em(1.25),
-  'px(24)     字面量': (w) => w.px(24),
+/** size 预制:number = iem 倍数(默认 1iem = 16px)。非 iem 单位 → 走 css。 */
+const sizes: Record<string, number> = {
+  '0.75  极小 (12px @ default)': 0.75,
+  '0.875 小 (14px @ default)': 0.875,
+  '1     中 (16px @ default,默认)': 1,
+  '1.25  大 (20px @ default)': 1.25,
+  '1.5   极大 (24px @ default)': 1.5,
+  '2     2 倍 (32px @ default)': 2,
 }
 
 /** color 预制:语义色 + 字面量 + currentColor + modifier 链。 */
@@ -83,7 +81,7 @@ const cssExamples: Record<string, ((s: Chain<ZuiSchema>) => void) | undefined> =
   'hover 高亮 _primary': (s) => {
     s.cursor('pointer')
     s._hover((h) => {
-      h.color((c) => c._primary)
+      h.color._primary
     })
   },
   '旋转 15deg + 加描边': (s) => {
@@ -102,7 +100,7 @@ const cssExamples: Record<string, ((s: Chain<ZuiSchema>) => void) | undefined> =
       a.width('6px')
       a.height('6px')
       a.borderRadius('999px')
-      a.backgroundColor((c) => c._danger)
+      a.backgroundColor._danger
     })
   },
   '非正方形 24×32': (s) => {
@@ -121,13 +119,13 @@ const cssExamples: Record<string, ((s: Chain<ZuiSchema>) => void) | undefined> =
 }
 
 // ─── interactive controls ──────────────────────────────────────────────────
-const sizeKey = ref<keyof typeof sizes>('iem(1)     中(16px @ default,默认)')
+const sizeKey = ref<keyof typeof sizes>('1     中 (16px @ default,默认)')
 const colorKey = ref<keyof typeof colors>('currentColor (默认)')
 const depthKey = ref<keyof typeof depths>('(不传 = 100%)')
 const spinKey = ref<keyof typeof spins>('(不传 = 不旋转)')
 const cssKey = ref<keyof typeof cssExamples>('(none)')
 
-const currentSize = computed(() => sizes[sizeKey.value])
+const currentSize = computed<number>(() => sizes[sizeKey.value] ?? 1)
 const currentColor = computed(() => colors[colorKey.value])
 const currentDepth = computed(() => depths[depthKey.value])
 const currentSpin = computed(() => spins[spinKey.value])
@@ -181,14 +179,14 @@ watchEffect(() => {
         <div class="cell">
           <h3>slot 模式</h3>
           <pre><code>&lt;ZIcon :size="(w) =&gt; w.iem(1.25)"&gt;&lt;HomeOutline /&gt;&lt;/ZIcon&gt;</code></pre>
-          <ZIcon :size="(w) => w.iem(1.25)">
+          <ZIcon :size="1.25">
             <HomeOutline />
           </ZIcon>
         </div>
         <div class="cell">
           <h3>component prop 模式</h3>
           <pre><code>&lt;ZIcon :component="HomeOutline" :size="(w) =&gt; w.iem(1.25)" /&gt;</code></pre>
-          <ZIcon :component="HomeOutline" :size="(w) => w.iem(1.25)" />
+          <ZIcon :component="HomeOutline" :size="1.25" />
         </div>
       </div>
     </section>
@@ -218,7 +216,7 @@ watchEffect(() => {
       </p>
       <div class="row">
         <div v-for="(fn, key) in colors" :key="key" class="cell-mini">
-          <ZIcon :color="fn" :component="HeartOutline" :size="(w) => w.iem(1.5)" />
+          <ZIcon :color="fn" :component="HeartOutline" :size="1.5" />
           <code>{{ key }}</code>
         </div>
       </div>
@@ -229,7 +227,7 @@ watchEffect(() => {
       <h2>4. <code>depth</code> factory —— <code>opacity</code> carrier</h2>
       <div class="row">
         <div v-for="(fn, key) in depths" :key="key" class="cell-mini">
-          <ZIcon :component="StarOutline" :depth="fn" :size="(w) => w.iem(1.5)" />
+          <ZIcon :component="StarOutline" :depth="fn" :size="1.5" />
           <code>{{ key }}</code>
         </div>
       </div>
@@ -244,7 +242,7 @@ watchEffect(() => {
       </p>
       <div class="row">
         <div v-for="(fn, key) in spins" :key="key" class="cell-mini">
-          <ZIcon :component="Reload" :spin="fn" :size="(w) => w.iem(1.5)" />
+          <ZIcon :component="Reload" :spin="fn" :size="1.5" />
           <code>{{ key }}</code>
         </div>
       </div>
@@ -270,7 +268,7 @@ watchEffect(() => {
       <div class="preview">
         <ZIcon
           :component="StarOutline"
-          :size="(w) => w.iem(2)"
+          :size="2"
           v-bind="currentCss ? { css: currentCss } : {}"
         />
       </div>
@@ -329,11 +327,11 @@ watchEffect(() => {
       <h2>8. a11y — <code>label</code> prop</h2>
       <div class="row">
         <div class="cell-mini">
-          <ZIcon :component="Trash" :size="(w) => w.iem(1.5)" />
+          <ZIcon :component="Trash" :size="1.5" />
           <code>无 label → aria-hidden(装饰性)</code>
         </div>
         <div class="cell-mini">
-          <ZIcon :component="Trash" :size="(w) => w.iem(1.5)" label="删除" />
+          <ZIcon :component="Trash" :size="1.5" label="删除" />
           <code>有 label → aria-label + role="img"</code>
         </div>
       </div>
@@ -388,7 +386,7 @@ const myLight = zuiLight.extend({
         <div class="cell-mini">
           <ZIcon
             :component="HeartOutline"
-            :size="(w) => w.iem(2)"
+            :size="2"
             :color="(c) => c._brandRoyal"
           />
           <code>c._brandRoyal</code>
@@ -396,7 +394,7 @@ const myLight = zuiLight.extend({
         <div class="cell-mini">
           <ZIcon
             :component="HeartOutline"
-            :size="(w) => w.iem(2)"
+            :size="2"
             :color="(c) => c._brandSunset"
           />
           <code>c._brandSunset</code>
@@ -404,7 +402,7 @@ const myLight = zuiLight.extend({
         <div class="cell-mini">
           <ZIcon
             :component="HeartOutline"
-            :size="(w) => w.iem(2)"
+            :size="2"
             :color="(c) => c._brandForest"
           />
           <code>c._brandForest</code>
@@ -455,11 +453,11 @@ const myLight = zuiLight.extend({
           </ZBox>
         </div>
         <div class="cell">
-          <h3><code>:iem="ZIemPreset.rem"</code> (跟浏览器根字号,a11y)</h3>
-          <ZBox :iem="ZIemPreset.rem">
+          <h3><code>:iem="ZIemPreset.fixed"</code> (固定 16px,opt-out 响应式)</h3>
+          <ZBox :iem="ZIemPreset.fixed">
             <div :style="{ padding: 'calc(1 * var(--zui-iem, 16px))', border: '1px solid #ccc', display: 'flex', gap: 'calc(1 * var(--zui-iem, 16px))', alignItems: 'center' }">
               <ZIcon :component="HeartOutline" />
-              <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">浏览器大字模式整站同步放大</span>
+              <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">固定 16px,不跟视口缩放</span>
             </div>
           </ZBox>
         </div>
