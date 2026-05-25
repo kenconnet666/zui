@@ -4,7 +4,11 @@
  *
  * **职责**:基于 `ZCodeCard` 再薄包一层,提供 desc 槽位 + 与页面其它内容的统一间距。
  *
+ * **设计原则**:**演示代码 = 实际文件源码 1:1**。不剥 import、不删空块,
+ * 用户看到啥就是真实可复制运行的 .vue 源。
+ *
  * **用法**(Vite `?raw` 双重身份):
+ *
  * ```ts
  * import BasicDemo from './demos/ButtonBasic.vue'
  * import BasicSource from './demos/ButtonBasic.vue?raw'
@@ -66,6 +70,7 @@ const descClass = computed(() =>
       :source="source"
       :lang="lang"
       :default-expanded="defaultExpanded"
+      :show-imports="true"
     >
       <slot />
     </ZCodeCard>

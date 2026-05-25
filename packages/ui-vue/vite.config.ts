@@ -42,6 +42,7 @@ export default defineConfig({
         /^date-fns-tz\//,
         '@vicons/material',
         'qrcode',
+        'shiki',
       ],
       output: {
         preserveModules: true,

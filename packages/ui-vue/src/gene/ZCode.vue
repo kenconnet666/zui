@@ -96,9 +96,11 @@ let warnedMissing = false
 async function loadShiki(): Promise<{ codeToHtml: ShikiCodeToHtml } | null> {
   if (shikiCache !== undefined) return shikiCache
   try {
-    // `@vite-ignore` —— optional peer,Vite 不应在 build 时静态解析失败
-    const moduleName = 'shiki'
-    const mod = (await import(/* @vite-ignore */ moduleName)) as {
+    // 字面量动态 import —— 让 Vite 等下游 bundler 能静态识别并解析。
+    // ui-vue 自身的 vite.config 把 `shiki` 列为 `rollupOptions.external`,
+    // 不打进 dist;消费方(若装了 shiki)的 bundler 负责实际加载。
+    // 未装 shiki:try-catch 走 fallback 纯文本(consoleconsole.warn 一次)。
+    const mod = (await import('shiki')) as {
       codeToHtml: ShikiCodeToHtml
     }
     shikiCache = { codeToHtml: mod.codeToHtml }
