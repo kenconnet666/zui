@@ -39,8 +39,6 @@ function indexRoutes(items: DocNavItem[]): void {
 }
 
 export const docNav: DocNavItem[] = [
-  { key: 'home', label: '首页', route: '/' },
-
   {
     key: 'guide',
     label: '指南',

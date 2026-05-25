@@ -34,7 +34,6 @@ import {
   ZFlex,
   ZMenu,
   ZScrollbar,
-  ZSegmented,
 } from '@kenconnet666/zui-vue'
 import { docNav, docRouteMap } from '../data/nav'
 
@@ -59,14 +58,8 @@ function onMenuSelect(key: string): void {
   if (path) router.push(path)
 }
 
-// ─── 主题切换 options ───
-const colorSchemeOptions = [
-  { value: 'light', label: '亮' },
-  { value: 'dark', label: '暗' },
-]
-
-function onColorSchemeChange(v: string | number): void {
-  if (v === 'light' || v === 'dark') emit('update:colorScheme', v)
+function onColorSchemeChange(v: ColorScheme): void {
+  emit('update:colorScheme', v)
 }
 
 // ─── 布局样式 ───
@@ -115,6 +108,7 @@ const brandClass = computed(() =>
     s.fontSize._middle
     s.fontWeight._semibold
     s.color._text
+    s.textAlign.center
     s.cursor.pointer
     s.userSelect.none
     s.transitionProperty._default
@@ -135,7 +129,10 @@ const menuAreaClass = computed(() =>
 
 const menuWrapClass = computed(() =>
   icss(theme.value, (s) => {
-    s.padding._small
+    s.paddingTop.px(0)
+    s.paddingLeft._tiny
+    s.paddingRight._tiny
+    s.paddingBottom._tiny
     s.backgroundColor.transparent
   }),
 )
@@ -143,14 +140,49 @@ const menuWrapClass = computed(() =>
 const themeBarClass = computed(() =>
   icss(theme.value, (s) => {
     s.flexShrink(0)
-    s.padding._small
+    s.display.flex
     s.borderTopWidth._thin
     s.borderTopStyle.solid
     s.borderTopColor._border
-    s.display.flex
-    s.justifyContent.center
   }),
 )
+
+function makeThemeBtnClass(scheme: ColorScheme) {
+  return computed(() =>
+    icss(theme.value, (s) => {
+      s.flex(1)
+      s.paddingTop.iem(0.75)
+      s.paddingBottom.iem(0.75)
+      s.borderWidth.px(0)
+      s.borderRadius.px(0)
+      s.cursor.pointer
+      s.fontSize._small
+      s.fontWeight._medium
+      s.transitionProperty._default
+      s.transitionDuration._tiny
+      if (props.colorScheme === scheme) {
+        s.backgroundColor._primary.alpha(10)
+        s.color._primary
+        s.fontWeight._semibold
+      } else {
+        s.backgroundColor.transparent
+        s.color._textSecondary
+        s._hover((h) => {
+          h.backgroundColor._textSecondary.alpha(8)
+          h.color._text
+        })
+      }
+      if (scheme === 'light') {
+        s.borderRightWidth._thin
+        s.borderRightStyle.solid
+        s.borderRightColor._border
+      }
+    }),
+  )
+}
+
+const lightBtnClass = makeThemeBtnClass('light')
+const darkBtnClass = makeThemeBtnClass('dark')
 
 const contentClass = computed(() =>
   icss(theme.value, (s) => {
@@ -198,11 +230,8 @@ const contentInnerClass = computed(() =>
 
         <!-- 底部主题切换 -->
         <div :class="themeBarClass">
-          <ZSegmented
-            :value="props.colorScheme"
-            :options="colorSchemeOptions"
-            @update:value="onColorSchemeChange"
-          />
+          <button type="button" :class="lightBtnClass" @click="onColorSchemeChange('light')">亮</button>
+          <button type="button" :class="darkBtnClass" @click="onColorSchemeChange('dark')">暗</button>
         </div>
       </div>
 

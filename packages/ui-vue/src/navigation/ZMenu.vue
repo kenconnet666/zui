@@ -108,6 +108,8 @@ const rootClass = computed(() =>
     } else {
       s.flexDirection.row
     }
+    s.margin.px(0)
+    s.padding.px(0)
     s.gap._tiny
     s.color._text
     s.fontSize._middle
