@@ -45,3 +45,4 @@ __screenshots__/
 
 # pnpm
 .pnpm-store/
+.playwright-mcp

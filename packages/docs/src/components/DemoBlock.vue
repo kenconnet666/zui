@@ -10,8 +10,8 @@
  * **用法**(Vite `?raw` 双重身份):
  *
  * ```ts
- * import BasicDemo from './demos/ButtonBasic.vue'
- * import BasicSource from './demos/ButtonBasic.vue?raw'
+ * import BasicDemo from './ZButton/BasicDemo.vue'
+ * import BasicSource from './ZButton/BasicDemo.vue?raw'
  * ```
  *
  * ```vue

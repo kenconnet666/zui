@@ -11,7 +11,7 @@
  */
 import { computed, ref, watch } from 'vue'
 import { ZBox, ZIemPreset, zuiDark, zuiLight } from '@kenconnet666/zui-vue'
-import DocLayout, { type ColorScheme } from './layouts/DocLayout.vue'
+import DocLayout, { type ColorScheme } from './components/DocLayout.vue'
 
 const LS_SCHEME_KEY = 'zui-docs-color-scheme'
 

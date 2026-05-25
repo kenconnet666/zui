@@ -1,15 +1,13 @@
 <script lang="ts" setup>
 /**
  * 首页 —— zui 一句话定位 + 跳转入口。
- *
- * 内容区由 `DocLayout` 提供 padding / max-width,本页只关心内容本身。
- * 排版直接用 Z* 组件,不写 scoped CSS。
  */
 import { computed, h, type Component } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   icss,
   useZTheme,
+  ZButton,
   ZCard,
   ZFlex,
   ZIcon,
@@ -37,21 +35,16 @@ interface EntryCard {
 }
 
 const cards: EntryCard[] = [
-  {
-    key: 'button',
-    title: 'ZButton 按钮',
-    desc: '5 种 variant + Material 风波纹 + iem 等比缩放',
-    icon: Touch,
-    route: '/components/button',
-  },
-  {
-    key: 'icon',
-    title: 'ZIcon 图标',
-    desc: '4 维度 chain factory + iem 联动 + Provider 切换基准',
-    icon: HeartOutline,
-    route: '/components/icon',
-  },
+  { key: 'button',  title: 'ZButton 按钮',  desc: '5 种 variant + Material 风波纹 + iem 等比缩放', icon: Touch,       route: '/gene/button' },
+  { key: 'icon',    title: 'ZIcon 图标',    desc: '4 维度 chain factory + iem 联动 + Provider 切换基准', icon: HeartOutline, route: '/gene/icon' },
 ]
+
+const heroClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.paddingTop.iem(2)
+    s.paddingBottom.iem(2)
+  }),
+)
 
 const linkClass = computed(() =>
   icss(theme.value, (s) => {
@@ -68,11 +61,11 @@ function go(path: string): void {
 </script>
 
 <template>
-  <ZFlex :direction="(d) => d.column" :gap="(g) => g.iem(1.5)">
+  <div :class="heroClass">
     <ZTitle :level="1">zui</ZTitle>
     <ZParagraph>
       <strong>框架无关</strong>的 CSS-in-JS 工具库 monorepo。<br />
-      核心 <code>@kenconnet666/zui-core</code> 提供 Chain + Theme + Variants 抽象,
+      核心 <code>@kenconnet666/zui-core</code> 提供 Chain + Theme + Variants 抽象，
       <code>@kenconnet666/zui-vue</code> 提供 ZBox 与 Vue 3 组件。
     </ZParagraph>
 
@@ -81,6 +74,11 @@ function go(path: string): void {
       <ZTag>Chain factory props</ZTag>
       <ZTag>Material 风</ZTag>
       <ZTag>Vue 3</ZTag>
+    </ZFlex>
+
+    <ZFlex :gap="(g) => g.iem(0.75)" :wrap="(w) => w.wrap" :css="(s) => s.marginTop.iem(1.5)">
+      <ZButton @click="go('/guide/quick-start')">快速开始</ZButton>
+      <ZButton variant="outlined" @click="go('/guide/core')">了解 Core</ZButton>
     </ZFlex>
 
     <ZTitle :level="2">
@@ -128,8 +126,7 @@ function go(path: string): void {
       </ZFlex>
     </ZTitle>
     <ZParagraph>
-      已实现 ~85 个组件源文件;文档站逐步覆盖。当前可访问的演示页详见左侧菜单
-      (灰色项尚未实现)。
+      已实现 ~85 个组件源文件；文档站持续覆盖中。当前可访问的演示页详见左侧菜单（灰色项尚未实现）。
     </ZParagraph>
-  </ZFlex>
+  </div>
 </template>

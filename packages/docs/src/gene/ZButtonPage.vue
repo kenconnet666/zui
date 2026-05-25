@@ -1,34 +1,28 @@
 <script setup lang="ts">
 /**
- * ZButton 文档页 —— DemoBlock 范式首个落地。
- *
- * **每个 demo 双重身份**:
- * - `XxxDemo` —— 运行组件,进 `<DemoBlock>` 的 default slot
- * - `XxxDemoSource` —— vite `?raw` 字符串,喂给 `:source`
- *
- * 一个 `.vue` 文件同步源码 + 运行时,零漂移。
+ * ZButton 文档页。
  */
 import { ZParagraph, ZTitle } from '@kenconnet666/zui-vue'
-import DemoBlock from '../../shared/DemoBlock.vue'
-import ApiTable from '../../shared/ApiTable.vue'
+import DemoBlock from '../components/DemoBlock.vue'
+import ApiTable from '../components/ApiTable.vue'
 
-import VariantsDemo from './demos/ZButton/VariantsDemo.vue'
-import VariantsDemoSource from './demos/ZButton/VariantsDemo.vue?raw'
+import VariantsDemo from './ZButton/VariantsDemo.vue'
+import VariantsDemoSource from './ZButton/VariantsDemo.vue?raw'
 
-import ColorDemo from './demos/ZButton/ColorDemo.vue'
-import ColorDemoSource from './demos/ZButton/ColorDemo.vue?raw'
+import ColorDemo from './ZButton/ColorDemo.vue'
+import ColorDemoSource from './ZButton/ColorDemo.vue?raw'
 
-import SizeDemo from './demos/ZButton/SizeDemo.vue'
-import SizeDemoSource from './demos/ZButton/SizeDemo.vue?raw'
+import SizeDemo from './ZButton/SizeDemo.vue'
+import SizeDemoSource from './ZButton/SizeDemo.vue?raw'
 
-import StateDemo from './demos/ZButton/StateDemo.vue'
-import StateDemoSource from './demos/ZButton/StateDemo.vue?raw'
+import StateDemo from './ZButton/StateDemo.vue'
+import StateDemoSource from './ZButton/StateDemo.vue?raw'
 
-import IconDemo from './demos/ZButton/IconDemo.vue'
-import IconDemoSource from './demos/ZButton/IconDemo.vue?raw'
+import IconDemo from './ZButton/IconDemo.vue'
+import IconDemoSource from './ZButton/IconDemo.vue?raw'
 
-import CssDemo from './demos/ZButton/CssDemo.vue'
-import CssDemoSource from './demos/ZButton/CssDemo.vue?raw'
+import CssDemo from './ZButton/CssDemo.vue'
+import CssDemoSource from './ZButton/CssDemo.vue?raw'
 </script>
 
 <template>
@@ -108,16 +102,16 @@ import CssDemoSource from './demos/ZButton/CssDemo.vue?raw'
       :rows="[
         { name: 'variant',   type: `'filled' | 'outlined' | 'text' | 'ghost' | 'link'`, default: `'filled'`, desc: '按钮外观变体。filled=实心, outlined=描边, text=文字, ghost=半透明, link=内联链接。' },
         { name: 'color',     type: '(c: ColorCarrier) => void', default: '_primary',   desc: '主色 factory。传入 chain color carrier,IDE 全量补全 schema token + CSS 命名色 + modifier 链(alpha/darken/…)。' },
-        { name: 'size',      type: 'number',  default: '1',       desc: 'iem 倍数。所有尺寸维度（fontSize / height / padding / borderRadius / gap）同比缩放，见下方尺寸参考表。' },
+        { name: 'size',      type: 'number',  default: '1',       desc: 'iem 倍数。所有尺寸维度（fontSize / height / padding / borderRadius / gap）同比缩放。' },
         { name: 'height',    type: 'number',  default: 'size × 2', desc: '按钮高度（iem 倍数）。可单独覆盖，不影响其他维度。' },
         { name: 'loading',   type: 'boolean', default: 'false',   desc: '加载态。prefix 位置自动渲染旋转 icon，并屏蔽点击事件。' },
         { name: 'disabled',  type: 'boolean', default: 'false',   desc: '禁用态。opacity._dim + cursor.notAllowed，同时屏蔽点击事件。' },
         { name: 'block',     type: 'boolean', default: 'false',   desc: '撑满父容器宽度（width: 100%）。' },
         { name: 'ripple',    type: 'boolean', default: 'true',    desc: 'Material 波纹效果。text / link variant 可关闭。' },
         { name: 'type',      type: `'button' | 'submit' | 'reset'`, default: `'button'`, desc: '原生 HTML type 属性，透传到 <button>。' },
-        { name: 'sxIcon',    type: 'SxObject', default: '—',      desc: 'prefix/suffix icon 容器的 sx 覆盖（style / class / attrs）。' },
+        { name: 'sxIcon',    type: 'SxObject', default: '—',      desc: 'prefix/suffix icon 容器的 sx 覆盖。' },
         { name: 'sxRipple',  type: 'SxObject', default: '—',      desc: '波纹层 sx 覆盖。' },
-        { name: 'css',       type: '(s: Chain) => void', default: '—', desc: '兜底 CSS factory，在所有内置样式之后应用，可覆盖任意属性。' },
+        { name: 'css',       type: '(s: Chain) => void', default: '—', desc: '兜底 CSS factory，在所有内置样式之后应用。' },
       ]"
     />
 
@@ -171,9 +165,5 @@ import CssDemoSource from './demos/ZButton/CssDemo.vue?raw'
         { size: '2',         fontSize: '32px', height: '64px', paddingY: '16px', paddingX: '32px', borderRadius: '12px', gap: '16px' },
       ]"
     />
-    <ZParagraph>
-      默认 <code>ZIemPreset.default</code> 下按钮整体随视口等比缩放，无需媒体查询。
-      需要固定像素尺寸时改用 <code>ZIemPreset.fixed</code>（= <code>'16px'</code>）或在外层 <code>&lt;ZBox :iem="'16px'"&gt;</code>。
-    </ZParagraph>
   </section>
 </template>
