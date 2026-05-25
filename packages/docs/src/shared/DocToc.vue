@@ -116,6 +116,9 @@ const rootClass = computed(() =>
     s._media('(max-width: 1400px)', (m) => {
       m.display.none
     })
+    s._media('(orientation: portrait)', (m) => {
+      m.display.none
+    })
   }),
 )
 
