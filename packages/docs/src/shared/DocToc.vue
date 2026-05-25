@@ -42,7 +42,7 @@ function buildToc(): void {
   items.value = headings.map((h) => ({
     id: h.id,
     text: h.textContent?.trim() ?? '',
-    level: parseInt(h.tagName[1], 10) as 2 | 3,
+    level: parseInt(h.tagName.charAt(1), 10) as 2 | 3,
   }))
   activeId.value = items.value[0]?.id ?? ''
 }
@@ -55,10 +55,12 @@ function updateActive(): void {
   const threshold = 100
   let found = ''
   for (let i = items.value.length - 1; i >= 0; i--) {
-    const heading = el.querySelector<HTMLElement>(`#${CSS.escape(items.value[i].id)}`)
+    const item = items.value[i]
+    if (!item) continue
+    const heading = el.querySelector<HTMLElement>(`#${CSS.escape(item.id)}`)
     if (!heading) continue
     if (heading.getBoundingClientRect().top - containerTop <= threshold) {
-      found = items.value[i].id
+      found = item.id
       break
     }
   }
