@@ -13,6 +13,7 @@
  *
  * **API**:
  * - `text: string` —— 要复制的文本(必传)
+ * - `size?: number` —— 整体尺寸 iem 倍数(默认 `1`)。所有维度等比缩放。
  * - `label?: string` —— 按钮文字(可选;仅传 icon 即可做成纯图标按钮)
  * - `copiedLabel?: string` —— 复制成功后临时显示的文字。默认 `'已复制'`
  * - `duration?: number` —— 按钮文字"已复制"持续 ms。默认 `1500`
@@ -20,7 +21,7 @@
  * - `toastMessage?: string` —— toast 内容。默认 `'已复制'`
  * - `toastDuration?: number` —— toast 持续 ms。默认 `1500`
  * - `icon?: Component` —— 自定义图标。默认 `ContentCopyOutlined`
- * - `iconSize?: number` —— 图标尺寸 iem。默认 `0.875`
+ * - `iconSize?: number` —— 图标尺寸 iem 倍数。默认 `size * 0.875`(随 size 缩放)
  * - `color?: factory` —— 文字色 carrier
  * - `css?: factory` —— 根元素覆盖
  *
@@ -33,6 +34,18 @@ import type { ZuiSchema } from '../provider/theme'
 export interface ZCopyButtonProps {
   /** 要复制的文本(必传)。 */
   text: string
+  /**
+   * 整体尺寸 iem 倍数(默认 `1`)。
+   *
+   * 内部公式:
+   * - `font-size` = `size` iem
+   * - `gap` = `size * 0.25` iem
+   * - `padding-y` = `size * 0.25` iem
+   * - `padding-x` = `size * 0.5` iem
+   * - `border-radius` = `size * 0.25` iem
+   * - `icon-size` = `size * 0.875` iem (未显式传 iconSize 时)
+   */
+  size?: number
   /** 按钮显示文字(可选;不传则纯图标)。 */
   label?: string
   /** 复制成功后临时显示的文字。默认 `'已复制'`。 */
@@ -47,7 +60,7 @@ export interface ZCopyButtonProps {
   toastDuration?: number
   /** 自定义图标组件。默认 `ContentCopyOutlined`。 */
   icon?: Component
-  /** 图标尺寸 iem。默认 `0.875`。 */
+  /** 图标尺寸 iem 倍数。不传时默认 `size * 0.875`(随 size 缩放)。 */
   iconSize?: number
   /** 文字色 carrier。默认 `_textSecondary`,hover `_text`。 */
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
@@ -70,30 +83,34 @@ import ZIcon from './ZIcon.vue'
 import { createMessageApi, type ZMessageApi } from '../feedback/messageApi'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
  *
  *   ┌──────────────────────────┐
- *   │ button (type=button)     │   inline-flex / center / gap 0.25iem
- *   │   [icon] [label?]        │   pad-y 0.25iem  pad-x 0.5iem
- *   │                          │   border 0  radius _tiny
+ *   │ button (type=button)     │   inline-flex / center
+ *   │   [icon] [label?]        │   gap size*0.25 iem
+ *   │                          │   pad-y size*0.25 iem  pad-x size*0.5 iem
+ *   │                          │   border 0  radius size*0.25 iem
  *   │                          │   bg transparent  color _textSecondary
- *   │                          │   font-size _small  lineHeight _tight
+ *   │                          │   font-size size*1 iem  lineHeight _tight
  *   │                          │   transition all _tiny
  *   │                          │   :hover → bg color.alpha(8) + color _text
  *   │                          │   :focus-visible → outline 2px _primary
  *   └──────────────────────────┘
+ *
+ * 默认 size=1 @ 1080p: gap=4px / pad-y=4px / pad-x=8px / fontSize=16px / radius=4px
+ * icon 尺寸 = iconSize prop(优先) 或 size*0.875 iem。
  *
  * 跨实例共享:首次调用 `handleCopy` 触发 lazy `messageApi` 单例创建。
  * 测试场景 navigator.clipboard 可能缺失,做了 typeof guard;失败时 emit
  * `copy(false, text)`,按钮不切到"已复制"。
  */
 const props = withDefaults(defineProps<ZCopyButtonProps>(), {
+  size: 1,
   copiedLabel: '已复制',
   duration: 1500,
   toast: true,
   toastMessage: '已复制',
   toastDuration: 1500,
-  iconSize: 0.875,
 })
 const emit = defineEmits<ZCopyButtonEmits>()
 
@@ -145,19 +162,22 @@ const displayText = computed(() =>
   copied.value ? props.copiedLabel : (props.label ?? '复制'),
 )
 
+const resolvedIconSize = computed(() => props.iconSize ?? props.size * 0.875)
+
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
+    const size = props.size
     s.display.inlineFlex
     s.alignItems.center
-    s.gap.iem(0.25)
-    s.paddingTop.iem(0.25)
-    s.paddingBottom.iem(0.25)
-    s.paddingLeft.iem(0.5)
-    s.paddingRight.iem(0.5)
+    s.gap.iem(size * 0.25)
+    s.paddingTop.iem(size * 0.25)
+    s.paddingBottom.iem(size * 0.25)
+    s.paddingLeft.iem(size * 0.5)
+    s.paddingRight.iem(size * 0.5)
     s.borderWidth.px(0)
-    s.borderRadius._tiny
+    s.borderRadius.iem(size * 0.25)
     s.backgroundColor.transparent
-    s.fontSize._small
+    s.fontSize.iem(size)
     s.lineHeight._tight
     s.cursor.pointer
     s.transitionProperty.all
@@ -190,7 +210,7 @@ const rootClass = computed(() =>
     :aria-label="displayText"
     @click="handleClick"
   >
-    <ZIcon :component="iconComponent" :size="iconSize ?? 0.875" />
+    <ZIcon :component="iconComponent" :size="resolvedIconSize" />
     <span v-if="label !== undefined">{{ displayText }}</span>
   </button>
 </template>

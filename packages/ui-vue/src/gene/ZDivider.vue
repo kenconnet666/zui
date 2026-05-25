@@ -40,12 +40,13 @@ export interface ZDividerProps {
    */
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   /**
-   * 线条粗细。任意 CSS 长度字符串(如 `'2px'` / `'0.1em'`)。默认 `'1px'`。
+   * 线条粗细。
+   * - `string`(如 `'2px'` / `'0.5em'`)→ 直接作为 CSS 长度值
+   * - `number` → iem 倍数,随 ZBox 字号等比缩放(如 `0.125` ≈ 2px @ 1080p)
    *
-   * 走字符串而非 carrier:`border-*-width` 极少需要 token 化,直传更轻。
-   * 想走 schema 长度(iem 联动)→ css 覆盖 `borderTopWidth` / `borderLeftWidth`。
+   * 默认 `'1px'`。
    */
-  thickness?: string
+  thickness?: string | number
   /** 根元素二次精细覆盖。 */
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
   /** 根元素 tag,默认 `'div'`。 */
@@ -55,7 +56,7 @@ export interface ZDividerProps {
 
 <script lang="ts" setup>
 import { computed, useSlots } from 'vue'
-import { icss } from '@kenconnet666/zui-core'
+import { icss, iem } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
 const props = withDefaults(defineProps<ZDividerProps>(), {
@@ -75,6 +76,10 @@ const theme = useZTheme()
 
 const hasSlot = computed(() => !!slots.default)
 const lineStyle = computed(() => (props.dashed ? 'dashed' : 'solid'))
+/** number → iem CSS 字符串;string → 原样透传。 */
+const thicknessValue = computed(() =>
+  typeof props.thickness === 'number' ? iem(props.thickness) : (props.thickness ?? '1px'),
+)
 
 /** 文字侧短边宽度(align=left/right 时短的那一段)。 */
 const EDGE_RATIO = '10%'
@@ -89,7 +94,7 @@ const className = computed(() =>
       s.display.inlineBlock
       s.width('0')
       s.alignSelf.stretch
-      s.borderLeftWidth(props.thickness)
+      s.borderLeftWidth(thicknessValue.value)
       s.borderLeftStyle(lineStyle.value)
       s.borderLeftColor.currentColor
     } else if (hasSlot.value) {
@@ -105,14 +110,14 @@ const className = computed(() =>
       s._before((b) => {
         b.content("''")
         b._prop('flex', beforeFlex)
-        b._prop('borderTopWidth', props.thickness)
+        b._prop('borderTopWidth', thicknessValue.value)
         b._prop('borderTopStyle', lineStyle.value)
         b._prop('borderTopColor', 'currentColor')
       })
       s._after((a) => {
         a.content("''")
         a._prop('flex', afterFlex)
-        a._prop('borderTopWidth', props.thickness)
+        a._prop('borderTopWidth', thicknessValue.value)
         a._prop('borderTopStyle', lineStyle.value)
         a._prop('borderTopColor', 'currentColor')
       })
@@ -120,7 +125,7 @@ const className = computed(() =>
       // ─── 水平单线 ───
       s.display.block
       s.width.pct(100)
-      s.borderTopWidth(props.thickness)
+      s.borderTopWidth(thicknessValue.value)
       s.borderTopStyle(lineStyle.value)
       s.borderTopColor.currentColor
     }

@@ -253,7 +253,7 @@ export default defineComponent({
             s.paddingRight.iem(0.375)
             s.paddingTop.iem(0.0625)
             s.paddingBottom.iem(0.0625)
-            s.fontSize.iem(0.875)
+            s.fontSize._small
           } else {
             s.display.block
             s.padding._small
