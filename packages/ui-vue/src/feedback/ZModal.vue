@@ -68,6 +68,7 @@ import { useEscapeStack } from '../_hooks'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { lockBodyScroll } from '../_internal/body-scroll-lock'
 import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
+import { useScrollbarOverlay } from '../_internal/useScrollbarOverlay'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
@@ -184,15 +185,30 @@ const headClass = computed(() =>
 )
 const sxHeadAttrs = computed(() => extractSxAttrs(props.sxHead))
 
+// ─── body overlay scrollbar ──────────────────────────────────────────────────
+const bodyOverlay = useScrollbarOverlay(theme)
+
+/** 外层 wrapper：承接 sxBody attrs、position:relative 定位 overlay track。 */
 const bodyClass = computed(() =>
   icss(theme.value, (s) => {
-    s.padding._middle
+    s.position.relative
     s.flexGrow(1)
-    s.overflowY.auto
-    applyScrollbarStyles(s, theme.value)
+    s.minHeight.px(0)
+    s.overflow.hidden
     applySx(s, props.sxBody)
   }),
 )
+
+/** 内层真正滚动的 div：height:100% + overflow-y:auto + native scrollbar 隐藏。 */
+const bodyScrollerClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.height.pct(100)
+    s.overflowY.auto
+    s.padding._middle
+    applyScrollbarStyles(s, theme.value)
+  }),
+)
+
 const sxBodyAttrs = computed(() => extractSxAttrs(props.sxBody))
 
 const footClass = computed(() =>
@@ -342,8 +358,24 @@ defineExpose({ rootRef })
             :class="[bodyClass, sxBodyAttrs.class]"
             :style="sxBodyAttrs.style"
             v-bind="sxBodyAttrs.attrs"
+            @mouseenter="bodyOverlay.isHovered.value = true"
+            @mouseleave="bodyOverlay.isHovered.value = false"
+            @focusin="bodyOverlay.isFocused.value = true"
+            @focusout="bodyOverlay.isFocused.value = false"
           >
-            <slot />
+            <div :ref="bodyOverlay.scrollEl" :class="bodyScrollerClass" @scroll="bodyOverlay.onScroll">
+              <slot />
+            </div>
+            <Transition
+              enter-active-class="__zs-fade-in"
+              leave-active-class="__zs-fade-out"
+              enter-from-class="__zs-fade-from"
+              leave-to-class="__zs-fade-from"
+            >
+              <div v-if="bodyOverlay.thumbVisible.value" :class="bodyOverlay.trackClass.value">
+                <div :class="bodyOverlay.thumbClass.value" :style="bodyOverlay.thumbStyle.value" />
+              </div>
+            </Transition>
           </div>
 
           <div

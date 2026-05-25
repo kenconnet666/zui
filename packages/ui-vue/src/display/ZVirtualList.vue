@@ -87,6 +87,7 @@ import { useZIem } from '../_hooks/useZIem'
 import { useZVirtualScroll } from '../_hooks/useZVirtualScroll'
 import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 import { themeColorScheme } from '../_internal/colorScheme'
+import { SCROLL_TRACK_MARGIN, SCROLL_THUMB_MIN_PX, scrollbarThumbColors } from '../_internal/scrollbarThumb'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -156,9 +157,6 @@ watch(scrollEl, (el) => {
 })
 
 // ─── Overlay scrollbar ──────────────────────────────────────────────────────
-const TRACK_MARGIN = 4
-const THUMB_MIN_PX = 24
-
 const isHovered = ref(false)
 const isFocused = ref(false)
 
@@ -168,14 +166,14 @@ const needsScrollbar = computed(
 
 const thumbPx = computed(() => {
   if (!needsScrollbar.value) return 0
-  const track = vs.viewportSize.value - TRACK_MARGIN
-  return Math.max(THUMB_MIN_PX, (vs.viewportSize.value / vs.totalSize.value) * track)
+  const track = vs.viewportSize.value - SCROLL_TRACK_MARGIN
+  return Math.max(SCROLL_THUMB_MIN_PX, (vs.viewportSize.value / vs.totalSize.value) * track)
 })
 
 const thumbTopPx = computed(() => {
   const maxScroll = vs.totalSize.value - vs.viewportSize.value
   if (maxScroll <= 0) return 0
-  const track = vs.viewportSize.value - TRACK_MARGIN
+  const track = vs.viewportSize.value - SCROLL_TRACK_MARGIN
   return (vs.scrollOffset.value / maxScroll) * (track - thumbPx.value)
 })
 
@@ -187,8 +185,7 @@ const thumbStyle = computed(() => ({
 const thumbVisible = computed(() => needsScrollbar.value && (isHovered.value || isFocused.value))
 
 const dark = computed(() => themeColorScheme(theme.value) === 'dark')
-const thumbColor = computed(() => (dark.value ? 'rgba(255,255,255,0.32)' : 'rgba(0,0,0,0.32)'))
-const thumbHoverColor = computed(() => (dark.value ? 'rgba(255,255,255,0.52)' : 'rgba(0,0,0,0.52)'))
+const thumbColors = computed(() => scrollbarThumbColors(dark.value))
 
 const trackClass = computed(() =>
   icss(theme.value, (s) => {
@@ -209,10 +206,10 @@ const sbThumbClass = computed(() =>
     s._prop('left', '0')
     s._prop('right', '0')
     s.borderRadius.iem(0.1875)
-    s._prop('background', thumbColor.value)
+    s._prop('background', thumbColors.value.normal)
     s._prop('transition', 'background 120ms')
     s._selector('&:hover', (h) => {
-      h._prop('background', thumbHoverColor.value)
+      h._prop('background', thumbColors.value.hover)
     })
   }),
 )
@@ -246,11 +243,12 @@ function resolveSize(v: number | string | undefined, fallback: string): string {
   return `${v * iemPx.value}px`
 }
 
-/** 外层包裹：持有尺寸 + position:relative，作为 overlay track 的定位容器。 */
+/** 外层包裹：持有尺寸 + position:relative，作为 overlay track 的定位容器。overflow:hidden 防止异常内容撑破。 */
 const outerStyle = computed<Record<string, string>>(() => {
   const isV = props.direction === 'vertical'
   return {
     position: 'relative',
+    overflow: 'hidden',
     height: resolveSize(props.height, isV ? '100%' : 'auto'),
     width: resolveSize(props.width, !isV ? '100%' : 'auto'),
   }
@@ -381,3 +379,9 @@ defineExpose<ZVirtualListExpose>({
     </Transition>
   </div>
 </template>
+
+<style>
+.__zs-fade-in  { transition: opacity 150ms; }
+.__zs-fade-out { transition: opacity 150ms; }
+.__zs-fade-from { opacity: 0; }
+</style>

@@ -29,6 +29,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { themeColorScheme } from '../_internal/colorScheme'
+import { SCROLL_TRACK_MARGIN, SCROLL_THUMB_MIN_PX, scrollbarThumbColors } from '../_internal/scrollbarThumb'
 
 /**
  * 盒子模型（iem，Provider 控制基准）：
@@ -84,21 +85,18 @@ onMounted(() => {
 onBeforeUnmount(() => ro?.disconnect())
 
 // ─── Thumb 位置/尺寸计算 ────────────────────────────────────────────────────
-const TRACK_MARGIN = 4 // top+bottom 各 2px
-const THUMB_MIN_PX = 24
-
 const needsScrollbar = computed(() => scrollHeight.value > clientHeight.value + 2)
 
 const thumbPx = computed(() => {
   if (!needsScrollbar.value) return 0
-  const track = clientHeight.value - TRACK_MARGIN
-  return Math.max(THUMB_MIN_PX, (clientHeight.value / scrollHeight.value) * track)
+  const track = clientHeight.value - SCROLL_TRACK_MARGIN
+  return Math.max(SCROLL_THUMB_MIN_PX, (clientHeight.value / scrollHeight.value) * track)
 })
 
 const thumbTopPx = computed(() => {
   const maxScroll = scrollHeight.value - clientHeight.value
   if (maxScroll <= 0) return 0
-  const track = clientHeight.value - TRACK_MARGIN
+  const track = clientHeight.value - SCROLL_TRACK_MARGIN
   const scrollRatio = scrollTop.value / maxScroll
   return scrollRatio * (track - thumbPx.value)
 })
@@ -115,8 +113,7 @@ const thumbVisible = computed(() => needsScrollbar.value && (isHovered.value || 
 
 // ─── 样式 ───────────────────────────────────────────────────────────────────
 const dark = computed(() => themeColorScheme(theme.value) === 'dark')
-const thumbColor = computed(() => dark.value ? 'rgba(255,255,255,0.32)' : 'rgba(0,0,0,0.32)')
-const thumbHoverColor = computed(() => dark.value ? 'rgba(255,255,255,0.52)' : 'rgba(0,0,0,0.52)')
+const thumbColors = computed(() => scrollbarThumbColors(dark.value))
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
@@ -161,15 +158,16 @@ const thumbClass = computed(() =>
     s._prop('left', '0')
     s._prop('right', '0')
     s.borderRadius.iem(0.1875)
-    s._prop('background', thumbColor.value)
+    s._prop('background', thumbColors.value.normal)
     s._prop('transition', 'background 120ms')
     s._selector('&:hover', (h) => {
-      h._prop('background', thumbHoverColor.value)
+      h._prop('background', thumbColors.value.hover)
     })
   }),
 )
 
-defineExpose({ $el: scrollerRef })
+// scrollerRef 是内层滚动容器；$el 保留作向后兼容别名（DocLayout 等处使用）
+defineExpose({ scrollerRef, $el: scrollerRef })
 </script>
 
 <template>

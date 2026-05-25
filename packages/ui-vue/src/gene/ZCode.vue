@@ -30,6 +30,7 @@ import type { Chain } from '@kenconnet666/zui-core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import type { ZuiSchema } from '../provider/theme'
+import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 
 export interface ZCodeProps {
   /** 代码文本。高亮模式必传(default slot 内容无法可靠提取)。 */
@@ -209,6 +210,7 @@ export default defineComponent({
             sub.borderStyle.solid
             sub.borderColor._border
             sub.overflowX.auto
+            applyScrollbarStyles(sub, theme.value)
             sub.fontSize._small
             sub.lineHeight._normal
             sub.color('var(--shiki-light)')
@@ -258,6 +260,7 @@ export default defineComponent({
             s.display.block
             s.padding._small
             s.overflowX.auto
+            applyScrollbarStyles(s, theme.value)
             s.whiteSpace.pre
             s.fontSize._small
             s.lineHeight._normal
