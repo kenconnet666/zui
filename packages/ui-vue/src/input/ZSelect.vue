@@ -81,6 +81,7 @@ import { BuiltinIcons, ZIcon } from '../gene'
 import { usePopper, useEscapeStack, useZIem } from '../_hooks'
 import { onClickOutside } from '@vueuse/core'
 import ZVirtualList from '../display/ZVirtualList.vue'
+import { themeColorScheme } from '../_internal/colorScheme'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -245,10 +246,12 @@ const dropdownClass = computed(() =>
     s.boxShadow._middle
     s.padding._tiny
     s.zIndex._popover
-    s.minWidth.iem(8)
+    s.minWidth.iem(10)
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
+    // Teleport 脱离 ZBox DOM 树，需要手动设置 color-scheme 让浏览器用正确模式渲染原生滚动条
+    s._prop('color-scheme', themeColorScheme(theme.value))
     applySx(s, props.sxDropdown)
   }),
 )
@@ -274,6 +277,9 @@ const optionClass = (opt: ZSelectOption): string =>
     s.cursor.pointer
     s.color._text
     s.fontSize._middle
+    s.whiteSpace.nowrap
+    s.overflow.hidden
+    s.textOverflow.ellipsis
     if (isOptionSelected(opt)) {
       s.backgroundColor._primary.alpha(8)
       s.color._primary

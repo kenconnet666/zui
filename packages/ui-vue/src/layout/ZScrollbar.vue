@@ -1,25 +1,26 @@
 <script lang="ts">
 /**
- * `ZScrollbar` —— 美化滚动条容器(走 webkit-scrollbar 样式 + Firefox scrollbar-width)。
+ * `ZScrollbar` —— 统一 overlay 自动隐藏滚动条容器。
  *
- * - `maxHeight?: factory` —— 容器最大高度 carrier factory(2026-05-24 B7:数字尺寸 → factory)
- * - `thin?: boolean` —— 细滚动条,默认 true
+ * **行为**：
+ * - 滚动条默认透明隐藏，鼠标进入或容器内有焦点时显示半透明细滚动条
+ * - Chrome/Edge：走 `overflow: overlay`，滚动条浮在内容上方，**不占布局空间**
+ * - Firefox：`scrollbar-width: thin` + `scrollbar-color`，始终占 ~6px 但尽量细
+ * - 暗色/亮色主题自动适配（暗色用浅色半透明，亮色用深色半透明）
+ *
+ * **API**：
+ * - `maxHeight?: number` —— 容器最大高度（iem 倍数）
+ * - `css?: factory` —— 根元素覆盖
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
 export interface ZScrollbarProps {
   /**
-   * 最大高度 —— `number`(iem 倍数,默认 undefined = 由父级决定)。
-   *
-   * 2026-05-24 B7:数值尺寸 prop 改 `number`。非 iem 单位走 `css` 兜底。
-   *
-   * @example
-   * <ZScrollbar :max-height="20" />          <!-- 20iem -->
-   * <ZScrollbar :css="(s) => s.maxHeight.px(200)" />   <!-- px 走 css -->
+   * 最大高度 —— `number`（iem 倍数，默认 undefined = 由父级决定）。
+   * 非 iem 单位走 `css` 兜底：`(s) => s.maxHeight.px(200)`。
    */
   maxHeight?: number
-  thin?: boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 </script>
@@ -28,74 +29,36 @@ export interface ZScrollbarProps {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型（iem，Provider 控制基准）：
  *
  *   ┌────────────────────────────────────┐
- *   │ ZScrollbar (div,overflow auto)     │
- *   │   max-height: `maxHeight` iem      │   默认 maxHeight=undefined(由父级决定)
- *   │                                    │   传 maxHeight=20 → 20iem(320px @ 1080p)
+ *   │ ZScrollbar（div，overflow auto/overlay）│
+ *   │   max-height: `maxHeight` iem      │
+ *   │                                    │
  *   │  ┌──────────────────────────────┐  │
- *   │  │ slot 内容(子元素自然撑高)  │  │   滚动条:thin → 8px,thick → 12px
- *   │  │                              │  │   webkit + firefox 联动样式
+ *   │  │ slot 内容（子元素自然撑高）  │  │  滚动条：6px 细，hover 显，overlay 不占位
  *   │  └──────────────────────────────┘  │
  *   └────────────────────────────────────┘
- *
- * 用户改 maxHeight 数字 → 容器最大高度等比缩(滚动条粗细固定不缩,跟随 thin 切)。
- * 非 iem 单位(px / vh)走 `:css` 兜底:`(s) => s.maxHeight.px(200)`。
  */
-const props = withDefaults(defineProps<ZScrollbarProps>(), {
-  thin: true,
-})
+const props = defineProps<ZScrollbarProps>()
 
 const theme = useZTheme()
-
-const SCROLLBAR_STYLE_ID = 'zui-scrollbar-styles'
-if (typeof document !== 'undefined' && !document.getElementById(SCROLLBAR_STYLE_ID)) {
-  const style = document.createElement('style')
-  style.id = SCROLLBAR_STYLE_ID
-  style.textContent = `
-.zui-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0,0,0,0.2) transparent;
-}
-.zui-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-.zui-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.zui-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.2);
-  border-radius: 4px;
-}
-.zui-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(0,0,0,0.35);
-}
-.zui-scrollbar.zui-scrollbar--thick::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-.zui-scrollbar.zui-scrollbar--thick {
-  scrollbar-width: auto;
-}
-`
-  document.head.appendChild(style)
-}
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
     s.overflow.auto
     if (props.maxHeight !== undefined) s.maxHeight.iem(props.maxHeight)
+    applyScrollbarStyles(s, theme.value)
     props.css?.(s)
   }),
 )
 </script>
 
 <template>
-  <div :class="['zui-scrollbar', props.thin ? '' : 'zui-scrollbar--thick', rootClass]">
+  <div :class="rootClass">
     <slot />
   </div>
 </template>

@@ -85,6 +85,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useZIem } from '../_hooks/useZIem'
 import { useZVirtualScroll } from '../_hooks/useZVirtualScroll'
+import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -226,6 +227,7 @@ const rootClass = computed(() =>
     s.position.relative
     s.overflow.auto
     s.display.block
+    applyScrollbarStyles(s, theme.value)
     props.css?.(s)
   }),
 )

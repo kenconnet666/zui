@@ -76,6 +76,7 @@ import { mergeLocale } from './locale/merge'
 import { zhCN } from './locale/zh-CN'
 import type { ZLocale, ZLocalePartial } from './locale/types'
 import type { ZIem } from './units'
+import { themeColorScheme } from '../_internal/colorScheme'
 
 const props = withDefaults(
   defineProps<{
@@ -306,6 +307,15 @@ const iemPx = computed<number>(() => {
 })
 provide(Z_IEM_PX_KEY, iemPx)
 
+// ─── color-scheme + iem 合并样式 ───
+// color-scheme 让浏览器用对应模式渲染原生元素（滚动条、input 等），级联到所有子元素
+const boxStyle = computed<Record<string, string>>(() => {
+  const result: Record<string, string> = { 'color-scheme': themeColorScheme(mergedTheme.value) }
+  const iem = iemStyle.value
+  if (iem) result['--zui-iem'] = iem['--zui-iem']
+  return result
+})
+
 // ─── css factory → emotion className(用合并后的 theme,跟子组件一致) ───
 const className = computed<string | undefined>(() => {
   if (!props.css) return undefined
@@ -320,7 +330,7 @@ defineExpose({
 </script>
 
 <template>
-  <component :is="tag" :class="className" :style="iemStyle">
+  <component :is="tag" :class="className" :style="boxStyle">
     <slot :theme="mergedTheme" :locale="mergedLocale" />
   </component>
 </template>

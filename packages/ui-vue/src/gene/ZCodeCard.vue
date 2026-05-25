@@ -11,9 +11,12 @@
  * **源代码文本**(`?raw` 字符串传 `source` prop)使用,源同步零漂移。
  *
  * **结构**:
- * - header bar(标题 + 复制按钮 + 折叠开关)
+ * - header bar(标题 + 复制按钮 + 代码主题选择器 + 折叠开关)
  * - preview area(default slot,实时渲染示例组件)
  * - code area(折叠态完全收起 0 高度;展开态用内置 `ZCode` shiki 高亮)
+ *
+ * **代码主题**:所有 ZCodeCard 实例共享 `globalCodeTheme`(模块级 ref),
+ * 任一实例切换主题全站联动,并持久化到 `localStorage('zui-code-theme')`。
  *
  * **API**:
  * - `title?: string` —— 卡片标题(prop;`#header` slot 优先级更高)
@@ -21,20 +24,70 @@
  * - `lang?: string` —— shiki 语言,默认 `'vue'`
  * - `defaultExpanded?: boolean` —— 默认折叠态,默认 `false`
  * - `expanded?: boolean` —— 受控展开态(传则走 `v-model:expanded`)
- * - `showImports?: boolean` —— 默认 `false`(剥除 `import ... from '...'` 行;
- *   文档场景下 import 是噪音,业务方按需开启)
- * - `themes?` / `colorScheme?` —— 透传 `ZCode`(shiki 主题对 + 模式)
+ * - `showImports?: boolean` —— 默认 `false`(剥除 `import ... from '...'` 行)
  * - `copyToastDuration?: number` —— 复制成功 toast ms,默认 `1500`;`0` 关闭 toast
- *   (按钮文字 "复制" → "已复制" 1.5s 始终生效)
  * - `css?: factory` —— 根元素覆盖
- *
- * **复制反馈**:全部委托给 `ZCopyButton`(按钮文字临时切换 + 可选 toast)。
- *
- * **折叠**:`v-show` + Vue `<Transition>` 简单 opacity/transform 过渡,
- * 折叠态完全 `display:none`,不占视觉空间。
  */
+import { ref } from 'vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
+
+// ─── 全局代码主题状态（所有实例共享，任意实例切换全站联动）───
+const LS_CODE_THEME_KEY = 'zui-code-theme'
+const DEFAULT_CODE_THEME = 'tokyo-night'
+
+/** 单个可选代码主题描述。 */
+export interface CodeThemeItem {
+  value: string
+  label: string
+  /** true = 暗色主题，false = 亮色主题。 */
+  dark: boolean
+}
+
+/** ZCodeCard 支持的所有 shiki 主题列表。 */
+export const CODE_THEMES: CodeThemeItem[] = [
+  // ── 亮色 ──
+  { value: 'light-plus', label: 'Light+', dark: false },
+  { value: 'github-light', label: 'GitHub Light', dark: false },
+  { value: 'min-light', label: 'Min Light', dark: false },
+  { value: 'one-light', label: 'One Light', dark: false },
+  { value: 'solarized-light', label: 'Solarized', dark: false },
+  { value: 'vitesse-light', label: 'Vitesse', dark: false },
+  { value: 'catppuccin-latte', label: 'Catppuccin Latte', dark: false },
+  { value: 'material-theme-lighter', label: 'Material Light', dark: false },
+  // ── 暗色 ──
+  { value: 'tokyo-night', label: 'Tokyo Night', dark: true },
+  { value: 'github-dark', label: 'GitHub Dark', dark: true },
+  { value: 'github-dark-dimmed', label: 'GitHub Dimmed', dark: true },
+  { value: 'one-dark-pro', label: 'One Dark Pro', dark: true },
+  { value: 'dracula', label: 'Dracula', dark: true },
+  { value: 'monokai', label: 'Monokai', dark: true },
+  { value: 'nord', label: 'Nord', dark: true },
+  { value: 'night-owl', label: 'Night Owl', dark: true },
+  { value: 'catppuccin-mocha', label: 'Catppuccin Mocha', dark: true },
+  { value: 'material-theme', label: 'Material Dark', dark: true },
+  { value: 'synthwave-84', label: 'Synthwave 84', dark: true },
+  { value: 'ayu-dark', label: 'Ayu Dark', dark: true },
+  { value: 'min-dark', label: 'Min Dark', dark: true },
+  { value: 'vitesse-dark', label: 'Vitesse Dark', dark: true },
+]
+
+function getInitialCodeTheme(): string {
+  if (typeof localStorage !== 'undefined') {
+    const saved = localStorage.getItem(LS_CODE_THEME_KEY)
+    if (saved && CODE_THEMES.some((t) => t.value === saved)) return saved
+  }
+  return DEFAULT_CODE_THEME
+}
+
+/** 全站共享代码主题（模块级单例）。 */
+export const globalCodeTheme = ref<string>(getInitialCodeTheme())
+
+/** 设置全站代码主题并持久化。 */
+export function setCodeTheme(theme: string): void {
+  globalCodeTheme.value = theme
+  if (typeof localStorage !== 'undefined') localStorage.setItem(LS_CODE_THEME_KEY, theme)
+}
 
 export interface ZCodeCardProps {
   /** 卡片标题(prop;`#header` slot 优先级更高)。 */
@@ -47,17 +100,10 @@ export interface ZCodeCardProps {
   defaultExpanded?: boolean
   /**
    * 受控展开态(传 `true`/`false` 走 `v-model:expanded`,默认 `null` 非受控)。
-   *
-   * 用 `null` 而非 `undefined` 区分:Vue runtime 把 absent boolean prop coerce
-   * 为 `false`,无法靠 `=== undefined` 判断是否受控。
    */
   expanded?: boolean | null
   /** 显示源码中的 `import` 语句。默认 `false`(文档场景剥除)。 */
   showImports?: boolean
-  /** shiki 双主题对。 */
-  themes?: { light: string; dark: string }
-  /** shiki 色调模式。 */
-  colorScheme?: 'auto' | 'light' | 'dark'
   /** 复制成功 toast 持续 ms。`0` 关闭 toast(按钮文字反馈始终生效)。默认 `1500`。 */
   copyToastDuration?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -72,9 +118,6 @@ export interface ZCodeCardEmits {
 
 /**
  * 剥除 `.vue` / `.ts` 源码中的所有 `import ... from '...'` 语句(含多行),并压缩前导/连续空行。
- *
- * 正则匹配从行首 `import` 开始,允许 import 中间换行(`{ A,\n  B,\n}`),直到 `from '...'`
- * 结束(可选分号)+ 行末换行。Lazy 量词避免吞下后续 import。
  */
 export function stripImports(source: string): string {
   return source
@@ -85,14 +128,15 @@ export function stripImports(source: string): string {
 </script>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
-import { DarkModeOutlined, LightModeOutlined } from '@vicons/material'
+import { computed, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import ZCode from './ZCode.vue'
 import ZIcon from './ZIcon.vue'
 import ZCopyButton from './ZCopyButton.vue'
 import { BuiltinIcons } from './icons'
+import ZSelect from '../input/ZSelect.vue'
+import type { ZSelectValue } from '../input/ZSelect.vue'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -104,20 +148,18 @@ import { BuiltinIcons } from './icons'
  *   │   ┌──────────────────────────────────────────────┐    │
  *   │   │ header (flex row / justifyBetween / gap small)│    │   pad-y _small / pad-x _middle
  *   │   │   ┌─────────────┐  ┌──────────────────────────────┐  │    │   bg _bgMuted
- *   │   │   │ <#header> / │  │ [⧉ 复制] [☀/🌙 主题] [▾ 展开] │  │    │   border-bottom _thin
- *   │   │   │  title      │  │       (action group)          │  │    │
- *   │   │   └─────────────┘  └─────────────────────┘  │    │   按钮:textSecondary +
- *   │   └──────────────────────────────────────────────┘    │     hover bg textSecondary.alpha(8)
+ *   │   │   │ <#header> / │  │ [⧉ 复制] [主题 ▾] [▾ 展开] │  │    │   border-bottom _thin
+ *   │   │   │  title      │  │       (action group)         │  │    │
+ *   │   │   └─────────────┘  └─────────────────────┘  │    │
+ *   │   └──────────────────────────────────────────────┘    │
  *   │                                                        │
  *   │   ┌──────────────────────────────────────────────┐    │
  *   │   │ preview (slot default 实时示例)              │    │   pad _middle / bg _bg
  *   │   └──────────────────────────────────────────────┘    │
  *   │                                                        │
- *   │   ┌──────────────────────────────────────────────┐    │   v-show 折叠;
- *   │   │ <Transition>                                 │    │   transition: opacity + translateY
- *   │   │   <ZCode :code lang inline=false /> (border-│    │
- *   │   │   top _thin)                                 │    │
- *   │   │ </Transition>                                │    │
+ *   │   ┌──────────────────────────────────────────────┐    │
+ *   │   │ <Transition> / <ZCode shiki 高亮> /          │    │
+ *   │   │ border-top _thin                             │    │
  *   │   └──────────────────────────────────────────────┘    │
  *   └────────────────────────────────────────────────────────┘
  */
@@ -126,8 +168,6 @@ const props = withDefaults(defineProps<ZCodeCardProps>(), {
   defaultExpanded: false,
   expanded: null,
   showImports: false,
-  themes: () => ({ light: 'light-plus', dark: 'tokyo-night' }),
-  colorScheme: 'auto',
   copyToastDuration: 1500,
 })
 const emit = defineEmits<ZCodeCardEmits>()
@@ -135,11 +175,11 @@ const emit = defineEmits<ZCodeCardEmits>()
 const theme = useZTheme()
 
 // ─── 受控/非受控展开 ───
-// 用 `expanded === null` 而非 `=== undefined` 判断未受控:Vue 把 absent boolean
-// prop coerce 为 false,会让 `=== undefined` 判断永远 false。
 const internalExpanded = ref(props.defaultExpanded)
 const isControlled = computed(() => props.expanded !== null)
-const expandedState = computed(() => (isControlled.value ? !!props.expanded : internalExpanded.value))
+const expandedState = computed(() =>
+  isControlled.value ? !!props.expanded : internalExpanded.value,
+)
 
 function toggle(): void {
   const next = !expandedState.value
@@ -147,27 +187,16 @@ function toggle(): void {
   emit('update:expanded', next)
 }
 
-// ─── 复制 emit 透传(行为完全由 ZCopyButton 承担)───
+// ─── 复制 emit 透传 ───
 function onCopy(success: boolean, text: string): void {
   emit('copy', success, text)
 }
 
-// ─── 代码主题切换(持久化到 localStorage)───
-const LS_CODE_THEME_KEY = 'zui-code-color-scheme'
+// ─── 主题选择器数据 ───
+const themeOptions = CODE_THEMES.map((t) => ({ value: t.value, label: t.label }))
 
-function resolveInitialCodeTheme(): 'light' | 'dark' {
-  const saved =
-    typeof localStorage !== 'undefined' ? localStorage.getItem(LS_CODE_THEME_KEY) : null
-  if (saved === 'light' || saved === 'dark') return saved
-  return props.colorScheme === 'light' ? 'light' : 'dark'
-}
-
-const codeThemePref = ref<'light' | 'dark'>(resolveInitialCodeTheme())
-
-function toggleCodeTheme(): void {
-  const next = codeThemePref.value === 'dark' ? 'light' : 'dark'
-  codeThemePref.value = next
-  if (typeof localStorage !== 'undefined') localStorage.setItem(LS_CODE_THEME_KEY, next)
+function onThemeSelect(value: ZSelectValue | ZSelectValue[] | null): void {
+  if (typeof value === 'string') setCodeTheme(value)
 }
 
 // ─── 处理后的源码(可选剥 import)───
@@ -294,7 +323,6 @@ const leaveToClass = computed(() =>
   }),
 )
 
-// 监听受控 expanded 变化,保持 internal 同步(便于切换受控/非受控)
 watch(
   () => props.expanded,
   (v) => {
@@ -312,28 +340,24 @@ watch(
       <div :class="actionsClass">
         <ZCopyButton
           :text="source"
-          label="复制"
-          copied-label="已复制"
           :toast-duration="copyToastDuration ?? 1500"
+          copied-label="已复制"
+          label="复制"
           @copy="onCopy"
         />
+        <!-- 代码主题选择器：全站联动 -->
+        <ZSelect
+          :dropdown-max-height="20"
+          :options="themeOptions"
+          :size="0.875"
+          :value="globalCodeTheme"
+          @update:value="onThemeSelect"
+        />
         <button
-          type="button"
-          :class="buttonClass"
-          :aria-label="`代码主题:${codeThemePref === 'dark' ? '暗色' : '亮色'},点击切换`"
-          @click="toggleCodeTheme"
-        >
-          <ZIcon
-            :component="codeThemePref === 'dark' ? DarkModeOutlined : LightModeOutlined"
-            :size="1"
-          />
-          <span>{{ codeThemePref === 'dark' ? '暗色' : '亮色' }}</span>
-        </button>
-        <button
-          type="button"
-          :class="buttonClass"
-          :aria-label="expandedState ? '收起代码' : '展开代码'"
           :aria-expanded="expandedState"
+          :aria-label="expandedState ? '收起代码' : '展开代码'"
+          :class="buttonClass"
+          type="button"
           @click="toggle"
         >
           <ZIcon
@@ -351,17 +375,17 @@ watch(
 
     <Transition
       :enter-active-class="transitionActiveClass"
-      :leave-active-class="transitionActiveClass"
       :enter-from-class="enterFromClass"
+      :leave-active-class="transitionActiveClass"
       :leave-to-class="leaveToClass"
     >
       <div v-show="expandedState" :class="codeAreaClass">
         <ZCode
           :code="processedSource"
-          :lang="lang ?? 'vue'"
           :inline="false"
-          :themes="themes ?? { light: 'light-plus', dark: 'tokyo-night' }"
-          :color-scheme="codeThemePref"
+          :lang="lang ?? 'vue'"
+          :themes="{ light: globalCodeTheme, dark: globalCodeTheme }"
+          color-scheme="light"
         />
       </div>
     </Transition>

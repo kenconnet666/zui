@@ -23,7 +23,7 @@ export interface DocTocProps {
 <script lang="ts" setup>
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
-import { icss, useZTheme } from '@kenconnet666/zui-vue'
+import { icss, useZTheme, ZScrollbar } from '@kenconnet666/zui-vue'
 
 const props = defineProps<DocTocProps>()
 const route = useRoute()
@@ -108,17 +108,24 @@ const rootClass = computed(() =>
     s.borderLeftWidth._thin
     s.borderLeftStyle.solid
     s.borderLeftColor._border
-    s.overflowY.auto
-    s.paddingTop.iem(1.75)
-    s.paddingLeft.iem(1)
-    s.paddingRight.iem(0.75)
-    s.paddingBottom.iem(2)
+    s.display.flex
+    s.flexDirection.column
+    s.minHeight.px(0)
     s._media('(max-width: 1400px)', (m) => {
       m.display.none
     })
     s._media('(orientation: portrait)', (m) => {
       m.display.none
     })
+  }),
+)
+
+const innerClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.paddingTop.iem(1.75)
+    s.paddingLeft.iem(1)
+    s.paddingRight.iem(0.75)
+    s.paddingBottom.iem(2)
   }),
 )
 
@@ -167,14 +174,18 @@ function itemClass(item: TocItem): string {
 
 <template>
   <nav v-if="items.length > 0" :class="rootClass" aria-label="页内目录">
-    <ul :class="listClass">
-      <li v-for="item in items" :key="item.id" role="none">
-        <button
-          type="button"
-          :class="itemClass(item)"
-          @click="scrollTo(item.id)"
-        >{{ item.text }}</button>
-      </li>
-    </ul>
+    <ZScrollbar :css="(s) => { s.flexGrow(1); s.minHeight.px(0) }">
+      <div :class="innerClass">
+        <ul :class="listClass">
+          <li v-for="item in items" :key="item.id" role="none">
+            <button
+              type="button"
+              :class="itemClass(item)"
+              @click="scrollTo(item.id)"
+            >{{ item.text }}</button>
+          </li>
+        </ul>
+      </div>
+    </ZScrollbar>
   </nav>
 </template>
