@@ -11,7 +11,7 @@
  * - `code?: string` —— 代码文本(优先于 default slot;高亮模式必传 prop)
  * - `lang?: string` —— shiki 语言标识(`'ts'` / `'js'` / `'json'` / `'vue'` 等),未传不高亮
  * - `themes?: { light: string; dark: string }` —— shiki 双主题,默认
- *   `vitesse-light` / `vitesse-dark`
+ *   `light-plus` / `tokyo-night`
  * - `colorScheme?: 'auto' | 'light' | 'dark'` —— 默认 `'auto'`,通过
  *   `@media (prefers-color-scheme: dark)` 切换 light/dark var
  * - `inline?: boolean` —— 默认 `true`(`<code>`);`false` 走块级(高亮前置条件)
@@ -36,7 +36,7 @@ export interface ZCodeProps {
   code?: string
   /** shiki 语言标识,未传 → 不启用高亮。 */
   lang?: string
-  /** shiki 双主题对,默认 `vitesse-light` / `vitesse-dark`。 */
+  /** shiki 双主题对,默认 `light-plus` / `tokyo-night`。 */
   themes?: { light: string; dark: string }
   /** 颜色模式:`'auto'`(跟随 OS prefers-color-scheme,默认)/ `'light'` / `'dark'`。 */
   colorScheme?: 'auto' | 'light' | 'dark'
@@ -120,7 +120,7 @@ async function loadShiki(): Promise<{ codeToHtml: ShikiCodeToHtml } | null> {
   return shikiCache
 }
 
-const DEFAULT_THEMES = { light: 'vitesse-light', dark: 'vitesse-dark' } as const
+const DEFAULT_THEMES = { light: 'light-plus', dark: 'tokyo-night' } as const
 
 export default defineComponent({
   name: 'ZCode',

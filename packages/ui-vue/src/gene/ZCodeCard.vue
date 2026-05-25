@@ -125,7 +125,7 @@ const props = withDefaults(defineProps<ZCodeCardProps>(), {
   defaultExpanded: false,
   expanded: null,
   showImports: false,
-  themes: () => ({ light: 'vitesse-light', dark: 'vitesse-dark' }),
+  themes: () => ({ light: 'light-plus', dark: 'tokyo-night' }),
   colorScheme: 'auto',
   copyToastDuration: 1500,
 })
@@ -329,7 +329,7 @@ watch(
           :code="processedSource"
           :lang="lang ?? 'vue'"
           :inline="false"
-          :themes="themes ?? { light: 'vitesse-light', dark: 'vitesse-dark' }"
+          :themes="themes ?? { light: 'light-plus', dark: 'tokyo-night' }"
           :color-scheme="colorScheme ?? 'auto'"
         />
       </div>
