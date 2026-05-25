@@ -38,6 +38,7 @@ export interface ZSplitEmits {
 import { computed, onScopeDispose, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 
 const props = withDefaults(defineProps<ZSplitProps>(), {
   direction: 'horizontal',
@@ -111,6 +112,7 @@ const firstClass = computed(() =>
     }
     s.flexShrink(0)
     s.overflow.auto
+    applyScrollbarStyles(s, theme.value)
   }),
 )
 
@@ -118,6 +120,7 @@ const secondClass = computed(() =>
   icss(theme.value, (s) => {
     s.flexGrow(1)
     s.overflow.auto
+    applyScrollbarStyles(s, theme.value)
   }),
 )
 

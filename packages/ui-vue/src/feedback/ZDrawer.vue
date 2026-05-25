@@ -59,6 +59,7 @@ import { useZTheme } from '../provider'
 import { useEscapeStack } from '../_hooks'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { lockBodyScroll } from '../_internal/body-scroll-lock'
+import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
@@ -195,6 +196,7 @@ const bodyClass = computed(() =>
     s.padding._middle
     s.flexGrow(1)
     s.overflowY.auto
+    applyScrollbarStyles(s, theme.value)
     applySx(s, props.sxBody)
   }),
 )

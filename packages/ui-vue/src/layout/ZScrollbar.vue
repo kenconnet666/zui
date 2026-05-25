@@ -1,64 +1,203 @@
 <script lang="ts">
 /**
- * `ZScrollbar` —— 统一 overlay 自动隐藏滚动条容器。
+ * `ZScrollbar` —— 浮层滚动条容器。
  *
  * **行为**：
- * - 滚动条默认透明隐藏，鼠标进入或容器内有焦点时显示半透明细滚动条
- * - Chrome/Edge：走 `overflow: overlay`，滚动条浮在内容上方，**不占布局空间**
- * - Firefox：`scrollbar-width: thin` + `scrollbar-color`，始终占 ~6px 但尽量细
- * - 暗色/亮色主题自动适配（暗色用浅色半透明，亮色用深色半透明）
+ * - 原生滚动条完全隐藏（`scrollbar-width: none` + webkit），**不占任何布局宽度**
+ * - 自定义 6px 半透明 thumb，`position: absolute` 浮在内容上方，z-index 隔离
+ * - 默认透明隐藏，鼠标进入或容器内有焦点时淡入显示
+ * - 暗/亮色主题自动适配
+ *
+ * **使用要求**：父级或 `:css` prop 必须给根元素提供明确高度
+ * （`height: 100%` / `flex-grow: 1; min-height: 0` 等），否则内容区为 0 高。
  *
  * **API**：
- * - `maxHeight?: number` —— 容器最大高度（iem 倍数）
- * - `css?: factory` —— 根元素覆盖
+ * - `maxHeight?: number` —— 容器最大高度（iem 倍数），优先于外部 height
+ * - `css?: factory` —— 根元素覆盖（在 height/overflow 之后应用）
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
 export interface ZScrollbarProps {
-  /**
-   * 最大高度 —— `number`（iem 倍数，默认 undefined = 由父级决定）。
-   * 非 iem 单位走 `css` 兜底：`(s) => s.maxHeight.px(200)`。
-   */
   maxHeight?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
+import { themeColorScheme } from '../_internal/colorScheme'
 
 /**
  * 盒子模型（iem，Provider 控制基准）：
  *
- *   ┌────────────────────────────────────┐
- *   │ ZScrollbar（div，overflow auto/overlay）│
- *   │   max-height: `maxHeight` iem      │
- *   │                                    │
- *   │  ┌──────────────────────────────┐  │
- *   │  │ slot 内容（子元素自然撑高）  │  │  滚动条：6px 细，hover 显，overlay 不占位
- *   │  └──────────────────────────────┘  │
- *   └────────────────────────────────────┘
+ *   ┌── root div ──────────────────────────────────────────────┐
+ *   │   position: relative                                      │
+ *   │   [user height via :css or maxHeight]                     │
+ *   │                                                           │
+ *   │  ┌── scroller div ───────────────────────────────────┐   │   height: 100% (或 max-height: N iem)
+ *   │  │  height: 100%   overflow-y: auto                  │   │   scrollbar-width: none（原生滚动条隐藏）
+ *   │  │  scrollbar-width: none / ::-webkit-scrollbar:none │   │
+ *   │  │    slot 内容（自然撑高，超出则滚动）               │   │
+ *   │  └───────────────────────────────────────────────────┘   │
+ *   │                                                           │
+ *   │  ┌── track div ──┐  position: absolute; right: 2px      │   不占布局空间
+ *   │  │  ┌── thumb ─┐ │  z-index: 10; pointer-events: none   │
+ *   │  │  └──────────┘ │  hover/focus-within 时淡入            │
+ *   │  └───────────────┘                                        │
+ *   └───────────────────────────────────────────────────────────┘
  */
 const props = defineProps<ZScrollbarProps>()
-
 const theme = useZTheme()
+
+// ─── 滚动测量 ───────────────────────────────────────────────────────────────
+const scrollerRef = ref<HTMLElement | null>(null)
+const scrollTop = ref(0)
+const scrollHeight = ref(0)
+const clientHeight = ref(0)
+
+function updateMeasurements(): void {
+  const el = scrollerRef.value
+  if (!el) return
+  scrollTop.value = el.scrollTop
+  scrollHeight.value = el.scrollHeight
+  clientHeight.value = el.clientHeight
+}
+
+function onScroll(): void {
+  updateMeasurements()
+}
+
+let ro: ResizeObserver | null = null
+onMounted(() => {
+  updateMeasurements()
+  if (typeof ResizeObserver !== 'undefined' && scrollerRef.value) {
+    ro = new ResizeObserver(updateMeasurements)
+    ro.observe(scrollerRef.value)
+    // 监听 slot 内容高度变化
+    const firstChild = scrollerRef.value.firstElementChild
+    if (firstChild) ro.observe(firstChild)
+  }
+})
+onBeforeUnmount(() => ro?.disconnect())
+
+// ─── Thumb 位置/尺寸计算 ────────────────────────────────────────────────────
+const TRACK_MARGIN = 4 // top+bottom 各 2px
+const THUMB_MIN_PX = 24
+
+const needsScrollbar = computed(() => scrollHeight.value > clientHeight.value + 2)
+
+const thumbPx = computed(() => {
+  if (!needsScrollbar.value) return 0
+  const track = clientHeight.value - TRACK_MARGIN
+  return Math.max(THUMB_MIN_PX, (clientHeight.value / scrollHeight.value) * track)
+})
+
+const thumbTopPx = computed(() => {
+  const maxScroll = scrollHeight.value - clientHeight.value
+  if (maxScroll <= 0) return 0
+  const track = clientHeight.value - TRACK_MARGIN
+  const scrollRatio = scrollTop.value / maxScroll
+  return scrollRatio * (track - thumbPx.value)
+})
+
+const thumbStyle = computed(() => ({
+  height: `${thumbPx.value}px`,
+  top: `${thumbTopPx.value}px`,
+}))
+
+// ─── 显示状态 ───────────────────────────────────────────────────────────────
+const isHovered = ref(false)
+const isFocused = ref(false)
+const thumbVisible = computed(() => needsScrollbar.value && (isHovered.value || isFocused.value))
+
+// ─── 样式 ───────────────────────────────────────────────────────────────────
+const dark = computed(() => themeColorScheme(theme.value) === 'dark')
+const thumbColor = computed(() => dark.value ? 'rgba(255,255,255,0.32)' : 'rgba(0,0,0,0.32)')
+const thumbHoverColor = computed(() => dark.value ? 'rgba(255,255,255,0.52)' : 'rgba(0,0,0,0.52)')
 
 const rootClass = computed(() =>
   icss(theme.value, (s) => {
-    s.overflow.auto
-    if (props.maxHeight !== undefined) s.maxHeight.iem(props.maxHeight)
-    applyScrollbarStyles(s, theme.value)
+    s.position.relative
+    if (props.maxHeight !== undefined) {
+      s.maxHeight.iem(props.maxHeight)
+      s.overflow.hidden
+    }
     props.css?.(s)
   }),
 )
+
+const scrollerClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.height.pct(100)
+    s.overflow.auto
+    // 隐藏原生滚动条（不占布局空间）
+    s._prop('scrollbarWidth', 'none')
+    s._prop('msOverflowStyle', 'none')
+    s._selector('&::-webkit-scrollbar', (sb) => {
+      sb._prop('display', 'none')
+    })
+  }),
+)
+
+const trackClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.position.absolute
+    s._prop('right', '2px')
+    s._prop('top', '2px')
+    s._prop('bottom', '2px')
+    s._prop('width', '6px')
+    s._prop('zIndex', '10')
+    s.pointerEvents.none
+    s.borderRadius.iem(0.1875)
+  }),
+)
+
+const thumbClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.position.absolute
+    s._prop('left', '0')
+    s._prop('right', '0')
+    s.borderRadius.iem(0.1875)
+    s._prop('background', thumbColor.value)
+    s._prop('transition', 'background 120ms')
+    s._selector('&:hover', (h) => {
+      h._prop('background', thumbHoverColor.value)
+    })
+  }),
+)
+
+defineExpose({ $el: scrollerRef })
 </script>
 
 <template>
-  <div :class="rootClass">
-    <slot />
+  <div
+    :class="rootClass"
+    @mouseenter="isHovered = true"
+    @mouseleave="isHovered = false"
+    @focusin="isFocused = true"
+    @focusout="isFocused = false"
+  >
+    <div ref="scrollerRef" :class="scrollerClass" @scroll="onScroll">
+      <slot />
+    </div>
+    <Transition
+      enter-active-class="__zs-fade-in"
+      leave-active-class="__zs-fade-out"
+      enter-from-class="__zs-fade-from"
+      leave-to-class="__zs-fade-from"
+    >
+      <div v-if="thumbVisible" :class="trackClass">
+        <div :class="thumbClass" :style="thumbStyle" />
+      </div>
+    </Transition>
   </div>
 </template>
+
+<style>
+.__zs-fade-in  { transition: opacity 150ms; }
+.__zs-fade-out { transition: opacity 150ms; }
+.__zs-fade-from { opacity: 0; }
+</style>

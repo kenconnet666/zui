@@ -250,8 +250,8 @@ const dropdownClass = computed(() =>
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
-    // Teleport 脱离 ZBox DOM 树，需要手动设置 color-scheme 让浏览器用正确模式渲染原生滚动条
-    s._prop('color-scheme', themeColorScheme(theme.value))
+    // Teleport 脱离 ZBox DOM 树，需要手动设置 color-scheme 让浏览器用正确模式渲染
+    s._prop('colorScheme', themeColorScheme(theme.value))
     applySx(s, props.sxDropdown)
   }),
 )

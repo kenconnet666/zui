@@ -86,6 +86,7 @@ import { useZTheme } from '../provider'
 import { useZIem } from '../_hooks/useZIem'
 import { useZVirtualScroll } from '../_hooks/useZVirtualScroll'
 import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
+import { themeColorScheme } from '../_internal/colorScheme'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -154,6 +155,68 @@ watch(scrollEl, (el) => {
   vs.setScrollElement(el)
 })
 
+// ─── Overlay scrollbar ──────────────────────────────────────────────────────
+const TRACK_MARGIN = 4
+const THUMB_MIN_PX = 24
+
+const isHovered = ref(false)
+const isFocused = ref(false)
+
+const needsScrollbar = computed(
+  () => props.direction !== 'horizontal' && vs.totalSize.value > vs.viewportSize.value + 2,
+)
+
+const thumbPx = computed(() => {
+  if (!needsScrollbar.value) return 0
+  const track = vs.viewportSize.value - TRACK_MARGIN
+  return Math.max(THUMB_MIN_PX, (vs.viewportSize.value / vs.totalSize.value) * track)
+})
+
+const thumbTopPx = computed(() => {
+  const maxScroll = vs.totalSize.value - vs.viewportSize.value
+  if (maxScroll <= 0) return 0
+  const track = vs.viewportSize.value - TRACK_MARGIN
+  return (vs.scrollOffset.value / maxScroll) * (track - thumbPx.value)
+})
+
+const thumbStyle = computed(() => ({
+  height: `${thumbPx.value}px`,
+  top: `${thumbTopPx.value}px`,
+}))
+
+const thumbVisible = computed(() => needsScrollbar.value && (isHovered.value || isFocused.value))
+
+const dark = computed(() => themeColorScheme(theme.value) === 'dark')
+const thumbColor = computed(() => (dark.value ? 'rgba(255,255,255,0.32)' : 'rgba(0,0,0,0.32)'))
+const thumbHoverColor = computed(() => (dark.value ? 'rgba(255,255,255,0.52)' : 'rgba(0,0,0,0.52)'))
+
+const trackClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.position.absolute
+    s._prop('right', '2px')
+    s._prop('top', '2px')
+    s._prop('bottom', '2px')
+    s._prop('width', '6px')
+    s._prop('zIndex', '10')
+    s.pointerEvents.none
+    s.borderRadius.iem(0.1875)
+  }),
+)
+
+const sbThumbClass = computed(() =>
+  icss(theme.value, (s) => {
+    s.position.absolute
+    s._prop('left', '0')
+    s._prop('right', '0')
+    s.borderRadius.iem(0.1875)
+    s._prop('background', thumbColor.value)
+    s._prop('transition', 'background 120ms')
+    s._selector('&:hover', (h) => {
+      h._prop('background', thumbHoverColor.value)
+    })
+  }),
+)
+
 watch(vs.visibleRange, ([start, end]) => emit('update', start, end))
 watch(vs.scrollOffset, (offset) => emit('scroll', offset))
 
@@ -183,15 +246,23 @@ function resolveSize(v: number | string | undefined, fallback: string): string {
   return `${v * iemPx.value}px`
 }
 
-const containerStyle = computed<Record<string, string>>(() => {
+/** 外层包裹：持有尺寸 + position:relative，作为 overlay track 的定位容器。 */
+const outerStyle = computed<Record<string, string>>(() => {
   const isV = props.direction === 'vertical'
   return {
+    position: 'relative',
     height: resolveSize(props.height, isV ? '100%' : 'auto'),
     width: resolveSize(props.width, !isV ? '100%' : 'auto'),
-    contain: 'strict',
-    overflowAnchor: 'none',
   }
 })
+
+/** 内层滚动容器：100% 填满外层，contain:strict 隔离布局。 */
+const containerStyle = computed<Record<string, string>>(() => ({
+  height: '100%',
+  width: '100%',
+  contain: 'strict',
+  overflowAnchor: 'none',
+}))
 
 const wrapperStyle = computed<Record<string, string>>(() => {
   const isV = props.direction === 'vertical'
@@ -273,19 +344,40 @@ defineExpose<ZVirtualListExpose>({
 </script>
 
 <template>
-  <div ref="scrollEl" :class="rootClass" :style="containerStyle">
-    <div v-if="slots.header" data-zv-header><slot name="header" /></div>
-    <div v-if="isEmpty && slots.empty" data-zv-empty><slot name="empty" /></div>
-    <div v-else :style="wrapperStyle" data-zv-wrapper>
-      <div
-        v-for="vi in visibleItems"
-        :key="vi.key"
-        :ref="setItemRef(vi.index)"
-        :style="itemStyle(vi.offset, vi.size)"
-      >
-        <slot :item="vi.item" :index="vi.index" :size="vi.size" />
+  <!-- 外层：持有尺寸 + position:relative，track overlay 定位于此（不随内容滚动） -->
+  <div
+    :style="outerStyle"
+    @mouseenter="isHovered = true"
+    @mouseleave="isHovered = false"
+    @focusin="isFocused = true"
+    @focusout="isFocused = false"
+  >
+    <!-- 内层：实际滚动容器（native scrollbar 已隐藏） -->
+    <div ref="scrollEl" :class="rootClass" :style="containerStyle">
+      <div v-if="slots.header" data-zv-header><slot name="header" /></div>
+      <div v-if="isEmpty && slots.empty" data-zv-empty><slot name="empty" /></div>
+      <div v-else :style="wrapperStyle" data-zv-wrapper>
+        <div
+          v-for="vi in visibleItems"
+          :key="vi.key"
+          :ref="setItemRef(vi.index)"
+          :style="itemStyle(vi.offset, vi.size)"
+        >
+          <slot :item="vi.item" :index="vi.index" :size="vi.size" />
+        </div>
       </div>
+      <div v-if="slots.footer" data-zv-footer><slot name="footer" /></div>
     </div>
-    <div v-if="slots.footer" data-zv-footer><slot name="footer" /></div>
+    <!-- overlay track：position:absolute 定位于外层，不受内层滚动影响 -->
+    <Transition
+      enter-active-class="__zs-fade-in"
+      leave-active-class="__zs-fade-out"
+      enter-from-class="__zs-fade-from"
+      leave-to-class="__zs-fade-from"
+    >
+      <div v-if="thumbVisible" :class="trackClass">
+        <div :class="sbThumbClass" :style="thumbStyle" />
+      </div>
+    </Transition>
   </div>
 </template>
