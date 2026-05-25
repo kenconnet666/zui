@@ -295,7 +295,7 @@ watch(
           :text="source"
           label="复制"
           copied-label="已复制"
-          :toast-duration="copyToastDuration"
+          :toast-duration="copyToastDuration ?? 1500"
           @copy="onCopy"
         />
         <button
@@ -327,10 +327,10 @@ watch(
       <div v-show="expandedState" :class="codeAreaClass">
         <ZCode
           :code="processedSource"
-          :lang="lang"
+          :lang="lang ?? 'vue'"
           :inline="false"
-          :themes="themes"
-          :color-scheme="colorScheme"
+          :themes="themes ?? { light: 'vitesse-light', dark: 'vitesse-dark' }"
+          :color-scheme="colorScheme ?? 'auto'"
         />
       </div>
     </Transition>

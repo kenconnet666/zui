@@ -39,22 +39,22 @@ export interface ZVirtualListProps<T = unknown> {
    */
   itemSize: ItemSizeArg<T>
   /** 滚动方向,默认 `'vertical'`。 */
-  direction?: 'vertical' | 'horizontal'
+  direction?: 'vertical' | 'horizontal' | undefined
   /** 预渲染缓冲项数(两端各加这么多)。默认 `5`。 */
-  overscan?: number
+  overscan?: number | undefined
   /** 是否启用 `ResizeObserver` 自动测真实尺寸。默认 `true`。 */
-  autoMeasure?: boolean
+  autoMeasure?: boolean | undefined
   /** 取项 key 的字段名(取不到回退 index)。默认 `'id'`。 */
-  keyField?: string
+  keyField?: string | undefined
   /**
    * 容器尺寸(垂直 → 高度 / 水平 → 宽度)。**iem 倍数**(`number`)或 CSS 字面
    * 字符串(`'100%'` / `'50vh'` 等)。
    */
-  height?: number | string
+  height?: number | string | undefined
   /** 同 `height`,水平方向用。 */
-  width?: number | string
+  width?: number | string | undefined
   /** 触发 `scroll-end` 的距底阈值(iem 倍数)。默认 `0`。 */
-  scrollEndThreshold?: number
+  scrollEndThreshold?: number | undefined
   /** 根容器 css 覆盖(`overflow: auto` / `position: relative` 已内置)。 */
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }

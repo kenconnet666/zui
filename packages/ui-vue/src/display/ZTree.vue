@@ -198,9 +198,9 @@ function onNodeClick(node: ZTreeNode): void {
   <div :class="rootClass" role="tree">
     <ZVirtualList
       :items="visibleNodes"
-      :item-size="itemSize"
+      :item-size="itemSize ?? 2"
       :height="height"
-      :overscan="overscan"
+      :overscan="overscan ?? 5"
       key-field="key"
     >
       <template #default="{ item }">

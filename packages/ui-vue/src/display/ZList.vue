@@ -70,7 +70,7 @@ export interface ZListExpose {
 </script>
 
 <script lang="ts" setup generic="T">
-import { computed, ref, useSlots } from 'vue'
+import { computed, ref, useSlots, type Slots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
@@ -108,7 +108,7 @@ const props = withDefaults(defineProps<ZListProps<T>>(), {
   keyField: 'id',
 })
 const emit = defineEmits<ZListEmits>()
-const slots = useSlots()
+const slots: Slots = useSlots()
 
 const theme = useZTheme()
 
@@ -193,7 +193,7 @@ function onUpdate(start: number, end: number): void {
       :items="items"
       :item-size="itemSize"
       :height="height"
-      :overscan="overscan"
+      :overscan="overscan ?? 5"
       :auto-measure="autoMeasure"
       :key-field="keyField"
       @scroll="onScroll"

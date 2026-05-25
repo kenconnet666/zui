@@ -120,7 +120,7 @@ export interface ZDataTableExpose {
 </script>
 
 <script lang="ts" setup generic="T">
-import { computed, h, ref, useSlots } from 'vue'
+import { computed, h, ref, useSlots, type Slots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useZIem } from '../_hooks/useZIem'
@@ -174,7 +174,10 @@ const props = withDefaults(defineProps<ZDataTableProps<T>>(), {
   emptyText: '暂无数据',
 })
 const emit = defineEmits<ZDataTableEmits<T>>()
-const slots = useSlots()
+// 强类型 `Slots`(含 index signature)允许 `slots[`cell-${key}`]` 动态键访问;
+// Vue 在无注解时只把模板字面用到的 `empty` / `loading` 作为已知 slot 推断,
+// 编译期 strict mode 会拒绝 `cell-${string}` 这类动态 key 索引。
+const slots: Slots = useSlots()
 
 const theme = useZTheme()
 const iemPx = useZIem()
@@ -519,9 +522,9 @@ const isEmpty = computed(() => sortedRows.value.length === 0)
       v-else
       ref="vlRef"
       :items="sortedRows"
-      :item-size="rowSize"
+      :item-size="rowSize ?? 3"
       :height="vlHeight"
-      :overscan="overscan"
+      :overscan="overscan ?? 5"
       :key-field="rowKey"
       @scroll-end="onScrollEnd"
     >

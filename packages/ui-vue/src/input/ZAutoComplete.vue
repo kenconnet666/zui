@@ -230,7 +230,7 @@ defineExpose({ rootRef })
     >
       <ZVirtualList
         :items="filtered"
-        :item-size="optionSize"
+        :item-size="optionSize ?? 2"
         :height="dropdownListHeight"
         key-field="value"
       >

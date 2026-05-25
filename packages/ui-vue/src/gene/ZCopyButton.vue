@@ -190,7 +190,7 @@ const rootClass = computed(() =>
     :aria-label="displayText"
     @click="handleClick"
   >
-    <ZIcon :component="iconComponent" :size="iconSize" />
+    <ZIcon :component="iconComponent" :size="iconSize ?? 0.875" />
     <span v-if="label !== undefined">{{ displayText }}</span>
   </button>
 </template>

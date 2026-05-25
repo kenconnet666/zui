@@ -331,7 +331,7 @@ defineExpose({ rootRef })
       <div v-for="(col, ci) in columns" :key="ci" :class="columnClass">
         <ZVirtualList
           :items="col"
-          :item-size="optionSize"
+          :item-size="optionSize ?? 2"
           :height="columnHeight(col)"
           key-field="value"
         >

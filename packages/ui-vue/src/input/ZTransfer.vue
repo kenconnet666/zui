@@ -233,8 +233,8 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
         <ZVirtualList
           v-else
           :items="leftItems"
-          :item-size="itemSize"
-          :height="listHeight"
+          :item-size="itemSize ?? 2"
+          :height="listHeight ?? 15"
           key-field="key"
         >
           <template #default="{ item }">
@@ -285,8 +285,8 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
         <ZVirtualList
           v-else
           :items="rightItems"
-          :item-size="itemSize"
-          :height="listHeight"
+          :item-size="itemSize ?? 2"
+          :height="listHeight ?? 15"
           key-field="key"
         >
           <template #default="{ item }">

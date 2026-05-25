@@ -294,8 +294,8 @@ defineExpose({ rootRef })
         :data="data"
         :expanded-keys="expandedKeys"
         :selected-key="value ?? null"
-        :item-size="treeItemSize"
-        :height="treeHeight"
+        :item-size="treeItemSize ?? 2"
+        :height="treeHeight ?? 18"
         @update:expanded-keys="expandedKeys = $event"
         @select="onSelectNode"
       />
