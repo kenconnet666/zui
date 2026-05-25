@@ -86,6 +86,7 @@ export function stripImports(source: string): string {
 
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
+import { DarkModeOutlined, LightModeOutlined } from '@vicons/material'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import ZCode from './ZCode.vue'
@@ -102,9 +103,9 @@ import { BuiltinIcons } from './icons'
  *   │                                                        │
  *   │   ┌──────────────────────────────────────────────┐    │
  *   │   │ header (flex row / justifyBetween / gap small)│    │   pad-y _small / pad-x _middle
- *   │   │   ┌─────────────┐  ┌─────────────────────┐  │    │   bg _bgMuted
- *   │   │   │ <#header> / │  │ [⧉ 复制] [▾ 展开代码] │  │    │   border-bottom _thin
- *   │   │   │  title      │  │   (action group)     │  │    │
+ *   │   │   ┌─────────────┐  ┌──────────────────────────────┐  │    │   bg _bgMuted
+ *   │   │   │ <#header> / │  │ [⧉ 复制] [☀/🌙 主题] [▾ 展开] │  │    │   border-bottom _thin
+ *   │   │   │  title      │  │       (action group)          │  │    │
  *   │   │   └─────────────┘  └─────────────────────┘  │    │   按钮:textSecondary +
  *   │   └──────────────────────────────────────────────┘    │     hover bg textSecondary.alpha(8)
  *   │                                                        │
@@ -149,6 +150,24 @@ function toggle(): void {
 // ─── 复制 emit 透传(行为完全由 ZCopyButton 承担)───
 function onCopy(success: boolean, text: string): void {
   emit('copy', success, text)
+}
+
+// ─── 代码主题切换(持久化到 localStorage)───
+const LS_CODE_THEME_KEY = 'zui-code-color-scheme'
+
+function resolveInitialCodeTheme(): 'light' | 'dark' {
+  const saved =
+    typeof localStorage !== 'undefined' ? localStorage.getItem(LS_CODE_THEME_KEY) : null
+  if (saved === 'light' || saved === 'dark') return saved
+  return props.colorScheme === 'light' ? 'light' : 'dark'
+}
+
+const codeThemePref = ref<'light' | 'dark'>(resolveInitialCodeTheme())
+
+function toggleCodeTheme(): void {
+  const next = codeThemePref.value === 'dark' ? 'light' : 'dark'
+  codeThemePref.value = next
+  if (typeof localStorage !== 'undefined') localStorage.setItem(LS_CODE_THEME_KEY, next)
 }
 
 // ─── 处理后的源码(可选剥 import)───
@@ -301,6 +320,18 @@ watch(
         <button
           type="button"
           :class="buttonClass"
+          :aria-label="`代码主题:${codeThemePref === 'dark' ? '暗色' : '亮色'},点击切换`"
+          @click="toggleCodeTheme"
+        >
+          <ZIcon
+            :component="codeThemePref === 'dark' ? DarkModeOutlined : LightModeOutlined"
+            :size="1"
+          />
+          <span>{{ codeThemePref === 'dark' ? '暗色' : '亮色' }}</span>
+        </button>
+        <button
+          type="button"
+          :class="buttonClass"
           :aria-label="expandedState ? '收起代码' : '展开代码'"
           :aria-expanded="expandedState"
           @click="toggle"
@@ -330,7 +361,7 @@ watch(
           :lang="lang ?? 'vue'"
           :inline="false"
           :themes="themes ?? { light: 'light-plus', dark: 'tokyo-night' }"
-          :color-scheme="colorScheme ?? 'auto'"
+          :color-scheme="codeThemePref"
         />
       </div>
     </Transition>
