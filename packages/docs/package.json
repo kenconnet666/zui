@@ -1,10 +1,9 @@
 {
   "name": "@kenconnet666/docs",
-  "version": "0.0.2",
+  "version": "0.8.0",
+  "private": true,
   "type": "module",
   "description": "zui 组件库官方文档站点（Vite SPA，包含所有组件演示）。",
-  "keywords": ["zui", "vue", "component-library", "docs", "demo"],
-  "files": ["dist"],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
