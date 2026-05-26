@@ -24,8 +24,9 @@ const stepRows = [
 const emitsRows = [
   { name: 'update:current', args: 'number',  desc: '步骤变更。' },
   { name: 'update:open',    args: 'boolean', desc: '显示状态变更。' },
-  { name: 'close',          args: '—',       desc: '点击关闭或 ESC 时触发。' },
+  { name: 'close',          args: '—',       desc: '点击遮罩、ESC 或「跳过」时触发。' },
   { name: 'finish',         args: '—',       desc: '完成最后一步时触发。' },
+  { name: 'skip',           args: '—',       desc: '点击「跳过」按钮时触发（区别于 ESC / 遮罩关闭）。' },
 ]
 </script>
 

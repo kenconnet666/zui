@@ -38,6 +38,8 @@ export interface ZTourEmits {
   (e: 'update:open', value: boolean): void
   (e: 'close'): void
   (e: 'finish'): void
+  /** 点击「跳过」按钮时触发（区别于 ESC / mask 触发的 close）。 */
+  (e: 'skip'): void
 }
 </script>
 
@@ -139,6 +141,12 @@ function next(): void {
 function close(): void {
   emit('update:open', false)
   emit('close')
+}
+
+function skip(): void {
+  emit('update:open', false)
+  emit('close')
+  emit('skip')
 }
 
 const isLast = computed(() => currentRef.value >= props.steps.length - 1)
@@ -283,6 +291,7 @@ const btnClass = (primary: boolean): string =>
           </span>
           <div :class="btnGroupClass">
             <button v-if="currentRef > 0" type="button" :class="btnClass(false)" @click="prev">上一步</button>
+            <button v-if="!isLast" type="button" :class="btnClass(false)" @click="skip">跳过</button>
             <button type="button" :class="btnClass(true)" @click="next">
               {{ isLast ? '完成' : '下一步' }}
             </button>
