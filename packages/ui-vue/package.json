@@ -1,6 +1,6 @@
 {
   "name": "@kenconnet666/zui-vue",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Vue 3 components & helpers built on @kenconnet666/zui-core. ZBox for nested theme / componentTokens / locale / timezone, plus headless composables.",
   "type": "module",
   "main": "./dist/index.js",
@@ -55,16 +55,6 @@
     "node": ">=20.0.0"
   },
   "peerDependencies": {
-    "@emotion/css": "^11.13.5",
-    "@emotion/unitless": "^0.10.0",
-    "@floating-ui/vue": "^1.1.11",
-    "@vicons/material": "^0.13.0",
-    "@vueuse/core": "^14.3.0",
-    "@vueuse/integrations": "^14.3.0",
-    "async-validator": "^4.2.5",
-    "color2k": "^2.0.3",
-    "date-fns": "^4.1.0",
-    "date-fns-tz": "^3.2.0",
     "qrcode": "^1.5.4",
     "shiki": "^3.13.0",
     "vue": "^3.5.0"
@@ -78,23 +68,24 @@
     }
   },
   "dependencies": {
-    "@kenconnet666/zui-core": "workspace:*"
-  },
-  "devDependencies": {
     "@emotion/css": "^11.13.5",
     "@emotion/unitless": "^0.10.0",
     "@floating-ui/vue": "^1.1.11",
-    "@types/qrcode": "^1.5.6",
+    "@kenconnet666/zui-core": "workspace:*",
     "@vicons/material": "^0.13.0",
-    "@vitest/coverage-v8": "^4.1.4",
-    "@vue/test-utils": "^2.4.6",
     "@vueuse/core": "^14.3.0",
     "@vueuse/integrations": "^14.3.0",
     "async-validator": "^4.2.5",
     "color2k": "^2.0.3",
-    "date-fns": "^4.2.1",
-    "date-fns-tz": "^3.2.0",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.6",
+    "@vitest/coverage-v8": "^4.1.4",
+    "@vue/test-utils": "^2.4.6",
     "happy-dom": "^20.9.0",
+    "qrcode": "^1.5.4",
     "shiki": "^3.13.0",
     "vue": "^3.5.32"
   },
