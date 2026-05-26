@@ -38,6 +38,83 @@ const layoutRoutes: RouteRecordRaw[] = [
   { path: '/layout/affix',     component: () => import('../layout/ZAffixPage.vue') },
 ]
 
+const displayRoutes: RouteRecordRaw[] = [
+  { path: '/display/card',         component: () => import('../display/ZCardPage.vue') },
+  { path: '/display/image',        component: () => import('../display/ZImagePage.vue') },
+  { path: '/display/empty',        component: () => import('../display/ZEmptyPage.vue') },
+  { path: '/display/progress',     component: () => import('../display/ZProgressPage.vue') },
+  { path: '/display/result',       component: () => import('../display/ZResultPage.vue') },
+  { path: '/display/skeleton',     component: () => import('../display/ZSkeletonPage.vue') },
+  { path: '/display/statistic',    component: () => import('../display/ZStatisticPage.vue') },
+  { path: '/display/timeline',     component: () => import('../display/ZTimelinePage.vue') },
+  { path: '/display/tooltip',      component: () => import('../display/ZTooltipPage.vue') },
+  { path: '/display/popover',      component: () => import('../display/ZPopoverPage.vue') },
+  { path: '/display/carousel',     component: () => import('../display/ZCarouselPage.vue') },
+  { path: '/display/collapse',     component: () => import('../display/ZCollapsePage.vue') },
+  { path: '/display/descriptions', component: () => import('../display/ZDescriptionsPage.vue') },
+  { path: '/display/calendar',     component: () => import('../display/ZCalendarPage.vue') },
+  { path: '/display/list',         component: () => import('../display/ZListPage.vue') },
+  { path: '/display/table',        component: () => import('../display/ZTablePage.vue') },
+  { path: '/display/data-table',   component: () => import('../display/ZDataTablePage.vue') },
+  { path: '/display/tree',         component: () => import('../display/ZTreePage.vue') },
+  { path: '/display/virtual-list', component: () => import('../display/ZVirtualListPage.vue') },
+]
+
+const feedbackRoutes: RouteRecordRaw[] = [
+  { path: '/feedback/alert',        component: () => import('../feedback/ZAlertPage.vue') },
+  { path: '/feedback/message',      component: () => import('../feedback/ZMessagePage.vue') },
+  { path: '/feedback/notification',  component: () => import('../feedback/ZNotificationPage.vue') },
+  { path: '/feedback/loading-bar',  component: () => import('../feedback/ZLoadingBarPage.vue') },
+  { path: '/feedback/spin',         component: () => import('../feedback/ZSpinPage.vue') },
+  { path: '/feedback/modal',        component: () => import('../feedback/ZModalPage.vue') },
+  { path: '/feedback/drawer',       component: () => import('../feedback/ZDrawerPage.vue') },
+  { path: '/feedback/popconfirm',   component: () => import('../feedback/ZPopconfirmPage.vue') },
+  { path: '/feedback/tour',         component: () => import('../feedback/ZTourPage.vue') },
+]
+
+const toolRoutes: RouteRecordRaw[] = [
+  { path: '/tool/countdown',        component: () => import('../tool/ZCountdownPage.vue') },
+  { path: '/tool/marquee',          component: () => import('../tool/ZMarqueePage.vue') },
+  { path: '/tool/number-animation', component: () => import('../tool/ZNumberAnimationPage.vue') },
+  { path: '/tool/qr-code',          component: () => import('../tool/ZQRCodePage.vue') },
+  { path: '/tool/watermark',        component: () => import('../tool/ZWatermarkPage.vue') },
+]
+
+const navigationRoutes: RouteRecordRaw[] = [
+  { path: '/navigation/menu',        component: () => import('../navigation/ZMenuPage.vue') },
+  { path: '/navigation/tabs',        component: () => import('../navigation/ZTabsPage.vue') },
+  { path: '/navigation/steps',       component: () => import('../navigation/ZStepsPage.vue') },
+  { path: '/navigation/breadcrumb',  component: () => import('../navigation/ZBreadcrumbPage.vue') },
+  { path: '/navigation/dropdown',    component: () => import('../navigation/ZDropdownPage.vue') },
+  { path: '/navigation/pagination',  component: () => import('../navigation/ZPaginationPage.vue') },
+  { path: '/navigation/anchor',      component: () => import('../navigation/ZAnchorPage.vue') },
+  { path: '/navigation/back-top',    component: () => import('../navigation/ZBackTopPage.vue') },
+  { path: '/navigation/page-header', component: () => import('../navigation/ZPageHeaderPage.vue') },
+]
+
+const inputRoutes: RouteRecordRaw[] = [
+  { path: '/input/input',        component: () => import('../input/ZInputPage.vue') },
+  { path: '/input/textarea',     component: () => import('../input/ZTextareaPage.vue') },
+  { path: '/input/input-number', component: () => import('../input/ZInputNumberPage.vue') },
+  { path: '/input/select',       component: () => import('../input/ZSelectPage.vue') },
+  { path: '/input/checkbox',     component: () => import('../input/ZCheckboxPage.vue') },
+  { path: '/input/radio',        component: () => import('../input/ZRadioPage.vue') },
+  { path: '/input/switch',       component: () => import('../input/ZSwitchPage.vue') },
+  { path: '/input/slider',       component: () => import('../input/ZSliderPage.vue') },
+  { path: '/input/rate',         component: () => import('../input/ZRatePage.vue') },
+  { path: '/input/date-picker',  component: () => import('../input/ZDatePickerPage.vue') },
+  { path: '/input/time-picker',  component: () => import('../input/ZTimePickerPage.vue') },
+  { path: '/input/upload',       component: () => import('../input/ZUploadPage.vue') },
+  { path: '/input/form',         component: () => import('../input/ZFormPage.vue') },
+  { path: '/input/auto-complete',component: () => import('../input/ZAutoCompletePage.vue') },
+  { path: '/input/mention',      component: () => import('../input/ZMentionPage.vue') },
+  { path: '/input/cascader',     component: () => import('../input/ZCascaderPage.vue') },
+  { path: '/input/tree-select',  component: () => import('../input/ZTreeSelectPage.vue') },
+  { path: '/input/transfer',     component: () => import('../input/ZTransferPage.vue') },
+  { path: '/input/dynamic-tags', component: () => import('../input/ZDynamicTagsPage.vue') },
+  { path: '/input/color-picker', component: () => import('../input/ZColorPickerPage.vue') },
+]
+
 /** 旧路由兼容（已有外链/收藏）。 */
 const legacyRedirects: RouteRecordRaw[] = [
   { path: '/components/button', redirect: '/gene/button' },
@@ -53,6 +130,11 @@ export const router = createRouter({
     ...guideRoutes,
     ...geneRoutes,
     ...layoutRoutes,
+    ...displayRoutes,
+    ...feedbackRoutes,
+    ...toolRoutes,
+    ...navigationRoutes,
+    ...inputRoutes,
     ...legacyRedirects,
   ],
   scrollBehavior: () => ({ top: 0 }),

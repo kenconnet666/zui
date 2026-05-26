@@ -4,7 +4,7 @@
  *
  * - `description?: string` —— 默认 "暂无数据"
  * - `image?: Component` —— 自定义图标(默认走 inline 占位 SVG)
- * - `imageSize?: number` —— 图标尺寸 px,默认 64
+ * - `size?: number` —— 图标尺寸 iem 倍数,默认 4(= 64px @ 16px base)
  * - slot:`#image`(自定义图)/ `#description`(自定义文)/ default(操作按钮)
  */
 import type { Component } from 'vue'
@@ -14,7 +14,8 @@ import type { ZuiSchema } from '../provider/theme'
 export interface ZEmptyProps {
   description?: string
   image?: Component
-  imageSize?: number
+  /** 图标尺寸 iem 倍数，默认 4（= 64px @ default iem）。 */
+  size?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 </script>
@@ -26,7 +27,7 @@ import { useZTheme } from '../provider'
 
 const props = withDefaults(defineProps<ZEmptyProps>(), {
   description: '暂无数据',
-  imageSize: 64,
+  size: 4,
 })
 
 const theme = useZTheme()
@@ -49,8 +50,8 @@ const imgClass = computed(() =>
   icss(theme.value, (s) => {
     s.display.inlineFlex
     s.color._border
-    s.width.px(props.imageSize)
-    s.height.px(props.imageSize)
+    s.width.iem(props.size)
+    s.height.iem(props.size)
   }),
 )
 

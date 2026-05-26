@@ -1,0 +1,57 @@
+<script setup lang="ts">
+import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
+import DemoBlock from '../components/DemoBlock.vue'
+import ApiTable from '../components/ApiTable.vue'
+import BasicDemo from './ZResult/BasicDemo.vue'
+import BasicDemoSource from './ZResult/BasicDemo.vue?raw'
+
+const propsRows = [
+  { name: 'title',       type: 'string',             default: '—',       desc: '结果标题。' },
+  { name: 'description', type: 'string',             default: '—',       desc: '结果描述文字。' },
+  { name: 'color',       type: '(c: Chain) => void', default: '_info',   desc: '大图标颜色 factory。' },
+  { name: 'icon',        type: 'Component',          default: 'info 图标', desc: '自定义大图标组件（Vue 组件）。' },
+  { name: 'notFound',    type: 'boolean',            default: 'false',   desc: '404 模式，默认图标改为搜索图标。' },
+  { name: 'css',         type: '(s: Chain) => void', default: '—',       desc: '根元素 CSS 兜底。' },
+]
+
+const slotsRows = [
+  { name: 'icon',    desc: '自定义大图标区域，优先级高于 icon prop。' },
+  { name: 'default', desc: '底部操作按钮区域（建议放 ZButton）。' },
+]
+</script>
+
+<template>
+  <section>
+    <ZTitle :level="1">ZResult 结果</ZTitle>
+    <ZParagraph>
+      结果状态展示组件，用于操作完成后的反馈页面。
+      通过 <ZCode code="color" /> factory 控制大图标颜色，
+      <ZCode code=":not-found='true'" /> 可快速切换为 404 场景。
+    </ZParagraph>
+
+    <ZTitle :level="2">基础用法</ZTitle>
+    <DemoBlock title="成功 / 失败 / 404" :source="BasicDemoSource">
+      <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">Props</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name',    label: '属性',   mono: true, width: '140px' },
+        { key: 'type',    label: '类型',   mono: true, width: '200px' },
+        { key: 'default', label: '默认值', mono: true, width: '120px' },
+        { key: 'desc',    label: '说明' },
+      ]"
+      :rows="propsRows"
+    />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽',  mono: true, width: '120px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="slotsRows"
+    />
+  </section>
+</template>

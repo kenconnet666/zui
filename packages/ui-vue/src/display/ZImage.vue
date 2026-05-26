@@ -48,6 +48,11 @@ export interface ZImageProps {
   fit?: ((c: Chain<ZuiSchema>['objectFit']) => void) | undefined
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
+
+export interface ZImageEmits {
+  (e: 'load', evt: Event): void
+  (e: 'error', evt: Event): void
+}
 </script>
 
 <script lang="ts" setup>
@@ -59,6 +64,7 @@ const props = withDefaults(defineProps<ZImageProps>(), {
   alt: '',
   lazy: true,
 })
+const emit = defineEmits<ZImageEmits>()
 
 const theme = useZTheme()
 
@@ -102,11 +108,13 @@ const errorClass = computed(() =>
   }),
 )
 
-function onLoad(): void {
+function onLoad(evt: Event): void {
   status.value = 'loaded'
+  emit('load', evt)
 }
-function onError(): void {
+function onError(evt: Event): void {
   status.value = 'error'
+  emit('error', evt)
 }
 </script>
 
