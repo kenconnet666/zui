@@ -3,7 +3,7 @@ import { ZGrid, ZFlex, ZText } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="g => g._base" :css="s => s.width.pct(100)">
+  <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.width.pct(100)">
     <!-- 固定列数 -->
     <ZText>固定 3 列</ZText>
     <ZGrid :cols="3" :gap="g => g._small">

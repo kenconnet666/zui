@@ -1,49 +1,51 @@
 <script lang="ts">
 /**
- * `ZButton` —— Material 风按钮(Stage 6.6,Phase α 收尾)。
+ * `ZButton` —— Material 风按钮。
  *
- * **5 种 variant**(M3 命名习惯):
+ * **7 种 variant**:
  * - `filled`(默认)—— 实心按钮(primary 背景 + 反色文字)
  * - `outlined` —— 描边(透明背景 + primary 边框 + primary 文字)
+ * - `dashed` —— 虚线描边(同 outlined 但 border-style: dashed)
+ * - `secondary` —— 半透明色底(primary.alpha(12) 恒定背景)
  * - `text` —— 文字按钮(无背景无边框)
- * - `ghost` —— 半透明背景(`primary.alpha(8)`,跟 hover state 同色)
+ * - `ghost` —— 全透明背景(hover 时出现 primary.alpha(8))
  * - `link` —— 内联链接样式(下划线 + primary 色)
+ *
+ * **4 种 shape**: `default` / `round` / `circle` / `square`
+ *
+ * **tag prop**: 多态根元素(默认 `button`,可改 `a`、`div` 等)
  *
  * **API**:
  * - `color` carrier factory —— 主色(默认 `_primary`,可走 `_danger` 等)
- * - `size`(small/middle/large)
+ * - `size`(iem 倍数,默认 `1`)
  * - `loading` / `disabled` / `block`(满宽)
  * - `prefixIcon` / `suffixIcon` slot
  * - `ripple`(boolean,默认 `true`)—— 启用 Material 波纹
- * - sx:sxIcon / sxRipple
- *
- * **Material 行为**:
- * - useRipple 启用 pointerdown 波纹
- * - hover state layer:`primary.alpha(8)` 叠层
- * - active state layer:`primary.alpha(12)` 叠层
- * - `:focus-visible` → primary 外环(2px outline,offset 2px)
- *
- * **a11y**:`aria-disabled` / `aria-busy`(loading 时) / `aria-label`(透传)。
+ * - `sxIcon` / `sxRipple`
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
+export type ZButtonVariant = 'filled' | 'outlined' | 'dashed' | 'secondary' | 'text' | 'ghost' | 'link'
+export type ZButtonShape = 'default' | 'round' | 'circle' | 'square'
+
 export interface ZButtonProps {
-  variant?: 'filled' | 'outlined' | 'text' | 'ghost' | 'link'
+  variant?: ZButtonVariant
+  shape?: ZButtonShape
+  /** 多态根元素标签。默认 `'button'`。改 `'a'` 后 disabled 走 aria-disabled + tabIndex=-1。 */
+  tag?: string
   /** 主色 factory(默认 `_primary`)。可写 `(c) => c._danger` 等。 */
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   /**
    * 字号尺寸 —— `number`(iem 倍数,默认 1)。
    *
-   * 2026-05-24 B7:数值尺寸 prop 改 `number`,组件按比例算所有维度。
-   *
    * 内部公式:
    * - `font-size` = `size` iem
    * - `height` = `height ?? size * 2` iem
    * - `padding-y` = `size * 0.5` iem
-   * - `padding-x` = `size * 1` iem
-   * - `border-radius` = `size * 0.375` iem
+   * - `padding-x` = `size * 1` iem (circle/square 时改 0)
+   * - `border-radius` = shape 决定
    * - `gap` = `size * 0.5` iem
    */
   size?: number
@@ -52,9 +54,9 @@ export interface ZButtonProps {
   loading?: boolean
   disabled?: boolean
   block?: boolean
-  /** 是否启用 ripple 波纹,默认 `true`(`filled` / `ghost` / `outlined` 推荐;`text` / `link` 可关)。 */
+  /** 是否启用 ripple 波纹,默认 `true`。 */
   ripple?: boolean
-  /** HTML type 属性(默认 `'button'`)。 */
+  /** HTML type 属性(默认 `'button'`,tag 非 button 时忽略)。 */
   type?: 'button' | 'submit' | 'reset'
 
   sxIcon?: SxObject
@@ -77,33 +79,10 @@ import { useRipple } from '../_hooks'
 import { BuiltinIcons } from './icons'
 import ZIcon from './ZIcon.vue'
 
-/**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
- *
- *   ┌────────────────────────────────────────────┐
- *   │ ZButton                                    │   inline-flex,border-width: _thin
- *   │   font-size: `size` iem                    │   默认 size=1(16px @ 1080p)
- *   │   height: `height` iem                     │   默认 height=size*2=2iem(32px)
- *   │   padding-y: size*0.5 iem                  │   = 0.5iem(8px)
- *   │   padding-x: size*1 iem                    │   = 1iem(16px)
- *   │   border-radius: size*0.375 iem            │   = 0.375iem(6px)
- *   │   gap: size*0.5 iem                        │   = 0.5iem(8px)
- *   │   block=true → width: 100%                 │
- *   │                                            │
- *   │  ┌──────┐ ┌──────────┐ ┌──────┐           │
- *   │  │prefix│ │  slot    │ │suffix│           │   prefix/suffix slot 各占 inline-flex
- *   │  │ Icon │ │ default  │ │ Icon │           │   loading 时 prefix 位置渲染 spin Icon
- *   │  └──────┘ └──────────┘ └──────┘           │
- *   └────────────────────────────────────────────┘
- *
- * 用户改 size 数字 → 所有 iem 维度等比缩放(整体比例不变)。height 可独立覆盖。
- * 5 个 variant: filled / outlined / text / ghost / link(详见 props.variant)。
- * Material state layer: hover/active 通过 ::before 伪元素叠 8%/12% alpha。
- * focus-visible: outline _middle solid _focusRing.alpha(40),offset 2px。
- * 非 iem 单位走 `:css` 兜底。
- */
 const props = withDefaults(defineProps<ZButtonProps>(), {
   variant: 'filled',
+  shape: 'default',
+  tag: 'button',
   size: 1,
   loading: false,
   disabled: false,
@@ -115,11 +94,11 @@ const props = withDefaults(defineProps<ZButtonProps>(), {
 const emit = defineEmits<ZButtonEmits>()
 
 const theme = useZTheme()
-const btnRef = ref<HTMLButtonElement | null>(null)
+const btnRef = ref<HTMLElement | null>(null)
 
 const isClickDisabled = computed(() => props.disabled || props.loading)
 
-useRipple(btnRef, {
+useRipple(btnRef as Parameters<typeof useRipple>[0], {
   disabled: computed(() => !props.ripple || isClickDisabled.value),
   color: 'rgba(255, 255, 255, 0.35)',
 })
@@ -128,6 +107,8 @@ const buttonClass = computed(() =>
   icss(theme.value, (s) => {
     const size = props.size ?? 1
     const height = props.height ?? size * 2
+    const isCompact = props.shape === 'circle' || props.shape === 'square'
+
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -138,9 +119,21 @@ const buttonClass = computed(() =>
     s.height.iem(height)
     s.paddingTop.iem(size * 0.5)
     s.paddingBottom.iem(size * 0.5)
-    s.paddingLeft.iem(size * 1)
-    s.paddingRight.iem(size * 1)
-    s.borderRadius.iem(size * 0.375)
+    if (isCompact) {
+      s.paddingLeft.px(0)
+      s.paddingRight.px(0)
+      s.width.iem(height)
+    } else {
+      s.paddingLeft.iem(size * 1)
+      s.paddingRight.iem(size * 1)
+    }
+    // border-radius
+    switch (props.shape) {
+      case 'round': s.borderRadius.iem(height * 0.5); break
+      case 'circle': s.borderRadius.pct(50); break
+      case 'square': s.borderRadius.px(0); break
+      default: s.borderRadius.iem(size * 0.375)
+    }
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor.transparent
@@ -152,58 +145,41 @@ const buttonClass = computed(() =>
     s.transitionDuration._small
     if (props.block) s.width.pct(100)
 
-    // color factory:用户指定 → 走 chain;默认 _primary
-    // 用作"主色"挂在 color carrier(供 outlined/text/link/ghost 用)
     if (props.color) s.color(props.color)
     else s.color._primary
 
-    // variant 区分(2026-05-23 技术债务修复:不再用 `backgroundColor.currentColor` 桥接,
-    // 因为 currentColor 在 CSS paint 时 resolve 当前 color,而后续 `color._bg` 又改了 color,
-    // 导致 filled 按钮变白底白字。改为直接独立设置 backgroundColor)。
-    //
-    // user color 处理:通过 `applyAsBg` helper 把 color factory 桥接到 backgroundColor carrier。
     const hasUserColor = !!props.color
 
     switch (props.variant) {
       case 'filled':
-        if (!applyAsBg(s, props.color)) {
-          s.backgroundColor._primary
-        }
+        if (!applyAsBg(s, props.color)) s.backgroundColor._primary
         s.color._bg
         s.boxShadow._tiny
-        s._hover((h2) => {
-          h2.boxShadow._small
-        })
-        s._active((a) => {
-          a.boxShadow._tiny
-        })
+        s._hover((h2) => { h2.boxShadow._small })
+        s._active((a) => { a.boxShadow._tiny })
         break
+
       case 'outlined':
         s.borderColor.currentColor
         s.backgroundColor.transparent
         if (!hasUserColor) {
-          s._hover((h2) => {
-            h2.backgroundColor._primary.alpha(8)
-          })
-          s._active((a) => {
-            a.backgroundColor._primary.alpha(12)
-          })
+          s._hover((h2) => { h2.backgroundColor._primary.alpha(8) })
+          s._active((a) => { a.backgroundColor._primary.alpha(12) })
         }
         break
-      case 'text':
+
+      case 'dashed':
+        s.borderColor.currentColor
+        s.borderStyle.dashed
         s.backgroundColor.transparent
         if (!hasUserColor) {
-          s._hover((h2) => {
-            h2.backgroundColor._primary.alpha(8)
-          })
-          s._active((a) => {
-            a.backgroundColor._primary.alpha(12)
-          })
+          s._hover((h2) => { h2.backgroundColor._primary.alpha(8) })
+          s._active((a) => { a.backgroundColor._primary.alpha(12) })
         }
         break
-      case 'ghost':
-        // 用 ::before 伪元素做 state layer,避免 opacity 整体淡化(包括文字/图标)。
-        // user color 时降级:背景不变(透明),仅靠 ::before 颜色由 currentColor 提供。
+
+      case 'secondary':
+        // 恒定半透明底(primary.alpha(12)),hover 加深到 18%,active 22%
         s.backgroundColor.transparent
         s.position.relative
         s._before((b) => {
@@ -211,28 +187,57 @@ const buttonClass = computed(() =>
           b.position.absolute
           b.inset.px(0)
           b.backgroundColor.currentColor
-          b.opacity(0.08)
+          b.opacity(0.12)
           b.borderRadius.inherit
           b.pointerEvents.none
           b._prop('transition', 'opacity 150ms cubic-bezier(0.4, 0, 0.2, 1)')
         })
         s._hover((h2) => {
-          h2._before((b) => {
-            b.opacity(0.12)
-          })
+          h2._before((b) => { b.opacity(0.18) })
+        })
+        s._active((a) => {
+          a._before((b) => { b.opacity(0.22) })
         })
         break
+
+      case 'text':
+        s.backgroundColor.transparent
+        if (!hasUserColor) {
+          s._hover((h2) => { h2.backgroundColor._primary.alpha(8) })
+          s._active((a) => { a.backgroundColor._primary.alpha(12) })
+        }
+        break
+
+      case 'ghost':
+        // opacity 0 底,hover 出现 8%,active 12%
+        s.backgroundColor.transparent
+        s.position.relative
+        s._before((b) => {
+          b.content("''")
+          b.position.absolute
+          b.inset.px(0)
+          b.backgroundColor.currentColor
+          b.opacity(0)
+          b.borderRadius.inherit
+          b.pointerEvents.none
+          b._prop('transition', 'opacity 150ms cubic-bezier(0.4, 0, 0.2, 1)')
+        })
+        s._hover((h2) => {
+          h2._before((b) => { b.opacity(0.08) })
+        })
+        s._active((a) => {
+          a._before((b) => { b.opacity(0.12) })
+        })
+        break
+
       case 'link':
         s.backgroundColor.transparent
         s.textDecoration('none')
         s.borderRadius._tiny
-        s._hover((h2) => {
-          h2.textDecoration('underline')
-        })
+        s._hover((h2) => { h2.textDecoration('underline') })
         break
     }
 
-    // :focus-visible outline ring(M3 模式)── 用户 color 时走 _primary 备份
     s._focusVisible((f) => {
       f.outlineWidth._middle
       f.outlineStyle.solid
@@ -273,16 +278,21 @@ const loadingIcon = computed(() =>
     },
   }),
 )
+
+// 非 button tag 时不传 type/disabled 原生属性;disabled 走 aria + tabIndex
+const isNativeButton = computed(() => props.tag === 'button')
 </script>
 
 <template>
-  <button
+  <component
+    :is="tag"
     ref="btnRef"
-    :type="type"
+    :type="isNativeButton ? type : undefined"
+    :disabled="isNativeButton ? isClickDisabled : undefined"
+    :aria-disabled="isClickDisabled || undefined"
+    :aria-busy="loading || undefined"
+    :tabindex="!isNativeButton && isClickDisabled ? -1 : undefined"
     :class="buttonClass"
-    :disabled="isClickDisabled"
-    :aria-disabled="isClickDisabled"
-    :aria-busy="loading"
     @click="onClick"
   >
     <span
@@ -313,5 +323,5 @@ const loadingIcon = computed(() =>
     >
       <slot name="suffixIcon" />
     </span>
-  </button>
+  </component>
 </template>

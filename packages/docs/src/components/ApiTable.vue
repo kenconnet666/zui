@@ -85,7 +85,7 @@ const tdClass = (mono: boolean) =>
       s.borderBottomStyle.solid
       s.borderBottomColor._border
       s.color._text
-      s.verticalAlign.top
+      s.verticalAlign('top')
       if (mono) {
         s.fontFamily('ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace')
         s.fontSize.iem(0.8125)

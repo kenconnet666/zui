@@ -18,14 +18,14 @@ import { ZPopover, ZButton, ZFlex, ZText } from '@kenconnet666/zui-vue'
           <ZText>第二行内容</ZText>
         </ZFlex>
       </template>
-      <ZButton :size="0.875" :variant="v => v._ghost">right</ZButton>
+      <ZButton :size="0.875" variant="ghost">right</ZButton>
     </ZPopover>
 
     <ZPopover title="悬停触发" trigger="hover">
       <template #content>
         <ZText>悬停 50ms 后显示。</ZText>
       </template>
-      <ZButton :size="0.875" :variant="v => v._ghost">hover 触发</ZButton>
+      <ZButton :size="0.875" variant="ghost">hover 触发</ZButton>
     </ZPopover>
   </ZFlex>
 </template>

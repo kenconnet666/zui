@@ -15,6 +15,8 @@ const propsRows = [
   { name: 'css',         type: '(s: Chain) => void', default: '—',    desc: '根元素 CSS 兜底。' },
 ]
 
+const stepCode = ':step="1"'
+
 const emitsRows = [
   { name: 'update:value', args: 'string', desc: '时间变更（HH:mm 或 HH:mm:ss）。' },
   { name: 'change',       args: 'string', desc: '确认后触发。' },
@@ -26,7 +28,7 @@ const emitsRows = [
     <ZTitle :level="1">ZTimePicker 时间选择器</ZTitle>
     <ZParagraph>
       基于原生 <ZCode code="input[type=time]" /> 封装，默认精度到分钟（<ZCode code="step=60" />），
-      设为 <ZCode code=":step=\"1\"" /> 可显示秒级选择。
+      设为 <ZCode :code="stepCode" /> 可显示秒级选择。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>

@@ -24,7 +24,7 @@ const backLog = ref<string[]>([])
       :show-back="false"
     >
       <template #extra>
-        <ZButton :size="0.875" :variant="v => v._ghost">操作</ZButton>
+        <ZButton :size="0.875" variant="ghost">操作</ZButton>
       </template>
     </ZPageHeader>
 

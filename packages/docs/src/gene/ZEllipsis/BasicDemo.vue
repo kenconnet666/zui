@@ -3,7 +3,7 @@ import { ZEllipsis, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex direction="column" :gap="(g) => g.iem(0.75)">
+  <ZFlex :direction="d => d.column" :gap="(g) => g.iem(0.75)">
     <ZEllipsis :css="(s) => s.width.px(200)">
       单行截断（lines=1，默认），这段文字超过 200px 后显示省略号
     </ZEllipsis>

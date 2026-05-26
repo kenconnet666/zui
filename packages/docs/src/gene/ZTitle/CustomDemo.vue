@@ -3,7 +3,7 @@ import { ZTitle, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex direction="column" :gap="(g) => g.iem(0.5)">
+  <ZFlex :direction="d => d.column" :gap="(g) => g.iem(0.5)">
     <!-- size 覆盖 level 默认 fontSize -->
     <ZTitle :level="2" :size="3">size=3 覆盖 h2 默认</ZTitle>
     <!-- color 覆盖默认文字色 -->

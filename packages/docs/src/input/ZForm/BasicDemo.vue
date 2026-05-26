@@ -17,7 +17,7 @@ const rules = {
   ],
   email: [
     { required: true, message: '请输入邮箱', trigger: 'change' },
-    { type: 'email', message: '邮箱格式不正确', trigger: 'blur' },
+    { type: 'email' as const, message: '邮箱格式不正确', trigger: 'blur' },
   ],
   role: [
     { required: true, message: '请选择角色', trigger: 'change' },
@@ -63,7 +63,7 @@ function handleReset(): void {
       <ZFormItem prop="">
         <ZFlex :gap="g => g._small">
           <ZButton :size="0.875" @click="handleSubmit">提交</ZButton>
-          <ZButton :size="0.875" :variant="v => v._ghost" @click="handleReset">重置</ZButton>
+          <ZButton :size="0.875" variant="ghost" @click="handleReset">重置</ZButton>
         </ZFlex>
       </ZFormItem>
     </ZForm>

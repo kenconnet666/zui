@@ -3,7 +3,7 @@ import { ZScrollbar, ZFlex, ZText } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="g => g._base">
+  <ZFlex :direction="d => d.column" :gap="g => g._small">
     <!-- maxHeight 模式 -->
     <ZText>maxHeight = 10（iem 倍数，超出滚动，悬停显示自定义滚动条）</ZText>
     <ZScrollbar

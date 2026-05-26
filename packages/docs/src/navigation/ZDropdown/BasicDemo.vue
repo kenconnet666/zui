@@ -30,7 +30,7 @@ const hoverItems = [
     </ZFlex>
 
     <ZDropdown :items="hoverItems" trigger="hover">
-      <ZButton :size="0.875" :variant="v => v._ghost">悬停触发</ZButton>
+      <ZButton :size="0.875" variant="ghost">悬停触发</ZButton>
     </ZDropdown>
   </ZFlex>
 </template>

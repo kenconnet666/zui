@@ -21,7 +21,8 @@ function onClose(name: string) {
   const idx = closableTabs.value.findIndex(t => t.name === name)
   if (idx >= 0) closableTabs.value.splice(idx, 1)
   if (activeClosable.value === name && closableTabs.value.length) {
-    activeClosable.value = closableTabs.value[Math.max(0, idx - 1)].name
+    const prev = closableTabs.value[Math.max(0, idx - 1)]
+    if (prev) activeClosable.value = prev.name
   }
 }
 </script>

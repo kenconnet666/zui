@@ -3,7 +3,7 @@ import { ZSpace, ZTag, ZText, ZDivider } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZSpace :direction="d => d.column" :size="g => g._base">
+  <ZSpace :direction="d => d.column" :size="g => g._small">
     <!-- 默认行内间距 -->
     <ZText>默认（row + _small gap + center align）</ZText>
     <ZSpace>

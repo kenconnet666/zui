@@ -3,7 +3,7 @@ import { ZFlex, ZTag, ZText } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="g => g._base" :css="s => s.width.pct(100)">
+  <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.width.pct(100)">
     <!-- Row wrap -->
     <ZFlex :wrap="w => w.wrap" :gap="g => g._small">
       <ZTag v-for="n in 8" :key="n">Item {{ n }}</ZTag>

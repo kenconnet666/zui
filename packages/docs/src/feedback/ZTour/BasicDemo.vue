@@ -37,7 +37,7 @@ function startTour(): void {
     <ZFlex :gap="g => g._large" :align="a => a.center">
       <ZButton id="tour-step-1" :size="0.875" @click="startTour">开始引导</ZButton>
       <ZText id="tour-step-2">描述文字示例</ZText>
-      <ZButton id="tour-step-3" :size="0.875" :variant="v => v._ghost">第三个目标</ZButton>
+      <ZButton id="tour-step-3" :size="0.875" variant="ghost">第三个目标</ZButton>
     </ZFlex>
   </ZFlex>
 

@@ -25,6 +25,6 @@ function showNoDesc()  { notify.info('无描述通知') }
     <ZButton :size="0.875" :color="c => c._warning" @click="showWarning">Warning</ZButton>
     <ZButton :size="0.875" :color="c => c._danger" @click="showError">Error</ZButton>
     <ZButton :size="0.875" :color="c => c._primary" @click="showLoading">Loading → Success</ZButton>
-    <ZButton :size="0.875" :variant="v => v._ghost" @click="showNoDesc">无描述</ZButton>
+    <ZButton :size="0.875" variant="ghost" @click="showNoDesc">无描述</ZButton>
   </ZFlex>
 </template>

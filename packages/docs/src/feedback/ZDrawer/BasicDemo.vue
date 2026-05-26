@@ -9,7 +9,7 @@ const bottomVisible = ref(false)
 <template>
   <ZFlex :gap="g => g._small" :wrap="w => w.wrap">
     <ZButton :size="0.875" @click="rightVisible = true">右侧抽屉（默认）</ZButton>
-    <ZButton :size="0.875" :variant="v => v._ghost" @click="bottomVisible = true">底部抽屉</ZButton>
+    <ZButton :size="0.875" variant="ghost" @click="bottomVisible = true">底部抽屉</ZButton>
   </ZFlex>
 
   <ZDrawer v-model:visible="rightVisible" title="右侧抽屉" :size="20">
@@ -19,7 +19,7 @@ const bottomVisible = ref(false)
     </ZFlex>
     <template #foot>
       <ZFlex :justify="j => j.flexEnd" :gap="g => g._small">
-        <ZButton :size="0.875" :variant="v => v._ghost" @click="rightVisible = false">取消</ZButton>
+        <ZButton :size="0.875" variant="ghost" @click="rightVisible = false">取消</ZButton>
         <ZButton :size="0.875" @click="rightVisible = false">保存</ZButton>
       </ZFlex>
     </template>

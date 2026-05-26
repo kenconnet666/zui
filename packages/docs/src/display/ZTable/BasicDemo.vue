@@ -8,6 +8,7 @@ interface User {
   age: number
   role: string
   status: string
+  [key: string]: unknown
 }
 
 const columns = [

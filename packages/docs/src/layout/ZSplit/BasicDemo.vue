@@ -7,7 +7,7 @@ const vRatio = ref(0.35)
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="g => g._base">
+  <ZFlex :direction="d => d.column" :gap="g => g._small">
     <!-- 水平分割 -->
     <ZText>水平分割（ratio = {{ hRatio.toFixed(2) }}）</ZText>
     <ZSplit

@@ -18,7 +18,7 @@ const columns = [
 const rows: Row[] = Array.from({ length: 100 }, (_, i) => ({
   id: i + 1,
   name: `员工 ${String(i + 1).padStart(3, '0')}`,
-  dept: ['研发部', '产品部', '设计部', '运营部'][i % 4],
+  dept: (['研发部', '产品部', '设计部', '运营部'] as string[])[i % 4] as string,
   salary: 8000 + (i % 10) * 1000,
 }))
 

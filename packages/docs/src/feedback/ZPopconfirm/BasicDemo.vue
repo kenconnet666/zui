@@ -29,7 +29,7 @@ const log = ref('')
       </ZPopconfirm>
 
       <ZPopconfirm title="已禁用" :disabled="true" @confirm="log = '不应触发'">
-        <ZButton :size="0.875" :variant="v => v._ghost">禁用确认框</ZButton>
+        <ZButton :size="0.875" variant="ghost">禁用确认框</ZButton>
       </ZPopconfirm>
     </ZFlex>
 

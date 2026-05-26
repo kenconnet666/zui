@@ -7,7 +7,7 @@ function remove(i: number) { tags.value.splice(i, 1) }
 </script>
 
 <template>
-  <ZFlex direction="column" :gap="(g) => g.iem(0.75)">
+  <ZFlex :direction="d => d.column" :gap="(g) => g.iem(0.75)">
     <!-- variant -->
     <ZFlex :gap="(g) => g.iem(0.5)" :wrap="(w) => w.wrap">
       <ZTag variant="soft">soft（默认）</ZTag>

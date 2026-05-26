@@ -3,7 +3,7 @@ import { ZFlex, ZSpacer, ZTag, ZText } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="g => g._base" :css="s => s.width.pct(100)">
+  <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.width.pct(100)">
     <!-- 工具栏 push-apart -->
     <ZText>工具栏：左边标题，右边操作（ZSpacer 撑开中间）</ZText>
     <ZFlex

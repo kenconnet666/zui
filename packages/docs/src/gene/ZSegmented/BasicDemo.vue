@@ -8,7 +8,7 @@ const tab3 = ref<string | number>('medium')
 </script>
 
 <template>
-  <ZFlex direction="column" :gap="(g) => g.iem(1)">
+  <ZFlex :direction="d => d.column" :gap="(g) => g.iem(1)">
     <!-- 基础 -->
     <ZSegmented
       v-model:value="tab1"

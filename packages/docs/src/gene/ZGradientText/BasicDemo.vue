@@ -3,7 +3,7 @@ import { ZGradientText, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex direction="column" :gap="(g) => g.iem(0.75)">
+  <ZFlex :direction="d => d.column" :gap="(g) => g.iem(0.75)">
     <ZGradientText :css="(s) => s.fontSize.iem(2)">
       默认渐变（primary → info，135°）
     </ZGradientText>

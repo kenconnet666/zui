@@ -25,7 +25,7 @@ import { ZCard, ZFlex, ZText, ZButton, ZTag } from '@kenconnet666/zui-vue'
       <ZText>卡片正文内容。</ZText>
       <template #foot>
         <ZFlex :gap="g => g._small" :justify="j => j.flexEnd">
-          <ZButton :size="0.875" :variant="v => v._ghost">取消</ZButton>
+          <ZButton :size="0.875" variant="ghost">取消</ZButton>
           <ZButton :size="0.875">确认</ZButton>
         </ZFlex>
       </template>

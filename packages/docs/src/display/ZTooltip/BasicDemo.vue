@@ -9,18 +9,18 @@ import { ZTooltip, ZButton, ZFlex } from '@kenconnet666/zui-vue'
     </ZTooltip>
 
     <ZTooltip content="底部提示" placement="bottom">
-      <ZButton :size="0.875" :variant="v => v._ghost">bottom</ZButton>
+      <ZButton :size="0.875" variant="ghost">bottom</ZButton>
     </ZTooltip>
 
     <ZTooltip content="右侧提示" placement="right">
-      <ZButton :size="0.875" :variant="v => v._ghost">right</ZButton>
+      <ZButton :size="0.875" variant="ghost">right</ZButton>
     </ZTooltip>
 
     <ZTooltip placement="top" trigger="click">
       <template #content>
         <span>点击触发 Tooltip<br />支持多行内容</span>
       </template>
-      <ZButton :size="0.875" :variant="v => v._ghost">点击触发</ZButton>
+      <ZButton :size="0.875" variant="ghost">点击触发</ZButton>
     </ZTooltip>
 
     <ZTooltip content="该按钮已禁用" :disabled="true">
