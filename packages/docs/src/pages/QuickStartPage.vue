@@ -10,7 +10,7 @@ import ApiTable from '../components/ApiTable.vue'
 
     <ZTitle :level="2">安装</ZTitle>
     <ZParagraph>使用 pnpm（推荐）、npm 或 yarn 安装：</ZParagraph>
-    <ZCode :inline="false" lang="bash" code="pnpm add @kenconnet666/zui-vue @kenconnet666/zui-core" />
+    <ZCode :inline="false" lang="bash" code="pnpm add @kenconnet666/zui-vue" />
 
     <ZTitle :level="2">注册 Provider</ZTitle>
     <ZParagraph>
