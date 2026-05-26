@@ -177,6 +177,9 @@ importers:
       '@kenconnet666/zui-vue':
         specifier: workspace:*
         version: link:../ui-vue
+      '@vicons/material':
+        specifier: ^0.13.0
+        version: 0.13.0
       shiki:
         specifier: ^3.23.0
         version: 3.23.0
