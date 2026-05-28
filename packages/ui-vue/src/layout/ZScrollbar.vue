@@ -122,17 +122,21 @@ const thumbColors = computed(() => scrollbarThumbColors(dark.value))
 const rootClass = computed(() =>
   icss(theme.value, s => {
     s.position.relative
-    if (props.maxHeight !== undefined) {
-      s.maxHeight.iem(props.maxHeight)
-      s.overflow.hidden
-    }
     props.css?.(s)
   }),
 )
 
 const scrollerClass = computed(() =>
   icss(theme.value, s => {
-    s.height.pct(100)
+    // 高度限制放在 scroller 自身:
+    // - maxHeight 模式:scroller 用 max-height 自限高 + overflow:auto 自滚动
+    //   (放 root 用 max-height 时,scroller 的 height:100% 因 parent 无确定 height 而失效)
+    // - 外部模式:依赖 root 经 :css 设定的明确高度,scroller height:100% 撑满
+    if (props.maxHeight !== undefined) {
+      s.maxHeight.iem(props.maxHeight)
+    } else {
+      s.height.pct(100)
+    }
     s.overflow.auto
     // 隐藏原生滚动条（不占布局空间）
     s._prop('scrollbarWidth', 'none')
@@ -170,13 +174,25 @@ const thumbClass = computed(() =>
   }),
 )
 
+// ─── 淡入淡出过渡 class(icss 生成,替代原 SFC style 块)───
+const fadeActiveClass = computed(() =>
+  icss(theme.value, s => {
+    s.transition('opacity 150ms')
+  }),
+)
+const fadeFromClass = computed(() =>
+  icss(theme.value, s => {
+    s.opacity(0)
+  }),
+)
+
 // scrollerRef 是内层滚动容器；$el 保留作向后兼容别名（DocLayout 等处使用）
 defineExpose({ scrollerRef, $el: scrollerRef })
 </script>
 
 <template>
   <div
-    :class="rootClass"
+    :class="['zui-scrollbar', rootClass]"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
     @focusin="isFocused = true"
@@ -186,10 +202,10 @@ defineExpose({ scrollerRef, $el: scrollerRef })
       <slot />
     </div>
     <Transition
-      enter-active-class="__zs-fade-in"
-      leave-active-class="__zs-fade-out"
-      enter-from-class="__zs-fade-from"
-      leave-to-class="__zs-fade-from"
+      :enter-active-class="fadeActiveClass"
+      :leave-active-class="fadeActiveClass"
+      :enter-from-class="fadeFromClass"
+      :leave-to-class="fadeFromClass"
     >
       <div v-if="thumbVisible" :class="trackClass">
         <div :class="thumbClass" :style="thumbStyle" />
@@ -197,15 +213,3 @@ defineExpose({ scrollerRef, $el: scrollerRef })
     </Transition>
   </div>
 </template>
-
-<style>
-.__zs-fade-in {
-  transition: opacity 150ms;
-}
-.__zs-fade-out {
-  transition: opacity 150ms;
-}
-.__zs-fade-from {
-  opacity: 0;
-}
-</style>

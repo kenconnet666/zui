@@ -101,13 +101,17 @@ describe('ZScrollbar', () => {
       slots: { default: () => 'long content' },
     })
     expect(w.text()).toContain('long content')
-    expect(w.classes()).toContain('zui-scrollbar')
+    // 注:ZScrollbar expose $el=scrollerRef,VTU 的 w.element/classes() 因此指向内层 scroller;
+    // 稳定 hook class 'zui-scrollbar' 在根元素,用 html() 校验
+    expect(w.html()).toContain('zui-scrollbar')
   })
 
-  it('全局样式只注入一次(再 mount 不重复)', () => {
-    mount(ZScrollbar, { slots: { default: () => 'x' } })
-    mount(ZScrollbar, { slots: { default: () => 'y' } })
-    expect(document.querySelectorAll('#zui-scrollbar-styles').length).toBe(1)
+  it('多次 mount 均挂载稳定 hook class(emotion 天然去重)', () => {
+    const w1 = mount(ZScrollbar, { slots: { default: () => 'x' } })
+    const w2 = mount(ZScrollbar, { slots: { default: () => 'y' } })
+    // emotion 对相同样式生成相同 hash class,天然去重;两次挂载根元素都带稳定 hook class
+    expect(w1.html()).toContain('zui-scrollbar')
+    expect(w2.html()).toContain('zui-scrollbar')
   })
 })
 

@@ -332,6 +332,18 @@ function setItemRef(i: number) {
   }
 }
 
+// ─── 淡入淡出过渡 class(icss 生成,替代原 SFC style 块)───
+const fadeActiveClass = computed(() =>
+  icss(theme.value, s => {
+    s.transition('opacity 150ms')
+  }),
+)
+const fadeFromClass = computed(() =>
+  icss(theme.value, s => {
+    s.opacity(0)
+  }),
+)
+
 defineExpose<ZVirtualListExpose>({
   rootRef: scrollEl,
   scrollToIndex: vs.scrollToIndex,
@@ -356,7 +368,7 @@ defineExpose<ZVirtualListExpose>({
     @focusout="isFocused = false"
   >
     <!-- 内层：实际滚动容器（native scrollbar 已隐藏） -->
-    <div ref="scrollEl" :class="rootClass" :style="containerStyle">
+    <div ref="scrollEl" :class="['zui-virtual-list', rootClass]" :style="containerStyle">
       <div v-if="slots.header" data-zv-header><slot name="header" /></div>
       <div v-if="isEmpty && slots.empty" data-zv-empty><slot name="empty" /></div>
       <div v-else :style="wrapperStyle" data-zv-wrapper>
@@ -373,10 +385,10 @@ defineExpose<ZVirtualListExpose>({
     </div>
     <!-- overlay track：position:absolute 定位于外层，不受内层滚动影响 -->
     <Transition
-      enter-active-class="__zs-fade-in"
-      leave-active-class="__zs-fade-out"
-      enter-from-class="__zs-fade-from"
-      leave-to-class="__zs-fade-from"
+      :enter-active-class="fadeActiveClass"
+      :leave-active-class="fadeActiveClass"
+      :enter-from-class="fadeFromClass"
+      :leave-to-class="fadeFromClass"
     >
       <div v-if="thumbVisible" :class="trackClass">
         <div :class="sbThumbClass" :style="thumbStyle" />
@@ -384,15 +396,3 @@ defineExpose<ZVirtualListExpose>({
     </Transition>
   </div>
 </template>
-
-<style>
-.__zs-fade-in {
-  transition: opacity 150ms;
-}
-.__zs-fade-out {
-  transition: opacity 150ms;
-}
-.__zs-fade-from {
-  opacity: 0;
-}
-</style>

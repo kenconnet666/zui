@@ -5,8 +5,6 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZScrollbar/BasicDemo.vue'
 import BasicDemoSource from './ZScrollbar/BasicDemo.vue?raw'
-import HorizontalDemo from './ZScrollbar/HorizontalDemo.vue'
-import HorizontalDemoSource from './ZScrollbar/HorizontalDemo.vue?raw'
 </script>
 
 <template>
@@ -32,15 +30,6 @@ import HorizontalDemoSource from './ZScrollbar/HorizontalDemo.vue?raw'
         <ZCode code=":css" /> 模式：需自行设定固定高度。
       </template>
       <BasicDemo />
-    </DemoBlock>
-
-    <ZTitle :level="2">横向滚动</ZTitle>
-    <DemoBlock title="内容超出宽度时横向滚动" :source="HorizontalDemoSource">
-      <template #desc>
-        子元素 <ZCode code="flex-shrink: 0" /> +
-        <ZCode code="nowrap" /> 不换行,容器宽度不足即横向滚动。
-      </template>
-      <HorizontalDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>
