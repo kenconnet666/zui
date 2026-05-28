@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZLink/BasicDemo.vue'
 import BasicDemoSource from './ZLink/BasicDemo.vue?raw'
+import StateDemo from './ZLink/StateDemo.vue'
+import StateDemoSource from './ZLink/StateDemo.vue?raw'
 </script>
 
 <template>
@@ -24,6 +26,15 @@ import BasicDemoSource from './ZLink/BasicDemo.vue?raw'
         不传 <ZCode code="href" /> 退化为普通行内文本（适合 SPA router-link 场景，用 <ZCode code="tag" /> 换成 RouterLink）。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">下划线与状态</ZTitle>
+    <DemoBlock title="underline / 外链 / 颜色 / 禁用" :source="StateDemoSource">
+      <template #desc>
+        <ZCode code="underline" /> 始终下划线,<ZCode code="underlineOnHover" /> 仅悬停;
+        <ZCode code="target='_blank'" /> 自动补 <ZCode code="rel" />;<ZCode code="disabled" /> 屏蔽点击。
+      </template>
+      <StateDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

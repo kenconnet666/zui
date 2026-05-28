@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZDynamicTags/BasicDemo.vue'
 import BasicDemoSource from './ZDynamicTags/BasicDemo.vue?raw'
+import MaxDemo from './ZDynamicTags/MaxDemo.vue'
+import MaxDemoSource from './ZDynamicTags/MaxDemo.vue?raw'
 
 const propsRows = [
   { name: 'value',       type: 'string[]',           default: '[]',        desc: '标签数组（v-model:value）。' },
@@ -30,6 +32,14 @@ const emitsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="添加删除 / 数量限制 / 禁用" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">数量限制 / 禁止新增</ZTitle>
+    <DemoBlock title="max / addable / placeholder" :source="MaxDemoSource">
+      <template #desc>
+        <ZCode code="max" /> 限制标签上限;<ZCode code=":addable='false'" /> 关闭新增,仅保留删除。
+      </template>
+      <MaxDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

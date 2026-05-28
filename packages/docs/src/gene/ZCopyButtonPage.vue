@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZCopyButton/BasicDemo.vue'
 import BasicDemoSource from './ZCopyButton/BasicDemo.vue?raw'
+import LabelDemo from './ZCopyButton/LabelDemo.vue'
+import LabelDemoSource from './ZCopyButton/LabelDemo.vue?raw'
 
 const propsRows = [
   { name: 'text',          type: 'string',                    default: '—（必传）',          desc: '要复制的文本内容。' },
@@ -39,6 +41,15 @@ const propsRows = [
         <ZCode code="toast=false" /> 关闭成功 toast，仅保留按钮状态切换。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">带文字 / 尺寸 / 静默</ZTitle>
+    <DemoBlock title="label / size / 关闭 toast" :source="LabelDemoSource">
+      <template #desc>
+        <ZCode code="label" /> 显示文字,<ZCode code="copiedLabel" /> 是复制成功临时文案;
+        <ZCode code=":toast='false'" /> 关闭弹出提示。
+      </template>
+      <LabelDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

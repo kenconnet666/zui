@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZRate/BasicDemo.vue'
 import BasicDemoSource from './ZRate/BasicDemo.vue?raw'
+import HalfDemo from './ZRate/HalfDemo.vue'
+import HalfDemoSource from './ZRate/HalfDemo.vue?raw'
 
 const propsRows = [
   { name: 'value',     type: 'number',                   default: '0',    desc: '评分值（v-model:value）。' },
@@ -32,6 +34,15 @@ const emitsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="整星 / 半星 / 多尺寸 / 只读 / 禁用" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">半星 / 自定义 / 只读</ZTitle>
+    <DemoBlock title="allowHalf / count / color / readonly" :source="HalfDemoSource">
+      <template #desc>
+        <ZCode code="allowHalf" /> 允许半星;<ZCode code="count" /> 自定义星数;
+        <ZCode code="color" /> carrier 切色;<ZCode code="readonly" /> 只读展示。
+      </template>
+      <HalfDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

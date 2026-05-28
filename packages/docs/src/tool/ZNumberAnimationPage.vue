@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZNumberAnimation/BasicDemo.vue'
 import BasicDemoSource from './ZNumberAnimation/BasicDemo.vue?raw'
+import PrecisionDemo from './ZNumberAnimation/PrecisionDemo.vue'
+import PrecisionDemoSource from './ZNumberAnimation/PrecisionDemo.vue?raw'
 
 const propsRows = [
   { name: 'to',        type: 'number',             default: '—（必传）', desc: '目标值。值变化时动画重新触发。' },
@@ -32,6 +34,15 @@ const propsRows = [
         <ZCode code="separator" /> 设为空字符串可关闭千分位分隔。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">小数精度 / 千分位</ZTitle>
+    <DemoBlock title="precision / separator / 动态 to" :source="PrecisionDemoSource">
+      <template #desc>
+        <ZCode code="precision" /> 控制小数位;<ZCode code="separator" /> 千分位分隔符;
+        改变 <ZCode code="to" /> 自动重新播放动画。
+      </template>
+      <PrecisionDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

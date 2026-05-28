@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZQRCode/BasicDemo.vue'
 import BasicDemoSource from './ZQRCode/BasicDemo.vue?raw'
+import CustomDemo from './ZQRCode/CustomDemo.vue'
+import CustomDemoSource from './ZQRCode/CustomDemo.vue?raw'
 
 const propsRows = [
   { name: 'value',     type: 'string',             default: '—（必传）', desc: '二维码内容（URL / 文本等）。' },
@@ -27,6 +29,14 @@ const propsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="默认 / 自定义尺寸 / 颜色 / 无边距" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">尺寸 / 颜色</ZTitle>
+    <DemoBlock title="pixelSize / color / bgColor / margin" :source="CustomDemoSource">
+      <template #desc>
+        <ZCode code="pixelSize" /> 是物理像素边长;<ZCode code="color" /> / <ZCode code="bgColor" /> 自定义前景背景。
+      </template>
+      <CustomDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

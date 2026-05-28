@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZSegmented/BasicDemo.vue'
 import BasicDemoSource from './ZSegmented/BasicDemo.vue?raw'
+import BlockDemo from './ZSegmented/BlockDemo.vue'
+import BlockDemoSource from './ZSegmented/BlockDemo.vue?raw'
 </script>
 
 <template>
@@ -23,6 +25,14 @@ import BasicDemoSource from './ZSegmented/BasicDemo.vue?raw'
         未激活项 hover 变色；整体禁用时 <ZCode code="opacity._dim" />。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">block / 尺寸 / 禁用</ZTitle>
+    <DemoBlock title="block 撑满 / size / disabled" :source="BlockDemoSource">
+      <template #desc>
+        <ZCode code="block" /> 让控件撑满父宽;<ZCode code="size" /> 是 iem 倍率;<ZCode code="disabled" /> 整体禁用。
+      </template>
+      <BlockDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

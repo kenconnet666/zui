@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZSpacer/BasicDemo.vue'
 import BasicDemoSource from './ZSpacer/BasicDemo.vue?raw'
+import BasisDemo from './ZSpacer/BasisDemo.vue'
+import BasisDemoSource from './ZSpacer/BasisDemo.vue?raw'
 </script>
 
 <template>
@@ -25,6 +27,14 @@ import BasicDemoSource from './ZSpacer/BasicDemo.vue?raw'
         ZSpacer 自动填满剩余空间。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">固定起始宽度 (basis)</ZTitle>
+    <DemoBlock title="grow=0 + basis：固定占位,两侧自适应" :source="BasisDemoSource">
+      <template #desc>
+        <ZCode code="basis" /> 设 <ZCode code="flex-basis" />;配合 <ZCode code=":grow='0'" /> 即得固定宽度占位块。
+      </template>
+      <BasisDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

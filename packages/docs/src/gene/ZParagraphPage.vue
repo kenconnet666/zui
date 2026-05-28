@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZParagraph/BasicDemo.vue'
 import BasicDemoSource from './ZParagraph/BasicDemo.vue?raw'
+import StyleDemo from './ZParagraph/StyleDemo.vue'
+import StyleDemoSource from './ZParagraph/StyleDemo.vue?raw'
 </script>
 
 <template>
@@ -24,6 +26,14 @@ import BasicDemoSource from './ZParagraph/BasicDemo.vue?raw'
         无需手动设 margin。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">排版微调</ZTitle>
+    <DemoBlock title="size / leading / tracking / italic" :source="StyleDemoSource">
+      <template #desc>
+        carrier factory 调度字号、行高(<ZCode code="leading" />)、字间距(<ZCode code="tracking" />)等主题 token。
+      </template>
+      <StyleDemo />
     </DemoBlock>
 
     <ZTitle :level="2">与 ZText 的差异</ZTitle>

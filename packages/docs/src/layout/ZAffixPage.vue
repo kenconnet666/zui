@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZAffix/BasicDemo.vue'
 import BasicDemoSource from './ZAffix/BasicDemo.vue?raw'
+import OffsetDemo from './ZAffix/OffsetDemo.vue'
+import OffsetDemoSource from './ZAffix/OffsetDemo.vue?raw'
 </script>
 
 <template>
@@ -23,6 +25,14 @@ import BasicDemoSource from './ZAffix/BasicDemo.vue?raw'
         <ZCode code="target" /> prop 传入返回滚动容器的函数（默认监听 <ZCode code="window" />）。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">带间距吸顶</ZTitle>
+    <DemoBlock title="offsetTop = 12：吸附时保留顶部间距" :source="OffsetDemoSource">
+      <template #desc>
+        <ZCode code="offsetTop" /> 大于 0 时,吸附状态与容器顶部保留对应像素间距。
+      </template>
+      <OffsetDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZSlider/BasicDemo.vue'
 import BasicDemoSource from './ZSlider/BasicDemo.vue?raw'
+import StepDemo from './ZSlider/StepDemo.vue'
+import StepDemoSource from './ZSlider/StepDemo.vue?raw'
 
 const propsRows = [
   { name: 'value',     type: 'number',             default: '0',    desc: '当前值（v-model:value）。' },
@@ -32,6 +34,15 @@ const emitsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="整数 / 小数步进 / 禁用" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">步长 / 范围 / 禁用</ZTitle>
+    <DemoBlock title="step / min / max / showValue / disabled" :source="StepDemoSource">
+      <template #desc>
+        <ZCode code="step" /> 设置吸附步长;<ZCode code="min" /> / <ZCode code="max" /> 限定范围;
+        <ZCode code="showValue" /> 显示当前值气泡。
+      </template>
+      <StepDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

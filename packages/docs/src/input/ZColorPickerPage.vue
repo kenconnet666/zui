@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZColorPicker/BasicDemo.vue'
 import BasicDemoSource from './ZColorPicker/BasicDemo.vue?raw'
+import ShowTextDemo from './ZColorPicker/ShowTextDemo.vue'
+import ShowTextDemoSource from './ZColorPicker/ShowTextDemo.vue?raw'
 
 const propsRows = [
   { name: 'value',    type: 'string',             default: "'#000000'", desc: '颜色值 #rrggbb 格式（v-model:value）。' },
@@ -29,6 +31,14 @@ const emitsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="颜色选择 / 隐藏文字 / 禁用" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">显示色值 / 禁用</ZTitle>
+    <DemoBlock title="showText / disabled" :source="ShowTextDemoSource">
+      <template #desc>
+        <ZCode code="showText" /> 在色块旁显示十六进制色值;<ZCode code="disabled" /> 禁用选择。
+      </template>
+      <ShowTextDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

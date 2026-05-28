@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZFlex/BasicDemo.vue'
 import BasicDemoSource from './ZFlex/BasicDemo.vue?raw'
+import AlignDemo from './ZFlex/AlignDemo.vue'
+import AlignDemoSource from './ZFlex/AlignDemo.vue?raw'
 </script>
 
 <template>
@@ -24,6 +26,14 @@ import BasicDemoSource from './ZFlex/BasicDemo.vue?raw'
         <ZCode code="inline=true" /> 切换为 <ZCode code="display: inline-flex" />。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">交叉轴对齐</ZTitle>
+    <DemoBlock title="align: flex-start / center / flex-end / stretch" :source="AlignDemoSource">
+      <template #desc>
+        <ZCode code="align" /> 控制 <ZCode code="align-items" />，决定不同高度子元素在交叉轴的对齐方式。
+      </template>
+      <AlignDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

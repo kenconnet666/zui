@@ -5,6 +5,10 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZTag/BasicDemo.vue'
 import BasicDemoSource from './ZTag/BasicDemo.vue?raw'
+import VariantDemo from './ZTag/VariantDemo.vue'
+import VariantDemoSource from './ZTag/VariantDemo.vue?raw'
+import ClosableDemo from './ZTag/ClosableDemo.vue'
+import ClosableDemoSource from './ZTag/ClosableDemo.vue?raw'
 </script>
 
 <template>
@@ -25,6 +29,22 @@ import BasicDemoSource from './ZTag/BasicDemo.vue?raw'
         <ZCode code="filled" /> 用 color 作背景 + 反色文字。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">变体与颜色</ZTitle>
+    <DemoBlock title="filled / outlined / soft + color" :source="VariantDemoSource">
+      <template #desc>
+        <ZCode code="variant" /> 三种视觉风格;<ZCode code="color" /> carrier 切换语义色。
+      </template>
+      <VariantDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">可关闭 / 圆角 / 尺寸</ZTitle>
+    <DemoBlock title="closable + round + size" :source="ClosableDemoSource">
+      <template #desc>
+        <ZCode code="closable" /> 显示关闭按钮并 emit <ZCode code="close" />;<ZCode code="round" /> 全圆角。
+      </template>
+      <ClosableDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

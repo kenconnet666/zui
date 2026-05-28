@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZEllipsis/BasicDemo.vue'
 import BasicDemoSource from './ZEllipsis/BasicDemo.vue?raw'
+import MultiLineDemo from './ZEllipsis/MultiLineDemo.vue'
+import MultiLineDemoSource from './ZEllipsis/MultiLineDemo.vue?raw'
 
 const compareRows = [
   { item: '包裹方式',   zellipsis: '独立组件，包裹任意内容', ztext: 'prop，在 ZText 元素自身' },
@@ -35,6 +37,14 @@ const propsRows = [
         需要父容器限定宽度（用 <ZCode code="css" /> 设 <ZCode code="width" />）。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">多行截断</ZTitle>
+    <DemoBlock title="lines = 1 / 2 / 3" :source="MultiLineDemoSource">
+      <template #desc>
+        <ZCode code="lines" /> 控制最大显示行数,超出以省略号收束(基于 <ZCode code="-webkit-line-clamp" />)。
+      </template>
+      <MultiLineDemo />
     </DemoBlock>
 
     <ZTitle :level="2">与 ZText :ellipsis 的区别</ZTitle>

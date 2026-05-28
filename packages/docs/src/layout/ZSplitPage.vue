@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZSplit/BasicDemo.vue'
 import BasicDemoSource from './ZSplit/BasicDemo.vue?raw'
+import MinMaxDemo from './ZSplit/MinMaxDemo.vue'
+import MinMaxDemoSource from './ZSplit/MinMaxDemo.vue?raw'
 </script>
 
 <template>
@@ -23,6 +25,14 @@ import BasicDemoSource from './ZSplit/BasicDemo.vue?raw'
         ——在 zui 中 <ZCode code="size" /> 语义是 iem 倍率，<ZCode code="ratio" /> 是比例（无单位）。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">范围限制 &amp; 禁用</ZTitle>
+    <DemoBlock title="min/max 限制拖拽范围 + disabled 锁定" :source="MinMaxDemoSource">
+      <template #desc>
+        <ZCode code="min" /> / <ZCode code="max" /> 把第一栏占比夹在区间内;<ZCode code="disabled" /> 关闭拖拽。
+      </template>
+      <MinMaxDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

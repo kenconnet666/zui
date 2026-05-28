@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZCountdown/BasicDemo.vue'
 import BasicDemoSource from './ZCountdown/BasicDemo.vue?raw'
+import FormatDemo from './ZCountdown/FormatDemo.vue'
+import FormatDemoSource from './ZCountdown/FormatDemo.vue?raw'
 
 const propsRows = [
   { name: 'value',     type: 'number | Date',        default: '—（必传）', desc: '目标时间戳（ms）或 Date 对象。' },
@@ -33,6 +35,15 @@ const eventsRows = [
         倒计时归零触发 <ZCode code="@finish" />。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义格式 / 精度 / 回调</ZTitle>
+    <DemoBlock title="format / precision / finish" :source="FormatDemoSource">
+      <template #desc>
+        <ZCode code="format" /> 自定义展示模板;<ZCode code="precision='ms'" /> 毫秒精度;
+        归零触发 <ZCode code="finish" /> 事件。
+      </template>
+      <FormatDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

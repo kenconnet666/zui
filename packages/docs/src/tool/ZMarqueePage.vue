@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZMarquee/BasicDemo.vue'
 import BasicDemoSource from './ZMarquee/BasicDemo.vue?raw'
+import DirectionDemo from './ZMarquee/DirectionDemo.vue'
+import DirectionDemoSource from './ZMarquee/DirectionDemo.vue?raw'
 
 const propsRows = [
   { name: 'duration',     type: 'number',             default: '10000', desc: '单次滚动时长（ms），值越小越快。' },
@@ -32,6 +34,15 @@ const slotsRows = [
         <ZCode code="pauseOnHover" /> 控制悬停暂停（默认 <ZCode code="true" />）。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">方向 / 速度 / 悬停暂停</ZTitle>
+    <DemoBlock title="direction / duration / pauseOnHover" :source="DirectionDemoSource">
+      <template #desc>
+        <ZCode code="direction" /> 控制滚动方向;<ZCode code="duration" /> 越小越快;
+        <ZCode code="pauseOnHover" /> 悬停暂停。
+      </template>
+      <DirectionDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

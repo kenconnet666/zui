@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZRadio/BasicDemo.vue'
 import BasicDemoSource from './ZRadio/BasicDemo.vue?raw'
+import ButtonStyleDemo from './ZRadio/ButtonStyleDemo.vue'
+import ButtonStyleDemoSource from './ZRadio/ButtonStyleDemo.vue?raw'
 
 const radioPropsRows = [
   { name: 'value',    type: 'string|number|boolean', default: '—',    desc: '该选项的值（必传，Group 用于匹配）。' },
@@ -44,6 +46,15 @@ const slotsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="圆点选组 / 按钮组 / 单独 ZRadio" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">按钮组 / 纵向排列</ZTitle>
+    <DemoBlock title="buttonStyle / direction / options" :source="ButtonStyleDemoSource">
+      <template #desc>
+        <ZCode code="buttonStyle" /> 切换为按钮组外观;<ZCode code="direction" /> carrier 控制排列方向;
+        <ZCode code="options" /> 配置式生成选项。
+      </template>
+      <ButtonStyleDemo />
     </DemoBlock>
 
     <ZTitle :level="2">ZRadio Props</ZTitle>

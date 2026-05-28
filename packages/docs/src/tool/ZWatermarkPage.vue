@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZWatermark/BasicDemo.vue'
 import BasicDemoSource from './ZWatermark/BasicDemo.vue?raw'
+import RotateDemo from './ZWatermark/RotateDemo.vue'
+import RotateDemoSource from './ZWatermark/RotateDemo.vue?raw'
 
 const propsRows = [
   { name: 'content',  type: 'string',             default: '—（必传）',             desc: '水印文字内容。' },
@@ -36,6 +38,14 @@ const slotsRows = [
         <ZCode code="rotate" /> 单位 deg（默认 -22）。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">旋转 / 密度 / 透明度</ZTitle>
+    <DemoBlock title="rotate / gap / color / fontSize" :source="RotateDemoSource">
+      <template #desc>
+        <ZCode code="rotate" /> 控制角度;<ZCode code="gap" /> 控制平铺密度;<ZCode code="color" /> 用 rgba 控制透明度。
+      </template>
+      <RotateDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

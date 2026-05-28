@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZSpace/BasicDemo.vue'
 import BasicDemoSource from './ZSpace/BasicDemo.vue?raw'
+import AlignDemo from './ZSpace/AlignDemo.vue'
+import AlignDemoSource from './ZSpace/AlignDemo.vue?raw'
 </script>
 
 <template>
@@ -24,6 +26,14 @@ import BasicDemoSource from './ZSpace/BasicDemo.vue?raw'
         <ZCode code="wrap" /> 控制换行。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">交叉轴对齐</ZTitle>
+    <DemoBlock title="align: center（默认） vs flex-start" :source="AlignDemoSource">
+      <template #desc>
+        子项高度不一致时,<ZCode code="align" /> 决定它们在交叉轴的对齐;默认 <ZCode code="center" />。
+      </template>
+      <AlignDemo />
     </DemoBlock>
 
     <ZTitle :level="2">ZSpace vs ZFlex</ZTitle>

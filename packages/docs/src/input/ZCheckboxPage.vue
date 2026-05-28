@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZCheckbox/BasicDemo.vue'
 import BasicDemoSource from './ZCheckbox/BasicDemo.vue?raw'
+import GroupDemo from './ZCheckbox/GroupDemo.vue'
+import GroupDemoSource from './ZCheckbox/GroupDemo.vue?raw'
 
 const checkboxPropsRows = [
   { name: 'checked',       type: 'boolean',            default: 'false', desc: '单独使用时的绑定值（v-model:checked）。' },
@@ -47,6 +49,14 @@ const slotsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="单独 / Group 横排 / Group 竖排" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">Group / 全选 / 半选</ZTitle>
+    <DemoBlock title="CheckboxGroup + indeterminate 全选联动" :source="GroupDemoSource">
+      <template #desc>
+        <ZCode code="indeterminate" /> 表示半选态(部分选中);配合 computed 实现全选/反选联动。
+      </template>
+      <GroupDemo />
     </DemoBlock>
 
     <ZTitle :level="2">ZCheckbox Props</ZTitle>

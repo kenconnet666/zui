@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZGrid/BasicDemo.vue'
 import BasicDemoSource from './ZGrid/BasicDemo.vue?raw'
+import RowsDemo from './ZGrid/RowsDemo.vue'
+import RowsDemoSource from './ZGrid/RowsDemo.vue?raw'
 </script>
 
 <template>
@@ -23,6 +25,15 @@ import BasicDemoSource from './ZGrid/BasicDemo.vue?raw'
         内部用 <ZCode code="s._media('_middle', ...)" /> 自动展开。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">显式行高</ZTitle>
+    <DemoBlock title="rows + alignItems：固定行高网格" :source="RowsDemoSource">
+      <template #desc>
+        <ZCode code="rows" /> 与 <ZCode code="cols" /> 同形,作用于 <ZCode code="grid-template-rows" />;
+        <ZCode code="alignItems" /> 控制单元格内对齐。
+      </template>
+      <RowsDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

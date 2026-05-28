@@ -5,6 +5,8 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZGradientText/BasicDemo.vue'
 import BasicDemoSource from './ZGradientText/BasicDemo.vue?raw'
+import CustomDemo from './ZGradientText/CustomDemo.vue'
+import CustomDemoSource from './ZGradientText/CustomDemo.vue?raw'
 </script>
 
 <template>
@@ -23,6 +25,14 @@ import BasicDemoSource from './ZGradientText/BasicDemo.vue?raw'
         传了则使用固定 CSS 值，不随主题变化。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义渐变</ZTitle>
+    <DemoBlock title="gradient 传入任意 CSS 渐变" :source="CustomDemoSource">
+      <template #desc>
+        <ZCode code="gradient" /> 接受任意 CSS <ZCode code="linear-gradient" /> / <ZCode code="radial-gradient" /> 字符串。
+      </template>
+      <CustomDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>
