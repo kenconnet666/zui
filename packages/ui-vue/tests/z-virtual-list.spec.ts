@@ -22,9 +22,16 @@ class StubRO {
 
 beforeEach(() => {
   ;(globalThis as unknown as { ResizeObserver: typeof StubRO }).ResizeObserver = StubRO
+  // happy-dom 无真实布局/滚动:onScroll 把 calculateRange 放进 rAF,而测试用 await nextTick
+  // 不会等 rAF,导致可视区/visibleRange 断言拿到旧值。这里把 rAF 同步化,让可视区即时计算。
+  vi.stubGlobal('requestAnimationFrame', (cb: FrameRequestCallback) => {
+    cb(0)
+    return 0
+  })
 })
 afterEach(() => {
   vi.useRealTimers()
+  vi.unstubAllGlobals()
 })
 
 /** happy-dom 不算盒子,手动注入 clientHeight + scrollTop setter。 */
@@ -59,7 +66,7 @@ function mountVL(props: Record<string, unknown>, slots: Record<string, unknown> 
   })
   const w = mount(Host)
   // ZBox 渲染 <div>,内部第一个子是 ZVirtualList 根
-  const root = w.element.firstElementChild as HTMLElement
+  const root = w.element.querySelector('.zui-virtual-list') as HTMLElement
   return { w, root }
 }
 
@@ -216,7 +223,7 @@ describe('ZVirtualList — emit', () => {
       },
     })
     const w = mount(Host)
-    const root = w.element.firstElementChild as HTMLElement
+    const root = w.element.querySelector('.zui-virtual-list') as HTMLElement
     fakeScrollEl(root, 200)
     await nextTick()
     root.dispatchEvent(new Event('scroll'))
@@ -252,7 +259,7 @@ describe('ZVirtualList — emit', () => {
       },
     })
     const w = mount(Host)
-    const root = w.element.firstElementChild as HTMLElement
+    const root = w.element.querySelector('.zui-virtual-list') as HTMLElement
     fakeScrollEl(root, 200)
     await nextTick()
     // total = 480, viewport = 200, scrollTop = 280 触底
@@ -302,7 +309,7 @@ describe('ZVirtualList — expose API', () => {
       },
     })
     const w = mount(Host)
-    const root = w.element.firstElementChild as HTMLElement
+    const root = w.element.querySelector('.zui-virtual-list') as HTMLElement
     return { w, expose: exposeRef, root }
   }
 
@@ -362,7 +369,7 @@ describe('ZVirtualList — 数据动态变化', () => {
       },
     })
     const w = mount(Host)
-    const root = w.element.firstElementChild as HTMLElement
+    const root = w.element.querySelector('.zui-virtual-list') as HTMLElement
     fakeScrollEl(root, 200)
     await nextTick()
     root.dispatchEvent(new Event('scroll'))
