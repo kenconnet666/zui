@@ -4,6 +4,14 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZInput/BasicDemo.vue'
 import BasicDemoSource from './ZInput/BasicDemo.vue?raw'
+import SizeDemo from './ZInput/SizeDemo.vue'
+import SizeDemoSource from './ZInput/SizeDemo.vue?raw'
+import AffixDemo from './ZInput/AffixDemo.vue'
+import AffixDemoSource from './ZInput/AffixDemo.vue?raw'
+import ClearableCountDemo from './ZInput/ClearableCountDemo.vue'
+import ClearableCountDemoSource from './ZInput/ClearableCountDemo.vue?raw'
+import DisabledDemo from './ZInput/DisabledDemo.vue'
+import DisabledDemoSource from './ZInput/DisabledDemo.vue?raw'
 
 const propsRows = [
   { name: 'value',       type: 'string | number',       default: '—',      desc: '绑定值（v-model:value）。' },
@@ -33,6 +41,10 @@ const emitsRows = [
   { name: 'clear',        args: '—',             desc: '点击清空按钮。' },
   { name: 'pressEnter',   args: 'KeyboardEvent', desc: '按 Enter 键。' },
 ]
+
+const exposeRows = [
+  { name: 'rootRef', type: 'Ref<HTMLDivElement | null>', desc: '根 wrapper 元素引用。' },
+]
 </script>
 
 <template>
@@ -46,6 +58,26 @@ const emitsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="多类型 / 多尺寸 / 清空 / 字数 / 只读 / 禁用" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">尺寸</ZTitle>
+    <DemoBlock title="size 三档(0.875 / 1 / 1.25)" :source="SizeDemoSource">
+      <SizeDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">前后附加内容</ZTitle>
+    <DemoBlock title="prefix / suffix slot" :source="AffixDemoSource">
+      <AffixDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">清空与字数</ZTitle>
+    <DemoBlock title="clearable + showCount" :source="ClearableCountDemoSource">
+      <ClearableCountDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">只读与禁用</ZTitle>
+    <DemoBlock title="readonly / disabled" :source="DisabledDemoSource">
+      <DisabledDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>
@@ -76,6 +108,16 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Expose</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '方法/属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型',     mono: true, width: '240px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="exposeRows"
     />
   </section>
 </template>

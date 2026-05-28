@@ -32,6 +32,10 @@ const emitsRows = [
 const slotsRows = [
   { name: 'default', desc: '面板内容区域。slot props: { activeName: string }。' },
 ]
+
+const exposeRows = [
+  { name: 'rootRef', type: 'Ref<HTMLElement | null>', desc: 'tab list 容器 DOM 引用。' },
+]
 </script>
 
 <template>
@@ -87,6 +91,16 @@ const slotsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="slotsRows"
+    />
+
+    <ZTitle :level="2">Expose</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '240px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="exposeRows"
     />
   </section>
 </template>

@@ -5,6 +5,9 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZBlockquote/BasicDemo.vue'
 import BasicDemoSource from './ZBlockquote/BasicDemo.vue?raw'
+
+import ColorDemo from './ZBlockquote/ColorDemo.vue'
+import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
 </script>
 
 <template>
@@ -25,6 +28,15 @@ import BasicDemoSource from './ZBlockquote/BasicDemo.vue?raw'
       <BasicDemo />
     </DemoBlock>
 
+    <ZTitle :level="2">边条颜色 (color)</ZTitle>
+    <DemoBlock title="schema token 与 :css 自定义颜色" :source="ColorDemoSource">
+      <template #desc>
+        <ZCode code="color" /> factory 仅作用于左侧边条；文字色固定 <ZCode code="_text" />。
+        非 schema token 走 <ZCode code=":css" /> 直接覆盖 <ZCode code="borderLeftColor" />。
+      </template>
+      <ColorDemo />
+    </DemoBlock>
+
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
@@ -37,6 +49,17 @@ import BasicDemoSource from './ZBlockquote/BasicDemo.vue?raw'
         { name: 'color', type: '(c: ColorCarrier) => void', default: '_primary', desc: '左侧边条颜色 factory（不影响文字色）。' },
         { name: 'size',  type: 'number',                    default: '1',        desc: 'iem 倍数。padding-y = size*0.5，padding-x = size*0.75，border-left-width = size*0.25。' },
         { name: 'css',   type: '(s: Chain) => void',        default: '—',        desc: '兜底 CSS factory。' },
+      ]"
+    />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: '引用文字内容，渲染到 blockquote 元素内。' },
       ]"
     />
 

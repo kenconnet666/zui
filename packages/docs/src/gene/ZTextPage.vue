@@ -65,6 +65,17 @@ import StateDemoSource from './ZText/StateDemo.vue?raw'
       ]"
     />
 
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: '行内文本内容。' },
+      ]"
+    />
+
     <ZTitle :level="2">语义 tag 示例</ZTitle>
     <ZParagraph>
       通过 <ZCode code="tag" /> 切换 HTML 语义元素，同时保留 chain factory 全量能力：

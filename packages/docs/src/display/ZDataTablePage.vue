@@ -39,6 +39,18 @@ const emitsRows = [
   { name: 'update:sort',     args: 'ZDataTableSort | null', desc: '排序变更。' },
   { name: 'scroll-end',      args: '—',                    desc: '滚动到底（可用于加载更多）。' },
 ]
+
+const slotsRows = [
+  { name: 'empty',   desc: '空数据展示（覆盖 emptyText）。' },
+  { name: 'loading', desc: '自定义 loading 遮罩内容（默认渲染 "加载中..."）。' },
+]
+
+const exposeRows = [
+  { name: 'rootRef',        type: 'Ref<HTMLElement | null>',   desc: '根 <div role="table"> DOM 引用。' },
+  { name: 'scrollToIndex',  type: '(i, align?) => void',       desc: '滚动到指定行索引。' },
+  { name: 'scrollToOffset', type: '(px: number) => void',      desc: '滚动到指定像素偏移。' },
+  { name: 'getScroll',      type: '() => { offset, total, viewport }', desc: '获取当前滚动状态。' },
+]
 </script>
 
 <template>
@@ -84,6 +96,25 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '120px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="slotsRows"
+    />
+
+    <ZTitle :level="2">Expose</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '方法', mono: true, width: '160px' },
+        { key: 'type', label: '类型', mono: true, width: '280px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="exposeRows"
     />
   </section>
 </template>

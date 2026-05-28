@@ -4,6 +4,14 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZAlert/BasicDemo.vue'
 import BasicDemoSource from './ZAlert/BasicDemo.vue?raw'
+import TypesDemo from './ZAlert/TypesDemo.vue'
+import TypesDemoSource from './ZAlert/TypesDemo.vue?raw'
+import ClosableDemo from './ZAlert/ClosableDemo.vue'
+import ClosableDemoSource from './ZAlert/ClosableDemo.vue?raw'
+import NoIconDemo from './ZAlert/NoIconDemo.vue'
+import NoIconDemoSource from './ZAlert/NoIconDemo.vue?raw'
+import SxAndSlotDemo from './ZAlert/SxAndSlotDemo.vue'
+import SxAndSlotDemoSource from './ZAlert/SxAndSlotDemo.vue?raw'
 </script>
 
 <template>
@@ -19,6 +27,38 @@ import BasicDemoSource from './ZAlert/BasicDemo.vue?raw'
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="颜色 / 可关闭 / 无图标 / 尺寸" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">4 种语义色</ZTitle>
+    <DemoBlock title="info / success / warning / danger" :source="TypesDemoSource">
+      <template #desc>
+        通过 <ZCode code="color" /> factory 切换语义色,内置图标会随颜色自动响应。
+      </template>
+      <TypesDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">可关闭</ZTitle>
+    <DemoBlock title="closable + @close" :source="ClosableDemoSource">
+      <template #desc>
+        <ZCode code="closable" /> 开启右侧关闭按钮,触发 <ZCode code="@close" /> 事件,通常配合 v-if / v-show 隐藏。
+      </template>
+      <ClosableDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">隐藏图标</ZTitle>
+    <DemoBlock title="showIcon=false" :source="NoIconDemoSource">
+      <template #desc>
+        关闭左侧图标,显示更紧凑;也可只显示描述、只显示标题。
+      </template>
+      <NoIconDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">子节点与 sx</ZTitle>
+    <DemoBlock title="default slot + sxBody + size 缩放" :source="SxAndSlotDemoSource">
+      <template #desc>
+        默认插槽追加在描述下方,适合放操作按钮;<ZCode code="size" /> iem 倍数等比缩放内边距与字号。
+      </template>
+      <SxAndSlotDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

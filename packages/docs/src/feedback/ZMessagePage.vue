@@ -28,6 +28,10 @@ const itemRows = [
   { name: 'icon',     type: 'Component',                default: '语义图标',  desc: '自定义图标组件，传给 ZIcon。' },
   { name: 'loading',  type: 'boolean',                  default: 'false',     desc: '是否旋转 loading 图标。' },
 ]
+
+const emitsRows = [
+  { name: 'close', args: 'id: string | number', desc: '某条消息到时关闭时触发，参数为该条 message 的 id。' },
+]
 </script>
 
 <template>
@@ -78,6 +82,16 @@ const itemRows = [
         { key: 'desc',    label: '说明' },
       ]"
       :rows="itemRows"
+    />
+
+    <ZTitle :level="2">Events（组件模式）</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '事件', mono: true, width: '120px' },
+        { key: 'args', label: '参数', mono: true, width: '200px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="emitsRows"
     />
   </section>
 </template>

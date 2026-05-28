@@ -46,6 +46,17 @@ import BasicDemoSource from './ZLink/BasicDemo.vue?raw'
       ]"
     />
 
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: '链接文本内容。' },
+      ]"
+    />
+
     <ZTitle :level="2">SPA 路由链接</ZTitle>
     <ZCode
       :inline="false"

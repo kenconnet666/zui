@@ -40,6 +40,17 @@ import BasicDemoSource from './ZGradientText/BasicDemo.vue?raw'
       ]"
     />
 
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: '渐变文字内容。' },
+      ]"
+    />
+
     <ZTitle :level="2">注意事项</ZTitle>
     <ZParagraph>
       渐变文字依赖 <ZCode code="-webkit-background-clip" />，各浏览器支持良好但为 WebKit 前缀属性。

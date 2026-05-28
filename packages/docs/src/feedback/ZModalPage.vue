@@ -4,6 +4,12 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZModal/BasicDemo.vue'
 import BasicDemoSource from './ZModal/BasicDemo.vue?raw'
+import NoMaskCloseDemo from './ZModal/NoMaskCloseDemo.vue'
+import NoMaskCloseDemoSource from './ZModal/NoMaskCloseDemo.vue?raw'
+import CustomFooterDemo from './ZModal/CustomFooterDemo.vue'
+import CustomFooterDemoSource from './ZModal/CustomFooterDemo.vue?raw'
+import NestedDemo from './ZModal/NestedDemo.vue'
+import NestedDemoSource from './ZModal/NestedDemo.vue?raw'
 
 const propsRows = [
   { name: 'visible',      type: 'boolean',             default: 'false',  desc: '是否显示（v-model:visible）。' },
@@ -29,6 +35,10 @@ const emitsRows = [
   { name: 'close',          args: '—',       desc: '关闭时触发（按钮或 ESC）。' },
   { name: 'mask-click',     args: '—',       desc: '点击遮罩时触发。' },
 ]
+
+const exposeRows = [
+  { name: 'rootRef', type: 'Ref<HTMLElement | null>', desc: '遮罩根元素 DOM 引用。' },
+]
 </script>
 
 <template>
@@ -42,6 +52,30 @@ const emitsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="基础对话框 / 自定义宽度" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">禁用遮罩关闭</ZTitle>
+    <DemoBlock title="maskClosable=false" :source="NoMaskCloseDemoSource">
+      <template #desc>
+        关键确认场景设置 <ZCode code="maskClosable=false" />,防止误点关闭。仍可 ESC / 关闭按钮关闭。
+      </template>
+      <NoMaskCloseDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义底部</ZTitle>
+    <DemoBlock title="#foot slot + 异步 loading" :source="CustomFooterDemoSource">
+      <template #desc>
+        <ZCode code="#foot" /> slot 完全自定义底部布局,支持 loading 按钮做异步提交。
+      </template>
+      <CustomFooterDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">嵌套 + ESC 栈</ZTitle>
+    <DemoBlock title="多层 Modal 与 useEscapeStack" :source="NestedDemoSource">
+      <template #desc>
+        多层弹窗共享 ESC 栈,按 ESC 仅关闭最顶层;z-index 自动叠加。
+      </template>
+      <NestedDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>
@@ -72,6 +106,16 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Expose</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '240px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="exposeRows"
     />
   </section>
 </template>

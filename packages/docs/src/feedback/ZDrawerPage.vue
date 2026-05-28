@@ -26,6 +26,10 @@ const emitsRows = [
   { name: 'close',          args: '—',       desc: '关闭时触发。' },
   { name: 'mask-click',     args: '—',       desc: '点击遮罩时触发。' },
 ]
+
+const exposeRows = [
+  { name: 'rootRef', type: 'Ref<HTMLElement | null>', desc: '遮罩根元素 DOM 引用。' },
+]
 </script>
 
 <template>
@@ -69,6 +73,16 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Expose</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '240px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="exposeRows"
     />
   </section>
 </template>

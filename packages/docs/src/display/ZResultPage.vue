@@ -4,6 +4,12 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZResult/BasicDemo.vue'
 import BasicDemoSource from './ZResult/BasicDemo.vue?raw'
+import SuccessDemo from './ZResult/SuccessDemo.vue'
+import SuccessDemoSource from './ZResult/SuccessDemo.vue?raw'
+import ErrorDemo from './ZResult/ErrorDemo.vue'
+import ErrorDemoSource from './ZResult/ErrorDemo.vue?raw'
+import CustomIconDemo from './ZResult/CustomIconDemo.vue'
+import CustomIconDemoSource from './ZResult/CustomIconDemo.vue?raw'
 
 const propsRows = [
   { name: 'title',       type: 'string',             default: '—',       desc: '结果标题。' },
@@ -32,6 +38,30 @@ const slotsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="成功 / 失败 / 404" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">成功结果</ZTitle>
+    <DemoBlock title="success" :source="SuccessDemoSource">
+      <template #desc>
+        典型成功反馈页 —— 大 success 色图标 + 主操作 + 次操作。
+      </template>
+      <SuccessDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">错误结果</ZTitle>
+    <DemoBlock title="error" :source="ErrorDemoSource">
+      <template #desc>
+        失败反馈 —— danger 色图标 + 重试按钮(同样 danger 色 chain factory 联动)。
+      </template>
+      <ErrorDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义图标</ZTitle>
+    <DemoBlock title="icon prop 传 Vue 组件" :source="CustomIconDemoSource">
+      <template #desc>
+        <code>icon</code> prop 传任意 Vue 组件覆盖默认图标,字体大小已经在 ZResult 内部锁为 4iem。
+      </template>
+      <CustomIconDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

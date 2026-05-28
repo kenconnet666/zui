@@ -26,6 +26,12 @@ const groupPropsRows = [
 const emitsRows = [
   { name: 'update:checked', args: 'boolean', desc: '（ZCheckbox）勾选状态变更。' },
   { name: 'update:value',   args: '(string|number|boolean)[]', desc: '（ZCheckboxGroup）选中数组变更。' },
+  { name: 'change',         args: '(string|number|boolean)[]', desc: '（ZCheckboxGroup）选中数组变更（与 update:value 等价）。' },
+]
+
+const slotsRows = [
+  { name: 'default', desc: '（ZCheckbox）自定义标签内容，覆盖 label prop。' },
+  { name: 'default', desc: '（ZCheckboxGroup）放置子 ZCheckbox（未传 options 时生效）。' },
 ]
 </script>
 
@@ -73,6 +79,15 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽',  mono: true, width: '120px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="slotsRows"
     />
   </section>
 </template>

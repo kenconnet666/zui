@@ -5,6 +5,9 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZCode/BasicDemo.vue'
 import BasicDemoSource from './ZCode/BasicDemo.vue?raw'
+
+import LangDemo from './ZCode/LangDemo.vue'
+import LangDemoSource from './ZCode/LangDemo.vue?raw'
 </script>
 
 <template>
@@ -25,6 +28,15 @@ import BasicDemoSource from './ZCode/BasicDemo.vue?raw'
         未装 shiki 时自动 fallback 为纯文本 pre，控制台 warn 一次。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">多语言高亮</ZTitle>
+    <DemoBlock title="ts / json / bash / css" :source="LangDemoSource">
+      <template #desc>
+        <ZCode code="lang" /> 接受任意 shiki 支持的语言标识。
+        装了 shiki 时按语言渲染配色，未装 shiki 时统一 fallback 为纯文本 pre。
+      </template>
+      <LangDemo />
     </DemoBlock>
 
     <ZTitle :level="2">安装 shiki</ZTitle>
@@ -50,6 +62,17 @@ import BasicDemoSource from './ZCode/BasicDemo.vue?raw'
         { name: 'colorScheme', type: `'auto' | 'light' | 'dark'`,      default: `'auto'`,        desc: '颜色模式，auto 跟随 OS prefers-color-scheme。' },
         { name: 'color',       type: '(c: ColorCarrier) => void',      default: '—',             desc: '文字色（fallback / 未高亮时生效；高亮模式由 shiki 控制）。' },
         { name: 'css',         type: '(s: Chain) => void',             default: '—',             desc: '根元素 CSS 兜底。' },
+      ]"
+    />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: 'fallback 模式（未启用 shiki 高亮）下的代码内容。高亮模式以 code prop 为准，slot 不参与。' },
       ]"
     />
   </section>

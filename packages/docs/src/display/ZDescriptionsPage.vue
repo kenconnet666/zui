@@ -19,6 +19,10 @@ const itemRows = [
   { name: 'value', type: 'string | number', default: '—', desc: '值文字。' },
   { name: 'span',  type: 'number',          default: '1', desc: '跨列数。' },
 ]
+
+const slotsRows = [
+  { name: 'title', desc: '自定义顶部标题（覆盖 title prop）。' },
+]
 </script>
 
 <template>
@@ -54,6 +58,15 @@ const itemRows = [
         { key: 'desc',    label: '说明' },
       ]"
       :rows="itemRows"
+    />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '120px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="slotsRows"
     />
   </section>
 </template>

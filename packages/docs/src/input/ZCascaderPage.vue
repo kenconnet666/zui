@@ -30,6 +30,10 @@ const emitsRows = [
   { name: 'update:value', args: 'string[]',                desc: '选中路径变更（key 数组）。' },
   { name: 'change',       args: 'string[], string[]',      desc: '确认选择，第二个参数为 label 路径。' },
 ]
+
+const exposeRows = [
+  { name: 'rootRef', type: 'Ref<HTMLDivElement | null>', desc: '根触发器元素引用。' },
+]
 </script>
 
 <template>
@@ -75,6 +79,16 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Expose</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '方法/属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型',     mono: true, width: '240px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="exposeRows"
     />
   </section>
 </template>

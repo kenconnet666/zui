@@ -55,6 +55,19 @@ import DemoSource from './demos/MyDemo.vue?raw'`"
       ]"
     />
 
+    <ZTitle :level="2">Events</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '事件',    mono: true, width: '180px' },
+        { key: 'payload', label: '参数', mono: true, width: '320px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'copy',            payload: '(success: boolean, code: string) => void', desc: '复制按钮触发时透传，包含成功/失败状态与实际复制的源码。' },
+        { name: 'update:expanded', payload: '(expanded: boolean) => void',              desc: '展开状态变更，配合 v-model:expanded 受控使用。' },
+      ]"
+    />
+
     <ZTitle :level="2">Slots</ZTitle>
     <ApiTable
       :columns="[

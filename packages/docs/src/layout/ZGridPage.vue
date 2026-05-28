@@ -44,5 +44,16 @@ import BasicDemoSource from './ZGrid/BasicDemo.vue?raw'
         { name: 'tag',          type: 'string',                          default: `'div'`, desc: '根元素 tag。' },
       ]"
     />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: 'grid 容器内的子元素，按 cols / rows 自动布局。' },
+      ]"
+    />
   </section>
 </template>

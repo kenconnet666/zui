@@ -71,5 +71,16 @@ import CustomDemoSource from './ZTitle/CustomDemo.vue?raw'
         { name: '...ZText', type: '(继承全部 ZText props)', default: '—',      desc: 'weight / color / depth / leading / tracking / italic / underline / ellipsis / css。' },
       ]"
     />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: '标题文本内容。' },
+      ]"
+    />
   </section>
 </template>

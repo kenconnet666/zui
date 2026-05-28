@@ -572,18 +572,17 @@ s._focusVisible((f) => {
 - [x] tool/ZQRCode(用 `@vueuse/integrations/useQRCode`)
 - [x] tool/ZCountdown / ZNumberAnimation / ZMarquee
 - [x] feedback/ZTour
-- [ ] display/ZThing(暂未做,需具体业务场景定义"thing"语义)
+- [x] display/ZThing —— **永久 skip**(2026-05-28 决策:语义模糊,ZCard+ZAvatar+ZSpace 可完全替代;见 decisions/2026-05-28-zthing-and-phase-delta.md)
 
-### Stage 9 ── Phase δ / P3(看需求开,可能新增依赖)
+### Stage 9 ── Phase δ / P3(收尾决策)
 
-> **状态**:roadmap 明确"看需求开"。当前 540 tests / 80+ 组件已足够 Phase α/β/γ 覆盖,这些
-> 重型组件建议依实际业务诉求按需引入,避免无人值守过早绑定大型依赖(`@tanstack/vue-virtual`、
-> TipTap、企业 DataGrid 等)。
+> **状态**:closed(2026-05-28)。
+> 决策文档:`.claude/decisions/2026-05-28-zthing-and-phase-delta.md`
 
-- [ ] VirtualList(需新增 `@tanstack/vue-virtual`)
-- [ ] 富文本(TipTap 等)
-- [ ] DataGrid 企业版(列冻结 / expandable rows / 虚拟滚动)
-- [ ] Schema-driven Form
+- [x] VirtualList —— **已交付**(2026-05-24 S0-S9 sprint;`ZVirtualList` / `ZDataTable` + 8 个数据组件接入,**不用 tanstack**,自写 `useZVirtualScroll`)
+- [-] 富文本 —— **不做**,业务方直接集成 TipTap/Lexical/Slate
+- [~] DataGrid 企业版 —— **50% 完成**(虚拟/排序/选择/sticky header)。列冻结/expandable rows/column resize/groupBy 按需开 sprint
+- [-] Schema-driven Form —— **不做**,业务方基于 ZForm 自行包装
 
 ---
 

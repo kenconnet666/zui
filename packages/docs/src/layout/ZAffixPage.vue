@@ -39,5 +39,16 @@ import BasicDemoSource from './ZAffix/BasicDemo.vue?raw'
         { name: 'css',       type: '(s: Chain) => void',               default: '—',  desc: '根元素 CSS 兜底。' },
       ]"
     />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: '需要吸附固定的内容。滚动达到 offsetTop 时切换为 fixed，离开时回到原位。' },
+      ]"
+    />
   </section>
 </template>

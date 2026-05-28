@@ -35,6 +35,12 @@ export const docNav: DocNavItem[] = [
       { key: 'theme', label: '主题与 ZBox', route: '/guide/theme' },
       { key: 'iem', label: 'iem 单位', route: '/guide/iem' },
       { key: 'core', label: 'zui-core 模块', route: '/guide/core' },
+      { key: 'prop-shape', label: 'props 范式', route: '/guide/prop-shape' },
+      { key: 'sx-object', label: 'SxObject 模型', route: '/guide/sx-object' },
+      { key: 'hooks', label: '内置 hooks', route: '/guide/hooks' },
+      { key: 'theme-ext', label: '主题扩展', route: '/guide/theme-ext' },
+      { key: 'locale-ext', label: 'Locale 扩展', route: '/guide/locale-ext' },
+      { key: 'ssr', label: 'SSR & tree-shake', route: '/guide/ssr' },
     ],
   },
 

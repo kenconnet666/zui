@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZEmpty/BasicDemo.vue'
 import BasicDemoSource from './ZEmpty/BasicDemo.vue?raw'
+import CustomDemo from './ZEmpty/CustomDemo.vue'
+import CustomDemoSource from './ZEmpty/CustomDemo.vue?raw'
 
 const propsRows = [
   { name: 'description', type: 'string',             default: "'暂无数据'", desc: '描述文字。' },
@@ -30,6 +32,14 @@ const slotsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="默认 / 自定义描述 / 尺寸 / 带按钮" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">完全自定义图标 + 描述 + 操作</ZTitle>
+    <DemoBlock title="#image + #description + 操作按钮" :source="CustomDemoSource">
+      <template #desc>
+        通过 <code>#image</code> / <code>#description</code> slot 全面替换,default slot 放操作按钮组。
+      </template>
+      <CustomDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

@@ -4,6 +4,14 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZSelect/BasicDemo.vue'
 import BasicDemoSource from './ZSelect/BasicDemo.vue?raw'
+import MultipleDemo from './ZSelect/MultipleDemo.vue'
+import MultipleDemoSource from './ZSelect/MultipleDemo.vue?raw'
+import FilterableDemo from './ZSelect/FilterableDemo.vue'
+import FilterableDemoSource from './ZSelect/FilterableDemo.vue?raw'
+import RemoteDemo from './ZSelect/RemoteDemo.vue'
+import RemoteDemoSource from './ZSelect/RemoteDemo.vue?raw'
+import DisabledOptionDemo from './ZSelect/DisabledOptionDemo.vue'
+import DisabledOptionDemoSource from './ZSelect/DisabledOptionDemo.vue?raw'
 
 const propsRows = [
   { name: 'value',             type: 'ZSelectValue | ZSelectValue[] | null', default: '—',    desc: '选中值（v-model:value）；multiple=true 时传数组。' },
@@ -28,6 +36,10 @@ const optionRows = [
 
 const emitsRows = [
   { name: 'update:value', args: 'ZSelectValue | ZSelectValue[] | null', desc: '选中值变更。' },
+]
+
+const exposeRows = [
+  { name: 'rootRef', type: 'Ref<HTMLDivElement | null>', desc: '根触发器元素引用。' },
 ]
 </script>
 
@@ -74,6 +86,16 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Expose</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '方法/属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型',     mono: true, width: '240px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="exposeRows"
     />
   </section>
 </template>

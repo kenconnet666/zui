@@ -4,6 +4,10 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZInputNumber/BasicDemo.vue'
 import BasicDemoSource from './ZInputNumber/BasicDemo.vue?raw'
+import StepRangeDemo from './ZInputNumber/StepRangeDemo.vue'
+import StepRangeDemoSource from './ZInputNumber/StepRangeDemo.vue?raw'
+import PrecisionDemo from './ZInputNumber/PrecisionDemo.vue'
+import PrecisionDemoSource from './ZInputNumber/PrecisionDemo.vue?raw'
 
 const propsRows = [
   { name: 'value',       type: 'number | null',      default: '—',    desc: '绑定值（v-model:value）。' },
@@ -38,6 +42,16 @@ const emitsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="整数 / 小数 / 禁用" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">步长与范围</ZTitle>
+    <DemoBlock title="step / min / max" :source="StepRangeDemoSource">
+      <StepRangeDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">精度</ZTitle>
+    <DemoBlock title="precision 小数位数" :source="PrecisionDemoSource">
+      <PrecisionDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

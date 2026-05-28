@@ -31,6 +31,10 @@ const emitsRows = [
   { name: 'change',          args: 'File[]',          desc: '新增文件选择时触发（实际上传逻辑由调用方处理）。' },
   { name: 'remove',          args: 'ZUploadedFile',   desc: '移除文件时触发。' },
 ]
+
+const slotsRows = [
+  { name: 'default', desc: '自定义拖拽区内容（仅 dragDrop=true 时生效），默认显示图标和"点击或拖拽文件…"提示。' },
+]
 </script>
 
 <template>
@@ -76,6 +80,15 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽',  mono: true, width: '120px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="slotsRows"
     />
   </section>
 </template>

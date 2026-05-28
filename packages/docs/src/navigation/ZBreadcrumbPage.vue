@@ -16,6 +16,10 @@ const itemRows = [
   { name: 'href',    type: 'string',            default: '—',         desc: '链接地址（有则渲染为 <a>）。' },
   { name: 'onClick', type: '(e: MouseEvent) => void', default: '—',  desc: '点击回调。' },
 ]
+
+const slotsRows = [
+  { name: 'default', desc: '自定义面包屑内容（提供时优先于 items 渲染）。' },
+]
 </script>
 
 <template>
@@ -52,6 +56,15 @@ const itemRows = [
         { key: 'desc',    label: '说明' },
       ]"
       :rows="itemRows"
+    />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '120px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="slotsRows"
     />
   </section>
 </template>

@@ -4,6 +4,12 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZSpin/BasicDemo.vue'
 import BasicDemoSource from './ZSpin/BasicDemo.vue?raw'
+import SizeDemo from './ZSpin/SizeDemo.vue'
+import SizeDemoSource from './ZSpin/SizeDemo.vue?raw'
+import WrapDemo from './ZSpin/WrapDemo.vue'
+import WrapDemoSource from './ZSpin/WrapDemo.vue?raw'
+import InlineDemo from './ZSpin/InlineDemo.vue'
+import InlineDemoSource from './ZSpin/InlineDemo.vue?raw'
 </script>
 
 <template>
@@ -22,6 +28,30 @@ import BasicDemoSource from './ZSpin/BasicDemo.vue?raw'
         有 default slot 时为包裹模式，<ZCode code=":spinning='false'" /> 时透明渲染 slot 内容。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">尺寸</ZTitle>
+    <DemoBlock title="size = iem 倍数" :source="SizeDemoSource">
+      <template #desc>
+        <ZCode code="size" /> 透传给内部 ZIcon 的 size,默认 1.5 (24px @ 16px iem)。
+      </template>
+      <SizeDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">包裹模式 + tip</ZTitle>
+    <DemoBlock title="default slot + tip 提示文字" :source="WrapDemoSource">
+      <template #desc>
+        有 default slot 时,内容被半透明遮罩,indicator 居中显示;<ZCode code="tip" /> 在图标下方提示。
+      </template>
+      <WrapDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">纯 indicator (inline)</ZTitle>
+    <DemoBlock title="无 slot,inline-flex 渲染" :source="InlineDemoSource">
+      <template #desc>
+        无 default slot 时退化为 <ZCode code="inline-flex" />,只渲染旋转图标,适合按钮 loading / 行内提示。
+      </template>
+      <InlineDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

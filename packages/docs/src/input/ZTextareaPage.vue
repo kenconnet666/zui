@@ -4,6 +4,10 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZTextarea/BasicDemo.vue'
 import BasicDemoSource from './ZTextarea/BasicDemo.vue?raw'
+import AutosizeDemo from './ZTextarea/AutosizeDemo.vue'
+import AutosizeDemoSource from './ZTextarea/AutosizeDemo.vue?raw'
+import MaxRowsDemo from './ZTextarea/MaxRowsDemo.vue'
+import MaxRowsDemoSource from './ZTextarea/MaxRowsDemo.vue?raw'
 
 const propsRows = [
   { name: 'value',       type: 'string',             default: '—',    desc: '绑定值（v-model:value）。' },
@@ -26,6 +30,10 @@ const emitsRows = [
   { name: 'focus',        args: 'FocusEvent',    desc: '聚焦。' },
   { name: 'blur',         args: 'FocusEvent',    desc: '失焦。' },
 ]
+
+const exposeRows = [
+  { name: 'rootRef', type: 'Ref<HTMLDivElement | null>', desc: '根 wrapper 元素引用。' },
+]
 </script>
 
 <template>
@@ -39,6 +47,16 @@ const emitsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="固定行数 / 自动高度 / 禁用" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自适应高度</ZTitle>
+    <DemoBlock title="autosize=true" :source="AutosizeDemoSource">
+      <AutosizeDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">maxRows + 字数</ZTitle>
+    <DemoBlock title="autosize 配合 maxRows / showCount" :source="MaxRowsDemoSource">
+      <MaxRowsDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>
@@ -60,6 +78,16 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Expose</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '方法/属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型',     mono: true, width: '240px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="exposeRows"
     />
   </section>
 </template>

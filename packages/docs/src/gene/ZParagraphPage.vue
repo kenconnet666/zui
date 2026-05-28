@@ -60,5 +60,16 @@ import BasicDemoSource from './ZParagraph/BasicDemo.vue?raw'
         { name: '...ZText', type: '(继承全部 ZText props)', default: '—', desc: 'size / weight / color / 等。' },
       ]"
     />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: '段落正文内容。' },
+      ]"
+    />
   </section>
 </template>

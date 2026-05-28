@@ -57,5 +57,16 @@ const propsRows = [
       ]"
       :rows="propsRows"
     />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: '被省略的内容（任意子元素）。lines=1 时单行截断，lines>1 时多行截断。' },
+      ]"
+    />
   </section>
 </template>

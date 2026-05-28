@@ -22,6 +22,10 @@ const emitsRows = [
   { name: 'update:value', args: 'string', desc: '值变更。' },
   { name: 'select',       args: 'string', desc: '选中候选成员（包含 @ prefix）。' },
 ]
+
+const exposeRows = [
+  { name: 'rootRef', type: 'Ref<HTMLDivElement | null>', desc: '根 wrapper 元素引用。' },
+]
 </script>
 
 <template>
@@ -56,6 +60,16 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Expose</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '方法/属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型',     mono: true, width: '240px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="exposeRows"
     />
   </section>
 </template>

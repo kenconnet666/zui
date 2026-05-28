@@ -4,6 +4,12 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZCard/BasicDemo.vue'
 import BasicDemoSource from './ZCard/BasicDemo.vue?raw'
+import HeadFootDemo from './ZCard/HeadFootDemo.vue'
+import HeadFootDemoSource from './ZCard/HeadFootDemo.vue?raw'
+import HoverableDemo from './ZCard/HoverableDemo.vue'
+import HoverableDemoSource from './ZCard/HoverableDemo.vue?raw'
+import SxNodesDemo from './ZCard/SxNodesDemo.vue'
+import SxNodesDemoSource from './ZCard/SxNodesDemo.vue?raw'
 
 const propsRows = [
   { name: 'title',    type: 'string',             default: '—',      desc: '头部标题文字（#header slot 优先级更高）。' },
@@ -35,6 +41,30 @@ const slotsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="基础 / extra 区域 / 底部 / 悬停阴影" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">头部 + 底部完整结构</ZTitle>
+    <DemoBlock title="title + #extra + body + #foot" :source="HeadFootDemoSource">
+      <template #desc>
+        三段式结构最常见的组合:头部标题 + 右侧操作 + 主体内容 + 底部按钮区。
+      </template>
+      <HeadFootDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">悬停阴影</ZTitle>
+    <DemoBlock title="hoverable" :source="HoverableDemoSource">
+      <template #desc>
+        <code>hoverable</code> 启用 hover 阴影过渡。bordered=false 时基础阴影已经存在,hover 进一步加深。
+      </template>
+      <HoverableDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">多节点 sx 配置</ZTitle>
+    <DemoBlock title="sxHead / sxBody / sxFoot" :source="SxNodesDemoSource">
+      <template #desc>
+        通过 <code>sxHead</code> / <code>sxBody</code> / <code>sxFoot</code> 分别精细化覆盖三个节点的样式。
+      </template>
+      <SxNodesDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

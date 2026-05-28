@@ -5,6 +5,12 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZBadge/BasicDemo.vue'
 import BasicDemoSource from './ZBadge/BasicDemo.vue?raw'
+
+import DotDemo from './ZBadge/DotDemo.vue'
+import DotDemoSource from './ZBadge/DotDemo.vue?raw'
+
+import MaxDemo from './ZBadge/MaxDemo.vue'
+import MaxDemoSource from './ZBadge/MaxDemo.vue?raw'
 </script>
 
 <template>
@@ -26,6 +32,24 @@ import BasicDemoSource from './ZBadge/BasicDemo.vue?raw'
       <BasicDemo />
     </DemoBlock>
 
+    <ZTitle :level="2">红点模式 (dot)</ZTitle>
+    <DemoBlock title="dot=true 忽略 value，显示小圆点" :source="DotDemoSource">
+      <template #desc>
+        红点常用于「有未读」「在线/忙碌/离线」等状态标识，无具体数量。
+        无 slot 时退化为 inline 圆点，可与文字行内组合。
+      </template>
+      <DotDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">max + showZero</ZTitle>
+    <DemoBlock title="数字上限与零值显示" :source="MaxDemoSource">
+      <template #desc>
+        <ZCode code="value &gt; max" /> 时显示 <ZCode code="${max}+" />；
+        <ZCode code="value=0" /> 默认隐藏，<ZCode code="showZero=true" /> 强制显示。
+      </template>
+      <MaxDemo />
+    </DemoBlock>
+
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
@@ -43,6 +67,17 @@ import BasicDemoSource from './ZBadge/BasicDemo.vue?raw'
         { name: 'color',    type: '(c: ColorCarrier) => void', default: '_danger', desc: '徽标背景色 factory。' },
         { name: 'offset',   type: '[number, number]', default: '[0, 0]', desc: '[x, y] 偏移 px（有 slot 时生效）。' },
         { name: 'css',      type: '(s: Chain) => void', default: '—',    desc: '根元素（wrapper）CSS 兜底。' },
+      ]"
+    />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: '被徽标修饰的子元素（如头像、图标）。传入时徽标绝对定位于右上角；不传时仅 inline 渲染徽标本体。' },
       ]"
     />
   </section>

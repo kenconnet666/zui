@@ -4,6 +4,10 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZImage/BasicDemo.vue'
 import BasicDemoSource from './ZImage/BasicDemo.vue?raw'
+import FitDemo from './ZImage/FitDemo.vue'
+import FitDemoSource from './ZImage/FitDemo.vue?raw'
+import ErrorSlotDemo from './ZImage/ErrorSlotDemo.vue'
+import ErrorSlotDemoSource from './ZImage/ErrorSlotDemo.vue?raw'
 
 const propsRows = [
   { name: 'src',      type: 'string',                    default: '—（必传）', desc: '图片地址。' },
@@ -37,6 +41,22 @@ const slotsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="默认 / contain / fallback / 错误状态" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">objectFit 五种模式</ZTitle>
+    <DemoBlock title="fill / contain / cover / none / scaleDown" :source="FitDemoSource">
+      <template #desc>
+        所有 5 种 objectFit 取值,box 都是 120×120 但原图是 200×100,可以直观对比。
+      </template>
+      <FitDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">错误自定义与加载策略</ZTitle>
+    <DemoBlock title="#error slot / lazy=false" :source="ErrorSlotDemoSource">
+      <template #desc>
+        <code>#error</code> slot 完全自定义加载失败展示;<code>lazy=false</code> 走 eager 立即加载。
+      </template>
+      <ErrorSlotDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

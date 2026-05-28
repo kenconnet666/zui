@@ -44,6 +44,17 @@ import BasicDemoSource from './ZScrollbar/BasicDemo.vue?raw'
       ]"
     />
 
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="[
+        { name: 'default', desc: '可滚动内容，渲染到内层 scroller div 内。超出容器高度时显示自定义滚动条。' },
+      ]"
+    />
+
     <ZTitle :level="2">Expose</ZTitle>
     <ApiTable
       :columns="[

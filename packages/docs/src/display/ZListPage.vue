@@ -32,6 +32,13 @@ const emitsRows = [
   { name: 'scroll-end', args: '—',                      desc: '触底事件。' },
   { name: 'update',     args: 'start: number, end: number', desc: '可见区间变化。' },
 ]
+
+const exposeRows = [
+  { name: 'rootRef',        type: 'Ref<HTMLElement | null>',   desc: '根 <div role="list"> DOM 引用。' },
+  { name: 'scrollToIndex',  type: '(i, align?) => void',       desc: '滚动到指定项索引。' },
+  { name: 'scrollToOffset', type: '(px: number) => void',      desc: '滚动到指定像素偏移。' },
+  { name: 'getScroll',      type: '() => { offset, total, viewport }', desc: '获取当前滚动状态。' },
+]
 </script>
 
 <template>
@@ -75,6 +82,16 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Expose</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '方法', mono: true, width: '160px' },
+        { key: 'type', label: '类型', mono: true, width: '280px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="exposeRows"
     />
   </section>
 </template>

@@ -4,6 +4,12 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZProgress/BasicDemo.vue'
 import BasicDemoSource from './ZProgress/BasicDemo.vue?raw'
+import LineDemo from './ZProgress/LineDemo.vue'
+import LineDemoSource from './ZProgress/LineDemo.vue?raw'
+import CircleDemo from './ZProgress/CircleDemo.vue'
+import CircleDemoSource from './ZProgress/CircleDemo.vue?raw'
+import ColorDemo from './ZProgress/ColorDemo.vue'
+import ColorDemoSource from './ZProgress/ColorDemo.vue?raw'
 
 const propsRows = [
   { name: 'value',    type: 'number',             default: '—（必传）', desc: '进度值 0~100，超出自动 clamp。' },
@@ -27,6 +33,30 @@ const propsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="线性 / 自定义颜色 / 环形 / 动态值" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">线性进度条 size 阶梯</ZTitle>
+    <DemoBlock title="size 0.5 / 1 / 1.5" :source="LineDemoSource">
+      <template #desc>
+        line 模式 <code>size</code> 控制 rail 高度(iem 倍数,默认 0.5 = 8px)。
+      </template>
+      <LineDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">环形进度条</ZTitle>
+    <DemoBlock title="circle / 不同 size" :source="CircleDemoSource">
+      <template #desc>
+        circle 模式 <code>size</code> 控制容器直径(iem 倍数,默认 7.5 = 120px),SVG viewBox 始终 100×100。
+      </template>
+      <CircleDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义颜色</ZTitle>
+    <DemoBlock title="语义 token + 命名色 + alpha modifier" :source="ColorDemoSource">
+      <template #desc>
+        <code>color</code> factory 支持 schema 语义 token、CSS 命名色、modifier 链(alpha / darken / lighten 等)。
+      </template>
+      <ColorDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

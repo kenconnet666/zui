@@ -24,6 +24,12 @@ const groupPropsRows = [
 
 const emitsRows = [
   { name: 'update:value', args: 'string|number|boolean', desc: '（ZRadioGroup）选中值变更。' },
+  { name: 'change',       args: 'string|number|boolean', desc: '（ZRadioGroup）选中变更（与 update:value 等价）。' },
+]
+
+const slotsRows = [
+  { name: 'default', desc: '（ZRadio）自定义标签内容，覆盖 label prop。' },
+  { name: 'default', desc: '（ZRadioGroup）放置子 ZRadio（未传 options 时生效）。' },
 ]
 </script>
 
@@ -70,6 +76,15 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Slots</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '插槽',  mono: true, width: '120px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="slotsRows"
     />
   </section>
 </template>

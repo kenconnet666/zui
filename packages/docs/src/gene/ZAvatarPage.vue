@@ -5,6 +5,12 @@ import ApiTable from '../components/ApiTable.vue'
 
 import BasicDemo from './ZAvatar/BasicDemo.vue'
 import BasicDemoSource from './ZAvatar/BasicDemo.vue?raw'
+
+import SizeDemo from './ZAvatar/SizeDemo.vue'
+import SizeDemoSource from './ZAvatar/SizeDemo.vue?raw'
+
+import ShapeDemo from './ZAvatar/ShapeDemo.vue'
+import ShapeDemoSource from './ZAvatar/ShapeDemo.vue?raw'
 </script>
 
 <template>
@@ -23,6 +29,24 @@ import BasicDemoSource from './ZAvatar/BasicDemo.vue?raw'
         不影响图片模式。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">尺寸档位 (size)</ZTitle>
+    <DemoBlock title="iem 倍数，width / height / fontSize 等比缩放" :source="SizeDemoSource">
+      <template #desc>
+        参考档位：<ZCode code="1.5" />(24px) / <ZCode code="2" />(32px) /
+        <ZCode code="2.5" />(默认 40px) / <ZCode code="3" />(48px) / <ZCode code="4" />(64px)。
+      </template>
+      <SizeDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">方圆 (square)</ZTitle>
+    <DemoBlock title="square=false 圆形 / square=true 方形" :source="ShapeDemoSource">
+      <template #desc>
+        默认 <ZCode code="square=false" /> 走 <ZCode code="borderRadius._full" /> 圆形；
+        <ZCode code="square=true" /> 改为 <ZCode code="size*0.15 iem" /> 轻圆角方形。
+      </template>
+      <ShapeDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

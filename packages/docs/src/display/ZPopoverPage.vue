@@ -18,6 +18,7 @@ const propsRows = [
 
 const slotsRows = [
   { name: 'default', desc: '触发器内容。' },
+  { name: 'title',   desc: '自定义标题（覆盖 title prop）。' },
   { name: 'content', desc: '弹出层内容区域。' },
 ]
 

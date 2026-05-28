@@ -6,6 +6,12 @@ const guideRoutes: RouteRecordRaw[] = [
   { path: '/guide/theme',       component: () => import('../pages/ThemePage.vue') },
   { path: '/guide/iem',         component: () => import('../pages/IemPage.vue') },
   { path: '/guide/core',        component: () => import('../pages/ZuiCorePage.vue') },
+  { path: '/guide/prop-shape',  component: () => import('../pages/PropShapePage.vue') },
+  { path: '/guide/sx-object',   component: () => import('../pages/SxObjectPage.vue') },
+  { path: '/guide/hooks',       component: () => import('../pages/HooksPage.vue') },
+  { path: '/guide/theme-ext',   component: () => import('../pages/ThemeExtensionPage.vue') },
+  { path: '/guide/locale-ext',  component: () => import('../pages/LocaleExtensionPage.vue') },
+  { path: '/guide/ssr',         component: () => import('../pages/SsrTreeShakingPage.vue') },
 ]
 
 const geneRoutes: RouteRecordRaw[] = [
