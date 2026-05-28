@@ -40,8 +40,15 @@ describe('集成 — 完整 Button 组件流程', () => {
     variants: {
       state: {
         idle: () => {},
-        loading: s => { s.opacity._strong; s.cursor.wait },
-        disabled: s => { s.opacity._half; s.cursor.notAllowed; s.pointerEvents('none') },
+        loading: s => {
+          s.opacity._strong
+          s.cursor.wait
+        },
+        disabled: s => {
+          s.opacity._half
+          s.cursor.notAllowed
+          s.pointerEvents('none')
+        },
       },
     },
     defaultVariants: { state: 'idle' },
@@ -59,23 +66,49 @@ describe('集成 — 完整 Button 组件流程', () => {
     },
     variants: {
       intent: {
-        primary: s => { s.backgroundColor._primary; s.color.white },
-        danger:  s => { s.backgroundColor._danger;  s.color.white },
-        ghost:   s => { s.color._primary; s.backgroundColor.transparent },
+        primary: s => {
+          s.backgroundColor._primary
+          s.color.white
+        },
+        danger: s => {
+          s.backgroundColor._danger
+          s.color.white
+        },
+        ghost: s => {
+          s.color._primary
+          s.backgroundColor.transparent
+        },
       },
       size: {
-        small: s => { s.padding.px(8); s.fontSize._small },
-        middle: s => { s.padding.px(12); s.fontSize._middle },
-        large: s => { s.padding.px(16); s.fontSize._large },
+        small: s => {
+          s.padding.px(8)
+          s.fontSize._small
+        },
+        middle: s => {
+          s.padding.px(12)
+          s.fontSize._middle
+        },
+        large: s => {
+          s.padding.px(16)
+          s.fontSize._large
+        },
       },
       block: {
-        true: s => { s.display.block; s.width.pct(100) },
+        true: s => {
+          s.display.block
+          s.width.pct(100)
+        },
         false: () => {},
       },
     },
     defaultVariants: { intent: 'primary', size: 'middle' },
     compoundVariants: [
-      { when: { intent: 'ghost', size: 'small' }, apply: s => { s.padding.px(6) } },
+      {
+        when: { intent: 'ghost', size: 'small' },
+        apply: s => {
+          s.padding.px(6)
+        },
+      },
     ],
   })
 
@@ -84,7 +117,7 @@ describe('集成 — 完整 Button 组件流程', () => {
   it('Button 默认渲染', () => {
     const cls = button()
     expect(typeof cls).toBe('string')
-    expect(cls.split(/\s+/).filter(Boolean).length).toBe(2)   // composed 出 2 个 className
+    expect(cls.split(/\s+/).filter(Boolean).length).toBe(2) // composed 出 2 个 className
   })
 
   it('Button 全 variant 组合', () => {
@@ -133,7 +166,11 @@ describe('集成 — Dialog 多 slot 组件', () => {
   const dialog = defineParts(defaultLight, {
     slots: ['root', 'overlay', 'content', 'title', 'description', 'close'] as const,
     base: {
-      root: s => { s.position.fixed; s.inset(0); s.zIndex._modal },
+      root: s => {
+        s.position.fixed
+        s.inset(0)
+        s.zIndex._modal
+      },
       overlay: s => {
         s.position.absolute
         s.inset(0)
@@ -146,8 +183,14 @@ describe('集成 — Dialog 多 slot 组件', () => {
         s.padding._large
         s.backgroundColor._bg
       },
-      title: s => { s.fontWeight._bold; s.fontSize._huge },
-      description: s => { s.color._textMuted; s.marginTop._small },
+      title: s => {
+        s.fontWeight._bold
+        s.fontSize._huge
+      },
+      description: s => {
+        s.color._textMuted
+        s.marginTop._small
+      },
       close: s => {
         s.position.absolute
         s.top.px(8)
@@ -157,9 +200,21 @@ describe('集成 — Dialog 多 slot 组件', () => {
     },
     variants: {
       size: {
-        small: { content: s => { s.maxWidth.px(400) } },
-        middle: { content: s => { s.maxWidth.px(600) } },
-        large: { content: s => { s.maxWidth.px(900) } },
+        small: {
+          content: s => {
+            s.maxWidth.px(400)
+          },
+        },
+        middle: {
+          content: s => {
+            s.maxWidth.px(600)
+          },
+        },
+        large: {
+          content: s => {
+            s.maxWidth.px(900)
+          },
+        },
       },
     },
     defaultVariants: { size: 'middle' },
@@ -207,7 +262,13 @@ describe('集成 — 主题切换 light / dark', () => {
         s.backgroundColor._primary
         s.color._text
       },
-      variants: { intent: { primary: s => { s.backgroundColor._primary } } },
+      variants: {
+        intent: {
+          primary: s => {
+            s.backgroundColor._primary
+          },
+        },
+      },
       defaultVariants: { intent: 'primary' },
     })
 
@@ -243,7 +304,9 @@ describe('集成 — createIcssInstance SSR 隔离', () => {
         return `mock-css-${cssCalls.length}`
       },
       cx: (...a: unknown[]) => a.filter(Boolean).join(' '),
-      injectGlobal: (s: unknown) => { injectCalls.push(s) },
+      injectGlobal: (s: unknown) => {
+        injectCalls.push(s)
+      },
       keyframes: (stops: object) => {
         kfCalls.push(stops)
         return `mock-kf-${kfCalls.length}`
@@ -285,7 +348,9 @@ describe('集成 — createIcssInstance SSR 隔离', () => {
   it('instance 的 icss 走自己的 css', () => {
     const m = mockEmotion()
     const inst = createIcssInstance(m)
-    inst.icss(defaultLight, s => { s.color._primary })
+    inst.icss(defaultLight, s => {
+      s.color._primary
+    })
     expect(m.cssCalls.length).toBe(1)
   })
 })
@@ -296,7 +361,6 @@ describe('集成 — createIcssInstance SSR 隔离', () => {
 
 describe('集成 — applyStyleProps 实际组件用例', () => {
   it('Box 组件：响应式 p + bg + rounded', () => {
-     
     const cls = applyStyleProps(defaultLight, {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       p: { base: 4, middle: 8, large: 16 } as any,
@@ -320,7 +384,9 @@ describe('集成 — applyStyleProps 实际组件用例', () => {
   it('与 chain 联用：先 applyStyleProps 后追加 _hover', () => {
     const cls = icss(defaultLight, s => {
       applyStyleProps(s, { p: '_middle', bg: '_primary' })
-      s._hover(h => { h.backgroundColor._primary.alpha(85) })
+      s._hover(h => {
+        h.backgroundColor._primary.alpha(85)
+      })
     })
     expect(typeof cls).toBe('string')
   })

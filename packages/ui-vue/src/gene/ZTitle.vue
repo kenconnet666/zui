@@ -116,7 +116,7 @@ const LEVEL_LINE_HEIGHT = 1.25
 const effectiveTag = computed(() => props.tag ?? `h${props.level}`)
 
 const className = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     // 组件级默认(放最前,后续 applyTypographyBase 若 props 传了同名维度会覆盖)
     s.fontSize.iem(LEVEL_FONT_SIZE[props.level])
     s.fontWeight(LEVEL_FONT_WEIGHT[props.level])

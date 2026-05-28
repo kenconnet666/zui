@@ -7,38 +7,55 @@ import ApiTable from '../components/ApiTable.vue'
   <section>
     <ZTitle :level="1">内置 hooks</ZTitle>
     <ZParagraph>
-      <ZCode code="@kenconnet666/zui-vue" /> 在 <ZCode code="_hooks/" /> 目录提供一组「轻量包装」composable,
+      <ZCode code="@kenconnet666/zui-vue" /> 在
+      <ZCode code="_hooks/" /> 目录提供一组「轻量包装」composable,
       给组件库自身和业务方共用。优先包装 <strong>VueUse</strong>,不够再 wrap floating-ui / Teleport,
-      最后自写。这些 hook 标注为 <em>internal</em> —— 业务方可用但不算核心 API surface,
-      API 变更不算 BREAKING。
+      最后自写。这些 hook 标注为 <em>internal</em> —— 业务方可用但不算核心 API surface, API 变更不算
+      BREAKING。
     </ZParagraph>
 
     <ZTitle :level="2">速查</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',   label: 'hook',     mono: true, width: '200px' },
-        { key: 'source', label: '来源',     mono: true, width: '140px' },
-        { key: 'desc',   label: '说明' },
+        { key: 'name', label: 'hook', mono: true, width: '200px' },
+        { key: 'source', label: '来源', mono: true, width: '140px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'useZId',         source: '包装 Vue useId', desc: 'SSR-friendly 唯一 id,加 zui- 前缀,可加语义后缀。' },
-        { name: 'usePortal',      source: '包装 Teleport',   desc: '把浮层渲染到 body 或自定义 target;附带 <ZPortal> 组件版。' },
-        { name: 'useEscapeStack', source: '自写',            desc: 'LIFO 栈 ESC 监听,多层浮层按下 Escape 只关最顶层。' },
-        { name: 'usePopper',      source: '包装 floating-ui', desc: 'useFloating 上层,内置 offset + flip + shift + autoUpdate。' },
-        { name: 'useRipple',      source: '自写',            desc: 'Material Design 波纹效果,pointerdown 触发,animationend 自清。' },
+        {
+          name: 'useZId',
+          source: '包装 Vue useId',
+          desc: 'SSR-friendly 唯一 id,加 zui- 前缀,可加语义后缀。',
+        },
+        {
+          name: 'usePortal',
+          source: '包装 Teleport',
+          desc: '把浮层渲染到 body 或自定义 target;附带 <ZPortal> 组件版。',
+        },
+        {
+          name: 'useEscapeStack',
+          source: '自写',
+          desc: 'LIFO 栈 ESC 监听,多层浮层按下 Escape 只关最顶层。',
+        },
+        {
+          name: 'usePopper',
+          source: '包装 floating-ui',
+          desc: 'useFloating 上层,内置 offset + flip + shift + autoUpdate。',
+        },
+        {
+          name: 'useRipple',
+          source: '自写',
+          desc: 'Material Design 波纹效果,pointerdown 触发,animationend 自清。',
+        },
       ]"
     />
 
     <ZTitle :level="2">useZId</ZTitle>
     <ZParagraph>
-      包装 Vue 3.5+ 内置 <ZCode code="useId()" />,加 <ZCode code="zui-" /> 前缀避免与宿主页面 id 冲突。
-      可选语义后缀,用于复合组件区分多个子节点 id。SSR 安全(Vue 内置 useId 跨端一致)。
+      包装 Vue 3.5+ 内置 <ZCode code="useId()" />,加 <ZCode code="zui-" /> 前缀避免与宿主页面 id
+      冲突。 可选语义后缀,用于复合组件区分多个子节点 id。SSR 安全(Vue 内置 useId 跨端一致)。
     </ZParagraph>
-    <ZCode
-      :inline="false"
-      lang="ts"
-      :code="`function useZId(suffix?: string): string`"
-    />
+    <ZCode :inline="false" lang="ts" :code="`function useZId(suffix?: string): string`" />
     <ZCode
       :inline="false"
       lang="vue"
@@ -58,12 +75,16 @@ const descId  = useZId('desc')        // 'zui-v-1-desc'
     />
     <ApiTable
       :columns="[
-        { key: 'name', label: '参数',   mono: true, width: '140px' },
-        { key: 'type', label: '类型',   mono: true, width: '160px' },
+        { key: 'name', label: '参数', mono: true, width: '140px' },
+        { key: 'type', label: '类型', mono: true, width: '160px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'suffix', type: 'string | undefined', desc: '可选语义后缀。无 → zui-{vueId};有 → zui-{vueId}-{suffix}。' },
+        {
+          name: 'suffix',
+          type: 'string | undefined',
+          desc: '可选语义后缀。无 → zui-{vueId};有 → zui-{vueId}-{suffix}。',
+        },
       ]"
     />
 
@@ -131,21 +152,25 @@ const root = usePortal(document.getElementById('app'))
     />
     <ApiTable
       :columns="[
-        { key: 'name', label: '参数',                mono: true, width: '120px' },
-        { key: 'type', label: '类型',                mono: true, width: '300px' },
+        { key: 'name', label: '参数', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '300px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'target', type: 'string | HTMLElement | null', desc: 'CSS selector 字符串 / Element / null;null/undefined → document.body。' },
+        {
+          name: 'target',
+          type: 'string | HTMLElement | null',
+          desc: 'CSS selector 字符串 / Element / null;null/undefined → document.body。',
+        },
       ]"
     />
 
     <ZTitle :level="2">useEscapeStack</ZTitle>
     <ZParagraph>
-      多层浮层(Modal 套 Popover、Dropdown 套 Tooltip 等)同时监听 Escape 时,
-      朴素的 <ZCode code="window.addEventListener" /> 会让所有 handler 一起触发——全部关闭,错。
-      <ZCode code="useEscapeStack" /> 维护一个全局 LIFO 栈,按下 Escape <strong>只 dispatch 给最顶层
-      enabled 的 handler</strong>。
+      多层浮层(Modal 套 Popover、Dropdown 套 Tooltip 等)同时监听 Escape 时, 朴素的
+      <ZCode code="window.addEventListener" /> 会让所有 handler 一起触发——全部关闭,错。
+      <ZCode code="useEscapeStack" /> 维护一个全局 LIFO 栈,按下 Escape
+      <strong>只 dispatch 给最顶层 enabled 的 handler</strong>。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -170,28 +195,31 @@ useEscapeStack(() => (open.value = false), { enabled: open })
     />
     <ZParagraph>
       底层细节:全局只附加<strong>一个</strong> <ZCode code="keydown" /> listener(capture);
-      调度时从栈顶往下找第一个 enabled 的 entry 并 <ZCode code="stopPropagation" />;
-      组件销毁时自动 pop,栈空则 detach listener,零泄漏。
+      调度时从栈顶往下找第一个 enabled 的 entry 并 <ZCode code="stopPropagation" />; 组件销毁时自动
+      pop,栈空则 detach listener,零泄漏。
     </ZParagraph>
     <ApiTable
       :columns="[
-        { key: 'name', label: '参数',         mono: true, width: '160px' },
-        { key: 'type', label: '类型',         mono: true, width: '220px' },
+        { key: 'name', label: '参数', mono: true, width: '160px' },
+        { key: 'type', label: '类型', mono: true, width: '220px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'onEscape',     type: '() => void',          desc: '按下 Escape 时的回调。' },
-        { name: 'opts.enabled', type: 'Ref<boolean>',        desc: '控制此 handler 是否生效。默认 ref(true)(始终生效)。设为 false 时 dispatch 会跳过此 entry 找下一层。' },
+        { name: 'onEscape', type: '() => void', desc: '按下 Escape 时的回调。' },
+        {
+          name: 'opts.enabled',
+          type: 'Ref<boolean>',
+          desc: '控制此 handler 是否生效。默认 ref(true)(始终生效)。设为 false 时 dispatch 会跳过此 entry 找下一层。',
+        },
       ]"
     />
 
     <ZTitle :level="2">usePopper</ZTitle>
     <ZParagraph>
-      <ZCode code="@floating-ui/vue" /> 的 <ZCode code="useFloating" /> 上薄薄包一层,
-      给 zui 默认的 placement / offset / middleware 预设——
-      <ZCode code="offset(8)" /> + <ZCode code="flip()" /> + <ZCode code="shift({ padding: 8 })" />
-      三件套,加 <ZCode code="autoUpdate" />。降低使用心智,让 Tooltip / Popover / Dropdown / Select
-      列表层定位的样板代码大幅缩减。
+      <ZCode code="@floating-ui/vue" /> 的 <ZCode code="useFloating" /> 上薄薄包一层, 给 zui 默认的
+      placement / offset / middleware 预设—— <ZCode code="offset(8)" /> + <ZCode code="flip()" /> +
+      <ZCode code="shift({ padding: 8 })" /> 三件套,加 <ZCode code="autoUpdate" />。降低使用心智,让
+      Tooltip / Popover / Dropdown / Select 列表层定位的样板代码大幅缩减。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -274,11 +302,11 @@ const { floatingStyles, middlewareData } = usePopper(reference, floating, {
 
     <ZTitle :level="2">useRipple</ZTitle>
     <ZParagraph>
-      Material Design 风波纹效果。VueUse 无对应实现,zui-vue <strong>自写</strong>。
-      基于 pointerdown 坐标 + element bounding 计算波纹中心,动态插入
-      <ZCode code="&lt;span class='zui-ripple'&gt;" />,scale + opacity 动画,animationend 自动移除 DOM。
-      第一次使用时往 <ZCode code="&lt;head&gt;" /> 注入 keyframes(全局一次),包装 ripple 容器需要
-      <ZCode code="position: relative" /> + <ZCode code="overflow: hidden" />(组件自己加)。
+      Material Design 风波纹效果。VueUse 无对应实现,zui-vue <strong>自写</strong>。 基于 pointerdown
+      坐标 + element bounding 计算波纹中心,动态插入
+      <ZCode code="&lt;span class='zui-ripple'&gt;" />,scale + opacity 动画,animationend 自动移除
+      DOM。 第一次使用时往 <ZCode code="&lt;head&gt;" /> 注入 keyframes(全局一次),包装 ripple
+      容器需要 <ZCode code="position: relative" /> + <ZCode code="overflow: hidden" />(组件自己加)。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -300,8 +328,8 @@ function useRipple(
 
     <ZTitle :level="3">默认开启的组件</ZTitle>
     <ZParagraph>
-      <ZCode code="ZButton" /> 默认在 setup 内调用 <ZCode code="useRipple(rootRef)" />,
-      传入的 <ZCode code="disabled" /> 是组件 prop 派生的响应式 ref——禁用按钮自动不出波纹。
+      <ZCode code="ZButton" /> 默认在 setup 内调用 <ZCode code="useRipple(rootRef)" />, 传入的
+      <ZCode code="disabled" /> 是组件 prop 派生的响应式 ref——禁用按钮自动不出波纹。
     </ZParagraph>
     <ZCode
       :inline="false"

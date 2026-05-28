@@ -38,11 +38,7 @@ export interface ZFormExpose {
 import { computed, provide, ref, toRef } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import {
-  Z_FORM_KEY,
-  type FormContext,
-  type FormItemContext,
-} from './_form-ctx'
+import { Z_FORM_KEY, type FormContext, type FormItemContext } from './_form-ctx'
 
 const props = withDefaults(defineProps<ZFormProps>(), {
   labelPlacement: 'left',
@@ -72,18 +68,18 @@ const ctx: FormContext = {
 provide(Z_FORM_KEY, ctx)
 
 async function validate(): Promise<void> {
-  await Promise.all(items.value.map((i) => i.validate()))
+  await Promise.all(items.value.map(i => i.validate()))
 }
 
 function reset(): void {
-  items.value.forEach((i) => i.reset())
+  items.value.forEach(i => i.reset())
 }
 
 const rootRef = ref<HTMLFormElement | null>(null)
 defineExpose<ZFormExpose & { rootRef: typeof rootRef }>({ validate, reset, rootRef })
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.gap._middle

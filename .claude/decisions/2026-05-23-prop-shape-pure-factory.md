@@ -17,6 +17,7 @@ supersedes:
 
 2026-05-22 引入 `factory | Size5` union 范式时,初衷是 happy path 简洁 (`size="middle"`)。
 实际使用半年发现:
+
 - 字符串档位 `'small' / 'middle' / 'large'` **本质是 schema token 翻译**(组件内 SIZE_MAP 把字符串映射到 `.iem(N)`),用户写 `(s) => s._middle` 直接读 token 完全等价、且**无需 MAP 翻译表**。
 - 字面量枚举有歧义:`size='small'` 在不同组件含义不一致(ZIcon=12px vs ZButton 高=24px)。
 - 用户提示词调研:"方便用户熟悉 css 本来的属性而不是魔法封装" —— 字符串枚举正是"魔法封装"。
@@ -77,7 +78,9 @@ export interface ZButtonProps {
 
 // ❌ 不要单独 export type alias
 export type ZButtonVariant = 'filled' | 'outlined' | 'text' | 'ghost' | 'link'
-export interface ZButtonProps { variant?: ZButtonVariant }
+export interface ZButtonProps {
+  variant?: ZButtonVariant
+}
 ```
 
 - 用于:**控制多种复杂样式组合**(背景 + 边框 + 文字 + hover state 一整套)
@@ -96,14 +99,14 @@ export interface ZButtonProps { variant?: ZButtonVariant }
 
 ## 禁忌(必须避免)
 
-| ❌ 错误形态 | ✅ 正确形态 |
-|---|---|
-| `justify?: 'between'` 配 MAP 翻译表 | `justify?: factory` (Type A) |
-| `size?: 'small' \| 'middle' \| 'large'`(纯字面量枚举) | `size?: factory` (Type C) |
-| `color?: 'primary' \| 'danger'`(颜色字面量) | `color?: factory` (Type A) |
+| ❌ 错误形态                                                           | ✅ 正确形态                                         |
+| --------------------------------------------------------------------- | --------------------------------------------------- |
+| `justify?: 'between'` 配 MAP 翻译表                                   | `justify?: factory` (Type A)                        |
+| `size?: 'small' \| 'middle' \| 'large'`(纯字面量枚举)                 | `size?: factory` (Type C)                           |
+| `color?: 'primary' \| 'danger'`(颜色字面量)                           | `color?: factory` (Type A)                          |
 | `direction?: 'horizontal' \| 'vertical'`(布局方向枚举,无 JS 逻辑耦合) | `direction?: factory` (Type A 操作 `flexDirection`) |
-| `export type ZXxxVariant = ...` 单独 type alias | 内联到 props interface (Type V) |
-| 组件内 `XXX_MAP: Record<keyword, css-value>` 翻译表 | 直接走 factory + chain token access |
+| `export type ZXxxVariant = ...` 单独 type alias                       | 内联到 props interface (Type V)                     |
+| 组件内 `XXX_MAP: Record<keyword, css-value>` 翻译表                   | 直接走 factory + chain token access                 |
 
 ## iem 盒子模型 JSDoc 规范
 
@@ -131,6 +134,7 @@ export interface ZButtonProps { variant?: ZButtonVariant }
 ## 迁移路径
 
 旧:
+
 ```vue
 <ZIcon size="middle" />
 <ZSpace size="large" />
@@ -139,15 +143,18 @@ export interface ZButtonProps { variant?: ZButtonVariant }
 ```
 
 新:
+
 ```vue
-<ZIcon :size="(w) => w.iem(1.25)" />              <!-- 显式 iem -->
-<ZIcon :size="(w) => w._middle" />                <!-- 走 schema sizes token -->
-<ZSpace :size="(g) => g._large" />
-<ZAlert :color="(c) => c._success">
+<ZIcon :size="w => w.iem(1.25)" />
+<!-- 显式 iem -->
+<ZIcon :size="w => w._middle" />
+<!-- 走 schema sizes token -->
+<ZSpace :size="g => g._large" />
+<ZAlert :color="c => c._success">
   <template #icon><ZIcon :component="BuiltinIcons.success" /></template>
   操作成功
 </ZAlert>
-<ZFlex :justify="(j) => j.spaceBetween" :align="(a) => a.center">...</ZFlex>
+<ZFlex :justify="j => j.spaceBetween" :align="a => a.center">...</ZFlex>
 ```
 
 ## 影响范围

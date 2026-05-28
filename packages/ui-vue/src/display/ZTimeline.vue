@@ -58,7 +58,7 @@ const props = defineProps<ZTimelineProps>()
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.color._text
@@ -68,7 +68,7 @@ const rootClass = computed(() =>
 )
 
 const itemClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.relative
     s.paddingLeft._huge
     s.paddingBottom._middle
@@ -77,7 +77,7 @@ const itemClass = computed(() =>
 )
 
 const dotClass = (color?: ZTimelineItem['color']): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.left.px(0)
     s.top.iem(0.25)
@@ -90,7 +90,7 @@ const dotClass = (color?: ZTimelineItem['color']): string =>
   })
 
 const lineClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.left.iem(0.25)
     s.top.iem(0.75)
@@ -101,13 +101,13 @@ const lineClass = computed(() =>
 )
 
 const titleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontWeight._semibold
     s.color._text
   }),
 )
 const descClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.fontSize._small
     s.marginTop._tiny

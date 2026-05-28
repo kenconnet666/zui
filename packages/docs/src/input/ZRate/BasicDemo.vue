@@ -10,12 +10,28 @@ const value2 = ref(2.5)
   <ZFlex :direction="d => d.column" :gap="g => g._large">
     <ZFlex :direction="d => d.column" :gap="g => g._small">
       <ZRate v-model:value="value1" />
-      <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">评分：{{ value1 }}</ZText>
+      <ZText
+        :css="
+          s => {
+            s.color._textSecondary
+            s.fontSize._small
+          }
+        "
+        >评分：{{ value1 }}</ZText
+      >
     </ZFlex>
 
     <ZFlex :direction="d => d.column" :gap="g => g._small">
       <ZRate v-model:value="value2" :allow-half="true" />
-      <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">半星：{{ value2 }}</ZText>
+      <ZText
+        :css="
+          s => {
+            s.color._textSecondary
+            s.fontSize._small
+          }
+        "
+        >半星：{{ value2 }}</ZText
+      >
     </ZFlex>
 
     <ZFlex :gap="g => g._large" :align="a => a.center">

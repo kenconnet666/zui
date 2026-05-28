@@ -51,7 +51,7 @@ withDefaults(defineProps<DemoBlockProps>(), {
 const theme = useZTheme()
 
 const descClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.fontSize._small
     s.lineHeight._relaxed
@@ -61,7 +61,7 @@ const descClass = computed(() =>
 </script>
 
 <template>
-  <ZFlex :direction="(d) => d.column" :gap="(g) => g.iem(0.5)">
+  <ZFlex :direction="d => d.column" :gap="g => g.iem(0.5)">
     <p v-if="$slots.desc" :class="descClass">
       <slot name="desc" />
     </p>

@@ -12,8 +12,7 @@ const interaction: DocsGroup = {
   // cursor
   // ════════════════════════════════════════════════════════════════════
   cursor: {
-    firstLine:
-      '设置元素**鼠标指针**的样式 —— 箭头 / 手型 / 文字光标 / 等待 / 拖动 / 调整方向等。',
+    firstLine: '设置元素**鼠标指针**的样式 —— 箭头 / 手型 / 文字光标 / 等待 / 拖动 / 调整方向等。',
     keywordGroups: [
       {
         label: '通用 / 自动',
@@ -69,7 +68,10 @@ const interaction: DocsGroup = {
           ['`rowResize`', '上下双箭头（调整行高）'],
           ['`eResize` / `wResize`', '左右单向（东 / 西方向调整）'],
           ['`nResize` / `sResize`', '上下单向（北 / 南方向调整）'],
-          ['`neResize` `nwResize` `seResize` `swResize`', '4 个对角线方向（东北 / 西北 / 东南 / 西南）'],
+          [
+            '`neResize` `nwResize` `seResize` `swResize`',
+            '4 个对角线方向（东北 / 西北 / 东南 / 西南）',
+          ],
           ['`ewResize` / `nsResize`', '横 / 纵双向调整'],
           ['`neswResize` / `nwseResize`', '对角线双向调整'],
         ],
@@ -89,12 +91,24 @@ s.cursor("url('/sword.png') 16 16, pointer")       // 带热点坐标（图片�
 - iOS Safari **完全忽略 cursor**（触摸设备无指针概念）`,
     syntax: [
       ['通用', '`auto` ｜ `default` ｜ `none`', '基础'],
-      ['交互', '`pointer` ｜ `text` ｜ `wait` ｜ `progress` ｜ `help` ｜ `contextMenu` ｜ `cell` ｜ `crosshair` ｜ `verticalText`', '最常用'],
-      ['拖放', '`move` ｜ `grab` ｜ `grabbing` ｜ `alias` ｜ `copy` ｜ `notAllowed` ｜ `noDrop`', '拖放交互'],
+      [
+        '交互',
+        '`pointer` ｜ `text` ｜ `wait` ｜ `progress` ｜ `help` ｜ `contextMenu` ｜ `cell` ｜ `crosshair` ｜ `verticalText`',
+        '最常用',
+      ],
+      [
+        '拖放',
+        '`move` ｜ `grab` ｜ `grabbing` ｜ `alias` ｜ `copy` ｜ `notAllowed` ｜ `noDrop`',
+        '拖放交互',
+      ],
       ['缩放', '`allScroll` ｜ `zoomIn` ｜ `zoomOut`', ''],
-      ['调整大小', '`colResize` ｜ `rowResize` ｜ `eResize` ｜ `wResize` ｜ `nResize` ｜ `sResize` ｜ `neResize` ｜ `nwResize` ｜ `seResize` ｜ `swResize` ｜ `ewResize` ｜ `nsResize` ｜ `neswResize` ｜ `nwseResize`', '8 方向 + 4 双向'],
-      ['自定义图片', "`\"url('/cursor.png'), pointer\"`", 'URL + 兜底关键字（必须）'],
-      ['图片 + 热点', "`\"url('/c.png') 16 16, pointer\"`", '坐标为图片热点位置'],
+      [
+        '调整大小',
+        '`colResize` ｜ `rowResize` ｜ `eResize` ｜ `wResize` ｜ `nResize` ｜ `sResize` ｜ `neResize` ｜ `nwResize` ｜ `seResize` ｜ `swResize` ｜ `ewResize` ｜ `nsResize` ｜ `neswResize` ｜ `nwseResize`',
+        '8 方向 + 4 双向',
+      ],
+      ['自定义图片', '`"url(\'/cursor.png\'), pointer"`', 'URL + 兜底关键字（必须）'],
+      ['图片 + 热点', '`"url(\'/c.png\') 16 16, pointer"`', '坐标为图片热点位置'],
     ],
     initialValue: 'auto',
     inherits: true,
@@ -104,8 +118,7 @@ s.cursor("url('/sword.png') 16 16, pointer")       // 带热点坐标（图片�
   // userSelect
   // ════════════════════════════════════════════════════════════════════
   userSelect: {
-    firstLine:
-      '控制文本是否**可被用户选中**（鼠标拖选、键盘 Ctrl+A 等）。',
+    firstLine: '控制文本是否**可被用户选中**（鼠标拖选、键盘 Ctrl+A 等）。',
     keywordGroups: [
       {
         label: '5 个 keyword',
@@ -132,9 +145,7 @@ s.userSelect.all
 ### a11y 注意
 
 \`userSelect: none\` 会让屏幕阅读器和键盘用户无法选中文本 —— **正文内容不要禁用**，仅 UI 控件用。`,
-    syntax: [
-      ['5 个 keyword', '`auto` ｜ `none` ｜ `text` ｜ `all` ｜ `contain`', '只接受关键字'],
-    ],
+    syntax: [['5 个 keyword', '`auto` ｜ `none` ｜ `text` ｜ `all` ｜ `contain`', '只接受关键字']],
     initialValue: 'auto',
     inherits: false,
   },
@@ -151,7 +162,10 @@ s.userSelect.all
         headers: ['关键字', '行为'],
         rows: [
           ['`auto`', '**默认值**。响应所有事件'],
-          ['`none`', '**事件穿透** —— 元素不响应任何事件，事件直接传给下方元素（覆盖层 / 装饰元素常用）'],
+          [
+            '`none`',
+            '**事件穿透** —— 元素不响应任何事件，事件直接传给下方元素（覆盖层 / 装饰元素常用）',
+          ],
         ],
       },
       {
@@ -265,7 +279,10 @@ s.touchAction.manipulation
         rows: [
           ['`auto`', '**默认值**。浏览器按元素类型决定样式（如 `<select>` 显示下拉箭头）'],
           ['`none`', '**完全去除原生外观** —— 让 CSS 完全接管（最常用，定制按钮 / select 时）'],
-          ['`textfield`', '强制按 `<input type="text">` 渲染（让 `type="search"` 等显示文本框外观）'],
+          [
+            '`textfield`',
+            '强制按 `<input type="text">` 渲染（让 `type="search"` 等显示文本框外观）',
+          ],
           ['`menulistButton`', '强制按下拉按钮渲染'],
         ],
       },

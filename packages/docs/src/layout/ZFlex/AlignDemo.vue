@@ -16,11 +16,45 @@ const aligns = [
       :key="item.label"
       :align="item.fn"
       :gap="g => g._small"
-      :css="s => { s.height.iem(5); s.padding.iem(0.5); s.borderRadius._small; s.backgroundColor._bgMuted }"
+      :css="
+        s => {
+          s.height.iem(5)
+          s.padding.iem(0.5)
+          s.borderRadius._small
+          s.backgroundColor._bgMuted
+        }
+      "
     >
-      <ZText :css="s => { s.width.iem(6); s.color._textSecondary; s.fontSize._small }">{{ item.label }}</ZText>
-      <ZText :css="s => { s.padding.iem(0.5); s.backgroundColor._bg; s.borderRadius._small }">矮</ZText>
-      <ZText :css="s => { s.padding.iem(1.25); s.backgroundColor._bg; s.borderRadius._small }">高</ZText>
+      <ZText
+        :css="
+          s => {
+            s.width.iem(6)
+            s.color._textSecondary
+            s.fontSize._small
+          }
+        "
+        >{{ item.label }}</ZText
+      >
+      <ZText
+        :css="
+          s => {
+            s.padding.iem(0.5)
+            s.backgroundColor._bg
+            s.borderRadius._small
+          }
+        "
+        >矮</ZText
+      >
+      <ZText
+        :css="
+          s => {
+            s.padding.iem(1.25)
+            s.backgroundColor._bg
+            s.borderRadius._small
+          }
+        "
+        >高</ZText
+      >
     </ZFlex>
   </ZFlex>
 </template>

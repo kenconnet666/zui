@@ -65,7 +65,7 @@ const ctx: RadioGroupCtx = {
 provide(Z_RADIO_GROUP_KEY, ctx)
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     if (props.direction) s.flexDirection(props.direction)
     if (props.buttonStyle) s.gap.px(0)
@@ -79,7 +79,6 @@ const rootClass = computed(() =>
     props.css?.(s)
   }),
 )
-
 </script>
 
 <template>

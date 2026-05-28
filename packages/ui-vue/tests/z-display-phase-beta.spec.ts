@@ -34,7 +34,7 @@ describe('ZSkeleton', () => {
   it('rows=3 → 渲染 3 行(默认)', () => {
     const w = mount(ZSkeleton, { props: { rows: 3 } })
     // 3 行 div(linesContainer 内)
-    const lines = w.findAll('div').filter((d) => {
+    const lines = w.findAll('div').filter(d => {
       const cls = d.classes().join(' ')
       return cls.includes('css-') && d.element.children.length === 0
     })
@@ -70,7 +70,7 @@ describe('ZResult', () => {
       },
     })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     // _success 走 schema(_2e7d32 in light)
     expect(css.toLowerCase()).toMatch(/#2e7d32|color:rgb\(46/)
@@ -137,7 +137,7 @@ describe('ZList', () => {
   it('bordered=true → 注入边框样式', () => {
     mount(ZList, { props: { items: [1, 2], itemSize: 3, height: 12, bordered: true } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/border-width:1px/)
   })
@@ -149,7 +149,7 @@ describe('ZProgress', () => {
     expect(w.attributes('role')).toBe('progressbar')
     expect(w.attributes('aria-valuenow')).toBe('40')
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/width:40%/)
   })
@@ -179,7 +179,7 @@ describe('ZProgress', () => {
       },
     })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css.toLowerCase()).toMatch(/#2e7d32|background-color:rgb\(46/)
   })

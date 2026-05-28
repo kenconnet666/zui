@@ -13,17 +13,14 @@ import { themeColorScheme } from './colorScheme'
  * 注：此函数仅隐藏原生滚动条，不提供自定义可视 thumb。
  * 需要悬浮半透明 thumb 的场景请直接使用 `<ZScrollbar>` 组件。
  */
-export function applyScrollbarStyles(
-  s: Chain<ZuiSchema>,
-  theme: ResolvedTheme<ZuiSchema>,
-): void {
+export function applyScrollbarStyles(s: Chain<ZuiSchema>, theme: ResolvedTheme<ZuiSchema>): void {
   const dark = themeColorScheme(theme) === 'dark'
   void dark // 保留参数签名兼容性
 
   // 隐藏原生滚动条——不占布局空间
   s._prop('scrollbarWidth', 'none')
   s._prop('msOverflowStyle', 'none')
-  s._selector('&::-webkit-scrollbar', (sb) => {
+  s._selector('&::-webkit-scrollbar', sb => {
     sb._prop('display', 'none')
   })
 }

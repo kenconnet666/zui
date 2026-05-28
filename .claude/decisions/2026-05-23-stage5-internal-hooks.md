@@ -34,6 +34,7 @@ wrapper 失败)。
 ### 4. `usePopper(reference, floating, opts?): ReturnType<typeof useFloating>`
 
 `@floating-ui/vue` `useFloating` 的薄包装,默认配置:
+
 - `placement: 'bottom'`
 - `strategy: 'absolute'`
 - `middleware: [offset(8), flip(), shift({ padding: 8 })]`
@@ -48,6 +49,7 @@ wrapper 失败)。
 animationend 自动移除。全局一次性注入 `@keyframes zui-ripple-scale`(`<style id="zui-ripple-style">`)。
 
 API:
+
 - `targetRef: Ref<HTMLElement | null>` —— 必填,通常 `ref(null)` + template ref / functional ref 绑定
 - `opts.color?: string` —— 默认 `'rgba(255, 255, 255, 0.35)'`(白色半透,深 bg 上明显)
 - `opts.duration?: number` —— 默认 `400`(ms,Material 推荐 350~450)
@@ -82,6 +84,7 @@ pnpm --filter @kenconnet666/zui-vue build       → 33 chunks emitted(含 5 个 
 ## 暴露策略
 
 `src/_hooks/index.ts` 导出全部 5 个 hook + `ZPortal` 组件,主入口 `src/index.ts` 透出:
+
 ```ts
 export * from './_hooks'
 ```

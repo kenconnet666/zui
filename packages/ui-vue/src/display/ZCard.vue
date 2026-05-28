@@ -92,7 +92,7 @@ const hasHead = computed<boolean>(
 const hasFoot = computed<boolean>(() => !!slots.foot)
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.backgroundColor._bg
     s.borderRadius._middle
     s.overflow.hidden
@@ -106,7 +106,7 @@ const rootClass = computed(() =>
     if (props.hoverable) {
       s.transitionProperty._shadow
       s.transitionDuration._small
-      s._hover((h) => {
+      s._hover(h => {
         h.boxShadow._middle
       })
     }
@@ -116,7 +116,7 @@ const rootClass = computed(() =>
 )
 
 const headClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.spaceBetween
@@ -133,7 +133,7 @@ const headClass = computed(() =>
 const sxHeadAttrs = computed(() => extractSxAttrs(props.sxHead))
 
 const bodyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._middle
     s.color._text
     applySx(s, props.sxBody)
@@ -142,7 +142,7 @@ const bodyClass = computed(() =>
 const sxBodyAttrs = computed(() => extractSxAttrs(props.sxBody))
 
 const footClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._middle
     s.borderTopWidth._thin
     s.borderTopStyle.solid
@@ -164,7 +164,9 @@ const sxFootAttrs = computed(() => extractSxAttrs(props.sxFoot))
       v-bind="sxHeadAttrs.attrs"
     >
       <div>
-        <slot name="header"><slot name="head">{{ title }}</slot></slot>
+        <slot name="header"
+          ><slot name="head">{{ title }}</slot></slot
+        >
       </div>
       <div v-if="$slots.extra">
         <slot name="extra" />

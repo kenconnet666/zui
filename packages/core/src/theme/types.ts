@@ -62,9 +62,8 @@ export type ResolvedThemeContext = Record<string, Record<string, string | number
 export type ResolvedTheme<T extends ThemeSchema> = {
   [Cat in keyof T]: T[Cat] extends Record<string, ThemeValue>
     ? {
-        [K in keyof T[Cat]]: (T[Cat][K] extends (...args: never[]) => infer R
-          ? R
-          : T[Cat][K]) & (string | number)
+        [K in keyof T[Cat]]: (T[Cat][K] extends (...args: never[]) => infer R ? R : T[Cat][K]) &
+          (string | number)
       }
     : never
 }

@@ -85,7 +85,7 @@ const thicknessValue = computed(() =>
 const EDGE_RATIO = '10%'
 
 const className = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     // 颜色:默认 `_border`(从 withDefaults 提供),用户 factory 覆盖。线 + 文字同色(border 走 currentColor 联动)
     s.color(props.color)
 
@@ -107,14 +107,14 @@ const className = computed(() =>
       const beforeFlex = props.align === 'left' ? `0 0 ${EDGE_RATIO}` : '1'
       const afterFlex = props.align === 'right' ? `0 0 ${EDGE_RATIO}` : '1'
 
-      s._before((b) => {
+      s._before(b => {
         b.content("''")
         b._prop('flex', beforeFlex)
         b._prop('borderTopWidth', thicknessValue.value)
         b._prop('borderTopStyle', lineStyle.value)
         b._prop('borderTopColor', 'currentColor')
       })
-      s._after((a) => {
+      s._after(a => {
         a.content("''")
         a._prop('flex', afterFlex)
         a._prop('borderTopWidth', thicknessValue.value)

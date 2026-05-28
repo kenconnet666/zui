@@ -13,9 +13,8 @@ import OffsetDemoSource from './ZAffix/OffsetDemo.vue?raw'
   <section>
     <ZTitle :level="1">ZAffix 固钉</ZTitle>
     <ZParagraph>
-      滚动触发吸附固定。当容器滚动到指定 <ZCode code="offsetTop" /> 偏移时，
-      内容切换为 <ZCode code="position: fixed" />，同时在原位插入等高占位元素，
-      防止布局跳动。
+      滚动触发吸附固定。当容器滚动到指定 <ZCode code="offsetTop" /> 偏移时， 内容切换为
+      <ZCode code="position: fixed" />，同时在原位插入等高占位元素， 防止布局跳动。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>
@@ -38,15 +37,25 @@ import OffsetDemoSource from './ZAffix/OffsetDemo.vue?raw'
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '140px' },
-        { key: 'type',    label: '类型',   mono: true, width: '280px' },
+        { key: 'name', label: '属性', mono: true, width: '140px' },
+        { key: 'type', label: '类型', mono: true, width: '280px' },
         { key: 'default', label: '默认值', mono: true, width: '100px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'offsetTop', type: 'number',                           default: '0',  desc: '距顶距离（px）。0 = 到达顶部时立即吸附。' },
-        { name: 'target',    type: '() => Element | Window',           default: 'window', desc: '监听的滚动容器，不传则监听 window。传入返回容器元素的函数。' },
-        { name: 'css',       type: '(s: Chain) => void',               default: '—',  desc: '根元素 CSS 兜底。' },
+        {
+          name: 'offsetTop',
+          type: 'number',
+          default: '0',
+          desc: '距顶距离（px）。0 = 到达顶部时立即吸附。',
+        },
+        {
+          name: 'target',
+          type: '() => Element | Window',
+          default: 'window',
+          desc: '监听的滚动容器，不传则监听 window。传入返回容器元素的函数。',
+        },
+        { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
       ]"
     />
 
@@ -57,7 +66,10 @@ import OffsetDemoSource from './ZAffix/OffsetDemo.vue?raw'
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'default', desc: '需要吸附固定的内容。滚动达到 offsetTop 时切换为 fixed，离开时回到原位。' },
+        {
+          name: 'default',
+          desc: '需要吸附固定的内容。滚动达到 offsetTop 时切换为 fixed，离开时回到原位。',
+        },
       ]"
     />
   </section>

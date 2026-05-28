@@ -19,13 +19,7 @@ export interface DocLayoutEmits {
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import {
-  icss,
-  useZTheme,
-  ZFlex,
-  ZMenu,
-  ZScrollbar,
-} from '@kenconnet666/zui-vue'
+import { icss, useZTheme, ZFlex, ZMenu, ZScrollbar } from '@kenconnet666/zui-vue'
 import { docNav, docRouteMap } from '../config/nav'
 import DocToc from './DocToc.vue'
 
@@ -56,7 +50,7 @@ function onColorSchemeChange(v: ColorScheme): void {
 
 // ─── 布局样式 ───
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.height.vh(100)
@@ -66,7 +60,7 @@ const rootClass = computed(() =>
 )
 
 const bodyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.minHeight.px(0)
     s.overflow.hidden
@@ -74,7 +68,7 @@ const bodyClass = computed(() =>
 )
 
 const sidebarClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexShrink(0)
     s.display.flex
     s.flexDirection.column
@@ -87,7 +81,7 @@ const sidebarClass = computed(() =>
 )
 
 const brandClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexShrink(0)
     s.paddingTop.iem(1.25)
     s.paddingBottom.iem(1.25)
@@ -104,14 +98,14 @@ const brandClass = computed(() =>
     s.userSelect.none
     s.transitionProperty._default
     s.transitionDuration._tiny
-    s._hover((h) => {
+    s._hover(h => {
       h.color._primary
     })
   }),
 )
 
 const menuAreaClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.minHeight.px(0)
     s.overflow.hidden
@@ -119,7 +113,7 @@ const menuAreaClass = computed(() =>
 )
 
 const menuWrapClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.paddingTop.px(0)
     s.paddingLeft._tiny
     s.paddingRight._tiny
@@ -129,7 +123,7 @@ const menuWrapClass = computed(() =>
 )
 
 const themeBarClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexShrink(0)
     s.display.flex
     s.borderTopWidth._thin
@@ -140,7 +134,7 @@ const themeBarClass = computed(() =>
 
 function makeThemeBtnClass(scheme: ColorScheme) {
   return computed(() =>
-    icss(theme.value, (s) => {
+    icss(theme.value, s => {
       s.flex(1)
       s.paddingTop.iem(0.75)
       s.paddingBottom.iem(0.75)
@@ -158,7 +152,7 @@ function makeThemeBtnClass(scheme: ColorScheme) {
       } else {
         s.backgroundColor.transparent
         s.color._textSecondary
-        s._hover((h) => {
+        s._hover(h => {
           h.backgroundColor._textSecondary.alpha(8)
           h.color._text
         })
@@ -180,7 +174,7 @@ const contentScrollRef = ref<{ $el: HTMLElement } | null>(null)
 const scrollEl = computed<HTMLElement | null>(() => contentScrollRef.value?.$el ?? null)
 
 const contentClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.minWidth.px(0)
     s.backgroundColor._bg
@@ -188,7 +182,7 @@ const contentClass = computed(() =>
 )
 
 const contentInnerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.paddingTop.iem(2)
     s.paddingBottom.iem(2)
     s.paddingLeft.iem(2)
@@ -200,32 +194,44 @@ const contentInnerClass = computed(() =>
 <template>
   <div :class="rootClass">
     <ZFlex :class="bodyClass">
-
       <!-- ─── 左侧栏 ─── -->
       <div :class="sidebarClass">
         <div :class="brandClass" @click="router.push('/')">zui docs</div>
 
         <div :class="menuAreaClass">
-          <ZScrollbar :css="(s) => { s.height.pct(100) }">
+          <ZScrollbar
+            :css="
+              s => {
+                s.height.pct(100)
+              }
+            "
+          >
             <div :class="menuWrapClass">
-              <ZMenu
-                :items="docNav"
-                :value="activeKey"
-                @select="onMenuSelect"
-              />
+              <ZMenu :items="docNav" :value="activeKey" @select="onMenuSelect" />
             </div>
           </ZScrollbar>
         </div>
 
         <div :class="themeBarClass">
-          <button type="button" :class="lightBtnClass" @click="onColorSchemeChange('light')">亮</button>
-          <button type="button" :class="darkBtnClass" @click="onColorSchemeChange('dark')">暗</button>
+          <button type="button" :class="lightBtnClass" @click="onColorSchemeChange('light')">
+            亮
+          </button>
+          <button type="button" :class="darkBtnClass" @click="onColorSchemeChange('dark')">
+            暗
+          </button>
         </div>
       </div>
 
       <!-- ─── 右侧内容区 ─── -->
       <div :class="contentClass">
-        <ZScrollbar ref="contentScrollRef" :css="(s) => { s.height.pct(100) }">
+        <ZScrollbar
+          ref="contentScrollRef"
+          :css="
+            s => {
+              s.height.pct(100)
+            }
+          "
+        >
           <div :class="contentInnerClass">
             <slot />
           </div>
@@ -234,7 +240,6 @@ const contentInnerClass = computed(() =>
 
       <!-- ─── 右侧 TOC ─── -->
       <DocToc :scroll-el="scrollEl" />
-
     </ZFlex>
   </div>
 </template>

@@ -8,6 +8,7 @@
 工程债务,提升一致性 + DX。
 
 **新能力**(配合 zui-core 0.7.1):
+
 - **`resolveCarrier(theme, prop, factory)`** 全局 helper(@kenconnet666/zui-core 新增)
 - **`resolveColor(theme, factory, fallback)`** —— ui-vue 在 `_internal/color-bridge.ts`
   补的便利包装,SVG/canvas/ARIA 等"裸字符串"场景从 color factory 取最终色串
@@ -17,6 +18,7 @@
 - **虚拟列表家族新增 `rootRef` expose**(ZVirtualList / ZList / ZDataTable)
 
 **BREAKING**:
+
 - **`ZQRCode.size` → `ZQRCode.pixelSize`**:语义偏离(size 是 iem 倍率,QR 是物理 px),
   显式拆名。迁移:`<ZQRCode :size="160" />` → `<ZQRCode :pixel-size="160" />`
 - **`ZSplit.size` / `update:size` → `ZSplit.ratio` / `update:ratio`**:size 是 iem 倍率,
@@ -28,6 +30,7 @@
     ZAnchor / ZTabs / ZPagination / ZUpload / ZCarousel(非 v-model 别名)
 
 **优化**(非破坏):
+
 - **ZCascader / ZTreeSelect `placeholder`** 默认从 `useZLocale('select').placeholder` 拿,
   不再硬编码 `'请选择'`(支持 i18n 切换)
 - **ZSelect `'无匹配项'` → `useZLocale('select').noOptions`**
@@ -37,6 +40,7 @@
 - **ZDynamicTags `setTimeout(fn, 0)` → `nextTick`**(Vue 原生 idiom)
 
 **验证**:
+
 - zui-core `640/640` ✓(+12 resolveCarrier spec)
 - zui-vue 受影响 spec 全套 ✓ / type-check ✓ / build ✓
 - 推迟到下一 sprint:**P0.1 usePopupTrigger hook**(8 个浮层组件去重,工作量 1-2 天,
@@ -45,6 +49,7 @@
 ### BREAKING — vw-first 单位 + 虚拟列表全栈接入(2026-05-24,S0-S9)
 
 **核心动机**:
+
 1. **响应式默认**:`ZIemPreset.default` 改为 `'0.8333vw'`(5/6vw,= 16px @ 1920 屏),整站 vw 等比缩放,16:9 屏跨屏宽视觉一致。
 2. **JS 算法层拿到 iem px 值**:虚拟列表 / 滚动计算等需要数值,以前要 DOM probe,现在 `useZIem()` 一行拿到响应式像素值。
 3. **接入虚拟列表**:大数据组件(`ZList` / `ZDataTable` / `ZSelect` / `ZAutoComplete` / `ZMention` / `ZTransfer` / `ZTree` / `ZTreeSelect` / `ZCascader`)统一用 `ZVirtualList` 渲染长列表,数据量任意,DOM 恒定。
@@ -72,6 +77,7 @@
 - **`<ZDataTable>`** —— 数据表格(行虚拟 + sticky header + 列定义 + 单/多选 + 排序 + loading + 空态 + 斑马纹/边框)。`ZTable` 保留作简单展示场景
 
 **执行 sprint**:
+
 - **S0** 单位基础设施(ZIemPreset / ZBox 解析 / useZIem)
 - **S1** ZVirtualList(iem 倍数对外,内部走 useZIem)
 - **S2** ZList 重写
@@ -84,6 +90,7 @@
 - **S9** 总验证 + CHANGELOG
 
 **验证**:
+
 - zui-core `628/628` ✓
 - zui-vue 全套 spec `655/655` ✓(53 文件)
 - type-check ✓ / build ✓
@@ -99,22 +106,34 @@
 **核心动机**:chain factory 是黑盒 callback,组件无法读取用户写入的具体数值 → 无法按比例算其他维度 → "整体保持比例" 无法实现。改 `number` 解决。
 
 **用户接口对比**:
+
 ```vue
 <!-- 旧 -->
 <ZButton :size="BUTTON_SIZE_MAP.middle" />
-<ZIcon :size="(w) => w.iem(1.5)" />
-<ZModal :width="(w) => w.iem(40)" />
+<ZIcon :size="w => w.iem(1.5)" />
+<ZModal :width="w => w.iem(40)" />
 
 <!-- 新 -->
-<ZButton :size="1" />          <!-- size=1 → fontSize 1iem,height 2iem,padding 0.5/1iem 等比缩 -->
-<ZIcon :size="1.5" />           <!-- 1.5iem 正方形 -->
-<ZModal :width="40" />          <!-- 40iem = 640px @ 1080p -->
+<ZButton :size="1" />
+<!-- size=1 → fontSize 1iem,height 2iem,padding 0.5/1iem 等比缩 -->
+<ZIcon :size="1.5" />
+<!-- 1.5iem 正方形 -->
+<ZModal :width="40" />
+<!-- 40iem = 640px @ 1080p -->
 
 <!-- 非 iem 单位走 css 兜底 -->
-<ZButton :size="1" :css="(s) => { s.height.vh(5) }" />
+<ZButton
+  :size="1"
+  :css="
+    s => {
+      s.height.vh(5)
+    }
+  "
+/>
 ```
 
 **改造批次**:
+
 - **R0**:写 ADR + 更新 `.claude/skills/zui.md §13.0`
 - **R1**:删 `_internal/size-prop.ts` + `_internal/component-sizes.ts` + 所有组件内 `*_SIZE_MAP`(13+ 处);新建 `_internal/input-size.ts` helper(`applyInputSize` / `applyInputSizeNoHeight`)
 - **R2-R7**:~40 组件改造(A 文字 8 / B 盒子 4 / C 输入 10 / D 按钮 2 / E 容器 8 / F 特殊 8)
@@ -147,6 +166,7 @@
 ZCard / ZPopover / ZTable / ZTooltip / ZAlert / ZDrawer / ZModal / ZSpin / ZButton / ZTag / ZCheckbox / ZFormItem / ZInput / ZInputNumber / ZRadio / ZSelect / ZSwitch / ZTextarea / ZBreadcrumb / ZDropdown / ZMenu / ZPagination / ZTabs
 
 **冲突处理 — 8 个 bindXxx helper**:子节点已有内部 ref(`triggerRef` / `inputRef` 等)的,合并用户 `sx*.ref` + 内部 ref 到一个函数 ref:
+
 - ZModal/ZDrawer `bindMask`
 - ZTooltip/ZPopover `bindTrigger` + `bindFloating`
 - ZInput `bindInput` / ZTextarea `bindTextarea` / ZSelect `bindRoot` + `bindDropdown`
@@ -156,15 +176,15 @@ ZCard / ZPopover / ZTable / ZTooltip / ZAlert / ZDrawer / ZModal / ZSpin / ZButt
 
 让用户用 `<ZComp ref="r">` → `r.rootRef` 拿到根 DOM:
 
-| 组件 | 根元素 | rootRef 类型 |
-|---|---|---|
-| ZModal / ZDrawer | mask `<div>` | `HTMLElement \| null` |
-| ZInput / ZTextarea / ZMention | wrapper `<div>` | `HTMLDivElement \| null` |
-| ZSelect / ZTreeSelect / ZCascader | trigger `<div>` | `HTMLDivElement \| null` |
-| ZAutoComplete | `<input>` 根 | `HTMLInputElement \| null` |
-| ZTabs | tablist `<div>` | `HTMLDivElement \| null` |
-| ZForm | `<form>` | `HTMLFormElement \| null`(合并 `validate` / `reset`) |
-| ZFormItem | `<div>` | `HTMLDivElement \| null`(合并 `validate` / `reset`) |
+| 组件                              | 根元素          | rootRef 类型                                         |
+| --------------------------------- | --------------- | ---------------------------------------------------- |
+| ZModal / ZDrawer                  | mask `<div>`    | `HTMLElement \| null`                                |
+| ZInput / ZTextarea / ZMention     | wrapper `<div>` | `HTMLDivElement \| null`                             |
+| ZSelect / ZTreeSelect / ZCascader | trigger `<div>` | `HTMLDivElement \| null`                             |
+| ZAutoComplete                     | `<input>` 根    | `HTMLInputElement \| null`                           |
+| ZTabs                             | tablist `<div>` | `HTMLDivElement \| null`                             |
+| ZForm                             | `<form>`        | `HTMLFormElement \| null`(合并 `validate` / `reset`) |
+| ZFormItem                         | `<div>`         | `HTMLDivElement \| null`(合并 `validate` / `reset`)  |
 
 跟内部 `triggerRef` / `inputRef` 共享 DOM 的组件用 `bindRoot` function ref 同时回填两侧。
 
@@ -183,39 +203,45 @@ ZCard / ZPopover / ZTable / ZTooltip / ZAlert / ZDrawer / ZModal / ZSpin / ZButt
 **5 类改动**:
 
 #### T1 — withDefaults Function 类型 default 修 double-wrap(3 处)
+
 ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double-wrap,改成 ZIcon 范式直接给函数:`(w) => {...}`。
 
 #### T2 — helper className 整理(27 处,22 文件)
+
 - **5 个零参数 helper** → `computed`(`ZSteps.stepClass / ZTimeline.itemClass / lineClass / ZMessage.bodyClass / ZNotification.itemClass`),template 改 `xxx` 裸名调用
 - **22 个有参数 helper** → `const xxx = (...args): string => icss(...)` 箭头风格(跟 computed 形式一致),调用方式不变
 
 #### T3 — ZSlider 性能优化(CSS var 注入)
+
 拖动时 `percent.value` 内嵌 `linear-gradient` 字符串 → 每帧重新生成 className(性能差)。改:
+
 - `inputClass` 不依赖 percent,用 `var(--zui-slider-fill / track / bg / percent)`
 - `inputStyle` computed 注入 CSS var 到 `:style`
 - 结果:**className 稳定,只更新 inline style CSS var**,拖动零 className 重生成
 
 #### Q4 — 默认值审计 + 补全(12 个组件)
+
 把藏在 className computed 里 `if (props.color) ...; else <token>` 隐式 fallback 提到 `withDefaults` 显式声明:
 
-| 组件 | Prop | 默认 factory |
-|---|---|---|
-| ZAlert | color | `(c) => c._info` |
-| ZAvatar | color | `(c) => c._textSecondary`(桥接 bg) |
-| ZBadge | color | `(c) => c._danger`(桥接 bg) |
-| ZBlockquote | color | `(c) => c._primary`(桥接 border-l) |
-| ZCode | color | `(c) => c._text` |
-| ZDivider | color | `(c) => c._border` |
-| ZRate | color | `(c) => c._warning` |
-| ZResult | color | `(c) => c._info` |
-| ZSpace | size / align | `(g) => g._small` / `(c) => c.center` |
-| ZSpacer | basis | `(b) => b.auto` |
-| ZStatistic | color | `(c) => c._text` |
-| ZSteps | currentColor | `(c) => c._primary` |
+| 组件        | Prop         | 默认 factory                          |
+| ----------- | ------------ | ------------------------------------- |
+| ZAlert      | color        | `(c) => c._info`                      |
+| ZAvatar     | color        | `(c) => c._textSecondary`(桥接 bg)    |
+| ZBadge      | color        | `(c) => c._danger`(桥接 bg)           |
+| ZBlockquote | color        | `(c) => c._primary`(桥接 border-l)    |
+| ZCode       | color        | `(c) => c._text`                      |
+| ZDivider    | color        | `(c) => c._border`                    |
+| ZRate       | color        | `(c) => c._warning`                   |
+| ZResult     | color        | `(c) => c._info`                      |
+| ZSpace      | size / align | `(g) => g._small` / `(c) => c.center` |
+| ZSpacer     | basis        | `(b) => b.auto`                       |
+| ZStatistic  | color        | `(c) => c._text`                      |
+| ZSteps      | currentColor | `(c) => c._primary`                   |
 
 **保留隐式 fallback**(合理):ZButton variant state layer 桥接;ZProgress `applyAsBg` 区分 user/默认色源切换;item 数据 prop(ZMessage / ZNotification / ZTimeline `item.color`);ZSlider inline 读 theme;ZImage `fit` 字面量枚举。
 
 #### Q5 — 盒子图 JSDoc 迁移 + 画完整嵌套图(43 个组件)
+
 - **位置统一**:所有 iem 默认尺寸组件的盒子图 JSDoc 集中到 `withDefaults / defineProps` 上一行(IDE hover defineProps 时一眼看到完整结构)
 - **形式**:box-drawing ASCII 完整嵌套图(`┌┐└┘─│`),标注节点尺寸 + 关键属性
 - **清理**:删除 B2 阶段散落在 computed 上的 30 处旧盒子注释
@@ -223,6 +249,7 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
 - **不画**:布局组件(ZFlex / ZGrid / ZSpace / ZSplit / ZSpacer / ZScrollbar / ZAffix)— 无固定尺寸
 
 #### B9 — 验证三件套全绿
+
 - type-check ✓ (vue-tsc exit 0)
 - 556/556 tests ✓ (50/50 spec files)
 - build ✓ (exit 0,218 modules,dist/zui-vue.css 不再生成)
@@ -235,6 +262,7 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
 `.claude/decisions/2026-05-23-prop-shape-pure-factory.md`。
 
 **5 种 prop 形态**:
+
 - **Type A** 单属性 factory:`color?: ((c) => void)` → `s.color(props.color)`
 - **Type B** 复合 wire factory(关键参数 expose):如 `spin?: ((d: AnimationDuration) => void)` →
   启用即自动 wire `animationName / iterationCount / timingFunction`,用户只控速度
@@ -243,6 +271,7 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
 - **Type N** 保留形态:真二态 boolean / JS 逻辑字符串(`trigger`)/ 原生 HTML 属性 / 第三方继承类型
 
 **禁忌**(违反必改):
+
 - ❌ 字符串枚举 MAP 翻译(`justify='between' → 'space-between'`)
 - ❌ 组件 size 字面量枚举(`size?: 'small' | 'middle' | 'large'`)
 - ❌ 颜色/语义字面量(`color?: 'primary' | 'danger'`)
@@ -250,6 +279,7 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
 - ❌ `export type ZXxxVariant = '...'` 单独 type alias(内联到 props interface)
 
 **改造分批**(8 批):
+
 - **B0**:写 `.claude/decisions/2026-05-23-prop-shape-pure-factory.md` 决策文档 + `.claude/skills/zui.md §13.0` 总纲更新 + `zui-vue-roadmap.md` L16 引用
 - **B1**:验证 chain `PropFn` 接 factory 重载(`tests/chain-factory-prop.spec.ts` 6/6)
 - **B2**:补 ~25 处 iem 盒子模型 JSDoc(只写 iem,不写 px,因 iem 由 Provider 控制)
@@ -262,6 +292,7 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
 - **B8**:CHANGELOG + roadmap 进度日志 + 三件套全绿(type-check ✓ / 556 tests ✓ / build ✓)
 
 **新 vs 旧用法对比**:
+
 ```vue
 <!-- 旧 -->
 <ZFlex justify="between" align="center" :gap="(g) => g._middle">
@@ -280,6 +311,7 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
 ```
 
 **验证**(2026-05-24):
+
 - type-check ✓ (exit 0)
 - 556/556 tests ✓ (50/50 spec files)
 - build ✓ (exit 0,218 modules,dist/zui-vue.css 不再生成)
@@ -290,6 +322,7 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
 写法,剩 4 处合理保留(动态 prop 名 / CSS custom property)。
 
 **替换策略**:
+
 - **keyword 类**(`overflow.hidden` / `position.relative` / `textAlign.center` / `cursor.notAllowed`
   / `whiteSpace.nowrap` / `textOverflow.ellipsis` / `flexDirection.column` 等):直接 `s.prop.keyword`
 - **长度类**:`'calc(N * var(--zui-iem, 16px))'` → `s.prop.iem(N)`;`'Npx'`(`N` 为 iem 倍数,如 8/16/24/32)
@@ -298,14 +331,15 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
   `'24px'` → `.iem(1.5)`
 - **复合 outline / borderTop 拆分**:`outline: '1px solid'` → `outlineWidth.px(1) + outlineStyle.solid`;
   `borderTop: '1px solid var(--zui-color-border)'` → `borderTopWidth.px(1) + borderTopStyle.solid +
-  borderTopColor._border`
+borderTopColor._border`
 - **transform / gridTemplateColumns / animation 等**:不在 ENHANCED_PROPS 但走 PropFn 函数调用,
   `s._prop('transform', '...')` → `s.transform('...')`
 - **textDecoration**:简写组件保 `s.textDecoration('underline')`(ZButton link 需要),其它走
   `s.textDecorationLine('underline')`
 
-**iem 化收益**:所有"calc(N * iem)"字面量改纯 chain `.iem(N)`,跟 `<ZBox :iem>` 全站缩放联动更稳。
+**iem 化收益**:所有"calc(N \* iem)"字面量改纯 chain `.iem(N)`,跟 `<ZBox :iem>` 全站缩放联动更稳。
 1080p / iem=16px 基准下各组件物理尺寸完全对齐:
+
 - ZInput middle = padding-y 6px + fontSize 16px ≈ 32px 高
 - ZButton middle ≈ 32-36px 高
 - ZAvatar middle = 40px(iem 2.5)
@@ -316,6 +350,7 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
 - ZPagination button(middle)= 28px(iem 1.75)
 
 **搭车修复**:
+
 - ZCascader column `:last-child` 边框去除 —— 原 `s._prop('lastChild', '')` 无效写法,改 `s._lastChild((c) => c.borderRightStyle.none)`
 - ZSlider linear-gradient background 改 `s.background('...')` PropFn
 - ZTag/ZAvatar `borderRadius` ternary 字符串拆 if/else chain(`borderRadius._full` vs `.iem(0.25)`)
@@ -325,7 +360,8 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
 - ZCarousel arrow position / dot indicator 用 chain iem 化
 - ZButton focus-visible outline 走 chain(`outlineWidth._middle` / `outlineStyle.solid` / `outlineOffset.px(2)`)
 
-**保留 _prop 的 4 处**(全部合理):
+**保留 \_prop 的 4 处**(全部合理):
+
 - `ZGrid` 2 处 —— `s._prop(prop, ...)` prop 名是动态变量(gridTemplateColumns / gridTemplateRows)
 - `ZSlider` 2 处 —— `--zui-slider-thumb-*` CSS custom property,chain 无对应 carrier
 
@@ -341,6 +377,7 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
 **决策文档**:`.claude/decisions/2026-05-22-prop-shape-union.md`
 
 **新基础设施**:
+
 - `src/_internal/size-prop.ts`:`Size5` / `SizeProp<K>` / `SizePropMulti` / `SizeMap<T>`
   类型 + `applySizeProp` / `makeSizeMap` helper(3 阶 → 5 阶自动 fallback)
 - `src/_internal/component-sizes.ts`:`INPUT_SIZE_MAP`(输入框尺寸:fontSize +
@@ -355,11 +392,13 @@ ZModal `width` / ZBackTop `right / bottom` 之前用 `() => (w) => {...}` double
 - **navigation**:ZPagination
 
 **搭车技术债务修复**:
+
 - ZPopconfirm:删除错误的 `aria-modal="false"`(W3C 规范:Popconfirm 不是模态,该属性不应设置)
 - ZInput:删除 dead code `useSlots` 未使用 import
 - ZTable / ZTreeSelect:修复 `s.color('_primary')` / `s.borderColor('_primary')` 字符串调用 bug(carrier 不接字符串 token)
 
 **兼容性**:
+
 - `<ZInput size="middle">` / `<ZIcon :size="(w) => w.iem(1)">` 等所有 happy path 不变
 - ZAvatar `:size="number"` 是唯一 BREAKING:改 `:size="(w) => w.px(N)"`
 - 5 阶档位新增 `tiny` / `huge`(原 3 阶组件)— 不实现的档位自动 fallback 到最近实现(`tiny → small`, `huge → large`)
@@ -373,6 +412,7 @@ roadmap §7(Phase β)+ §8(Phase γ)全部交付,Stage 9(Phase δ:VirtualList / 
 DataGrid 企业版 / Schema-driven Form)按需开。
 
 **新组件清单**(本次 commit `e639b0b` 收尾):
+
 - `ZTreeSelect`(input):ZTree 嵌入下拉,叶子选中自动 close
 - `ZTour`(feedback):新手引导,steps 配置 + 4 边 mask 挖洞 + 引导卡片
 - `ZTable` 升级:`column.sortable` + `v-model:sortState`(asc/desc/none toggle) +
@@ -380,6 +420,7 @@ DataGrid 企业版 / Schema-driven Form)按需开。
 - `ZSelect` 升级:`multiple` prop + 多选 toggle + `aria-multiselectable` + 多选 clearable
 
 **技术债务批 2(commit `b9ae101`)**:
+
 - `qrcode` 从 dependencies 移到 peerDependencies + peerDependenciesMeta.optional(业务方按需装)
 - ZCollapse / ZTransfer / ZNotification / ZMessage:reactive `Set`/`Map` → `array` / 闭包 `Map`
   (规避 Vue test-utils "Invalid value used as weak map key" 边界)
@@ -411,6 +452,7 @@ Stage 7 第二批,基于已有 hooks(`usePopper` / `useEscapeStack`)+ Teleport:
 测试 15 case(总 381 → 396 全绿)。
 
 **实现细节**:
+
 - Teleport 渲染 portal 到 body,跨 spec 测试需 wrapper.unmount() + 显式清理 DOM portal 残留
 - ZTooltip:`disabled` 必须在所有 trigger 模式下都阻止显示(包括 manual 受控),否则有逻辑漏洞
 
@@ -448,7 +490,7 @@ Stage 7 第一批:
 Stage 6.5 + 6.6:
 
 - **`ZTable`**(display)—— 基础表格(配置式)。`columns: Array<{ key, title, dataIndex?, width?,
-  align?, render? }>` + `data` + `rowKey`(string 或函数)+ `bordered` / `striped` / `size` /
+align?, render? }>` + `data` + `rowKey`(string 或函数)+ `bordered` / `striped` / `size` /
   `emptyText`。column.render 函数返回 VNode 自定义渲染。空数据走 `emptyText` 占位行。
   sx:sxHead / sxBody / sxRow / sxCell。
   **未实现(Phase β)**:排序 / 选择(checkbox)/ 分页接入 / 列冻结 / expandable rows。
@@ -522,7 +564,7 @@ Stage 6.3 收尾:
   `clearable` / `filterable`(输入框过滤) / `disabled` / `size`(small/middle/large)。
   实现走 `usePopper`(`@floating-ui/vue` `offset+flip+shift`)+ `<Teleport to="body">` 避开 overflow 截断 +
   `onClickOutside`(`@vueuse/core`)外部点击关闭 + `useEscapeStack` ESC 关闭。`role="combobox" /
-  aria-expanded`,下拉 `role="listbox"`,选项 `role="option"`。
+aria-expanded`,下拉 `role="listbox"`,选项 `role="option"`。
   sx:sxTrigger / sxDropdown / sxOption。
   **Phase β 未实现**:多选 / 远程搜索 / 分组。
 - **`ZForm` + `ZFormItem`** —— 表单 + 字段项,基于 `async-validator`(peerDep)。
@@ -574,8 +616,8 @@ Stage 6.2 P0 反馈与展示组件:
 - **`ZSpin`**(feedback)—— 加载指示器。两种模式:
   - 包裹模式(有 default slot)→ overlay 浮层覆盖 + indicator 居中 + 可选 `tip` 文字
   - 纯 indicator 模式(无 slot)→ inline-flex 单独显示
-  默认 indicator = `BuiltinIcons.refresh` + `spin: (d) => d.s(1)` + `iem` size 跟 `size` 档位。
-  sx:sxOverlay / sxIndicator。
+    默认 indicator = `BuiltinIcons.refresh` + `spin: (d) => d.s(1)` + `iem` size 跟 `size` 档位。
+    sx:sxOverlay / sxIndicator。
 - **`ZCard`**(display)—— 三节点卡片。slots: head(`#head` 优先于 `title`)/ extra / default / foot。
   `bordered`(默认 true → 边框)/ `bordered=false`(走 M3 shadow)/ `hoverable`(transition + shadow 加深)。
   sx:sxHead / sxBody / sxFoot。
@@ -607,7 +649,7 @@ Stage 6.1 P0 布局组件落地:
   - 字符串 → 直接作 `grid-template-columns` / `rows`
   - 响应式对象 → `{ tiny: 1, middle: 3 }`,最小断点作 base,其它用 `@media min-width:breakpoint`(走
     schema `breakpoint.*` token)。
-  另含 `gap` carrier factory / `justifyItems` / `alignItems` / `inline` / `css` / `tag`。
+    另含 `gap` carrier factory / `justifyItems` / `alignItems` / `inline` / `css` / `tag`。
 - **`ZSpace`** —— 等间距 flex(类 antd Space)。默认 `align: center`、`gap: _small`、不 wrap。
   Props:`direction`(horizontal/vertical)/ `size` carrier factory / `align` / `wrap` / `inline` /
   `css` / `tag`。
@@ -629,7 +671,7 @@ Stage 6.1 P0 布局组件落地:
 - **`useEscapeStack(onEscape, { enabled? })`** —— 多层浮层 ESC 栈式管理,只关最顶层(LIFO);
   enabled=false 的 handler 跳过。
 - **`usePopper(reference, floating, opts?)`** —— `@floating-ui/vue` 薄包装,内置 `offset(8) + flip() +
-  shift({ padding: 8 })` middleware + `autoUpdate`。Popover / Tooltip / Dropdown / Select 浮层定位。
+shift({ padding: 8 })` middleware + `autoUpdate`。Popover / Tooltip / Dropdown / Select 浮层定位。
 - **`useRipple(targetRef, opts?)`** —— Material 风波纹(**自写**,VueUse 无对应)。pointerdown →
   span + @keyframes 动画 → animationend 清理。Button / Tab / IconButton 用。
 
@@ -645,12 +687,14 @@ Stage 6.1 P0 布局组件落地:
 ### BREAKING — 主题美学升级 Material Design(C2 方案)+ 新增 `focusRing` / `overlayBg` 语义色
 
 **理由**:
+
 - `#L8` 锁定决策:主题美学采用 Material 2 经典色 + M3 motion/elevation/shape 的组合方案 ──
   比 Tailwind 蓝绿色调更"产品级",跟 `@vicons/material` 图标体系搭配也更自然
 - 新增 `focusRing` / `overlayBg` 是组件库后续 Modal / Drawer / 各类 focus 环都要用的状态色,
   之前用 `_primary.alpha(40)` / `'#000'.alpha(50)` 临时凑合,提升为 token 后业务侧统一覆盖更顺手
 
 **配色变更**(zuiLight):
+
 - `primary`: `tw('blue','600')` ≈ `#2563eb` → `#1976d2` Material Blue 700
 - `danger`: `#dc2626` → `#d32f2f` M2 Red 700
 - `warning`: `#eab308` → `#ed6c02` M2 Orange 700
@@ -664,6 +708,7 @@ Stage 6.1 P0 布局组件落地:
 - (新)`overlayBg`: `#000000`,使用处 `.alpha(50)`
 
 **配色变更**(zuiDark):
+
 - `primary`: `tw('blue','500')` → `#90caf9` Material Blue 200
 - `danger / warning / success / info`: 全部换 Material 200~400 shade
 - `text`: `#e0e0e0` grey-300 / `textSecondary`: `#9e9e9e` grey-500
@@ -674,12 +719,14 @@ Stage 6.1 P0 布局组件落地:
 
 **shadow → M3 Elevation 双层阴影**(level 1-5,两层叠加 ── key light + ambient light,
 Material Design 3 官方推荐 elevation 实现):
+
 - light 模式 rgba 0.15~0.30 不透明度
 - dark 模式 rgba 0.40~0.70 不透明度(深 bg 需要更强阴影才"浮起")
 
 **radius.huge**: `iem(1.5)`(24px)→ `iem(1.75)`(28px) ── 对齐 Material 3 FAB / Dialog 推荐圆角
 
 **迁移**:
+
 1. 内部 tests / 业务代码若 hardcode 比对 primary `#2563eb` 等具体值 → 改读 `zuiLight.resolve().color.primary`
 2. 若业务工程依赖旧 shadow 单层布局 → 重新比对 Stripe 卡片视觉(M3 双层更立体)
 3. 若依赖 `radius.huge=24` → 显式覆盖 `zuiLight.extend({ radius: { huge: iem(1.5) } })`
@@ -691,6 +738,7 @@ Material Design 3 官方推荐 elevation 实现):
 ### BREAKING — 图标 peerDep 从 `@vicons/ionicons5` 切到 `@vicons/material`,新增 `BuiltinIcons` 语义 map
 
 **理由**:
+
 - 主题美学方案 C2(`#L8` 锁定决策)走 Material Design 视觉(M2 经典色 + M3 motion/elevation/shape),
   内置图标自然应配套 Material 图标体系(`@vicons/material`),美观度和语义一致性都优于 Ionicons5
 - peerDep 从 optional 升 required,组件库内置反馈(`<ZAlert>` / `<ZModal>` 的关闭按钮、Select 的下拉箭头、
@@ -700,6 +748,7 @@ Material Design 3 官方推荐 elevation 实现):
   统一字典 —— 想要 `success` 从 `CheckCircleOutlined` 换 `DoneOutlined`,只改一处
 
 **改动**:
+
 - `peerDependencies` 与 `devDependencies`:`@vicons/ionicons5@^0.13.0` → `@vicons/material@^0.13.0`
 - `peerDependenciesMeta` 删除 `@vicons/ionicons5` optional 标记
 - `vite.config.ts` external 列表同步
@@ -710,6 +759,7 @@ Material Design 3 官方推荐 elevation 实现):
 - `docs/package.json`:dependency 同步
 
 **迁移**:
+
 ```diff
 - import { HomeOutline } from '@vicons/ionicons5'
 + import { HomeOutlined } from '@vicons/material'         // 或:
@@ -725,6 +775,7 @@ Material Design 3 官方推荐 elevation 实现):
 ### BREAKING — `cssRoot` prop 全局重命名为 `css`,新增 `SxObject` 类型与 helper
 
 **理由**:
+
 - `cssRoot` 这名字暗示"根节点的 css"但其实就是组件的核心 css 逃生口。改为更短的 `css` 更对仗
   `class` / `style`,跟 antd / MUI 的 `sx` / `css` prop 命名习惯对齐。
 - 同时引入 `SxObject` 类型(`{ css, class, style, ...HTMLAttributes }`)+ `applySx` / `extractSxAttrs`
@@ -732,6 +783,7 @@ Material Design 3 官方推荐 elevation 实现):
   提供统一基建。
 
 **改动**:
+
 - `ZBox` + 6 个 gene 组件(ZIcon / ZText / ZTitle / ZParagraph / ZLink / ZDivider)的 `cssRoot` prop
   改名为 `css`(类型不变,仍是 `(s: Chain<ZuiSchema>) => void`)
 - 5 个 spec 文件同步改 `cssRoot:` → `css:`
@@ -740,6 +792,7 @@ Material Design 3 官方推荐 elevation 实现):
 - 新增 `src/_internal/sx.ts`(对外不直接暴露,通过组件 props 类型间接出现)
 
 **迁移**:
+
 ```diff
 - <ZIcon :css-root="(s) => { s.color._primary }" />
 + <ZIcon :css="(s) => { s.color._primary }" />
@@ -780,6 +833,7 @@ src/provider/useZDate.ts        → src/provider/date/useZDate.ts
 保留它们只增加包面积和文档维护成本。业务侧需要时直接装 `@vueuse/core`。
 
 **迁移**:
+
 ```diff
 - import { useZTheme } from '@kenconnet666/zui-vue/provider'
 + import { useZTheme } from '@kenconnet666/zui-vue'
@@ -800,10 +854,12 @@ src/provider/useZDate.ts        → src/provider/date/useZDate.ts
 **理由**:对齐 antd / MUI 的 `text.secondary` 命名惯例,语义清晰("次要文本"层级),且避免跟主题模式名 `light` 字面冲突。
 
 **改动**:
+
 - `SemanticColorTokens` 中 `textMuted` → `textSecondary`
 - `zuiLight.color.textSecondary` / `zuiDark.color.textSecondary`(物理值不变,仍是 `tw('gray', '600')` / `tw('gray', '400')`)
 
 **迁移**:
+
 ```diff
 - s.color._textMuted
 + s.color._textSecondary
@@ -821,32 +877,35 @@ src/provider/useZDate.ts        → src/provider/date/useZDate.ts
 模式派生 hover —— 选后者,更简洁。
 
 **改动**:
+
 - `SemanticColorTokens` 删 `primaryHover`(从 11 减到 10 个语义色)
 - `zuiLight.color.primaryHover` / `zuiDark.color.primaryHover` 删
 - IDE 上 `s.color._primaryHover` 报"找不到 token" → 改用 modifier
 
 **迁移**:hover 态用 chain `color2k` modifier 在使用处派生:
+
 ```ts
 // 旧
 s._hover(h => h.color._primaryHover)
 
 // 新(三选一,按效果选)
-s._hover(h => h.color._primary.darken(8))   // 加深 8%(类似旧 zuiLight 行为)
-s._hover(h => h.color._primary.lighten(8))  // 提亮 8%(类似旧 zuiDark 行为)
-s._hover(h => h.color._primary.alpha(80))   // 80% 透明度
+s._hover(h => h.color._primary.darken(8)) // 加深 8%(类似旧 zuiLight 行为)
+s._hover(h => h.color._primary.lighten(8)) // 提亮 8%(类似旧 zuiDark 行为)
+s._hover(h => h.color._primary.alpha(80)) // 80% 透明度
 ```
 
 业务侧要"全站统一 hover 加深"可用 augmentation + 默认值:
+
 ```ts
 declare module '@kenconnet666/zui-vue' {
   interface UserColorExt {
-    primaryHover: string  // 自己加回去
+    primaryHover: string // 自己加回去
   }
 }
 zuiLight.extend({ color: { primaryHover: tw('blue', '500') } })
 ```
 
-**对 core 包零影响**:core/tests/_fixture-theme.ts 等测试 fixture 自定义 schema 中
+**对 core 包零影响**:core/tests/\_fixture-theme.ts 等测试 fixture 自定义 schema 中
 的 `primaryHover` 不动(那是 core 包"function token 引用同级 key"等行为的测试样本)。
 
 ---
@@ -858,13 +917,14 @@ zuiLight.extend({ color: { primaryHover: tw('blue', '500') } })
 
 **新增 3 个 schema category**(全部支持 `UserXxxExt` augmentation):
 
-| Category | 用于 chain carrier | 默认 keys | 单位策略 |
-|---|---|---|---|
-| `sizes` | `width / height / minW / minH / maxW / maxH / flexBasis` | 5 阶 `tiny`(64px)/`small`(128px)/`middle`(256px)/`large`(512px)/`huge`(768px)+ 4 个语义 `container`(1200px)/`readable`('65ch')/`full`('100%')/`screen`('100vw')/`screenH`('100vh') | 5 阶 iem 化(Provider 联动),语义 4 个字面量 |
-| `borders` | `borderWidth / outlineWidth` + 各 sub(top/right/bottom/left) | `none`/`thin`(1px)/`middle`(2px)/`thick`(3px)/`heavy`(4px) | **px 字面量**(同 shadow,跟字号无关) |
-| `transitionProperty` | `transitionProperty` | `none`/`all`/`colors`/`opacity`/`transform`/`shadow`/`sizes`/`default` | 逗号分隔 CSS 属性列表 |
+| Category             | 用于 chain carrier                                           | 默认 keys                                                                                                                                                                          | 单位策略                                   |
+| -------------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| `sizes`              | `width / height / minW / minH / maxW / maxH / flexBasis`     | 5 阶 `tiny`(64px)/`small`(128px)/`middle`(256px)/`large`(512px)/`huge`(768px)+ 4 个语义 `container`(1200px)/`readable`('65ch')/`full`('100%')/`screen`('100vw')/`screenH`('100vh') | 5 阶 iem 化(Provider 联动),语义 4 个字面量 |
+| `borders`            | `borderWidth / outlineWidth` + 各 sub(top/right/bottom/left) | `none`/`thin`(1px)/`middle`(2px)/`thick`(3px)/`heavy`(4px)                                                                                                                         | **px 字面量**(同 shadow,跟字号无关)        |
+| `transitionProperty` | `transitionProperty`                                         | `none`/`all`/`colors`/`opacity`/`transform`/`shadow`/`sizes`/`default`                                                                                                             | 逗号分隔 CSS 属性列表                      |
 
 **典型用法**:
+
 ```ts
 <ZBox :css-root="(s) => {
   s.maxWidth._container       // 1200px page 主区
@@ -880,6 +940,7 @@ zuiLight.extend({ color: { primaryHover: tw('blue', '500') } })
 新 zuiDark.shadow 把 rgba 不透明度提升到 0.3~0.7,深色 bg 上保留"浮起"层次感。
 
 **用户扩展**(同其它 category):
+
 ```ts
 declare module '@kenconnet666/zui-vue' {
   interface UserSizesExt {
@@ -905,12 +966,14 @@ zuiLight.extend({
 **问题**:之前 `:iem` 默认值 `'16px'`,导致每个 ZBox 都强制写 inline `--zui-iem: 16px`,**子 ZBox 总是覆盖父级 cascade**,违反"向下透传,显式才覆盖"的本意。一旦页面里嵌套多层 ZBox(主题分组 / 装饰 box),根级 `:iem="ZIemPreset.large"` 立刻被子层默认值打回 16px。
 
 **改动**:
+
 - `:iem` 改为可选,**不再有默认值**
 - 不传 `:iem` 时,wrapper 不写 inline `--zui-iem`,让 css cascade 自然透传父 ZBox 的值
 - **根 ZBox**(没有父 Provider)未传 `:iem` 时,**dev warn** 提醒显式声明根基准:
   > `[zui-vue/ZBox] 根 ZBox 未传 :iem。所有 iem 化 token 将回落到 css var fallback 16px,无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。建议根节点显式包一层 <ZBox :iem="ZIemPreset.default">`
 
 **对现有代码**:
+
 - 完全没用 ZBox / 用 `chain.iem(N)` 的页面:行为不变(自带 `calc(... var(--zui-iem, 16px))` fallback)
 - 根 ZBox 已经传了 `:iem` 的工程:不变
 - 根 ZBox 没传 `:iem` 的工程:开发期 warn,生产期视觉不变(仍然 16px),但**强烈建议加上**以支持 a11y / 大字 / 紧凑模式
@@ -930,6 +993,7 @@ zuiLight.extend({
 解决用户经常需要"包一层 div 改背景/边距"时还得另起 wrapper 组件的痛点。
 
 **改动**:
+
 - `ZConfigProvider` → `ZBox`(SFC + 所有 import / docs / tests / skill 文档同步重命名)
 - 新增 `cssRoot?: (s: Chain<ZuiSchema>) => void` —— 跟 ZIcon/ZText 一致的 chain factory,
   可写 padding/margin/background/borderRadius、`_hover` 伪类、`_media('_small', ...)` 媒体查询等
@@ -938,6 +1002,7 @@ zuiLight.extend({
   和注入语义(`Z_THEME_KEY` / `Z_LOCALE_KEY` / `Z_DATE_KEY`)**100% 保留**
 
 **新增 schema 字段 `fonts`**(`sans` / `serif` / `mono` 3 件套):
+
 - 对应 chain `fontFamily` carrier 的 `tokenCat: 'fonts'` token lookup
 - `zuiLight` 默认提供跨平台兜底栈(`system-ui` / `ui-serif` / `ui-monospace`)
 - `ZText` `mono=true` 现在走 `s.fontFamily._mono`(原硬编码 `MONO_FONT_STACK` 已删)
@@ -945,6 +1010,7 @@ zuiLight.extend({
 - `UserFontsExt` augmentation 锚点 + 顶层 re-export
 
 **迁移**:
+
 ```diff
 - <ZConfigProvider :theme="zuiLight" :iem="ZIemPreset.large">
 + <ZBox :theme="zuiLight" :iem="ZIemPreset.large">
@@ -964,15 +1030,16 @@ zuiLight.extend({
 
 **移除的 API**：
 
-| API | 替代方案 |
-| --- | --- |
+| API                                   | 替代方案                                                                                                                                                                           |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `<ZConfigProvider :component-tokens>` | 改主题：`<ZConfigProvider :theme="zuiLight.extend({ color: { primary: '#abc' } })">`；加品牌 token：`interface UserColorExt { brand: string }` augmentation；单实例改：`:css-root` |
-| `useZComponentTokens()` | 不再需要；组件 setup 直接 `useZTheme()` |
-| `useZComponentTokenSlice(name)` | 同上 |
-| `Z_OVERRIDES_KEY` injection key | 同上 |
-| `type ZIconTokens` 等组件 Tokens 接口 | 数值类档位由组件内部 `const SIZE_MAP / DEPTH_MAP / SPIN_MAP` 接管（不再公开） |
+| `useZComponentTokens()`               | 不再需要；组件 setup 直接 `useZTheme()`                                                                                                                                            |
+| `useZComponentTokenSlice(name)`       | 同上                                                                                                                                                                               |
+| `Z_OVERRIDES_KEY` injection key       | 同上                                                                                                                                                                               |
+| `type ZIconTokens` 等组件 Tokens 接口 | 数值类档位由组件内部 `const SIZE_MAP / DEPTH_MAP / SPIN_MAP` 接管（不再公开）                                                                                                      |
 
 **ZIcon 变更**：
+
 - 移除 `ZIconTokens` 类型导出（barrel 只剩 `ZIcon` + `ZIconProps`）
 - `size` prop 维持 `'tiny' | 'small' | 'middle' | 'large' | 'huge' | number`（number escape hatch 仍可用）
 - 5 个语义色直接走 chain shortcut `s.color._primary / _success / _warning / _danger / _info`（IDE 自动补全 ZuiSchema token）

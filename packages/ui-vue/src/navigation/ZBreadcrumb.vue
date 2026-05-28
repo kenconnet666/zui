@@ -46,7 +46,7 @@ const props = withDefaults(defineProps<ZBreadcrumbProps>(), {
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.flexWrap.wrap
@@ -58,13 +58,13 @@ const rootClass = computed(() =>
 )
 
 const itemClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.color.currentColor
     s.cursor.pointer
     s.textDecorationLine.none
-    s._hover((h) => {
+    s._hover(h => {
       h.color._primary
     })
     applySx(s, props.sxItem)
@@ -73,7 +73,7 @@ const itemClass = computed(() =>
 const sxItemAttrs = computed(() => extractSxAttrs(props.sxItem))
 
 const lastItemClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._text
     s.fontWeight._medium
     s.cursor.default
@@ -82,7 +82,7 @@ const lastItemClass = computed(() =>
 )
 
 const separatorClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.userSelect.none
     s.opacity._strong

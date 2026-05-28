@@ -76,7 +76,7 @@ const qrOptions = computed(() => ({
 const qrSrc = computed(() => useQRCode(props.value, qrOptions.value).value)
 
 const wrapClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineBlock
     s.width.px(props.pixelSize)
     s.height.px(props.pixelSize)
@@ -87,7 +87,7 @@ const wrapClass = computed(() =>
 )
 
 const imgClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.width.pct(100)
     s.height.pct(100)
     s.display.block

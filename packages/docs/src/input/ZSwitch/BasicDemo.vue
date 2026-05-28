@@ -31,11 +31,26 @@ async function handleChange(v: boolean): Promise<void> {
 
     <ZFlex :gap="g => g._large" :align="a => a.center">
       <ZSwitch :value="value2" :loading="loading" @update:value="handleChange" />
-      <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">
-        {{ loading ? '切换中...' : (value2 ? '已开启' : '已关闭') }}
+      <ZText
+        :css="
+          s => {
+            s.color._textSecondary
+            s.fontSize._small
+          }
+        "
+      >
+        {{ loading ? '切换中...' : value2 ? '已开启' : '已关闭' }}
       </ZText>
     </ZFlex>
 
-    <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">状态：{{ value1 ? '开' : '关' }}</ZText>
+    <ZText
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+      >状态：{{ value1 ? '开' : '关' }}</ZText
+    >
   </ZFlex>
 </template>

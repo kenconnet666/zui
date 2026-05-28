@@ -124,7 +124,7 @@ function toggle(): void {
 
 watch(
   () => props.visible,
-  (v) => {
+  v => {
     if (props.trigger === 'manual') innerVisible.value = v
   },
   { immediate: true },
@@ -156,7 +156,7 @@ const triggerHandlers = computed(() => {
 })
 
 const triggerWrapClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     applySx(s, props.sxTrigger)
   }),
@@ -164,7 +164,7 @@ const triggerWrapClass = computed(() =>
 const sxTriggerAttrs = computed(() => extractSxAttrs(props.sxTrigger))
 
 const popperClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.zIndex._popover
     s.backgroundColor._bg
@@ -184,7 +184,7 @@ const popperClass = computed(() =>
 const sxContentAttrs = computed(() => extractSxAttrs(props.sxContent))
 
 const titleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontWeight._semibold
     s.fontSize._middle
     s.color._text

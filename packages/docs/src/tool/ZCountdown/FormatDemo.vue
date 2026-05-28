@@ -9,10 +9,26 @@ const done = ref(false)
 
 <template>
   <ZSpace :direction="d => d.column" :size="g => g._middle">
-    <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">自定义 format</ZText>
+    <ZText
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+      >自定义 format</ZText
+    >
     <ZCountdown :value="target" format="HH 时 mm 分 ss 秒" />
 
-    <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">precision = ms(毫秒精度)+ finish 回调</ZText>
+    <ZText
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+      >precision = ms(毫秒精度)+ finish 回调</ZText
+    >
     <ZCountdown :value="msTarget" precision="ms" format="ss.SSS" @finish="done = true" />
     <ZText v-if="done" :css="s => s.color._success">倒计时结束!</ZText>
   </ZSpace>

@@ -31,7 +31,14 @@ function onClose(name: string) {
   <ZFlex :direction="d => d.column" :gap="g => g._large">
     <ZTabs v-model:value="activeTab" :tabs="tabs">
       <template #default="{ activeName }">
-        <ZText :css="s => { s.padding._middle }">当前 tab：{{ activeName }}</ZText>
+        <ZText
+          :css="
+            s => {
+              s.padding._middle
+            }
+          "
+          >当前 tab：{{ activeName }}</ZText
+        >
       </template>
     </ZTabs>
 

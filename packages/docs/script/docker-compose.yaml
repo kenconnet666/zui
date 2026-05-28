@@ -6,12 +6,12 @@ services:
     image: zui-docs
     container_name: zui-docs
     ports:
-      - "4173:80"
+      - '4173:80'
     environment:
       - TZ=Asia/Shanghai
     restart: always
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost/" ]
+      test: ['CMD', 'curl', '-f', 'http://localhost/']
       interval: 10s
       timeout: 3s
       retries: 3
@@ -21,7 +21,6 @@ services:
 networks:
   baota_net:
     external: true
-
 
 #  docker compose down
 #  docker compose up -d --build

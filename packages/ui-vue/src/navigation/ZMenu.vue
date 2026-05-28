@@ -101,7 +101,7 @@ const theme = useZTheme()
 const expandedKeys = ref<Set<string>>(new Set())
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     if (props.vertical) {
       s.flexDirection.column
@@ -119,7 +119,7 @@ const rootClass = computed(() =>
 )
 
 const itemClass = (item: ZMenuItem, isActive: boolean, depth: number): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.gap._small
@@ -141,7 +141,7 @@ const itemClass = (item: ZMenuItem, isActive: boolean, depth: number): string =>
       s.backgroundColor._primary.alpha(8)
       s.fontWeight._medium
     }
-    s._hover((h2) => {
+    s._hover(h2 => {
       if (!item.disabled && !isActive) h2.backgroundColor._textSecondary.alpha(8)
     })
     if (item.disabled || props.disabled) {
@@ -153,7 +153,7 @@ const itemClass = (item: ZMenuItem, isActive: boolean, depth: number): string =>
 const sxItemAttrs = computed(() => extractSxAttrs(props.sxItem))
 
 const submenuClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.gap._tiny
@@ -163,7 +163,7 @@ const submenuClass = computed(() =>
 const sxSubmenuAttrs = computed(() => extractSxAttrs(props.sxSubmenu))
 
 const labelClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.overflow.hidden
     s.whiteSpace.nowrap
@@ -174,7 +174,7 @@ const labelClass = computed(() =>
 const sxLabelAttrs = computed(() => extractSxAttrs(props.sxLabel))
 
 const arrowClass = (expanded: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.transitionProperty._transform
     s.transitionDuration._small
@@ -211,14 +211,13 @@ const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }
       <button
         type="button"
         :ref="sxItemAttrs.ref"
-        :class="[
-          itemClass(item, value === item.key, 0),
-          sxItemAttrs.class,
-        ]"
+        :class="[itemClass(item, value === item.key, 0), sxItemAttrs.class]"
         :style="sxItemAttrs.style"
         role="menuitem"
         :aria-disabled="item.disabled || disabled"
-        :aria-expanded="item.children && item.children.length > 0 ? isExpanded(item.key) : undefined"
+        :aria-expanded="
+          item.children && item.children.length > 0 ? isExpanded(item.key) : undefined
+        "
         v-bind="sxItemAttrs.attrs"
         @click="onItemClick(item)"
       >

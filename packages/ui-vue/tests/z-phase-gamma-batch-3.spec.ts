@@ -9,9 +9,9 @@ import { ZMention, ZCalendar, ZCascader, type ZCascaderOption } from '../src'
 let wrappers: VueWrapper[] = []
 
 function cleanup(): void {
-  wrappers.forEach((w) => w.unmount())
+  wrappers.forEach(w => w.unmount())
   wrappers = []
-  document.body.querySelectorAll('[role="listbox"]').forEach((el) => el.remove())
+  document.body.querySelectorAll('[role="listbox"]').forEach(el => el.remove())
 }
 
 beforeEach(cleanup)
@@ -57,7 +57,7 @@ describe('ZCalendar', () => {
     })
     const w = mount(Host)
     // 找到 "10" 日期按钮(本月)
-    const dayBtns = w.findAll('button').filter((b) => b.text() === '10')
+    const dayBtns = w.findAll('button').filter(b => b.text() === '10')
     expect(dayBtns.length).toBeGreaterThan(0)
     await dayBtns[0].trigger('click')
     expect(value.value).toMatch(/2026-05-1\d/)
@@ -77,7 +77,7 @@ describe('ZCalendar', () => {
   it('firstDayOfWeek=1 → 周一起首', () => {
     const w = mount(ZCalendar, { props: { firstDayOfWeek: 1 } })
     // weekday header 第一个应是 '一'
-    const headers = w.findAll('span').filter((s) => /^[一二三四五六日]$/.test(s.text()))
+    const headers = w.findAll('span').filter(s => /^[一二三四五六日]$/.test(s.text()))
     expect(headers[0]?.text()).toBe('一')
   })
 })
@@ -128,7 +128,7 @@ describe('ZCascader', () => {
     wrappers.push(w)
     await w.find('[role="combobox"]').trigger('click')
     // 激活 panel 虚拟列表
-    document.querySelectorAll('[data-zv-wrapper]').forEach((wrap) => {
+    document.querySelectorAll('[data-zv-wrapper]').forEach(wrap => {
       const root = wrap.parentElement as HTMLElement | null
       if (root) {
         Object.defineProperty(root, 'clientHeight', { configurable: true, value: 300 })
@@ -140,7 +140,7 @@ describe('ZCascader', () => {
     ;(items[0] as HTMLElement).click()
     await w.vm.$nextTick()
     // 现在应该多一列(包含 杭州)— 也需要再次激活
-    document.querySelectorAll('[data-zv-wrapper]').forEach((wrap) => {
+    document.querySelectorAll('[data-zv-wrapper]').forEach(wrap => {
       const root = wrap.parentElement as HTMLElement | null
       if (root) {
         Object.defineProperty(root, 'clientHeight', { configurable: true, value: 300 })
@@ -159,7 +159,7 @@ describe('ZCascader', () => {
       disconnect(): void {}
     }
     ;(globalThis as unknown as { ResizeObserver: typeof StubRO }).ResizeObserver = StubRO
-    document.querySelectorAll('[data-zv-wrapper]').forEach((wrap) => {
+    document.querySelectorAll('[data-zv-wrapper]').forEach(wrap => {
       const root = wrap.parentElement as HTMLElement | null
       if (root) {
         Object.defineProperty(root, 'clientHeight', { configurable: true, value: 300 })
@@ -190,14 +190,14 @@ describe('ZCascader', () => {
     await w.vm.$nextTick()
     await activateVirtualPanels()
     // 点杭州(此时第二列已激活)
-    const hzBtn = Array.from(document.querySelectorAll('[role="option"]')).find((el) =>
+    const hzBtn = Array.from(document.querySelectorAll('[role="option"]')).find(el =>
       el.textContent?.includes('杭州'),
     )!
     ;(hzBtn as HTMLElement).click()
     await w.vm.$nextTick()
     await activateVirtualPanels()
     // 点西湖区
-    const xhBtn = Array.from(document.querySelectorAll('[role="option"]')).find((el) =>
+    const xhBtn = Array.from(document.querySelectorAll('[role="option"]')).find(el =>
       el.textContent?.includes('西湖'),
     )!
     ;(xhBtn as HTMLElement).click()

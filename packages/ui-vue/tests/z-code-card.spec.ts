@@ -106,7 +106,7 @@ describe('ZCodeCard', () => {
     const src = `import { ref } from 'vue'\n\nconst x = ref(0)`
     const w = mount(ZCodeCard, { props: { source: src, defaultExpanded: true } })
     const html = w.html()
-    expect(html).not.toContain("import { ref }")
+    expect(html).not.toContain('import { ref }')
     expect(html).toContain('const x = ref(0)')
   })
 

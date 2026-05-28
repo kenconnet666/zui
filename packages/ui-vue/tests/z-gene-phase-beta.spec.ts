@@ -30,7 +30,7 @@ describe('ZAvatar', () => {
   it('square=true → 方形圆角(非完全圆)', () => {
     mount(ZAvatar, { props: { square: true, text: 'A' } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/border-radius:calc/)
   })
@@ -44,7 +44,7 @@ describe('ZAvatar', () => {
       },
     })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/width:calc\(3 \* var\(--zui-iem/)
   })
@@ -67,7 +67,7 @@ describe('ZTag', () => {
   it('variant=filled → schema color 背景(不再用 currentColor 桥接,2026-05-23 重构)', () => {
     mount(ZTag, { props: { variant: 'filled' }, slots: { default: () => 't' } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/background-color:#/)
   })
@@ -75,7 +75,7 @@ describe('ZTag', () => {
   it('round=true → 圆角胶囊', () => {
     mount(ZTag, { props: { round: true }, slots: { default: () => 't' } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/border-radius:9999px/)
   })
@@ -112,7 +112,7 @@ describe('ZBadge', () => {
   it('有 default slot → wrapper position:relative', () => {
     mount(ZBadge, { props: { value: 5 }, slots: { default: () => 'icon' } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/position:relative/)
   })
@@ -134,7 +134,7 @@ describe('ZCode', () => {
   it('字体走 mono', () => {
     mount(ZCode, { slots: { default: () => 'x' } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/font-family:/)
   })
@@ -150,7 +150,7 @@ describe('ZBlockquote', () => {
   it('左侧 border-left 0.25iem(默认 size=1 → size * 0.25)', () => {
     mount(ZBlockquote, { slots: { default: () => 'q' } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/border-left-width:calc\(0\.25 \* var\(--zui-iem/)
   })
@@ -160,7 +160,7 @@ describe('ZEllipsis', () => {
   it('默认 lines=1 → 单行 ellipsis 三件套', () => {
     mount(ZEllipsis, { slots: { default: () => 'long text long text' } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/overflow:hidden/)
     expect(css).toMatch(/text-overflow:ellipsis/)
@@ -170,7 +170,7 @@ describe('ZEllipsis', () => {
   it('lines=3 → -webkit-line-clamp:3', () => {
     mount(ZEllipsis, { props: { lines: 3 }, slots: { default: () => 'x' } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/-webkit-line-clamp:3/)
   })

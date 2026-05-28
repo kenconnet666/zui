@@ -17,9 +17,11 @@ import {
 let wrappers: VueWrapper[] = []
 
 function cleanPortals(): void {
-  wrappers.forEach((w) => w.unmount())
+  wrappers.forEach(w => w.unmount())
   wrappers = []
-  document.body.querySelectorAll('[role="menu"], [role="dialog"], [data-zui-notification-host]').forEach((el) => el.remove())
+  document.body
+    .querySelectorAll('[role="menu"], [role="dialog"], [data-zui-notification-host]')
+    .forEach(el => el.remove())
 }
 
 beforeEach(cleanPortals)
@@ -35,7 +37,8 @@ describe('ZDropdown', () => {
   it('default 隐藏,点击触发器 → 展开 menu', async () => {
     const Host = defineComponent({
       setup() {
-        return () => h(ZDropdown, { items: ITEMS }, { default: () => h('button', { id: 't' }, 'click') })
+        return () =>
+          h(ZDropdown, { items: ITEMS }, { default: () => h('button', { id: 't' }, 'click') })
       },
     })
     const w = mount(Host, { attachTo: document.body })

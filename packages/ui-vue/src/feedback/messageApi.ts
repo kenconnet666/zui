@@ -21,11 +21,21 @@ import { BuiltinIcons } from '../gene/icons'
 /** 语义类型 → color factory + icon component(messageApi 内部 wrap)。 */
 type SemanticType = 'info' | 'success' | 'warning' | 'danger' | 'loading'
 const SEMANTIC_COLOR: Record<SemanticType, (c: Chain<ZuiSchema>['color']) => void> = {
-  info: (c) => { c._info },
-  success: (c) => { c._success },
-  warning: (c) => { c._warning },
-  danger: (c) => { c._danger },
-  loading: (c) => { c._info },
+  info: c => {
+    c._info
+  },
+  success: c => {
+    c._success
+  },
+  warning: c => {
+    c._warning
+  },
+  danger: c => {
+    c._danger
+  },
+  loading: c => {
+    c._info
+  },
 }
 const SEMANTIC_ICON: Record<SemanticType, Component> = {
   info: BuiltinIcons.info,
@@ -92,7 +102,7 @@ export function createMessageApi(opts: CreateMessageApiOptions = {}): ZMessageAp
   }
 
   function close(id: ZMessageItem['id']): void {
-    const idx = messages.findIndex((m) => m.id === id)
+    const idx = messages.findIndex(m => m.id === id)
     if (idx >= 0) messages.splice(idx, 1)
   }
 

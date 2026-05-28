@@ -175,21 +175,21 @@ const selectedLabel = computed(() => {
   if (props.multiple) {
     if (valueArray.value.length === 0) return ''
     return valueArray.value
-      .map((v) => props.options.find((o) => o.value === v)?.label ?? String(v))
+      .map(v => props.options.find(o => o.value === v)?.label ?? String(v))
       .join(', ')
   }
   if (props.value === null || props.value === undefined || Array.isArray(props.value)) return ''
-  return props.options.find((o) => o.value === props.value)?.label ?? String(props.value)
+  return props.options.find(o => o.value === props.value)?.label ?? String(props.value)
 })
 
 const filteredOptions = computed(() => {
   if (!props.filterable || !search.value) return props.options
   const q = search.value.toLowerCase()
-  return props.options.filter((o) => o.label.toLowerCase().includes(q))
+  return props.options.filter(o => o.label.toLowerCase().includes(q))
 })
 
 const triggerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -216,7 +216,7 @@ const triggerClass = computed(() =>
 const sxTriggerAttrs = computed(() => extractSxAttrs(props.sxTrigger))
 
 const triggerTextClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.overflow.hidden
     s.whiteSpace.nowrap
@@ -226,7 +226,7 @@ const triggerTextClass = computed(() =>
 )
 
 const triggerInputClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.borderStyle.none
     s.backgroundColor.transparent
@@ -239,7 +239,7 @@ const triggerInputClass = computed(() =>
 )
 
 const dropdownClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.backgroundColor._bg
     s.color._text
     s.borderRadius._small
@@ -266,7 +266,7 @@ const dropdownListHeight = computed<string>(() => {
 const sxDropdownAttrs = computed(() => extractSxAttrs(props.sxDropdown))
 
 const optionClass = (opt: ZSelectOption): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.gap._tiny
@@ -288,7 +288,7 @@ const optionClass = (opt: ZSelectOption): string =>
       s.opacity._dim
       s.cursor.notAllowed
     } else {
-      s._hover((h2) => {
+      s._hover(h2 => {
         h2.backgroundColor._textSecondary.alpha(8)
       })
     }
@@ -297,7 +297,7 @@ const optionClass = (opt: ZSelectOption): string =>
 const sxOptionAttrs = computed(() => extractSxAttrs(props.sxOption))
 
 const clearBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -306,14 +306,14 @@ const clearBtnClass = computed(() =>
     s.borderStyle.none
     s.padding.px(0)
     s.color._textSecondary
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.color._text
     })
   }),
 )
 
 const arrowClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.transitionProperty._transform
     s.transitionDuration._small
@@ -340,9 +340,7 @@ function selectOption(opt: ZSelectOption): void {
   if (props.multiple) {
     // 多选:toggle 添加/移除,保持下拉打开
     const cur = valueArray.value
-    const next = cur.includes(opt.value)
-      ? cur.filter((v) => v !== opt.value)
-      : [...cur, opt.value]
+    const next = cur.includes(opt.value) ? cur.filter(v => v !== opt.value) : [...cur, opt.value]
     emit('update:value', next)
     return
   }
@@ -371,7 +369,7 @@ watch(
 )
 
 const emptyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._small
     s.color._textSecondary
     s.fontSize._small

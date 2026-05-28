@@ -16,7 +16,7 @@ function makePointerDown(x = 50, y = 50): PointerEvent {
 }
 
 afterEach(() => {
-  document.querySelectorAll('.zui-ripple').forEach((el) => el.remove())
+  document.querySelectorAll('.zui-ripple').forEach(el => el.remove())
 })
 
 /**
@@ -73,10 +73,9 @@ describe('useRipple', () => {
 
   it('自定义 color / duration 写入 ripple style', async () => {
     const target = ref<HTMLElement | null>(null)
-    const w = mount(
-      makeRippleComponent(target, { color: 'rgba(255,0,0,0.5)', duration: 500 }),
-      { attachTo: document.body },
-    )
+    const w = mount(makeRippleComponent(target, { color: 'rgba(255,0,0,0.5)', duration: 500 }), {
+      attachTo: document.body,
+    })
     await nextTick()
     ;(w.element as HTMLElement).dispatchEvent(makePointerDown())
     const ripple = (w.element as HTMLElement).querySelector('.zui-ripple') as HTMLElement

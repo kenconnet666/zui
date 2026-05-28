@@ -7,7 +7,7 @@ import { mount } from '@vue/test-utils'
 import { ZMessage, createMessageApi, type ZMessageItem } from '../src'
 
 afterEach(() => {
-  document.body.querySelectorAll('[data-zui-message-host]').forEach((el) => el.remove())
+  document.body.querySelectorAll('[data-zui-message-host]').forEach(el => el.remove())
 })
 
 describe('ZMessage — 组件模式', () => {
@@ -30,7 +30,9 @@ describe('ZMessage — 组件模式', () => {
   it('duration > 0 → 时间到 emit close', async () => {
     vi.useFakeTimers()
     try {
-      const messages = reactive<ZMessageItem[]>([{ id: 1, type: 'info', content: 'x', duration: 1000 }])
+      const messages = reactive<ZMessageItem[]>([
+        { id: 1, type: 'info', content: 'x', duration: 1000 },
+      ])
       let closedId: ZMessageItem['id'] | null = null
       const Host = defineComponent({
         setup() {

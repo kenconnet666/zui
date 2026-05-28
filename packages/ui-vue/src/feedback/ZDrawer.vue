@@ -123,7 +123,7 @@ useEscapeStack(
 )
 
 const maskClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.fixed
     s.inset.px(0)
     s.backgroundColor._overlayBg.alpha(50)
@@ -134,7 +134,7 @@ const maskClass = computed(() =>
 const sxMaskAttrs = computed(() => extractSxAttrs(props.sxMask))
 
 const drawerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.fixed
     s.backgroundColor._bg
     s.color._text
@@ -177,7 +177,7 @@ const drawerClass = computed(() =>
 const sxDrawerAttrs = computed(() => extractSxAttrs(props.sxDrawer))
 
 const headClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.spaceBetween
@@ -197,7 +197,7 @@ const drawerBodyOverlay = useScrollbarOverlay(theme)
 
 /** 外层 wrapper：承接 sxBody attrs、position:relative 定位 overlay track。 */
 const bodyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.relative
     s.flexGrow(1)
     s.minHeight.px(0)
@@ -208,7 +208,7 @@ const bodyClass = computed(() =>
 
 /** 内层真正滚动的 div：height:100% + overflow-y:auto + native scrollbar 隐藏。 */
 const bodyScrollerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.height.pct(100)
     s.overflowY.auto
     s.padding._middle
@@ -219,7 +219,7 @@ const bodyScrollerClass = computed(() =>
 const sxBodyAttrs = computed(() => extractSxAttrs(props.sxBody))
 
 const footClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.justifyContent.flexEnd
     s.gap._small
@@ -233,7 +233,7 @@ const footClass = computed(() =>
 const sxFootAttrs = computed(() => extractSxAttrs(props.sxFoot))
 
 const closeBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -244,7 +244,7 @@ const closeBtnClass = computed(() =>
     s.fontSize._middle
     s.color._textSecondary
     s.borderRadius._tiny
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.backgroundColor._textSecondary.alpha(8)
     })
   }),
@@ -266,7 +266,7 @@ function onCloseClick(): void {
 let releaseLock: (() => void) | null = null
 watch(
   () => props.visible,
-  (v) => {
+  v => {
     if (v && !releaseLock) {
       releaseLock = lockBodyScroll()
     } else if (!v && releaseLock) {
@@ -304,7 +304,14 @@ defineExpose({ rootRef })
 
 <template>
   <Teleport to="body">
-    <div v-if="visible" :ref="bindMask" :class="[maskClass, sxMaskAttrs.class]" :style="sxMaskAttrs.style" v-bind="sxMaskAttrs.attrs" @click.self="onMaskClick" />
+    <div
+      v-if="visible"
+      :ref="bindMask"
+      :class="[maskClass, sxMaskAttrs.class]"
+      :style="sxMaskAttrs.style"
+      v-bind="sxMaskAttrs.attrs"
+      @click.self="onMaskClick"
+    />
     <div
       v-if="visible"
       :ref="sxDrawerAttrs.ref"
@@ -324,7 +331,13 @@ defineExpose({ rootRef })
         <div>
           <slot name="head">{{ title }}</slot>
         </div>
-        <button v-if="closable" type="button" :class="closeBtnClass" aria-label="关闭" @click="onCloseClick">
+        <button
+          v-if="closable"
+          type="button"
+          :class="closeBtnClass"
+          aria-label="关闭"
+          @click="onCloseClick"
+        >
           <component :is="closeIconNode" />
         </button>
       </div>
@@ -338,7 +351,11 @@ defineExpose({ rootRef })
         @focusin="drawerBodyOverlay.isFocused.value = true"
         @focusout="drawerBodyOverlay.isFocused.value = false"
       >
-        <div :ref="drawerBodyOverlay.scrollEl" :class="bodyScrollerClass" @scroll="drawerBodyOverlay.onScroll">
+        <div
+          :ref="drawerBodyOverlay.scrollEl"
+          :class="bodyScrollerClass"
+          @scroll="drawerBodyOverlay.onScroll"
+        >
           <slot />
         </div>
         <Transition
@@ -347,8 +364,14 @@ defineExpose({ rootRef })
           enter-from-class="__zs-fade-from"
           leave-to-class="__zs-fade-from"
         >
-          <div v-if="drawerBodyOverlay.thumbVisible.value" :class="drawerBodyOverlay.trackClass.value">
-            <div :class="drawerBodyOverlay.thumbClass.value" :style="drawerBodyOverlay.thumbStyle.value" />
+          <div
+            v-if="drawerBodyOverlay.thumbVisible.value"
+            :class="drawerBodyOverlay.trackClass.value"
+          >
+            <div
+              :class="drawerBodyOverlay.thumbClass.value"
+              :style="drawerBodyOverlay.thumbStyle.value"
+            />
           </div>
         </Transition>
       </div>

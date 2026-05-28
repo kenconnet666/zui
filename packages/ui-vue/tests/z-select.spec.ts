@@ -8,7 +8,7 @@ import { ZSelect, type ZSelectValue } from '../src'
 
 afterEach(() => {
   // 清理 Teleport 残留
-  document.body.querySelectorAll('[role="listbox"]').forEach((el) => el.remove())
+  document.body.querySelectorAll('[role="listbox"]').forEach(el => el.remove())
 })
 
 function makeHost(

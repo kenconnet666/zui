@@ -82,7 +82,7 @@ const emit = defineEmits<ZNotificationEmits>()
 const theme = useZTheme()
 
 const containerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.fixed
     const [vert, horiz] = props.placement.split('-') as ['top' | 'bottom', 'left' | 'right']
     if (vert === 'top') s.top.iem(1.5)
@@ -100,7 +100,7 @@ const containerClass = computed(() =>
 )
 
 const itemClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.gap._small
     s.padding._middle
@@ -118,7 +118,7 @@ const itemClass = computed(() =>
 )
 
 const iconClass = (item: ZNotificationItem): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     if (item.color) s.color(item.color)
     else s.color._info
     s.fontSize._large
@@ -126,7 +126,7 @@ const iconClass = (item: ZNotificationItem): string =>
   })
 
 const titleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontWeight._semibold
     s.color._text
     s.fontSize._middle
@@ -134,7 +134,7 @@ const titleClass = computed(() =>
 )
 
 const descClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.fontSize._small
     s.marginTop._tiny
@@ -142,7 +142,7 @@ const descClass = computed(() =>
 )
 
 const closeBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -153,7 +153,7 @@ const closeBtnClass = computed(() =>
     s.color._textSecondary
     s.flexShrink(0)
     s.marginLeft._small
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.color._text
     })
   }),
@@ -177,7 +177,7 @@ onMounted(() => {
 })
 
 watch(
-  () => props.items.map((m) => m.id),
+  () => props.items.map(m => m.id),
   (newIds, oldIds) => {
     for (const id of oldIds ?? []) {
       if (!newIds.includes(id)) {
@@ -190,7 +190,7 @@ watch(
     }
     for (const id of newIds) {
       if (!timers.has(id)) {
-        const item = props.items.find((m) => m.id === id)
+        const item = props.items.find(m => m.id === id)
         if (item) scheduleClose(item)
       }
     }
@@ -218,14 +218,14 @@ function renderIcon(item: ZNotificationItem) {
 const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
 
 const transitionActiveClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.transitionProperty.all
     s.transitionDuration._middle
     s.transitionTimingFunction._default
   }),
 )
 const slideBoundaryClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.opacity._none
     s.transform('translateX(1.25em)')
   }),

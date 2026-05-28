@@ -65,15 +65,13 @@ function toggle(item: ZCollapseItem): void {
     emit('update:value', isExpanded(item.key) ? '' : item.key)
   } else {
     const cur = expandedList.value
-    const next = cur.includes(item.key)
-      ? cur.filter((k) => k !== item.key)
-      : [...cur, item.key]
+    const next = cur.includes(item.key) ? cur.filter(k => k !== item.key) : [...cur, item.key]
     emit('update:value', next)
   }
 }
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.color._text
@@ -90,7 +88,7 @@ const rootClass = computed(() =>
 )
 
 const headerClass = (item: ZCollapseItem, idx: number): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.spaceBetween
@@ -109,7 +107,7 @@ const headerClass = (item: ZCollapseItem, idx: number): string =>
       s.borderTopStyle.solid
       s.borderTopColor._border
     }
-    s._hover((h2) => {
+    s._hover(h2 => {
       if (!item.disabled) h2.backgroundColor._bgMuted
     })
     if (item.disabled) {
@@ -119,7 +117,7 @@ const headerClass = (item: ZCollapseItem, idx: number): string =>
   })
 
 const bodyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._middle
     s.borderTopWidth._thin
     s.borderTopStyle.solid
@@ -129,7 +127,7 @@ const bodyClass = computed(() =>
 )
 
 const arrowClass = (expanded: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.transitionProperty._transform
     s.transitionDuration._small

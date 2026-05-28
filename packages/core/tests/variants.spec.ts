@@ -13,7 +13,7 @@ import type { VariantProps } from '../src'
 describe('defineVariants — base only', () => {
   it('仅 base 无 variants，返回稳定 className', () => {
     const f = defineVariants(defaultLight, {
-      base: (s) => {
+      base: s => {
         s.padding.px(12)
       },
       variants: {},
@@ -34,15 +34,15 @@ describe('defineVariants — base only', () => {
 
 describe('defineVariants — 单 variant', () => {
   const button = defineVariants(defaultLight, {
-    base: (s) => {
+    base: s => {
       s.padding.px(12)
     },
     variants: {
       intent: {
-        primary: (s) => {
+        primary: s => {
           s.backgroundColor._primary
         },
-        danger: (s) => {
+        danger: s => {
           s.backgroundColor._danger
         },
       },
@@ -77,21 +77,21 @@ describe('defineVariants — 多 variant 组合', () => {
   const button = defineVariants(defaultLight, {
     variants: {
       intent: {
-        primary: (s) => {
+        primary: s => {
           s.backgroundColor._primary
         },
-        danger: (s) => {
+        danger: s => {
           s.backgroundColor._danger
         },
       },
       size: {
-        small: (s) => {
+        small: s => {
           s.padding.px(8)
         },
-        middle: (s) => {
+        middle: s => {
           s.padding.px(12)
         },
-        large: (s) => {
+        large: s => {
           s.padding.px(16)
         },
       },
@@ -113,23 +113,23 @@ describe('defineVariants — 多 variant 组合', () => {
 
 describe('defineVariants — compoundVariants', () => {
   const button = defineVariants(defaultLight, {
-    base: (s) => {
+    base: s => {
       s.padding.px(12)
     },
     variants: {
       intent: {
-        primary: (s) => {
+        primary: s => {
           s.backgroundColor._primary
         },
-        ghost: (s) => {
+        ghost: s => {
           s.color._primary
         },
       },
       size: {
-        small: (s) => {
+        small: s => {
           s.padding.px(8)
         },
-        middle: (s) => {
+        middle: s => {
           s.padding.px(12)
         },
       },
@@ -138,7 +138,7 @@ describe('defineVariants — compoundVariants', () => {
     compoundVariants: [
       {
         when: { intent: 'ghost', size: 'small' },
-        apply: (s) => {
+        apply: s => {
           s.padding.px(6)
         },
       },
@@ -167,13 +167,13 @@ describe('defineVariants — compoundVariants', () => {
       compoundVariants: [
         {
           when: { a: 'x', b: 'x' },
-          apply: (s) => {
+          apply: s => {
             s._node.zIndex = 1
           },
         },
         {
           when: { a: 'x', b: 'x' },
-          apply: (s) => {
+          apply: s => {
             s._node.zIndex = 2
           },
         }, // 覆盖
@@ -192,7 +192,7 @@ describe('defineVariants — 缓存', () => {
     const f = defineVariants(defaultLight, {
       variants: {
         intent: {
-          primary: (s) => {
+          primary: s => {
             s.color._primary
           },
         },
@@ -210,10 +210,10 @@ describe('defineVariants — 缓存', () => {
     const f = defineVariants(defaultLight, {
       variants: {
         intent: {
-          primary: (s) => {
+          primary: s => {
             s.color._primary
           },
-          danger: (s) => {
+          danger: s => {
             s.color._danger
           },
         },
@@ -242,12 +242,12 @@ describe('defineVariants — 嵌套 _hover / 内建方法', () => {
     const f = defineVariants(defaultLight, {
       variants: {
         intent: {
-          primary: (s) => {
+          primary: s => {
             s.backgroundColor._primary
-            s._hover((h) => {
+            s._hover(h => {
               h.backgroundColor._primary.alpha(85)
             })
-            s._focusVisible((f) => {
+            s._focusVisible(f => {
               f.outlineColor._primary
             })
           },
@@ -262,9 +262,9 @@ describe('defineVariants — 嵌套 _hover / 内建方法', () => {
 
   it('base 内也可用嵌套方法', () => {
     const f = defineVariants(defaultLight, {
-      base: (s) => {
+      base: s => {
         s.padding.px(12)
-        s._hover((h) => {
+        s._hover(h => {
           h.cursor.pointer
         })
       },
@@ -288,7 +288,7 @@ describe('defineVariants — 边界 / 健壮性', () => {
     const f = defineVariants(defaultLight, {
       variants: {
         intent: {
-          primary: (s) => {
+          primary: s => {
             s.color._primary
           },
         },
@@ -302,12 +302,12 @@ describe('defineVariants — 边界 / 健壮性', () => {
 
   it('未传 props 且无 defaults，仅应用 base', () => {
     const f = defineVariants(defaultLight, {
-      base: (s) => {
+      base: s => {
         s.padding.px(8)
       },
       variants: {
         intent: {
-          primary: (s) => {
+          primary: s => {
             s.color._primary
           },
         },
@@ -357,35 +357,35 @@ describe('defineVariants — 类型推断', () => {
 describe('defineVariants — 实际组件库场景', () => {
   it('Button 组件三态完整 demo', () => {
     const button = defineVariants(defaultLight, {
-      base: (s) => {
+      base: s => {
         s.padding.px(12)
         s.borderRadius._middle
         s.fontWeight._bold
       },
       variants: {
         intent: {
-          primary: (s) => {
+          primary: s => {
             s.backgroundColor._primary
             s.color.white
           },
-          danger: (s) => {
+          danger: s => {
             s.backgroundColor._danger
             s.color.white
           },
-          ghost: (s) => {
+          ghost: s => {
             s.color._primary
           },
         },
         size: {
-          small: (s) => {
+          small: s => {
             s.padding.px(8)
             s.fontSize._small
           },
-          middle: (s) => {
+          middle: s => {
             s.padding.px(12)
             s.fontSize._middle
           },
-          large: (s) => {
+          large: s => {
             s.padding.px(16)
             s.fontSize._large
           },
@@ -395,7 +395,7 @@ describe('defineVariants — 实际组件库场景', () => {
       compoundVariants: [
         {
           when: { intent: 'ghost', size: 'small' },
-          apply: (s) => {
+          apply: s => {
             s.padding.px(6)
           },
         },

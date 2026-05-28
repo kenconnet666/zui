@@ -80,12 +80,32 @@ export interface ZLocaleDatePicker {
   confirm: string
   weekdaysShort: readonly [string, string, string, string, string, string, string]
   monthsShort: readonly [
-    string, string, string, string, string, string,
-    string, string, string, string, string, string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
   ]
   months: readonly [
-    string, string, string, string, string, string,
-    string, string, string, string, string, string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
   ]
 }
 

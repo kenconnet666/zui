@@ -19,21 +19,21 @@ const theme = new Theme({
 
 describe('resolveCarrier — token / 字面量 / keyword', () => {
   it('token → primary 色串', () => {
-    const v = resolveCarrier(theme, 'color', (c) => {
+    const v = resolveCarrier(theme, 'color', c => {
       ;(c as { _primary: unknown })._primary
     })
     expect(v).toBe('#1976d2')
   })
 
   it('字面量 c("#abc")', () => {
-    const v = resolveCarrier(theme, 'color', (c) => {
+    const v = resolveCarrier(theme, 'color', c => {
       ;(c as (val: string) => void)('#abc')
     })
     expect(v).toBe('#abc')
   })
 
   it('keyword(currentColor)', () => {
-    const v = resolveCarrier(theme, 'color', (c) => {
+    const v = resolveCarrier(theme, 'color', c => {
       ;(c as { currentColor: unknown }).currentColor
     })
     expect(v).toBe('currentColor')
@@ -42,7 +42,7 @@ describe('resolveCarrier — token / 字面量 / keyword', () => {
 
 describe('resolveCarrier — modifier(立即计算)', () => {
   it('alpha(50) → rgba 字符串', () => {
-    const v = resolveCarrier(theme, 'color', (c) => {
+    const v = resolveCarrier(theme, 'color', c => {
       ;(c as { _primary: { alpha: (n: number) => void } })._primary.alpha(50)
     })
     expect(typeof v).toBe('string')
@@ -52,7 +52,7 @@ describe('resolveCarrier — modifier(立即计算)', () => {
   })
 
   it('darken(20) → 比原色更暗', () => {
-    const v = resolveCarrier(theme, 'color', (c) => {
+    const v = resolveCarrier(theme, 'color', c => {
       ;(c as { _primary: { darken: (n: number) => void } })._primary.darken(20)
     })
     expect(typeof v).toBe('string')
@@ -63,7 +63,7 @@ describe('resolveCarrier — modifier(立即计算)', () => {
 
 describe('resolveCarrier — unit method', () => {
   it('width.px(16) → "16px"', () => {
-    const v = resolveCarrier(theme, 'width', (c) => {
+    const v = resolveCarrier(theme, 'width', c => {
       ;(c as { px: (n: number) => void }).px(16)
     })
     expect(v).toBe('16px')
@@ -72,10 +72,10 @@ describe('resolveCarrier — unit method', () => {
 
 describe('resolveCarrier — 字符串逃生舱', () => {
   it('c("_primary.alpha(50)") 等价于 chain modifier', () => {
-    const direct = resolveCarrier(theme, 'color', (c) => {
+    const direct = resolveCarrier(theme, 'color', c => {
       ;(c as { _primary: { alpha: (n: number) => void } })._primary.alpha(50)
     })
-    const escape = resolveCarrier(theme, 'color', (c) => {
+    const escape = resolveCarrier(theme, 'color', c => {
       ;(c as (val: string) => void)('_primary.alpha(50)')
     })
     expect(escape).toBe(direct)
@@ -88,7 +88,7 @@ describe('resolveCarrier — 边界', () => {
   })
 
   it('未知 prop → undefined(不抛错)', () => {
-    const v = resolveCarrier(theme, 'nonexistentPropZZZ', (c) => {
+    const v = resolveCarrier(theme, 'nonexistentPropZZZ', c => {
       ;(c as { _primary?: unknown })._primary
     })
     expect(v).toBeUndefined()
@@ -103,7 +103,7 @@ describe('resolveCarrier — 边界', () => {
 
   it('不污染原 theme(每次 new Chain)', () => {
     const before = JSON.stringify(theme)
-    resolveCarrier(theme, 'color', (c) => {
+    resolveCarrier(theme, 'color', c => {
       ;(c as { _primary: { alpha: (n: number) => void } })._primary.alpha(80)
     })
     expect(JSON.stringify(theme)).toBe(before)
@@ -113,7 +113,7 @@ describe('resolveCarrier — 边界', () => {
 describe('resolveCarrier — 跟 Theme 实例兼容', () => {
   it('传 Theme 实例自动 resolve', () => {
     const t = new Theme({ color: { primary: '#ff00aa' } })
-    const v = resolveCarrier(t, 'color', (c) => {
+    const v = resolveCarrier(t, 'color', c => {
       ;(c as { _primary: unknown })._primary
     })
     expect(v).toBe('#ff00aa')

@@ -26,7 +26,7 @@ const DummyIcon = defineComponent({
 /** 收集注入 CSS,剥掉 keyframes 块避免误命中。 */
 function getInjectedCss(): string {
   const raw = Array.from(document.querySelectorAll('style'))
-    .map((el) => el.textContent ?? '')
+    .map(el => el.textContent ?? '')
     .join('\n')
   return raw.replace(/@(?:-webkit-)?keyframes\s+\S+\s*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g, '')
 }
@@ -394,7 +394,7 @@ describe('ZIcon — css factory(逃生口)', () => {
       props: {
         component: DummyIcon,
         css: (s: Chain<ZuiSchema>) => {
-          s._hover((h) => {
+          s._hover(h => {
             h.color('#ff00aa')
           })
         },
@@ -424,8 +424,8 @@ describe('ZIcon — css factory(逃生口)', () => {
       props: {
         component: DummyIcon,
         css: (s: Chain<ZuiSchema>) => {
-          s._hover((h) => {
-            h.color((c) => {
+          s._hover(h => {
+            h.color(c => {
               c._danger
             })
           })

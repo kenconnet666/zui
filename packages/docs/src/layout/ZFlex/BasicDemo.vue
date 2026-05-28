@@ -13,7 +13,13 @@ import { ZFlex, ZTag, ZText } from '@kenconnet666/zui-vue'
     <ZFlex
       :justify="j => j.spaceBetween"
       :align="a => a.center"
-      :css="s => { s.padding.iem(0.75); s.borderRadius._small; s.backgroundColor._bgMuted }"
+      :css="
+        s => {
+          s.padding.iem(0.75)
+          s.borderRadius._small
+          s.backgroundColor._bgMuted
+        }
+      "
     >
       <ZText>左侧内容</ZText>
       <ZFlex :gap="g => g._small">
@@ -26,7 +32,13 @@ import { ZFlex, ZTag, ZText } from '@kenconnet666/zui-vue'
     <ZFlex
       :direction="d => d.column"
       :gap="g => g._small"
-      :css="s => { s.padding.iem(0.75); s.borderRadius._small; s.backgroundColor._bgMuted }"
+      :css="
+        s => {
+          s.padding.iem(0.75)
+          s.borderRadius._small
+          s.backgroundColor._bgMuted
+        }
+      "
     >
       <ZText>纵向排列 A</ZText>
       <ZText>纵向排列 B</ZText>

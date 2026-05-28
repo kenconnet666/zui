@@ -12,23 +12,12 @@
  * - 在 wrapper 内（与内层 div 并列）渲染：
  *   `<div v-if="overlay.thumbVisible" :class="overlay.trackClass"> ...`
  */
-import {
-  computed,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  watch,
-  type Ref,
-} from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import type { ResolvedTheme } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import { themeColorScheme } from './colorScheme'
-import {
-  SCROLL_TRACK_MARGIN,
-  SCROLL_THUMB_MIN_PX,
-  scrollbarThumbColors,
-} from './scrollbarThumb'
+import { SCROLL_TRACK_MARGIN, SCROLL_THUMB_MIN_PX, scrollbarThumbColors } from './scrollbarThumb'
 
 export function useScrollbarOverlay(theme: Ref<ResolvedTheme<ZuiSchema>>) {
   const scrollEl = ref<HTMLElement | null>(null)
@@ -92,15 +81,13 @@ export function useScrollbarOverlay(theme: Ref<ResolvedTheme<ZuiSchema>>) {
     top: `${thumbTopPx.value}px`,
   }))
 
-  const thumbVisible = computed(
-    () => needsScrollbar.value && (isHovered.value || isFocused.value),
-  )
+  const thumbVisible = computed(() => needsScrollbar.value && (isHovered.value || isFocused.value))
 
   // ─── 样式 ────────────────────────────────────────────────────────────────────
   const dark = computed(() => themeColorScheme(theme.value) === 'dark')
 
   const trackClass = computed(() =>
-    icss(theme.value, (s) => {
+    icss(theme.value, s => {
       s.position.absolute
       s._prop('right', '2px')
       s._prop('top', '2px')
@@ -114,14 +101,14 @@ export function useScrollbarOverlay(theme: Ref<ResolvedTheme<ZuiSchema>>) {
 
   const thumbClass = computed(() => {
     const colors = scrollbarThumbColors(dark.value)
-    return icss(theme.value, (s) => {
+    return icss(theme.value, s => {
       s.position.absolute
       s._prop('left', '0')
       s._prop('right', '0')
       s.borderRadius.iem(0.1875)
       s._prop('background', colors.normal)
       s._prop('transition', 'background 120ms')
-      s._selector('&:hover', (h) => {
+      s._selector('&:hover', h => {
         h._prop('background', colors.hover)
       })
     })

@@ -84,7 +84,7 @@ const emit = defineEmits<ZTagEmits>()
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 0.875
     s.display.inlineFlex
     s.alignItems.center
@@ -135,7 +135,7 @@ const rootClass = computed(() =>
 )
 
 const closeBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -145,7 +145,7 @@ const closeBtnClass = computed(() =>
     s.padding.px(0)
     s.color.currentColor
     s.opacity._strong
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.opacity._full
     })
     applySx(s, props.sxClose)

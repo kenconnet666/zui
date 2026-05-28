@@ -75,7 +75,7 @@ const emit = defineEmits<ZSegmentedEmits>()
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.padding._tiny
     s.backgroundColor._bgMuted
@@ -92,7 +92,7 @@ const itemClass = (opt: ZSegmentedOption): string => {
   const isDisabled = opt.disabled || props.disabled
   const size = props.size ?? 1
   const height = props.height ?? size * 2
-  return icss(theme.value, (s) => {
+  return icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -117,7 +117,7 @@ const itemClass = (opt: ZSegmentedOption): string => {
     } else {
       s.backgroundColor.transparent
       s.color._textSecondary
-      s._hover((h) => {
+      s._hover(h => {
         if (!isDisabled) h.color._text
       })
     }

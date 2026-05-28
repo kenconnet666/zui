@@ -15,7 +15,14 @@ const anchors = [
     <ZFlex
       :direction="d => d.column"
       :gap="g => g._large"
-      :css="s => { s.flex(1); s.height.iem(15); s.overflowY.auto; s.padding._middle }"
+      :css="
+        s => {
+          s.flex(1)
+          s.height.iem(15)
+          s.overflowY.auto
+          s.padding._middle
+        }
+      "
     >
       <div id="section-1">
         <ZTitle :level="3">第一章</ZTitle>

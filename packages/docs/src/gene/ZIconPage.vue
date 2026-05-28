@@ -26,16 +26,18 @@ import CssDemoSource from './ZIcon/CssDemo.vue?raw'
   <section>
     <ZTitle :level="1">ZIcon 图标</ZTitle>
     <ZParagraph>
-      框架无关图标容器，支持任意 SVG 图标库（<code>@vicons/material</code>、<code>@vicons/ionicons5</code> 等）。
-      提供 <strong>4 个 chain factory props</strong>（<code>size</code> / <code>color</code> /
-      <code>depth</code> / <code>spin</code>）+ <code>css</code> 兜底。
+      框架无关图标容器，支持任意 SVG 图标库（<code>@vicons/material</code>、<code
+        >@vicons/ionicons5</code
+      >
+      等）。 提供 <strong>4 个 chain factory props</strong>（<code>size</code> /
+      <code>color</code> / <code>depth</code> / <code>spin</code>）+ <code>css</code> 兜底。
     </ZParagraph>
 
     <ZTitle :level="2">接入方式</ZTitle>
     <DemoBlock title="slot 模式 vs :component prop 模式" :source="BasicDemoSource">
       <template #desc>
-        两种方式等价：slot 模式适合在模板里直接嵌入图标组件；<code>:component</code>
-        prop 模式适合动态切换图标（<code>shallowRef</code> + <code>watchEffect</code>）。
+        两种方式等价：slot 模式适合在模板里直接嵌入图标组件；<code>:component</code> prop
+        模式适合动态切换图标（<code>shallowRef</code> + <code>watchEffect</code>）。
       </template>
       <BasicDemo />
     </DemoBlock>
@@ -52,8 +54,8 @@ import CssDemoSource from './ZIcon/CssDemo.vue?raw'
     <ZTitle :level="2">颜色 (color)</ZTitle>
     <DemoBlock title="color factory + modifier 链" :source="ColorDemoSource">
       <template #desc>
-        默认继承父元素 <code>currentColor</code>。传入 chain factory 可使用全部 schema token
-        + CSS 命名色 + modifier 链（<code>alpha / darken / lighten</code> 等）。
+        默认继承父元素 <code>currentColor</code>。传入 chain factory 可使用全部 schema token + CSS
+        命名色 + modifier 链（<code>alpha / darken / lighten</code> 等）。
       </template>
       <ColorDemo />
     </DemoBlock>
@@ -71,8 +73,8 @@ import CssDemoSource from './ZIcon/CssDemo.vue?raw'
     <ZTitle :level="2">css 兜底</ZTitle>
     <DemoBlock title="任意 CSS 属性 / 伪类 / 非正方形" :source="CssDemoSource">
       <template #desc>
-        在 4 个维度之后应用，可覆盖任意属性。<code>_hover</code> / <code>_media</code> /
-        伪元素等 Chain 内建方法均可使用。
+        在 4 个维度之后应用，可覆盖任意属性。<code>_hover</code> / <code>_media</code> / 伪元素等
+        Chain 内建方法均可使用。
       </template>
       <CssDemo />
     </DemoBlock>
@@ -81,30 +83,68 @@ import CssDemoSource from './ZIcon/CssDemo.vue?raw'
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '140px' },
-        { key: 'type',    label: '类型',   mono: true, width: '300px' },
+        { key: 'name', label: '属性', mono: true, width: '140px' },
+        { key: 'type', label: '类型', mono: true, width: '300px' },
         { key: 'default', label: '默认值', mono: true, width: '140px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'component', type: 'Component | undefined',         default: '—',                 desc: '图标组件（:component prop 模式）。与 default slot 二选一。' },
-        { name: 'size',      type: 'number',                        default: '1',                 desc: 'iem 倍数，width = height = size * iem。' },
-        { name: 'color',     type: '(c: ColorCarrier) => void',     default: 'currentColor',      desc: '图标颜色 factory。' },
-        { name: 'depth',     type: '(o: OpacityCarrier) => void',   default: '—（opacity: 1）',   desc: '透明度 factory，走 opacity carrier。' },
-        { name: 'spin',      type: '(d: DurationCarrier) => void',  default: '—（不旋转）',        desc: '旋转动画速度 factory，走 animationDuration carrier。启用后自动加 spin 关键帧。' },
-        { name: 'label',     type: 'string',                        default: '—',                 desc: '无障碍标签。传入后添加 aria-label + role=img；不传则 aria-hidden=true（装饰性图标）。' },
-        { name: 'css',       type: '(s: Chain) => void',            default: '—',                 desc: '兜底 CSS factory，在所有内置样式之后应用。' },
+        {
+          name: 'component',
+          type: 'Component | undefined',
+          default: '—',
+          desc: '图标组件（:component prop 模式）。与 default slot 二选一。',
+        },
+        {
+          name: 'size',
+          type: 'number',
+          default: '1',
+          desc: 'iem 倍数，width = height = size * iem。',
+        },
+        {
+          name: 'color',
+          type: '(c: ColorCarrier) => void',
+          default: 'currentColor',
+          desc: '图标颜色 factory。',
+        },
+        {
+          name: 'depth',
+          type: '(o: OpacityCarrier) => void',
+          default: '—（opacity: 1）',
+          desc: '透明度 factory，走 opacity carrier。',
+        },
+        {
+          name: 'spin',
+          type: '(d: DurationCarrier) => void',
+          default: '—（不旋转）',
+          desc: '旋转动画速度 factory，走 animationDuration carrier。启用后自动加 spin 关键帧。',
+        },
+        {
+          name: 'label',
+          type: 'string',
+          default: '—',
+          desc: '无障碍标签。传入后添加 aria-label + role=img；不传则 aria-hidden=true（装饰性图标）。',
+        },
+        {
+          name: 'css',
+          type: '(s: Chain) => void',
+          default: '—',
+          desc: '兜底 CSS factory，在所有内置样式之后应用。',
+        },
       ]"
     />
 
     <ZTitle :level="2">Slots</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name', label: '插槽',    mono: true, width: '120px' },
+        { key: 'name', label: '插槽', mono: true, width: '120px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'default', desc: '图标内容（slot 模式）。与 :component prop 二选一，同时传入时 :component 优先。' },
+        {
+          name: 'default',
+          desc: '图标内容（slot 模式）。与 :component prop 二选一，同时传入时 :component 优先。',
+        },
       ]"
     />
   </section>

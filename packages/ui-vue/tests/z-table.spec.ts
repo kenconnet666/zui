@@ -46,9 +46,7 @@ describe('ZTable', () => {
   })
 
   it('dataIndex 不同于 key', () => {
-    const cols: ZTableColumn<Row>[] = [
-      { key: 'displayName', title: 'Name', dataIndex: 'name' },
-    ]
+    const cols: ZTableColumn<Row>[] = [{ key: 'displayName', title: 'Name', dataIndex: 'name' }]
     const w = mount(ZTable<Row>, { props: { columns: cols, data: ROWS } })
     expect(w.text()).toContain('Alice')
   })
@@ -58,7 +56,7 @@ describe('ZTable', () => {
       {
         key: 'name',
         title: 'Name',
-        render: (row) => h('strong', `[${row.name}]`),
+        render: row => h('strong', `[${row.name}]`),
       },
     ]
     const w = mount(ZTable<Row>, { props: { columns: cols, data: ROWS } })
@@ -83,7 +81,7 @@ describe('ZTable', () => {
   it('bordered=true 写入 border 样式', () => {
     const w = mount(ZTable<Row>, { props: { columns: COLS, data: ROWS, bordered: true } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/border-width:1px/)
   })
@@ -91,7 +89,7 @@ describe('ZTable', () => {
   it('align=right 写入 text-align', () => {
     mount(ZTable<Row>, { props: { columns: COLS, data: ROWS } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/text-align:right/)
   })

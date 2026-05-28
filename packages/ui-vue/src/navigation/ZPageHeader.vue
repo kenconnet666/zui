@@ -38,7 +38,7 @@ const emit = defineEmits<ZPageHeaderEmits>()
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.gap._small
@@ -52,7 +52,7 @@ const rootClass = computed(() =>
 )
 
 const headRowClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.gap._small
@@ -60,7 +60,7 @@ const headRowClass = computed(() =>
 )
 
 const backBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -70,14 +70,14 @@ const backBtnClass = computed(() =>
     s.padding._tiny
     s.color._text
     s.borderRadius._tiny
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.backgroundColor._bgMuted
     })
   }),
 )
 
 const titleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._huge
     s.fontWeight._semibold
     s.color._text
@@ -86,7 +86,7 @@ const titleClass = computed(() =>
 )
 
 const subtitleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._small
     s.color._textSecondary
     s.marginLeft._small
@@ -94,7 +94,7 @@ const subtitleClass = computed(() =>
 )
 
 const extraClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.marginLeft.auto
     s.display.flex
     s.gap._small
@@ -102,7 +102,7 @@ const extraClass = computed(() =>
 )
 
 const footerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.fontSize._small
   }),

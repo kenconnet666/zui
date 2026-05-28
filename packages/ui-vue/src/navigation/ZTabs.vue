@@ -69,11 +69,11 @@ const emit = defineEmits<ZTabsEmits>()
 const theme = useZTheme()
 
 const activeName = computed(
-  () => props.value ?? props.tabs.find((t) => !t.disabled)?.name ?? props.tabs[0]?.name ?? '',
+  () => props.value ?? props.tabs.find(t => !t.disabled)?.name ?? props.tabs[0]?.name ?? '',
 )
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.color._text
@@ -82,7 +82,7 @@ const rootClass = computed(() =>
 )
 
 const listClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.stretch
     s.gap._tiny
@@ -103,7 +103,7 @@ const listClass = computed(() =>
 const sxListAttrs = computed(() => extractSxAttrs(props.sxList))
 
 const tabClass = (tab: ZTabItem, isActive: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -149,7 +149,7 @@ const tabClass = (tab: ZTabItem, isActive: boolean): string =>
       }
     }
 
-    s._hover((h2) => {
+    s._hover(h2 => {
       if (!tab.disabled && !isActive) h2.color._text
     })
     if (tab.disabled || props.disabled) {
@@ -161,7 +161,7 @@ const tabClass = (tab: ZTabItem, isActive: boolean): string =>
 const sxTabAttrs = computed(() => extractSxAttrs(props.sxTab))
 
 const panelClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._middle
     applySx(s, props.sxPanel)
   }),
@@ -169,7 +169,7 @@ const panelClass = computed(() =>
 const sxPanelAttrs = computed(() => extractSxAttrs(props.sxPanel))
 
 const closeBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -179,14 +179,14 @@ const closeBtnClass = computed(() =>
     s.padding.px(0)
     s.fontSize._small
     s.color._textSecondary
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.color._text
     })
   }),
 )
 
 const addBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -196,7 +196,7 @@ const addBtnClass = computed(() =>
     s.padding._small
     s.fontSize._middle
     s.color._textSecondary
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.color._primary
     })
   }),

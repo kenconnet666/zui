@@ -25,7 +25,7 @@ import { ZEmpty, ZButton, ZSpace } from '@kenconnet666/zui-vue'
       <span style="font-size: 0.85em; opacity: 0.7">试试调整关键词或筛选条件</span>
     </template>
 
-    <ZSpace :size="(g) => g._small">
+    <ZSpace :size="g => g._small">
       <ZButton variant="ghost" :size="0.875">重置筛选</ZButton>
       <ZButton :size="0.875">重新搜索</ZButton>
     </ZSpace>

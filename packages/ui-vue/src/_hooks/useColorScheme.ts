@@ -50,7 +50,7 @@ export function useColorScheme(opts: UseColorSchemeOptions = {}): UseColorScheme
 
   const preference = computed<ColorScheme>({
     get: () => (mode.value === 'auto' ? 'system' : (mode.value as 'light' | 'dark')),
-    set: (v) => {
+    set: v => {
       mode.value = v === 'system' ? 'auto' : v
     },
   })

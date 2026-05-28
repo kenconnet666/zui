@@ -91,14 +91,12 @@ export interface DefinePartsConfig<
  * 单个 slot 的工厂函数。约束放宽到 `Record<string, Record<string, unknown>>`
  * 避免 ThemeSchema 协变冲突（exactOptionalPropertyTypes 严格模式）。
  */
-export type PartFactory<V extends Record<string, Record<string, unknown>>> =
-  (props?: { [K in keyof V]?: keyof V[K] & string }) => string
+export type PartFactory<V extends Record<string, Record<string, unknown>>> = (props?: {
+  [K in keyof V]?: keyof V[K] & string
+}) => string
 
 /** `defineParts` 返回值：每个 slot 名 → 该 slot 的工厂函数。 */
-export type PartsResult<
-  Slot extends string,
-  V extends Record<string, Record<string, unknown>>,
-> = {
+export type PartsResult<Slot extends string, V extends Record<string, Record<string, unknown>>> = {
   [K in Slot]: PartFactory<V>
 }
 
@@ -110,12 +108,11 @@ export type PartsResult<
  * type DialogProps = VariantPropsOfParts<typeof dialog>
  * // = { size?: 'small' | 'large' }
  */
-export type VariantPropsOfParts<P> =
-  P extends { [k: string]: (props?: infer Props) => string }
+export type VariantPropsOfParts<P> = P extends { [k: string]: (props?: infer Props) => string }
+  ? NonNullable<Props>
+  : P extends Record<string, (props?: infer Props) => string>
     ? NonNullable<Props>
-    : P extends Record<string, (props?: infer Props) => string>
-      ? NonNullable<Props>
-      : never
+    : never
 
 /**
  * 把 parts 配置编译成 `{ slot1: factory, slot2: factory, ... }`。
@@ -126,10 +123,7 @@ export function defineParts<
   S extends ThemeSchema,
   Slot extends string,
   V extends PartsVariantMap<S, Slot>,
->(
-  theme: ResolvedTheme<S> | Theme<S>,
-  config: DefinePartsConfig<S, Slot, V>,
-): PartsResult<Slot, V> {
+>(theme: ResolvedTheme<S> | Theme<S>, config: DefinePartsConfig<S, Slot, V>): PartsResult<Slot, V> {
   const result = {} as PartsResult<Slot, V>
   const cacheLimit = config.cacheLimit ?? 256
 
@@ -137,7 +131,10 @@ export function defineParts<
     // 每个 slot 一个 LRU cache（key = props 的 stable JSON）
     const cache = new Map<string, string>()
     const slotFactory: PartFactory<V> = (props): string => {
-      const resolved = resolveProps(props as Record<string, string | undefined> | undefined, config.defaultVariants as Record<string, string | undefined> | undefined)
+      const resolved = resolveProps(
+        props as Record<string, string | undefined> | undefined,
+        config.defaultVariants as Record<string, string | undefined> | undefined,
+      )
       const cacheKey = stableKey(resolved)
       const cached = cache.get(cacheKey)
       if (cached !== undefined) {
@@ -250,7 +247,7 @@ export function extendParts<
   const child = defineParts<S, Slot, V2>(theme, {
     slots,
     ...(childConfig.base !== undefined ? { base: childConfig.base } : {}),
-    variants: (childConfig.variants ?? ({} as V2)),
+    variants: childConfig.variants ?? ({} as V2),
     ...(childConfig.defaultVariants !== undefined
       ? { defaultVariants: childConfig.defaultVariants }
       : {}),
@@ -265,10 +262,7 @@ export function extendParts<
     const parentFactory = parent[slot]
     const childFactory = child[slot]
     const composed: PartFactory<V1 & V2> = (props =>
-      joinCls(
-        parentFactory(props as never),
-        childFactory(props as never),
-      )) as PartFactory<V1 & V2>
+      joinCls(parentFactory(props as never), childFactory(props as never))) as PartFactory<V1 & V2>
     out[slot] = composed
   }
   return out

@@ -22,7 +22,7 @@ function inspectCss(node: Record<string, unknown>, depth: number): string {
       lines.push(inspectCss(v as Record<string, unknown>, depth + 1))
       lines.push(`${indent}}`)
     } else {
-      const cssKey = key.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase())
+      const cssKey = key.replace(/[A-Z]/g, m => '-' + m.toLowerCase())
       lines.push(`${indent}${cssKey}: ${v as string};`)
     }
   }
@@ -196,10 +196,7 @@ export class Chain<T extends ThemeSchema = BaseSchema> {
    *   })
    * })
    */
-  _state(
-    props: Record<string, unknown>,
-    mapping: Record<string, (s: this) => void>,
-  ): this {
+  _state(props: Record<string, unknown>, mapping: Record<string, (s: this) => void>): this {
     for (const key of Object.keys(mapping)) {
       if (props[key]) {
         const fn = mapping[key]
@@ -435,7 +432,7 @@ export class Chain<T extends ThemeSchema = BaseSchema> {
    * 配合 `interpolate-size: allow-keywords` 可实现 `height: 0 → height: auto` 动画。
    */
   _starting(fn: (s: this) => void): this {
-    return this._nest('@starting-style', (s) => s._nest('&', fn))
+    return this._nest('@starting-style', s => s._nest('&', fn))
   }
 
   // ─── W2.4 Container query variant 简写（0.6.0 改语义化命名） ───
@@ -491,7 +488,7 @@ export class Chain<T extends ThemeSchema = BaseSchema> {
 
   /** `@layer <name> { & { ... } }`。配合 W8.1 `injectLayerOrder` 控制级联优先级。 */
   _layer(name: string, fn: (s: this) => void): this {
-    return this._nest(`@layer ${name}`, (s) => s._nest('&', fn))
+    return this._nest(`@layer ${name}`, s => s._nest('&', fn))
   }
 
   // ─── At 规则 ───
@@ -685,7 +682,7 @@ export class Chain<T extends ThemeSchema = BaseSchema> {
         color = opts.color
       }
     }
-    return this._nest('&:focus-visible', (s) => {
+    return this._nest('&:focus-visible', s => {
       s._node.outline = `${width}px ${style} ${color}`
       s._node.outlineOffset = `${offset}px`
     })
@@ -710,7 +707,7 @@ export class Chain<T extends ThemeSchema = BaseSchema> {
     this._node.position = 'absolute'
     this._node.left = '-9999px'
     this._node.zIndex = 999
-    return this._nest('&:focus', (s) => {
+    return this._nest('&:focus', s => {
       s._node.left = '50%'
       s._node.translate = '-50% 0'
     })

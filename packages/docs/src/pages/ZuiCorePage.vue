@@ -9,8 +9,8 @@ import ApiTable from '../components/ApiTable.vue'
     <ZParagraph>
       <ZCode code="@kenconnet666/zui-core" /> 是 zui 的框架无关核心库，提供
       <strong>Chain 链式样式 builder</strong>、<strong>icss 类名工厂</strong>、
-      <strong>主题系统</strong>和<strong>变体抽象</strong>，不依赖任何 UI 框架，
-      可在 Vue / React / Svelte 等任意环境使用。
+      <strong>主题系统</strong>和<strong>变体抽象</strong>，不依赖任何 UI 框架， 可在 Vue / React /
+      Svelte 等任意环境使用。
     </ZParagraph>
 
     <ZTitle :level="2">安装</ZTitle>
@@ -18,8 +18,8 @@ import ApiTable from '../components/ApiTable.vue'
 
     <ZTitle :level="2">icss — 类名生成入口</ZTitle>
     <ZParagraph>
-      <ZCode code="icss(theme, factory)" /> 是最常用的入口，接收 resolved theme 和一个
-      Chain factory，返回 Emotion CSS class 字符串。
+      <ZCode code="icss(theme, factory)" /> 是最常用的入口，接收 resolved theme 和一个 Chain
+      factory，返回 Emotion CSS class 字符串。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -103,8 +103,8 @@ s._selector('& + &', (r) => { r.marginLeft.iem(0.5) })`"
 
     <ZTitle :level="2">iem 单位</ZTitle>
     <ZParagraph>
-      <ZCode code="iem(n)" /> 生成 <ZCode code="calc(n * var(--zui-iem, 16px))" />，
-      基准由 ZBox 通过 CSS 变量注入，使所有尺寸随 Provider 统一缩放。
+      <ZCode code="iem(n)" /> 生成 <ZCode code="calc(n * var(--zui-iem, 16px))" />， 基准由 ZBox
+      通过 CSS 变量注入，使所有尺寸随 Provider 统一缩放。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -135,8 +135,10 @@ s.borderRadius.iem(0.375)`"
 
     <ZTitle :level="3">BaseSchema palette</ZTitle>
     <ZParagraph>
-      <ZCode code="BaseSchema.color" /> 包含 Tailwind 全部 242 个调色板 token（<ZCode code="slate50" /> …
-      <ZCode code="zinc950" /> 等），以及 <ZCode code="black" /> / <ZCode code="white" />。
+      <ZCode code="BaseSchema.color" /> 包含 Tailwind 全部 242 个调色板 token（<ZCode
+        code="slate50"
+      />
+      … <ZCode code="zinc950" /> 等），以及 <ZCode code="black" /> / <ZCode code="white" />。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -167,9 +169,7 @@ const extended = zuiLight.extend({
     <ZTitle :level="2">变体系统</ZTitle>
 
     <ZTitle :level="3">defineVariants</ZTitle>
-    <ZParagraph>
-      cva / tv 风格的变体抽象，把组件多态映射到 CSS class。
-    </ZParagraph>
+    <ZParagraph> cva / tv 风格的变体抽象，把组件多态映射到 CSS class。 </ZParagraph>
     <ZCode
       :inline="false"
       lang="ts"
@@ -227,18 +227,24 @@ const parts = cardParts({ hoverable: true })
     <ZTitle :level="2">其他工具函数</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'fn',   label: '函数',    mono: true, width: '240px' },
+        { key: 'fn', label: '函数', mono: true, width: '240px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { fn: 'ikeyframes(factory)',         desc: '生成 @keyframes animation name。factory 接受 { from, to, pct(n) } 写关键帧。' },
-        { fn: 'cx(...inputs)',               desc: '合并 class 字符串，过滤 falsy，等同 clsx。' },
-        { fn: 'injectGlobal(css)',           desc: '注入全局 CSS，常用于 scrollbar 样式、body 重置等。' },
-        { fn: 'injectPreflight()',           desc: '注入 Tailwind 风格的 preflight / reset。' },
-        { fn: 'registerFont(src, options)',  desc: '注入 @font-face 规则。' },
-        { fn: 'registerCustomProperty(options)', desc: '注入 @property（CSS Houdini 类型化自定义属性）。' },
-        { fn: 'toClassName(css)',            desc: '直接接受 Emotion CSSObject 返回 class，低级逃生口。' },
-        { fn: 'createIcssInstance()',        desc: 'SSR / 多实例场景：创建独立的 emotion 实例。' },
+        {
+          fn: 'ikeyframes(factory)',
+          desc: '生成 @keyframes animation name。factory 接受 { from, to, pct(n) } 写关键帧。',
+        },
+        { fn: 'cx(...inputs)', desc: '合并 class 字符串，过滤 falsy，等同 clsx。' },
+        { fn: 'injectGlobal(css)', desc: '注入全局 CSS，常用于 scrollbar 样式、body 重置等。' },
+        { fn: 'injectPreflight()', desc: '注入 Tailwind 风格的 preflight / reset。' },
+        { fn: 'registerFont(src, options)', desc: '注入 @font-face 规则。' },
+        {
+          fn: 'registerCustomProperty(options)',
+          desc: '注入 @property（CSS Houdini 类型化自定义属性）。',
+        },
+        { fn: 'toClassName(css)', desc: '直接接受 Emotion CSSObject 返回 class，低级逃生口。' },
+        { fn: 'createIcssInstance()', desc: 'SSR / 多实例场景：创建独立的 emotion 实例。' },
       ]"
     />
   </section>

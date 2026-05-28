@@ -2,7 +2,12 @@ import type { Chain } from '../chain/Chain'
 import type { ThemeSchema } from '../theme/types'
 import type { ResolvedTheme } from '../theme/types'
 import { Theme } from '../theme/Theme'
-import { defineVariants, type DefineVariantsConfig, type VariantMap, type VariantProps } from './defineVariants'
+import {
+  defineVariants,
+  type DefineVariantsConfig,
+  type VariantMap,
+  type VariantProps,
+} from './defineVariants'
 
 /**
  * `VariantPropsOf<typeof factory>` — 从 `defineVariants` / `composeVariants` 返回的工厂函数推 props 类型。
@@ -58,10 +63,7 @@ export type VariantPropsOf<F> = F extends (props?: infer P) => string ? P : neve
 export function composeVariants<
   F1 extends (props?: Record<string, string | undefined>) => string,
   F2 extends (props?: Record<string, string | undefined>) => string,
->(
-  f1: F1,
-  f2: F2,
-): (props?: VariantPropsOf<F1> & VariantPropsOf<F2>) => string
+>(f1: F1, f2: F2): (props?: VariantPropsOf<F1> & VariantPropsOf<F2>) => string
 export function composeVariants<
   F1 extends (props?: Record<string, string | undefined>) => string,
   F2 extends (props?: Record<string, string | undefined>) => string,
@@ -81,7 +83,9 @@ export function composeVariants<
   f2: F2,
   f3: F3,
   f4: F4,
-): (props?: VariantPropsOf<F1> & VariantPropsOf<F2> & VariantPropsOf<F3> & VariantPropsOf<F4>) => string
+): (
+  props?: VariantPropsOf<F1> & VariantPropsOf<F2> & VariantPropsOf<F3> & VariantPropsOf<F4>,
+) => string
 export function composeVariants(
   ...factories: Array<(props?: Record<string, string | undefined>) => string>
 ): (props?: Record<string, string | undefined>) => string {
@@ -134,16 +138,14 @@ export function extendVariants<
       // 简化：让 child 的 base 直接跑（parent 通过 composeVariants 串）
       childConfig.base?.(s)
     },
-    variants: (childConfig.variants ?? {} as V2),
+    variants: childConfig.variants ?? ({} as V2),
     ...(childConfig.defaultVariants !== undefined
       ? { defaultVariants: childConfig.defaultVariants }
       : {}),
     ...(childConfig.compoundVariants !== undefined
       ? { compoundVariants: childConfig.compoundVariants }
       : {}),
-    ...(childConfig.cacheLimit !== undefined
-      ? { cacheLimit: childConfig.cacheLimit }
-      : {}),
+    ...(childConfig.cacheLimit !== undefined ? { cacheLimit: childConfig.cacheLimit } : {}),
   }
   const child = defineVariants(theme, mergedConfig)
   // 用 composeVariants 让 parent 先跑、child 后跑（child 的 mutation 覆盖前者）

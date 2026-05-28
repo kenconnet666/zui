@@ -3,7 +3,7 @@ import { ZProgress, ZFlex, ZText } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :direction="(d) => d.column" :gap="(g) => g._small">
+  <ZFlex :direction="d => d.column" :gap="g => g._small">
     <ZText>默认细线 (size=0.5)</ZText>
     <ZProgress :value="30" />
 

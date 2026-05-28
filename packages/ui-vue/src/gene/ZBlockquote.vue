@@ -65,7 +65,7 @@ const props = withDefaults(defineProps<ZBlockquoteProps>(), {
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 1
     s.display.block
     s.margin.px(0)

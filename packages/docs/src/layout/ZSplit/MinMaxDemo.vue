@@ -14,10 +14,28 @@ const lockedRatio = ref(0.5)
       direction="horizontal"
       :min="0.3"
       :max="0.7"
-      :css="s => { s.height.iem(10); s.borderRadius._small; s.overflow.hidden; s.borderWidth.px(1); s.borderStyle.solid; s.borderColor._border }"
+      :css="
+        s => {
+          s.height.iem(10)
+          s.borderRadius._small
+          s.overflow.hidden
+          s.borderWidth.px(1)
+          s.borderStyle.solid
+          s.borderColor._border
+        }
+      "
     >
       <template #first>
-        <ZFlex :justify="j => j.center" :align="a => a.center" :css="s => { s.height.pct(100); s.backgroundColor._bgMuted }">
+        <ZFlex
+          :justify="j => j.center"
+          :align="a => a.center"
+          :css="
+            s => {
+              s.height.pct(100)
+              s.backgroundColor._bgMuted
+            }
+          "
+        >
           <ZText>30% ~ 70%</ZText>
         </ZFlex>
       </template>
@@ -33,10 +51,28 @@ const lockedRatio = ref(0.5)
       v-model:ratio="lockedRatio"
       direction="horizontal"
       :disabled="true"
-      :css="s => { s.height.iem(7); s.borderRadius._small; s.overflow.hidden; s.borderWidth.px(1); s.borderStyle.solid; s.borderColor._border }"
+      :css="
+        s => {
+          s.height.iem(7)
+          s.borderRadius._small
+          s.overflow.hidden
+          s.borderWidth.px(1)
+          s.borderStyle.solid
+          s.borderColor._border
+        }
+      "
     >
       <template #first>
-        <ZFlex :justify="j => j.center" :align="a => a.center" :css="s => { s.height.pct(100); s.backgroundColor._bgMuted }">
+        <ZFlex
+          :justify="j => j.center"
+          :align="a => a.center"
+          :css="
+            s => {
+              s.height.pct(100)
+              s.backgroundColor._bgMuted
+            }
+          "
+        >
           <ZText>固定</ZText>
         </ZFlex>
       </template>

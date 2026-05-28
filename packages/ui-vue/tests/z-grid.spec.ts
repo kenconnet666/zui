@@ -8,7 +8,7 @@ import { ZGrid, type ZuiSchema } from '../src'
 
 function getInjectedCss(): string {
   return Array.from(document.querySelectorAll('style'))
-    .map((el) => el.textContent ?? '')
+    .map(el => el.textContent ?? '')
     .join('\n')
 }
 
@@ -18,7 +18,7 @@ describe('ZGrid — 默认', () => {
     const css = getInjectedCss()
     expect(css).toMatch(/display:grid/)
     // 默认不写 justify-items/align-items —— 仅验证本组件 class 规则
-    const cls = w.classes().find((c) => c.startsWith('css-'))
+    const cls = w.classes().find(c => c.startsWith('css-'))
     expect(cls).toBeTruthy()
     const re = new RegExp(`\\.${cls}\\s*\\{([^}]*)\\}`)
     const m = css.match(re)
@@ -69,7 +69,11 @@ describe('ZGrid — gap + 对齐', () => {
 
   it('justifyItems=center', () => {
     mount(ZGrid, {
-      props: { justifyItems: (j: Chain<ZuiSchema>['justifyItems']) => { j.center } },
+      props: {
+        justifyItems: (j: Chain<ZuiSchema>['justifyItems']) => {
+          j.center
+        },
+      },
       slots: { default: () => 'x' },
     })
     expect(getInjectedCss()).toMatch(/justify-items:center/)

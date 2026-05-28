@@ -49,9 +49,9 @@ const COLOR_MODIFIERS: Record<string, ColorMod> = {
   shade: (c, n) => shade(c, n as number),
   tint: (c, n) => tint(c, n as number),
   mix: (c, other, n) => mix(c, other as string, n as number),
-  complement: (c) => complement(c),
+  complement: c => complement(c),
   rotateHue: (c, deg) => rotateHue(c, deg as number),
-  invert: (c) => invert(c),
+  invert: c => invert(c),
 }
 
 // 单位 ident 全集 —— length + time + angle,启动期一次性 build,O(1) 查询。
@@ -71,7 +71,6 @@ function isDevEnv(): boolean {
 
 function warn(msg: string): void {
   if (isDevEnv()) {
-     
     console.warn(`[zui-core/escape] ${msg}`)
   }
 }
@@ -264,7 +263,7 @@ export function resolveStringValue(
       warn(`unknown color modifier "${call.name}" in "${value}"; stopping at "${current}"`)
       break
     }
-    const resolvedArgs = call.args.map((a) => resolveArg(a, theme, keymap))
+    const resolvedArgs = call.args.map(a => resolveArg(a, theme, keymap))
     current = fn(current, ...resolvedArgs)
   }
   return current

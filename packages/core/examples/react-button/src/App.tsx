@@ -45,10 +45,10 @@ export function App() {
     c.borderStyle.none
     c.transitionDuration.ms(150)
     c.transitionProperty('background-color')
-    c._hover((h) => {
+    c._hover(h => {
       h.backgroundColor._primary.alpha(85)
     })
-    c._focusVisible((f) => {
+    c._focusVisible(f => {
       f.outlineColor._primary
       f.outlineStyle.solid
       f.outlineWidth.px(2)
@@ -67,7 +67,7 @@ export function App() {
     c.borderWidth.px(1)
     c.borderStyle.solid
     c.borderColor._primary.alpha(30)
-    c._hover((h) => {
+    c._hover(h => {
       h.backgroundColor._primary.alpha(20)
     })
     return toClassName(c)
@@ -81,7 +81,7 @@ export function App() {
     c.borderRadius._middle
     c.fontWeight._bold
     c.borderStyle.none
-    c._hover((h) => {
+    c._hover(h => {
       h.backgroundColor._danger.alpha(85)
     })
     return toClassName(c)
@@ -91,7 +91,7 @@ export function App() {
     <>
       <h1>zui-core · React 19 button demo</h1>
       <p>主题切换演示：useMemo 包 chain → className 自动响应主题切换。</p>
-      <button onClick={() => setDark((d) => !d)}>Toggle {dark ? 'light' : 'dark'} mode</button>
+      <button onClick={() => setDark(d => !d)}>Toggle {dark ? 'light' : 'dark'} mode</button>
       <div style={{ display: 'flex', gap: 12 }}>
         <button className={primaryCls}>Primary</button>
         <button className={ghostCls}>Ghost</button>

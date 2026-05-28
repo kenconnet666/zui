@@ -74,7 +74,7 @@ const props = withDefaults(defineProps<ZDescriptionsProps>(), {
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.color._text
@@ -91,7 +91,7 @@ const rootClass = computed(() =>
 )
 
 const titleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._large
     s.fontWeight._semibold
     s.color._text
@@ -109,7 +109,7 @@ const titleClass = computed(() =>
 )
 
 const gridClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.grid
     s.gridTemplateColumns(`repeat(${props.column}, minmax(0, 1fr))`)
     if (props.bordered) {
@@ -121,7 +121,7 @@ const gridClass = computed(() =>
 )
 
 const labelClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.fontWeight._medium
     s.padding.iem((props.size ?? 1) * 0.5)
@@ -135,7 +135,7 @@ const labelClass = computed(() =>
 )
 
 const valueClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._text
     s.padding.iem((props.size ?? 1) * 0.5)
     if (props.bordered) {

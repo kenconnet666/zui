@@ -8,45 +8,97 @@ import ApiTable from '../components/ApiTable.vue'
     <ZTitle :level="1">Locale 扩展</ZTitle>
     <ZParagraph>
       zui-vue 的国际化系统<strong>不依赖 vue-i18n</strong>(L14 决策),用一个扁平的
-      <ZCode code="ZLocale" /> 字典契约表达组件文案。用户工程通过 <ZCode code="declare module" />
-      给 <ZCode code="ZLocaleRegistry" /> 扩展自家组件的 namespace,跟主题扩展同思路。
+      <ZCode code="ZLocale" /> 字典契约表达组件文案。用户工程通过 <ZCode code="declare module" /> 给
+      <ZCode code="ZLocaleRegistry" /> 扩展自家组件的 namespace,跟主题扩展同思路。
     </ZParagraph>
 
     <ZTitle :level="2">设计原则</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'topic',  label: '原则',  mono: true, width: '220px' },
-        { key: 'desc',   label: '说明' },
+        { key: 'topic', label: '原则', mono: true, width: '220px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { topic: '扁平 namespace',           desc: '一级 namespace = 组件名(common / button / input / ...),二级 key = 具体文案,不嵌套深结构。' },
-        { topic: '不接入 vue-i18n',          desc: '避免强依赖。用户可在外层包 vue-i18n 把翻译后字符串塞进来作为 partial 喂给 ZBox。' },
-        { topic: 'declaration merging 扩展', desc: '用户自定义组件通过 declare module 给 ZLocaleRegistry 扩 namespace,自动获得类型补全。' },
-        { topic: 'mergeLocale 浅合并',       desc: '嵌套 ZBox 用 :localePatch 局部覆盖,namespace + 字段两级浅合并;数组整体替换。' },
+        {
+          topic: '扁平 namespace',
+          desc: '一级 namespace = 组件名(common / button / input / ...),二级 key = 具体文案,不嵌套深结构。',
+        },
+        {
+          topic: '不接入 vue-i18n',
+          desc: '避免强依赖。用户可在外层包 vue-i18n 把翻译后字符串塞进来作为 partial 喂给 ZBox。',
+        },
+        {
+          topic: 'declaration merging 扩展',
+          desc: '用户自定义组件通过 declare module 给 ZLocaleRegistry 扩 namespace,自动获得类型补全。',
+        },
+        {
+          topic: 'mergeLocale 浅合并',
+          desc: '嵌套 ZBox 用 :localePatch 局部覆盖,namespace + 字段两级浅合并;数组整体替换。',
+        },
       ]"
     />
 
     <ZTitle :level="2">内建 namespace</ZTitle>
     <ZParagraph>
-      <ZCode code="ZLocaleRegistry" /> 定义在 <ZCode code="provider/locale/types.ts" />,
-      8 个内建 namespace:
+      <ZCode code="ZLocaleRegistry" /> 定义在 <ZCode code="provider/locale/types.ts" />, 8 个内建
+      namespace:
     </ZParagraph>
     <ApiTable
       :columns="[
-        { key: 'ns',     label: 'namespace',  mono: true, width: '160px' },
-        { key: 'iface',  label: 'interface', mono: true, width: '200px' },
-        { key: 'keys',   label: '字段',       mono: true, width: '320px' },
-        { key: 'desc',   label: '说明' },
+        { key: 'ns', label: 'namespace', mono: true, width: '160px' },
+        { key: 'iface', label: 'interface', mono: true, width: '200px' },
+        { key: 'keys', label: '字段', mono: true, width: '320px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { ns: 'common',     iface: 'ZLocaleCommon',     keys: 'ok / cancel / confirm / close / clear / reset / search / loading / noData / empty / prev / next / back / more / retry', desc: '跨组件复用的公共词条。' },
-        { ns: 'button',     iface: 'ZLocaleButton',     keys: 'loading',                                          desc: 'ZButton loading 状态显示文案。' },
-        { ns: 'input',      iface: 'ZLocaleInput',      keys: 'placeholder / clear',                              desc: 'ZInput 占位 + 清空提示。' },
-        { ns: 'select',     iface: 'ZLocaleSelect',     keys: 'placeholder / noOptions',                          desc: 'ZSelect 占位 + 无选项提示。' },
-        { ns: 'dialog',     iface: 'ZLocaleDialog',     keys: 'title / ok / cancel',                              desc: 'ZModal / Modal.confirm 默认标题与按钮文案。' },
-        { ns: 'pagination', iface: 'ZLocalePagination', keys: 'prev / next / page / of / total / jumpTo / goto / pageSize', desc: 'ZPagination 上下页 / 总数 / 跳转。' },
-        { ns: 'form',       iface: 'ZLocaleForm',       keys: 'required / invalid',                               desc: 'ZForm 默认校验提示。' },
-        { ns: 'datePicker', iface: 'ZLocaleDatePicker', keys: 'placeholder / today / now / clear / confirm / weekdaysShort[7] / monthsShort[12] / months[12]', desc: 'ZDatePicker 完整文案 + 星期 / 月份名(数组,整体替换)。' },
+        {
+          ns: 'common',
+          iface: 'ZLocaleCommon',
+          keys: 'ok / cancel / confirm / close / clear / reset / search / loading / noData / empty / prev / next / back / more / retry',
+          desc: '跨组件复用的公共词条。',
+        },
+        {
+          ns: 'button',
+          iface: 'ZLocaleButton',
+          keys: 'loading',
+          desc: 'ZButton loading 状态显示文案。',
+        },
+        {
+          ns: 'input',
+          iface: 'ZLocaleInput',
+          keys: 'placeholder / clear',
+          desc: 'ZInput 占位 + 清空提示。',
+        },
+        {
+          ns: 'select',
+          iface: 'ZLocaleSelect',
+          keys: 'placeholder / noOptions',
+          desc: 'ZSelect 占位 + 无选项提示。',
+        },
+        {
+          ns: 'dialog',
+          iface: 'ZLocaleDialog',
+          keys: 'title / ok / cancel',
+          desc: 'ZModal / Modal.confirm 默认标题与按钮文案。',
+        },
+        {
+          ns: 'pagination',
+          iface: 'ZLocalePagination',
+          keys: 'prev / next / page / of / total / jumpTo / goto / pageSize',
+          desc: 'ZPagination 上下页 / 总数 / 跳转。',
+        },
+        {
+          ns: 'form',
+          iface: 'ZLocaleForm',
+          keys: 'required / invalid',
+          desc: 'ZForm 默认校验提示。',
+        },
+        {
+          ns: 'datePicker',
+          iface: 'ZLocaleDatePicker',
+          keys: 'placeholder / today / now / clear / confirm / weekdaysShort[7] / monthsShort[12] / months[12]',
+          desc: 'ZDatePicker 完整文案 + 星期 / 月份名(数组,整体替换)。',
+        },
       ]"
     />
 
@@ -72,7 +124,8 @@ enUS.datePicker.weekdaysShort  // ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sa
 
     <ZTitle :level="2">ZBox locale 注入</ZTitle>
     <ZParagraph>
-      跟 theme 同款 API:<ZCode code=":locale" /> 完整替换 / <ZCode code=":localePatch" /> 局部 patch。
+      跟 theme 同款 API:<ZCode code=":locale" /> 完整替换 / <ZCode code=":localePatch" /> 局部
+      patch。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -136,8 +189,8 @@ all.value.name                   // 'zh-CN'
 
     <ZTitle :level="2">局部覆盖(localePatch)</ZTitle>
     <ZParagraph>
-      嵌套 <ZCode code="ZBox" /> 用 <ZCode code=":locale-patch" /> 增量覆盖父字典——
-      namespace + 字段两级浅合并,缺失字段继承父;数组(<ZCode code="weekdaysShort" /> /
+      嵌套 <ZCode code="ZBox" /> 用 <ZCode code=":locale-patch" /> 增量覆盖父字典—— namespace +
+      字段两级浅合并,缺失字段继承父;数组(<ZCode code="weekdaysShort" /> /
       <ZCode code="monthsShort" />)整体替换。
     </ZParagraph>
     <ZCode
@@ -177,8 +230,9 @@ const polite = mergeLocale(zhCN, {
 
     <ZTitle :level="2">新增自定义 namespace</ZTitle>
     <ZParagraph>
-      用户自定义组件用 <ZCode code="declare module" /> 给 <ZCode code="ZLocaleRegistry" /> 扩 namespace,
-      所有内建 + 用户 namespace 共用一套 <ZCode code="useZLocale" /> 入口与 <ZCode code="locale-patch" />
+      用户自定义组件用 <ZCode code="declare module" /> 给 <ZCode code="ZLocaleRegistry" /> 扩
+      namespace, 所有内建 + 用户 namespace 共用一套 <ZCode code="useZLocale" /> 入口与
+      <ZCode code="locale-patch" />
       合并机制。
     </ZParagraph>
 
@@ -281,15 +335,27 @@ const locale = computed(() => lang.value === 'en' ? myEn : myZh)
     <ZTitle :level="2">mergeLocale 合并规则</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'kind', label: '字段类型',           mono: true, width: '180px' },
-        { key: 'rule', label: '合并行为',           mono: true, width: '200px' },
+        { key: 'kind', label: '字段类型', mono: true, width: '180px' },
+        { key: 'rule', label: '合并行为', mono: true, width: '200px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { kind: 'namespace 顶层',  rule: '浅合并',    desc: '父 + 子各自存在的 namespace 用子覆盖父,缺失的从父继承。' },
-        { kind: 'namespace 内字段', rule: '浅合并',    desc: '同 namespace 同 key 子覆盖父;缺失字段继承父。' },
-        { kind: '数组(如 weekdaysShort)', rule: '整体替换', desc: '不做下标级合并 —— 传一半数组会丢另一半。' },
-        { kind: 'name',            rule: '子覆盖父',  desc: '没传则保留父名称。' },
+        {
+          kind: 'namespace 顶层',
+          rule: '浅合并',
+          desc: '父 + 子各自存在的 namespace 用子覆盖父,缺失的从父继承。',
+        },
+        {
+          kind: 'namespace 内字段',
+          rule: '浅合并',
+          desc: '同 namespace 同 key 子覆盖父;缺失字段继承父。',
+        },
+        {
+          kind: '数组(如 weekdaysShort)',
+          rule: '整体替换',
+          desc: '不做下标级合并 —— 传一半数组会丢另一半。',
+        },
+        { kind: 'name', rule: '子覆盖父', desc: '没传则保留父名称。' },
       ]"
     />
 

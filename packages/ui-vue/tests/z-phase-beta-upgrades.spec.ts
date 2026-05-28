@@ -20,9 +20,9 @@ import {
 let wrappers: VueWrapper[] = []
 
 function cleanup(): void {
-  wrappers.forEach((w) => w.unmount())
+  wrappers.forEach(w => w.unmount())
   wrappers = []
-  document.body.querySelectorAll('[role="listbox"], [role="dialog"]').forEach((el) => el.remove())
+  document.body.querySelectorAll('[role="listbox"], [role="dialog"]').forEach(el => el.remove())
 }
 
 beforeEach(cleanup)
@@ -58,7 +58,7 @@ describe('ZTreeSelect', () => {
       disconnect(): void {}
     }
     ;(globalThis as unknown as { ResizeObserver: typeof StubRO }).ResizeObserver = StubRO
-    document.querySelectorAll('[data-zv-wrapper]').forEach((wrap) => {
+    document.querySelectorAll('[data-zv-wrapper]').forEach(wrap => {
       const root = wrap.parentElement as HTMLElement | null
       if (root) {
         Object.defineProperty(root, 'clientHeight', { configurable: true, value: 400 })
@@ -99,7 +99,7 @@ describe('ZTreeSelect', () => {
     await activateTree()
     await w.vm.$nextTick()
     // 找 Leaf 1
-    const leaf = Array.from(document.querySelectorAll('[role="treeitem"]')).find((el) =>
+    const leaf = Array.from(document.querySelectorAll('[role="treeitem"]')).find(el =>
       el.textContent?.includes('Leaf 1'),
     )!
     ;(leaf as HTMLElement).click()
@@ -131,7 +131,7 @@ describe('ZTour', () => {
   }
 
   beforeEach(() => {
-    document.querySelectorAll('#step1, #step2').forEach((el) => el.remove())
+    document.querySelectorAll('#step1, #step2').forEach(el => el.remove())
     setupTargetEls()
   })
 
@@ -142,7 +142,10 @@ describe('ZTour', () => {
   })
 
   it('open=true + step 0 → 渲染卡片 + 当前步标题', async () => {
-    const w = mount(ZTour, { props: { steps: STEPS, open: true, current: 0 }, attachTo: document.body })
+    const w = mount(ZTour, {
+      props: { steps: STEPS, open: true, current: 0 },
+      attachTo: document.body,
+    })
     wrappers.push(w)
     await w.vm.$nextTick()
     expect(document.querySelector('[role="dialog"]')).not.toBeNull()
@@ -166,7 +169,7 @@ describe('ZTour', () => {
     const w = mount(Host, { attachTo: document.body })
     wrappers.push(w)
     await w.vm.$nextTick()
-    const nextBtn = Array.from(document.querySelectorAll('button')).find((b) =>
+    const nextBtn = Array.from(document.querySelectorAll('button')).find(b =>
       b.textContent?.includes('下一步'),
     )!
     nextBtn.click()
@@ -192,7 +195,7 @@ describe('ZTour', () => {
     const w = mount(Host, { attachTo: document.body })
     wrappers.push(w)
     await w.vm.$nextTick()
-    const finishBtn = Array.from(document.querySelectorAll('button')).find((b) =>
+    const finishBtn = Array.from(document.querySelectorAll('button')).find(b =>
       b.textContent?.includes('完成'),
     )!
     finishBtn.click()

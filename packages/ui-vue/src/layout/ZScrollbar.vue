@@ -29,7 +29,11 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { themeColorScheme } from '../_internal/colorScheme'
-import { SCROLL_TRACK_MARGIN, SCROLL_THUMB_MIN_PX, scrollbarThumbColors } from '../_internal/scrollbarThumb'
+import {
+  SCROLL_TRACK_MARGIN,
+  SCROLL_THUMB_MIN_PX,
+  scrollbarThumbColors,
+} from '../_internal/scrollbarThumb'
 
 /**
  * 盒子模型（iem，Provider 控制基准）：
@@ -116,7 +120,7 @@ const dark = computed(() => themeColorScheme(theme.value) === 'dark')
 const thumbColors = computed(() => scrollbarThumbColors(dark.value))
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.relative
     if (props.maxHeight !== undefined) {
       s.maxHeight.iem(props.maxHeight)
@@ -127,20 +131,20 @@ const rootClass = computed(() =>
 )
 
 const scrollerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.height.pct(100)
     s.overflow.auto
     // 隐藏原生滚动条（不占布局空间）
     s._prop('scrollbarWidth', 'none')
     s._prop('msOverflowStyle', 'none')
-    s._selector('&::-webkit-scrollbar', (sb) => {
+    s._selector('&::-webkit-scrollbar', sb => {
       sb._prop('display', 'none')
     })
   }),
 )
 
 const trackClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s._prop('right', '2px')
     s._prop('top', '2px')
@@ -153,14 +157,14 @@ const trackClass = computed(() =>
 )
 
 const thumbClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s._prop('left', '0')
     s._prop('right', '0')
     s.borderRadius.iem(0.1875)
     s._prop('background', thumbColors.value.normal)
     s._prop('transition', 'background 120ms')
-    s._selector('&:hover', (h) => {
+    s._selector('&:hover', h => {
       h._prop('background', thumbColors.value.hover)
     })
   }),
@@ -195,7 +199,13 @@ defineExpose({ scrollerRef, $el: scrollerRef })
 </template>
 
 <style>
-.__zs-fade-in  { transition: opacity 150ms; }
-.__zs-fade-out { transition: opacity 150ms; }
-.__zs-fade-from { opacity: 0; }
+.__zs-fade-in {
+  transition: opacity 150ms;
+}
+.__zs-fade-out {
+  transition: opacity 150ms;
+}
+.__zs-fade-from {
+  opacity: 0;
+}
 </style>

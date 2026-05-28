@@ -79,7 +79,7 @@ function commitInput(): void {
 
 function removeTag(tag: string): void {
   if (props.disabled) return
-  const next = props.value.filter((t) => t !== tag)
+  const next = props.value.filter(t => t !== tag)
   emit('update:value', next)
 }
 
@@ -94,7 +94,7 @@ function onKey(e: KeyboardEvent): void {
 }
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.flexWrap.wrap
     s.gap._tiny
@@ -104,7 +104,7 @@ const rootClass = computed(() =>
 )
 
 const tagClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -120,7 +120,7 @@ const tagClass = computed(() =>
 )
 
 const removeBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -130,14 +130,14 @@ const removeBtnClass = computed(() =>
     s.padding.px(0)
     s.color._textSecondary
     s.fontSize._tiny
-    s._hover((h) => {
+    s._hover(h => {
       h.color._danger
     })
   }),
 )
 
 const addBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -157,7 +157,7 @@ const addBtnClass = computed(() =>
       s.opacity._dim
       s.cursor.notAllowed
     } else {
-      s._hover((h) => {
+      s._hover(h => {
         h.color._primary
         h.borderColor._primary
       })
@@ -166,7 +166,7 @@ const addBtnClass = computed(() =>
 )
 
 const inputClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.width.em(6)
     s.fontSize._small
     s.borderRadius._tiny
@@ -212,12 +212,7 @@ const addIcon = computed(() => h(ZIcon, { component: BuiltinIcons.add }))
       @blur="commitInput"
       @keydown="onKey"
     />
-    <button
-      v-else-if="canAdd"
-      type="button"
-      :class="addBtnClass"
-      @click="startEdit"
-    >
+    <button v-else-if="canAdd" type="button" :class="addBtnClass" @click="startEdit">
       <component :is="addIcon" />
       <span>{{ placeholder }}</span>
     </button>

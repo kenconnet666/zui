@@ -6,10 +6,10 @@ const checked = ref(false)
 const groupValue = ref<(string | number | boolean)[]>(['vue'])
 
 const options = [
-  { value: 'vue',    label: 'Vue 3' },
-  { value: 'react',  label: 'React' },
+  { value: 'vue', label: 'Vue 3' },
+  { value: 'react', label: 'React' },
   { value: 'svelte', label: 'Svelte', disabled: true },
-  { value: 'solid',  label: 'Solid' },
+  { value: 'solid', label: 'Solid' },
 ]
 </script>
 
@@ -23,7 +23,15 @@ const options = [
 
     <ZFlex :direction="d => d.column" :gap="g => g._small">
       <ZCheckboxGroup v-model:value="groupValue" :options="options" />
-      <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">已选：{{ groupValue.join(', ') || '（无）' }}</ZText>
+      <ZText
+        :css="
+          s => {
+            s.color._textSecondary
+            s.fontSize._small
+          }
+        "
+        >已选：{{ groupValue.join(', ') || '（无）' }}</ZText
+      >
     </ZFlex>
 
     <ZCheckboxGroup v-model:value="groupValue" :options="options" :direction="d => d.column" />

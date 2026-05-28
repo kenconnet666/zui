@@ -56,8 +56,7 @@ describe('ZFormItem — 校验', () => {
           h(
             ZForm,
             { model, ref: (el: unknown) => (formRef.value = el as ZFormExpose | null) },
-            () =>
-              h(ZFormItem, { prop: 'name', label: '名称', required: true }, () => h('input')),
+            () => h(ZFormItem, { prop: 'name', label: '名称', required: true }, () => h('input')),
           )
       },
     })
@@ -77,8 +76,7 @@ describe('ZFormItem — 校验', () => {
           h(
             ZForm,
             { model, ref: (el: unknown) => (formRef.value = el as ZFormExpose | null) },
-            () =>
-              h(ZFormItem, { prop: 'name', label: '名称', required: true }, () => h('input')),
+            () => h(ZFormItem, { prop: 'name', label: '名称', required: true }, () => h('input')),
           )
       },
     })
@@ -127,8 +125,7 @@ describe('ZFormItem — 校验', () => {
           h(
             ZForm,
             { model, ref: (el: unknown) => (formRef.value = el as ZFormExpose | null) },
-            () =>
-              h(ZFormItem, { prop: 'name', label: '名称', required: true }, () => h('input')),
+            () => h(ZFormItem, { prop: 'name', label: '名称', required: true }, () => h('input')),
           )
       },
     })

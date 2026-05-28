@@ -37,7 +37,7 @@ const emit = defineEmits<ZColorPickerEmits>()
 const theme = useZTheme()
 
 const wrapperClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._small
@@ -56,7 +56,7 @@ const wrapperClass = computed(() =>
       s.cursor.notAllowed
     } else {
       s.cursor.pointer
-      s._hover((h) => {
+      s._hover(h => {
         h.borderColor._primary
       })
     }
@@ -70,7 +70,7 @@ const wrapperClass = computed(() =>
  * - border: _thin,圆角 _tiny
  */
 const swatchClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineBlock
     s.width.iem(1.25)
     s.height.iem(1.25)
@@ -83,7 +83,7 @@ const swatchClass = computed(() =>
 )
 
 const valueTextClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._text
     s.fontSize._small
     s.fontFamily._mono
@@ -91,7 +91,7 @@ const valueTextClass = computed(() =>
 )
 
 const hiddenInputClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.opacity._none
     s.pointerEvents.none

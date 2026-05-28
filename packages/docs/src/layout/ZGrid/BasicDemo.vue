@@ -7,7 +7,16 @@ import { ZGrid, ZFlex, ZText } from '@kenconnet666/zui-vue'
     <!-- 固定列数 -->
     <ZText>固定 3 列</ZText>
     <ZGrid :cols="3" :gap="g => g._small">
-      <div v-for="n in 6" :key="n" :style="{ padding: '12px', borderRadius: '4px', background: 'var(--zui-bg-secondary)', textAlign: 'center' }">
+      <div
+        v-for="n in 6"
+        :key="n"
+        :style="{
+          padding: '12px',
+          borderRadius: '4px',
+          background: 'var(--zui-bg-secondary)',
+          textAlign: 'center',
+        }"
+      >
         Cell {{ n }}
       </div>
     </ZGrid>
@@ -15,7 +24,16 @@ import { ZGrid, ZFlex, ZText } from '@kenconnet666/zui-vue'
     <!-- 自定义模板 -->
     <ZText>自定义模板：200px 1fr 1fr</ZText>
     <ZGrid cols="200px 1fr 1fr" :gap="g => g._small">
-      <div v-for="n in 3" :key="n" :style="{ padding: '12px', borderRadius: '4px', background: 'var(--zui-bg-secondary)', textAlign: 'center' }">
+      <div
+        v-for="n in 3"
+        :key="n"
+        :style="{
+          padding: '12px',
+          borderRadius: '4px',
+          background: 'var(--zui-bg-secondary)',
+          textAlign: 'center',
+        }"
+      >
         Col {{ n }}
       </div>
     </ZGrid>
@@ -26,7 +44,12 @@ import { ZGrid, ZFlex, ZText } from '@kenconnet666/zui-vue'
       <div
         v-for="n in 6"
         :key="n"
-        :style="{ padding: '12px', borderRadius: '4px', background: 'var(--zui-bg-secondary)', textAlign: 'center' }"
+        :style="{
+          padding: '12px',
+          borderRadius: '4px',
+          background: 'var(--zui-bg-secondary)',
+          textAlign: 'center',
+        }"
       >
         Item {{ n }}
       </div>

@@ -81,7 +81,7 @@ const showImage = computed(() => !!props.src && !imgFailed.value)
 const showText = computed(() => !showImage.value && !!props.text)
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 2.5
     s.display.inlineFlex
     s.alignItems.center
@@ -108,7 +108,7 @@ const rootClass = computed(() =>
 )
 
 const imgClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.width.pct(100)
     s.height.pct(100)
     s.objectFit.cover

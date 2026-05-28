@@ -21,8 +21,7 @@ const animation: DocsGroup = {
   // Transition
   // ════════════════════════════════════════════════════════════════════
   transitionDuration: {
-    firstLine:
-      '设置 CSS 过渡（`transition`）的**持续时间**。0 表示无过渡（即时变化）。',
+    firstLine: '设置 CSS 过渡（`transition`）的**持续时间**。0 表示无过渡（即时变化）。',
     keywordGroups: [
       {
         label: '此属性的特点',
@@ -58,8 +57,7 @@ s.transitionDuration('300ms, 500ms')     // 多属性各自时长（与 transiti
   },
 
   transitionDelay: {
-    firstLine:
-      '设置 CSS 过渡**开始前的延迟**。可为负值（让过渡从中间状态开始）。',
+    firstLine: '设置 CSS 过渡**开始前的延迟**。可为负值（让过渡从中间状态开始）。',
     keywordGroups: [
       {
         label: '此属性的特点',
@@ -90,8 +88,7 @@ s.transitionDelay.ms(100)     // 等 100ms 才开始
   },
 
   transitionTimingFunction: {
-    firstLine:
-      '设置 CSS 过渡的**速率曲线**（缓动函数）—— 决定过渡是匀速、加速、减速还是阶梯式。',
+    firstLine: '设置 CSS 过渡的**速率曲线**（缓动函数）—— 决定过渡是匀速、加速、减速还是阶梯式。',
     keywordGroups: [
       {
         label: '7 个标准缓动关键字',
@@ -118,13 +115,17 @@ s.transitionTimingFunction('steps(10, jump-start)')             // 10 步，开�
 - **匀速**（loading 旋转）：\`linear\`
 - **打字机 / 像素跳变**：\`steps(N)\``,
     syntax: [
-      ['7 个标准 keyword', '`linear` ｜ `ease` ｜ `easeIn` ｜ `easeOut` ｜ `easeInOut` ｜ `stepStart` ｜ `stepEnd`', '常用'],
       [
-        '贝塞尔曲线',
-        "`'cubic-bezier(0.4, 0, 0.2, 1)'`",
-        '4 个控制点（前两个 X∈[0,1]，Y 无限制）',
+        '7 个标准 keyword',
+        '`linear` ｜ `ease` ｜ `easeIn` ｜ `easeOut` ｜ `easeInOut` ｜ `stepStart` ｜ `stepEnd`',
+        '常用',
       ],
-      ['阶梯函数', "`'steps(5, end)'`", 'N 步 + 方向（start / end / jump-start / jump-end / jump-both / jump-none）'],
+      ['贝塞尔曲线', "`'cubic-bezier(0.4, 0, 0.2, 1)'`", '4 个控制点（前两个 X∈[0,1]，Y 无限制）'],
+      [
+        '阶梯函数',
+        "`'steps(5, end)'`",
+        'N 步 + 方向（start / end / jump-start / jump-end / jump-both / jump-none）',
+      ],
     ],
     initialValue: 'ease',
     inherits: false,
@@ -138,10 +139,7 @@ s.transitionTimingFunction('steps(10, jump-start)')             // 10 步，开�
         label: '2 个 keyword',
         headers: ['关键字', '行为'],
         rows: [
-          [
-            '`all`',
-            '**默认值**。所有可过渡属性都过渡（方便但有性能风险 —— 任意变化都触发动画）',
-          ],
+          ['`all`', '**默认值**。所有可过渡属性都过渡（方便但有性能风险 —— 任意变化都触发动画）'],
           ['`none`', '禁用所有过渡'],
         ],
       },
@@ -188,14 +186,12 @@ s.transitionProperty('opacity, transform')
   // ════════════════════════════════════════════════════════════════════
   animationDuration: {
     extends: 'transitionDuration',
-    firstLine:
-      '设置 `@keyframes` **动画的持续时间**。0 表示动画立即跳到终态。',
+    firstLine: '设置 `@keyframes` **动画的持续时间**。0 表示动画立即跳到终态。',
   },
 
   animationDelay: {
     extends: 'transitionDelay',
-    firstLine:
-      '设置 `@keyframes` 动画**开始前的延迟**。可负值（让动画从中间状态开始）。',
+    firstLine: '设置 `@keyframes` 动画**开始前的延迟**。可负值（让动画从中间状态开始）。',
   },
 
   animationTimingFunction: {
@@ -203,15 +199,18 @@ s.transitionProperty('opacity, transform')
     firstLine:
       '设置 `@keyframes` 动画的**速率曲线**。规则同 `transitionTimingFunction`，但作用于关键帧动画。',
     syntax: [
-      ['7 个标准 keyword', '`linear` ｜ `ease` ｜ `easeIn` ｜ `easeOut` ｜ `easeInOut` ｜ `stepStart` ｜ `stepEnd`', '常用'],
+      [
+        '7 个标准 keyword',
+        '`linear` ｜ `ease` ｜ `easeIn` ｜ `easeOut` ｜ `easeInOut` ｜ `stepStart` ｜ `stepEnd`',
+        '常用',
+      ],
       ['贝塞尔曲线', "`'cubic-bezier(0.4, 0, 0.2, 1)'`", '4 个控制点'],
       ['阶梯函数', "`'steps(5, end)'`", 'N 步 + 方向'],
     ],
   },
 
   animationIterationCount: {
-    firstLine:
-      '设置动画**循环次数**。可为整数、小数（不完整循环）、或 `infinite`（无限循环）。',
+    firstLine: '设置动画**循环次数**。可为整数、小数（不完整循环）、或 `infinite`（无限循环）。',
     keywordGroups: [
       {
         label: '1 个 keyword',
@@ -236,8 +235,7 @@ s.animationIterationCount.infinite   // 无限循环
   },
 
   animationName: {
-    firstLine:
-      '指定使用的 `@keyframes` **关键帧动画名称**。多个动画用逗号分隔，同时播放。',
+    firstLine: '指定使用的 `@keyframes` **关键帧动画名称**。多个动画用逗号分隔，同时播放。',
     keywordGroups: [
       {
         label: '1 个 keyword',
@@ -274,8 +272,7 @@ s.animationName('fadeIn, slideUp')
   },
 
   animationDirection: {
-    firstLine:
-      '设置动画**播放方向** —— 正向、反向、交替（来回）。',
+    firstLine: '设置动画**播放方向** —— 正向、反向、交替（来回）。',
     keywordGroups: [
       {
         label: '4 个 keyword',
@@ -300,7 +297,11 @@ s.animationName('pulse')
   .animationDirection.alternate    // 来回缩放
 \`\`\``,
     syntax: [
-      ['4 个 keyword', '`normal` ｜ `reverse` ｜ `alternate` ｜ `alternateReverse`', '只接受关键字'],
+      [
+        '4 个 keyword',
+        '`normal` ｜ `reverse` ｜ `alternate` ｜ `alternateReverse`',
+        '只接受关键字',
+      ],
     ],
     initialValue: 'normal',
     inherits: false,
@@ -319,10 +320,7 @@ s.animationName('pulse')
             '`forwards`',
             '动画结束后**保持最后一帧（100%）**的样式（最常用 —— 进入动画后保持终态）',
           ],
-          [
-            '`backwards`',
-            '动画**开始前的延迟期间**就应用第一帧（0%）的样式（避免延迟期间的闪烁）',
-          ],
+          ['`backwards`', '动画**开始前的延迟期间**就应用第一帧（0%）的样式（避免延迟期间的闪烁）'],
           ['`both`', '同时启用 `forwards` 和 `backwards`'],
         ],
       },
@@ -339,16 +337,13 @@ s.animationName('fadeIn')
 s.animationDelay.ms(200)
 s.animationFillMode.backwards
 \`\`\``,
-    syntax: [
-      ['4 个 keyword', '`none` ｜ `forwards` ｜ `backwards` ｜ `both`', '只接受关键字'],
-    ],
+    syntax: [['4 个 keyword', '`none` ｜ `forwards` ｜ `backwards` ｜ `both`', '只接受关键字']],
     initialValue: 'none',
     inherits: false,
   },
 
   animationPlayState: {
-    firstLine:
-      '控制动画**播放 / 暂停**状态。可用于 JS 控制动画暂停。',
+    firstLine: '控制动画**播放 / 暂停**状态。可用于 JS 控制动画暂停。',
     keywordGroups: [
       {
         label: '2 个 keyword',

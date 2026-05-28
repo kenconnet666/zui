@@ -18,10 +18,7 @@ describe('usePopper', () => {
         const floating = ref<HTMLElement | null>(null)
         popper = usePopper(reference, floating)
         return () =>
-          h('div', [
-            h('button', { ref: 'reference' }, 'btn'),
-            h('div', { ref: 'floating' }, 'pop'),
-          ])
+          h('div', [h('button', { ref: 'reference' }, 'btn'), h('div', { ref: 'floating' }, 'pop')])
       },
     })
     mount(C)

@@ -165,7 +165,12 @@ const maskBottomStyle = computed(() => {
 const maskLeftStyle = computed(() => {
   const r = targetRect.value
   if (!r) return { display: 'none' }
-  return { top: `${r.top}px`, left: '0', width: `${Math.max(0, r.left)}px`, height: `${r.height}px` }
+  return {
+    top: `${r.top}px`,
+    left: '0',
+    width: `${Math.max(0, r.left)}px`,
+    height: `${r.height}px`,
+  }
 })
 const maskRightStyle = computed(() => {
   const r = targetRect.value
@@ -174,7 +179,7 @@ const maskRightStyle = computed(() => {
 })
 
 const maskClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.fixed
     s.backgroundColor._overlayBg.alpha(50)
     s.zIndex._modal
@@ -194,7 +199,7 @@ const cardStyle = computed(() => {
 })
 
 const cardClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.fixed
     s.zIndex._modal
     s.backgroundColor._bg
@@ -212,7 +217,7 @@ const cardClass = computed(() =>
 )
 
 const titleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._large
     s.fontWeight._semibold
     s.color._text
@@ -220,14 +225,14 @@ const titleClass = computed(() =>
   }),
 )
 const descClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.fontSize._small
     s.marginBottom._small
   }),
 )
 const footerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.spaceBetween
@@ -235,19 +240,19 @@ const footerClass = computed(() =>
   }),
 )
 const stepIndicatorClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._small
     s.color._textSecondary
   }),
 )
 const btnGroupClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.gap._tiny
   }),
 )
 const btnClass = (primary: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -286,12 +291,14 @@ const btnClass = (primary: boolean): string =>
         <div :class="titleClass">{{ currentStep.title }}</div>
         <div v-if="currentStep.description" :class="descClass">{{ currentStep.description }}</div>
         <div :class="footerClass">
-          <span :class="stepIndicatorClass">
-            {{ currentRef + 1 }} / {{ steps.length }}
-          </span>
+          <span :class="stepIndicatorClass"> {{ currentRef + 1 }} / {{ steps.length }} </span>
           <div :class="btnGroupClass">
-            <button v-if="currentRef > 0" type="button" :class="btnClass(false)" @click="prev">上一步</button>
-            <button v-if="!isLast" type="button" :class="btnClass(false)" @click="skip">跳过</button>
+            <button v-if="currentRef > 0" type="button" :class="btnClass(false)" @click="prev">
+              上一步
+            </button>
+            <button v-if="!isLast" type="button" :class="btnClass(false)" @click="skip">
+              跳过
+            </button>
             <button type="button" :class="btnClass(true)" @click="next">
               {{ isLast ? '完成' : '下一步' }}
             </button>

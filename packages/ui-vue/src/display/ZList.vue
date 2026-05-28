@@ -113,7 +113,7 @@ const slots: Slots = useSlots()
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.block
     s.color._text
     s.fontSize.iem(props.size ?? 1)
@@ -129,7 +129,7 @@ const rootClass = computed(() =>
 )
 
 const headerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding.iem((props.size ?? 1) * 0.625)
     s.fontWeight._semibold
     s.borderBottomWidth._thin
@@ -139,7 +139,7 @@ const headerClass = computed(() =>
 )
 
 const footerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding.iem((props.size ?? 1) * 0.625)
     s.color._textSecondary
     s.fontSize._small
@@ -150,7 +150,7 @@ const footerClass = computed(() =>
 )
 
 const emptyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._large
     s.color._textSecondary
     s.fontSize._small
@@ -164,11 +164,10 @@ const rootRef = ref<HTMLElement | null>(null)
 defineExpose<ZListExpose>({
   rootRef,
   scrollToIndex: (i, align) => vlRef.value?.scrollToIndex(i, align),
-  scrollToOffset: (px) => vlRef.value?.scrollToOffset(px),
-  getScroll: () =>
-    vlRef.value?.getScroll() ?? { offset: 0, total: 0, viewport: 0 },
-  getItemOffset: (i) => vlRef.value?.getItemOffset(i) ?? 0,
-  getItemSize: (i) => vlRef.value?.getItemSize(i) ?? 0,
+  scrollToOffset: px => vlRef.value?.scrollToOffset(px),
+  getScroll: () => vlRef.value?.getScroll() ?? { offset: 0, total: 0, viewport: 0 },
+  getItemOffset: i => vlRef.value?.getItemOffset(i) ?? 0,
+  getItemSize: i => vlRef.value?.getItemSize(i) ?? 0,
 })
 
 function onScroll(offset: number): void {

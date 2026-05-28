@@ -58,7 +58,7 @@ describe('预设动画与 chain 集成', () => {
   })
 
   it('与 icss 配合：完整 fade-in 动画', () => {
-    const cls = icss(defaultLight, (s) => {
+    const cls = icss(defaultLight, s => {
       s.animationName(presetAnimations.fadeIn)
       s.animationDuration('300ms')
       s.animationFillMode('both')
@@ -68,7 +68,7 @@ describe('预设动画与 chain 集成', () => {
   })
 
   it('spin 动画典型 spinner 用法', () => {
-    const cls = icss(defaultLight, (s) => {
+    const cls = icss(defaultLight, s => {
       s.animationName(presetAnimations.spin)
       s.animationDuration('1s')
       s.animationIterationCount('infinite')
@@ -211,7 +211,7 @@ describe('_transition — 链式与 statement-only 协调', () => {
 
   it('在 _hover 嵌套内可用', () => {
     const c = new Chain(defaultLight)
-    c._hover((h) => {
+    c._hover(h => {
       h._transition({ duration: '_small', easing: '_out' })
       h.backgroundColor._primary
     })
@@ -223,11 +223,11 @@ describe('_transition — 链式与 statement-only 协调', () => {
 describe('Batch C 实际场景', () => {
   it('hover 渐入 + spin loading 联合用法', () => {
     const button = (loading: boolean) =>
-      icss(defaultLight, (s) => {
+      icss(defaultLight, s => {
         s.padding.px(12)
         s.backgroundColor._primary
         s._transition({ property: 'all', duration: '_small', easing: '_inOut' })
-        s._hover((h) => {
+        s._hover(h => {
           h.backgroundColor._primary.alpha(85)
         })
         if (loading) {

@@ -90,7 +90,7 @@ onScopeDispose(() => {
 })
 
 const containerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection(props.direction === 'vertical' ? 'column' : 'row')
     s.width.pct(100)
@@ -101,7 +101,7 @@ const containerClass = computed(() =>
 )
 
 const firstClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const pct = props.ratio * 100
     if (props.direction === 'horizontal') {
       s.width.pct(pct)
@@ -117,7 +117,7 @@ const firstClass = computed(() =>
 )
 
 const secondClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.overflow.auto
     applyScrollbarStyles(s, theme.value)
@@ -125,7 +125,7 @@ const secondClass = computed(() =>
 )
 
 const dividerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexShrink(0)
     s.backgroundColor._border
     s.transitionProperty._colors
@@ -138,7 +138,7 @@ const dividerClass = computed(() =>
       s.cursor(props.disabled ? 'default' : 'row-resize')
     }
     if (!props.disabled) {
-      s._hover((h) => {
+      s._hover(h => {
         h.backgroundColor._primary
       })
     }
@@ -151,7 +151,12 @@ const dividerClass = computed(() =>
     <div :class="firstClass">
       <slot name="first" />
     </div>
-    <div :class="dividerClass" @pointerdown="onPointerDown" role="separator" :aria-orientation="direction === 'vertical' ? 'horizontal' : 'vertical'" />
+    <div
+      :class="dividerClass"
+      @pointerdown="onPointerDown"
+      role="separator"
+      :aria-orientation="direction === 'vertical' ? 'horizontal' : 'vertical'"
+    />
     <div :class="secondClass">
       <slot name="second" />
     </div>

@@ -150,35 +150,56 @@ s.borderStyle('solid dashed dotted none')      // 上 / 右 / 下 / 左
     extends: 'borderStyle',
     firstLine: '设置元素**上边框**的样式。规则同 `borderStyle`。',
     syntax: [
-      ['10 个 keyword', '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`', '见关键字表'],
+      [
+        '10 个 keyword',
+        '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`',
+        '见关键字表',
+      ],
     ],
   },
   borderRightStyle: {
     extends: 'borderStyle',
     firstLine: '设置元素**右边框**的样式。规则同 `borderStyle`。',
     syntax: [
-      ['10 个 keyword', '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`', '见关键字表'],
+      [
+        '10 个 keyword',
+        '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`',
+        '见关键字表',
+      ],
     ],
   },
   borderBottomStyle: {
     extends: 'borderStyle',
     firstLine: '设置元素**下边框**的样式。规则同 `borderStyle`。',
     syntax: [
-      ['10 个 keyword', '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`', '见关键字表'],
+      [
+        '10 个 keyword',
+        '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`',
+        '见关键字表',
+      ],
     ],
   },
   borderLeftStyle: {
     extends: 'borderStyle',
     firstLine: '设置元素**左边框**的样式。规则同 `borderStyle`。',
     syntax: [
-      ['10 个 keyword', '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`', '见关键字表'],
+      [
+        '10 个 keyword',
+        '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`',
+        '见关键字表',
+      ],
     ],
   },
   outlineStyle: {
     extends: 'borderStyle',
-    firstLine: '设置 outline 的样式。同 `borderStyle`，常用 `solid`。outline 还接受 `auto`（平台原生焦点环）。',
+    firstLine:
+      '设置 outline 的样式。同 `borderStyle`，常用 `solid`。outline 还接受 `auto`（平台原生焦点环）。',
     syntax: [
-      ['10 个 keyword', '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`', '同 borderStyle'],
+      [
+        '10 个 keyword',
+        '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`',
+        '同 borderStyle',
+      ],
       ['`auto`', '—', 'outline 特有：浏览器使用平台原生焦点轮廓（如 macOS 蓝光环）'],
     ],
   },
@@ -357,7 +378,11 @@ s.boxShadow('0 0 0 3px rgba(59,130,246,0.4)')    // 焦点环
     syntax: [
       ['`none`', '—', '**默认值**'],
       ['单组阴影', "`'2px 4px 8px #0002'`", 'offsetX offsetY blur color'],
-      ['完整 5 参数', "`'inset 0 2px 4px 0 rgba(0,0,0,0.1)'`", 'inset offsetX offsetY blur spread color'],
+      [
+        '完整 5 参数',
+        "`'inset 0 2px 4px 0 rgba(0,0,0,0.1)'`",
+        'inset offsetX offsetY blur spread color',
+      ],
       ['多组叠加', "`'0 1px 3px #0001, 0 1px 2px #0006'`", '逗号分隔'],
     ],
     initialValue: 'none',
@@ -365,8 +390,7 @@ s.boxShadow('0 0 0 3px rgba(59,130,246,0.4)')    // 焦点环
   },
 
   textShadow: {
-    firstLine:
-      '给**文字**添加阴影。比 `boxShadow` 简化，**无 `spread`，无 `inset`**。可叠加多组。',
+    firstLine: '给**文字**添加阴影。比 `boxShadow` 简化，**无 `spread`，无 `inset`**。可叠加多组。',
     keywordGroups: [
       {
         label: '1 个 keyword',
@@ -411,14 +435,16 @@ s.textShadow(\`
   },
 
   borderCollapse: {
-    firstLine:
-      '决定 `<table>` 中相邻单元格**边框合并还是分离**。表格样式的核心开关。',
+    firstLine: '决定 `<table>` 中相邻单元格**边框合并还是分离**。表格样式的核心开关。',
     keywordGroups: [
       {
         label: '2 个 keyword',
         headers: ['关键字', '行为'],
         rows: [
-          ['`separate`', '**默认值**。相邻单元格边框**独立**（有间距），间距由 `borderSpacing` 控制'],
+          [
+            '`separate`',
+            '**默认值**。相邻单元格边框**独立**（有间距），间距由 `borderSpacing` 控制',
+          ],
           ['`collapse`', '相邻单元格边框**合并**（消除间距 + 重叠时取优先级高的样式）'],
         ],
       },
@@ -447,10 +473,7 @@ s.textShadow(\`
       {
         label: '此属性的特点',
         asTable: false,
-        rows: [
-          ['只接受 1 或 2 个长度值，**无关键字**'],
-          ['1 值：横纵相同；2 值：横距 / 纵距'],
-        ],
+        rows: [['只接受 1 或 2 个长度值，**无关键字**'], ['1 值：横纵相同；2 值：横距 / 纵距']],
       },
     ],
     details: `### 用例
@@ -484,7 +507,11 @@ ${lengthUnitsSnippet('borderSpacing')}`,
     firstLine:
       '设置**多栏布局**中**栏间分隔线**的样式。规则同 `borderStyle`。⚠️ 必须设非 `none` 才显示。',
     syntax: [
-      ['10 个 keyword', '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`', '同 borderStyle'],
+      [
+        '10 个 keyword',
+        '`none` `hidden` `dotted` `dashed` `solid` `double` `groove` `ridge` `inset` `outset`',
+        '同 borderStyle',
+      ],
     ],
   },
 }

@@ -13,12 +13,7 @@
 export { default as ZBox } from './ZBox.vue'
 
 // ─── Injection keys + ZDateConfig ───
-export {
-  Z_THEME_KEY,
-  Z_LOCALE_KEY,
-  Z_DATE_KEY,
-  type ZDateConfig,
-} from './keys'
+export { Z_THEME_KEY, Z_LOCALE_KEY, Z_DATE_KEY, type ZDateConfig } from './keys'
 
 // ─── iem 单位预设 ───
 export { ZIemPreset, type ZIem } from './units'

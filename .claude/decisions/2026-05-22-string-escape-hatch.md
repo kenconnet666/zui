@@ -10,12 +10,12 @@
 
 zui-core 的 chain API 当前有 4 种 setter 形态:
 
-| 形态                  | 例子                                | 类型补全          |
-| --------------------- | ----------------------------------- | ----------------- |
-| 字面量 fn             | `s.color('red')` / `s.width('20px')`| 弱(string)        |
-| token shortcut        | `s.color._primary`                  | **强**(枚举)      |
-| unit method           | `s.width.px(20)` / `s.width.zu(2)`  | **强**(数字)      |
-| color modifier        | `s.color._primary.alpha(50)`        | **强**            |
+| 形态           | 例子                                 | 类型补全     |
+| -------------- | ------------------------------------ | ------------ |
+| 字面量 fn      | `s.color('red')` / `s.width('20px')` | 弱(string)   |
+| token shortcut | `s.color._primary`                   | **强**(枚举) |
+| unit method    | `s.width.px(20)` / `s.width.zu(2)`   | **强**(数字) |
+| color modifier | `s.color._primary.alpha(50)`         | **强**       |
 
 **痛点**: chain shortcut / unit method 体验最好,但**只能在 ENHANCED_PROPS 注册的属性上工作**。
 对于非 enhanced 的属性（如未来加的实验性 CSS prop / 用户从其他工具复制粘贴的字符串值 / 动态拼接的字符串）,只能走"字面量 fn",失去 token 与 unit 系统的语义价值。
@@ -26,7 +26,7 @@ zui-core 的 chain API 当前有 4 种 setter 形态:
 
 ## 设计原则
 
-1. **不破坏现有 API** —— 所有现状用法零改动通过。  
+1. **不破坏现有 API** —— 所有现状用法零改动通过。
 2. **trigger 必须明确** —— 只有以 `_` 开头的字符串才尝试解析,普通字面量(`'red'` / `'20px'` / `'#abc'`)零成本通过。
 3. **强类型层不变** —— chain shortcut / unit method / color modifier 仍是主推 API,字符串逃生舱**只在运行时层**做事,不污染类型签名。
 4. **运行时解析失败默默回落到字面量** —— 不抛错,因为用户可能写 `'_animation-name'` 这种确实是 css 字面量。
@@ -39,34 +39,35 @@ zui-core 的 chain API 当前有 4 种 setter 形态:
 ### 单条 token
 
 ```ts
-s.color('_primary')                  // = s.color._primary
-s.padding('_middle')                 // = s.padding._middle (carrier 已知 cat=spacing)
-s.outlineColor('_primary')           // 即使该 prop 不在 ENHANCED_PROPS,也会全 schema 扫描命中
+s.color('_primary') // = s.color._primary
+s.padding('_middle') // = s.padding._middle (carrier 已知 cat=spacing)
+s.outlineColor('_primary') // 即使该 prop 不在 ENHANCED_PROPS,也会全 schema 扫描命中
 ```
 
 ### unit 单位
 
 ```ts
-s.width('_px(20)')                   // = '20px'
-s.width('_zu(2)')                    // = 'calc(2 * var(--zui-unit, 1px))'
-s.width('_em(1.5)')                  // = '1.5em'
-s.padding('_rem(1)')                 // = '1rem'
-s.transitionDuration('_ms(300)')     // = '300ms'
-s.transform('_deg(45)')              // (虽然 transform 不是 angle carrier, 字符串仍解析)
+s.width('_px(20)') // = '20px'
+s.width('_zu(2)') // = 'calc(2 * var(--zui-unit, 1px))'
+s.width('_em(1.5)') // = '1.5em'
+s.padding('_rem(1)') // = '1rem'
+s.transitionDuration('_ms(300)') // = '300ms'
+s.transform('_deg(45)') // (虽然 transform 不是 angle carrier, 字符串仍解析)
 ```
 
 ### token + color 操作链
 
 ```ts
-s.color('_primary.alpha(50)')        // = setAlpha(theme.color.primary, 0.5)
-s.color('_primary.shade(20)')        // 与黑混 20%
-s.color('_primary.shade(20).alpha(80)')   // 链式
+s.color('_primary.alpha(50)') // = setAlpha(theme.color.primary, 0.5)
+s.color('_primary.shade(20)') // 与黑混 20%
+s.color('_primary.shade(20).alpha(80)') // 链式
 s.color('_primary.mix(_danger, 30)') // 与另一 token 混色
-s.color('_primary.lighten(15)')      // HSL 增亮
-s.color('_primary.complement()')     // 补色
+s.color('_primary.lighten(15)') // HSL 增亮
+s.color('_primary.complement()') // 补色
 ```
 
 支持的 11 个 color 操作完全复用 `chain/color.ts`:
+
 - `alpha(n)` —— 注意 `n` 取 0-100(百分比),内部 / 100;与 chain modifier `.alpha(50)` 一致
 - `darken(n)` / `lighten(n)` —— HSL 0-100
 - `mix(other, n)` —— other 可是字面量或 `_token`,n 取 0-100
@@ -77,10 +78,10 @@ s.color('_primary.complement()')     // 补色
 ### 字面量原样通过
 
 ```ts
-s.color('red')                       // 不以 _ 开头, 原样
-s.width('20px')                      // 同上
-s.border('1px solid #abc')           // 同上
-s.fontFamily('Open_Sans')            // 含 _ 但不以 _ 开头, 原样
+s.color('red') // 不以 _ 开头, 原样
+s.width('20px') // 同上
+s.border('1px solid #abc') // 同上
+s.fontFamily('Open_Sans') // 含 _ 但不以 _ 开头, 原样
 ```
 
 ---
@@ -100,6 +101,7 @@ s.fontFamily('Open_Sans')            // 含 _ 但不以 _ 开头, 原样
 ### 决策 2: token 反查策略 —— 优先用 carrier cfg.tokenCat, 失败 fallback 全 schema 扫描
 
 **选择**: 两阶段反查
+
 1. 若 carrier 有 `cfg.tokenCat`(例 `s.color` → cat=color),先在 `keymap.get('color')` 找 `_primary`
 2. 若上一步 miss,遍历所有 category,找第一个匹配的 ident
 
@@ -116,6 +118,7 @@ s.fontFamily('Open_Sans')            // 含 _ 但不以 _ 开头, 原样
 **理由**: 与 chain modifier `s.color._primary.alpha(50)` 的 TS 写法完全镜像,用户从强类型形态迁移到字符串形态零认知成本。
 
 **放弃方案**:
+
 - `'_primary/alpha(50)'` —— 用户的最初描述提到了 `/`,但 `/` 在 CSS 里有强语义(`background-position/size`, `font: size/line-height`,grid `1 / 3`),会与未来扩展(直接支持 css shorthand 字符串)冲突。
 - `'_primary | alpha(50)'` —— pipe 不像 ts 习惯。
 - `'_primary alpha(50)'`(空格) —— CSS shorthand 用空格区分多值,冲突。
@@ -145,6 +148,7 @@ s.fontFamily('Open_Sans')            // 含 _ 但不以 _ 开头, 原样
 ### 决策 6: 解析失败的兜底行为 —— silent fallthrough + dev warn
 
 **选择**:
+
 - 以 `_` 开头但 token 反查失败 → 原样写入 + `console.warn` (dev mode)
 - 完全格式错误(无法 parse 链式)→ 原样写入 + warn
 - 不以 `_` 开头 → 原样写入,零开销
@@ -163,26 +167,28 @@ s.fontFamily('Open_Sans')            // 含 _ 但不以 _ 开头, 原样
 
 ```ts
 // 默认(走 css var, Provider cascade)
-zu(8)                          // 'calc(8 * var(--zui-unit, 1px))'
+zu(8) // 'calc(8 * var(--zui-unit, 1px))'
 
 // 自定义基准(纯 TS,无 css var 依赖)
 const zu2x = zuWith('2px')
-zu2x(8)                        // '16px'        ← 编译期已算好
+zu2x(8) // '16px'        ← 编译期已算好
 
 const zuRem = zuWith('0.0625rem')
-zuRem(16)                      // '1rem'
+zuRem(16) // '1rem'
 
 // 复杂 css 表达式(无法 TS 解析) → 退化到 calc()
 const zuFluid = zuWith('clamp(0.5px, 0.1vw, 2px)')
-zuFluid(8)                     // 'calc(8 * clamp(0.5px, 0.1vw, 2px))'
+zuFluid(8) // 'calc(8 * clamp(0.5px, 0.1vw, 2px))'
 ```
 
 **理由**:
+
 - `<ZConfigProvider :unit>` 走 css cascade 是有意设计(嵌套覆盖零运行时开销),不应替换。
 - 但 SSR / 静态站点生成 / 测试场景需要"在 TS 层就把 zu(N) 算成具体 px",`zuWith(base)` 提供这个 escape。
 - 不引入全局可变状态(`setZuiUnit()` 那种 module-level setter)—— 全局状态在 SSR / 多实例 / 测试隔离里都是坑。`zuWith` 是工厂,纯函数,无副作用。
 
 **放弃方案**:
+
 - `setZuiUnit('2px')` 全局副作用 setter —— SSR 不安全。
 - 让 `zu(n)` 默认就走 TS 计算 —— 破坏 Provider cascade 优势。
 
@@ -247,12 +253,12 @@ export function resolveStringValue(
 
 ## 风险与不做的事
 
-| 风险 | 应对 |
-| --- | --- |
+| 风险                                                                  | 应对                                                                                                                                        |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | 字符串里嵌 `_other_token` 当作 token 解析?(如 `'1px solid _primary'`) | **不做** —— 只匹配整串以 `_` 开头的形态;mixed 字符串(`'1px solid _primary'`)不解析,要写 mixed 走 `${`1px solid ${zuiLight.color.primary}`}` |
-| Provider cascade 与 `zuWith` 同时存在,用户混用引起困惑 | 决策文档明确两者用途互补 + jsdoc 写清楚 |
-| `_primary.alpha(50)` 解析时 `mix(_danger, 30)` 嵌套 token 反查 | 实现内做单层递归(够用),不支持任意嵌套(`mix(_a.alpha(50), 30)` 这种暂不支持) |
-| token 全扫描在大 schema 下性能 | keymap 已结构化 `Map<cat, Map<ident, key>>`,遍历 ~20 cat × ~10 ident = 200 次 lookup,微秒级,可接受 |
+| Provider cascade 与 `zuWith` 同时存在,用户混用引起困惑                | 决策文档明确两者用途互补 + jsdoc 写清楚                                                                                                     |
+| `_primary.alpha(50)` 解析时 `mix(_danger, 30)` 嵌套 token 反查        | 实现内做单层递归(够用),不支持任意嵌套(`mix(_a.alpha(50), 30)` 这种暂不支持)                                                                 |
+| token 全扫描在大 schema 下性能                                        | keymap 已结构化 `Map<cat, Map<ident, key>>`,遍历 ~20 cat × ~10 ident = 200 次 lookup,微秒级,可接受                                          |
 
 ---
 

@@ -8,7 +8,14 @@ import { ZFlex, ZSpacer, ZTag, ZText } from '@kenconnet666/zui-vue'
     <ZText>工具栏：左边标题，右边操作（ZSpacer 撑开中间）</ZText>
     <ZFlex
       :align="a => a.center"
-      :css="s => { s.padding.iem(0.75); s.borderRadius._small; s.backgroundColor._bgMuted; s.width.pct(100) }"
+      :css="
+        s => {
+          s.padding.iem(0.75)
+          s.borderRadius._small
+          s.backgroundColor._bgMuted
+          s.width.pct(100)
+        }
+      "
     >
       <ZText>页面标题</ZText>
       <ZSpacer />
@@ -23,11 +30,25 @@ import { ZFlex, ZSpacer, ZTag, ZText } from '@kenconnet666/zui-vue'
     <ZFlex :gap="g => g._small" :css="s => s.width.pct(100)">
       <ZSpacer
         :grow="2"
-        :css="s => { s.backgroundColor._bgMuted; s.borderRadius._small; s.padding.iem(0.5); s.textAlign.center }"
+        :css="
+          s => {
+            s.backgroundColor._bgMuted
+            s.borderRadius._small
+            s.padding.iem(0.5)
+            s.textAlign.center
+          }
+        "
       />
       <ZSpacer
         :grow="1"
-        :css="s => { s.backgroundColor._bgMuted; s.borderRadius._small; s.padding.iem(0.5); s.textAlign.center }"
+        :css="
+          s => {
+            s.backgroundColor._bgMuted
+            s.borderRadius._small
+            s.padding.iem(0.5)
+            s.textAlign.center
+          }
+        "
       />
     </ZFlex>
   </ZFlex>

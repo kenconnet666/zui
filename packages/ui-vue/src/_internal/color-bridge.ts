@@ -31,10 +31,7 @@ type CaretFactory = (c: Chain<ZuiSchema>['caretColor']) => void
  * @example
  * applyAsBg(s, props.color)  // 等价于 s.backgroundColor(props.color)(类型层面强 cast)
  */
-export function applyAsBg(
-  s: Chain<ZuiSchema>,
-  factory: ColorFactory | undefined,
-): boolean {
+export function applyAsBg(s: Chain<ZuiSchema>, factory: ColorFactory | undefined): boolean {
   if (!factory) return false
   s.backgroundColor(factory as unknown as BgFactory)
   return true
@@ -43,10 +40,7 @@ export function applyAsBg(
 /**
  * 把 `color` factory 应用到 `borderColor` carrier。
  */
-export function applyAsBorder(
-  s: Chain<ZuiSchema>,
-  factory: ColorFactory | undefined,
-): boolean {
+export function applyAsBorder(s: Chain<ZuiSchema>, factory: ColorFactory | undefined): boolean {
   if (!factory) return false
   s.borderColor(factory as unknown as BorderFactory)
   return true
@@ -55,10 +49,7 @@ export function applyAsBorder(
 /**
  * 把 `color` factory 应用到 `borderLeftColor` carrier。
  */
-export function applyAsBorderLeft(
-  s: Chain<ZuiSchema>,
-  factory: ColorFactory | undefined,
-): boolean {
+export function applyAsBorderLeft(s: Chain<ZuiSchema>, factory: ColorFactory | undefined): boolean {
   if (!factory) return false
   s.borderLeftColor(factory as unknown as BorderLeftFactory)
   return true
@@ -67,10 +58,7 @@ export function applyAsBorderLeft(
 /**
  * 把 `color` factory 应用到 `outlineColor` carrier。
  */
-export function applyAsOutline(
-  s: Chain<ZuiSchema>,
-  factory: ColorFactory | undefined,
-): boolean {
+export function applyAsOutline(s: Chain<ZuiSchema>, factory: ColorFactory | undefined): boolean {
   if (!factory) return false
   s.outlineColor(factory as unknown as OutlineFactory)
   return true
@@ -79,10 +67,7 @@ export function applyAsOutline(
 /**
  * 把 `color` factory 应用到 `stroke` carrier(SVG)。
  */
-export function applyAsStroke(
-  s: Chain<ZuiSchema>,
-  factory: ColorFactory | undefined,
-): boolean {
+export function applyAsStroke(s: Chain<ZuiSchema>, factory: ColorFactory | undefined): boolean {
   if (!factory) return false
   s.stroke(factory as unknown as StrokeFactory)
   return true
@@ -91,10 +76,7 @@ export function applyAsStroke(
 /**
  * 把 `color` factory 应用到 `fill` carrier(SVG)。
  */
-export function applyAsFill(
-  s: Chain<ZuiSchema>,
-  factory: ColorFactory | undefined,
-): boolean {
+export function applyAsFill(s: Chain<ZuiSchema>, factory: ColorFactory | undefined): boolean {
   if (!factory) return false
   s.fill(factory as unknown as FillFactory)
   return true
@@ -103,10 +85,7 @@ export function applyAsFill(
 /**
  * 把 `color` factory 应用到 `caretColor` carrier(input caret 光标色)。
  */
-export function applyAsCaret(
-  s: Chain<ZuiSchema>,
-  factory: ColorFactory | undefined,
-): boolean {
+export function applyAsCaret(s: Chain<ZuiSchema>, factory: ColorFactory | undefined): boolean {
   if (!factory) return false
   s.caretColor(factory as unknown as CaretFactory)
   return true

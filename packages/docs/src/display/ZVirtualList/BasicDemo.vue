@@ -19,10 +19,27 @@ const items: Item[] = Array.from({ length: 1000 }, (_, i) => ({
         <ZFlex
           :justify="j => j.spaceBetween"
           :align="a => a.center"
-          :css="s => { s.paddingLeft._small; s.paddingRight._small; s.height.iem(3); s.borderBottomWidth.px(1); s.borderBottomStyle.solid; s.borderBottomColor._border }"
+          :css="
+            s => {
+              s.paddingLeft._small
+              s.paddingRight._small
+              s.height.iem(3)
+              s.borderBottomWidth.px(1)
+              s.borderBottomStyle.solid
+              s.borderBottomColor._border
+            }
+          "
         >
           <ZText>{{ item.label }}</ZText>
-          <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">#{{ index + 1 }}</ZText>
+          <ZText
+            :css="
+              s => {
+                s.color._textSecondary
+                s.fontSize._small
+              }
+            "
+            >#{{ index + 1 }}</ZText
+          >
         </ZFlex>
       </template>
     </ZVirtualList>
@@ -36,9 +53,23 @@ const items: Item[] = Array.from({ length: 1000 }, (_, i) => ({
       <template #default="{ item, index }">
         <ZFlex
           :align="a => a.center"
-          :css="s => { s.paddingLeft._small; s.paddingRight._small; s.height._full; s.backgroundColor._bgMuted }"
+          :css="
+            s => {
+              s.paddingLeft._small
+              s.paddingRight._small
+              s.height._full
+              s.backgroundColor._bgMuted
+            }
+          "
         >
-          <ZText :css="s => { s.fontSize._small }">{{ item.label }}（高度 {{ index % 3 === 0 ? '4iem' : '2.5iem' }}）</ZText>
+          <ZText
+            :css="
+              s => {
+                s.fontSize._small
+              }
+            "
+            >{{ item.label }}（高度 {{ index % 3 === 0 ? '4iem' : '2.5iem' }}）</ZText
+          >
         </ZFlex>
       </template>
     </ZVirtualList>

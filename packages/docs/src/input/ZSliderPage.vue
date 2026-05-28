@@ -8,18 +8,18 @@ import StepDemo from './ZSlider/StepDemo.vue'
 import StepDemoSource from './ZSlider/StepDemo.vue?raw'
 
 const propsRows = [
-  { name: 'value',     type: 'number',             default: '0',    desc: '当前值（v-model:value）。' },
-  { name: 'min',       type: 'number',             default: '0',    desc: '最小值。' },
-  { name: 'max',       type: 'number',             default: '100',  desc: '最大值。' },
-  { name: 'step',      type: 'number',             default: '1',    desc: '步进值。' },
-  { name: 'disabled',  type: 'boolean',            default: 'false', desc: '禁用。' },
-  { name: 'showValue', type: 'boolean',            default: 'false', desc: '显示当前值标签。' },
-  { name: 'css',       type: '(s: Chain) => void', default: '—',    desc: '根元素 CSS 兜底。' },
+  { name: 'value', type: 'number', default: '0', desc: '当前值（v-model:value）。' },
+  { name: 'min', type: 'number', default: '0', desc: '最小值。' },
+  { name: 'max', type: 'number', default: '100', desc: '最大值。' },
+  { name: 'step', type: 'number', default: '1', desc: '步进值。' },
+  { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },
+  { name: 'showValue', type: 'boolean', default: 'false', desc: '显示当前值标签。' },
+  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 
 const emitsRows = [
   { name: 'update:value', args: 'number', desc: '拖动时实时更新。' },
-  { name: 'change',       args: 'number', desc: '松手后确认值。' },
+  { name: 'change', args: 'number', desc: '松手后确认值。' },
 ]
 </script>
 
@@ -27,8 +27,8 @@ const emitsRows = [
   <section>
     <ZTitle :level="1">ZSlider 滑块</ZTitle>
     <ZParagraph>
-      基于原生 <ZCode code="input[type=range]" /> 包装，支持 <ZCode code="min" /> / <ZCode code="max" /> /
-      <ZCode code="step" /> 配置，<ZCode code="showValue" /> 展示当前值标签。
+      基于原生 <ZCode code="input[type=range]" /> 包装，支持 <ZCode code="min" /> /
+      <ZCode code="max" /> / <ZCode code="step" /> 配置，<ZCode code="showValue" /> 展示当前值标签。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>
@@ -48,10 +48,10 @@ const emitsRows = [
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '120px' },
-        { key: 'type',    label: '类型',   mono: true, width: '120px' },
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '120px' },
         { key: 'default', label: '默认值', mono: true, width: '80px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="propsRows"
     />
@@ -59,8 +59,8 @@ const emitsRows = [
     <ZTitle :level="2">Emits</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name', label: '事件',  mono: true, width: '160px' },
-        { key: 'args', label: '参数',  mono: true, width: '80px' },
+        { key: 'name', label: '事件', mono: true, width: '160px' },
+        { key: 'args', label: '参数', mono: true, width: '80px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"

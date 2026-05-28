@@ -27,7 +27,14 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
-export type ZButtonVariant = 'filled' | 'outlined' | 'dashed' | 'secondary' | 'text' | 'ghost' | 'link'
+export type ZButtonVariant =
+  | 'filled'
+  | 'outlined'
+  | 'dashed'
+  | 'secondary'
+  | 'text'
+  | 'ghost'
+  | 'link'
 export type ZButtonShape = 'default' | 'round' | 'circle' | 'square'
 
 export interface ZButtonProps {
@@ -104,7 +111,7 @@ useRipple(btnRef as Parameters<typeof useRipple>[0], {
 })
 
 const buttonClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 1
     const height = props.height ?? size * 2
     const isCompact = props.shape === 'circle' || props.shape === 'square'
@@ -129,10 +136,17 @@ const buttonClass = computed(() =>
     }
     // border-radius
     switch (props.shape) {
-      case 'round': s.borderRadius.iem(height * 0.5); break
-      case 'circle': s.borderRadius.pct(50); break
-      case 'square': s.borderRadius.px(0); break
-      default: s.borderRadius.iem(size * 0.375)
+      case 'round':
+        s.borderRadius.iem(height * 0.5)
+        break
+      case 'circle':
+        s.borderRadius.pct(50)
+        break
+      case 'square':
+        s.borderRadius.px(0)
+        break
+      default:
+        s.borderRadius.iem(size * 0.375)
     }
     s.borderWidth._thin
     s.borderStyle.solid
@@ -155,16 +169,24 @@ const buttonClass = computed(() =>
         if (!applyAsBg(s, props.color)) s.backgroundColor._primary
         s.color._bg
         s.boxShadow._tiny
-        s._hover((h2) => { h2.boxShadow._small })
-        s._active((a) => { a.boxShadow._tiny })
+        s._hover(h2 => {
+          h2.boxShadow._small
+        })
+        s._active(a => {
+          a.boxShadow._tiny
+        })
         break
 
       case 'outlined':
         s.borderColor.currentColor
         s.backgroundColor.transparent
         if (!hasUserColor) {
-          s._hover((h2) => { h2.backgroundColor._primary.alpha(8) })
-          s._active((a) => { a.backgroundColor._primary.alpha(12) })
+          s._hover(h2 => {
+            h2.backgroundColor._primary.alpha(8)
+          })
+          s._active(a => {
+            a.backgroundColor._primary.alpha(12)
+          })
         }
         break
 
@@ -173,8 +195,12 @@ const buttonClass = computed(() =>
         s.borderStyle.dashed
         s.backgroundColor.transparent
         if (!hasUserColor) {
-          s._hover((h2) => { h2.backgroundColor._primary.alpha(8) })
-          s._active((a) => { a.backgroundColor._primary.alpha(12) })
+          s._hover(h2 => {
+            h2.backgroundColor._primary.alpha(8)
+          })
+          s._active(a => {
+            a.backgroundColor._primary.alpha(12)
+          })
         }
         break
 
@@ -182,7 +208,7 @@ const buttonClass = computed(() =>
         // 恒定半透明底(primary.alpha(12)),hover 加深到 18%,active 22%
         s.backgroundColor.transparent
         s.position.relative
-        s._before((b) => {
+        s._before(b => {
           b.content("''")
           b.position.absolute
           b.inset.px(0)
@@ -192,19 +218,27 @@ const buttonClass = computed(() =>
           b.pointerEvents.none
           b._prop('transition', 'opacity 150ms cubic-bezier(0.4, 0, 0.2, 1)')
         })
-        s._hover((h2) => {
-          h2._before((b) => { b.opacity(0.18) })
+        s._hover(h2 => {
+          h2._before(b => {
+            b.opacity(0.18)
+          })
         })
-        s._active((a) => {
-          a._before((b) => { b.opacity(0.22) })
+        s._active(a => {
+          a._before(b => {
+            b.opacity(0.22)
+          })
         })
         break
 
       case 'text':
         s.backgroundColor.transparent
         if (!hasUserColor) {
-          s._hover((h2) => { h2.backgroundColor._primary.alpha(8) })
-          s._active((a) => { a.backgroundColor._primary.alpha(12) })
+          s._hover(h2 => {
+            h2.backgroundColor._primary.alpha(8)
+          })
+          s._active(a => {
+            a.backgroundColor._primary.alpha(12)
+          })
         }
         break
 
@@ -212,7 +246,7 @@ const buttonClass = computed(() =>
         // opacity 0 底,hover 出现 8%,active 12%
         s.backgroundColor.transparent
         s.position.relative
-        s._before((b) => {
+        s._before(b => {
           b.content("''")
           b.position.absolute
           b.inset.px(0)
@@ -222,11 +256,15 @@ const buttonClass = computed(() =>
           b.pointerEvents.none
           b._prop('transition', 'opacity 150ms cubic-bezier(0.4, 0, 0.2, 1)')
         })
-        s._hover((h2) => {
-          h2._before((b) => { b.opacity(0.08) })
+        s._hover(h2 => {
+          h2._before(b => {
+            b.opacity(0.08)
+          })
         })
-        s._active((a) => {
-          a._before((b) => { b.opacity(0.12) })
+        s._active(a => {
+          a._before(b => {
+            b.opacity(0.12)
+          })
         })
         break
 
@@ -234,11 +272,13 @@ const buttonClass = computed(() =>
         s.backgroundColor.transparent
         s.textDecoration('none')
         s.borderRadius._tiny
-        s._hover((h2) => { h2.textDecoration('underline') })
+        s._hover(h2 => {
+          h2.textDecoration('underline')
+        })
         break
     }
 
-    s._focusVisible((f) => {
+    s._focusVisible(f => {
       f.outlineWidth._middle
       f.outlineStyle.solid
       f.outlineColor._focusRing.alpha(40)
@@ -255,7 +295,7 @@ const buttonClass = computed(() =>
 )
 
 const iconClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.flexShrink(0)

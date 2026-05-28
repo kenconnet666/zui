@@ -132,8 +132,7 @@ ${lengthUnitsSnippet('minWidth')}`,
   // maxWidth
   // ════════════════════════════════════════════════════════════════════
   maxWidth: {
-    firstLine:
-      '设置元素的**最大宽度**上限。元素宽度不会超过此值，常用于响应式布局限制内容区最宽。',
+    firstLine: '设置元素的**最大宽度**上限。元素宽度不会超过此值，常用于响应式布局限制内容区最宽。',
     inherits: false,
     details: `### 经典用法：内容区宽度限制
 
@@ -243,7 +242,7 @@ ${lengthUnitsSnippet('maxHeight')}`,
           [
             '`auto`',
             '浏览器按剩余空间自动分配。**常用于水平居中**：`margin: 0 auto` 让块级元素在父容器中水平居中（左右各自分配剩余空间的一半）',
-            '水平居中：`s.margin(\'0 auto\')`；`margin-left: auto` 把元素推到右侧（flex 布局右对齐技巧）',
+            "水平居中：`s.margin('0 auto')`；`margin-left: auto` 把元素推到右侧（flex 布局右对齐技巧）",
           ],
         ],
       },
@@ -311,8 +310,7 @@ ${lengthUnitsSnippet('margin')}`,
   },
   marginBottom: {
     extends: 'margin',
-    firstLine:
-      '设置元素的**下外边距**。常用于段落 / 标题之间的垂直间隔。其他规则同 [`margin`]。',
+    firstLine: '设置元素的**下外边距**。常用于段落 / 标题之间的垂直间隔。其他规则同 [`margin`]。',
   },
   marginLeft: {
     extends: 'margin',
@@ -576,7 +574,8 @@ s.maxHeight('80vh')
     ],
     initialValue: 'auto',
     inherits: false,
-    browserNote: 'Chrome 88+ / Firefox 89+ / Safari 15+ 全面支持（2021+）。旧浏览器需用 padding-top hack。',
+    browserNote:
+      'Chrome 88+ / Firefox 89+ / Safari 15+ 全面支持（2021+）。旧浏览器需用 padding-top hack。',
   },
 }
 

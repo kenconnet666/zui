@@ -35,39 +35,39 @@
 
 ## B. zuiLight color(Material Design 2 经典 700 / Orange 700)
 
-| token | 旧值(Tailwind) | 新值(Material) |
-|---|---|---|
-| primary | `tw('blue','600')` ≈ `#2563eb` | `#1976d2` Material Blue 700 |
-| danger | `tw('red','600')` ≈ `#dc2626` | `#d32f2f` M2 Red 700 |
-| warning | `tw('yellow','500')` ≈ `#eab308` | `#ed6c02` M2 Orange 700 |
-| success | `tw('green','500')` ≈ `#22c55e` | `#2e7d32` M2 Green 700 |
-| info | `tw('cyan','500')` ≈ `#06b6d4` | `#0288d1` M2 Light Blue 700 |
-| text | `tw('gray','900')` ≈ `#111827` | `#212121` M2 grey-900 |
-| textSecondary | `tw('gray','600')` ≈ `#4b5563` | `#616161` M2 grey-700 |
-| bg | `#ffffff` | `#ffffff` ✓ 不变 |
-| bgMuted | `tw('gray','50')` ≈ `#f9fafb` | `#f5f5f5` M2 grey-100 |
-| border | `tw('gray','200')` ≈ `#e5e7eb` | `#e0e0e0` M2 grey-300 |
-| **focusRing** | (新) | `#1976d2` 同 primary |
-| **overlayBg** | (新) | `#000000` 用 `.alpha(50)` |
+| token         | 旧值(Tailwind)                   | 新值(Material)              |
+| ------------- | -------------------------------- | --------------------------- |
+| primary       | `tw('blue','600')` ≈ `#2563eb`   | `#1976d2` Material Blue 700 |
+| danger        | `tw('red','600')` ≈ `#dc2626`    | `#d32f2f` M2 Red 700        |
+| warning       | `tw('yellow','500')` ≈ `#eab308` | `#ed6c02` M2 Orange 700     |
+| success       | `tw('green','500')` ≈ `#22c55e`  | `#2e7d32` M2 Green 700      |
+| info          | `tw('cyan','500')` ≈ `#06b6d4`   | `#0288d1` M2 Light Blue 700 |
+| text          | `tw('gray','900')` ≈ `#111827`   | `#212121` M2 grey-900       |
+| textSecondary | `tw('gray','600')` ≈ `#4b5563`   | `#616161` M2 grey-700       |
+| bg            | `#ffffff`                        | `#ffffff` ✓ 不变            |
+| bgMuted       | `tw('gray','50')` ≈ `#f9fafb`    | `#f5f5f5` M2 grey-100       |
+| border        | `tw('gray','200')` ≈ `#e5e7eb`   | `#e0e0e0` M2 grey-300       |
+| **focusRing** | (新)                             | `#1976d2` 同 primary        |
+| **overlayBg** | (新)                             | `#000000` 用 `.alpha(50)`   |
 
 ---
 
 ## C. zuiDark color(Material 200 / 300 shade,暗背景柔和对比)
 
-| token | 旧值 | 新值 |
-|---|---|---|
-| primary | `tw('blue','500')` | `#90caf9` Material Blue 200 |
-| danger | `tw('red','500')` | `#ef5350` Red 400 |
-| warning | `tw('yellow','500')` | `#ffa726` Orange 400 |
-| success | `tw('green','500')` | `#66bb6a` Green 400 |
-| info | `tw('cyan','500')` | `#4fc3f7` Light Blue 300 |
-| text | `tw('gray','100')` | `#e0e0e0` grey-300 |
-| textSecondary | `tw('gray','400')` | `#9e9e9e` grey-500 |
-| bg | `tw('gray','900')` ≈ `#111827` | `#121212` M3 dark surface 推荐基色 |
-| bgMuted | `tw('gray','800')` ≈ `#1f2937` | `#1e1e1e` M3 surface +1 |
-| border | `tw('gray','600')` ≈ `#4b5563` | `#424242` grey-800 |
-| **focusRing** | (新) | `#90caf9` 同 primary |
-| **overlayBg** | (新) | `#000000` |
+| token         | 旧值                           | 新值                               |
+| ------------- | ------------------------------ | ---------------------------------- |
+| primary       | `tw('blue','500')`             | `#90caf9` Material Blue 200        |
+| danger        | `tw('red','500')`              | `#ef5350` Red 400                  |
+| warning       | `tw('yellow','500')`           | `#ffa726` Orange 400               |
+| success       | `tw('green','500')`            | `#66bb6a` Green 400                |
+| info          | `tw('cyan','500')`             | `#4fc3f7` Light Blue 300           |
+| text          | `tw('gray','100')`             | `#e0e0e0` grey-300                 |
+| textSecondary | `tw('gray','400')`             | `#9e9e9e` grey-500                 |
+| bg            | `tw('gray','900')` ≈ `#111827` | `#121212` M3 dark surface 推荐基色 |
+| bgMuted       | `tw('gray','800')` ≈ `#1f2937` | `#1e1e1e` M3 surface +1            |
+| border        | `tw('gray','600')` ≈ `#4b5563` | `#424242` grey-800                 |
+| **focusRing** | (新)                           | `#90caf9` 同 primary               |
+| **overlayBg** | (新)                           | `#000000`                          |
 
 ---
 
@@ -78,21 +78,23 @@
 ("light bottom drop")更清晰、更"真实"。
 
 **zuiLight**:
+
 ```ts
-tiny:   '0px 1px 2px rgba(0,0,0,0.30), 0px 1px 3px 1px rgba(0,0,0,0.15)'  // M3 level 1
-small:  '0px 1px 2px rgba(0,0,0,0.30), 0px 2px 6px 2px rgba(0,0,0,0.15)'  // level 2
-middle: '0px 4px 8px 3px rgba(0,0,0,0.15), 0px 1px 3px rgba(0,0,0,0.30)'  // level 3
-large:  '0px 6px 10px 4px rgba(0,0,0,0.15), 0px 2px 3px rgba(0,0,0,0.30)' // level 4
-huge:   '0px 8px 12px 6px rgba(0,0,0,0.15), 0px 4px 4px rgba(0,0,0,0.30)' // level 5
+tiny: '0px 1px 2px rgba(0,0,0,0.30), 0px 1px 3px 1px rgba(0,0,0,0.15)' // M3 level 1
+small: '0px 1px 2px rgba(0,0,0,0.30), 0px 2px 6px 2px rgba(0,0,0,0.15)' // level 2
+middle: '0px 4px 8px 3px rgba(0,0,0,0.15), 0px 1px 3px rgba(0,0,0,0.30)' // level 3
+large: '0px 6px 10px 4px rgba(0,0,0,0.15), 0px 2px 3px rgba(0,0,0,0.30)' // level 4
+huge: '0px 8px 12px 6px rgba(0,0,0,0.15), 0px 4px 4px rgba(0,0,0,0.30)' // level 5
 ```
 
 **zuiDark**:同结构,不透明度 0.40~0.70(深色 bg 上需要更强阴影才"浮起"):
+
 ```ts
-tiny:   '0px 1px 2px rgba(0,0,0,0.60), 0px 1px 3px 1px rgba(0,0,0,0.40)'
-small:  '0px 1px 2px rgba(0,0,0,0.60), 0px 2px 6px 2px rgba(0,0,0,0.40)'
+tiny: '0px 1px 2px rgba(0,0,0,0.60), 0px 1px 3px 1px rgba(0,0,0,0.40)'
+small: '0px 1px 2px rgba(0,0,0,0.60), 0px 2px 6px 2px rgba(0,0,0,0.40)'
 middle: '0px 4px 8px 3px rgba(0,0,0,0.40), 0px 1px 3px rgba(0,0,0,0.60)'
-large:  '0px 6px 10px 4px rgba(0,0,0,0.40), 0px 2px 3px rgba(0,0,0,0.65)'
-huge:   '0px 8px 12px 6px rgba(0,0,0,0.45), 0px 4px 4px rgba(0,0,0,0.70)'
+large: '0px 6px 10px 4px rgba(0,0,0,0.40), 0px 2px 3px rgba(0,0,0,0.65)'
+huge: '0px 8px 12px 6px rgba(0,0,0,0.45), 0px 4px 4px rgba(0,0,0,0.70)'
 ```
 
 ---
@@ -129,6 +131,7 @@ pnpm --filter @kenconnet666/docs dev
 ```
 
 视觉验收点:
+
 1. primary 蓝是否符合 M2 700 视觉(略深沉,跟 M3 推荐一致)
 2. 阴影双层是否在卡片 / 弹窗上"浮起"得自然
 3. radius huge=28 在 dialog/sheet 上是否显得过大(若 jarring 可微调到 iem(1.6) = 25.6px)

@@ -72,9 +72,7 @@ export interface UseZVirtualScrollReturn {
   isAtEnd: ComputedRef<boolean>
 }
 
-export function useZVirtualScroll<T>(
-  opts: UseZVirtualScrollOptions<T>,
-): UseZVirtualScrollReturn {
+export function useZVirtualScroll<T>(opts: UseZVirtualScrollOptions<T>): UseZVirtualScrollReturn {
   const direction = opts.direction ?? shallowRef('vertical' as const)
   const overscan = opts.overscan ?? shallowRef(5)
   const autoMeasure = opts.autoMeasure ?? shallowRef(true)
@@ -190,24 +188,21 @@ export function useZVirtualScroll<T>(
   function observeViewport(el: HTMLElement): void {
     if (viewportObserver) viewportObserver.disconnect()
     if (typeof ResizeObserver === 'undefined') {
-      viewportSize.value =
-        direction.value === 'horizontal' ? el.clientWidth : el.clientHeight
+      viewportSize.value = direction.value === 'horizontal' ? el.clientWidth : el.clientHeight
       return
     }
     viewportObserver = new ResizeObserver(() => {
-      viewportSize.value =
-        direction.value === 'horizontal' ? el.clientWidth : el.clientHeight
+      viewportSize.value = direction.value === 'horizontal' ? el.clientWidth : el.clientHeight
       calculateRange()
     })
     viewportObserver.observe(el)
-    viewportSize.value =
-      direction.value === 'horizontal' ? el.clientWidth : el.clientHeight
+    viewportSize.value = direction.value === 'horizontal' ? el.clientWidth : el.clientHeight
   }
 
   function setupItemObserver(): void {
     if (!autoMeasure.value || typeof ResizeObserver === 'undefined') return
     if (resizeObserver) return
-    resizeObserver = new ResizeObserver((entries) => {
+    resizeObserver = new ResizeObserver(entries => {
       let changed = false
       for (const entry of entries) {
         const el = entry.target as HTMLElement
@@ -215,9 +210,7 @@ export function useZVirtualScroll<T>(
         if (indexAttr === undefined) continue
         const i = Number(indexAttr)
         const newSize =
-          direction.value === 'horizontal'
-            ? entry.contentRect.width
-            : entry.contentRect.height
+          direction.value === 'horizontal' ? entry.contentRect.width : entry.contentRect.height
         if (Math.abs((measuredSizes[i] ?? getDeclaredSize(i)) - newSize) > 0.5) {
           measuredSizes[i] = newSize
           changed = true

@@ -7,8 +7,7 @@ import type { DocsGroup } from './_common'
 
 const grid: DocsGroup = {
   gridAutoFlow: {
-    firstLine:
-      'grid 中**未显式定位的子元素**如何自动填入网格 —— 沿行还是沿列、是否填补空隙。',
+    firstLine: 'grid 中**未显式定位的子元素**如何自动填入网格 —— 沿行还是沿列、是否填补空隙。',
     keywordGroups: [
       {
         label: '5 个 keyword',
@@ -34,7 +33,11 @@ s.display.grid
 
 ⚠️ \`dense\` 会让视觉顺序与 DOM 顺序不一致，**影响屏幕阅读器**。`,
     syntax: [
-      ['5 个 keyword', '`row` ｜ `column` ｜ `dense` ｜ `rowDense` ｜ `columnDense`', '只接受关键字'],
+      [
+        '5 个 keyword',
+        '`row` ｜ `column` ｜ `dense` ｜ `rowDense` ｜ `columnDense`',
+        '只接受关键字',
+      ],
     ],
     initialValue: 'row',
     inherits: false,
@@ -77,8 +80,7 @@ grid 列线从 **1** 开始（不是 0），最后一条线可用 \`-1\` 表示�
 
   gridRow: {
     extends: 'gridColumn',
-    firstLine:
-      'grid **子元素**占据的**行范围**（简写）。规则同 `gridColumn`，方向变为垂直。',
+    firstLine: 'grid **子元素**占据的**行范围**（简写）。规则同 `gridColumn`，方向变为垂直。',
     syntax: [
       ['`auto`', '—', '默认；自动分配'],
       ['单值', "`'2'`", '从第 2 条行线开始'],

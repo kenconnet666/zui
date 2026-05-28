@@ -120,10 +120,10 @@ function onCancel(): void {
   visible.value = false
 }
 
-const triggerWrapClass = computed(() => icss(theme.value, (s) => s.display.inlineFlex))
+const triggerWrapClass = computed(() => icss(theme.value, s => s.display.inlineFlex))
 
 const popperClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.zIndex._popover
     s.backgroundColor._bg
@@ -145,7 +145,7 @@ const popperClass = computed(() =>
 )
 
 const headRowClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.flexStart
     s.gap._small
@@ -153,21 +153,21 @@ const headRowClass = computed(() =>
 )
 
 const titleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontWeight._semibold
     s.color._text
   }),
 )
 
 const descClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.fontSize._small
   }),
 )
 
 const iconClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._warning
     s.flexShrink(0)
     s.fontSize._middle
@@ -175,7 +175,7 @@ const iconClass = computed(() =>
 )
 
 const actionsClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.justifyContent.flexEnd
     s.gap._tiny
@@ -184,7 +184,7 @@ const actionsClass = computed(() =>
 )
 
 const btnClass = (primary: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center

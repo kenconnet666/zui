@@ -78,7 +78,7 @@ const formatted = computed(() => {
 })
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontWeight._semibold
     s.color._text
     s.display.inlineBlock

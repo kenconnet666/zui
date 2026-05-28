@@ -6,9 +6,14 @@ import BasicDemo from './ZCalendar/BasicDemo.vue'
 import BasicDemoSource from './ZCalendar/BasicDemo.vue?raw'
 
 const propsRows = [
-  { name: 'value',          type: 'string',             default: '—', desc: 'ISO 日期字符串 YYYY-MM-DD（v-model:value）。' },
-  { name: 'firstDayOfWeek', type: '0 | 1',              default: '0', desc: '周起始：0 = 周日，1 = 周一。' },
-  { name: 'css',            type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
+  {
+    name: 'value',
+    type: 'string',
+    default: '—',
+    desc: 'ISO 日期字符串 YYYY-MM-DD（v-model:value）。',
+  },
+  { name: 'firstDayOfWeek', type: '0 | 1', default: '0', desc: '周起始：0 = 周日，1 = 周一。' },
+  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 
 const emitsRows = [
@@ -32,10 +37,10 @@ const emitsRows = [
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '160px' },
-        { key: 'type',    label: '类型',   mono: true, width: '200px' },
+        { key: 'name', label: '属性', mono: true, width: '160px' },
+        { key: 'type', label: '类型', mono: true, width: '200px' },
         { key: 'default', label: '默认值', mono: true, width: '80px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="propsRows"
     />
@@ -43,8 +48,8 @@ const emitsRows = [
     <ZTitle :level="2">Emits</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name', label: '事件',  mono: true, width: '160px' },
-        { key: 'args', label: '参数',  mono: true, width: '100px' },
+        { key: 'name', label: '事件', mono: true, width: '160px' },
+        { key: 'args', label: '参数', mono: true, width: '100px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"

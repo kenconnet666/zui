@@ -28,7 +28,7 @@ describe('单条 className 产出', () => {
   })
 
   bench('icss(theme, fn)（一行 shortcut）', () => {
-    icss(defaultLight, (s) => {
+    icss(defaultLight, s => {
       s.color._primary
       s.padding._middle
       s.borderRadius._middle
@@ -51,16 +51,16 @@ describe('嵌套伪类 + 多属性（典型按钮）', () => {
   })
 
   bench('icss 嵌套', () => {
-    icss(defaultLight, (s) => {
+    icss(defaultLight, s => {
       s.color.white
       s.backgroundColor._primary
       s.padding.px(12)
       s.borderRadius._middle
       s.fontWeight._bold
-      s._hover((h) => {
+      s._hover(h => {
         h.backgroundColor._primary.alpha(85)
       })
-      s._focusVisible((f) => {
+      s._focusVisible(f => {
         f.outlineColor._primary
         f.outlineStyle('solid')
         f.outlineWidth.px(2)

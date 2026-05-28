@@ -7,7 +7,7 @@ const amount = ref('')
 </script>
 
 <template>
-  <ZSpace :direction="d => d.vertical" :size="g => g.iem(0.75)">
+  <ZSpace :direction="d => d.column" :size="g => g.iem(0.75)">
     <ZInput v-model:value="user" placeholder="搜索...">
       <template #prefix>
         <ZIcon :component="BuiltinIcons.search" />

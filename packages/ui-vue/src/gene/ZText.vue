@@ -179,7 +179,7 @@ const props = withDefaults(defineProps<ZTextProps>(), {
 const theme = useZTheme()
 
 const className = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     applyTypographyBase(s, props)
     props.css?.(s)
   }),

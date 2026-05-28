@@ -206,7 +206,6 @@ const iemStyle = computed<{ '--zui-iem': string } | undefined>(() => {
   const parsed = parseIem(props.iem)
   if (parsed === null) {
     if (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production') {
-
       console.warn(
         `[zui-vue/ZBox] :iem 仅支持 'px' / 'vw' 字面字符串或 number,收到 "${props.iem}";` +
           '\n  回落 ZIemPreset.default ("0.8333vw")。',
@@ -234,7 +233,6 @@ if (
   props.iem === undefined &&
   (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production')
 ) {
-
   console.warn(
     '[zui-vue/ZBox] 根 ZBox 未传 `:iem`。所有 iem 化 token 将回落到 css var fallback 16px,' +
       '\n  无法跟随浏览器根字号(a11y 大字)、无法整站切换大字 / 紧凑模式。' +
@@ -260,7 +258,6 @@ const mergedTheme = computed<ResolvedTheme<ZuiSchema>>(() => {
   // ③ 都没传 → 直接用 parent / fallback
   if (parentTheme) return parentTheme.value
   if (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production') {
-
     console.warn(
       '[zui-vue/ZBox] 没有父 Provider 且未传 theme/themePatch,回落 zuiLight。' +
         '\n  根 ZBox 建议显式传 `:theme="zuiLight"` 或你自家的 Theme 实例。',
@@ -300,7 +297,7 @@ const iemPx = computed<number>(() => {
     return parentIemPx?.value ?? 16
   }
   const parsed = parseIem(props.iem)
-  if (parsed === null) return 16  // 解析失败 fallback(dev warn 已在 iemStyle 触发过)
+  if (parsed === null) return 16 // 解析失败 fallback(dev warn 已在 iemStyle 触发过)
   if (parsed.staticPx !== null) return parsed.staticPx
   if (parsed.vwFactor !== null) return parsed.vwFactor * viewportWidth.value
   return 16

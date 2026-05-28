@@ -18,17 +18,34 @@ const shortItems: ListItem[] = items.slice(0, 5)
 
 <template>
   <ZFlex :direction="d => d.column" :gap="g => g._large">
-    <ZList
-      :items="shortItems"
-      :item-size="3"
-      :height="16"
-      header="简单列表"
-      :bordered="true"
-    >
+    <ZList :items="shortItems" :item-size="3" :height="16" header="简单列表" :bordered="true">
       <template #default="{ item }">
-        <ZFlex :direction="d => d.column" :gap="g => g._tiny" :css="s => { s.padding._small }">
-          <ZText :css="s => { s.fontWeight._semibold }">{{ item.title }}</ZText>
-          <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">{{ item.desc }}</ZText>
+        <ZFlex
+          :direction="d => d.column"
+          :gap="g => g._tiny"
+          :css="
+            s => {
+              s.padding._small
+            }
+          "
+        >
+          <ZText
+            :css="
+              s => {
+                s.fontWeight._semibold
+              }
+            "
+            >{{ item.title }}</ZText
+          >
+          <ZText
+            :css="
+              s => {
+                s.color._textSecondary
+                s.fontSize._small
+              }
+            "
+            >{{ item.desc }}</ZText
+          >
         </ZFlex>
       </template>
     </ZList>
@@ -42,9 +59,25 @@ const shortItems: ListItem[] = items.slice(0, 5)
       :bordered="true"
     >
       <template #default="{ item, index }">
-        <ZFlex :justify="j => j.spaceBetween" :align="a => a.center" :css="s => { s.padding._small }">
+        <ZFlex
+          :justify="j => j.spaceBetween"
+          :align="a => a.center"
+          :css="
+            s => {
+              s.padding._small
+            }
+          "
+        >
           <ZText>{{ item.title }}</ZText>
-          <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">#{{ index + 1 }}</ZText>
+          <ZText
+            :css="
+              s => {
+                s.color._textSecondary
+                s.fontSize._small
+              }
+            "
+            >#{{ index + 1 }}</ZText
+          >
         </ZFlex>
       </template>
     </ZList>

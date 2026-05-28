@@ -56,7 +56,7 @@ const props = withDefaults(defineProps<ZSpacerProps>(), {
 const theme = useZTheme()
 
 const className = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(props.grow)
     s.flexShrink(props.shrink)
     // basis 默认 `auto`(从 withDefaults 提供)

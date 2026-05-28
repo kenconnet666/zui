@@ -133,7 +133,7 @@ useEscapeStack(
 )
 
 const maskClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.fixed
     s.inset.px(0)
     s.display.flex
@@ -148,7 +148,7 @@ const maskClass = computed(() =>
 const sxMaskAttrs = computed(() => extractSxAttrs(props.sxMask))
 
 const dialogClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.backgroundColor._bg
     s.color._text
     s.borderRadius._large
@@ -169,7 +169,7 @@ const dialogClass = computed(() =>
 const sxDialogAttrs = computed(() => extractSxAttrs(props.sxDialog))
 
 const headClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.spaceBetween
@@ -190,7 +190,7 @@ const bodyOverlay = useScrollbarOverlay(theme)
 
 /** 外层 wrapper：承接 sxBody attrs、position:relative 定位 overlay track。 */
 const bodyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.relative
     s.flexGrow(1)
     s.minHeight.px(0)
@@ -201,7 +201,7 @@ const bodyClass = computed(() =>
 
 /** 内层真正滚动的 div：height:100% + overflow-y:auto + native scrollbar 隐藏。 */
 const bodyScrollerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.height.pct(100)
     s.overflowY.auto
     s.padding._middle
@@ -212,7 +212,7 @@ const bodyScrollerClass = computed(() =>
 const sxBodyAttrs = computed(() => extractSxAttrs(props.sxBody))
 
 const footClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.justifyContent.flexEnd
     s.gap._small
@@ -226,7 +226,7 @@ const footClass = computed(() =>
 const sxFootAttrs = computed(() => extractSxAttrs(props.sxFoot))
 
 const closeBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -237,20 +237,20 @@ const closeBtnClass = computed(() =>
     s.fontSize._middle
     s.color._textSecondary
     s.borderRadius._tiny
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.backgroundColor._textSecondary.alpha(8)
     })
   }),
 )
 
 const fadeActiveClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.transitionProperty._opacity
     s.transitionDuration._small
     s.transitionTimingFunction._default
   }),
 )
-const fadeBoundaryClass = computed(() => icss(theme.value, (s) => s.opacity._none))
+const fadeBoundaryClass = computed(() => icss(theme.value, s => s.opacity._none))
 
 function onMaskClick(e: MouseEvent): void {
   if (e.target !== e.currentTarget) return
@@ -270,7 +270,7 @@ function onCloseClick(): void {
 let releaseLock: (() => void) | null = null
 watch(
   () => props.visible,
-  (v) => {
+  v => {
     if (v && !releaseLock) {
       releaseLock = lockBodyScroll()
     } else if (!v && releaseLock) {
@@ -363,7 +363,11 @@ defineExpose({ rootRef })
             @focusin="bodyOverlay.isFocused.value = true"
             @focusout="bodyOverlay.isFocused.value = false"
           >
-            <div :ref="bodyOverlay.scrollEl" :class="bodyScrollerClass" @scroll="bodyOverlay.onScroll">
+            <div
+              :ref="bodyOverlay.scrollEl"
+              :class="bodyScrollerClass"
+              @scroll="bodyOverlay.onScroll"
+            >
               <slot />
             </div>
             <Transition

@@ -3,14 +3,7 @@
  */
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
-import {
-  ZSegmented,
-  ZGradientText,
-  ZCountdown,
-  ZNumberAnimation,
-  ZMarquee,
-  ZSplit,
-} from '../src'
+import { ZSegmented, ZGradientText, ZCountdown, ZNumberAnimation, ZMarquee, ZSplit } from '../src'
 
 describe('ZSegmented', () => {
   const OPTS = [
@@ -53,7 +46,7 @@ describe('ZGradientText', () => {
     const w = mount(ZGradientText, { slots: { default: () => 'Hello' } })
     expect(w.text()).toContain('Hello')
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/background-image:linear-gradient/)
   })
@@ -64,7 +57,7 @@ describe('ZGradientText', () => {
       slots: { default: () => 'x' },
     })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/red.*blue/)
   })
@@ -122,7 +115,7 @@ describe('ZMarquee', () => {
     mount(ZMarquee, { slots: { default: () => 'x' } })
     // ikeyframes 走 emotion 注入 <style data-emotion>,包含 @keyframes 定义
     const emotionStyles = Array.from(document.querySelectorAll('style[data-emotion]'))
-    const css = emotionStyles.map((el) => el.textContent ?? '').join('\n')
+    const css = emotionStyles.map(el => el.textContent ?? '').join('\n')
     expect(css).toMatch(/@keyframes/)
   })
 })

@@ -205,7 +205,7 @@ describe('ZBox', () => {
 describe('ZBox — 底层 box 能力(css + tag)', () => {
   function getInjectedCss(): string {
     return Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
   }
 
@@ -229,7 +229,7 @@ describe('ZBox — 底层 box 能力(css + tag)', () => {
       },
       slots: { default: () => 'x' },
     })
-    const cls = w.classes().find((c) => c.startsWith('css-'))
+    const cls = w.classes().find(c => c.startsWith('css-'))
     expect(cls).toBeDefined()
     const css = getInjectedCss().toLowerCase()
     expect(css).toMatch(/padding:24px/)
@@ -257,14 +257,14 @@ describe('ZBox — 底层 box 能力(css + tag)', () => {
     const w = mount(ZBox, { slots: { default: () => 'x' } })
     const cls = w.classes()
     // 没传 css 时,classList 应为空(或不含 css-* emotion class)
-    expect(cls.filter((c) => c.startsWith('css-')).length).toBe(0)
+    expect(cls.filter(c => c.startsWith('css-')).length).toBe(0)
   })
 })
 
 describe('ZBox — fonts schema token', () => {
   function getInjectedCss(): string {
     return Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
   }
 
@@ -297,7 +297,7 @@ describe('ZBox — fonts schema token', () => {
 describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', () => {
   function getInjectedCss(): string {
     return Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
   }
 
@@ -456,8 +456,8 @@ describe('ZBox — iem 透传语义(无默认值,子不传则继承父 cascade)'
         props: { theme: zuiLight }, // 有 theme 但没 iem
         slots: { default: () => 'x' },
       })
-      const calls = warnSpy.mock.calls.map((args) => String(args[0]))
-      expect(calls.some((m) => m.includes('根 ZBox 未传 `:iem`'))).toBe(true)
+      const calls = warnSpy.mock.calls.map(args => String(args[0]))
+      expect(calls.some(m => m.includes('根 ZBox 未传 `:iem`'))).toBe(true)
     } finally {
       warnSpy.mockRestore()
     }
@@ -470,8 +470,8 @@ describe('ZBox — iem 透传语义(无默认值,子不传则继承父 cascade)'
         props: { theme: zuiLight, iem: '16px' },
         slots: { default: () => 'x' },
       })
-      const calls = warnSpy.mock.calls.map((args) => String(args[0]))
-      expect(calls.some((m) => m.includes('根 ZBox 未传 `:iem`'))).toBe(false)
+      const calls = warnSpy.mock.calls.map(args => String(args[0]))
+      expect(calls.some(m => m.includes('根 ZBox 未传 `:iem`'))).toBe(false)
     } finally {
       warnSpy.mockRestore()
     }
@@ -489,8 +489,8 @@ describe('ZBox — iem 透传语义(无默认值,子不传则继承父 cascade)'
         `,
         data: () => ({ theme: zuiLight }),
       })
-      const calls = warnSpy.mock.calls.map((args) => String(args[0]))
-      expect(calls.some((m) => m.includes('根 ZBox 未传 `:iem`'))).toBe(false)
+      const calls = warnSpy.mock.calls.map(args => String(args[0]))
+      expect(calls.some(m => m.includes('根 ZBox 未传 `:iem`'))).toBe(false)
     } finally {
       warnSpy.mockRestore()
     }

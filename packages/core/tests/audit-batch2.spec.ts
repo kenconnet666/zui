@@ -101,7 +101,7 @@ describe('S6 — function token 引用未定义路径记录完整路径', () => 
       }),
     )
     // 应找到 spacing.md 未定义的 warning
-    const ref = issues.find((i) => i.message.includes('spacing.md') && i.level === 'warn')
+    const ref = issues.find(i => i.message.includes('spacing.md') && i.level === 'warn')
     expect(ref).toBeDefined()
   })
 
@@ -119,7 +119,7 @@ describe('S6 — function token 引用未定义路径记录完整路径', () => 
         },
       }),
     )
-    const ref = issues.find((i) => i.message.includes('color.nonExistent'))
+    const ref = issues.find(i => i.message.includes('color.nonExistent'))
     expect(ref).toBeDefined()
   })
 
@@ -139,9 +139,9 @@ describe('S6 — function token 引用未定义路径记录完整路径', () => 
         },
       }),
     )
-    const refs = issues.filter((i) => i.message.includes('引用了未定义路径'))
+    const refs = issues.filter(i => i.message.includes('引用了未定义路径'))
     expect(refs.length).toBeGreaterThanOrEqual(2)
-    const pathsMentioned = refs.map((r) => r.message).join(' ')
+    const pathsMentioned = refs.map(r => r.message).join(' ')
     expect(pathsMentioned).toContain('spacing.unknownX')
     expect(pathsMentioned).toContain('spacing.unknownY')
   })
@@ -160,7 +160,7 @@ describe('S6 — function token 引用未定义路径记录完整路径', () => 
         },
       }),
     )
-    const pathIssues = issues.filter((i) => i.message.includes('引用了未定义路径'))
+    const pathIssues = issues.filter(i => i.message.includes('引用了未定义路径'))
     expect(pathIssues).toHaveLength(0)
   })
 
@@ -178,7 +178,7 @@ describe('S6 — function token 引用未定义路径记录完整路径', () => 
         },
       }),
     )
-    const bad = issues.find((i) => i.key === 'bad' && i.level === 'error')
+    const bad = issues.find(i => i.key === 'bad' && i.level === 'error')
     expect(bad).toBeDefined()
   })
 })

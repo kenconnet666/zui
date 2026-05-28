@@ -54,11 +54,7 @@ export type { ZEllipsisProps } from './ZEllipsis.vue'
 
 // ─── Phase γ ───
 export { default as ZSegmented } from './ZSegmented.vue'
-export type {
-  ZSegmentedProps,
-  ZSegmentedEmits,
-  ZSegmentedOption,
-} from './ZSegmented.vue'
+export type { ZSegmentedProps, ZSegmentedEmits, ZSegmentedOption } from './ZSegmented.vue'
 
 export { default as ZGradientText } from './ZGradientText.vue'
 export type { ZGradientTextProps } from './ZGradientText.vue'

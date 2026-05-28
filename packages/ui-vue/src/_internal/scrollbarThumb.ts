@@ -8,7 +8,7 @@ export const SCROLL_THUMB_MIN_PX = 24
 export function scrollbarThumbColors(dark: boolean): { normal: string; hover: string } {
   return dark
     ? { normal: 'rgba(255,255,255,0.32)', hover: 'rgba(255,255,255,0.52)' }
-    : { normal: 'rgba(0,0,0,0.32)',       hover: 'rgba(0,0,0,0.52)' }
+    : { normal: 'rgba(0,0,0,0.32)', hover: 'rgba(0,0,0,0.52)' }
 }
 
 /** 计算 thumb 高度（px）。 */

@@ -151,18 +151,33 @@ describe('resolveStringValue — unit 解析', () => {
 
 describe('resolveStringValue — color modifier 链', () => {
   it('_primary.alpha(50) → setAlpha 50%', () => {
-    const v = resolveStringValue('_primary.alpha(50)', { tokenCat: 'color' }, theme, keymap) as string
+    const v = resolveStringValue(
+      '_primary.alpha(50)',
+      { tokenCat: 'color' },
+      theme,
+      keymap,
+    ) as string
     expect(v).toMatch(/^rgba\(/)
     expect(v).toContain('0.5')
   })
 
   it('_primary.alpha(0) → 完全透明', () => {
-    const v = resolveStringValue('_primary.alpha(0)', { tokenCat: 'color' }, theme, keymap) as string
+    const v = resolveStringValue(
+      '_primary.alpha(0)',
+      { tokenCat: 'color' },
+      theme,
+      keymap,
+    ) as string
     expect(v).toContain(', 0)')
   })
 
   it('_primary.alpha(100) → 完全不透明', () => {
-    const v = resolveStringValue('_primary.alpha(100)', { tokenCat: 'color' }, theme, keymap) as string
+    const v = resolveStringValue(
+      '_primary.alpha(100)',
+      { tokenCat: 'color' },
+      theme,
+      keymap,
+    ) as string
     expect(v).toContain(', 1)')
   })
 
@@ -178,22 +193,36 @@ describe('resolveStringValue — color modifier 链', () => {
   })
 
   it('_primary.saturate(20) / desaturate(20)', () => {
-    expect(resolveStringValue('_primary.saturate(20)', undefined, theme, keymap)).not.toBe(theme.color!.primary)
-    expect(resolveStringValue('_primary.desaturate(20)', undefined, theme, keymap)).not.toBe(theme.color!.primary)
+    expect(resolveStringValue('_primary.saturate(20)', undefined, theme, keymap)).not.toBe(
+      theme.color!.primary,
+    )
+    expect(resolveStringValue('_primary.desaturate(20)', undefined, theme, keymap)).not.toBe(
+      theme.color!.primary,
+    )
   })
 
   it('_primary.shade(50) / tint(50)', () => {
-    expect(resolveStringValue('_primary.shade(50)', undefined, theme, keymap)).not.toBe(theme.color!.primary)
-    expect(resolveStringValue('_primary.tint(50)', undefined, theme, keymap)).not.toBe(theme.color!.primary)
+    expect(resolveStringValue('_primary.shade(50)', undefined, theme, keymap)).not.toBe(
+      theme.color!.primary,
+    )
+    expect(resolveStringValue('_primary.tint(50)', undefined, theme, keymap)).not.toBe(
+      theme.color!.primary,
+    )
   })
 
   it('_primary.complement() / invert() 无参数 modifier', () => {
-    expect(resolveStringValue('_primary.complement()', undefined, theme, keymap)).not.toBe(theme.color!.primary)
-    expect(resolveStringValue('_primary.invert()', undefined, theme, keymap)).not.toBe(theme.color!.primary)
+    expect(resolveStringValue('_primary.complement()', undefined, theme, keymap)).not.toBe(
+      theme.color!.primary,
+    )
+    expect(resolveStringValue('_primary.invert()', undefined, theme, keymap)).not.toBe(
+      theme.color!.primary,
+    )
   })
 
   it('_primary.rotateHue(90) 任意角度', () => {
-    expect(resolveStringValue('_primary.rotateHue(90)', undefined, theme, keymap)).not.toBe(theme.color!.primary)
+    expect(resolveStringValue('_primary.rotateHue(90)', undefined, theme, keymap)).not.toBe(
+      theme.color!.primary,
+    )
   })
 
   it('_primary.mix(_danger, 30) — 嵌套 token 反查', () => {
@@ -246,12 +275,7 @@ describe('resolveStringValue — color modifier 链', () => {
 
   it('数字 token 不接 modifier(typeof !== string)', () => {
     const spy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-    const v = resolveStringValue(
-      '_bold.alpha(50)',
-      { tokenCat: 'fontWeight' },
-      theme,
-      keymap,
-    )
+    const v = resolveStringValue('_bold.alpha(50)', { tokenCat: 'fontWeight' }, theme, keymap)
     // fontWeight.bold 是 number, modifier 跳过, 返回原 number
     expect(v).toBe(theme.fontWeight!.bold)
     expect(spy).toHaveBeenCalledWith(expect.stringContaining('cannot apply modifiers'))

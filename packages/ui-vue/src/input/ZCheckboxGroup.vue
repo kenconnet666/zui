@@ -62,7 +62,7 @@ const ctx: CheckboxGroupCtx = {
     if (checked) {
       next = cur.includes(val) ? [...cur] : [...cur, val]
     } else {
-      next = cur.filter((v) => v !== val)
+      next = cur.filter(v => v !== val)
     }
     emit('update:value', next)
     emit('change', next)
@@ -72,7 +72,7 @@ const ctx: CheckboxGroupCtx = {
 provide(Z_CHECKBOX_GROUP_KEY, ctx)
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     if (props.direction) s.flexDirection(props.direction)
     s.gap._small

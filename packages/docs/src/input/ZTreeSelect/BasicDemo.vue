@@ -9,8 +9,8 @@ const treeData = [
     key: 'frontend',
     label: '前端',
     children: [
-      { key: 'vue',    label: 'Vue 3' },
-      { key: 'react',  label: 'React' },
+      { key: 'vue', label: 'Vue 3' },
+      { key: 'react', label: 'React' },
       { key: 'svelte', label: 'Svelte' },
     ],
   },
@@ -18,9 +18,9 @@ const treeData = [
     key: 'backend',
     label: '后端',
     children: [
-      { key: 'java',   label: 'Java' },
+      { key: 'java', label: 'Java' },
       { key: 'golang', label: 'Go' },
-      { key: 'node',   label: 'Node.js', disabled: true },
+      { key: 'node', label: 'Node.js', disabled: true },
     ],
   },
 ]
@@ -35,7 +35,16 @@ const treeData = [
         placeholder="请选择技术栈"
         :clearable="true"
       />
-      <ZText v-if="value" :css="s => { s.color._textSecondary; s.fontSize._small }">已选：{{ value }}</ZText>
+      <ZText
+        v-if="value"
+        :css="
+          s => {
+            s.color._textSecondary
+            s.fontSize._small
+          }
+        "
+        >已选：{{ value }}</ZText
+      >
     </ZFlex>
 
     <ZTreeSelect :data="treeData" placeholder="已禁用" :disabled="true" />

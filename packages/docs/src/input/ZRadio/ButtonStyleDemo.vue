@@ -19,14 +19,26 @@ const planOptions = [
 
 <template>
   <ZSpace :direction="d => d.column" :size="g => g._middle">
-    <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">buttonStyle 按钮组样式</ZText>
+    <ZText
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+      >buttonStyle 按钮组样式</ZText
+    >
     <ZRadioGroup v-model:value="v1" :options="sizeOptions" :button-style="true" />
 
-    <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">默认样式 + 纵向排列</ZText>
-    <ZRadioGroup
-      v-model:value="v2"
-      :options="planOptions"
-      :direction="d => d.column"
-    />
+    <ZText
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+      >默认样式 + 纵向排列</ZText
+    >
+    <ZRadioGroup v-model:value="v2" :options="planOptions" :direction="d => d.column" />
   </ZSpace>
 </template>

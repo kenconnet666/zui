@@ -33,9 +33,7 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
     })
 
     it('严格模式：含未声明 key 返回 false', () => {
-      expect(
-        isResponsiveValue({ base: 1, weird: 2 }, ['small', 'middle', 'large']),
-      ).toBe(false)
+      expect(isResponsiveValue({ base: 1, weird: 2 }, ['small', 'middle', 'large'])).toBe(false)
     })
 
     it('启发模式（不传 breakpoints）— 向后兼容', () => {
@@ -47,9 +45,7 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
     })
 
     it('严格模式拒绝下划线开头 key', () => {
-      expect(
-        isResponsiveValue({ _primary: '#fff' }, ['small', 'middle', 'large']),
-      ).toBe(false)
+      expect(isResponsiveValue({ _primary: '#fff' }, ['small', 'middle', 'large'])).toBe(false)
     })
 
     it('null / 非对象 / 数组都返回 false', () => {
@@ -73,10 +69,10 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
       const dialog = defineParts(theme, {
         slots: ['root', 'content'] as const,
         base: {
-          root: (s) => {
+          root: s => {
             s.position.fixed
           },
-          content: (s) => {
+          content: s => {
             s.padding.px(16)
           },
         },
@@ -84,7 +80,7 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
 
       const compact = extendParts(theme, dialog, {
         base: {
-          content: (s) => {
+          content: s => {
             s.padding.px(8)
           },
         },
@@ -102,7 +98,7 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
       const tabs = defineParts(theme, {
         slots: ['list', 'tab'] as const,
         base: {
-          list: (s) => {
+          list: s => {
             s.display.flex
           },
         },
@@ -112,12 +108,12 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
         variants: {
           intent: {
             primary: {
-              tab: (s) => {
+              tab: s => {
                 s.color._primary
               },
             },
             danger: {
-              tab: (s) => {
+              tab: s => {
                 s.color._danger
               },
             },
@@ -136,14 +132,22 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
       const select = defineParts(theme, {
         slots: ['trigger'] as const,
         base: {
-          trigger: (s) => {
+          trigger: s => {
             s.padding.px(12)
           },
         },
         variants: {
           size: {
-            small: { trigger: (s) => { s.fontSize.px(12) } },
-            middle: { trigger: (s) => { s.fontSize.px(14) } },
+            small: {
+              trigger: s => {
+                s.fontSize.px(12)
+              },
+            },
+            middle: {
+              trigger: s => {
+                s.fontSize.px(14)
+              },
+            },
           },
         } as const,
         defaultVariants: { size: 'middle' },
@@ -152,7 +156,11 @@ describe('CL Batch 4 — core 扩展（ui-vue 启动前补齐）', () => {
       const customized = extendParts(theme, select, {
         variants: {
           size: {
-            middle: { trigger: (s) => { s.fontSize.px(20) } },
+            middle: {
+              trigger: s => {
+                s.fontSize.px(20)
+              },
+            },
           },
         } as const,
       })

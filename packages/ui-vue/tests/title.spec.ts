@@ -15,7 +15,7 @@ import { ZTitle, type ZTitleLevel, type ZuiSchema } from '../src'
 
 function getInjectedCss(): string {
   return Array.from(document.querySelectorAll('style'))
-    .map((el) => el.textContent ?? '')
+    .map(el => el.textContent ?? '')
     .join('\n')
 }
 

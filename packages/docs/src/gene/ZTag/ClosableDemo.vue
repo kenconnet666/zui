@@ -5,7 +5,7 @@ import { ZTag, ZSpace } from '@kenconnet666/zui-vue'
 const tags = ref(['Vue', 'TypeScript', 'Emotion', 'Vite'])
 
 function remove(t: string) {
-  tags.value = tags.value.filter((x) => x !== t)
+  tags.value = tags.value.filter(x => x !== t)
 }
 </script>
 

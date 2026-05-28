@@ -10,16 +10,19 @@ let wrappers: VueWrapper[] = []
 
 function cleanup(): void {
   // 共享 body scroll lock 依赖 onScopeDispose 释放,wrapper.unmount() 触发它
-  wrappers.forEach((w) => w.unmount())
+  wrappers.forEach(w => w.unmount())
   wrappers = []
-  document.body.querySelectorAll('[role="dialog"]').forEach((el) => el.parentElement?.remove())
+  document.body.querySelectorAll('[role="dialog"]').forEach(el => el.parentElement?.remove())
   document.body.style.overflow = ''
 }
 
 beforeEach(cleanup)
 afterEach(cleanup)
 
-function makeHost(visible: ReturnType<typeof ref<boolean>>, extraProps: Record<string, unknown> = {}) {
+function makeHost(
+  visible: ReturnType<typeof ref<boolean>>,
+  extraProps: Record<string, unknown> = {},
+) {
   return defineComponent({
     setup() {
       return () =>
@@ -77,7 +80,9 @@ describe('ZModal — 关闭', () => {
 
   it('closable=false → 不渲染关闭按钮', async () => {
     const visible = ref(true)
-    wrappers.push(mount(makeHost(visible, { title: 'T', closable: false }), { attachTo: document.body }))
+    wrappers.push(
+      mount(makeHost(visible, { title: 'T', closable: false }), { attachTo: document.body }),
+    )
     await nextTick()
     expect(document.querySelector('button[aria-label="关闭"]')).toBeNull()
   })

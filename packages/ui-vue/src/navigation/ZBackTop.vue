@@ -108,7 +108,7 @@ onScopeDispose(() => {
 })
 
 const btnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 2.5
     s.position.fixed
     if (props.right) s.right(props.right)
@@ -129,7 +129,7 @@ const btnClass = computed(() =>
     s.zIndex._popover
     s.transitionProperty._default
     s.transitionDuration._small
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.boxShadow._large
     })
     props.css?.(s)
@@ -139,13 +139,13 @@ const btnClass = computed(() =>
 const upIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronUp }))
 
 const fadeActiveClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.transitionProperty._opacity
     s.transitionDuration._small
     s.transitionTimingFunction.ease
   }),
 )
-const fadeBoundaryClass = computed(() => icss(theme.value, (s) => s.opacity._none))
+const fadeBoundaryClass = computed(() => icss(theme.value, s => s.opacity._none))
 </script>
 
 <template>

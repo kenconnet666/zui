@@ -65,7 +65,7 @@ const props = withDefaults(defineProps<ZResultProps>(), {
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.alignItems.center
@@ -79,7 +79,7 @@ const rootClass = computed(() =>
 )
 
 const iconWrapClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.color(props.color)
     s.fontSize.iem(4)
@@ -87,7 +87,7 @@ const iconWrapClass = computed(() =>
 )
 
 const titleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._huge
     s.fontWeight._semibold
     s.color._text
@@ -96,7 +96,7 @@ const titleClass = computed(() =>
 )
 
 const descClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._middle
     s.color._textSecondary
     s.textAlign.center
@@ -105,7 +105,7 @@ const descClass = computed(() =>
 )
 
 const actionsClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.gap._small
     s.marginTop._small

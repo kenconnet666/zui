@@ -94,7 +94,7 @@ const DEFAULT_CIRCLE_DIAMETER_IEM = 7.5
 const SVG_VIEWBOX_BASE = 100
 
 const trackClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.gap._small
@@ -104,7 +104,7 @@ const trackClass = computed(() =>
 )
 
 const railClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.backgroundColor._bgMuted
     s.borderRadius._full
@@ -114,7 +114,7 @@ const railClass = computed(() =>
 )
 
 const fillClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     if (!applyAsBg(s, props.color)) {
       s.backgroundColor._primary
     }
@@ -126,7 +126,7 @@ const fillClass = computed(() =>
 )
 
 const textClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.fontSize._small
     s.flexShrink(0)
@@ -141,7 +141,7 @@ const circumference = 2 * Math.PI * circleRadius
 const dashOffset = computed(() => circumference * (1 - clampedValue.value / 100))
 
 const circleRootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.relative
     s.display.inlineFlex
     s.alignItems.center
@@ -153,7 +153,7 @@ const circleRootClass = computed(() =>
 )
 
 const circleTextClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.color._text
     s.fontWeight._semibold
@@ -176,23 +176,30 @@ const fillColor = computed<string>(() =>
 </script>
 
 <template>
-  <div v-if="type === 'line'" :class="trackClass" role="progressbar" :aria-valuenow="clampedValue" aria-valuemin="0" aria-valuemax="100">
+  <div
+    v-if="type === 'line'"
+    :class="trackClass"
+    role="progressbar"
+    :aria-valuenow="clampedValue"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
     <div :class="railClass">
       <div :class="fillClass" />
     </div>
     <span v-if="showText" :class="textClass">{{ clampedValue }}%</span>
   </div>
 
-  <div v-else :class="circleRootClass" role="progressbar" :aria-valuenow="clampedValue" aria-valuemin="0" aria-valuemax="100">
+  <div
+    v-else
+    :class="circleRootClass"
+    role="progressbar"
+    :aria-valuenow="clampedValue"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
     <svg width="100%" height="100%" viewBox="0 0 100 100">
-      <circle
-        cx="50"
-        cy="50"
-        :r="circleRadius"
-        fill="none"
-        :stroke="trackColor"
-        stroke-width="8"
-      />
+      <circle cx="50" cy="50" :r="circleRadius" fill="none" :stroke="trackColor" stroke-width="8" />
       <circle
         cx="50"
         cy="50"

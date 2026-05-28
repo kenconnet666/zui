@@ -75,7 +75,7 @@ const percent = computed(() => {
 })
 
 const wrapperClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.gap._small
@@ -88,7 +88,7 @@ const wrapperClass = computed(() =>
 // 拖动时只更新 inline style,className 稳定不重新生成(性能优化)
 // 2026-05-24 B7:内部 track 0.25iem(4px)thumb 1iem(16px)写死,跟 Provider 字号联动
 const inputClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.appearance.none
     s.width.pct(100)
@@ -101,11 +101,11 @@ const inputClass = computed(() =>
     s.background(
       'linear-gradient(to right, var(--zui-slider-fill) 0%, var(--zui-slider-fill) var(--zui-slider-percent), var(--zui-slider-track) var(--zui-slider-percent), var(--zui-slider-track) 100%)',
     )
-    s._disabled((d) => {
+    s._disabled(d => {
       d.cursor.notAllowed
       d.opacity._half
     })
-    s._selector('&::-webkit-slider-thumb', (t) => {
+    s._selector('&::-webkit-slider-thumb', t => {
       t.appearance.none
       t.width.iem(1)
       t.height.iem(1)
@@ -117,7 +117,7 @@ const inputClass = computed(() =>
       t.background('var(--zui-slider-bg)')
       t.boxShadow('0 1px 3px rgba(0,0,0,0.2)')
     })
-    s._selector('&::-moz-range-thumb', (t) => {
+    s._selector('&::-moz-range-thumb', t => {
       t.width.iem(1)
       t.height.iem(1)
       t.borderRadius._full
@@ -139,7 +139,7 @@ const inputStyle = computed(() => ({
 }))
 
 const valueLabelClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexShrink(0)
     s.color._textSecondary
     s.fontSize._small

@@ -8,7 +8,13 @@ import { ZAlert, ZFlex, ZButton } from '@kenconnet666/zui-vue'
       :color="c => c._success"
       title="带操作按钮"
       description="default slot 渲染在描述下方,适合放操作按钮。"
-      :sxBody="{ css: s => { s.gap.iem(0.5); s.display.flex; s.flexDirection.column } }"
+      :sxBody="{
+        css: s => {
+          s.gap.iem(0.5)
+          s.display.flex
+          s.flexDirection.column
+        },
+      }"
     >
       <ZFlex :gap="g => g._small">
         <ZButton :size="0.75" :color="c => c._success">查看</ZButton>

@@ -58,7 +58,11 @@ ${lengthUnitsSnippet('fontSize')}`,
     syntax: [
       ['`<length>`', "`'16px'` `'1rem'` `'1.2em'`", '具体长度'],
       ['`<percentage>`', "`'120%'`", '相对父字号'],
-      ['8 个绝对大小', '`xxSmall` `xSmall` `small` `medium` `large` `xLarge` `xxLarge` `xxxLarge`', '浏览器约定值'],
+      [
+        '8 个绝对大小',
+        '`xxSmall` `xSmall` `small` `medium` `large` `xLarge` `xxLarge` `xxxLarge`',
+        '浏览器约定值',
+      ],
       ['2 个相对大小', '`smaller` ｜ `larger`', '相对父字号'],
       ['数学函数', "`'clamp(14px, 2vw, 18px)'`", '响应式字号'],
     ],
@@ -126,8 +130,7 @@ s.fontWeight(450)         // 介于 400 和 500 之间（仅可变字体支持�
   // fontFamily
   // ════════════════════════════════════════════════════════════════════
   fontFamily: {
-    firstLine:
-      '设置元素使用的**字体族**。可写具体字体名 + 回退族，或仅写通用族关键字。',
+    firstLine: '设置元素使用的**字体族**。可写具体字体名 + 回退族，或仅写通用族关键字。',
     keywordGroups: [
       {
         label: '5 个传统通用族（generic family）',
@@ -144,7 +147,10 @@ s.fontWeight(450)         // 介于 400 和 500 之间（仅可变字体支持�
         label: '8 个现代 UI 通用族（CSS Fonts 4）',
         headers: ['关键字', '行为'],
         rows: [
-          ['`systemUi`', '**系统 UI 字体**（macOS: SF Pro，Windows: Segoe UI，Linux: Cantarell 等）—— 现代 Web App 首选'],
+          [
+            '`systemUi`',
+            '**系统 UI 字体**（macOS: SF Pro，Windows: Segoe UI，Linux: Cantarell 等）—— 现代 Web App 首选',
+          ],
           ['`uiSerif`', '系统 UI 的衬线版本'],
           ['`uiSansSerif`', '系统 UI 的无衬线版本'],
           ['`uiMonospace`', '系统 UI 的等宽版本'],
@@ -176,9 +182,13 @@ s.fontFamily.systemUi                     // 等价 token 写法
 s.fontFamily("'PingFang SC', 'Microsoft YaHei', sans-serif")
 \`\`\``,
     syntax: [
-      ['函数态字体栈', "`\"'Inter', sans-serif\"`", '按优先级列出，逗号分隔'],
+      ['函数态字体栈', '`"\'Inter\', sans-serif"`', '按优先级列出，逗号分隔'],
       ['通用族关键字', '`serif` `sansSerif` `monospace` `cursive` `fantasy`', '5 个传统通用族'],
-      ['现代 UI 族', '`systemUi` `uiSerif` `uiSansSerif` `uiMonospace` `uiRounded` `emoji` `math` `fangsong`', 'CSS Fonts 4'],
+      [
+        '现代 UI 族',
+        '`systemUi` `uiSerif` `uiSansSerif` `uiMonospace` `uiRounded` `emoji` `math` `fangsong`',
+        'CSS Fonts 4',
+      ],
     ],
     initialValue: '取决于浏览器（一般为 sans-serif）',
     inherits: true,
@@ -188,8 +198,7 @@ s.fontFamily("'PingFang SC', 'Microsoft YaHei', sans-serif")
   // lineHeight
   // ════════════════════════════════════════════════════════════════════
   lineHeight: {
-    firstLine:
-      '设置文字**行高** —— 每行文字占据的垂直空间。直接影响段落呼吸感与可读性。',
+    firstLine: '设置文字**行高** —— 每行文字占据的垂直空间。直接影响段落呼吸感与可读性。',
     keywordGroups: [
       {
         label: '1 个 keyword',
@@ -234,8 +243,7 @@ ${lengthUnitsSnippet('lineHeight')}`,
   // letterSpacing
   // ════════════════════════════════════════════════════════════════════
   letterSpacing: {
-    firstLine:
-      '设置**字符之间**的额外间距（正值变宽松，负值变紧凑）。常用于标题字间距优化。',
+    firstLine: '设置**字符之间**的额外间距（正值变宽松，负值变紧凑）。常用于标题字间距优化。',
     keywordGroups: [
       {
         label: '1 个 keyword',
@@ -300,8 +308,7 @@ ${lengthUnitsSnippet('wordSpacing')}`,
   // textAlign
   // ════════════════════════════════════════════════════════════════════
   textAlign: {
-    firstLine:
-      '设置文本**水平对齐方式** —— 左对齐、居中、右对齐、两端对齐等。',
+    firstLine: '设置文本**水平对齐方式** —— 左对齐、居中、右对齐、两端对齐等。',
     keywordGroups: [
       {
         label: '8 个对齐 keyword',
@@ -312,8 +319,14 @@ ${lengthUnitsSnippet('wordSpacing')}`,
           ['`left`', '**强制左**对齐（不依赖书写方向）'],
           ['`right`', '**强制右**对齐'],
           ['`center`', '**水平居中**'],
-          ['`justify`', '**两端对齐**：通过调整单词间距让每行齐平左右边界（最后一行除外）；中文效果不佳'],
-          ['`matchParent`', '与父元素的 `text-align` **相同**（解决 `start`/`end` 继承时的方向问题）'],
+          [
+            '`justify`',
+            '**两端对齐**：通过调整单词间距让每行齐平左右边界（最后一行除外）；中文效果不佳',
+          ],
+          [
+            '`matchParent`',
+            '与父元素的 `text-align` **相同**（解决 `start`/`end` 继承时的方向问题）',
+          ],
           ['`justifyAll`', '**所有行**都两端对齐（包括最后一行；实验性）'],
         ],
       },
@@ -350,8 +363,7 @@ s.textAlign.justify               // 两端对齐（书籍 / 报纸风格）
   // textDecorationLine
   // ════════════════════════════════════════════════════════════════════
   textDecorationLine: {
-    firstLine:
-      '设置**文本装饰线**的类型（下划线 / 删除线 / 上划线 / 拼写错误）。可多选叠加。',
+    firstLine: '设置**文本装饰线**的类型（下划线 / 删除线 / 上划线 / 拼写错误）。可多选叠加。',
     keywordGroups: [
       {
         label: '6 个 keyword',
@@ -385,7 +397,11 @@ s.textDecorationLine.underline
 
 或简写：\`s.textDecoration('underline wavy red 2px')\``,
     syntax: [
-      ['6 个 keyword', '`none` ｜ `underline` ｜ `overline` ｜ `lineThrough` ｜ `spellingError` ｜ `grammarError`', '可叠加'],
+      [
+        '6 个 keyword',
+        '`none` ｜ `underline` ｜ `overline` ｜ `lineThrough` ｜ `spellingError` ｜ `grammarError`',
+        '可叠加',
+      ],
       ['多个叠加', "`'underline lineThrough'`", '空格分隔多个'],
     ],
     initialValue: 'none',
@@ -396,8 +412,7 @@ s.textDecorationLine.underline
   // textDecorationStyle
   // ════════════════════════════════════════════════════════════════════
   textDecorationStyle: {
-    firstLine:
-      '设置文本装饰线的**样式**（实线 / 虚线 / 双线 / 波浪线）。',
+    firstLine: '设置文本装饰线的**样式**（实线 / 虚线 / 双线 / 波浪线）。',
     keywordGroups: [
       {
         label: '5 个 keyword',
@@ -422,8 +437,7 @@ s.textDecorationLine.underline
   // textDecorationThickness
   // ════════════════════════════════════════════════════════════════════
   textDecorationThickness: {
-    firstLine:
-      '设置文本装饰线的**粗细**。可精细控制下划线 / 删除线粗细。',
+    firstLine: '设置文本装饰线的**粗细**。可精细控制下划线 / 删除线粗细。',
     keywordGroups: [
       {
         label: '2 个 keyword',
@@ -457,8 +471,7 @@ ${lengthUnitsSnippet('textDecorationThickness')}`,
   // textTransform
   // ════════════════════════════════════════════════════════════════════
   textTransform: {
-    firstLine:
-      '控制文字的**大小写转换** / 全角半角转换（不修改 DOM，仅显示层变换）。',
+    firstLine: '控制文字的**大小写转换** / 全角半角转换（不修改 DOM，仅显示层变换）。',
     keywordGroups: [
       {
         label: '7 个 keyword',
@@ -628,17 +641,13 @@ s.textOverflow.ellipsis
   // wordBreak
   // ════════════════════════════════════════════════════════════════════
   wordBreak: {
-    firstLine:
-      '控制**单词何时可断行** —— 处理英文长单词溢出、CJK 文本断行规则。',
+    firstLine: '控制**单词何时可断行** —— 处理英文长单词溢出、CJK 文本断行规则。',
     keywordGroups: [
       {
         label: '5 个 keyword',
         headers: ['关键字', '行为'],
         rows: [
-          [
-            '`normal`',
-            '**默认值**。按语言规则断行（CJK 在任意字符间断，英文仅在空格 / 连字符断）',
-          ],
+          ['`normal`', '**默认值**。按语言规则断行（CJK 在任意字符间断，英文仅在空格 / 连字符断）'],
           ['`breakAll`', '**任意字符间**都可断（包括英文中间）—— 适合容纳长 URL'],
           ['`keepAll`', 'CJK 文字**不可断**（仅在空格 / 连字符 / 标点处断）'],
           ['`breakWord`', '已弃用，等同 `overflow-wrap: anywhere`'],
@@ -663,7 +672,11 @@ s.wordBreak.breakAll
 s.wordBreak.keepAll
 \`\`\``,
     syntax: [
-      ['5 个 keyword', '`normal` ｜ `breakAll` ｜ `keepAll` ｜ `breakWord` ｜ `autoPhrase`', '只接受关键字'],
+      [
+        '5 个 keyword',
+        '`normal` ｜ `breakAll` ｜ `keepAll` ｜ `breakWord` ｜ `autoPhrase`',
+        '只接受关键字',
+      ],
     ],
     initialValue: 'normal',
     inherits: true,
@@ -686,10 +699,7 @@ s.wordBreak.keepAll
             '`balance`',
             '**平衡换行**：每行宽度尽量接近（标题最佳实践，避免最后一行只有 1-2 个词）',
           ],
-          [
-            '`pretty`',
-            '美化换行：浏览器避免"孤行"（段尾单独一个词的悬挂行）；性能比 balance 好',
-          ],
+          ['`pretty`', '美化换行：浏览器避免"孤行"（段尾单独一个词的悬挂行）；性能比 balance 好'],
           ['`stable`', '保证文字增量更新时**前面行不变**（罕用，文本动画场景）'],
         ],
       },
@@ -721,18 +731,14 @@ s.textWrap.pretty               // 长段落（避免末行孤词）
   // 表格 + 列表 + 书写方向
   // ════════════════════════════════════════════════════════════════════
   tableLayout: {
-    firstLine:
-      '决定 `<table>` 列宽**算法**。',
+    firstLine: '决定 `<table>` 列宽**算法**。',
     keywordGroups: [
       {
         label: '2 个 keyword',
         headers: ['关键字', '行为'],
         rows: [
           ['`auto`', '**默认值**。浏览器读完全部内容后**自适应**列宽（慢，但灵活）'],
-          [
-            '`fixed`',
-            '**首行决定**所有列宽（快）；超出内容截断或换行，不影响列宽',
-          ],
+          ['`fixed`', '**首行决定**所有列宽（快）；超出内容截断或换行，不影响列宽'],
         ],
       },
     ],
@@ -749,8 +755,7 @@ s.width('100%')
   },
 
   captionSide: {
-    firstLine:
-      '决定 `<caption>` 元素（表格标题）**显示在表格上方还是下方**。',
+    firstLine: '决定 `<caption>` 元素（表格标题）**显示在表格上方还是下方**。',
     keywordGroups: [
       {
         label: '6 个 keyword',
@@ -766,15 +771,18 @@ s.width('100%')
       },
     ],
     syntax: [
-      ['6 个 keyword', '`top` ｜ `bottom` ｜ `blockStart` ｜ `blockEnd` ｜ `inlineStart` ｜ `inlineEnd`', '物理 / 逻辑方向'],
+      [
+        '6 个 keyword',
+        '`top` ｜ `bottom` ｜ `blockStart` ｜ `blockEnd` ｜ `inlineStart` ｜ `inlineEnd`',
+        '物理 / 逻辑方向',
+      ],
     ],
     initialValue: 'top',
     inherits: true,
   },
 
   listStyleType: {
-    firstLine:
-      '设置列表项的**标记类型**（点 / 数字 / 罗马字 / 自定义）。',
+    firstLine: '设置列表项的**标记类型**（点 / 数字 / 罗马字 / 自定义）。',
     keywordGroups: [
       {
         label: '基础标记',
@@ -820,27 +828,31 @@ s.listStyleType('"★ "')              // 自定义符号
 \`\`\``,
     syntax: [
       ['基础标记', '`disc` ｜ `circle` ｜ `square` ｜ `none`', '常用'],
-      ['数字 / 字母', '`decimal` `decimalLeadingZero` `lowerRoman` `upperRoman` `lowerAlpha` `upperAlpha`', ''],
-      ['国际化', '`lowerGreek` `armenian` `georgian` `hebrew` `hiragana` `katakana` `cjkIdeographic`', ''],
-      ['自定义字符', "`\"'★ '\"`", '用字符串作为标记'],
+      [
+        '数字 / 字母',
+        '`decimal` `decimalLeadingZero` `lowerRoman` `upperRoman` `lowerAlpha` `upperAlpha`',
+        '',
+      ],
+      [
+        '国际化',
+        '`lowerGreek` `armenian` `georgian` `hebrew` `hiragana` `katakana` `cjkIdeographic`',
+        '',
+      ],
+      ['自定义字符', '`"\'★ \'"`', '用字符串作为标记'],
     ],
     initialValue: 'disc',
     inherits: true,
   },
 
   listStylePosition: {
-    firstLine:
-      '决定列表标记**在文本之外还是文本流之内**。',
+    firstLine: '决定列表标记**在文本之外还是文本流之内**。',
     keywordGroups: [
       {
         label: '2 个 keyword',
         headers: ['关键字', '行为'],
         rows: [
           ['`outside`', '**默认值**。标记在 li 的内容框**外侧**（标记不参与换行缩进）'],
-          [
-            '`inside`',
-            '标记**在 li 内容内**（标记跟随文字一起缩进、参与换行）',
-          ],
+          ['`inside`', '标记**在 li 内容内**（标记跟随文字一起缩进、参与换行）'],
         ],
       },
     ],
@@ -850,8 +862,7 @@ s.listStyleType('"★ "')              // 自定义符号
   },
 
   listStyleImage: {
-    firstLine:
-      '使用**图片**作为列表标记（替代 `listStyleType` 的字符）。',
+    firstLine: '使用**图片**作为列表标记（替代 `listStyleType` 的字符）。',
     keywordGroups: [
       {
         label: '1 个 keyword',
@@ -867,7 +878,7 @@ s.listStyleImage("url('/icons/check.svg')")
 
 ⚠️ 浏览器对图片大小无统一控制，**多数现代项目改用 \`::marker\` 伪元素或自定义符号**。`,
     syntax: [
-      ['`<url>`', "`\"url('/icons/dot.svg')\"`", '图片 URL'],
+      ['`<url>`', '`"url(\'/icons/dot.svg\')"`', '图片 URL'],
       ['`none`', '—', '不使用图片'],
     ],
     initialValue: 'none',
@@ -883,10 +894,7 @@ s.listStyleImage("url('/icons/check.svg')")
         headers: ['关键字', '行为'],
         rows: [
           ['`horizontalTb`', '**默认值**。**横排**，从上到下流（最常见，中英文）'],
-          [
-            '`verticalRl`',
-            '**竖排**，从**右到左**列流（日文 / 中文古籍）',
-          ],
+          ['`verticalRl`', '**竖排**，从**右到左**列流（日文 / 中文古籍）'],
           ['`verticalLr`', '**竖排**，从**左到右**列流（蒙文）'],
           ['`sidewaysRl`', '横排文字侧躺，从右到左（罕用）'],
           ['`sidewaysLr`', '横排文字侧躺，从左到右（罕用）'],
@@ -894,7 +902,11 @@ s.listStyleImage("url('/icons/check.svg')")
       },
     ],
     syntax: [
-      ['5 个 keyword', '`horizontalTb` ｜ `verticalRl` ｜ `verticalLr` ｜ `sidewaysRl` ｜ `sidewaysLr`', '只接受关键字'],
+      [
+        '5 个 keyword',
+        '`horizontalTb` ｜ `verticalRl` ｜ `verticalLr` ｜ `sidewaysRl` ｜ `sidewaysLr`',
+        '只接受关键字',
+      ],
     ],
     initialValue: 'horizontalTb',
     inherits: true,
@@ -924,8 +936,7 @@ s.listStyleImage("url('/icons/check.svg')")
   },
 
   textOrientation: {
-    firstLine:
-      '在竖排书写（`writingMode: verticalRl/verticalLr`）时，控制单个**字符的朝向**。',
+    firstLine: '在竖排书写（`writingMode: verticalRl/verticalLr`）时，控制单个**字符的朝向**。',
     keywordGroups: [
       {
         label: '3 个 keyword',

@@ -91,7 +91,7 @@ const railHeightIem = computed<number>(() => (props.size ?? 2.5) * 0.6)
 const railWidthIem = computed<number>(() => props.size ?? 2.5)
 
 const railClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.position.relative
@@ -117,7 +117,7 @@ const railClass = computed(() =>
 const sxRailAttrs = computed(() => extractSxAttrs(props.sxRail))
 
 const thumbClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const h = railHeightIem.value
     const w = railWidthIem.value
     const thumb = h * 0.8
@@ -137,7 +137,7 @@ const thumbClass = computed(() =>
 const sxThumbAttrs = computed(() => extractSxAttrs(props.sxThumb))
 
 const labelClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     const offset = railHeightIem.value * 0.25
     if (props.value) s.left.iem(offset)
@@ -176,14 +176,8 @@ function onKeydown(e: KeyboardEvent): void {
     @click="toggle"
     @keydown="onKeydown"
   >
-    <span
-      v-if="value && checkedLabel"
-      :class="labelClass"
-    >{{ checkedLabel }}</span>
-    <span
-      v-else-if="!value && uncheckedLabel"
-      :class="labelClass"
-    >{{ uncheckedLabel }}</span>
+    <span v-if="value && checkedLabel" :class="labelClass">{{ checkedLabel }}</span>
+    <span v-else-if="!value && uncheckedLabel" :class="labelClass">{{ uncheckedLabel }}</span>
     <span
       :ref="sxThumbAttrs.ref"
       :class="[thumbClass, sxThumbAttrs.class]"

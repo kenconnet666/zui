@@ -8,8 +8,7 @@ import { lengthUnitsSnippet, type DocsGroup } from './_common'
 
 const scroll: DocsGroup = {
   scrollBehavior: {
-    firstLine:
-      '设置滚动**是否平滑过渡** —— JS `scrollTo` / 锚点跳转时是瞬间跳过去还是平滑滚过去。',
+    firstLine: '设置滚动**是否平滑过渡** —— JS `scrollTo` / 锚点跳转时是瞬间跳过去还是平滑滚过去。',
     keywordGroups: [
       {
         label: '2 个 keyword',
@@ -121,18 +120,14 @@ s.scrollSnapAlign.start              // 滚动停止时对齐到 item 起点
   },
 
   scrollSnapStop: {
-    firstLine:
-      '决定滚动是否**必须停在每个 snap point**（不允许快速滑过多个）。',
+    firstLine: '决定滚动是否**必须停在每个 snap point**（不允许快速滑过多个）。',
     keywordGroups: [
       {
         label: '2 个 keyword',
         headers: ['关键字', '行为'],
         rows: [
           ['`normal`', '**默认值**。快速滚动可跳过多个 snap point'],
-          [
-            '`always`',
-            '**必须停**在下一个 snap point（即使用户快速 fling，也只滚 1 个 item）',
-          ],
+          ['`always`', '**必须停**在下一个 snap point（即使用户快速 fling，也只滚 1 个 item）'],
         ],
       },
     ],
@@ -156,10 +151,7 @@ s.scrollSnapStop.always
       {
         label: '此属性的特点',
         asTable: false,
-        rows: [
-          ['只接受长度（可负），**无关键字**'],
-          ['仅在元素是 snap item 时生效'],
-        ],
+        rows: [['只接受长度（可负），**无关键字**'], ['仅在元素是 snap item 时生效']],
       },
     ],
     details: `### 用例
@@ -273,10 +265,7 @@ ${lengthUnitsSnippet('scrollPadding')}`,
             '`auto`',
             '**默认值**。启用滚动锚定（浏览器自动记住当前可视位置，新内容插入上方时保持视图稳定）',
           ],
-          [
-            '`none`',
-            '禁用（用于动画中的元素，避免锚定行为干扰）',
-          ],
+          ['`none`', '禁用（用于动画中的元素，避免锚定行为干扰）'],
         ],
       },
     ],
@@ -296,8 +285,7 @@ s.overflowAnchor.none
   },
 
   resize: {
-    firstLine:
-      '允许用户**手动调整元素尺寸**（拖右下角）。最常用于 `<textarea>` 让用户拖动改大小。',
+    firstLine: '允许用户**手动调整元素尺寸**（拖右下角）。最常用于 `<textarea>` 让用户拖动改大小。',
     keywordGroups: [
       {
         label: '6 个 keyword',
@@ -326,7 +314,11 @@ s.resize.none
 
 \`resize\` 需要元素是 \`overflow\` 非 \`visible\`（默认 \`<textarea>\` 满足，其他元素需 \`overflow: auto/hidden/scroll\`）。`,
     syntax: [
-      ['6 个 keyword', '`none` ｜ `both` ｜ `horizontal` ｜ `vertical` ｜ `block` ｜ `inline`', '只接受关键字'],
+      [
+        '6 个 keyword',
+        '`none` ｜ `both` ｜ `horizontal` ｜ `vertical` ｜ `block` ｜ `inline`',
+        '只接受关键字',
+      ],
     ],
     initialValue: 'none',
     inherits: false,

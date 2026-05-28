@@ -15,8 +15,9 @@ import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
     <ZTitle :level="1">ZBlockquote 引用</ZTitle>
     <ZParagraph>
       块引用组件，视觉效果：左侧强调色边条 + 中性背景 + 斜体文字。
-      <ZCode code="color" /> factory 仅作用于左侧 border 颜色，文字始终使用 <ZCode code="_text" /> token，
-      不随 color 变化。<ZCode code="size" /> 是 iem 倍数，padding / border-left-width / fontSize 等比缩放。
+      <ZCode code="color" /> factory 仅作用于左侧 border 颜色，文字始终使用
+      <ZCode code="_text" /> token， 不随 color 变化。<ZCode code="size" /> 是 iem 倍数，padding /
+      border-left-width / fontSize 等比缩放。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>
@@ -31,8 +32,8 @@ import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
     <ZTitle :level="2">边条颜色 (color)</ZTitle>
     <DemoBlock title="schema token 与 :css 自定义颜色" :source="ColorDemoSource">
       <template #desc>
-        <ZCode code="color" /> factory 仅作用于左侧边条；文字色固定 <ZCode code="_text" />。
-        非 schema token 走 <ZCode code=":css" /> 直接覆盖 <ZCode code="borderLeftColor" />。
+        <ZCode code="color" /> factory 仅作用于左侧边条；文字色固定 <ZCode code="_text" />。 非
+        schema token 走 <ZCode code=":css" /> 直接覆盖 <ZCode code="borderLeftColor" />。
       </template>
       <ColorDemo />
     </DemoBlock>
@@ -40,15 +41,25 @@ import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '120px' },
-        { key: 'type',    label: '类型',   mono: true, width: '260px' },
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '260px' },
         { key: 'default', label: '默认值', mono: true, width: '100px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'color', type: '(c: ColorCarrier) => void', default: '_primary', desc: '左侧边条颜色 factory（不影响文字色）。' },
-        { name: 'size',  type: 'number',                    default: '1',        desc: 'iem 倍数。padding-y = size*0.5，padding-x = size*0.75，border-left-width = size*0.25。' },
-        { name: 'css',   type: '(s: Chain) => void',        default: '—',        desc: '兜底 CSS factory。' },
+        {
+          name: 'color',
+          type: '(c: ColorCarrier) => void',
+          default: '_primary',
+          desc: '左侧边条颜色 factory（不影响文字色）。',
+        },
+        {
+          name: 'size',
+          type: 'number',
+          default: '1',
+          desc: 'iem 倍数。padding-y = size*0.5，padding-x = size*0.75，border-left-width = size*0.25。',
+        },
+        { name: 'css', type: '(s: Chain) => void', default: '—', desc: '兜底 CSS factory。' },
       ]"
     />
 
@@ -58,9 +69,7 @@ import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
         { key: 'name', label: '插槽', mono: true, width: '100px' },
         { key: 'desc', label: '说明' },
       ]"
-      :rows="[
-        { name: 'default', desc: '引用文字内容，渲染到 blockquote 元素内。' },
-      ]"
+      :rows="[{ name: 'default', desc: '引用文字内容，渲染到 blockquote 元素内。' }]"
     />
 
     <ZTitle :level="2">盒子模型</ZTitle>

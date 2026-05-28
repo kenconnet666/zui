@@ -214,7 +214,7 @@ function toggleSelection(row: T, index: number): void {
 function toggleAll(): void {
   if (props.selection !== 'multiple') return
   const allKeys = props.rows.map((r, i) => getRowKey(r, i))
-  const allSelected = allKeys.every((k) => selectedSet.value.has(k))
+  const allSelected = allKeys.every(k => selectedSet.value.has(k))
   emit('update:selected', allSelected ? [] : allKeys)
 }
 
@@ -247,7 +247,7 @@ function toggleSort(col: ZDataTableColumn<T>): void {
 
 const sortedRows = computed<readonly T[]>(() => {
   if (!props.sort) return props.rows
-  const col = props.columns.find((c) => c.key === props.sort?.key)
+  const col = props.columns.find(c => c.key === props.sort?.key)
   if (!col || !col.sortable) return props.rows
   const comparator =
     typeof col.sortable === 'function'
@@ -271,7 +271,7 @@ const SELECT_COL_IEM = 2.5
 const selectColPx = computed(() => SELECT_COL_IEM * iemPx.value)
 
 function resolveColumnWidth(col: ZDataTableColumn<T>): string {
-  if (col.width === undefined) return ''  // flex 填充
+  if (col.width === undefined) return '' // flex 填充
   if (typeof col.width === 'string') return col.width
   return `${col.width * iemPx.value}px`
 }
@@ -309,7 +309,7 @@ const selectColStyle = computed<Record<string, string>>(() => ({
 
 // ─── 样式 ───
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.relative
     s.display.flex
     s.flexDirection.column
@@ -327,7 +327,7 @@ const rootClass = computed(() =>
 )
 
 const headerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.flexShrink(0)
@@ -345,18 +345,18 @@ const headerClass = computed(() =>
 )
 
 const headerCellClass = (col: ZDataTableColumn<T>) =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     if (col.sortable) {
       s.cursor.pointer
       s.userSelect.none
-      s._hover((h2) => {
+      s._hover(h2 => {
         h2.backgroundColor._textSecondary.alpha(8)
       })
     }
   })
 
 const sortIconClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.marginLeft.iem(0.25)
     s.opacity._dim
     s.fontSize._small
@@ -364,7 +364,7 @@ const sortIconClass = computed(() =>
 )
 
 const rowClass = (row: T, index: number) =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.height.pct(100)
@@ -380,19 +380,19 @@ const rowClass = (row: T, index: number) =>
     if (props.selection !== 'none') {
       s.cursor.pointer
     }
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.backgroundColor._textSecondary.alpha(6)
     })
   })
 
 const cellClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._text
   }),
 )
 
 const loadingMaskClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.top.px(0)
     s.left.px(0)
@@ -407,7 +407,7 @@ const loadingMaskClass = computed(() =>
 )
 
 const emptyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._large
     s.color._textSecondary
     s.fontSize._small
@@ -428,9 +428,7 @@ function renderCellContent(row: T, col: ZDataTableColumn<T>, index: number): VNo
     if (typeof result === 'string') return result
     return result
   }
-  const val = col.accessor
-    ? col.accessor(row)
-    : (row as Record<string, unknown>)[col.key]
+  const val = col.accessor ? col.accessor(row) : (row as Record<string, unknown>)[col.key]
   return val == null ? '' : String(val)
 }
 
@@ -459,7 +457,7 @@ const rootRef = ref<HTMLElement | null>(null)
 defineExpose<ZDataTableExpose>({
   rootRef,
   scrollToIndex: (i, align) => vlRef.value?.scrollToIndex(i, align),
-  scrollToOffset: (px) => vlRef.value?.scrollToOffset(px),
+  scrollToOffset: px => vlRef.value?.scrollToOffset(px),
   getScroll: () => vlRef.value?.getScroll() ?? { offset: 0, total: 0, viewport: 0 },
 })
 
@@ -501,11 +499,16 @@ const isEmpty = computed(() => sortedRows.value.length === 0)
         :class="headerCellClass(col)"
         :style="columnStyle(col)"
         role="columnheader"
-        :aria-sort="sort?.key === col.key ? (sort.order === 'asc' ? 'ascending' : 'descending') : 'none'"
+        :aria-sort="
+          sort?.key === col.key ? (sort.order === 'asc' ? 'ascending' : 'descending') : 'none'
+        "
         @click="toggleSort(col)"
       >
         <span>
-          <component :is="renderHeaderContent(col)" v-if="typeof renderHeaderContent(col) !== 'string'" />
+          <component
+            :is="renderHeaderContent(col)"
+            v-if="typeof renderHeaderContent(col) !== 'string'"
+          />
           <template v-else>{{ renderHeaderContent(col) }}</template>
         </span>
         <span v-if="col.sortable" :class="sortIconClass">
@@ -533,14 +536,9 @@ const isEmpty = computed(() => sortedRows.value.length === 0)
           :class="rowClass(row, index)"
           role="row"
           :aria-selected="isSelected(row, index)"
-          @click="(e) => onRowClick(row, index, e)"
+          @click="e => onRowClick(row, index, e)"
         >
-          <div
-            v-if="selection === 'multiple'"
-            :style="selectColStyle"
-            role="cell"
-            @click.stop
-          >
+          <div v-if="selection === 'multiple'" :style="selectColStyle" role="cell" @click.stop>
             <input
               type="checkbox"
               :checked="isSelected(row, index)"
@@ -554,7 +552,10 @@ const isEmpty = computed(() => sortedRows.value.length === 0)
             :style="columnStyle(col)"
             role="cell"
           >
-            <component :is="renderCellContent(row, col, index)" v-if="typeof renderCellContent(row, col, index) !== 'string'" />
+            <component
+              :is="renderCellContent(row, col, index)"
+              v-if="typeof renderCellContent(row, col, index) !== 'string'"
+            />
             <template v-else>{{ renderCellContent(row, col, index) }}</template>
           </div>
         </div>

@@ -76,7 +76,6 @@ export interface ZTableEmits {
   (e: 'update:selectedKeys', keys: (string | number)[]): void
   (e: 'update:sortState', state: ZTableSortState): void
 }
-
 </script>
 
 <script lang="ts" setup generic="T extends Record<string, unknown>">
@@ -142,7 +141,7 @@ const theme = useZTheme()
 const sortedData = computed<T[]>(() => {
   const { column, order } = props.sortState
   if (!column || !order) return props.data
-  const col = props.columns.find((c) => c.key === column)
+  const col = props.columns.find(c => c.key === column)
   if (!col) return props.data
   const dataIndex = col.dataIndex ?? col.key
   const sorter =
@@ -186,11 +185,11 @@ const isAllSelected = computed(
   () =>
     props.selectable &&
     allKeys.value.length > 0 &&
-    allKeys.value.every((k) => props.selectedKeys.includes(k)),
+    allKeys.value.every(k => props.selectedKeys.includes(k)),
 )
 const isIndeterminate = computed(() => {
   if (!props.selectable) return false
-  const selected = allKeys.value.filter((k) => props.selectedKeys.includes(k)).length
+  const selected = allKeys.value.filter(k => props.selectedKeys.includes(k)).length
   return selected > 0 && selected < allKeys.value.length
 })
 
@@ -200,7 +199,7 @@ function toggleAll(checked: boolean): void {
 
 function toggleRow(key: string | number): void {
   const next = props.selectedKeys.includes(key)
-    ? props.selectedKeys.filter((k) => k !== key)
+    ? props.selectedKeys.filter(k => k !== key)
     : [...props.selectedKeys, key]
   emit('update:selectedKeys', next)
 }
@@ -231,7 +230,7 @@ function colWidth(col: ZTableColumn<T>): string | undefined {
 
 // ─── 样式 ───
 const tableClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.width.pct(100)
     s.borderCollapse.collapse
     s.fontSize.iem(props.size ?? 1)
@@ -247,7 +246,7 @@ const tableClass = computed(() =>
 )
 
 const theadClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.backgroundColor._bgMuted
     s.color._text
     s.fontWeight._semibold
@@ -257,20 +256,20 @@ const theadClass = computed(() =>
 const sxHeadAttrs = computed(() => extractSxAttrs(props.sxHead))
 
 const tbodyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     applySx(s, props.sxBody)
   }),
 )
 const sxBodyAttrs = computed(() => extractSxAttrs(props.sxBody))
 
 const rowClass = (idx: number, selected: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.borderTopWidth._thin
     s.borderTopStyle.solid
     s.borderTopColor._border
     if (selected) s.backgroundColor._primary.alpha(8)
     else if (props.striped && idx % 2 === 1) s.backgroundColor._bgMuted.alpha(50)
-    s._hover((h2) => {
+    s._hover(h2 => {
       if (!selected) h2.backgroundColor._primary.alpha(4)
     })
     applySx(s, props.sxRow)
@@ -278,7 +277,7 @@ const rowClass = (idx: number, selected: boolean): string =>
 const sxRowAttrs = computed(() => extractSxAttrs(props.sxRow))
 
 const cellClass = (col: ZTableColumn<T>): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 1
     s.paddingTop.iem(size * 0.625)
     s.paddingBottom.iem(size * 0.625)
@@ -295,7 +294,7 @@ const cellClass = (col: ZTableColumn<T>): string =>
 const sxCellAttrs = computed(() => extractSxAttrs(props.sxCell))
 
 const selectCellClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 1
     s.paddingTop.iem(size * 0.625)
     s.paddingBottom.iem(size * 0.625)
@@ -307,17 +306,17 @@ const selectCellClass = computed(() =>
 )
 
 const sortableHeadClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.cursor.pointer
     s.userSelect.none
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.color._primary
     })
   }),
 )
 
 const sortIconClass = (active: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.marginLeft._tiny
@@ -327,7 +326,7 @@ const sortIconClass = (active: boolean): string =>
   })
 
 const emptyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._large
     s.color._textSecondary
     s.fontSize._small

@@ -15,7 +15,8 @@ import ApiTable from '../components/ApiTable.vue'
     <ZTitle :level="2">注册 Provider</ZTitle>
     <ZParagraph>
       在应用根组件用 <ZCode code="ZBox" /> 包裹，注入主题和 iem 基准。
-      <ZCode code="ZBox" /> 是唯一必须的 Provider，它通过 CSS 变量向下传递 <ZCode code="--zui-iem" />
+      <ZCode code="ZBox" /> 是唯一必须的 Provider，它通过 CSS 变量向下传递
+      <ZCode code="--zui-iem" />
       和 Emotion 全局 class 上下文。
     </ZParagraph>
     <ZCode
@@ -48,8 +49,8 @@ import { ZButton, ZTitle } from '@kenconnet666/zui-vue'
 
     <ZTitle :level="2">暗色主题</ZTitle>
     <ZParagraph>
-      切换 <ZCode code=":theme" /> 为 <ZCode code="zuiDark" /> 即可全站暗色。
-      也可以动态绑定 ref 实现亮暗切换。
+      切换 <ZCode code=":theme" /> 为 <ZCode code="zuiDark" /> 即可全站暗色。 也可以动态绑定 ref
+      实现亮暗切换。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -94,15 +95,19 @@ const myTheme = zuiLight.extend({
     <ZTitle :level="2">ZIemPreset 预设</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',  label: '预设',  mono: true, width: '180px' },
-        { key: 'value', label: '值',    mono: true, width: '160px' },
-        { key: 'desc',  label: '说明' },
+        { key: 'name', label: '预设', mono: true, width: '180px' },
+        { key: 'value', label: '值', mono: true, width: '160px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'ZIemPreset.default', value: '0.8333vw',  desc: '随视口等比缩放。1920px 宽屏下 = 16px，推荐默认。' },
-        { name: 'ZIemPreset.fixed',   value: '16px',       desc: '固定 16px，opt-out 响应式缩放。' },
-        { name: 'ZIemPreset.compact', value: '14px',       desc: '紧凑模式，适合信息密度高的后台。' },
-        { name: 'ZIemPreset.large',   value: '20px',       desc: '大字模式，适合无障碍/展示场景。' },
+        {
+          name: 'ZIemPreset.default',
+          value: '0.8333vw',
+          desc: '随视口等比缩放。1920px 宽屏下 = 16px，推荐默认。',
+        },
+        { name: 'ZIemPreset.fixed', value: '16px', desc: '固定 16px，opt-out 响应式缩放。' },
+        { name: 'ZIemPreset.compact', value: '14px', desc: '紧凑模式，适合信息密度高的后台。' },
+        { name: 'ZIemPreset.large', value: '20px', desc: '大字模式，适合无障碍/展示场景。' },
       ]"
     />
   </section>

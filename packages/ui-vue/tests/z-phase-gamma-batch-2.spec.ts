@@ -24,8 +24,7 @@ describe('ZCarousel', () => {
             ZCarousel,
             { current: 0, items: ['A', 'B', 'C'] },
             {
-              default: ({ item, index }: { item: string; index: number }) =>
-                `${index}:${item}`,
+              default: ({ item, index }: { item: string; index: number }) => `${index}:${item}`,
             },
           )
       },
@@ -40,8 +39,7 @@ describe('ZCarousel', () => {
   it('箭头按钮 + dots 渲染(showArrows/showDots 默认 true)', () => {
     const Host = defineComponent({
       setup() {
-        return () =>
-          h(ZCarousel, { current: 0, items: ['A', 'B'] }, { default: () => 'x' })
+        return () => h(ZCarousel, { current: 0, items: ['A', 'B'] }, { default: () => 'x' })
       },
     })
     const w = mount(Host)
@@ -100,7 +98,7 @@ describe('ZDescriptions', () => {
       props: { items: [{ label: 'X', value: 'Y' }], column: 2 },
     })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/grid-template-columns:repeat\(2/)
   })
@@ -155,7 +153,7 @@ describe('ZDynamicTags', () => {
 
   it('点 add 按钮 → 显示输入框', async () => {
     const w = mount(ZDynamicTags, { props: { value: [] } })
-    const addBtn = w.findAll('button').find((b) => b.text().includes('新标签'))!
+    const addBtn = w.findAll('button').find(b => b.text().includes('新标签'))!
     await addBtn.trigger('click')
     await w.vm.$nextTick()
     expect(w.find('input').exists()).toBe(true)
@@ -173,7 +171,7 @@ describe('ZDynamicTags', () => {
       },
     })
     const w = mount(Host)
-    const addBtn = w.findAll('button').find((b) => b.text().includes('新标签'))!
+    const addBtn = w.findAll('button').find(b => b.text().includes('新标签'))!
     await addBtn.trigger('click')
     await w.vm.$nextTick()
     const input = w.find('input')
@@ -202,7 +200,7 @@ describe('ZDynamicTags', () => {
 
   it('达到 max → 不显示 add 按钮', () => {
     const w = mount(ZDynamicTags, { props: { value: ['a', 'b'], max: 2 } })
-    expect(w.findAll('button').find((b) => b.text().includes('新标签'))).toBeUndefined()
+    expect(w.findAll('button').find(b => b.text().includes('新标签'))).toBeUndefined()
   })
 })
 

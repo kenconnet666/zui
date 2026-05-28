@@ -25,13 +25,37 @@ const sizeOptions = [
 
 <template>
   <ZSpace :direction="d => d.column" :size="g => g._middle" :css="s => s.width.pct(100)">
-    <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">block 撑满父宽</ZText>
+    <ZText
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+      >block 撑满父宽</ZText
+    >
     <ZSegmented v-model:value="v1" :options="viewOptions" :block="true" />
 
-    <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">size = 1.125(大号)</ZText>
+    <ZText
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+      >size = 1.125(大号)</ZText
+    >
     <ZSegmented v-model:value="v2" :options="rangeOptions" :size="1.125" />
 
-    <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">disabled 整体禁用</ZText>
+    <ZText
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+      >disabled 整体禁用</ZText
+    >
     <ZSegmented v-model:value="v3" :options="sizeOptions" :disabled="true" />
   </ZSpace>
 </template>

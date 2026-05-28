@@ -16,7 +16,7 @@ import { defaultLight, type TestSchema } from './_fixture-theme'
 describe('Carrier factory — ColorPropCarrier', () => {
   it('s.color(c => c._primary) 等价 s.color._primary', () => {
     const c1 = new Chain(defaultLight)
-    c1.color((c) => {
+    c1.color(c => {
       c._primary
     })
     const c2 = new Chain(defaultLight)
@@ -26,7 +26,7 @@ describe('Carrier factory — ColorPropCarrier', () => {
 
   it('factory 内调用字面量 c => c("red")', () => {
     const c = new Chain(defaultLight)
-    c.color((cc) => {
+    c.color(cc => {
       cc('red')
     })
     expect(c._node.color).toBe('red')
@@ -34,7 +34,7 @@ describe('Carrier factory — ColorPropCarrier', () => {
 
   it('factory 内命中 CSS keyword c => c.currentColor', () => {
     const c = new Chain(defaultLight)
-    c.color((cc) => {
+    c.color(cc => {
       cc.currentColor
     })
     expect(c._node.color).toBe('currentColor')
@@ -42,7 +42,7 @@ describe('Carrier factory — ColorPropCarrier', () => {
 
   it('factory 内 token + modifier c => c._primary.alpha(50)', () => {
     const c = new Chain(defaultLight)
-    c.color((cc) => {
+    c.color(cc => {
       cc._primary.alpha(50)
     })
     // alpha(50) → rgba 含 50% alpha
@@ -52,7 +52,7 @@ describe('Carrier factory — ColorPropCarrier', () => {
 
   it('factory 内字符串逃生舱 c => c("_primary")', () => {
     const c = new Chain(defaultLight)
-    c.color((cc) => {
+    c.color(cc => {
       cc('_primary')
     })
     const c2 = new Chain(defaultLight)
@@ -70,7 +70,7 @@ describe('Carrier factory — ColorPropCarrier', () => {
 
   it('factory 多次调用 — 后者覆盖前者', () => {
     const c = new Chain(defaultLight)
-    c.color((cc) => {
+    c.color(cc => {
       cc._primary
       cc._danger
     })
@@ -83,7 +83,7 @@ describe('Carrier factory — ColorPropCarrier', () => {
 describe('Carrier factory — PropCarrier (非 color)', () => {
   it('s.padding(c => c._middle) 等价 s.padding._middle', () => {
     const c1 = new Chain(defaultLight)
-    c1.padding((p) => {
+    c1.padding(p => {
       p._middle
     })
     const c2 = new Chain(defaultLight)
@@ -93,7 +93,7 @@ describe('Carrier factory — PropCarrier (非 color)', () => {
 
   it('factory 内 unit method c => c.px(8)', () => {
     const c = new Chain(defaultLight)
-    c.padding((p) => {
+    c.padding(p => {
       p.px(8)
     })
     expect(c._node.padding).toBe('8px')
@@ -101,7 +101,7 @@ describe('Carrier factory — PropCarrier (非 color)', () => {
 
   it('factory 内 iem unit c => c.iem(1) (默认 1iem = 16px)', () => {
     const c = new Chain(defaultLight)
-    c.width((w) => {
+    c.width(w => {
       w.iem(1)
     })
     expect(c._node.width).toBe('calc(1 * var(--zui-iem, 16px))')
@@ -109,7 +109,7 @@ describe('Carrier factory — PropCarrier (非 color)', () => {
 
   it('factory 内 keyword c => c.auto', () => {
     const c = new Chain(defaultLight)
-    c.margin((m) => {
+    c.margin(m => {
       m.auto
     })
     expect(c._node.margin).toBe('auto')
@@ -117,7 +117,7 @@ describe('Carrier factory — PropCarrier (非 color)', () => {
 
   it('opacity factory c => c(0.5) 字面量数字', () => {
     const c = new Chain(defaultLight)
-    c.opacity((o) => {
+    c.opacity(o => {
       o(0.5)
     })
     expect(c._node.opacity).toBe(0.5)
@@ -125,7 +125,7 @@ describe('Carrier factory — PropCarrier (非 color)', () => {
 
   it('opacity factory c => c._half schema token', () => {
     const c = new Chain(defaultLight)
-    c.opacity((o) => {
+    c.opacity(o => {
       o._half
     })
     expect(c._node.opacity).toBe(0.5)
@@ -135,7 +135,7 @@ describe('Carrier factory — PropCarrier (非 color)', () => {
 describe('Carrier factory — PropFn (无 token / unit)', () => {
   it('factory 内 GlobalKw c => c.inherit', () => {
     const c = new Chain(defaultLight)
-    c.appearance((a) => {
+    c.appearance(a => {
       a.inherit
     })
     expect(c._node.appearance).toBe('inherit')
@@ -143,7 +143,7 @@ describe('Carrier factory — PropFn (无 token / unit)', () => {
 
   it('factory 内字面量 c => c("none")', () => {
     const c = new Chain(defaultLight)
-    c.appearance((a) => {
+    c.appearance(a => {
       a('none')
     })
     expect(c._node.appearance).toBe('none')
@@ -166,7 +166,7 @@ describe('Carrier factory — 组件 prop 范式集成', () => {
   it('factory 闭包外部变量:动态选 token', () => {
     const useDanger = true
     const c = new Chain(defaultLight)
-    c.color((cc) => {
+    c.color(cc => {
       if (useDanger) cc._danger
       else cc._primary
     })
@@ -177,9 +177,9 @@ describe('Carrier factory — 组件 prop 范式集成', () => {
 
   it('多个 carrier factory 串联:同 chain 内不同 prop 都用 factory', () => {
     const c = new Chain(defaultLight)
-    c.color((cc) => cc._primary)
-    c.padding((p) => p.px(12))
-    c.width((w) => w.iem(0.5))
+    c.color(cc => cc._primary)
+    c.padding(p => p.px(12))
+    c.width(w => w.iem(0.5))
     expect(c._node.color).toBeDefined()
     expect(c._node.padding).toBe('12px')
     expect(c._node.width).toBe('calc(0.5 * var(--zui-iem, 16px))')

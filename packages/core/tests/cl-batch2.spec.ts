@@ -1,11 +1,5 @@
 import { describe, expect, expectTypeOf, it } from 'vitest'
-import {
-  Chain,
-  applyResponsive,
-  applyStyleProps,
-  defineVariants,
-  isResponsiveValue,
-} from '../src'
+import { Chain, applyResponsive, applyStyleProps, defineVariants, isResponsiveValue } from '../src'
 import type { VariantPropsOf } from '../src'
 import { defaultLight } from './_fixture-theme'
 
@@ -37,8 +31,11 @@ describe('E4 — applyResponsive 响应式值解析', () => {
 
   it('全响应式断点（base + tiny + small + middle + large + huge）', () => {
     const c = new Chain(defaultLight)
-    applyResponsive(c, { base: 4, tiny: 6, small: 8, middle: 10, large: 12, huge: 14 },
-      (s, v: number) => s.padding.px(v))
+    applyResponsive(
+      c,
+      { base: 4, tiny: 6, small: 8, middle: 10, large: 12, huge: 14 },
+      (s, v: number) => s.padding.px(v),
+    )
     expect(c._node.padding).toBe('4px')
     // 5 个 @media（tiny/small/middle/large/huge）
     const mediaKeys = Object.keys(c._node).filter(k => k.startsWith('@media'))
@@ -53,19 +50,15 @@ describe('E4 — applyResponsive 响应式值解析', () => {
 
   it('对象内 undefined 字段跳过', () => {
     const c = new Chain(defaultLight)
-    applyResponsive(
-      c, { base: 8, middle: undefined, large: 16 },
-      (s, v: number) => s.padding.px(v),
-    )
+    applyResponsive(c, { base: 8, middle: undefined, large: 16 }, (s, v: number) => s.padding.px(v))
     expect(c._node.padding).toBe('8px')
     const mediaKeys = Object.keys(c._node).filter(k => k.startsWith('@media'))
-    expect(mediaKeys.length).toBe(1)   // 只 large
+    expect(mediaKeys.length).toBe(1) // 只 large
   })
 
   it('字符串值也能响应式', () => {
     const c = new Chain(defaultLight)
-    applyResponsive(c, { base: 'red', middle: 'blue' },
-      (s, v) => s.color(v as string))
+    applyResponsive(c, { base: 'red', middle: 'blue' }, (s, v) => s.color(v as string))
     expect(c._node.color).toBe('red')
   })
 })
@@ -149,7 +142,7 @@ describe('F1 + E4 — applyStyleProps 响应式 prop', () => {
 
   it('混合响应式与普通值', () => {
     const c = new Chain(defaultLight)
-     
+
     applyStyleProps(c, {
       p: { base: 4, middle: 8 } as any,
       bg: '_primary',
@@ -168,10 +161,15 @@ describe('F1 + E4 — applyStyleProps 响应式 prop', () => {
 describe('F2 — defineVariants 接受 boolean / number', () => {
   it('disabled: boolean 自动转 true/false 字符串 key', () => {
     const button = defineVariants(defaultLight, {
-      base: s => { s.padding.px(8) },
+      base: s => {
+        s.padding.px(8)
+      },
       variants: {
         disabled: {
-          true: s => { s.opacity._half; s.pointerEvents('none') },
+          true: s => {
+            s.opacity._half
+            s.pointerEvents('none')
+          },
           false: () => {},
         },
       },
@@ -184,7 +182,14 @@ describe('F2 — defineVariants 接受 boolean / number', () => {
   it('boolean 默认值', () => {
     const tooltip = defineVariants(defaultLight, {
       variants: {
-        open: { true: s => { s.opacity._full }, false: s => { s.opacity._none } },
+        open: {
+          true: s => {
+            s.opacity._full
+          },
+          false: s => {
+            s.opacity._none
+          },
+        },
       },
       defaultVariants: { open: 'false' },
     })
@@ -197,10 +202,18 @@ describe('F2 — defineVariants 接受 boolean / number', () => {
     const card = defineVariants(defaultLight, {
       variants: {
         elevation: {
-          '0': s => { s.boxShadow('none') },
-          '1': s => { s.boxShadow._small },
-          '2': s => { s.boxShadow._middle },
-          '3': s => { s.boxShadow._large },
+          '0': s => {
+            s.boxShadow('none')
+          },
+          '1': s => {
+            s.boxShadow._small
+          },
+          '2': s => {
+            s.boxShadow._middle
+          },
+          '3': s => {
+            s.boxShadow._large
+          },
         },
       },
     })
@@ -213,11 +226,17 @@ describe('F2 — defineVariants 接受 boolean / number', () => {
     const button = defineVariants(defaultLight, {
       variants: {
         intent: {
-          primary: s => { s.backgroundColor._primary },
-          danger: s => { s.backgroundColor._danger },
+          primary: s => {
+            s.backgroundColor._primary
+          },
+          danger: s => {
+            s.backgroundColor._danger
+          },
         },
         disabled: {
-          true: s => { s.opacity._half },
+          true: s => {
+            s.opacity._half
+          },
           false: () => {},
         },
       },

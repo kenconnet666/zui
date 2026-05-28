@@ -3,14 +3,7 @@ import { ZMention, ZFlex, ZText } from '@kenconnet666/zui-vue'
 import { ref } from 'vue'
 
 const value = ref('')
-const members = [
-  'Alice',
-  'Bob',
-  'Charlie',
-  'Dave',
-  'Eve',
-  'Frank',
-]
+const members = ['Alice', 'Bob', 'Charlie', 'Dave', 'Eve', 'Frank']
 </script>
 
 <template>
@@ -22,7 +15,16 @@ const members = [
         placeholder="输入 @ 触发成员提及..."
         :rows="3"
       />
-      <ZText v-if="value" :css="s => { s.color._textSecondary; s.fontSize._small }">内容：{{ value }}</ZText>
+      <ZText
+        v-if="value"
+        :css="
+          s => {
+            s.color._textSecondary
+            s.fontSize._small
+          }
+        "
+        >内容：{{ value }}</ZText
+      >
     </ZFlex>
 
     <ZMention :options="members" placeholder="已禁用" :disabled="true" :rows="2" />

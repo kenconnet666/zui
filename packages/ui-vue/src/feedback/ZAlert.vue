@@ -113,7 +113,7 @@ const emit = defineEmits<ZAlertEmits>()
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 0.875
     s.display.flex
     s.alignItems.flexStart
@@ -129,7 +129,7 @@ const rootClass = computed(() =>
     s.color(props.color)
     s.borderColor.currentColor
     // 背景走 ::before 伪元素 8% currentColor 叠层(避免 backgroundColor.alpha 不可链式问题)
-    s._before((b) => {
+    s._before(b => {
       b.content("''")
       b.position.absolute
       b.inset.px(0)
@@ -144,7 +144,7 @@ const rootClass = computed(() =>
 )
 
 const iconClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.flexShrink(0)
@@ -155,7 +155,7 @@ const iconClass = computed(() =>
 const sxIconAttrs = computed(() => extractSxAttrs(props.sxIcon))
 
 const bodyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.color._text
     s.fontSize._small
@@ -166,7 +166,7 @@ const bodyClass = computed(() =>
 const sxBodyAttrs = computed(() => extractSxAttrs(props.sxBody))
 
 const closeClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -178,7 +178,7 @@ const closeClass = computed(() =>
     s.fontSize._middle
     s.color._textSecondary
     s.borderRadius._tiny
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.backgroundColor._textSecondary.alpha(8)
     })
     applySx(s, props.sxClose)
@@ -191,9 +191,7 @@ function onCloseClick(e: MouseEvent): void {
 }
 
 // icon 默认 fallback:info 图标(用户走 `#icon` slot 自定义)
-const defaultIconNode = computed(() =>
-  h(ZIcon, { component: BuiltinIcons.info }),
-)
+const defaultIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.info }))
 
 const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
 </script>

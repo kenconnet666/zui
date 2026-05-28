@@ -21,10 +21,5 @@
 export { assertSchemaConsistency } from './assertSchemaConsistency'
 export type { SchemaIssue } from './assertSchemaConsistency'
 
-export {
-  makeCallsiteLabel,
-  parseStackLine,
-  findUserCallsite,
-  isProductionEnv,
-} from './stackTrace'
+export { makeCallsiteLabel, parseStackLine, findUserCallsite, isProductionEnv } from './stackTrace'
 export type { StackFrame } from './stackTrace'

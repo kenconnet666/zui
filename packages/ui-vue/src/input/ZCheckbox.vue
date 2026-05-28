@@ -86,7 +86,7 @@ const isChecked = computed(() =>
 const isDisabled = computed(() => props.disabled || group?.disabled.value === true)
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -107,7 +107,7 @@ const rootClass = computed(() =>
  * - border: _thin,内部图标 0.75em 跟随字号缩放
  */
 const boxClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 1
     s.display.inlineFlex
     s.alignItems.center
@@ -132,7 +132,7 @@ const boxClass = computed(() =>
 const sxBoxAttrs = computed(() => extractSxAttrs(props.sxBox))
 
 const labelClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     applySx(s, props.sxLabel)
   }),
 )

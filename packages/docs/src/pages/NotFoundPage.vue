@@ -7,14 +7,14 @@ const theme = useZTheme()
 const router = useRouter()
 
 const wrapClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.paddingTop.iem(6)
     s.textAlign.center
   }),
 )
 
 const codeClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize.iem(6)
     s.fontWeight._bold
     s.color._primary.alpha(20)
@@ -28,10 +28,10 @@ const codeClass = computed(() =>
   <div :class="wrapClass">
     <div :class="codeClass">404</div>
     <ZTitle :level="2">页面不存在</ZTitle>
-    <ZParagraph :css="(s) => s.color._textSecondary">
+    <ZParagraph :css="s => s.color._textSecondary">
       你访问的页面不存在，可能已被移动或删除。
     </ZParagraph>
-    <ZFlex :gap="(g) => g.iem(0.75)" :justify="(j) => j.center">
+    <ZFlex :gap="g => g.iem(0.75)" :justify="j => j.center">
       <ZButton @click="router.push('/')">返回首页</ZButton>
       <ZButton variant="outlined" @click="router.back()">返回上页</ZButton>
     </ZFlex>

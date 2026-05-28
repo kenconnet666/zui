@@ -65,10 +65,7 @@ export interface ZTypographyBaseProps {
  *   props.css?.(s)
  * })
  */
-export function applyTypographyBase(
-  s: Chain<ZuiSchema>,
-  props: ZTypographyBaseProps,
-): void {
+export function applyTypographyBase(s: Chain<ZuiSchema>, props: ZTypographyBaseProps): void {
   // ─── size: number(2026-05-24 B7 决策)。undefined = 继承父字号 ───
   if (props.size !== undefined) s.fontSize.iem(props.size)
   if (props.weight) s.fontWeight(props.weight)
@@ -87,7 +84,7 @@ export function applyTypographyBase(
   if (baseLines.length > 0) s.textDecorationLine(baseLines.join(' '))
   if (props.underlineOnHover) {
     const hoverLines = [...baseLines, 'underline'].join(' ')
-    s._hover((h) => {
+    s._hover(h => {
       h.textDecorationLine(hoverLines)
     })
   }

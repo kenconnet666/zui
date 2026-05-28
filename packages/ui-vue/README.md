@@ -12,7 +12,7 @@
 - **响应式 vw 单位** —— `ZIemPreset.default = '0.8333vw'`(16px @ 1920),16:9 全屏等比缩放
 - **5 个内置 hooks** —— `usePopper` / `usePortal` / `useEscapeStack` / `useZId` / `useRipple`
 - **i18n + timezone** —— `zhCN` / `enUS` + date-fns-tz 时区支持
-- **完整 a11y** —— ARIA role / aria-* / 焦点管理 / ESC 栈
+- **完整 a11y** —— ARIA role / aria-\* / 焦点管理 / ESC 栈
 
 ## 安装
 

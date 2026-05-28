@@ -15,6 +15,8 @@ const visible = ref(true)
       :closable="true"
       @close="visible = false"
     />
-    <ZButton v-if="!visible" :size="0.875" variant="ghost" @click="visible = true">重新显示</ZButton>
+    <ZButton v-if="!visible" :size="0.875" variant="ghost" @click="visible = true"
+      >重新显示</ZButton
+    >
   </ZFlex>
 </template>

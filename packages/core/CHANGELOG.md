@@ -8,15 +8,15 @@
 
 **移除的 API**：
 
-| API | 替代方案 |
-| --- | --- |
-| `interface ComponentTokenRegistry` | 改走 `interface UserColorExt` 等 schema augmentation 锚点（位于 `@kenconnet666/zui-vue`） |
-| `withComponentTokens(theme, derivers, overrides)` | 组件 setup 直接吃 `useZTheme()`；数值常量本地写成模块级 `const SIZE_MAP / DEPTH_MAP / SPIN_MAP` |
-| `componentTokensFor(name, theme)` | 同上，无需反推 |
-| `mergeComponentTokenOverrides(...layers)` | 不再有嵌套合并 |
-| `ComponentTokenDeriver / ComponentTokenDerivers / ComponentTokenOverrides` 类型 | 同上 |
-| `FlattenComponentTokens / ComponentTokenNames` 类型 | 同上 |
-| `BaseSchema.color & Partial<Record<FlattenComponentTokens, string>>` 这层 intersection | `BaseSchema.color = Record<PaletteToken, string>` 严格类型 |
+| API                                                                                    | 替代方案                                                                                        |
+| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `interface ComponentTokenRegistry`                                                     | 改走 `interface UserColorExt` 等 schema augmentation 锚点（位于 `@kenconnet666/zui-vue`）       |
+| `withComponentTokens(theme, derivers, overrides)`                                      | 组件 setup 直接吃 `useZTheme()`；数值常量本地写成模块级 `const SIZE_MAP / DEPTH_MAP / SPIN_MAP` |
+| `componentTokensFor(name, theme)`                                                      | 同上，无需反推                                                                                  |
+| `mergeComponentTokenOverrides(...layers)`                                              | 不再有嵌套合并                                                                                  |
+| `ComponentTokenDeriver / ComponentTokenDerivers / ComponentTokenOverrides` 类型        | 同上                                                                                            |
+| `FlattenComponentTokens / ComponentTokenNames` 类型                                    | 同上                                                                                            |
+| `BaseSchema.color & Partial<Record<FlattenComponentTokens, string>>` 这层 intersection | `BaseSchema.color = Record<PaletteToken, string>` 严格类型                                      |
 
 **迁移**：
 
@@ -328,32 +328,32 @@ const SIZE_MAP = { tiny: 0.75, ..., huge: 1.5 } as const
 
   ```ts
   const button = defineVariants(defaultLight, {
-    base: (s) => {
+    base: s => {
       s.padding.px(12)
       s.borderRadius._md
     },
     variants: {
       intent: {
-        primary: (s) => {
+        primary: s => {
           s.backgroundColor._primary
           s.color.white
         },
-        danger: (s) => {
+        danger: s => {
           s.backgroundColor._danger
           s.color.white
         },
-        ghost: (s) => {
+        ghost: s => {
           s.color._primary
         },
       },
       size: {
-        sm: (s) => {
+        sm: s => {
           s.padding.px(8)
         },
-        md: (s) => {
+        md: s => {
           s.padding.px(12)
         },
-        lg: (s) => {
+        lg: s => {
           s.padding.px(16)
         },
       },
@@ -362,7 +362,7 @@ const SIZE_MAP = { tiny: 0.75, ..., huge: 1.5 } as const
     compoundVariants: [
       {
         when: { intent: 'ghost', size: 'sm' },
-        apply: (s) => {
+        apply: s => {
           s.padding.px(6)
         },
       },
@@ -403,7 +403,7 @@ const SIZE_MAP = { tiny: 0.75, ..., huge: 1.5 } as const
   ```ts
   import { presetAnimations, icss, defaultLight } from '@kenconnet666/zui-core'
 
-  const cls = icss(defaultLight, (s) => {
+  const cls = icss(defaultLight, s => {
     s.animationName(presetAnimations.fadeIn)
     s.animationDuration('300ms')
     s.animationFillMode('both')

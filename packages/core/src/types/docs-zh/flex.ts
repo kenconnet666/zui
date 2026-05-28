@@ -45,7 +45,9 @@ s.flexDirection.column
 s.gap.px(12)
 // 垂直堆叠子元素，间距 12px
 \`\`\``,
-    syntax: [['4 个方向 keyword', '`row` ｜ `rowReverse` ｜ `column` ｜ `columnReverse`', '只接受关键字']],
+    syntax: [
+      ['4 个方向 keyword', '`row` ｜ `rowReverse` ｜ `column` ｜ `columnReverse`', '只接受关键字'],
+    ],
     initialValue: 'row',
     inherits: false,
   },
@@ -161,11 +163,7 @@ s.gap.px(8)    // 按钮组右对齐
         '`flexStart` ｜ `flexEnd` ｜ `center` ｜ `start` ｜ `end` ｜ `left` ｜ `right`',
         '子元素挤到某一端 / 居中',
       ],
-      [
-        '分布对齐',
-        '`spaceBetween` ｜ `spaceAround` ｜ `spaceEvenly`',
-        '剩余空间分配规则',
-      ],
+      ['分布对齐', '`spaceBetween` ｜ `spaceAround` ｜ `spaceEvenly`', '剩余空间分配规则'],
       ['其他', '`normal` ｜ `stretch`', 'grid 容器中常用'],
     ],
     initialValue: 'normal',
@@ -296,7 +294,11 @@ s.flexWrap.wrap
 s.alignContent.spaceBetween
 \`\`\``,
     syntax: [
-      ['基础对齐', '`stretch` ｜ `flexStart` ｜ `flexEnd` ｜ `center` ｜ `start` ｜ `end` ｜ `baseline` ｜ `normal`', '只接受关键字'],
+      [
+        '基础对齐',
+        '`stretch` ｜ `flexStart` ｜ `flexEnd` ｜ `center` ｜ `start` ｜ `end` ｜ `baseline` ｜ `normal`',
+        '只接受关键字',
+      ],
       ['分布对齐', '`spaceBetween` ｜ `spaceAround` ｜ `spaceEvenly`', '间距分配'],
     ],
     initialValue: 'normal',
@@ -428,7 +430,11 @@ ${lengthUnitsSnippet('flexBasis')}`,
     syntax: [
       ['`<length>`', "`'200px'` `'12rem'`", '具体长度起步'],
       ['`<percentage>`', "`'50%'`", '相对容器主轴尺寸'],
-      ['6 个 keyword', '`auto` ｜ `fill` ｜ `maxContent` ｜ `minContent` ｜ `fitContent` ｜ `content`', '内容驱动 / 自适应'],
+      [
+        '6 个 keyword',
+        '`auto` ｜ `fill` ｜ `maxContent` ｜ `minContent` ｜ `fitContent` ｜ `content`',
+        '内容驱动 / 自适应',
+      ],
     ],
     initialValue: 'auto',
     inherits: false,
@@ -438,8 +444,7 @@ ${lengthUnitsSnippet('flexBasis')}`,
   // order
   // ════════════════════════════════════════════════════════════════════
   order: {
-    firstLine:
-      'flex / grid 子元素的**显示顺序** —— 不改变 DOM 顺序但改变视觉顺序。可为**负数**。',
+    firstLine: 'flex / grid 子元素的**显示顺序** —— 不改变 DOM 顺序但改变视觉顺序。可为**负数**。',
     keywordGroups: [
       {
         label: '此属性的特点',
@@ -521,14 +526,12 @@ ${lengthUnitsSnippet('gap')}`,
 
   rowGap: {
     extends: 'gap',
-    firstLine:
-      '仅设置**行间距**（垂直方向）。可单独覆盖 `gap` 简写的行间距值。',
+    firstLine: '仅设置**行间距**（垂直方向）。可单独覆盖 `gap` 简写的行间距值。',
   },
 
   columnGap: {
     extends: 'gap',
-    firstLine:
-      '仅设置**列间距**（水平方向）。可单独覆盖 `gap` 简写的列间距值。',
+    firstLine: '仅设置**列间距**（水平方向）。可单独覆盖 `gap` 简写的列间距值。',
   },
 }
 

@@ -10,9 +10,9 @@ interface Row {
 }
 
 const columns = [
-  { key: 'name',   title: '姓名',   sortable: true },
-  { key: 'dept',   title: '部门',   sortable: true },
-  { key: 'salary', title: '薪资',   align: 'right' as const, sortable: true },
+  { key: 'name', title: '姓名', sortable: true },
+  { key: 'dept', title: '部门', sortable: true },
+  { key: 'salary', title: '薪资', align: 'right' as const, sortable: true },
 ]
 
 const rows: Row[] = Array.from({ length: 100 }, (_, i) => ({

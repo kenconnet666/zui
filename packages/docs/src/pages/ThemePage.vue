@@ -7,8 +7,8 @@ import ApiTable from '../components/ApiTable.vue'
   <section>
     <ZTitle :level="1">主题与 ZBox</ZTitle>
     <ZParagraph>
-      zui 的主题系统基于<strong>三层 schema 继承</strong> + <strong>CSS 变量注入</strong>，
-      通过 <ZCode code="ZBox" /> Provider 向下传递，支持嵌套隔离和运行时动态切换。
+      zui 的主题系统基于<strong>三层 schema 继承</strong> + <strong>CSS 变量注入</strong>， 通过
+      <ZCode code="ZBox" /> Provider 向下传递，支持嵌套隔离和运行时动态切换。
     </ZParagraph>
 
     <ZTitle :level="2">三层 Schema 架构</ZTitle>
@@ -29,35 +29,50 @@ import ApiTable from '../components/ApiTable.vue'
     </ZParagraph>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '导出',          mono: true, width: '180px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'name', label: '导出', mono: true, width: '180px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
         { name: 'zuiLight', desc: '亮色主题，白色背景 + 深色文字，蓝色主色调。' },
-        { name: 'zuiDark',  desc: '暗色主题，深灰背景 + 浅色文字，蓝色主色调。' },
+        { name: 'zuiDark', desc: '暗色主题，深灰背景 + 浅色文字，蓝色主色调。' },
       ]"
     />
 
     <ZTitle :level="2">ZBox Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '120px' },
-        { key: 'type',    label: '类型',   mono: true, width: '260px' },
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '260px' },
         { key: 'default', label: '默认值', mono: true, width: '120px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'theme',  type: 'ResolvedTheme<ZuiSchema>', default: '—',              desc: '注入主题对象。必传（或由父级 ZBox 继承）。' },
-        { name: 'iem',    type: 'string',                   default: '—',              desc: 'CSS 变量 --zui-iem 的值，如 ZIemPreset.default 或 16px。' },
-        { name: 'tag',    type: 'string',                   default: `'div'`,          desc: '根元素标签名，可改为 section / main / article 等语义标签。' },
-        { name: 'css',    type: '(s: Chain) => void',       default: '—',              desc: '根元素 css factory。' },
+        {
+          name: 'theme',
+          type: 'ResolvedTheme<ZuiSchema>',
+          default: '—',
+          desc: '注入主题对象。必传（或由父级 ZBox 继承）。',
+        },
+        {
+          name: 'iem',
+          type: 'string',
+          default: '—',
+          desc: 'CSS 变量 --zui-iem 的值，如 ZIemPreset.default 或 16px。',
+        },
+        {
+          name: 'tag',
+          type: 'string',
+          default: `'div'`,
+          desc: '根元素标签名，可改为 section / main / article 等语义标签。',
+        },
+        { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 css factory。' },
       ]"
     />
 
     <ZTitle :level="2">嵌套隔离</ZTitle>
     <ZParagraph>
-      多个 <ZCode code="ZBox" /> 可嵌套使用，子树独立设定 iem 或 theme，
-      通过浏览器 CSS cascade 自动隔离，零运行时合并开销。
+      多个 <ZCode code="ZBox" /> 可嵌套使用，子树独立设定 iem 或 theme， 通过浏览器 CSS cascade
+      自动隔离，零运行时合并开销。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -75,8 +90,8 @@ import ApiTable from '../components/ApiTable.vue'
 
     <ZTitle :level="2">useZTheme</ZTitle>
     <ZParagraph>
-      在任意子组件中通过 <ZCode code="useZTheme()" /> 获取当前 theme，
-      配合 <ZCode code="icss(theme.value, factory)" /> 生成 Emotion CSS class。
+      在任意子组件中通过 <ZCode code="useZTheme()" /> 获取当前 theme， 配合
+      <ZCode code="icss(theme.value, factory)" /> 生成 Emotion CSS class。
     </ZParagraph>
     <ZCode
       :inline="false"

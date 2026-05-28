@@ -39,7 +39,11 @@ s.mask('linear-gradient(black 50%, transparent) center')   // 渐变模板,上�
 
 **SVG \`<mask>\` 引用**: \`mask: url(#myMask)\` —— 引用同文档 SVG \`<mask id="myMask">\` 元素。`,
     syntax: [
-      ['`<image>`', "`'url(./mask.png)'` `'linear-gradient(black, transparent)'`", '图像 / 渐变作为蒙版'],
+      [
+        '`<image>`',
+        "`'url(./mask.png)'` `'linear-gradient(black, transparent)'`",
+        '图像 / 渐变作为蒙版',
+      ],
       ['`<id>`', "`'url(#svgMaskId)'`", '引用 SVG `<mask>` 元素'],
       ['`none`', '—', '无蒙版(默认)'],
       ['完整简写', "`'url(./m.svg) 50% / cover no-repeat'`", '组合多子属性'],
@@ -194,7 +198,13 @@ s.maskPosition('right 16px bottom 8px')   // 4 值:从右 16px / 从底 8px
         ],
       },
     ],
-    syntax: [['关键字', '`border-box` / `padding-box` / `content-box` / `fill-box` / `stroke-box`', '见上']],
+    syntax: [
+      [
+        '关键字',
+        '`border-box` / `padding-box` / `content-box` / `fill-box` / `stroke-box`',
+        '见上',
+      ],
+    ],
     initialValue: 'border-box',
     inherits: false,
   },
@@ -215,8 +225,15 @@ s.maskPosition('right 16px bottom 8px')   // 4 值:从右 16px / 从底 8px
         ],
       },
     ],
-    details: '**与 `mask-origin` 区别**:`origin` 是蒙版"起点"(原点位置),`clip` 是蒙版"边界"(超出剪掉)。两者通常同步设。',
-    syntax: [['关键字', '`border-box` / `padding-box` / `content-box` / `fill-box` / `stroke-box` / `no-clip`', '见上']],
+    details:
+      '**与 `mask-origin` 区别**:`origin` 是蒙版"起点"(原点位置),`clip` 是蒙版"边界"(超出剪掉)。两者通常同步设。',
+    syntax: [
+      [
+        '关键字',
+        '`border-box` / `padding-box` / `content-box` / `fill-box` / `stroke-box` / `no-clip`',
+        '见上',
+      ],
+    ],
     initialValue: 'border-box',
     inherits: false,
   },
@@ -246,7 +263,8 @@ s.maskPosition('right 16px bottom 8px')   // 4 值:从右 16px / 从底 8px
   // ════════════════════════════════════════════════════════════════════
 
   clipPath: {
-    firstLine: '**几何裁剪**:把元素显示区裁成任意形状/路径。与 mask 区别 —— clip-path 是**硬边裁切**(0/1),mask 是**alpha 渐变**。',
+    firstLine:
+      '**几何裁剪**:把元素显示区裁成任意形状/路径。与 mask 区别 —— clip-path 是**硬边裁切**(0/1),mask 是**alpha 渐变**。',
     keywordGroups: [
       {
         label: 'CSS 基本形状(`<basic-shape>`)',
@@ -256,7 +274,7 @@ s.maskPosition('right 16px bottom 8px')   // 4 值:从右 16px / 从底 8px
           ['`circle()`', "`'circle(50% at 50% 50%)'`", '圆形,半径 + 中心点'],
           ['`ellipse()`', "`'ellipse(50% 30% at center)'`", '椭圆,半轴 + 中心点'],
           ['`polygon()`', "`'polygon(0 0, 100% 0, 100% 100%, 0 100%)'`", '多边形顶点列表'],
-          ['`path()`', "`'path(\"M0 0 L100 0 L50 100 Z\")'`", 'SVG path 命令'],
+          ['`path()`', '`\'path("M0 0 L100 0 L50 100 Z")\'`', 'SVG path 命令'],
           ['`rect()`', "`'rect(10px 90% 90% 10px)'`", '四边偏移矩形(CSS 4)'],
           ['`xywh()`', "`'xywh(0 0 100% 100%)'`", 'XY+宽高 矩形(CSS 4)'],
           ['`shape()`', "`'shape(from 0 0, line to 100px 0, curve to ...)'`", '声明式形状(CSS 4)'],
@@ -268,7 +286,10 @@ s.maskPosition('right 16px bottom 8px')   // 4 值:从右 16px / 从底 8px
         rows: [
           ['`none`', '**默认值**。无裁剪'],
           ['`<url>`', "`'url(#svgClip)'` 引用 SVG `<clipPath>`"],
-          ['`<geometry-box>`', '`border-box` / `padding-box` / `content-box` / `margin-box` / `fill-box` / `stroke-box` / `view-box`,定义裁切参照盒'],
+          [
+            '`<geometry-box>`',
+            '`border-box` / `padding-box` / `content-box` / `margin-box` / `fill-box` / `stroke-box` / `view-box`,定义裁切参照盒',
+          ],
         ],
       },
     ],

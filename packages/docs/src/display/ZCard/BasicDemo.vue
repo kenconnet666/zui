@@ -4,13 +4,24 @@ import { ZCard, ZFlex, ZText, ZButton, ZTag } from '@kenconnet666/zui-vue'
 
 <template>
   <ZFlex :gap="g => g._large" :wrap="w => w.wrap" :align="a => a.flexStart">
-    <ZCard title="基础卡片" :css="s => { s.width.iem(16) }">
+    <ZCard
+      title="基础卡片"
+      :css="
+        s => {
+          s.width.iem(16)
+        }
+      "
+    >
       <ZText>卡片内容区域，可以放置任意内容。</ZText>
     </ZCard>
 
     <ZCard
       title="带操作的卡片"
-      :css="s => { s.width.iem(16) }"
+      :css="
+        s => {
+          s.width.iem(16)
+        }
+      "
     >
       <template #extra>
         <ZTag :color="c => c._primary">更多</ZTag>
@@ -20,7 +31,11 @@ import { ZCard, ZFlex, ZText, ZButton, ZTag } from '@kenconnet666/zui-vue'
 
     <ZCard
       title="带底部"
-      :css="s => { s.width.iem(16) }"
+      :css="
+        s => {
+          s.width.iem(16)
+        }
+      "
     >
       <ZText>卡片正文内容。</ZText>
       <template #foot>
@@ -35,7 +50,11 @@ import { ZCard, ZFlex, ZText, ZButton, ZTag } from '@kenconnet666/zui-vue'
       title="悬停阴影"
       :bordered="false"
       :hoverable="true"
-      :css="s => { s.width.iem(16) }"
+      :css="
+        s => {
+          s.width.iem(16)
+        }
+      "
     >
       <ZText>无边框 + 悬停加深阴影效果。</ZText>
     </ZCard>

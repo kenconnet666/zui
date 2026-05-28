@@ -102,7 +102,7 @@ const focused = ref(false)
 const innerValue = computed(() => props.value ?? '')
 
 const wrapperClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.flexDirection.column
     s.gap._tiny
@@ -130,7 +130,7 @@ const wrapperClass = computed(() =>
 )
 
 const textareaClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.borderStyle.none
     s.backgroundColor.transparent
     s.color.currentColor
@@ -149,7 +149,7 @@ const textareaClass = computed(() =>
 const sxTextareaAttrs = computed(() => extractSxAttrs(props.sxTextarea))
 
 const countClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._tiny
     s.color._textSecondary
     s.alignSelf.flexEnd
@@ -188,7 +188,10 @@ function onBlur(e: FocusEvent): void {
   emit('blur', e)
 }
 
-watch(() => props.value, () => nextTick(adjustHeight))
+watch(
+  () => props.value,
+  () => nextTick(adjustHeight),
+)
 onMounted(() => {
   if (props.autosize) nextTick(adjustHeight)
 })

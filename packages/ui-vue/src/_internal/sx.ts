@@ -47,8 +47,8 @@ export type SxObject<S extends ThemeSchema = ZuiSchema> = {
   style?: string | Record<string, string | number>
   /** template ref(string / function / Ref 对象)— 让用户拿到该子节点 DOM。 */
   ref?: VNodeRef
-} & Omit<HTMLAttributes, 'class' | 'style' | 'ref'>
-  & Record<string, unknown>
+} & Omit<HTMLAttributes, 'class' | 'style' | 'ref'> &
+  Record<string, unknown>
 
 /**
  * 应用 SxObject 的 `css` factory 到 chain(若有)。

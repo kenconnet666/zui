@@ -195,10 +195,7 @@ ${lengthUnitsSnippet('objectPosition')}`,
           ['`light`', '仅支持浅色（强制浅色 UI）'],
           ['`dark`', '仅支持深色（强制深色 UI）'],
           ['`lightDark`', '**两种都支持**（让浏览器根据用户系统主题自动切换）'],
-          [
-            '`only`',
-            '关键字修饰符：`only light` 表示严格只支持 light（关闭浏览器自动 dark mode）',
-          ],
+          ['`only`', '关键字修饰符：`only light` 表示严格只支持 light（关闭浏览器自动 dark mode）'],
         ],
       },
     ],
@@ -226,8 +223,7 @@ s.colorScheme('only light')          // 严格浅色，禁用浏览器自动 dar
   // columns (多栏)
   // ════════════════════════════════════════════════════════════════════
   columns: {
-    firstLine:
-      '把元素内容**分成多栏**（类似报纸 / 杂志排版）。可指定栏数或栏宽。',
+    firstLine: '把元素内容**分成多栏**（类似报纸 / 杂志排版）。可指定栏数或栏宽。',
     keywordGroups: [
       {
         label: '1 个 keyword',
@@ -261,8 +257,7 @@ s.columns('250px')
   },
 
   columnCount: {
-    firstLine:
-      '指定**栏数**（多栏布局的简单方式）。',
+    firstLine: '指定**栏数**（多栏布局的简单方式）。',
     keywordGroups: [
       {
         label: '1 个 keyword',
@@ -279,8 +274,7 @@ s.columns('250px')
   },
 
   columnWidth: {
-    firstLine:
-      '指定**每栏的理想宽度**（栏数由容器宽度自动算）。',
+    firstLine: '指定**每栏的理想宽度**（栏数由容器宽度自动算）。',
     keywordGroups: [
       {
         label: '1 个 keyword',
@@ -306,8 +300,7 @@ ${lengthUnitsSnippet('columnWidth')}`,
   },
 
   columnSpan: {
-    firstLine:
-      '让元素**跨越所有栏**（多栏内容中的标题 / 横幅常用）。',
+    firstLine: '让元素**跨越所有栏**（多栏内容中的标题 / 横幅常用）。',
     keywordGroups: [
       {
         label: '2 个 keyword',
@@ -337,21 +330,13 @@ s.columnSpan.all          // 跨栏显示
         label: '3 个 keyword',
         headers: ['关键字', '行为'],
         rows: [
-          [
-            '`balance`',
-            '**默认值**。**平衡填充** —— 内容均分到各栏让每栏内容高度接近（最常用）',
-          ],
+          ['`balance`', '**默认值**。**平衡填充** —— 内容均分到各栏让每栏内容高度接近（最常用）'],
           ['`auto`', '**顺序填充** —— 先填满前一栏再填下一栏'],
-          [
-            '`balanceAll`',
-            '所有 column-break 区域都平衡（不只是最后一段）',
-          ],
+          ['`balanceAll`', '所有 column-break 区域都平衡（不只是最后一段）'],
         ],
       },
     ],
-    syntax: [
-      ['3 个 keyword', '`balance` ｜ `auto` ｜ `balanceAll`', '只接受关键字'],
-    ],
+    syntax: [['3 个 keyword', '`balance` ｜ `auto` ｜ `balanceAll`', '只接受关键字']],
     initialValue: 'balance',
     inherits: false,
   },
@@ -360,8 +345,7 @@ s.columnSpan.all          // 跨栏显示
   // breakBefore / breakAfter / breakInside
   // ════════════════════════════════════════════════════════════════════
   breakBefore: {
-    firstLine:
-      '控制元素**前**是否**强制分页 / 分栏 / 分区域**（打印分页 / 多栏布局换栏）。',
+    firstLine: '控制元素**前**是否**强制分页 / 分栏 / 分区域**（打印分页 / 多栏布局换栏）。',
     keywordGroups: [
       {
         label: '通用',
@@ -427,8 +411,7 @@ s.breakInside.avoid
   },
 
   breakInside: {
-    firstLine:
-      '控制元素**内部**是否允许分页 / 分栏。常用于让卡片 / 表格行**不被打印分页拆断**。',
+    firstLine: '控制元素**内部**是否允许分页 / 分栏。常用于让卡片 / 表格行**不被打印分页拆断**。',
     keywordGroups: [
       {
         label: '5 个 keyword',
@@ -443,7 +426,11 @@ s.breakInside.avoid
       },
     ],
     syntax: [
-      ['5 个 keyword', '`auto` ｜ `avoid` ｜ `avoidPage` ｜ `avoidColumn` ｜ `avoidRegion`', '只接受关键字'],
+      [
+        '5 个 keyword',
+        '`auto` ｜ `avoid` ｜ `avoidPage` ｜ `avoidColumn` ｜ `avoidRegion`',
+        '只接受关键字',
+      ],
     ],
     initialValue: 'auto',
     inherits: false,
@@ -464,10 +451,7 @@ s.breakInside.avoid
             '`slice`',
             '**默认值**。装饰被**切断**：跨行元素第一段有起始边框，最后一段有结束边框，中间无两端装饰',
           ],
-          [
-            '`clone`',
-            '装饰**每段独立**：每段都完整应用装饰（如每行都有完整 border）',
-          ],
+          ['`clone`', '装饰**每段独立**：每段都完整应用装饰（如每行都有完整 border）'],
         ],
       },
     ],
@@ -594,11 +578,11 @@ s.clear.both
     syntax: [
       ['`none`', '—', '不生成'],
       ['`normal`', '—', '伪元素默认'],
-      ['字符串', "`\"'★'\"`", '内嵌单引号'],
+      ['字符串', '`"\'★\'"`', '内嵌单引号'],
       ['`attr()`', "`'attr(data-x)'`", '引用属性值'],
       ['`counter()`', "`'counter(section)'`", 'CSS 计数器'],
-      ['URL', "`\"url('/icon.svg')\"`", '图片'],
-      ['组合', "`\"counter(item) '. '\"`", '空格连接多个值'],
+      ['URL', '`"url(\'/icon.svg\')"`', '图片'],
+      ['组合', '`"counter(item) \'. \'"`', '空格连接多个值'],
     ],
     initialValue: 'normal',
     inherits: false,
@@ -635,8 +619,7 @@ s.counterReset('chapter')
   },
 
   counterIncrement: {
-    firstLine:
-      '**递增 CSS 计数器**（每遇到该元素时计数器 +1，或自定义增量）。',
+    firstLine: '**递增 CSS 计数器**（每遇到该元素时计数器 +1，或自定义增量）。',
     keywordGroups: [
       {
         label: '1 个 keyword',

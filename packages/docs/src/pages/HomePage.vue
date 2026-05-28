@@ -35,19 +35,31 @@ interface EntryCard {
 }
 
 const cards: EntryCard[] = [
-  { key: 'button',  title: 'ZButton 按钮',  desc: '5 种 variant + Material 风波纹 + iem 等比缩放', icon: Touch,       route: '/gene/button' },
-  { key: 'icon',    title: 'ZIcon 图标',    desc: '4 维度 chain factory + iem 联动 + Provider 切换基准', icon: HeartOutline, route: '/gene/icon' },
+  {
+    key: 'button',
+    title: 'ZButton 按钮',
+    desc: '5 种 variant + Material 风波纹 + iem 等比缩放',
+    icon: Touch,
+    route: '/gene/button',
+  },
+  {
+    key: 'icon',
+    title: 'ZIcon 图标',
+    desc: '4 维度 chain factory + iem 联动 + Provider 切换基准',
+    icon: HeartOutline,
+    route: '/gene/icon',
+  },
 ]
 
 const heroClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.paddingTop.iem(2)
     s.paddingBottom.iem(2)
   }),
 )
 
 const linkClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.block
     s.textDecoration('none')
     s.color.inherit
@@ -69,26 +81,26 @@ function go(path: string): void {
       <code>@kenconnet666/zui-vue</code> 提供 ZBox 与 Vue 3 组件。
     </ZParagraph>
 
-    <ZFlex :gap="(g) => g.iem(0.5)" :wrap="(w) => w.wrap">
+    <ZFlex :gap="g => g.iem(0.5)" :wrap="w => w.wrap">
       <ZTag>iem 单位</ZTag>
       <ZTag>Chain factory props</ZTag>
       <ZTag>Material 风</ZTag>
       <ZTag>Vue 3</ZTag>
     </ZFlex>
 
-    <ZFlex :gap="(g) => g.iem(0.75)" :wrap="(w) => w.wrap" :css="(s) => s.marginTop.iem(1.5)">
+    <ZFlex :gap="g => g.iem(0.75)" :wrap="w => w.wrap" :css="s => s.marginTop.iem(1.5)">
       <ZButton @click="go('/guide/quick-start')">快速开始</ZButton>
       <ZButton variant="outlined" @click="go('/guide/core')">了解 Core</ZButton>
     </ZFlex>
 
     <ZTitle :level="2">
-      <ZFlex :align="(a) => a.center" :gap="(g) => g.iem(0.5)" inline>
+      <ZFlex :align="a => a.center" :gap="g => g.iem(0.5)" inline>
         <component :is="h(ZIcon, { component: Rocket })" />
         <span>组件演示</span>
       </ZFlex>
     </ZTitle>
 
-    <ZFlex :gap="(g) => g.iem(1)" :wrap="(w) => w.wrap">
+    <ZFlex :gap="g => g.iem(1)" :wrap="w => w.wrap">
       <a
         v-for="card in cards"
         :key="card.key"
@@ -96,31 +108,46 @@ function go(path: string): void {
         href="javascript:void(0)"
         @click="go(card.route)"
       >
-        <ZCard hoverable :css="(s) => { s.width.iem(20) }">
+        <ZCard
+          hoverable
+          :css="
+            s => {
+              s.width.iem(20)
+            }
+          "
+        >
           <template #header>
-            <ZFlex :align="(a) => a.center" :gap="(g) => g.iem(0.5)" inline>
+            <ZFlex :align="a => a.center" :gap="g => g.iem(0.5)" inline>
               <component :is="h(ZIcon, { component: card.icon, size: 1.25 })" />
               <span>{{ card.title }}</span>
             </ZFlex>
           </template>
-          <ZParagraph :css="(s) => { s.margin.px(0) }">{{ card.desc }}</ZParagraph>
+          <ZParagraph
+            :css="
+              s => {
+                s.margin.px(0)
+              }
+            "
+            >{{ card.desc }}</ZParagraph
+          >
         </ZCard>
       </a>
     </ZFlex>
 
     <ZTitle :level="2">
-      <ZFlex :align="(a) => a.center" :gap="(g) => g.iem(0.5)" inline>
+      <ZFlex :align="a => a.center" :gap="g => g.iem(0.5)" inline>
         <component :is="h(ZIcon, { component: Palette })" />
         <span>设计哲学</span>
       </ZFlex>
     </ZTitle>
     <ZParagraph>
-      所有 Z\* 组件遵守 <strong>chain factory props + iem + css 兜底 + 三层覆盖 + 单文件 SFC</strong>
+      所有 Z\* 组件遵守
+      <strong>chain factory props + iem + css 兜底 + 三层覆盖 + 单文件 SFC</strong>
       五件套。组件 API 表面极小、零硬编码档位、设计 token 集中在 schema。
     </ZParagraph>
 
     <ZTitle :level="2">
-      <ZFlex :align="(a) => a.center" :gap="(g) => g.iem(0.5)" inline>
+      <ZFlex :align="a => a.center" :gap="g => g.iem(0.5)" inline>
         <component :is="h(ZIcon, { component: Grid })" />
         <span>路线图</span>
       </ZFlex>

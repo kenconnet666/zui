@@ -87,7 +87,11 @@ import { useZIem } from '../_hooks/useZIem'
 import { useZVirtualScroll } from '../_hooks/useZVirtualScroll'
 import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 import { themeColorScheme } from '../_internal/colorScheme'
-import { SCROLL_TRACK_MARGIN, SCROLL_THUMB_MIN_PX, scrollbarThumbColors } from '../_internal/scrollbarThumb'
+import {
+  SCROLL_TRACK_MARGIN,
+  SCROLL_THUMB_MIN_PX,
+  scrollbarThumbColors,
+} from '../_internal/scrollbarThumb'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -152,7 +156,7 @@ const vs = useZVirtualScroll<T>({
 })
 
 const scrollEl = ref<HTMLElement | null>(null)
-watch(scrollEl, (el) => {
+watch(scrollEl, el => {
   vs.setScrollElement(el)
 })
 
@@ -188,7 +192,7 @@ const dark = computed(() => themeColorScheme(theme.value) === 'dark')
 const thumbColors = computed(() => scrollbarThumbColors(dark.value))
 
 const trackClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s._prop('right', '2px')
     s._prop('top', '2px')
@@ -201,25 +205,25 @@ const trackClass = computed(() =>
 )
 
 const sbThumbClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s._prop('left', '0')
     s._prop('right', '0')
     s.borderRadius.iem(0.1875)
     s._prop('background', thumbColors.value.normal)
     s._prop('transition', 'background 120ms')
-    s._selector('&:hover', (h) => {
+    s._selector('&:hover', h => {
       h._prop('background', thumbColors.value.hover)
     })
   }),
 )
 
 watch(vs.visibleRange, ([start, end]) => emit('update', start, end))
-watch(vs.scrollOffset, (offset) => emit('scroll', offset))
+watch(vs.scrollOffset, offset => emit('scroll', offset))
 
 /** scroll-end 去重:进入触底 emit 一次,离开后才重新可触发。 */
 const scrollEndEmitted = shallowRef(false)
-watch(vs.isAtEnd, (atEnd) => {
+watch(vs.isAtEnd, atEnd => {
   if (atEnd && !scrollEndEmitted.value && props.items.length > 0) {
     scrollEndEmitted.value = true
     emit('scroll-end')
@@ -292,7 +296,7 @@ function itemStyle(offset: number, size: number): Record<string, string> {
 }
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.relative
     s.overflow.auto
     s.display.block
@@ -304,7 +308,8 @@ const rootClass = computed(() =>
 const visibleItems = computed(() => {
   const [start, end] = vs.visibleRange.value
   if (end < start) return []
-  const result: { item: T; index: number; offset: number; size: number; key: string | number }[] = []
+  const result: { item: T; index: number; offset: number; size: number; key: string | number }[] =
+    []
   for (let i = start; i <= end; i++) {
     const item = props.items[i]
     if (item === undefined) continue
@@ -381,7 +386,13 @@ defineExpose<ZVirtualListExpose>({
 </template>
 
 <style>
-.__zs-fade-in  { transition: opacity 150ms; }
-.__zs-fade-out { transition: opacity 150ms; }
-.__zs-fade-from { opacity: 0; }
+.__zs-fade-in {
+  transition: opacity 150ms;
+}
+.__zs-fade-out {
+  transition: opacity 150ms;
+}
+.__zs-fade-from {
+  opacity: 0;
+}
 </style>

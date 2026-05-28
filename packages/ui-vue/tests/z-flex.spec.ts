@@ -8,7 +8,7 @@ import { ZFlex, type ZuiSchema } from '../src'
 
 function getInjectedCss(): string {
   return Array.from(document.querySelectorAll('style'))
-    .map((el) => el.textContent ?? '')
+    .map(el => el.textContent ?? '')
     .join('\n')
 }
 
@@ -18,7 +18,7 @@ describe('ZFlex — 默认', () => {
     const css = getInjectedCss()
     expect(css).toMatch(/display:flex/)
     // 默认不主动写 direction/wrap/justify/align —— 验证本组件 class 的规则里没这些
-    const cls = w.classes().find((c) => c.startsWith('css-'))
+    const cls = w.classes().find(c => c.startsWith('css-'))
     expect(cls).toBeTruthy()
     const re = new RegExp(`\\.${cls}\\s*\\{([^}]*)\\}`)
     const m = css.match(re)
@@ -44,7 +44,11 @@ describe('ZFlex — 默认', () => {
 describe('ZFlex — 布局 props', () => {
   it('direction=column → flex-direction:column', () => {
     mount(ZFlex, {
-      props: { direction: (d: Chain<ZuiSchema>['flexDirection']) => { d.column } },
+      props: {
+        direction: (d: Chain<ZuiSchema>['flexDirection']) => {
+          d.column
+        },
+      },
       slots: { default: () => 'x' },
     })
     expect(getInjectedCss()).toMatch(/flex-direction:column/)
@@ -52,7 +56,11 @@ describe('ZFlex — 布局 props', () => {
 
   it('wrap=true → flex-wrap:wrap', () => {
     mount(ZFlex, {
-      props: { wrap: (w: Chain<ZuiSchema>['flexWrap']) => { w.wrap } },
+      props: {
+        wrap: (w: Chain<ZuiSchema>['flexWrap']) => {
+          w.wrap
+        },
+      },
       slots: { default: () => 'x' },
     })
     expect(getInjectedCss()).toMatch(/flex-wrap:wrap[;}]/)
@@ -60,7 +68,11 @@ describe('ZFlex — 布局 props', () => {
 
   it('wrap=reverse → wrap-reverse', () => {
     mount(ZFlex, {
-      props: { wrap: (w: Chain<ZuiSchema>['flexWrap']) => { w.wrapReverse } },
+      props: {
+        wrap: (w: Chain<ZuiSchema>['flexWrap']) => {
+          w.wrapReverse
+        },
+      },
       slots: { default: () => 'x' },
     })
     expect(getInjectedCss()).toMatch(/flex-wrap:wrap-reverse/)
@@ -68,7 +80,11 @@ describe('ZFlex — 布局 props', () => {
 
   it('justify=between → space-between', () => {
     mount(ZFlex, {
-      props: { justify: (j: Chain<ZuiSchema>['justifyContent']) => { j.spaceBetween } },
+      props: {
+        justify: (j: Chain<ZuiSchema>['justifyContent']) => {
+          j.spaceBetween
+        },
+      },
       slots: { default: () => 'x' },
     })
     expect(getInjectedCss()).toMatch(/justify-content:space-between/)
@@ -76,7 +92,11 @@ describe('ZFlex — 布局 props', () => {
 
   it('align=center → center', () => {
     mount(ZFlex, {
-      props: { align: (a: Chain<ZuiSchema>['alignItems']) => { a.center } },
+      props: {
+        align: (a: Chain<ZuiSchema>['alignItems']) => {
+          a.center
+        },
+      },
       slots: { default: () => 'x' },
     })
     expect(getInjectedCss()).toMatch(/align-items:center/)

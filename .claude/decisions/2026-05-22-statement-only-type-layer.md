@@ -36,15 +36,15 @@ IDE 在 `s.color.currentColor.` 之后弹出 89+ Chain 内建方法 + 857 个 CS
 
 ### 1. `packages/core/src/types/carrier.ts` —— 删 TSelf，全部返回 void
 
-| 类型 / 接口 | 改动 |
-| --- | --- |
-| `LengthUnits<TSelf>` → `LengthUnits` | 删 TSelf；35 个 unit method 全部返回 `void` |
-| `TimeUnits<TSelf>` → `TimeUnits` | 同上（ms / s） |
-| `AngleUnits<TSelf>` → `AngleUnits` | 同上（deg / rad / grad / turn） |
-| `PropCarrier<TSelf, TValue, TTokens, TKeywords, TUnits, TExtraKeywords>` | 删 TSelf；callable + token map + keyword map + extra-keyword map 全部返回 `void` |
-| `PropFn<TSelf, TValue>` → `PropFn<TValue>` | 删 TSelf；callable + GlobalKw map 返回 `void` |
-| `ColorPropCarrier<TSelf, ...>` | 删 TSelf；callable + keyword map 返回 `void`；token map 返回 `ColorTokenValue`（无泛型） |
-| `ColorTokenValue<TSelf>` → `ColorTokenValue` | 删 TSelf；11 个 modifier 全部返回 `void` |
+| 类型 / 接口                                                              | 改动                                                                                     |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `LengthUnits<TSelf>` → `LengthUnits`                                     | 删 TSelf；35 个 unit method 全部返回 `void`                                              |
+| `TimeUnits<TSelf>` → `TimeUnits`                                         | 同上（ms / s）                                                                           |
+| `AngleUnits<TSelf>` → `AngleUnits`                                       | 同上（deg / rad / grad / turn）                                                          |
+| `PropCarrier<TSelf, TValue, TTokens, TKeywords, TUnits, TExtraKeywords>` | 删 TSelf；callable + token map + keyword map + extra-keyword map 全部返回 `void`         |
+| `PropFn<TSelf, TValue>` → `PropFn<TValue>`                               | 删 TSelf；callable + GlobalKw map 返回 `void`                                            |
+| `ColorPropCarrier<TSelf, ...>`                                           | 删 TSelf；callable + keyword map 返回 `void`；token map 返回 `ColorTokenValue`（无泛型） |
+| `ColorTokenValue<TSelf>` → `ColorTokenValue`                             | 删 TSelf；11 个 modifier 全部返回 `void`                                                 |
 
 ### 2. `scripts/generate-properties.mjs` —— renderTypeExpr 同步
 
@@ -68,6 +68,7 @@ IDE 在 `s.color.currentColor.` 之后弹出 89+ Chain 内建方法 + 857 个 CS
 40+ 处 fluent 链式示例改写为多行 statement。涉及文件：`animation.ts` / `border.ts` / `box.ts` / `colors.ts` / `flex.ts` / `interaction.ts` / `layout.ts` / `misc.ts` / `scroll.ts` / `svg.ts` / `transform.ts` / `typography.ts`。
 
 特例：
+
 - `border.ts` "❌/✅" 教学对比：注释挪到 statement 上方而非尾部，避免语义模糊
 - `colors.ts` 描述句内 inline 示例用 `; ` 分号分隔（避免破坏段落流）
 
@@ -93,6 +94,7 @@ IDE 在 `s.color.currentColor.` 之后弹出 89+ Chain 内建方法 + 857 个 CS
 **选择**：彻底删 TSelf 参数
 
 **理由**：
+
 - 既然返回类型是 `void`，TSelf 完全不被使用，未使用的类型参数让签名混乱
 - 删除让 generator 输出更短、更清晰
 - 改动面虽然多一处 generator 同步，但本就在改 generator
@@ -106,6 +108,7 @@ IDE 在 `s.color.currentColor.` 之后弹出 89+ Chain 内建方法 + 857 个 CS
 **选择**：carrier / modifier 改 void；Chain 内建方法（`_hover` / `_apply` / `_media` / etc.）保持 `: this`
 
 **理由**：
+
 - 用户原话明确是"一条语句只描述一行 css"。`_hover(fn)` 是 block 容器，不是"一行 css"
 - 改 Chain 内建方法的返回类型涉及 ~89 个方法 body 的 return 语句，工作量大、风险高
 - 仍允许 `s._hover(fn)._active(fn2)` 这种 block 连写（runtime 已支持），对用户体验是友好的
@@ -121,6 +124,7 @@ IDE 在 `s.color.currentColor.` 之后弹出 89+ Chain 内建方法 + 857 个 CS
 **选择**：`s.color._primary.alpha(50)` 之后即终结，不允许 `.alpha(50).darken(15)`
 
 **理由**：
+
 - 既有设计就说明 modifier 不累积、后者覆盖前者，链式 modifier 实际上是误导
 - 类型层禁止链式正好与"覆盖式"语义对齐
 - 一个 token 只能用一个 modifier 决定最终色值，符合"一行 css = 一个值"
@@ -134,6 +138,7 @@ IDE 在 `s.color.currentColor.` 之后弹出 89+ Chain 内建方法 + 857 个 CS
 **选择**：JSDoc 示例 + README 示例全部改为多行 statement
 
 **理由**：
+
 - 文档与类型签名必须一致 —— 旧 fluent 示例在新签名下编译会红，文档不能教用户写编译错的代码
 - generator 把 docs-zh JSDoc 编译进 `properties.generated.ts`，所有 IDE hover 提示都会读这些示例
 - 文档教学风格直接影响用户学习路径
@@ -147,6 +152,7 @@ IDE 在 `s.color.currentColor.` 之后弹出 89+ Chain 内建方法 + 857 个 CS
 **选择**：carrier 类型是 `((value: TValue) => void) & { [K in TTokens]: ColorTokenValue } & { [K in TKeywords]: void } & TUnits`
 
 **实际表现**：
+
 - `s.color.` → IDE 显示 color tokens（`_primary` / `_success` / etc.）+ CSS color keywords（`white` / `red` / `currentColor` / etc.）+ unit methods（如非 color 属性也是 carrier）+ extra-keyword（如有）
 - `s.color._primary.` → IDE 只显示 11 个 ColorTokenValue modifier（alpha / darken / etc.）
 - `s.color._primary.alpha(50).` → IDE 只显示 `Object.prototype` 几个方法（toString / valueOf / 等），不再爆 Chain 表面
@@ -167,13 +173,13 @@ IDE 在 `s.color.currentColor.` 之后弹出 89+ Chain 内建方法 + 857 个 CS
 
 ## 验证
 
-| 验证 | 结果 |
-| --- | --- |
-| `pnpm --filter @kenconnet666/zui-core run type-check` | ✅ 通过 |
-| `pnpm --filter @kenconnet666/zui-core test -- run` | ✅ 30 文件 / 610 tests 全绿（含 parity test） |
-| `pnpm --filter @kenconnet666/zui-core build` | ✅ vite build OK；dts 1.7s 生成 |
-| `node scripts/generate-properties.mjs` | ✅ 输出无 drift（再跑同结果） |
-| IDE 实际补全 | `s.color.currentColor.` 不再弹 Chain 表面 |
+| 验证                                                  | 结果                                          |
+| ----------------------------------------------------- | --------------------------------------------- |
+| `pnpm --filter @kenconnet666/zui-core run type-check` | ✅ 通过                                       |
+| `pnpm --filter @kenconnet666/zui-core test -- run`    | ✅ 30 文件 / 610 tests 全绿（含 parity test） |
+| `pnpm --filter @kenconnet666/zui-core build`          | ✅ vite build OK；dts 1.7s 生成               |
+| `node scripts/generate-properties.mjs`                | ✅ 输出无 drift（再跑同结果）                 |
+| IDE 实际补全                                          | `s.color.currentColor.` 不再弹 Chain 表面     |
 
 ---
 

@@ -93,7 +93,7 @@ function isExpanded(key: string): boolean {
 
 function toggleExpand(key: string): void {
   const cur = props.expandedKeys
-  const next = cur.includes(key) ? cur.filter((k) => k !== key) : [...cur, key]
+  const next = cur.includes(key) ? cur.filter(k => k !== key) : [...cur, key]
   emit('update:expandedKeys', next)
 }
 
@@ -104,7 +104,7 @@ function selectNode(node: ZTreeNode): void {
 }
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.color._text
@@ -115,7 +115,7 @@ const rootClass = computed(() =>
 
 const nodeRowClass = (node: ZTreeNode, depth: number): string => {
   const isSelected = props.selectedKey === node.key
-  return icss(theme.value, (s) => {
+  return icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.gap._tiny
@@ -133,7 +133,7 @@ const nodeRowClass = (node: ZTreeNode, depth: number): string => {
     if (node.disabled) {
       s.opacity._dim
     } else {
-      s._hover((h2) => {
+      s._hover(h2 => {
         if (!isSelected) h2.backgroundColor._textSecondary.alpha(8)
       })
     }
@@ -141,7 +141,7 @@ const nodeRowClass = (node: ZTreeNode, depth: number): string => {
 }
 
 const arrowClass = (expanded: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -155,7 +155,7 @@ const arrowClass = (expanded: boolean): string =>
   })
 
 const arrowSpacerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineBlock
     s.width.iem(1)
     s.flexShrink(0)

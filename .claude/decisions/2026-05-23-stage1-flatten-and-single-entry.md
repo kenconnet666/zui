@@ -37,6 +37,7 @@ src/provider/useZDate.ts                    →   src/provider/date/useZDate.ts
 ### B. provider 子结构(L2)
 
 `src/provider/` 根仅保留:
+
 - `ZBox.vue` —— 主题/iem/locale/date 注入器 + 底层带 css 的容器
 - `keys.ts` —— `Z_THEME_KEY` / `Z_LOCALE_KEY` / `Z_DATE_KEY` injection symbols
 - `units.ts` —— `ZIemPreset` / `ZIem`
@@ -57,7 +58,7 @@ hook,纯外部工具函数,业务方需要时直接装 `@vueuse/core`。
 
 ### E. Import 路径同步
 
-- gene/*.vue + _typography-base.ts:`'../../theme'` → `'../provider/theme'`,
+- gene/\*.vue + \_typography-base.ts:`'../../theme'` → `'../provider/theme'`,
   `'../../provider'` → `'../provider'`
 - provider/keys.ts:`'../theme'` → `'./theme'`,`'../locale/types'` → `'./locale/types'`
 - provider/ZBox.vue:`'../theme'` → `'./theme'`,`'../locale/*'` → `'./locale/*'`

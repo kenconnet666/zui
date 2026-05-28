@@ -29,10 +29,7 @@ import type { ZuiSchema } from '../provider/theme'
 type GridSize5Keys = 'tiny' | 'small' | 'middle' | 'large' | 'huge'
 
 /** cols/rows 取值:固定数 / 自定义字符串 / 响应式对象。 */
-export type ZGridColsValue =
-  | number
-  | string
-  | Partial<Record<GridSize5Keys, number | string>>
+export type ZGridColsValue = number | string | Partial<Record<GridSize5Keys, number | string>>
 
 export interface ZGridProps {
   /** 列定义。数字 → `repeat(N, 1fr)`;字符串 → 直接作 `grid-template-columns`;对象 → 响应式。 */
@@ -95,14 +92,14 @@ function applyResponsive(
     if (k === firstKey) continue
     const v = value[k]
     if (v === undefined) continue
-    s._media(`_${k}` as `_${GridSize5Keys}`, (m) => {
+    s._media(`_${k}` as `_${GridSize5Keys}`, m => {
       m._prop(prop, resolveTemplate(v))
     })
   }
 }
 
 const className = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     if (props.inline) s.display.inlineGrid
     else s.display.grid
 

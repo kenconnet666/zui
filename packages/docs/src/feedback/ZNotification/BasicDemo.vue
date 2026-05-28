@@ -4,10 +4,18 @@ import { createNotificationApi } from '@kenconnet666/zui-vue'
 
 const notify = createNotificationApi()
 
-function showInfo()    { notify.info('普通通知', '这是详细描述信息，可以多行显示。') }
-function showSuccess() { notify.success('操作成功', '数据已成功保存到服务器。') }
-function showWarning() { notify.warning('注意', '当前操作不可撤销，请确认后继续。') }
-function showError()   { notify.error('请求失败', '网络连接超时，请检查网络后重试。') }
+function showInfo() {
+  notify.info('普通通知', '这是详细描述信息，可以多行显示。')
+}
+function showSuccess() {
+  notify.success('操作成功', '数据已成功保存到服务器。')
+}
+function showWarning() {
+  notify.warning('注意', '当前操作不可撤销，请确认后继续。')
+}
+function showError() {
+  notify.error('请求失败', '网络连接超时，请检查网络后重试。')
+}
 function showLoading() {
   const id = notify.loading('处理中', '正在上传文件，请稍候...')
   setTimeout(() => {
@@ -15,7 +23,9 @@ function showLoading() {
     notify.success('上传完成', '文件已成功上传。')
   }, 2000)
 }
-function showNoDesc()  { notify.info('无描述通知') }
+function showNoDesc() {
+  notify.info('无描述通知')
+}
 </script>
 
 <template>

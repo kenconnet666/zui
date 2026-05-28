@@ -54,10 +54,10 @@ const primaryCls = computed(() => {
   c.borderStyle('none')
   c.transitionDuration.ms(150)
   c.transitionProperty('background-color')
-  c._hover((h) => {
+  c._hover(h => {
     h.backgroundColor._primary.alpha(85)
   })
-  c._focusVisible((f) => {
+  c._focusVisible(f => {
     f.outlineColor._primary
     f.outlineStyle.solid
     f.outlineWidth.px(2)
@@ -77,7 +77,7 @@ const ghostCls = computed(() => {
   c.borderWidth.px(1)
   c.borderStyle.solid
   c.borderColor._primary.alpha(30)
-  c._hover((h) => {
+  c._hover(h => {
     h.backgroundColor._primary.alpha(20)
   })
   return toClassName(c)
@@ -92,7 +92,7 @@ const dangerCls = computed(() => {
   c.borderRadius._middle
   c.fontWeight._bold
   c.borderStyle('none')
-  c._hover((h) => {
+  c._hover(h => {
     h.backgroundColor._danger.alpha(85)
   })
   return toClassName(c)

@@ -43,7 +43,7 @@ const props = defineProps<ApiTableProps>()
 const theme = useZTheme()
 
 const tableClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.width.pct(100)
     s.borderCollapse.collapse
     s.fontSize._small
@@ -53,13 +53,13 @@ const tableClass = computed(() =>
 )
 
 const theadClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.backgroundColor._bgMuted
   }),
 )
 
 const thClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.textAlign.left
     s.paddingTop.iem(0.5)
     s.paddingBottom.iem(0.5)
@@ -76,7 +76,7 @@ const thClass = computed(() =>
 
 const tdClass = (mono: boolean) =>
   computed(() =>
-    icss(theme.value, (s) => {
+    icss(theme.value, s => {
       s.paddingTop.iem(0.5)
       s.paddingBottom.iem(0.5)
       s.paddingLeft.iem(0.75)
@@ -96,7 +96,7 @@ const tdClass = (mono: boolean) =>
 
 /** 预计算每列的 td class（避免模板里重复调用）。 */
 const tdClasses = computed(() =>
-  props.columns.map((col) => ({ key: col.key, cls: tdClass(!!col.mono).value })),
+  props.columns.map(col => ({ key: col.key, cls: tdClass(!!col.mono).value })),
 )
 </script>
 
@@ -117,11 +117,7 @@ const tdClasses = computed(() =>
       </thead>
       <tbody>
         <tr v-for="(row, i) in rows" :key="i">
-          <td
-            v-for="colCls in tdClasses"
-            :key="colCls.key"
-            :class="colCls.cls"
-          >
+          <td v-for="colCls in tdClasses" :key="colCls.key" :class="colCls.cls">
             {{ row[colCls.key] ?? '—' }}
           </td>
         </tr>

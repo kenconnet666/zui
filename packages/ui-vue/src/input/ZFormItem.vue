@@ -120,7 +120,7 @@ onUnmounted(() => {
 })
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     if (effectiveLabelPlacement.value === 'top') {
       s.flexDirection.column
@@ -135,7 +135,7 @@ const rootClass = computed(() =>
 )
 
 const labelClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._text
     s.fontSize._middle
     s.lineHeight._normal
@@ -155,14 +155,14 @@ const labelClass = computed(() =>
 const sxLabelAttrs = computed(() => extractSxAttrs(props.sxLabel))
 
 const requiredMarkClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._danger
     s.marginRight._tiny
   }),
 )
 
 const controlClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.display.flex
     s.flexDirection.column
@@ -173,7 +173,7 @@ const controlClass = computed(() =>
 const sxControlAttrs = computed(() => extractSxAttrs(props.sxControl))
 
 const errorClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._danger
     s.fontSize._small
     s.lineHeight._normal

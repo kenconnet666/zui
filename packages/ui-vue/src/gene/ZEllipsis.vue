@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<ZEllipsisProps>(), {
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     if (props.lines === 1) {
       s.display.inlineBlock
       s.overflow.hidden

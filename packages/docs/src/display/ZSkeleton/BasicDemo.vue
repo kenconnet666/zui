@@ -31,11 +31,26 @@ const loading = ref(true)
       <ZSkeleton :loading="loading" :avatar="true" :title="true">
         <ZFlex :gap="g => g._small" :align="a => a.center">
           <ZFlex
-            :css="s => { s.width.iem(2.5); s.height.iem(2.5); s.borderRadius._full; s.backgroundColor._bgMuted }"
+            :css="
+              s => {
+                s.width.iem(2.5)
+                s.height.iem(2.5)
+                s.borderRadius._full
+                s.backgroundColor._bgMuted
+              }
+            "
           />
           <ZFlex :direction="d => d.column" :gap="g => g._tiny">
             <ZText>加载完成的用户名</ZText>
-            <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">用户简介内容已加载完毕。</ZText>
+            <ZText
+              :css="
+                s => {
+                  s.color._textSecondary
+                  s.fontSize._small
+                }
+              "
+              >用户简介内容已加载完毕。</ZText
+            >
           </ZFlex>
         </ZFlex>
       </ZSkeleton>

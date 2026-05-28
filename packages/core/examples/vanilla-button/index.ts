@@ -34,25 +34,25 @@ long.backgroundColor._primary
 long.padding.px(12)
 long.borderRadius._middle
 long.fontWeight._bold
-long._hover((h) => {
+long._hover(h => {
   h.backgroundColor._primary.alpha(85)
 })
 const longCls = long.toString()
 
 // ─── 2. icss shortcut：一行 builder ───
-const dangerCls = icss<MySchema>(theme, (s) => {
+const dangerCls = icss<MySchema>(theme, s => {
   s.color.white
   s.backgroundColor._danger
   s.padding.px(12)
   s.borderRadius._middle
   s.fontWeight._bold
-  s._hover((h) => {
+  s._hover(h => {
     h.backgroundColor._danger.alpha(85)
   })
 })
 
 // ─── 3. ghost：组合 token + alpha + 边框 ───
-const ghostCls = icss<MySchema>(theme, (s) => {
+const ghostCls = icss<MySchema>(theme, s => {
   s.color._primary
   s.backgroundColor._primary.alpha(10)
   s.padding.px(12)
@@ -61,7 +61,7 @@ const ghostCls = icss<MySchema>(theme, (s) => {
   s.borderWidth.px(1)
   s.borderStyle('solid')
   s.borderColor._primary.alpha(30)
-  s._hover((h) => {
+  s._hover(h => {
     h.backgroundColor._primary.alpha(20)
   })
 })

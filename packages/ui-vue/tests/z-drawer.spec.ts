@@ -9,16 +9,19 @@ import { ZDrawer } from '../src'
 let wrappers: VueWrapper[] = []
 
 function cleanPortals(): void {
-  wrappers.forEach((w) => w.unmount())
+  wrappers.forEach(w => w.unmount())
   wrappers = []
-  document.body.querySelectorAll('[role="dialog"]').forEach((el) => el.remove())
+  document.body.querySelectorAll('[role="dialog"]').forEach(el => el.remove())
   document.body.style.overflow = ''
 }
 
 beforeEach(cleanPortals)
 afterEach(cleanPortals)
 
-function makeHost(visible: ReturnType<typeof ref<boolean>>, extraProps: Record<string, unknown> = {}) {
+function makeHost(
+  visible: ReturnType<typeof ref<boolean>>,
+  extraProps: Record<string, unknown> = {},
+) {
   return defineComponent({
     setup() {
       return () =>
@@ -73,7 +76,9 @@ describe('ZDrawer', () => {
 
   it('closable=false → 无关闭按钮', async () => {
     const visible = ref(true)
-    wrappers.push(mount(makeHost(visible, { title: 'T', closable: false }), { attachTo: document.body }))
+    wrappers.push(
+      mount(makeHost(visible, { title: 'T', closable: false }), { attachTo: document.body }),
+    )
     await nextTick()
     expect(document.querySelector('button[aria-label="关闭"]')).toBeNull()
   })
@@ -83,7 +88,7 @@ describe('ZDrawer', () => {
     wrappers.push(mount(makeHost(visible, { placement: 'left' }), { attachTo: document.body }))
     await nextTick()
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/left:0/)
   })

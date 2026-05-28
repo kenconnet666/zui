@@ -167,7 +167,8 @@ ${colorTokenUsage('borderColor')}
   // outlineColor
   // ════════════════════════════════════════════════════════════════════
   outlineColor: {
-    firstLine: '设置元素的**外轮廓 outline 颜色**。outline 不占空间、可跨圆角包绕，常用于焦点态高亮。',
+    firstLine:
+      '设置元素的**外轮廓 outline 颜色**。outline 不占空间、可跨圆角包绕，常用于焦点态高亮。',
 
     keywordGroups: [
       {
@@ -176,12 +177,12 @@ ${colorTokenUsage('borderColor')}
         rows: [
           ['`white`', '`#FFFFFF`', '纯白'],
           ['`black`', '`#000000`', '纯黑'],
-          ['`transparent`', '`rgba(0,0,0,0)`', '透明轮廓（保留焦点行为但不可见，**慎用，影响可访问性**）'],
           [
-            '`currentColor`',
-            '**默认值**，跟随 `color`',
-            '轮廓色跟随文字色变（最常用）',
+            '`transparent`',
+            '`rgba(0,0,0,0)`',
+            '透明轮廓（保留焦点行为但不可见，**慎用，影响可访问性**）',
           ],
+          ['`currentColor`', '**默认值**，跟随 `color`', '轮廓色跟随文字色变（最常用）'],
         ],
       },
       {
@@ -210,10 +211,7 @@ ${colorTokenUsage('outlineColor')}
 
     insertNamedColors: true,
 
-    syntax: [
-      ...COLOR_SYNTAX_ROWS,
-      ['`invert`', '—', '反色（罕用，浏览器实现不一致）'],
-    ],
+    syntax: [...COLOR_SYNTAX_ROWS, ['`invert`', '—', '反色（罕用，浏览器实现不一致）']],
     initialValue: 'currentColor',
     inherits: false,
   },
@@ -222,8 +220,7 @@ ${colorTokenUsage('outlineColor')}
   // textDecorationColor
   // ════════════════════════════════════════════════════════════════════
   textDecorationColor: {
-    firstLine:
-      '设置**文本装饰线**（下划线 / 删除线 / 上划线）的颜色。未设置时跟随 `color`。',
+    firstLine: '设置**文本装饰线**（下划线 / 删除线 / 上划线）的颜色。未设置时跟随 `color`。',
 
     keywordGroups: [
       {
@@ -233,11 +230,7 @@ ${colorTokenUsage('outlineColor')}
           ['`white`', '`#FFFFFF`', '纯白'],
           ['`black`', '`#000000`', '纯黑'],
           ['`transparent`', '`rgba(0,0,0,0)`', '隐藏装饰线（但仍占位）'],
-          [
-            '`currentColor`',
-            '**默认值**，跟随 `color`',
-            '装饰线跟随文字色（最常用）',
-          ],
+          ['`currentColor`', '**默认值**，跟随 `color`', '装饰线跟随文字色（最常用）'],
         ],
       },
     ],
@@ -308,10 +301,7 @@ ${colorTokenUsage('caretColor')}
 
     insertNamedColors: true,
 
-    syntax: [
-      ...COLOR_SYNTAX_ROWS,
-      ['`auto`', '—', '默认；浏览器按对比度自动选'],
-    ],
+    syntax: [...COLOR_SYNTAX_ROWS, ['`auto`', '—', '默认；浏览器按对比度自动选']],
     initialValue: 'auto',
     inherits: true,
   },
@@ -337,9 +327,7 @@ ${colorTokenUsage('caretColor')}
       {
         label: '此属性特有',
         headers: ['关键字', '行为'],
-        rows: [
-          ['`auto`', '**默认值**。浏览器使用平台原生强调色（macOS 蓝、Windows 蓝）'],
-        ],
+        rows: [['`auto`', '**默认值**。浏览器使用平台原生强调色（macOS 蓝、Windows 蓝）']],
       },
     ],
 
@@ -363,10 +351,7 @@ CSS Color 4 新属性，Chrome 93+ / Firefox 92+ / Safari 15.4+ 支持。旧浏�
 
     insertNamedColors: true,
 
-    syntax: [
-      ...COLOR_SYNTAX_ROWS,
-      ['`auto`', '—', '默认；平台原生强调色'],
-    ],
+    syntax: [...COLOR_SYNTAX_ROWS, ['`auto`', '—', '默认；平台原生强调色']],
     initialValue: 'auto',
     inherits: true,
   },
@@ -417,8 +402,7 @@ ${colorTokenUsage('columnRuleColor')}
   // fill —— SVG
   // ════════════════════════════════════════════════════════════════════
   fill: {
-    firstLine:
-      'SVG 专属：设置 SVG 图形（`<path>` / `<circle>` / `<rect>` 等）的**填充颜色**。',
+    firstLine: 'SVG 专属：设置 SVG 图形（`<path>` / `<circle>` / `<rect>` 等）的**填充颜色**。',
 
     keywordGroups: [
       {
@@ -428,11 +412,7 @@ ${colorTokenUsage('columnRuleColor')}
           ['`white`', '`#FFFFFF`', '纯白填充'],
           ['`black`', '`#000000`', '**默认值**。纯黑填充'],
           ['`transparent`', '`rgba(0,0,0,0)`', '完全透明，等同 `none`（露出下层）'],
-          [
-            '`currentColor`',
-            '引用 `color`',
-            '让 SVG 跟随文字色 —— **icon font 风格**的核心写法',
-          ],
+          ['`currentColor`', '引用 `color`', '让 SVG 跟随文字色 —— **icon font 风格**的核心写法'],
         ],
       },
       {
@@ -440,10 +420,7 @@ ${colorTokenUsage('columnRuleColor')}
         headers: ['关键字', '行为'],
         rows: [
           ['`none`', '无填充（与 `transparent` 视觉相同，但语义更清晰）'],
-          [
-            '`context-fill`',
-            '引用调用 SVG 的元素的 fill（在 `<use>` 引用的 \\<symbol\\> 内使用）',
-          ],
+          ['`context-fill`', '引用调用 SVG 的元素的 fill（在 `<use>` 引用的 \\<symbol\\> 内使用）'],
           ['`context-stroke`', '引用调用元素的 stroke'],
         ],
       },
@@ -451,7 +428,11 @@ ${colorTokenUsage('columnRuleColor')}
         label: 'SVG paint server 引用',
         headers: ['形式', '示例', '用途'],
         rows: [
-          ['`url(#id)`', "`'url(#gradient1)'`", '引用 `<linearGradient>` / `<radialGradient>` / `<pattern>` 实现渐变/图案填充'],
+          [
+            '`url(#id)`',
+            "`'url(#gradient1)'`",
+            '引用 `<linearGradient>` / `<radialGradient>` / `<pattern>` 实现渐变/图案填充',
+          ],
         ],
       },
     ],

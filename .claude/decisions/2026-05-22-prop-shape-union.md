@@ -10,12 +10,12 @@
 
 roadmap §1 L15 + skill §13.0 ① 锁定的"chain factory only"在实施过程中没人遵守:
 
-| 形态 | 组件数 | 代表 |
-|---|---|---|
-| 纯 factory | 6 | ZIcon / ZText / ZTitle / ZParagraph / ZLink / ZSpace |
-| 纯 3 阶枚举 | 15+ | ZInput / ZSelect / ZForm / ZPagination / ZProgress / ZRate / ZTag / ZButton / ZSegmented / ZSpin / ZAutoComplete / ZInputNumber / ZDatePicker / ZTreeSelect / ZDescriptions / ZList |
-| 混合 union | 1 | ZAvatar(`number \| 'small' \| 'middle' \| 'large'`) |
-| 纯 number/string | 3 | ZDrawer / ZQRCode / ZSplit |
+| 形态             | 组件数 | 代表                                                                                                                                                                                |
+| ---------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 纯 factory       | 6      | ZIcon / ZText / ZTitle / ZParagraph / ZLink / ZSpace                                                                                                                                |
+| 纯 3 阶枚举      | 15+    | ZInput / ZSelect / ZForm / ZPagination / ZProgress / ZRate / ZTag / ZButton / ZSegmented / ZSpin / ZAutoComplete / ZInputNumber / ZDatePicker / ZTreeSelect / ZDescriptions / ZList |
+| 混合 union       | 1      | ZAvatar(`number \| 'small' \| 'middle' \| 'large'`)                                                                                                                                 |
+| 纯 number/string | 3      | ZDrawer / ZQRCode / ZSplit                                                                                                                                                          |
 
 实际现实是 **carrier factory 对 happy path 太啰嗦**,大部分组件回退到枚举档位。这不是漂移,是承认现实。
 
@@ -40,7 +40,14 @@ size?: ((s: Chain<ZuiSchema>) => void) | Size5
 <ZInput size="middle" />
 
 <!-- factory 逃生口,需要超出预设的尺寸 -->
-<ZInput :size="(s) => { s.height.iem(2.5); s.fontSize.iem(1.1) }" />
+<ZInput
+  :size="
+    s => {
+      s.height.iem(2.5)
+      s.fontSize.iem(1.1)
+    }
+  "
+/>
 ```
 
 ---
@@ -92,6 +99,7 @@ ZAvatar / ZDrawer 等的 `number` 字面量**不保留**,改为 `factory | Size5
 ### R7 — 类型 helper 位置
 
 `_internal/size-prop.ts` 导出:
+
 - `Size5` —— 通用枚举类型
 - `SizeProp<K>` —— 单 carrier 维度 helper
 - `SizePropMulti` —— 多 carrier 维度 helper
@@ -103,12 +111,12 @@ ZAvatar / ZDrawer 等的 `number` 字面量**不保留**,改为 `factory | Size5
 
 **对业务方代码的影响**:
 
-| 当前用法 | 新方案 | 兼容性 |
-|---|---|---|
-| `<ZInput size="middle">` | 同 | ✅ 兼容 |
-| `<ZIcon :size="(w) => w.iem(1.5)">` | 同 | ✅ 兼容 |
-| `<ZAvatar :size="32">` | `<ZAvatar :size="(w) => w.px(32)">` | ❌ BREAKING |
-| `<ZAvatar size="middle">` | 同 | ✅ 兼容 |
+| 当前用法                            | 新方案                              | 兼容性      |
+| ----------------------------------- | ----------------------------------- | ----------- |
+| `<ZInput size="middle">`            | 同                                  | ✅ 兼容     |
+| `<ZIcon :size="(w) => w.iem(1.5)">` | 同                                  | ✅ 兼容     |
+| `<ZAvatar :size="32">`              | `<ZAvatar :size="(w) => w.px(32)">` | ❌ BREAKING |
+| `<ZAvatar size="middle">`           | 同                                  | ✅ 兼容     |
 
 ZAvatar 是唯一现有 BREAKING 点,其它都是**新增**枚举档位 / 新增 factory 路径,不破坏现有写法。
 

@@ -76,7 +76,7 @@ export function parseStackLine(line: string): StackFrame | null {
  */
 export function findUserCallsite(stackLines: string[]): StackFrame | null {
   for (const line of stackLines) {
-    const isFramework = FRAMEWORK_HINTS.some((hint) => line.includes(hint))
+    const isFramework = FRAMEWORK_HINTS.some(hint => line.includes(hint))
     if (isFramework) continue
     const frame = parseStackLine(line)
     if (frame) return frame

@@ -8,7 +8,7 @@ import { ZSpace, type ZuiSchema } from '../src'
 
 function getInjectedCss(): string {
   return Array.from(document.querySelectorAll('style'))
-    .map((el) => el.textContent ?? '')
+    .map(el => el.textContent ?? '')
     .join('\n')
 }
 
@@ -21,7 +21,7 @@ describe('ZSpace — 默认', () => {
     // _small = iem(0.5) → calc(0.5 * var(--zui-iem, 16px))
     expect(css).toMatch(/gap:calc\(0\.5 \* var\(--zui-iem,/)
     // 默认不写 flex-direction —— 仅验证本组件 class 规则
-    const cls = w.classes().find((c) => c.startsWith('css-'))
+    const cls = w.classes().find(c => c.startsWith('css-'))
     expect(cls).toBeTruthy()
     const re = new RegExp(`\\.${cls}\\s*\\{([^}]*)\\}`)
     const m = css.match(re)
@@ -33,7 +33,11 @@ describe('ZSpace — 默认', () => {
 describe('ZSpace — direction', () => {
   it('direction=column → flex-direction:column', () => {
     mount(ZSpace, {
-      props: { direction: (d: Chain<ZuiSchema>['flexDirection']) => { d.column } },
+      props: {
+        direction: (d: Chain<ZuiSchema>['flexDirection']) => {
+          d.column
+        },
+      },
       slots: { default: () => 'x' },
     })
     expect(getInjectedCss()).toMatch(/flex-direction:column/)
@@ -57,7 +61,11 @@ describe('ZSpace — size factory 覆盖默认 gap', () => {
 describe('ZSpace — 其它 props', () => {
   it('wrap=true → flex-wrap:wrap', () => {
     mount(ZSpace, {
-      props: { wrap: (w: Chain<ZuiSchema>['flexWrap']) => { w.wrap } },
+      props: {
+        wrap: (w: Chain<ZuiSchema>['flexWrap']) => {
+          w.wrap
+        },
+      },
       slots: { default: () => 'x' },
     })
     expect(getInjectedCss()).toMatch(/flex-wrap:wrap[;}]/)
@@ -65,7 +73,11 @@ describe('ZSpace — 其它 props', () => {
 
   it('align=start → flex-start', () => {
     mount(ZSpace, {
-      props: { align: (a: Chain<ZuiSchema>['alignItems']) => { a.flexStart } },
+      props: {
+        align: (a: Chain<ZuiSchema>['alignItems']) => {
+          a.flexStart
+        },
+      },
       slots: { default: () => 'x' },
     })
     expect(getInjectedCss()).toMatch(/align-items:flex-start/)

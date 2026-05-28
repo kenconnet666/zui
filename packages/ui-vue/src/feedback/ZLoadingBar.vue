@@ -40,7 +40,7 @@ const widthPct = computed(() => Math.max(0, Math.min(100, props.value ?? 0)))
  * - fixed 定位在 viewport top:0,横跨整宽
  */
 const wrapClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.fixed
     s.top.px(0)
     s.left.px(0)
@@ -53,7 +53,7 @@ const wrapClass = computed(() =>
 )
 
 const fillClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.height.pct(100)
     s.width.pct(widthPct.value)
     if (props.error) s.backgroundColor._danger

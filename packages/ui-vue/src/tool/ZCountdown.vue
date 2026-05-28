@@ -109,7 +109,7 @@ const displayText = computed(() => {
 })
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontFamily._mono
     s.fontWeight._semibold
     s.color._text

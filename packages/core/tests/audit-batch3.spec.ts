@@ -34,7 +34,7 @@ describe('S4 — createIcssInstance.presetAnimations', () => {
     const m = mockEmotion()
     const inst = createIcssInstance(m)
     expect(m.keyframeCalls.length).toBe(0)
-     
+
     inst.presetAnimations.fadeIn
     expect(m.keyframeCalls.length).toBe(1)
   })
@@ -55,14 +55,13 @@ describe('S4 — createIcssInstance.presetAnimations', () => {
     const m2 = mockEmotion()
     const inst1 = createIcssInstance(m1)
     const inst2 = createIcssInstance(m2)
-     
+
     inst1.presetAnimations.fadeIn
-     
+
     inst1.presetAnimations.spin
     expect(m1.keyframeCalls.length).toBe(2)
     expect(m2.keyframeCalls.length).toBe(0)
 
-     
     inst2.presetAnimations.fadeIn
     expect(m1.keyframeCalls.length).toBe(2)
     expect(m2.keyframeCalls.length).toBe(1)
@@ -71,7 +70,7 @@ describe('S4 — createIcssInstance.presetAnimations', () => {
   it('注册的 stops 与 PRESET_ANIMATION_DEFS 一致', () => {
     const m = mockEmotion()
     const inst = createIcssInstance(m)
-     
+
     inst.presetAnimations.fadeIn
     expect(m.keyframeCalls[0]).toEqual(PRESET_ANIMATION_DEFS.fadeIn)
   })

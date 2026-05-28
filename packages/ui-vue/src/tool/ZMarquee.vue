@@ -30,23 +30,23 @@ const props = withDefaults(defineProps<ZMarqueeProps>(), {
 
 const theme = useZTheme()
 
-const marqueeLeft = ikeyframes((k) => {
+const marqueeLeft = ikeyframes(k => {
   k.from({ transform: 'translateX(0)' })
   k.to({ transform: 'translateX(-50%)' })
 })
-const marqueeRight = ikeyframes((k) => {
+const marqueeRight = ikeyframes(k => {
   k.from({ transform: 'translateX(-50%)' })
   k.to({ transform: 'translateX(0)' })
 })
 
 const wrapClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.block
     s.overflow.hidden
     s.whiteSpace.nowrap
     if (props.pauseOnHover) {
-      s._hover((h) => {
-        h._selector('& > div', (c) => {
+      s._hover(h => {
+        h._selector('& > div', c => {
           c.animationPlayState.paused
         })
       })
@@ -56,7 +56,7 @@ const wrapClass = computed(() =>
 )
 
 const trackClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.animationName(props.direction === 'left' ? marqueeLeft : marqueeRight)
     s.animationDuration.ms(props.duration)

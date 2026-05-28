@@ -33,7 +33,19 @@ const loading = ref(true)
         <ZText>包裹模式（loading={{ loading }}）</ZText>
       </ZFlex>
       <ZSpin :spinning="loading">
-        <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => { s.padding.iem(1); s.borderWidth.px(1); s.borderStyle.solid; s.borderColor._border; s.borderRadius._small }">
+        <ZFlex
+          :direction="d => d.column"
+          :gap="g => g._small"
+          :css="
+            s => {
+              s.padding.iem(1)
+              s.borderWidth.px(1)
+              s.borderStyle.solid
+              s.borderColor._border
+              s.borderRadius._small
+            }
+          "
+        >
           <ZText>被包裹的内容行 1</ZText>
           <ZText>被包裹的内容行 2</ZText>
           <ZText>被包裹的内容行 3</ZText>

@@ -112,7 +112,7 @@ onMounted(() => startTimer())
 onScopeDispose(() => stopTimer())
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.relative
     s.display.block
     s.overflow.hidden
@@ -123,7 +123,7 @@ const rootClass = computed(() =>
 )
 
 const trackClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.width.pct(total.value * 100)
     s.transform(`translateX(-${(props.current / total.value) * 100}%)`)
@@ -134,14 +134,14 @@ const trackClass = computed(() =>
 )
 
 const slideClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.width.pct(100 / total.value)
     s.flexShrink(0)
   }),
 )
 
 const arrowClass = (side: 'left' | 'right'): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.top.pct(50)
     if (side === 'left') s.left.iem(0.5)
@@ -159,13 +159,13 @@ const arrowClass = (side: 'left' | 'right'): string =>
     s.cursor.pointer
     s.boxShadow._small
     s.zIndex._small
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.boxShadow._middle
     })
   })
 
 const dotsClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.bottom.iem(0.75)
     s.left.pct(50)
@@ -177,7 +177,7 @@ const dotsClass = computed(() =>
 )
 
 const dotClass = (active: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.width.iem(0.5)
     s.height.iem(0.5)
     s.borderRadius._full

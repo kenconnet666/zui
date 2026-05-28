@@ -18,17 +18,21 @@ const backLog = ref<string[]>([])
       </template>
     </ZPageHeader>
 
-    <ZPageHeader
-      title="无返回按钮"
-      subtitle="副标题文字"
-      :show-back="false"
-    >
+    <ZPageHeader title="无返回按钮" subtitle="副标题文字" :show-back="false">
       <template #extra>
         <ZButton :size="0.875" variant="ghost">操作</ZButton>
       </template>
     </ZPageHeader>
 
-    <ZText v-if="backLog.length" :css="s => { s.color._textSecondary; s.fontSize._small }">
+    <ZText
+      v-if="backLog.length"
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+    >
       返回按钮被点击 {{ backLog.length }} 次
     </ZText>
   </ZFlex>

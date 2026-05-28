@@ -58,14 +58,14 @@ const watermarkDataUrl = computed(() => {
 })
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.relative
     props.css?.(s)
   }),
 )
 
 const overlayClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.inset.px(0)
     s.pointerEvents.none

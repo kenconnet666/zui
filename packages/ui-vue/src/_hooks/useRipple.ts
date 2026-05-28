@@ -115,7 +115,7 @@ export function useRipple(
 
   watch(
     targetRef,
-    (el) => {
+    el => {
       if (attachedTo) {
         attachedTo.removeEventListener('pointerdown', onPointerDown)
         attachedTo = null

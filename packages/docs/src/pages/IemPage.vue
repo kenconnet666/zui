@@ -29,39 +29,64 @@ gap:       calc(1.5 * var(--zui-iem, 16px));  /* 1.5iem */`"
     <ZTitle :level="2">ZIemPreset 预设</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '预设',              mono: true, width: '220px' },
-        { key: 'value',   label: 'CSS 值',            mono: true, width: '140px' },
-        { key: 'px1920',  label: '@ 1920px',          mono: true, width: '100px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'name', label: '预设', mono: true, width: '220px' },
+        { key: 'value', label: 'CSS 值', mono: true, width: '140px' },
+        { key: 'px1920', label: '@ 1920px', mono: true, width: '100px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'ZIemPreset.default', value: '0.8333vw',  px1920: '16px', desc: '随视口等比缩放。推荐大多数场景。' },
-        { name: 'ZIemPreset.fixed',   value: '16px',       px1920: '16px', desc: '固定 16px，不随视口缩放。' },
-        { name: 'ZIemPreset.compact', value: '14px',       px1920: '14px', desc: '紧凑模式，适合信息密度高的后台。' },
-        { name: 'ZIemPreset.large',   value: '20px',       px1920: '20px', desc: '大字模式，适合展示/无障碍场景。' },
+        {
+          name: 'ZIemPreset.default',
+          value: '0.8333vw',
+          px1920: '16px',
+          desc: '随视口等比缩放。推荐大多数场景。',
+        },
+        {
+          name: 'ZIemPreset.fixed',
+          value: '16px',
+          px1920: '16px',
+          desc: '固定 16px，不随视口缩放。',
+        },
+        {
+          name: 'ZIemPreset.compact',
+          value: '14px',
+          px1920: '14px',
+          desc: '紧凑模式，适合信息密度高的后台。',
+        },
+        {
+          name: 'ZIemPreset.large',
+          value: '20px',
+          px1920: '20px',
+          desc: '大字模式，适合展示/无障碍场景。',
+        },
       ]"
     />
 
     <ZTitle :level="2">实时演示</ZTitle>
     <ZParagraph>同一个 <ZCode code="ZIcon" /> + 文字，在不同 iem 下的物理大小：</ZParagraph>
 
-    <ZFlex :gap="(g) => g.iem(1)" :wrap="(w) => w.wrap">
-      <ZBox v-for="preset in [
-        { label: 'compact (14px)', iem: ZIemPreset.compact },
-        { label: 'fixed (16px)',   iem: ZIemPreset.fixed },
-        { label: 'default (vw)',   iem: ZIemPreset.default },
-        { label: 'large (20px)',   iem: ZIemPreset.large },
-      ]" :key="preset.label" :iem="preset.iem"
-        :css="(s) => {
-          s.padding._middle
-          s.borderWidth._thin
-          s.borderStyle.solid
-          s.borderColor._border
-          s.borderRadius._middle
-          s.display.flex
-          s.alignItems.center
-          s.gap._small
-        }"
+    <ZFlex :gap="g => g.iem(1)" :wrap="w => w.wrap">
+      <ZBox
+        v-for="preset in [
+          { label: 'compact (14px)', iem: ZIemPreset.compact },
+          { label: 'fixed (16px)', iem: ZIemPreset.fixed },
+          { label: 'default (vw)', iem: ZIemPreset.default },
+          { label: 'large (20px)', iem: ZIemPreset.large },
+        ]"
+        :key="preset.label"
+        :iem="preset.iem"
+        :css="
+          s => {
+            s.padding._middle
+            s.borderWidth._thin
+            s.borderStyle.solid
+            s.borderColor._border
+            s.borderRadius._middle
+            s.display.flex
+            s.alignItems.center
+            s.gap._small
+          }
+        "
       >
         <ZIcon :component="HomeOutline" />
         <span :style="{ fontSize: 'calc(1 * var(--zui-iem, 16px))' }">{{ preset.label }}</span>

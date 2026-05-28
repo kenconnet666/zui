@@ -9,7 +9,15 @@ const selected = ref('')
   <ZFlex :direction="d => d.column" :gap="g => g._large">
     <ZFlex :direction="d => d.column" :gap="g => g._small">
       <ZCalendar v-model:value="selected" />
-      <ZText v-if="selected" :css="s => { s.color._textSecondary; s.fontSize._small }">
+      <ZText
+        v-if="selected"
+        :css="
+          s => {
+            s.color._textSecondary
+            s.fontSize._small
+          }
+        "
+      >
         已选择：{{ selected }}
       </ZText>
     </ZFlex>

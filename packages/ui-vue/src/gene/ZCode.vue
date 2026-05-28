@@ -156,14 +156,7 @@ export default defineComponent({
     const highlighted = ref<string | null>(null)
 
     watch(
-      () =>
-        [
-          props.code,
-          props.lang,
-          props.themes.light,
-          props.themes.dark,
-          props.inline,
-        ] as const,
+      () => [props.code, props.lang, props.themes.light, props.themes.dark, props.inline] as const,
       async ([code, lang, light, dark, inline]) => {
         // 行内模式 / lang 未传 / code 为空 → 不高亮
         if (inline || !lang || !code) {
@@ -194,7 +187,7 @@ export default defineComponent({
 
     // ─── 根 className ───
     const rootClass = computed(() =>
-      icss(theme.value, (s) => {
+      icss(theme.value, s => {
         s.fontFamily._mono
 
         if (highlighted.value !== null) {
@@ -202,7 +195,7 @@ export default defineComponent({
           s.display.block
           s.borderRadius._tiny
 
-          s._selector('& .shiki', (sub) => {
+          s._selector('& .shiki', sub => {
             sub.margin.px(0)
             sub.padding._small
             sub.borderRadius._tiny
@@ -216,26 +209,26 @@ export default defineComponent({
             sub.color('var(--shiki-light)')
             sub.backgroundColor('var(--shiki-light-bg)')
           })
-          s._selector('& .shiki span', (sub) => {
+          s._selector('& .shiki span', sub => {
             sub.color('var(--shiki-light)')
           })
 
           if (props.colorScheme === 'auto') {
-            s._dark((d) => {
-              d._selector('& .shiki', (sub) => {
+            s._dark(d => {
+              d._selector('& .shiki', sub => {
                 sub.color('var(--shiki-dark)')
                 sub.backgroundColor('var(--shiki-dark-bg)')
               })
-              d._selector('& .shiki span', (sub) => {
+              d._selector('& .shiki span', sub => {
                 sub.color('var(--shiki-dark)')
               })
             })
           } else if (props.colorScheme === 'dark') {
-            s._selector('& .shiki', (sub) => {
+            s._selector('& .shiki', sub => {
               sub.color('var(--shiki-dark)')
               sub.backgroundColor('var(--shiki-dark-bg)')
             })
-            s._selector('& .shiki span', (sub) => {
+            s._selector('& .shiki span', sub => {
               sub.color('var(--shiki-dark)')
             })
           }
@@ -282,11 +275,7 @@ export default defineComponent({
       // fallback 块级:<pre><code><slot/></code></pre>
       const slotContent = slots.default?.() ?? [props.code ?? '']
       if (!props.inline) {
-        return h(
-          'pre',
-          { class: rootClass.value },
-          [h('code', null, slotContent)],
-        )
+        return h('pre', { class: rootClass.value }, [h('code', null, slotContent)])
       }
       // fallback 行内:<code><slot/></code>
       return h('code', { class: rootClass.value }, slotContent)

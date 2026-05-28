@@ -19,13 +19,11 @@ const rules = {
     { required: true, message: '请输入邮箱', trigger: 'change' },
     { type: 'email' as const, message: '邮箱格式不正确', trigger: 'blur' },
   ],
-  role: [
-    { required: true, message: '请选择角色', trigger: 'change' },
-  ],
+  role: [{ required: true, message: '请选择角色', trigger: 'change' }],
 }
 
 const roleOptions = [
-  { value: 'admin',  label: '管理员' },
+  { value: 'admin', label: '管理员' },
   { value: 'editor', label: '编辑' },
   { value: 'viewer', label: '访客' },
 ]
@@ -68,6 +66,15 @@ function handleReset(): void {
       </ZFormItem>
     </ZForm>
 
-    <ZText v-if="log" :css="s => { s.color._textSecondary; s.fontSize._small }">{{ log }}</ZText>
+    <ZText
+      v-if="log"
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+      >{{ log }}</ZText
+    >
   </ZFlex>
 </template>

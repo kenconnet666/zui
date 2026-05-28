@@ -29,7 +29,7 @@ const LockIcon = {
 <template>
   <ZResult
     :icon="LockIcon"
-    :color="(c) => c._warning"
+    :color="c => c._warning"
     title="账号已锁定"
     description="检测到异常登录,系统已临时冻结此账号。请通过邮箱验证后解锁。"
   >

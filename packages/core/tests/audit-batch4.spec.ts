@@ -21,7 +21,7 @@ function makeMockInstance() {
   const inst = createIcssInstance({
     css: () => 'mock',
     cx: (...a: unknown[]) => a.filter(Boolean).join(' '),
-    injectGlobal: (s) => {
+    injectGlobal: s => {
       calls.push(s)
     },
     keyframes: () => 'mock-kf',

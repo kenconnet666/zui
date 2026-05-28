@@ -75,7 +75,7 @@ export const CODE_THEMES: CodeThemeItem[] = [
 function getInitialCodeTheme(): string {
   if (typeof localStorage !== 'undefined') {
     const saved = localStorage.getItem(LS_CODE_THEME_KEY)
-    if (saved && CODE_THEMES.some((t) => t.value === saved)) return saved
+    if (saved && CODE_THEMES.some(t => t.value === saved)) return saved
   }
   return DEFAULT_CODE_THEME
 }
@@ -193,7 +193,7 @@ function onCopy(success: boolean, text: string): void {
 }
 
 // ─── 主题选择器数据 ───
-const themeOptions = CODE_THEMES.map((t) => ({ value: t.value, label: t.label }))
+const themeOptions = CODE_THEMES.map(t => ({ value: t.value, label: t.label }))
 
 function onThemeSelect(value: ZSelectValue | ZSelectValue[] | null): void {
   if (typeof value === 'string') setCodeTheme(value)
@@ -206,7 +206,7 @@ const processedSource = computed(() =>
 
 // ─── className ───
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.block
     s.borderWidth._thin
     s.borderStyle.solid
@@ -219,7 +219,7 @@ const rootClass = computed(() =>
 )
 
 const headerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.spaceBetween
@@ -236,7 +236,7 @@ const headerClass = computed(() =>
 )
 
 const titleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._small
     s.fontWeight._semibold
     s.color._text
@@ -249,7 +249,7 @@ const titleClass = computed(() =>
 )
 
 const actionsClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap.iem(0.25)
@@ -258,7 +258,7 @@ const actionsClass = computed(() =>
 )
 
 const buttonClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap.iem(0.25)
@@ -275,11 +275,11 @@ const buttonClass = computed(() =>
     s.cursor.pointer
     s.transitionProperty.all
     s.transitionDuration._tiny
-    s._selector('&:hover', (h) => {
+    s._selector('&:hover', h => {
       h.backgroundColor._textSecondary.alpha(8)
       h.color._text
     })
-    s._selector('&:focus-visible', (h) => {
+    s._selector('&:focus-visible', h => {
       h.outlineWidth.px(2)
       h.outlineStyle.solid
       h.outlineColor._primary
@@ -289,14 +289,14 @@ const buttonClass = computed(() =>
 )
 
 const previewClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._middle
     s.backgroundColor._bg
   }),
 )
 
 const codeAreaClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.borderTopWidth._thin
     s.borderTopStyle.solid
     s.borderTopColor._border
@@ -304,20 +304,20 @@ const codeAreaClass = computed(() =>
 )
 
 const transitionActiveClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.transitionProperty.all
     s.transitionDuration._small
     s.transitionTimingFunction._default
   }),
 )
 const enterFromClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.opacity._none
     s.transform('translateY(-0.25em)')
   }),
 )
 const leaveToClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.opacity._none
     s.transform('translateY(-0.25em)')
   }),
@@ -325,7 +325,7 @@ const leaveToClass = computed(() =>
 
 watch(
   () => props.expanded,
-  (v) => {
+  v => {
     if (v !== null && v !== undefined) internalExpanded.value = v
   },
 )

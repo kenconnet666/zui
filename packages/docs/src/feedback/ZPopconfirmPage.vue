@@ -6,24 +6,22 @@ import BasicDemo from './ZPopconfirm/BasicDemo.vue'
 import BasicDemoSource from './ZPopconfirm/BasicDemo.vue?raw'
 
 const propsRows = [
-  { name: 'title',       type: 'string',             default: '—',    desc: '确认框标题。' },
-  { name: 'description', type: 'string',             default: '—',    desc: '确认框描述文字。' },
-  { name: 'okText',      type: 'string',             default: "'确认'", desc: '确认按钮文字。' },
-  { name: 'cancelText',  type: 'string',             default: "'取消'", desc: '取消按钮文字。' },
-  { name: 'placement',   type: 'Placement',          default: "'top'", desc: 'floating-ui placement。' },
-  { name: 'disabled',    type: 'boolean',            default: 'false', desc: '禁用（不弹出）。' },
-  { name: 'minWidth',    type: 'number',             default: '12',   desc: 'popper 最小宽度（iem 倍数）。' },
-  { name: 'maxWidth',    type: 'number',             default: '20',   desc: 'popper 最大宽度（iem 倍数）。' },
-  { name: 'css',         type: '(s: Chain) => void', default: '—',    desc: '根元素 CSS 兜底。' },
+  { name: 'title', type: 'string', default: '—', desc: '确认框标题。' },
+  { name: 'description', type: 'string', default: '—', desc: '确认框描述文字。' },
+  { name: 'okText', type: 'string', default: "'确认'", desc: '确认按钮文字。' },
+  { name: 'cancelText', type: 'string', default: "'取消'", desc: '取消按钮文字。' },
+  { name: 'placement', type: 'Placement', default: "'top'", desc: 'floating-ui placement。' },
+  { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用（不弹出）。' },
+  { name: 'minWidth', type: 'number', default: '12', desc: 'popper 最小宽度（iem 倍数）。' },
+  { name: 'maxWidth', type: 'number', default: '20', desc: 'popper 最大宽度（iem 倍数）。' },
+  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 
-const slotsRows = [
-  { name: 'default', desc: '触发器内容。' },
-]
+const slotsRows = [{ name: 'default', desc: '触发器内容。' }]
 
 const emitsRows = [
   { name: 'confirm', args: '—', desc: '点击确认按钮触发。' },
-  { name: 'cancel',  args: '—', desc: '点击取消按钮触发。' },
+  { name: 'cancel', args: '—', desc: '点击取消按钮触发。' },
 ]
 </script>
 
@@ -43,10 +41,10 @@ const emitsRows = [
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '140px' },
-        { key: 'type',    label: '类型',   mono: true, width: '200px' },
+        { key: 'name', label: '属性', mono: true, width: '140px' },
+        { key: 'type', label: '类型', mono: true, width: '200px' },
         { key: 'default', label: '默认值', mono: true, width: '80px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="propsRows"
     />
@@ -54,7 +52,7 @@ const emitsRows = [
     <ZTitle :level="2">Slots</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name', label: '插槽',  mono: true, width: '120px' },
+        { key: 'name', label: '插槽', mono: true, width: '120px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="slotsRows"
@@ -63,8 +61,8 @@ const emitsRows = [
     <ZTitle :level="2">Emits</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name', label: '事件',  mono: true, width: '120px' },
-        { key: 'args', label: '参数',  mono: true, width: '80px' },
+        { key: 'name', label: '事件', mono: true, width: '120px' },
+        { key: 'args', label: '参数', mono: true, width: '80px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"

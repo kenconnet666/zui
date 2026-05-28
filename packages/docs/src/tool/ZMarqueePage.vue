@@ -8,14 +8,17 @@ import DirectionDemo from './ZMarquee/DirectionDemo.vue'
 import DirectionDemoSource from './ZMarquee/DirectionDemo.vue?raw'
 
 const propsRows = [
-  { name: 'duration',     type: 'number',             default: '10000', desc: '单次滚动时长（ms），值越小越快。' },
-  { name: 'direction',    type: "'left' | 'right'",   default: "'left'", desc: '滚动方向。' },
-  { name: 'pauseOnHover', type: 'boolean',             default: 'true',  desc: '鼠标悬停时暂停滚动。' },
-  { name: 'css',          type: '(s: Chain) => void', default: '—',     desc: '容器根元素 CSS 兜底。' },
+  { name: 'duration', type: 'number', default: '10000', desc: '单次滚动时长（ms），值越小越快。' },
+  { name: 'direction', type: "'left' | 'right'", default: "'left'", desc: '滚动方向。' },
+  { name: 'pauseOnHover', type: 'boolean', default: 'true', desc: '鼠标悬停时暂停滚动。' },
+  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '容器根元素 CSS 兜底。' },
 ]
 
 const slotsRows = [
-  { name: 'default', desc: '滚动内容。内部会渲染两份实现无缝循环，宽度应超过容器宽度才有滚动效果。' },
+  {
+    name: 'default',
+    desc: '滚动内容。内部会渲染两份实现无缝循环，宽度应超过容器宽度才有滚动效果。',
+  },
 ]
 </script>
 
@@ -48,10 +51,10 @@ const slotsRows = [
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '160px' },
-        { key: 'type',    label: '类型',   mono: true, width: '220px' },
+        { key: 'name', label: '属性', mono: true, width: '160px' },
+        { key: 'type', label: '类型', mono: true, width: '220px' },
         { key: 'default', label: '默认值', mono: true, width: '120px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="propsRows"
     />
@@ -59,7 +62,7 @@ const slotsRows = [
     <ZTitle :level="2">Slots</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name', label: '插槽',  mono: true, width: '120px' },
+        { key: 'name', label: '插槽', mono: true, width: '120px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="slotsRows"

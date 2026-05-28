@@ -27,6 +27,13 @@ const page = ref(1)
       <ZPagination v-model:page="page" :total="100" :size="0.875" />
     </ZFlex>
 
-    <ZText :css="s => { s.color._textSecondary }">当前页：{{ page }}</ZText>
+    <ZText
+      :css="
+        s => {
+          s.color._textSecondary
+        }
+      "
+      >当前页：{{ page }}</ZText
+    >
   </ZFlex>
 </template>

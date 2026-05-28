@@ -55,8 +55,16 @@ s.container('card / inline-size')   // 等同 'container-type: inline-size; cont
         headers: ['关键字', '允许查询', '布局副作用'],
         rows: [
           ['`normal`', '**默认值**。**不**作为查询容器', '无副作用'],
-          ['`inline-size`', '查询**主轴**尺寸(横向布局时 = 宽度)', '主轴含布局/样式/绘制 containment;子树不能 affect 外层宽度'],
-          ['`size`', '查询**两个轴**尺寸(宽 + 高)', '两轴 containment;**子树必须明确尺寸**(否则布局崩),通常需配 `contain-intrinsic-size`'],
+          [
+            '`inline-size`',
+            '查询**主轴**尺寸(横向布局时 = 宽度)',
+            '主轴含布局/样式/绘制 containment;子树不能 affect 外层宽度',
+          ],
+          [
+            '`size`',
+            '查询**两个轴**尺寸(宽 + 高)',
+            '两轴 containment;**子树必须明确尺寸**(否则布局崩),通常需配 `contain-intrinsic-size`',
+          ],
         ],
       },
     ],
@@ -78,7 +86,10 @@ s.container('card / inline-size')   // 等同 'container-type: inline-size; cont
         headers: ['形式', '行为'],
         rows: [
           ['`none`', '**默认值**。匿名容器(只能用 `@container (...)` 无名查询匹配最近祖先)'],
-          ['`<custom-ident>`', "`'card'` `'sidebar'` 等自定义名;`@container card (...)` 只匹配同名容器"],
+          [
+            '`<custom-ident>`',
+            "`'card'` `'sidebar'` 等自定义名;`@container card (...)` 只匹配同名容器",
+          ],
           ['多个名', "`'card sidebar'` 同时拥有多个名;空格分隔"],
         ],
       },
@@ -114,7 +125,11 @@ s.container('card / inline-size')
         rows: [
           ['`none`', '**默认值**。无隔离', '一般元素'],
           ['`strict`', '= `size layout paint style`,**最强**隔离', '复杂卡片 / 列表项'],
-          ['`content`', '= `layout paint style`,**不**含 size(子尺寸仍影响父)', '可滚动列表 / 折叠面板'],
+          [
+            '`content`',
+            '= `layout paint style`,**不**含 size(子尺寸仍影响父)',
+            '可滚动列表 / 折叠面板',
+          ],
           ['`size`', '子布局不影响本元素尺寸(必须配自给尺寸,否则坍缩)', '虚拟列表项'],
           ['`layout`', '子布局不影响外部', '复杂组件根'],
           ['`paint`', '子内容不绘制到本元素外', '溢出隐藏区'],
@@ -138,18 +153,23 @@ s.contain('layout paint')             // 组合多个 keyword
     ],
     initialValue: 'none',
     inherits: false,
-    browserNote: 'Chrome 52+ / Safari 15.4+ / Firefox 69+,稳定可用。`content-visibility` 配套使用效益更高。',
+    browserNote:
+      'Chrome 52+ / Safari 15.4+ / Firefox 69+,稳定可用。`content-visibility` 配套使用效益更高。',
   },
 
   containIntrinsicSize: {
-    firstLine: '**内禀占位尺寸**简写 —— 给 `contain: size` 或 `content-visibility: auto` 的元素一个"预估尺寸",避免坍缩。',
+    firstLine:
+      '**内禀占位尺寸**简写 —— 给 `contain: size` 或 `content-visibility: auto` 的元素一个"预估尺寸",避免坍缩。',
     keywordGroups: [
       {
         label: '取值形式',
         headers: ['形式', '行为'],
         rows: [
           ['`none`', '**默认值**。无内禀尺寸,可能坍缩'],
-          ['`auto <length>`', '**推荐**。`auto` 让浏览器记住实际渲染尺寸;`<length>` 是首次渲染前的占位'],
+          [
+            '`auto <length>`',
+            '**推荐**。`auto` 让浏览器记住实际渲染尺寸;`<length>` 是首次渲染前的占位',
+          ],
           ['`<length>`', '固定内禀宽 = 高 = N'],
           ['`<length> <length>`', '分别设宽 高'],
         ],
@@ -175,22 +195,26 @@ s.containIntrinsicSize('auto 200px')   // 预估每项 200px 高
 
   containIntrinsicWidth: {
     extends: 'containIntrinsicSize',
-    firstLine: '`contain-intrinsic-size` 的**宽度分量**(单轴版)。详情见 [`contain-intrinsic-size`]。',
+    firstLine:
+      '`contain-intrinsic-size` 的**宽度分量**(单轴版)。详情见 [`contain-intrinsic-size`]。',
   },
 
   containIntrinsicHeight: {
     extends: 'containIntrinsicSize',
-    firstLine: '`contain-intrinsic-size` 的**高度分量**(单轴版)。详情见 [`contain-intrinsic-size`]。',
+    firstLine:
+      '`contain-intrinsic-size` 的**高度分量**(单轴版)。详情见 [`contain-intrinsic-size`]。',
   },
 
   containIntrinsicBlockSize: {
     extends: 'containIntrinsicSize',
-    firstLine: '`contain-intrinsic-size` 的**块轴分量**(逻辑属性版,跟随 `writing-mode`)。详情见 [`contain-intrinsic-size`]。',
+    firstLine:
+      '`contain-intrinsic-size` 的**块轴分量**(逻辑属性版,跟随 `writing-mode`)。详情见 [`contain-intrinsic-size`]。',
   },
 
   containIntrinsicInlineSize: {
     extends: 'containIntrinsicSize',
-    firstLine: '`contain-intrinsic-size` 的**行轴分量**(逻辑属性版,跟随 `writing-mode`)。详情见 [`contain-intrinsic-size`]。',
+    firstLine:
+      '`contain-intrinsic-size` 的**行轴分量**(逻辑属性版,跟随 `writing-mode`)。详情见 [`contain-intrinsic-size`]。',
   },
 
   contentVisibility: {
@@ -202,8 +226,16 @@ s.containIntrinsicSize('auto 200px')   // 预估每项 200px 高
         headers: ['关键字', '行为', '何时用'],
         rows: [
           ['`visible`', '**默认值**。正常渲染', '一般元素'],
-          ['`auto`', '视口外**跳过**渲染(layout / style / paint),进入视口**自动恢复**;不影响 a11y/find-in-page', '长列表 / 文档站每个 section'],
-          ['`hidden`', '**始终**跳过渲染(类似 `display: none` 但保留布局空间状态可瞬间恢复)', '手动管理的虚拟列表'],
+          [
+            '`auto`',
+            '视口外**跳过**渲染(layout / style / paint),进入视口**自动恢复**;不影响 a11y/find-in-page',
+            '长列表 / 文档站每个 section',
+          ],
+          [
+            '`hidden`',
+            '**始终**跳过渲染(类似 `display: none` 但保留布局空间状态可瞬间恢复)',
+            '手动管理的虚拟列表',
+          ],
         ],
       },
     ],

@@ -95,7 +95,7 @@ function setValue(v: number): void {
 }
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.gap.iem(0.125)
     s.color(props.color)
@@ -105,7 +105,7 @@ const rootClass = computed(() =>
 )
 
 const starClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 1.5
     s.display.inlineFlex
     s.alignItems.center
@@ -120,7 +120,7 @@ const starClass = computed(() =>
 )
 
 const filledStarClass = (filledRatio: number): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.left.px(0)
     s.top.px(0)
@@ -165,10 +165,10 @@ const starSvg = `<svg viewBox="0 0 24 24" fill="currentColor" width="100%" heigh
       role="radio"
       :aria-checked="value === i"
       :disabled="disabled"
-      style="background: transparent; border: none; padding: 0;"
+      style="background: transparent; border: none; padding: 0"
       @click="onClick(i - 1, $event)"
     >
-      <span v-html="starSvg" style="position: absolute; inset: 0; opacity: 1; color: inherit;" />
+      <span v-html="starSvg" style="position: absolute; inset: 0; opacity: 1; color: inherit" />
       <span
         v-if="starFilledRatio(i - 1) > 0"
         :class="filledStarClass(starFilledRatio(i - 1))"

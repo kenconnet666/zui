@@ -6,14 +6,19 @@ import BasicDemo from './ZTimeline/BasicDemo.vue'
 import BasicDemoSource from './ZTimeline/BasicDemo.vue?raw'
 
 const propsRows = [
-  { name: 'items',   type: 'ZTimelineItem[]',          default: '—', desc: '时间轴项数组。' },
-  { name: 'css',     type: '(s: Chain) => void',        default: '—', desc: '根元素 CSS 兜底。' },
+  { name: 'items', type: 'ZTimelineItem[]', default: '—', desc: '时间轴项数组。' },
+  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 
 const itemRows = [
-  { name: 'title',       type: 'string',                      default: '—',    desc: '每项标题。' },
-  { name: 'description', type: 'string',                      default: '—',    desc: '每项描述文字。' },
-  { name: 'color',       type: '(c: Chain[\'color\']) => void', default: '—',    desc: 'dot 颜色 factory，默认 _textSecondary。' },
+  { name: 'title', type: 'string', default: '—', desc: '每项标题。' },
+  { name: 'description', type: 'string', default: '—', desc: '每项描述文字。' },
+  {
+    name: 'color',
+    type: "(c: Chain['color']) => void",
+    default: '—',
+    desc: 'dot 颜色 factory，默认 _textSecondary。',
+  },
 ]
 </script>
 
@@ -33,10 +38,10 @@ const itemRows = [
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '120px' },
-        { key: 'type',    label: '类型',   mono: true, width: '200px' },
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '200px' },
         { key: 'default', label: '默认值', mono: true, width: '80px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="propsRows"
     />
@@ -44,10 +49,10 @@ const itemRows = [
     <ZTitle :level="2">ZTimelineItem</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '120px' },
-        { key: 'type',    label: '类型',   mono: true, width: '260px' },
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '260px' },
         { key: 'default', label: '默认值', mono: true, width: '80px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="itemRows"
     />

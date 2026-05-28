@@ -75,7 +75,7 @@ const isDisabled = computed(() => props.disabled || group?.disabled.value === tr
 const isButton = computed(() => group?.buttonStyle.value === true)
 
 const dotRootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -96,7 +96,7 @@ const dotRootClass = computed(() =>
  * - border: _thin
  */
 const dotClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 1
     s.display.inlineFlex
     s.alignItems.center
@@ -124,7 +124,7 @@ const sxDotAttrs = computed(() => extractSxAttrs(props.sxDot))
  * - 选中时 scale(1),否则 scale(0)折叠
  */
 const innerDotClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 1
     s.width.iem(size * 0.5)
     s.height.iem(size * 0.5)
@@ -137,7 +137,7 @@ const innerDotClass = computed(() =>
 )
 
 const buttonClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center

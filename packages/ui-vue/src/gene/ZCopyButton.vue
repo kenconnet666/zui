@@ -158,14 +158,12 @@ onBeforeUnmount(() => {
 })
 
 /** 当前显示文字(总是有值,用于 aria-label;span 渲染受 `label` 是否传入控制)。 */
-const displayText = computed(() =>
-  copied.value ? props.copiedLabel : (props.label ?? '复制'),
-)
+const displayText = computed(() => (copied.value ? props.copiedLabel : (props.label ?? '复制')))
 
 const resolvedIconSize = computed(() => props.iconSize ?? props.size * 0.875)
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size
     s.display.inlineFlex
     s.alignItems.center
@@ -184,17 +182,17 @@ const rootClass = computed(() =>
     s.transitionDuration._tiny
     if (props.color) s.color(props.color)
     else s.color._textSecondary
-    s._selector('&:hover', (h) => {
+    s._selector('&:hover', h => {
       h.backgroundColor._textSecondary.alpha(8)
       if (!props.color) h.color._text
     })
-    s._selector('&:focus-visible', (f) => {
+    s._selector('&:focus-visible', f => {
       f.outlineWidth.px(2)
       f.outlineStyle.solid
       f.outlineColor._primary
       f.outlineOffset.px(1)
     })
-    s._selector('&:disabled', (d) => {
+    s._selector('&:disabled', d => {
       d.opacity._half
       d.cursor.notAllowed
     })
@@ -204,12 +202,7 @@ const rootClass = computed(() =>
 </script>
 
 <template>
-  <button
-    type="button"
-    :class="rootClass"
-    :aria-label="displayText"
-    @click="handleClick"
-  >
+  <button type="button" :class="rootClass" :aria-label="displayText" @click="handleClick">
     <ZIcon :component="iconComponent" :size="resolvedIconSize" />
     <span v-if="label !== undefined">{{ displayText }}</span>
   </button>

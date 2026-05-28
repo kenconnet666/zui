@@ -90,7 +90,7 @@ function stepState(idx: number): StepState {
 }
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection(props.vertical ? 'column' : 'row')
     s.color._text
@@ -101,7 +101,7 @@ const rootClass = computed(() =>
 )
 
 const stepClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems(props.vertical ? 'flex-start' : 'center')
     s.gap._small
@@ -111,7 +111,7 @@ const stepClass = computed(() =>
 )
 
 const indicatorClass = (state: StepState): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 2
     s.display.inlineFlex
     s.alignItems.center
@@ -145,7 +145,7 @@ const indicatorClass = (state: StepState): string =>
   })
 
 const titleWrapClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.gap._tiny
@@ -153,13 +153,13 @@ const titleWrapClass = computed(() =>
   }),
 )
 const titleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontWeight._semibold
     s.color._text
   }),
 )
 const descClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.fontSize._small
   }),

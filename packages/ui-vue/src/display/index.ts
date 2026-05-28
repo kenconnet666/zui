@@ -58,20 +58,13 @@ export { default as ZCarousel } from './ZCarousel.vue'
 export type { ZCarouselProps, ZCarouselEmits } from './ZCarousel.vue'
 
 export { default as ZDescriptions } from './ZDescriptions.vue'
-export type {
-  ZDescriptionsProps,
-  ZDescriptionsItem,
-} from './ZDescriptions.vue'
+export type { ZDescriptionsProps, ZDescriptionsItem } from './ZDescriptions.vue'
 
 export { default as ZCalendar } from './ZCalendar.vue'
 export type { ZCalendarProps, ZCalendarEmits } from './ZCalendar.vue'
 
 export { default as ZVirtualList } from './ZVirtualList.vue'
-export type {
-  ZVirtualListProps,
-  ZVirtualListEmits,
-  ZVirtualListExpose,
-} from './ZVirtualList.vue'
+export type { ZVirtualListProps, ZVirtualListEmits, ZVirtualListExpose } from './ZVirtualList.vue'
 
 export { default as ZDataTable } from './ZDataTable.vue'
 export type {

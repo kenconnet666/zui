@@ -9,9 +9,9 @@ import { ZTooltip } from '../src'
 let wrappers: VueWrapper[] = []
 
 function cleanPortals(): void {
-  wrappers.forEach((w) => w.unmount())
+  wrappers.forEach(w => w.unmount())
   wrappers = []
-  document.body.querySelectorAll('[role="tooltip"]').forEach((el) => el.remove())
+  document.body.querySelectorAll('[role="tooltip"]').forEach(el => el.remove())
 }
 
 beforeEach(cleanPortals)
@@ -21,8 +21,7 @@ describe('ZTooltip', () => {
   it('默认 hover 模式 + 默认隐藏', () => {
     const Host = defineComponent({
       setup() {
-        return () =>
-          h(ZTooltip, { content: 'tip' }, { default: () => h('button', 'hover me') })
+        return () => h(ZTooltip, { content: 'tip' }, { default: () => h('button', 'hover me') })
       },
     })
     wrappers.push(mount(Host, { attachTo: document.body }))

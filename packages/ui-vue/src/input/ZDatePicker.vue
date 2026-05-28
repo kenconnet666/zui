@@ -65,7 +65,7 @@ const emit = defineEmits<ZDatePickerEmits>()
 const theme = useZTheme()
 
 const inputClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
@@ -73,7 +73,7 @@ const inputClass = computed(() =>
     s.color._text
     applyInputSize(s, props.size, props.height)
     s.outline('none')
-    s._hover((h) => {
+    s._hover(h => {
       if (!props.disabled) h.borderColor._primary
     })
     if (props.disabled) {

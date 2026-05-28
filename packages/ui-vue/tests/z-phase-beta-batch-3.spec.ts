@@ -3,21 +3,16 @@
  */
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { mount, type VueWrapper } from '@vue/test-utils'
-import {
-  ZTimeline,
-  ZSteps,
-  ZBackTop,
-  ZAffix,
-  ZStatistic,
-  ZLoadingBar,
-} from '../src'
+import { ZTimeline, ZSteps, ZBackTop, ZAffix, ZStatistic, ZLoadingBar } from '../src'
 
 let wrappers: VueWrapper[] = []
 
 function cleanup(): void {
-  wrappers.forEach((w) => w.unmount())
+  wrappers.forEach(w => w.unmount())
   wrappers = []
-  document.body.querySelectorAll('[role="progressbar"], [aria-label="回到顶部"]').forEach((el) => el.parentElement?.remove())
+  document.body
+    .querySelectorAll('[role="progressbar"], [aria-label="回到顶部"]')
+    .forEach(el => el.parentElement?.remove())
 }
 
 beforeEach(cleanup)
@@ -46,18 +41,14 @@ describe('ZTimeline', () => {
       props: { items: [{ title: 'ok', color: (c: any) => c._danger }] },
     })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css.toLowerCase()).toMatch(/#d32f2f|background-color:rgb\(211/)
   })
 })
 
 describe('ZSteps', () => {
-  const ITEMS = [
-    { title: 'A', description: 'a' },
-    { title: 'B' },
-    { title: 'C' },
-  ]
+  const ITEMS = [{ title: 'A', description: 'a' }, { title: 'B' }, { title: 'C' }]
 
   it('current=1 → 第 2 步 process', () => {
     const w = mount(ZSteps, { props: { current: 1, items: ITEMS } })
@@ -70,7 +61,7 @@ describe('ZSteps', () => {
     mount(ZSteps, { props: { current: 2, items: ITEMS } })
     // 前两步 finish 状态走 _success
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css.toLowerCase()).toMatch(/#2e7d32|background-color:rgb\(46/)
   })
@@ -78,7 +69,7 @@ describe('ZSteps', () => {
   it('errored=true → 当前步骤红色(_danger)', () => {
     mount(ZSteps, { props: { current: 1, items: ITEMS, errored: true } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css.toLowerCase()).toMatch(/#d32f2f/)
   })
@@ -92,7 +83,7 @@ describe('ZSteps', () => {
       },
     })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     // _warning 在 light theme 走橙色系
     expect(css.toLowerCase()).toMatch(/#ed6c02|#ff9800|background-color:rgb\(/)
@@ -101,7 +92,7 @@ describe('ZSteps', () => {
   it('vertical=true → flex-direction:column', () => {
     mount(ZSteps, { props: { current: 0, items: ITEMS, vertical: true } })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/flex-direction:column/)
   })
@@ -161,17 +152,19 @@ describe('ZLoadingBar', () => {
 
   it('value=50 → 渲染 + aria-valuenow=50', async () => {
     wrappers.push(mount(ZLoadingBar, { props: { value: 50 }, attachTo: document.body }))
-    await new Promise((r) => setTimeout(r, 0))
+    await new Promise(r => setTimeout(r, 0))
     const bar = document.querySelector('[role="progressbar"]')
     expect(bar).not.toBeNull()
     expect(bar!.getAttribute('aria-valuenow')).toBe('50')
   })
 
   it('error=true → 红色', async () => {
-    wrappers.push(mount(ZLoadingBar, { props: { value: 30, error: true }, attachTo: document.body }))
-    await new Promise((r) => setTimeout(r, 0))
+    wrappers.push(
+      mount(ZLoadingBar, { props: { value: 30, error: true }, attachTo: document.body }),
+    )
+    await new Promise(r => setTimeout(r, 0))
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css.toLowerCase()).toMatch(/#d32f2f|background-color:rgb\(211/)
   })

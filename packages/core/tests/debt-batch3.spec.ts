@@ -18,7 +18,7 @@ describe('L5 — defineVariants LRU 缓存', () => {
     })
     // 用 256 + 1 = 257 个不同 key 测淘汰
     const keys = Array.from({ length: 300 }, (_, i) => `v${i}`)
-    for (const k of keys) f({ x: ((i) => (i % 2 === 0 ? 'a' : 'b'))(parseInt(k.slice(1))) })
+    for (const k of keys) f({ x: (i => (i % 2 === 0 ? 'a' : 'b'))(parseInt(k.slice(1))) })
     // 行为：仍能返回 className，不抛错
     expect(typeof f({ x: 'a' })).toBe('string')
   })
@@ -26,7 +26,7 @@ describe('L5 — defineVariants LRU 缓存', () => {
   it('cacheLimit 配置 + LRU 淘汰', () => {
     let computeCount = 0
     const f = defineVariants(defaultLight, {
-      base: (s) => {
+      base: s => {
         computeCount++
         s.padding.px(8)
       },
@@ -36,9 +36,9 @@ describe('L5 — defineVariants LRU 缓存', () => {
       cacheLimit: 2,
     })
     // 触发 3 个不同 size
-    const a = f({ size: 'small' })  // cache: [small]
+    const a = f({ size: 'small' }) // cache: [small]
     const b = f({ size: 'middle' }) // cache: [small, middle]
-    const c = f({ size: 'large' })  // cache: [middle, large]（small 被淘汰）
+    const c = f({ size: 'large' }) // cache: [middle, large]（small 被淘汰）
     expect(computeCount).toBe(3)
     // 再访问 small：缓存已淘汰，需重算
     f({ size: 'small' })
@@ -52,7 +52,7 @@ describe('L5 — defineVariants LRU 缓存', () => {
   it('LRU touch：访问已缓存项把它移到尾部，避免被淘汰', () => {
     let computeCount = 0
     const f = defineVariants(defaultLight, {
-      base: (s) => {
+      base: s => {
         computeCount++
         s.padding.px(8)
       },
@@ -75,7 +75,7 @@ describe('L5 — defineVariants LRU 缓存', () => {
   it('cacheLimit = Infinity 不淘汰', () => {
     let computeCount = 0
     const f = defineVariants(defaultLight, {
-      base: (s) => {
+      base: s => {
         computeCount++
         s.padding.px(8)
       },

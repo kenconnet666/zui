@@ -21,9 +21,18 @@ const options = [
         v-model:value="value"
         :options="options"
         placeholder="输入邮箱..."
-        @select="v => selected = v"
+        @select="v => (selected = v)"
       />
-      <ZText v-if="selected" :css="s => { s.color._textSecondary; s.fontSize._small }">已选：{{ selected }}</ZText>
+      <ZText
+        v-if="selected"
+        :css="
+          s => {
+            s.color._textSecondary
+            s.fontSize._small
+          }
+        "
+        >已选：{{ selected }}</ZText
+      >
     </ZFlex>
 
     <ZAutoComplete :options="options" placeholder="已禁用" :disabled="true" />

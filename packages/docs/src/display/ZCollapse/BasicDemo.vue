@@ -22,10 +22,26 @@ const accordionItems = [
   <ZFlex :direction="d => d.column" :gap="g => g._large">
     <ZCollapse v-model:value="expanded" :items="items">
       <template #default="{ item }">
-        <ZText v-if="item.key === 'panel1'" :css="s => { s.padding._small }">
+        <ZText
+          v-if="item.key === 'panel1'"
+          :css="
+            s => {
+              s.padding._small
+            }
+          "
+        >
           面板一的内容区域，展开后显示详细信息。
         </ZText>
-        <ZFlex v-else-if="item.key === 'panel2'" :direction="d => d.column" :gap="g => g._tiny" :css="s => { s.padding._small }">
+        <ZFlex
+          v-else-if="item.key === 'panel2'"
+          :direction="d => d.column"
+          :gap="g => g._tiny"
+          :css="
+            s => {
+              s.padding._small
+            }
+          "
+        >
           <ZText>自定义内容行 1</ZText>
           <ZText>自定义内容行 2</ZText>
         </ZFlex>
@@ -34,7 +50,14 @@ const accordionItems = [
 
     <ZCollapse v-model:value="accordion" :items="accordionItems" :accordion="true">
       <template #default="{ item }">
-        <ZText :css="s => { s.padding._small }">{{ item.title }} 的详细内容。</ZText>
+        <ZText
+          :css="
+            s => {
+              s.padding._small
+            }
+          "
+          >{{ item.title }} 的详细内容。</ZText
+        >
       </template>
     </ZCollapse>
   </ZFlex>

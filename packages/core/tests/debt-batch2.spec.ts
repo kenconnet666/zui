@@ -205,7 +205,7 @@ describe('L1 — Chain._node readonly 兼容性', () => {
 
   it('_nest 切换 _node 引用仍工作（内部 cast）', () => {
     const c = new Chain(defaultLight)
-    c._hover((h) => {
+    c._hover(h => {
       h.color.white
     })
     expect((c._node['&:hover'] as Record<string, unknown>).color).toBe('white')

@@ -112,7 +112,7 @@ function setVisible(v: boolean): void {
 
 watch(
   () => props.visible,
-  (v) => {
+  v => {
     if (props.trigger === 'manual') innerVisible.value = v
   },
   { immediate: true },
@@ -162,13 +162,13 @@ function bindMenu(el: unknown): void {
 }
 
 const triggerWrapClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
   }),
 )
 
 const menuClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.zIndex._popover
     s.backgroundColor._bg
@@ -189,7 +189,7 @@ const menuClass = computed(() =>
 const sxMenuAttrs = computed(() => extractSxAttrs(props.sxMenu))
 
 const itemClass = (item: ZDropdownItem): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.gap._small
@@ -205,7 +205,7 @@ const itemClass = (item: ZDropdownItem): string =>
       s.opacity._dim
       s.cursor.notAllowed
     } else {
-      s._hover((h2) => {
+      s._hover(h2 => {
         h2.backgroundColor._textSecondary.alpha(8)
       })
     }

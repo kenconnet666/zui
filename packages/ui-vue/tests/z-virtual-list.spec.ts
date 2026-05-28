@@ -35,7 +35,7 @@ function fakeScrollEl(el: HTMLElement, clientHeight: number): void {
   Object.defineProperty(el, 'scrollTop', {
     configurable: true,
     get: () => scrollTop,
-    set: (v) => {
+    set: v => {
       scrollTop = v
       el.dispatchEvent(new Event('scroll'))
     },
@@ -48,9 +48,13 @@ function mountVL(props: Record<string, unknown>, slots: Record<string, unknown> 
   const Host = defineComponent({
     setup() {
       return () =>
-        h(ZBox, { iem: '16px' }, {
-          default: () => h(ZVirtualList, props, slots),
-        })
+        h(
+          ZBox,
+          { iem: '16px' },
+          {
+            default: () => h(ZVirtualList, props, slots),
+          },
+        )
     },
   })
   const w = mount(Host)
@@ -61,22 +65,28 @@ function mountVL(props: Record<string, unknown>, slots: Record<string, unknown> 
 
 describe('ZVirtualList — 固定行高', () => {
   it('items=100, itemSize=3(=48px), height=200(=3200px wrapper) → totalSize=4800', async () => {
-    const { w, root } = mountVL({ items: rows(100), itemSize: 3, height: 200 }, {
-      default: '<div>x</div>',
-    })
+    const { w, root } = mountVL(
+      { items: rows(100), itemSize: 3, height: 200 },
+      {
+        default: '<div>x</div>',
+      },
+    )
     fakeScrollEl(root, 200)
     await nextTick()
     root.dispatchEvent(new Event('scroll'))
     await nextTick()
     const wrapper = root.querySelector('[data-zv-wrapper]') as HTMLElement
-    expect(wrapper.style.height).toBe('4800px')  // 100 * 48
+    expect(wrapper.style.height).toBe('4800px') // 100 * 48
     w.unmount()
   })
 
   it('只渲染可视区 + overscan', async () => {
-    const { w, root } = mountVL({ items: rows(1000), itemSize: 3, height: 200, overscan: 2 }, {
-      default: '<div>x</div>',
-    })
+    const { w, root } = mountVL(
+      { items: rows(1000), itemSize: 3, height: 200, overscan: 2 },
+      {
+        default: '<div>x</div>',
+      },
+    )
     fakeScrollEl(root, 200)
     await nextTick()
     root.dispatchEvent(new Event('scroll'))
@@ -89,14 +99,16 @@ describe('ZVirtualList — 固定行高', () => {
   })
 
   it('滚到 scrollTop=480 → 起始 item index = 10(480/48)', async () => {
-    const { w, root } = mountVL({ items: rows(1000), itemSize: 3, height: 200, overscan: 0 }, {
-      default: '<div>x</div>',
-    })
+    const { w, root } = mountVL(
+      { items: rows(1000), itemSize: 3, height: 200, overscan: 0 },
+      {
+        default: '<div>x</div>',
+      },
+    )
     fakeScrollEl(root, 200)
     await nextTick()
     root.dispatchEvent(new Event('scroll'))
     await nextTick()
-
     ;(root as unknown as { scrollTop: number }).scrollTop = 480
     await nextTick()
     const firstItem = root.querySelector('[data-zv-wrapper] > div') as HTMLElement
@@ -110,7 +122,7 @@ describe('ZVirtualList — 函数行高', () => {
     const { w, root } = mountVL(
       {
         items: rows(10),
-        itemSize: (i: number) => (i % 2 === 0 ? 2 : 4),  // 32 / 64 px
+        itemSize: (i: number) => (i % 2 === 0 ? 2 : 4), // 32 / 64 px
         height: 200,
       },
       { default: '<div>x</div>' },
@@ -179,20 +191,28 @@ describe('ZVirtualList — emit', () => {
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZVirtualList, {
-                items: rows(100),
-                itemSize: 3,
-                height: 200,
-                ref: (el: unknown) => {
-                  exposeRef.value = el
-                },
-                onUpdate: (s: number, e: number) => events.push([s, e]),
-              } as Record<string, unknown>, {
-                default: () => h('div', 'x'),
-              }),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(
+                  ZVirtualList,
+                  {
+                    items: rows(100),
+                    itemSize: 3,
+                    height: 200,
+                    ref: (el: unknown) => {
+                      exposeRef.value = el
+                    },
+                    onUpdate: (s: number, e: number) => events.push([s, e]),
+                  } as Record<string, unknown>,
+                  {
+                    default: () => h('div', 'x'),
+                  },
+                ),
+            },
+          )
       },
     })
     const w = mount(Host)
@@ -210,17 +230,25 @@ describe('ZVirtualList — emit', () => {
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZVirtualList, {
-                items: rows(10),
-                itemSize: 3,
-                height: 200,
-                onScrollEnd: () => events.push('end'),
-              } as Record<string, unknown>, {
-                default: () => h('div', 'x'),
-              }),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(
+                  ZVirtualList,
+                  {
+                    items: rows(10),
+                    itemSize: 3,
+                    height: 200,
+                    onScrollEnd: () => events.push('end'),
+                  } as Record<string, unknown>,
+                  {
+                    default: () => h('div', 'x'),
+                  },
+                ),
+            },
+          )
       },
     })
     const w = mount(Host)
@@ -237,25 +265,40 @@ describe('ZVirtualList — emit', () => {
 
 describe('ZVirtualList — expose API', () => {
   function mountWithExpose() {
-    const exposeRef: { value: { scrollToIndex: Function; scrollToOffset: Function; getScroll: Function; getItemOffset: Function } | null } = {
+    const exposeRef: {
+      value: {
+        scrollToIndex: Function
+        scrollToOffset: Function
+        getScroll: Function
+        getItemOffset: Function
+      } | null
+    } = {
       value: null,
     }
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZVirtualList, {
-                items: rows(100),
-                itemSize: 3,
-                height: 200,
-                ref: (el: unknown) => {
-                  exposeRef.value = el as typeof exposeRef.value
-                },
-              } as Record<string, unknown>, {
-                default: () => h('div', 'x'),
-              }),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(
+                  ZVirtualList,
+                  {
+                    items: rows(100),
+                    itemSize: 3,
+                    height: 200,
+                    ref: (el: unknown) => {
+                      exposeRef.value = el as typeof exposeRef.value
+                    },
+                  } as Record<string, unknown>,
+                  {
+                    default: () => h('div', 'x'),
+                  },
+                ),
+            },
+          )
       },
     })
     const w = mount(Host)
@@ -302,12 +345,20 @@ describe('ZVirtualList — 数据动态变化', () => {
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZVirtualList, { items: items.value, itemSize: 3, height: 200 }, {
-                default: () => h('div', 'x'),
-              }),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(
+                  ZVirtualList,
+                  { items: items.value, itemSize: 3, height: 200 },
+                  {
+                    default: () => h('div', 'x'),
+                  },
+                ),
+            },
+          )
       },
     })
     const w = mount(Host)

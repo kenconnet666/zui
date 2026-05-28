@@ -20,10 +20,10 @@ description: zui monorepo（@kenconnet666/zui-core + @kenconnet666/zui-vue）项
 **核心范式 — 四态访问**：
 
 ```ts
-s.color('red')                  // ① 函数调用：csstype 严格
-s.color._primary                // ② 主题 token（_ 前缀）
-s.color.white                   // ③ CSS keyword（无前缀）
-s.padding.px(16)                // ④ unit 方法 → '16px'
+s.color('red') // ① 函数调用：csstype 严格
+s.color._primary // ② 主题 token（_ 前缀）
+s.color.white // ③ CSS keyword（无前缀）
+s.padding.px(16) // ④ unit 方法 → '16px'
 ```
 
 颜色 token 命中后挂 6 个 modifier：`.alpha(n)` `.darken(n)` `.lighten(n)` `.mix(other, n)` `.saturate(n)` `.desaturate(n)`。
@@ -39,13 +39,13 @@ zui/
 ├── packages/
 │   ├── core/                                # @kenconnet666/zui-core
 │   │   ├── src/
-│   │   │   ├── chain/                       # Chain.ts / proxy.ts / carrier.ts / color.ts / 
+│   │   │   ├── chain/                       # Chain.ts / proxy.ts / carrier.ts / color.ts /
 │   │   │   │                                  enhanced-props.ts / keywords.ts / units.ts / helpers.ts
-│   │   │   ├── theme/                       # Theme.ts / resolveTheme.ts / mergeTheme.ts / 
+│   │   │   ├── theme/                       # Theme.ts / resolveTheme.ts / mergeTheme.ts /
 │   │   │   │                                  keymap.ts / defaults/
-│   │   │   ├── variants/                    # defineVariants / defineParts / composeVariants / 
+│   │   │   ├── variants/                    # defineVariants / defineParts / composeVariants /
 │   │   │   │                                  extendVariants / extendParts / defineMixin
-│   │   │   ├── types/                       # carrier / tokens / components / styleProps / 
+│   │   │   ├── types/                       # carrier / tokens / components / styleProps /
 │   │   │   │                                  properties.generated.ts ★ 自动生成
 │   │   │   ├── dev/                         # assertSchemaConsistency / stackTrace
 │   │   │   ├── preset/                      # animation-defs / animations / preflightStyles
@@ -89,16 +89,19 @@ zui/
 ```ts
 class Theme<T extends ThemeSchema> {
   constructor(schema: T)
-  resolve(): ResolvedTheme<T>                                // 展开 function token，结果缓存
-  merge<P extends DeepPartial<T>>(partial: P): Theme<T>      // 返回新 Theme，父不变
-  fork<P extends DeepPartial<T>>(partial: P): Theme<T>       // merge 的别名（推荐入口）
-  getKeymap(): Map<string, Map<string, string>>              // ident keymap，Chain 共享
+  resolve(): ResolvedTheme<T> // 展开 function token，结果缓存
+  merge<P extends DeepPartial<T>>(partial: P): Theme<T> // 返回新 Theme，父不变
+  fork<P extends DeepPartial<T>>(partial: P): Theme<T> // merge 的别名（推荐入口）
+  getKeymap(): Map<string, Map<string, string>> // ident keymap，Chain 共享
 }
-type Theme<T> = _ThemeClass<T> & ResolvedTheme<T>             // intersection 注入 schema 字段访问
+type Theme<T> = _ThemeClass<T> & ResolvedTheme<T> // intersection 注入 schema 字段访问
 
 // 工具
 function resolveTheme<T>(schema: T): ResolvedTheme<T>
-function mergeTheme<T, P extends DeepPartial<T>>(parent: ResolvedTheme<T>, partial: P): ResolvedTheme<T>
+function mergeTheme<T, P extends DeepPartial<T>>(
+  parent: ResolvedTheme<T>,
+  partial: P,
+): ResolvedTheme<T>
 function buildKeymap<T>(theme: ResolvedTheme<T>): Map<string, Map<string, string>>
 
 // 默认主题（Tailwind 风 242 色 palette + 11 语义色 + 18 token category）
@@ -215,27 +218,29 @@ import { ... } from '@kenconnet666/zui-core/dev'         // assertSchemaConsiste
 
 ## 四、用户偏好
 
-| 项 | 偏好 |
-|---|---|
-| 沟通语言 | 中文回复；代码 / 命令 / 错误信息保持英文 |
-| 决策风格 | "讨论 → 列选项 → 用户拍板"；不要先动手 |
-| 默认策略 | 用户常说"按推荐"，agent 给的推荐应可执行、风险低 |
-| 离线推进 | 用户明确授权后会离开，agent 自主跑完 phase 才停 |
-| 发布定义 | **推送到远程 git = 代码层面发布**；`npm publish` 始终用户手动 |
-| 验证强制度 | 每改完一个文件**必跑** `mcp__idea__get_file_problems`；大改后 typecheck + test 必跑 |
+| 项          | 偏好                                                                                         |
+| ----------- | -------------------------------------------------------------------------------------------- |
+| 沟通语言    | 中文回复；代码 / 命令 / 错误信息保持英文                                                     |
+| 决策风格    | "讨论 → 列选项 → 用户拍板"；不要先动手                                                       |
+| 默认策略    | 用户常说"按推荐"，agent 给的推荐应可执行、风险低                                             |
+| 离线推进    | 用户明确授权后会离开，agent 自主跑完 phase 才停                                              |
+| 发布定义    | **推送到远程 git = 代码层面发布**；`npm publish` 始终用户手动                                |
+| 验证强制度  | 每改完一个文件**必跑** `mcp__idea__get_file_problems`；大改后 typecheck + test 必跑          |
 | commit 节奏 | 每个 P*.X / W*.X / Batch N 子任务一次 commit；中文 body + 列改动 + 验证结果 + Co-Authored-By |
-| 设计 idiom | `s.xx.xx`（carrier 四态）/ `s._xx('opt', (h) => h.xx)`（option + factory） |
+| 设计 idiom  | `s.xx.xx`（carrier 四态）/ `s._xx('opt', (h) => h.xx)`（option + factory）                   |
 
 ---
 
 ## 五、验证铁律
 
 ### 5.1 每改完一个文件
+
 ```
 mcp__idea__get_file_problems(filePath, errorsOnly=true)
 ```
 
 ### 5.2 push 前必跑（顺序固定）
+
 ```powershell
 pnpm --filter @kenconnet666/zui-core run type-check
 pnpm --filter @kenconnet666/zui-core test
@@ -246,6 +251,7 @@ pnpm --filter @kenconnet666/zui-core test -- parity
 ```
 
 ### 5.3 用 IDE 终端跑 pnpm（绕过 PATH 问题）
+
 ```
 mcp__idea__execute_terminal_command(
   command='cmd.exe /c "pnpm --filter @kenconnet666/zui-core test"',
@@ -254,10 +260,13 @@ mcp__idea__execute_terminal_command(
   maxLinesCount=120
 )
 ```
+
 JetBrains MCP 内嵌 Node 没把 pnpm 放进 PATH，直接 PowerShell 调用会找不到；包一层 `cmd.exe /c` 即可。
 
 ### 5.4 CI 验证（已配，无须手动）
+
 `.github/workflows/ci.yml` 在 push main / PR 时跑：
+
 - generator drift 检查（`generate-properties.mjs` → `git diff --exit-code properties.generated.ts`）
 - type-check + test + build core + build 3 examples
 
@@ -289,39 +298,49 @@ JetBrains MCP 内嵌 Node 没把 pnpm 放进 PATH，直接 PowerShell 调用会�
 ## 八、关键陷阱表（按踩过频率排序）
 
 ### 8.1 ★ dist/ 与 src/ 不同步（最大坑）
+
 **症状**：改对外类型 → commit + push → 用户 IDEA 仍报错。  
 **原因**：dist/index.d.ts 是上次 build 产物；IDEA 通过 node_modules symlink 读旧签名。  
 **防范**：**每次改对外类型后必须** `pnpm build`；examples 的 tsconfig 加 `paths` 直指 src。
 
 ### 8.2 ★ Proxy `bind` 到 receiver 不是 target
+
 `chain/proxy.ts` 拦截 `get` 时**必须** `.bind(receiver)`。bind 到 `target` 让 `_when`/`_apply`/`_nest` 内 `fn(this)` 传出 target（原始 chain，无 carrier），后续 `s.color._primary` 触发不了 Proxy → TypeError。
 
 ### 8.3 ★ csstype `Properties` 默认不接 number
+
 `Properties['padding']` 默认 `Padding<string | 0>`。generator 用 `Properties<string|number, string|number>` 实例化让 length/time 接 number。
 
 ### 8.4 ★ Generator 不解析 spread + 命名常量（已修）
+
 `keywords: [...JUSTIFY_KW, 'auto']` 让 generator 漏 spread。AST parser 加 `collectStringArrayConsts` + SpreadElement 展开。
 
 ### 8.5 interface extends mapped type
+
 `interface X<T> extends ResolvedTheme<T>` 在 `verbatimModuleSyntax` 严格模式下 TS2312。  
 改用 `type X<T> = _Internal<T> & ResolvedTheme<T>` + const 强转。
 
 ### 8.6 noUncheckedIndexedAccess
+
 `ctx.color!.primary` 返回 `string | number | undefined` → function token 类型不满足 ThemeValue → T 推断为 never → 级联 never。  
 测试里 cast；生产代码避免依赖 indexed access narrowing。
 
 ### 8.7 vitest happy-dom 下 `import.meta.url` 不可用
+
 报"URL must be of scheme file"。用 `process.cwd()` 代替（vitest 工作目录就是 packages/core）。
 
 ### 8.8 自定义 schema 用数字 / 特殊字符 key 非合法 ident
+
 内置 token 全语义化（`tiny/small/middle/large/huge`，可加 `none/full`），无此问题。  
 但用户扩展时若用 `'2xl'` / `'4xl'` 等数字开头 key —— Schema interface 用字面量字符串：`'2xl': string`。访问：`theme.blur['2xl']`。Chain 上 `_blur('2xl')` 不带 `_` 直接命中（toIdent 函数会把它转成 `_2xl` 形 carrier token）。
 
 ### 8.9 schema 上 function token 通过 `theme.<cat>.<key>` 读 — 类型与运行时不一致
+
 `Object.assign(this, schema)` 把 function 原值挂到 instance；类型签名是 `string | number` 但运行时是 function。  
 **修复**：永远走 `theme.resolve()` / `icss(theme, ...)` / `new Chain(theme)` 拿值，**不要**直接读 `theme.color.x` 当展开后的真值用。Theme 构造时 dev 模式会 warn。
 
 ### 8.10 ★ 类型层 statement-only —— carrier / unit / modifier 全部返回 `void`（2026-05-22 实施）
+
 **类型层硬约束**：所有 carrier setter（`s.color('red')` / `s.color._primary` / `s.color.red` / `s.padding.px(8)` / `s.color._primary.alpha(50)`）的 TS 返回类型都是 `void`，链式 `s.X.x.Y.y` **编译会红**（`Property 'Y' does not exist on type 'void'`）。
 
 **runtime 不变**：chain Proxy 仍 `return chain`，JS 层依赖 chain 状态切换的实现不动；只是类型签名不暴露 chain。
@@ -335,37 +354,41 @@ JetBrains MCP 内嵌 Node 没把 pnpm 放进 PATH，直接 PowerShell 调用会�
 完整决策见 `.claude/decisions/2026-05-22-statement-only-type-layer.md`。
 
 ### 8.11 .claude/ untracked 导致 `pnpm publish` 报 `ERR_PNPM_GIT_UNCLEAN`
+
 `.gitignore` 必须 ignore `.claude/settings.local.json`（**不要** ignore 整个 `.claude/`，否则项目级 settings.json 也入不了 git）。
 
 ### 8.12 npm 2FA 强制 publish（2024+）
+
 新账号 publish 报 `E403 Two-factor authentication required`。  
 两条出路：① 启用 2FA（Authenticator app，**不要 Security Key 路径**）；② 创建 **Granular Access Token** 时勾上 **"Bypass two-factor authentication (2FA)"** + Organizations 权限 "No access"。
 
 ### 8.13 csstype 6.0 升级 vite-plugin-dts 警告
+
 "newer than bundled compiler engine"。不阻塞 build，留观察；未来 dts 出问题再升 API Extractor。
 
 ### 8.14 vitest agent 环境跑不通 pnpm
+
 JetBrains MCP 内嵌 Node 没把 pnpm 放进 PATH。包一层 `cmd.exe /c "pnpm ..."` 即可。
 
 ---
 
 ## 九、内建嵌套方法（89+ 个，按职责）
 
-| 组 | 方法 |
-|---|---|
-| 状态伪类 | `_hover` `_active` `_focus` `_focusVisible` `_focusWithin` `_disabled` `_checked` `_enabled` |
-| 表单伪类 | `_required` `_optional` `_valid` `_invalid` `_readOnly` `_placeholderShown` `_inRange` `_outOfRange` |
-| 链接 / 目标 | `_link` `_visited` `_target` `_dir(rtl/ltr, fn)` |
-| 伪元素 | `_before` `_after` `_placeholder` `_selection` `_marker` |
-| 结构伪类 | `_firstChild` `_lastChild` `_only` `_empty` `_nthChild(n, fn)` `_nthOfType(n, fn)` |
-| group / peer | `_groupHover` `_groupFocus` `_groupActive` `_peerHover` `_peerFocus` `_peerChecked` |
-| 媒体查询 | `_media(query, fn)` `_dark` `_light` `_motionReduce` `_motionSafe` `_print` `_screen` |
-| 容器查询 | `_container(name, fn)` `_supports(query, fn)` |
-| 嵌套 / 工具 | `_apply(...)` `_when(cond, fn)` `_nest(selector, fn)` `_state(props, mapping)` |
-| 现代 CSS 4 | `_safeArea(side, fn)` `_scrollSnap(...)` `_overscroll(...)` `_field(...)` |
-| 文本工具 | `_truncate()` `_lineClamp(n)` |
-| 选择器 | `_not(selector, fn)` `_has(selector, fn)` `_is(selector, fn)` `_where(selector, fn)` |
-| Token-aware | `_media('_middle', fn)` `_blur('_middle')` `_dur('_small')` |
+| 组           | 方法                                                                                                 |
+| ------------ | ---------------------------------------------------------------------------------------------------- |
+| 状态伪类     | `_hover` `_active` `_focus` `_focusVisible` `_focusWithin` `_disabled` `_checked` `_enabled`         |
+| 表单伪类     | `_required` `_optional` `_valid` `_invalid` `_readOnly` `_placeholderShown` `_inRange` `_outOfRange` |
+| 链接 / 目标  | `_link` `_visited` `_target` `_dir(rtl/ltr, fn)`                                                     |
+| 伪元素       | `_before` `_after` `_placeholder` `_selection` `_marker`                                             |
+| 结构伪类     | `_firstChild` `_lastChild` `_only` `_empty` `_nthChild(n, fn)` `_nthOfType(n, fn)`                   |
+| group / peer | `_groupHover` `_groupFocus` `_groupActive` `_peerHover` `_peerFocus` `_peerChecked`                  |
+| 媒体查询     | `_media(query, fn)` `_dark` `_light` `_motionReduce` `_motionSafe` `_print` `_screen`                |
+| 容器查询     | `_container(name, fn)` `_supports(query, fn)`                                                        |
+| 嵌套 / 工具  | `_apply(...)` `_when(cond, fn)` `_nest(selector, fn)` `_state(props, mapping)`                       |
+| 现代 CSS 4   | `_safeArea(side, fn)` `_scrollSnap(...)` `_overscroll(...)` `_field(...)`                            |
+| 文本工具     | `_truncate()` `_lineClamp(n)`                                                                        |
+| 选择器       | `_not(selector, fn)` `_has(selector, fn)` `_is(selector, fn)` `_where(selector, fn)`                 |
+| Token-aware  | `_media('_middle', fn)` `_blur('_middle')` `_dur('_small')`                                          |
 
 完整签名见 `packages/core/src/chain/Chain.ts`。
 
@@ -374,6 +397,7 @@ JetBrains MCP 内嵌 Node 没把 pnpm 放进 PATH。包一层 `cmd.exe /c "pnpm 
 ## 十、ENHANCED_PROPS 与 generator
 
 ### 10.1 single source of truth
+
 `packages/core/src/chain/enhanced-props.ts` 列出 ~195 条增强属性，**类型 + 运行时双向对齐**：
 
 ```ts
@@ -385,13 +409,16 @@ export const ENHANCED_PROPS: Record<string, EnhancedPropConfig> = {
 ```
 
 ### 10.2 generator 漂移守护（CI 红线）
+
 `scripts/generate-properties.mjs` 读 csstype `Properties` 的 JSDoc + ENHANCED_PROPS 名单 → 派生 `src/types/properties.generated.ts`：
+
 - 增强名单 → `PropCarrier` / `ColorPropCarrier`
 - 其余 ~660 个 → `PropFn`（函数态 + 全局关键字）
 
 CI 步骤"Generator drift check"会跑 generator 再 `git diff --exit-code`。**改 ENHANCED_PROPS 后必须重跑 generator + 提交结果**，否则 CI 红。
 
 ### 10.3 W6.1 extra-keywords slot
+
 `src/chain/config/extra-keywords.config.ts` 是 ENHANCED_PROPS 漏掉的 CSS keyword 兜底入口（如 `place-items` 的 `start/end/center` 等）。
 
 ---
@@ -399,11 +426,13 @@ CI 步骤"Generator drift check"会跑 generator 再 `git diff --exit-code`。**
 ## 十一、token / unit / keyword 速查
 
 ### 11.1 默认 schema 18 category
+
 `color` `spacing` `radius` `shadow` `fontSize` `fontWeight` `lineHeight` `letterSpacing` `fonts` `borders` `zIndex` `opacity` `duration` `easing` `aspectRatio` `size` `cursor` `transitionProperty` + `breakpoint`（响应式专用） + `blur`（含 `2xl` / `3xl` 字面量 key）
 
 ### 11.2 默认 token 命名（0.6.0 / 0.8.0 / 0.9.0 改名汇总）
 
 **总哲学**：**5 阶 + 可能有 none + 可能有 full + 少数特例**。词汇分两类：
+
 - **数量/尺寸维度**用 size 词 `tiny / small / middle / large / huge` —— 字面表达"小到大"
 - **强度/质量/角色维度**用领域词 —— 字面表达"该维度的含义"
 
@@ -411,62 +440,66 @@ CI 步骤"Generator drift check"会跑 generator 再 `git diff --exit-code`。**
 
 #### 用 size 词（tiny → huge）
 
-| Category | Keys | 默认值 / 备注 |
-|---|---|---|
-| `spacing` | tiny/small/middle/large/huge | **`iem(0.25/0.5/1/1.5/2)`** —— 走 iem(默认 4/8/16/24/32px),`ZBox :iem` 全站切换基准 |
-| `fontSize` | tiny/small/middle/large/huge | **`iem(0.75/0.875/1/1.125/1.25)`** —— 默认 12/14/16/18/20px;`:iem="ZIemPreset.rem"` 达到 a11y 大字模式 |
-| `radius` | none/tiny/small/middle/large/huge/**full** | none=`'0'` / 5 阶`iem(0.25/0.5/0.75/1/1.5)`(默认 4/8/12/16/24px)/ **full=`'9999px'`**(语义性 ∞,不缩放) |
-| `shadow` | tiny/small/middle/large/huge | 保留 px 字面量（装饰性效果，与设计稿绑定，**不**跟 unit 缩放） |
-| `blur` | **none**/tiny/small/middle/large/huge | none=`'0'` / 5 阶 `iem(0.25/0.5/1/1.5/2.5)`(默认 4/8/16/24/40px) |
-| `breakpoint` | tiny/small/middle/large/huge | **保留 px**（媒体查询基准，与"屏幕宽度"硬绑定，**不**跟 unit 缩放） |
-| `duration` | **none**/tiny/small/middle/large/huge | 6 阶；0ms/75ms/150ms/300ms/500ms/700ms（时间，非长度） |
-| `zIndex` | **none**/tiny/small/middle/large/huge + 角色 modal/popover/tooltip/toast + auto | 0/10/20/30/40/50（无单位） |
+| Category     | Keys                                                                            | 默认值 / 备注                                                                                          |
+| ------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `spacing`    | tiny/small/middle/large/huge                                                    | **`iem(0.25/0.5/1/1.5/2)`** —— 走 iem(默认 4/8/16/24/32px),`ZBox :iem` 全站切换基准                    |
+| `fontSize`   | tiny/small/middle/large/huge                                                    | **`iem(0.75/0.875/1/1.125/1.25)`** —— 默认 12/14/16/18/20px;`:iem="ZIemPreset.rem"` 达到 a11y 大字模式 |
+| `radius`     | none/tiny/small/middle/large/huge/**full**                                      | none=`'0'` / 5 阶`iem(0.25/0.5/0.75/1/1.5)`(默认 4/8/12/16/24px)/ **full=`'9999px'`**(语义性 ∞,不缩放) |
+| `shadow`     | tiny/small/middle/large/huge                                                    | 保留 px 字面量（装饰性效果，与设计稿绑定，**不**跟 unit 缩放）                                         |
+| `blur`       | **none**/tiny/small/middle/large/huge                                           | none=`'0'` / 5 阶 `iem(0.25/0.5/1/1.5/2.5)`(默认 4/8/16/24/40px)                                       |
+| `breakpoint` | tiny/small/middle/large/huge                                                    | **保留 px**（媒体查询基准，与"屏幕宽度"硬绑定，**不**跟 unit 缩放）                                    |
+| `duration`   | **none**/tiny/small/middle/large/huge                                           | 6 阶；0ms/75ms/150ms/300ms/500ms/700ms（时间，非长度）                                                 |
+| `zIndex`     | **none**/tiny/small/middle/large/huge + 角色 modal/popover/tooltip/toast + auto | 0/10/20/30/40/50（无单位）                                                                             |
 
 #### 用领域词（按强度顺序）
 
-| Category | Keys | 默认值 | 备注 |
-|---|---|---|---|
-| `fontWeight` | thin/extralight/light/normal/medium/semibold/bold/extrabold/black | 100..900 | **9 阶（特例）**；CSS 标准词；`normal/bold` 与 keyword 双命中 |
-| `lineHeight` | **none**/tight/snug/normal/relaxed/loose | 1 / 1.25 / 1.375 / 1.5 / 1.625 / 2 | 6 阶；Tailwind 标准；`normal` 与 keyword 双命中 |
-| `letterSpacing` | tighter/tight/normal/wide/wider | -0.05 / -0.025 / 0 / 0.025 / 0.05 em | 5 阶；Tailwind 标准；`normal` 与 keyword 双命中 |
-| `opacity` | **none**/faint/dim/half/strong/solid/**full** | 0 / 0.05 / 0.25 / 0.5 / 0.75 / 0.95 / 1 | 7 阶；含 none+full |
+| Category        | Keys                                                              | 默认值                                  | 备注                                                          |
+| --------------- | ----------------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------- |
+| `fontWeight`    | thin/extralight/light/normal/medium/semibold/bold/extrabold/black | 100..900                                | **9 阶（特例）**；CSS 标准词；`normal/bold` 与 keyword 双命中 |
+| `lineHeight`    | **none**/tight/snug/normal/relaxed/loose                          | 1 / 1.25 / 1.375 / 1.5 / 1.625 / 2      | 6 阶；Tailwind 标准；`normal` 与 keyword 双命中               |
+| `letterSpacing` | tighter/tight/normal/wide/wider                                   | -0.05 / -0.025 / 0 / 0.025 / 0.05 em    | 5 阶；Tailwind 标准；`normal` 与 keyword 双命中               |
+| `opacity`       | **none**/faint/dim/half/strong/solid/**full**                     | 0 / 0.05 / 0.25 / 0.5 / 0.75 / 0.95 / 1 | 7 阶；含 none+full                                            |
 
 #### 不动（function / role 维度，不分大小）
 
-| Category | Keys | 备注 |
-|---|---|---|
-| `easing` | default/linear/in/out/inOut | 5 个 timing function |
-| `aspectRatio` | square/video/portrait/landscape | 4 个常用比例 |
+| Category      | Keys                            | 备注                 |
+| ------------- | ------------------------------- | -------------------- |
+| `easing`      | default/linear/in/out/inOut     | 5 个 timing function |
+| `aspectRatio` | square/video/portrait/landscape | 4 个常用比例         |
 
 #### 0.9.0 BREAKING 迁移速查（按 `_token` 访问形态）
 
-| 旧 | 新 | 同值？ |
-|---|---|---|
-| `fontWeight._bold` | `fontWeight._bold` 不变 | ✓ |
-| `fontWeight._medium` | `fontWeight._medium` 不变 | ✓ |
-| `fontWeight._normal` | `fontWeight._normal` 不变 | ✓ |
-| `opacity._0` | `opacity._none` | ✓ |
-| `opacity._50` | `opacity._half` | ✓ |
-| `opacity._70` | `opacity._strong` | 0.7→0.75 |
-| `opacity._75` | `opacity._strong` | ✓ |
-| `opacity._100` | `opacity._full` | ✓ |
-| `lineHeight._tight` | `lineHeight._tight` 不变 | ✓ |
-| `letterSpacing._wide` | `letterSpacing._wide` 不变 | ✓ |
-| `zIndex._50` | `zIndex._huge` | ✓ (50) |
-| `zIndex._modal` | `zIndex._modal` 不变 | ✓ |
+| 旧                    | 新                         | 同值？   |
+| --------------------- | -------------------------- | -------- |
+| `fontWeight._bold`    | `fontWeight._bold` 不变    | ✓        |
+| `fontWeight._medium`  | `fontWeight._medium` 不变  | ✓        |
+| `fontWeight._normal`  | `fontWeight._normal` 不变  | ✓        |
+| `opacity._0`          | `opacity._none`            | ✓        |
+| `opacity._50`         | `opacity._half`            | ✓        |
+| `opacity._70`         | `opacity._strong`          | 0.7→0.75 |
+| `opacity._75`         | `opacity._strong`          | ✓        |
+| `opacity._100`        | `opacity._full`            | ✓        |
+| `lineHeight._tight`   | `lineHeight._tight` 不变   | ✓        |
+| `letterSpacing._wide` | `letterSpacing._wide` 不变 | ✓        |
+| `zIndex._50`          | `zIndex._huge`             | ✓ (50)   |
+| `zIndex._modal`       | `zIndex._modal` 不变       | ✓        |
 
 CSS keyword fallback 路径 `fontWeight.bold` / `lineHeight.normal` / `letterSpacing.normal` / `zIndex.auto` **始终可用**。
 
 ### 11.3 LENGTH_UNITS（30 个）
+
 `.px(n)` `.rem(n)` `.em(n)` `.ch(n)` `.ex(n)` `.percent(n)` `.vw(n)` `.vh(n)` `.vmin(n)` `.vmax(n)` `.svh/svw/lvh/lvw/dvh/dvw(n)`（小/大/动态视口）`.cm(n)` `.mm(n)` `.in(n)` `.pt(n)` `.pc(n)` `.q(n)` `.cqw/cqh/cqi/cqb/cqmin/cqmax(n)`（容器查询单位）`.fr(n)`
 
 ### 11.4 TIME_UNITS
+
 `.ms(n)` `.s(n)`
 
 ### 11.5 ANGLE_UNITS
+
 `.deg(n)` `.rad(n)` `.turn(n)` `.grad(n)`
 
 ### 11.6 Tailwind palette
+
 完整 242 色 + 11 语义色。`tw('blue', '600')` helper。`TAILWIND_PALETTE` / `FLAT_PALETTE` / `PALETTE_NAMES` / `PALETTE_SHADES` 全部导出。
 
 ---
@@ -474,31 +507,37 @@ CSS keyword fallback 路径 `fontWeight.bold` / `lineHeight.normal` / `letterSpa
 ## 十二、关键技术决策（实现核心）
 
 ### 12.1 type intersection + const 强转
+
 ```ts
 class _ThemeClass<T extends ThemeSchema> { ... }
 export type Theme<T> = _ThemeClass<T> & ResolvedTheme<T>
 export const Theme = _ThemeClass as unknown as { new<T>(schema: T): Theme<T>; ... }
 ```
+
 原因：`interface Theme<T> extends ResolvedTheme<T>` 在 `verbatimModuleSyntax` 下 TS2312。
 
 ### 12.2 PropCarrier 类型 = 四态交叉
+
 ```ts
-type PropCarrier<TSelf, TValue, TTokens, TKeywords, TUnits, TExtraKeywords> =
-  ((value: TValue) => TSelf)                      // ① fn
-  & { readonly [K in TTokens]: TSelf }             // ② token
-  & { readonly [K in TKeywords]: TSelf }           // ③ keyword
-  & { readonly [K in TExtraKeywords]: TSelf }      // ③' W6 slot
-  & TUnits                                         // ④ unit
+type PropCarrier<TSelf, TValue, TTokens, TKeywords, TUnits, TExtraKeywords> = ((
+  value: TValue,
+) => TSelf) & { readonly [K in TTokens]: TSelf } & { readonly [K in TKeywords]: TSelf } & { // ① fn // ② token // ③ keyword
+  readonly [K in TExtraKeywords]: TSelf
+} & TUnits // ③' W6 slot // ④ unit
 ```
+
 颜色专用：`ColorPropCarrier` 命中 token 返回 `ColorTokenValue<TSelf>` 暴露 6 modifier。
 
 ### 12.3 闭包陷阱（嵌套时必读最新 `_node`）
+
 carrier 内部所有对 `_node` 的读写**必须**走 `chain._node`（不要快照 `_node` 引用）。`_nest(sel, fn)` 临时切换 `chain._node` 引用到子节点（try/finally 还原），carrier 必须通过 chain.\_node **间接**访问。
 
 ### 12.4 carrier 缓存
+
 `chain._carriers: Map<string, callable>` 缓存。注意：缓存对象只引用 `chain`（不引用 `_node`），闭包陷阱依然适用。
 
 ### 12.5 Theme.getKeymap() 懒缓存（W4.1）
+
 ```ts
 class _ThemeClass<T> {
   private _keymap: Map<string, Map<string, string>> | null = null
@@ -508,12 +547,15 @@ class _ThemeClass<T> {
   }
 }
 ```
+
 Chain 构造时优先复用 `theme.getKeymap()`。**bench icss 19k → 404k ops/s（21×）**。
 
 ### 12.6 resolveTheme freeze 策略
+
 `resolveTheme` 只 freeze **每个 category 内部 record**，**不 freeze 顶层**。这让 mergeTheme 后能再构建新对象；Vue 响应式靠 `theme.value = newTheme` 整体替换（标准模式），无需在 core 改 freeze。
 
 ### 12.7 mergeTheme 不再支持 function token
+
 partial 应基于已解析的字面量。dev 模式扫到 function 会 warn，不阻塞。
 
 ---
@@ -557,7 +599,7 @@ export interface ZxxxProps {
   disabled?: boolean
   trigger?: 'hover' | 'click'
   type?: 'button' | 'submit' | 'reset'
-  placement?: Placement   // floating-ui 自带类型
+  placement?: Placement // floating-ui 自带类型
 
   // 兜底逃生口
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -568,34 +610,45 @@ export interface ZxxxProps {
 
 ```vue
 <!-- Type A 单属性 -->
-<ZIcon :color="(c) => c._primary" />
-<ZIcon :color="(c) => c._danger.alpha(50)" />     <!-- modifier 链 -->
-<ZFlex :justify="(j) => j.spaceBetween" :align="(a) => a.center">...</ZFlex>
+<ZIcon :color="c => c._primary" />
+<ZIcon :color="c => c._danger.alpha(50)" />
+<!-- modifier 链 -->
+<ZFlex :justify="j => j.spaceBetween" :align="a => a.center">...</ZFlex>
 
 <!-- Type B 复合 wire -->
-<ZIcon :spin="(d) => d.s(1)" />                   <!-- 1 秒一圈;name/iteration/timing 自动 -->
+<ZIcon :spin="d => d.s(1)" />
+<!-- 1 秒一圈;name/iteration/timing 自动 -->
 
 <!-- Type C 一对多 -->
-<ZIcon :size="(w) => w.iem(1.25)" />              <!-- 显式 iem,width+height 同步 -->
-<ZIcon :size="(w) => w._middle" />                <!-- 走 schema sizes token -->
+<ZIcon :size="w => w.iem(1.25)" />
+<!-- 显式 iem,width+height 同步 -->
+<ZIcon :size="w => w._middle" />
+<!-- 走 schema sizes token -->
 
 <!-- Type V variant -->
 <ZButton variant="outlined" />
 
 <!-- 逃生口 -->
-<ZIcon :css="(s) => { s.cursor.pointer; s._hover(h => h.color(c => c._primary)) }" />
+<ZIcon
+  :css="
+    s => {
+      s.cursor.pointer
+      s._hover(h => h.color(c => c._primary))
+    }
+  "
+/>
 ```
 
 **禁忌**(违反必须改):
 
-| ❌ 错误形态 | ✅ 正确形态 |
-|---|---|
-| `justify?: 'between'` 配 MAP 翻译表 | `justify?: factory` (Type A) |
-| `size?: 'small' \| 'middle' \| 'large'`(纯字面量枚举) | `size?: factory` (Type C) |
-| `color?: 'primary' \| 'danger'`(颜色字面量) | `color?: factory` (Type A) |
+| ❌ 错误形态                                                       | ✅ 正确形态                                         |
+| ----------------------------------------------------------------- | --------------------------------------------------- |
+| `justify?: 'between'` 配 MAP 翻译表                               | `justify?: factory` (Type A)                        |
+| `size?: 'small' \| 'middle' \| 'large'`(纯字面量枚举)             | `size?: factory` (Type C)                           |
+| `color?: 'primary' \| 'danger'`(颜色字面量)                       | `color?: factory` (Type A)                          |
 | `direction?: 'horizontal' \| 'vertical'`(布局方向,无 JS 逻辑耦合) | `direction?: factory` (Type A 操作 `flexDirection`) |
-| `export type ZXxxVariant = ...` 单独 type alias | 内联到 props interface (Type V) |
-| 组件内 `XXX_MAP: Record<keyword, css-value>` 翻译表 | 直接走 factory + chain token access |
+| `export type ZXxxVariant = ...` 单独 type alias                   | 内联到 props interface (Type V)                     |
+| 组件内 `XXX_MAP: Record<keyword, css-value>` 翻译表               | 直接走 factory + chain token access                 |
 
 **iem 盒子模型 JSDoc 规范**:任何使用 iem 单位的尺寸 prop / 内部默认值,JSDoc **必须**标注 iem 盒子模型(**只写 iem,不写 px**,iem 物理意义由 ZBox Provider 控制):
 
@@ -617,10 +670,12 @@ export interface ZxxxProps {
 ```
 
 **实现选择**(按组件复杂度二选一,不变):
+
 - **极简组件**(ZIcon / Spinner / Badge 等):setup 内一个 `icss(themed.value, s => { ... })`,内联 base + 维度 + 末尾 `props.css?.(s)`。**无** `defineVariants` 工厂、**无** `cx` 拼接。
 - **复杂组件**(Button / Input / Dialog —— 含 hover/focus/disabled 状态笛卡尔积):用 `defineVariants` / `defineParts`;但**外观维度 props 仍然全 factory**,只是内部 className 拆 base / 状态 / variants 多层。
 
 历史决策:
+
 - `2026-05-22-carrier-factory-prop.md` —— 首次引入 factory props
 - `2026-05-22-prop-shape-union.md` —— Size5 union(已被 2026-05-23 撤销)
 - `2026-05-23-prop-shape-pure-factory.md` —— 当前规范(全 factory)
@@ -628,6 +683,7 @@ export interface ZxxxProps {
 **② iem 单位优先 · `<ZBox :iem>` 全站切换基准 · 罕见局部用 em**
 
 `iem` = **"我自己使用的 em"**,跟 CSS `rem`(root em)对称:
+
 - `rem` = 浏览器根元素 font-size 倍率(浏览器掌控,默认 16px)
 - `iem` = ZBox 注入的基准倍率(应用层掌控,**默认 1iem = 16px**,等同 1rem)
 
@@ -663,11 +719,11 @@ cssItem?:   (s: Chain<ZuiSchema>) => void
 
 不再有「ComponentTokenRegistry / `<ZBox :component-tokens>` / `withComponentTokens` / `componentTokensFor`」这套 namespace 级覆盖。三个口子各管一类需求：
 
-| 层级       | 场景                            | 怎么做                                                                                  |
-| ---------- | ------------------------------- | --------------------------------------------------------------------------------------- |
-| **Theme**  | 全组件统一改色                  | `zuiLight.extend({ color: { primary: '#abc' } })` → 所有 `_primary` 调用点跟随          |
-| **Schema** | 新增品牌 / 自定义 token         | `interface UserColorExt { brandRoyal: string }` augmentation → chain `_brandRoyal` 自动可用 |
-| **Instance** | 单组件 / 单实例改一项         | `:css="s => s.width.em(1.2)"` 任意 chain 方法直接覆盖                              |
+| 层级         | 场景                    | 怎么做                                                                                      |
+| ------------ | ----------------------- | ------------------------------------------------------------------------------------------- |
+| **Theme**    | 全组件统一改色          | `zuiLight.extend({ color: { primary: '#abc' } })` → 所有 `_primary` 调用点跟随              |
+| **Schema**   | 新增品牌 / 自定义 token | `interface UserColorExt { brandRoyal: string }` augmentation → chain `_brandRoyal` 自动可用 |
+| **Instance** | 单组件 / 单实例改一项   | `:css="s => s.width.em(1.2)"` 任意 chain 方法直接覆盖                                       |
 
 - 组件 setup 直接吃 `useZTheme()`，**不走** `withComponentTokens / componentTokensFor`
 - 设计档位由 **theme schema** 表达(`spacing.middle = '16px'` / `opacity.half = 0.5` / `duration.middle = '300ms'`),组件层不再硬编码 `SIZE_MAP` / `DEPTH_MAP` / `SPIN_MAP` 字面量(2026-05-22 改 chain factory props 范式后废除)
@@ -701,6 +757,7 @@ packages/ui-vue/src/
 ```
 
 **subpath exports**：
+
 - `@kenconnet666/zui-vue` —— 主入口
 - `@kenconnet666/zui-vue/provider`
 - `@kenconnet666/zui-vue/composables`
@@ -733,20 +790,20 @@ packages/ui-vue/src/
 
 工作区根 devDeps 还装了语言服务器（统一版本，2026-05 拍板锁 minor）：
 
-| 包 | 版本 |
-|---|---|
-| `typescript` | `~6.0.3` |
-| `vue-tsc` | `~3.3.0` |
-| `@vue/language-core` | `~3.3.0` |
-| `@vue/language-server` | `~3.3.0` |
-| `@vue/typescript-plugin` | `~3.3.0` |
-| `@vue/tsconfig` | `^0.9.1` |
+| 包                              | 版本      |
+| ------------------------------- | --------- |
+| `typescript`                    | `~6.0.3`  |
+| `vue-tsc`                       | `~3.3.0`  |
+| `@vue/language-core`            | `~3.3.0`  |
+| `@vue/language-server`          | `~3.3.0`  |
+| `@vue/typescript-plugin`        | `~3.3.0`  |
+| `@vue/tsconfig`                 | `^0.9.1`  |
 | `@vue/eslint-config-typescript` | `^14.7.0` |
-| `eslint-plugin-vue` | `~10.9.0` |
-| `svelte-language-server` | `^0.18.0` |
-| `typescript-language-server` | `^5.2.0` |
-| `@vitejs/plugin-vue` | `^6.0.6` |
-| `@vitejs/plugin-vue-jsx` | `^5.1.5` |
+| `eslint-plugin-vue`             | `~10.9.0` |
+| `svelte-language-server`        | `^0.18.0` |
+| `typescript-language-server`    | `^5.2.0`  |
+| `@vitejs/plugin-vue`            | `^6.0.6`  |
+| `@vitejs/plugin-vue-jsx`        | `^5.1.5`  |
 
 `vue-tsc` 与 `@vue/language-*` 必须保持同 minor（同步发版），用 `~` 锁住 minor。
 
@@ -760,25 +817,25 @@ import type { ZLocale, ZLocalePartial, ZDateConfig } from '@kenconnet666/zui-vue
 import type { Locale as DateFnsLocale } from 'date-fns'
 
 interface Props<S extends ThemeSchema = ThemeSchema> {
-  theme?: Theme<S>                          // 完整主题（顶层推荐）
-  themePatch?: DeepPartial<S>               // 局部 patch（嵌套推荐，与 theme 同时给时先 theme 再 patch）
-  locale?: ZLocale                          // 完整替换
-  localePatch?: ZLocalePartial              // namespace 级 + 字段级浅合并
-  timezone?: string                         // IANA 时区，未传继承父；根未传 → 'UTC'
-  dateLocale?: DateFnsLocale                // date-fns Locale，未传继承父
-  iem?: string | number                     // 逻辑单位 iem 的物理映射,写到 wrapper inline --zui-iem(默认 16px)
+  theme?: Theme<S> // 完整主题（顶层推荐）
+  themePatch?: DeepPartial<S> // 局部 patch（嵌套推荐，与 theme 同时给时先 theme 再 patch）
+  locale?: ZLocale // 完整替换
+  localePatch?: ZLocalePartial // namespace 级 + 字段级浅合并
+  timezone?: string // IANA 时区，未传继承父；根未传 → 'UTC'
+  dateLocale?: DateFnsLocale // date-fns Locale，未传继承父
+  iem?: string | number // 逻辑单位 iem 的物理映射,写到 wrapper inline --zui-iem(默认 16px)
 }
 ```
 
 合并策略一栏：
 
-| context | 顶层 fallback | 嵌套合并方式 |
-|---|---|---|
-| theme | `defaultLight.resolve()`（dev warn） | `mergeTheme` 深合并 |
-| locale | `zhCN` | `mergeLocale` namespace+字段两级浅合并；数组整体替换 |
-| timezone | `'UTC'` | 子覆盖父 |
-| dateLocale | `undefined` | 子覆盖父 |
-| iem | `'16px'`(`ZIemPreset.default`) | wrapper inline `--zui-iem`,子层 css cascade 自然覆盖(无运行时合并;兄弟 Provider 互不影响) |
+| context    | 顶层 fallback                        | 嵌套合并方式                                                                              |
+| ---------- | ------------------------------------ | ----------------------------------------------------------------------------------------- |
+| theme      | `defaultLight.resolve()`（dev warn） | `mergeTheme` 深合并                                                                       |
+| locale     | `zhCN`                               | `mergeLocale` namespace+字段两级浅合并；数组整体替换                                      |
+| timezone   | `'UTC'`                              | 子覆盖父                                                                                  |
+| dateLocale | `undefined`                          | 子覆盖父                                                                                  |
+| iem        | `'16px'`(`ZIemPreset.default`)       | wrapper inline `--zui-iem`,子层 css cascade 自然覆盖(无运行时合并;兄弟 Provider 互不影响) |
 
 Inject keys（symbol）：`Z_THEME_KEY` / `Z_LOCALE_KEY` / `Z_DATE_KEY`，全部 `InjectionKey<Ref<...>>`。`Z_THEME_KEY` 退化到 `ResolvedTheme<any>`（Vue InjectionKey 不支持泛型），子组件 `useZTheme<S>()` cast 回。
 
@@ -917,15 +974,15 @@ import { ZIcon } from '@kenconnet666/zui-vue/components/icon'
 
 ```ts
 export interface ZIconProps {
-  size?:  ((w: Chain<ZuiSchema>['width']) => void) | undefined              // width carrier;height 自动镜像
-  color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined              // color carrier
-  depth?: ((o: Chain<ZuiSchema>['opacity']) => void) | undefined            // opacity carrier
-  spin?:  ((d: Chain<ZuiSchema>['animationDuration']) => void) | undefined  // animationDuration carrier(name/iteration/timing 自动加)
-  css?: ((s: Chain<ZuiSchema>) => void) | undefined                     // 兜底逃生口
+  size?: ((w: Chain<ZuiSchema>['width']) => void) | undefined // width carrier;height 自动镜像
+  color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined // color carrier
+  depth?: ((o: Chain<ZuiSchema>['opacity']) => void) | undefined // opacity carrier
+  spin?: ((d: Chain<ZuiSchema>['animationDuration']) => void) | undefined // animationDuration carrier(name/iteration/timing 自动加)
+  css?: ((s: Chain<ZuiSchema>) => void) | undefined // 兜底逃生口
 
-  component?: Component                              // 双模式:与 default slot 互斥(slot 优先)
-  tag?: string                                       // 根元素,默认 'i'
-  label?: string                                     // a11y
+  component?: Component // 双模式:与 default slot 互斥(slot 优先)
+  tag?: string // 根元素,默认 'i'
+  label?: string // a11y
 }
 ```
 
@@ -939,34 +996,54 @@ export interface ZIconProps {
 
 ```vue
 <!-- size: w.em(N) 一行,height 自动镜像 -->
-<ZIcon :component="HeartIcon" :size="(w) => w.em(1.25)" />     <!-- 1.25em × 1.25em -->
-<ZIcon :component="HeartIcon" :size="(w) => w.iem(1)" />       <!-- 1iem,跟随 :iem -->
-<ZIcon :component="HeartIcon" :size="(w) => w.px(20)" />       <!-- 字面量 -->
+<ZIcon :component="HeartIcon" :size="w => w.em(1.25)" />
+<!-- 1.25em × 1.25em -->
+<ZIcon :component="HeartIcon" :size="w => w.iem(1)" />
+<!-- 1iem,跟随 :iem -->
+<ZIcon :component="HeartIcon" :size="w => w.px(20)" />
+<!-- 字面量 -->
 
 <!-- color: schema token / modifier / 字面量 -->
-<ZIcon :component="HeartIcon" :color="(c) => c._primary" />
-<ZIcon :component="HeartIcon" :color="(c) => c._danger.alpha(50)" />
-<ZIcon :component="HeartIcon" :color="(c) => c('#ff00aa')" />
+<ZIcon :component="HeartIcon" :color="c => c._primary" />
+<ZIcon :component="HeartIcon" :color="c => c._danger.alpha(50)" />
+<ZIcon :component="HeartIcon" :color="c => c('#ff00aa')" />
 
 <!-- depth: 字面量 / schema token -->
-<ZIcon :component="HeartIcon" :depth="(o) => o(0.5)" />
-<ZIcon :component="HeartIcon" :depth="(o) => o._half" />
+<ZIcon :component="HeartIcon" :depth="o => o(0.5)" />
+<ZIcon :component="HeartIcon" :depth="o => o._half" />
 
 <!-- spin: 只控制速度(name / iteration / timing 自动加) -->
-<ZIcon :component="Reload" :spin="(d) => d.s(1)" />            <!-- 1 秒一圈 -->
-<ZIcon :component="Reload" :spin="(d) => d.ms(300)" />         <!-- 300ms -->
-<ZIcon :component="Reload" :spin="(d) => d._middle" />         <!-- schema duration token -->
+<ZIcon :component="Reload" :spin="d => d.s(1)" />
+<!-- 1 秒一圈 -->
+<ZIcon :component="Reload" :spin="d => d.ms(300)" />
+<!-- 300ms -->
+<ZIcon :component="Reload" :spin="d => d._middle" />
+<!-- schema duration token -->
 
 <!-- 非正方形 / 自定义 easing 走 css 兜底 -->
-<ZIcon :component="HeartIcon" :css="(s) => { s.width.px(24); s.height.px(32) }" />
+<ZIcon
+  :component="HeartIcon"
+  :css="
+    s => {
+      s.width.px(24)
+      s.height.px(32)
+    }
+  "
+/>
 <ZIcon
   :component="Reload"
-  :spin="(d) => d.s(2)"
-  :css="(s) => { s.animationTimingFunction('ease-in-out'); s.animationDirection.reverse }"
+  :spin="d => d.s(2)"
+  :css="
+    s => {
+      s.animationTimingFunction('ease-in-out')
+      s.animationDirection.reverse
+    }
+  "
 />
 ```
 
 IDE 在每个 callback 内补全完整:
+
 - `c.` → 全部 color schema token(`_primary` / `_danger` / `_blue600` / ...)+ 146 CSS 命名色 + `currentColor` 等 keyword
 - 输入 `_p` → 模糊筛选 `_p*` token(`_primary` / `_pink500` 等)
 - `c._primary.` → 11 个 ColorTokenValue modifier(`alpha` / `darken` / `lighten` / ...)
@@ -974,11 +1051,13 @@ IDE 在每个 callback 内补全完整:
 **`ZIcon.vue` 内部结构**(按 §13.0 ⑤ 五件套):
 
 `<script lang="ts">` 块(模块级出口):
+
 - type imports(`Chain` / `Component` / `ZuiSchema`)+ runtime imports(`icss`)
 - `export interface ZIconProps {}`
 - **没有** const map(已废除)
 
 `<script setup lang="ts">` 块(**setup 仅 ~35 行**):
+
 - `import { computed } from 'vue'` + `import { useZTheme } from '../../provider'`
 - `withDefaults(defineProps<ZIconProps>(), { ... })` —— ⚠️ **Function 类型 prop 的 default 直接给函数本身**,不要 `() => fn` 工厂(Vue 不调用 outer factory,会导致 default 永远不生效)
 - `const theme = useZTheme()` —— 一行注入
@@ -986,40 +1065,46 @@ IDE 在每个 callback 内补全完整:
 
 ```ts
 const props = withDefaults(defineProps<ZIconProps>(), {
-  size: (w: Chain<ZuiSchema>['width']) => { w.em(1) },          // 默认 1em(height 自动镜像)
-  color: (c: Chain<ZuiSchema>['color']) => { c.currentColor },
+  size: (w: Chain<ZuiSchema>['width']) => {
+    w.em(1)
+  }, // 默认 1em(height 自动镜像)
+  color: (c: Chain<ZuiSchema>['color']) => {
+    c.currentColor
+  },
   tag: 'i',
 })
 
-const className = computed(() => icss(theme.value, (s) => {
-  // base
-  s.display.inlineFlex
-  s.alignItems.center
-  s.justifyContent.center
-  s.flexShrink(0)
-  s.lineHeight(1)
+const className = computed(() =>
+  icss(theme.value, s => {
+    // base
+    s.display.inlineFlex
+    s.alignItems.center
+    s.justifyContent.center
+    s.flexShrink(0)
+    s.lineHeight(1)
 
-  // size:用户只控制 width carrier;height 自动镜像 width(保证图标正方形)
-  props.size(s.width)
-  if (s._node.width !== undefined) s._node.height = s._node.width
+    // size:用户只控制 width carrier;height 自动镜像 width(保证图标正方形)
+    props.size(s.width)
+    if (s._node.width !== undefined) s._node.height = s._node.width
 
-  // color:单 carrier factory
-  s.color(props.color)
+    // color:单 carrier factory
+    s.color(props.color)
 
-  // depth:单 carrier factory;不传 = 不写 opacity
-  if (props.depth) s.opacity(props.depth)
+    // depth:单 carrier factory;不传 = 不写 opacity
+    if (props.depth) s.opacity(props.depth)
 
-  // spin:启用时自动加 name / iteration / timing,用户只控制速度
-  if (props.spin) {
-    s.animationName(presetAnimations.spin)
-    s.animationIterationCount.infinite
-    s.animationTimingFunction.linear
-    s.animationDuration(props.spin)
-  }
+    // spin:启用时自动加 name / iteration / timing,用户只控制速度
+    if (props.spin) {
+      s.animationName(presetAnimations.spin)
+      s.animationIterationCount.infinite
+      s.animationTimingFunction.linear
+      s.animationDuration(props.spin)
+    }
 
-  // css 兜底
-  props.css?.(s)
-}))
+    // css 兜底
+    props.css?.(s)
+  }),
+)
 ```
 
 **为什么所有维度都接单 carrier**:粒度统一 —— 每个 prop 表达"该维度的一个核心轴"(width / color / opacity / animationDuration),IDE 补全聚焦该 carrier 能力(token / keyword / 字面量 / modifier / unit method)。其它属性(height 镜像 / animation name 等)由组件 setup 自动处理,用户**不需要也不能**直接操作 — 想突破走 css。这种"单轴 + 兜底"的设计模式比"多属性 chain factory"更易理解、更难写错。
@@ -1027,6 +1112,7 @@ const className = computed(() => icss(theme.value, (s) => {
 **测试覆盖**:42 tests = provider 9 + icon 33(`tests/icon.spec.ts`:渲染 5 / size 7 含镜像 + css 非正方形 / color 5 / depth 4 / spin 5 含自动属性 + css 覆盖 timing / css 4 / a11y 2)。tests 显式标注 callback 入参 `(c: Chain<ZuiSchema>['color'])` 因为 mount props 字面量内 vue-tsc 不能从 carrier union 重载推断回 callback 类型。
 
 ### 13.11 SSR（Nuxt / Vue SSR）
+
 ```ts
 import { createIcssInstance } from '@kenconnet666/zui-core'
 import createCache from '@emotion/cache'
@@ -1097,6 +1183,7 @@ npm config delete //registry.npmjs.org/:_authToken  # 用完删除（安全）
 ## 十五、Git remote 配置
 
 远程 HTTPS 没缓存凭据时 push 会 403：
+
 - **方案 A**：配 PAT — `git config --global credential.helper manager`，再 push 时填用户名 + PAT
 - **方案 B**：切 SSH — `git remote set-url origin git@github.com:kenconnet666/zui.git`（需 `~/.ssh/id_ed25519.pub` 已加到 GitHub）
 
@@ -1105,12 +1192,15 @@ npm config delete //registry.npmjs.org/:_authToken  # 用完删除（安全）
 ## 十六、自主推进规则
 
 ### 16.1 离线决策同步
+
 agent 离线做的边角决策，直接 commit message 留痕（无需单独 Plan.md 累加）。
 
 ### 16.2 任务追踪
+
 ≥3 步用 `TaskCreate` / `TaskUpdate` 追踪；每步 atomic；完成立刻 `completed`，不要批量。
 
 ### 16.3 commit 模板
+
 ```
 <type>(<scope>): <中文摘要>
 
@@ -1164,12 +1254,12 @@ import ApiTable from '../../shared/ApiTable.vue'
 
 **columns 配置**：
 
-| key     | 作用 | mono? |
-|---------|------|-------|
-| name    | 属性 / 事件 / 插槽名 | ✅ |
-| type    | 类型描述 | ✅ |
-| default | 默认值 | ✅ |
-| desc    | 说明文字 | ❌ |
+| key     | 作用                 | mono? |
+| ------- | -------------------- | ----- |
+| name    | 属性 / 事件 / 插槽名 | ✅    |
+| type    | 类型描述             | ✅    |
+| default | 默认值               | ✅    |
+| desc    | 说明文字             | ❌    |
 
 `mono: true` → 等宽字体 + `_primary` 色；`mono: false/undefined` → 正文字体 + `_text` 色。
 
@@ -1184,6 +1274,7 @@ import ApiTable from '../../shared/ApiTable.vue'
 **表头固定列**：`size | font-size | height | padding-y | padding-x | border-radius | gap`（按实际有意义的列写，无意义的省略）。
 
 **档位固定写法**（iem = 16px 换算）：
+
 - `size = n` → 各维度 = `n × 比例系数 × 16` px；
 - 公式从组件源码的 iem 公式直接读取；
 - 默认档标注 `（默认）`，如 `1（默认）`。
@@ -1191,23 +1282,25 @@ import ApiTable from '../../shared/ApiTable.vue'
 ### 17.4 iem / vw 说明段（size prop 尺寸参考表前后各一段）
 
 **前置段**（说明换算基准）：
+
 > `size` 是 **iem 倍数**，1iem 的物理像素由 `<ZBox :iem>` 决定。
 > 默认使用 `ZIemPreset.default = '0.8333vw'`，在 1920px 宽屏下等于 16px，随视口宽度自适应缩放。
 > 下表以 **iem = 16px**（固定基准）为例换算各档位的 px 值：
 
 **后置段**（说明如何固定像素）：
+
 > 默认 `ZIemPreset.default` 下整体随视口等比缩放，无需媒体查询。
 > 需要固定像素尺寸时改用 `ZIemPreset.fixed`（= `'16px'`）或在外层 `<ZBox :iem="'16px'">` 。
 
 ### 17.5 类型描述字符串约定
 
-| 场景 | 写法 |
-|------|------|
-| 字面量联合 | `'filled' \| 'outlined' \| 'text'` |
-| chain factory | `(c: ColorCarrier) => void` |
-| 整数倍数 | `number` |
-| 可选 boolean | `boolean` |
-| 无（未暴露） | `—` |
+| 场景          | 写法                               |
+| ------------- | ---------------------------------- |
+| 字面量联合    | `'filled' \| 'outlined' \| 'text'` |
+| chain factory | `(c: ColorCarrier) => void`        |
+| 整数倍数      | `number`                           |
+| 可选 boolean  | `boolean`                          |
+| 无（未暴露）  | `—`                                |
 
 **不要**写完整的 TypeScript 泛型（如 `((c: Chain<ZuiSchema>['color']) => void) | undefined`），截短到语义核心。
 

@@ -10,17 +10,18 @@
 
 ### A. 5 个 variant(M3 风格命名)
 
-| variant   | 视觉                                                              |
-|---------- |------------------------------------------------------------------ |
-| `filled`  | 实心 ── `backgroundColor: currentColor` + 反色文字 + `boxShadow._tiny` |
-| `outlined`| 描边 ── `borderColor: currentColor` + 透明背景                        |
-| `text`    | 无背景无边框 ── 透明 + state layer hover                              |
-| `ghost`   | 半透明背景 ── `_primary.alpha(8)`,跟 hover state layer 同色          |
-| `link`    | 内联链接 ── 透明背景 + hover 时 `text-decoration: underline`           |
+| variant    | 视觉                                                                   |
+| ---------- | ---------------------------------------------------------------------- |
+| `filled`   | 实心 ── `backgroundColor: currentColor` + 反色文字 + `boxShadow._tiny` |
+| `outlined` | 描边 ── `borderColor: currentColor` + 透明背景                         |
+| `text`     | 无背景无边框 ── 透明 + state layer hover                               |
+| `ghost`    | 半透明背景 ── `_primary.alpha(8)`,跟 hover state layer 同色            |
+| `link`     | 内联链接 ── 透明背景 + hover 时 `text-decoration: underline`           |
 
 ### B. `color` carrier factory(主色)
 
 默认 `_primary`;用户可传 `(c) => c._danger` 等。该色透过 `color` 属性挂到按钮(`currentColor` 引用):
+
 - filled:`backgroundColor: currentColor`(把 color 当背景)+ 文字反色 `_bg`
 - outlined:`borderColor: currentColor` + 文字保持 color
 - text/ghost/link:文字 = color
@@ -38,7 +39,7 @@
 ### D. `:focus-visible` outline ring(M3)
 
 ```ts
-s._focusVisible((f) => {
+s._focusVisible(f => {
   f._prop('outlineWidth', '2px')
   f._prop('outlineStyle', 'solid')
   f.outlineColor._focusRing.alpha(40)
@@ -87,16 +88,16 @@ s._focusVisible((f) => {
 
 `Stage 6.1 → 6.6` 全部完成,21 个 P0 组件清单:
 
-| 分类 | 组件 |
-|----|----|
-| **layout** | ZFlex / ZGrid / ZSpace / ZSpacer |
-| **gene** | ZIcon / ZText / ZTitle / ZParagraph / ZLink / ZDivider / **ZButton** + `BuiltinIcons` 语义 map |
-| **feedback** | ZAlert / ZSpin / ZModal / ZMessage + `createMessageApi()` |
-| **display** | ZCard / ZTable |
-| **input** | ZInput / ZTextarea / ZInputNumber / ZSwitch / ZCheckbox + ZCheckboxGroup / ZRadio + ZRadioGroup / ZSelect / ZForm + ZFormItem |
-| **navigation** | ZBreadcrumb / ZPagination / ZTabs / ZMenu |
+| 分类           | 组件                                                                                                                          |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| **layout**     | ZFlex / ZGrid / ZSpace / ZSpacer                                                                                              |
+| **gene**       | ZIcon / ZText / ZTitle / ZParagraph / ZLink / ZDivider / **ZButton** + `BuiltinIcons` 语义 map                                |
+| **feedback**   | ZAlert / ZSpin / ZModal / ZMessage + `createMessageApi()`                                                                     |
+| **display**    | ZCard / ZTable                                                                                                                |
+| **input**      | ZInput / ZTextarea / ZInputNumber / ZSwitch / ZCheckbox + ZCheckboxGroup / ZRadio + ZRadioGroup / ZSelect / ZForm + ZFormItem |
+| **navigation** | ZBreadcrumb / ZPagination / ZTabs / ZMenu                                                                                     |
 
-总共 **27 个 SFC + 3 个 helper**(messageApi / _checkbox-group / _radio-group / _form-ctx)+ 5 个 hooks(`_hooks/`)。
+总共 **27 个 SFC + 3 个 helper**(messageApi / \_checkbox-group / \_radio-group / \_form-ctx)+ 5 个 hooks(`_hooks/`)。
 
 测试 **358 case 全绿**,build OK,type-check 0 error。
 
@@ -105,18 +106,20 @@ s._focusVisible((f) => {
 ## 视觉验收(待用户)
 
 用户回 IDE 后可写一个 docs 页面:
+
 ```vue
 <ZButton variant="filled">Save</ZButton>
 <ZButton variant="outlined">Outlined</ZButton>
 <ZButton variant="text">Text</ZButton>
 <ZButton variant="ghost">Ghost</ZButton>
 <ZButton variant="link">Link</ZButton>
-<ZButton :color="(c) => c._danger" variant="filled">Danger</ZButton>
+<ZButton :color="c => c._danger" variant="filled">Danger</ZButton>
 <ZButton :loading="true">Loading</ZButton>
 <ZButton block>Block</ZButton>
 ```
 
 验收要点:
+
 1. 5 variant 视觉对比是否符合 M3 风格
 2. 波纹动画速度 / 颜色 / 范围
 3. focus 环厚度 / 颜色 / offset
@@ -128,6 +131,7 @@ s._focusVisible((f) => {
 ## 路线图后续
 
 Phase α 完成,接下来:
+
 - **Stage α 收尾**(可选):验证三件套整体跑一次,docs 站点写 ButtonPage / FormPage / TablePage
 - **Stage 7+ Phase β**:高频补全(ZAvatar / ZTag / ZBadge / ZTooltip / ZPopover / ZDropdown /
   ZDrawer / ZNotification / 等),Modal.confirm 静态方法,focus trap,popup-style submenu,

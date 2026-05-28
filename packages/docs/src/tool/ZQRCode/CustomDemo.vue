@@ -5,12 +5,28 @@ import { ZQRCode, ZSpace, ZText } from '@kenconnet666/zui-vue'
 <template>
   <ZSpace :size="g => g._large" :align="a => a.flexStart" :wrap="w => w.wrap">
     <ZSpace :direction="d => d.column" :size="g => g._small" :align="a => a.center">
-      <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">大尺寸</ZText>
+      <ZText
+        :css="
+          s => {
+            s.color._textSecondary
+            s.fontSize._small
+          }
+        "
+        >大尺寸</ZText
+      >
       <ZQRCode value="https://github.com/kenconnet666/zui" :pixel-size="160" />
     </ZSpace>
 
     <ZSpace :direction="d => d.column" :size="g => g._small" :align="a => a.center">
-      <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">自定义前景/背景色</ZText>
+      <ZText
+        :css="
+          s => {
+            s.color._textSecondary
+            s.fontSize._small
+          }
+        "
+        >自定义前景/背景色</ZText
+      >
       <ZQRCode
         value="https://github.com/kenconnet666/zui"
         :pixel-size="120"

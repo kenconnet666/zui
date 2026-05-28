@@ -16,7 +16,7 @@
 
 1. **"thing" 语义模糊**:Naive UI / Element Plus 都不存在对应组件。Naive UI 的 `n-thing` 在
    官方文档里也是一个"占位用复合容器"(头像/标题/描述/操作四区),但实际业务里完全可以用 `ZCard`
-   + `ZSpace` 或者 `ZList.item` 拼出来,**没有不可替代性**。
+   - `ZSpace` 或者 `ZList.item` 拼出来,**没有不可替代性**。
 2. **现有组件已覆盖**:`ZCard`(head/body/foot + sx 平铺) + `ZAvatar` + `ZSpace` 已足够覆盖
    "头像 + 标题 + 描述 + 操作"的常见场景。
 3. **不做不影响**任何 P0/P1 业务场景。
@@ -24,7 +24,7 @@
 ### 迁移建议(给后续如果有人想用)
 
 ```vue
-<ZCard :css="(s) => s.padding._middle">
+<ZCard :css="s => s.padding._middle">
   <template #header>
     <ZSpace>
       <ZAvatar :src="user.avatar" />
@@ -141,7 +141,7 @@ Stage 9 整体改写为:
       数据组件接入)
 - [-] 富文本 —— **不做**,业务方直接集成 TipTap/Lexical
 - [~] DataGrid 企业版 —— **50% 完成**(虚拟/排序/选择/sticky)。列冻结/expandable rows/
-      column resize/groupBy 按需开 sprint
+  column resize/groupBy 按需开 sprint
 - [-] Schema-driven Form —— **不做**,业务方基于 ZForm 自行包装
 
 **Stage 9 状态:closed**。后续业务诉求驱动新需求 → 开新 sprint,不属于"路线图主线"。

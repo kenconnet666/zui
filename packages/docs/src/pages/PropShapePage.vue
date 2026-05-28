@@ -1,6 +1,114 @@
 <script setup lang="ts">
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import ApiTable from '../components/ApiTable.vue'
+
+const shapeColumns = [
+  { key: 'type', label: '类型', mono: true, width: '110px' },
+  { key: 'name', label: '名称', width: '180px' },
+  { key: 'shape', label: '示例签名', mono: true, width: '320px' },
+  { key: 'desc', label: '说明' },
+]
+const shapeRows = [
+  {
+    type: 'Type A',
+    name: '单属性 factory',
+    shape: "((c: Chain['color']) => void) | undefined",
+    desc: 'prop 名 ≈ CSS 属性名,carrier 直接对应该属性。如 color / direction / justify / align。',
+  },
+  {
+    type: 'Type B',
+    name: '复合 wire factory',
+    shape: "((d: Chain['animationDuration']) => void) | undefined",
+    desc: '启用即 wire 一组规则(name/iteration/timing 等自动加),用户只控关键参数(如 spin 的速度)。',
+  },
+  {
+    type: 'Type C',
+    name: '一对多 factory',
+    shape: "((w: Chain['width']) => void) | undefined",
+    desc: '同一 factory 作用到多个 CSS 属性。如 ZIcon.size = width + height 同步。',
+  },
+  {
+    type: 'Type V',
+    name: 'variant 字面量 union',
+    shape: "'filled' | 'outlined' | 'text'",
+    desc: '视觉变体。内联到 props,不导出独立 type alias。',
+  },
+  {
+    type: 'Type N',
+    name: '真二态 / 原生 / 第三方',
+    shape: "boolean | 'button' | Placement",
+    desc: '布尔状态、原生 HTML 字段、第三方继承(如 floating-ui Placement)保留原类型。',
+  },
+]
+
+const historyColumns = [
+  { key: 'date', label: '日期', mono: true, width: '120px' },
+  { key: 'stage', label: '决策', width: '220px' },
+  { key: 'desc', label: '内容' },
+]
+const historyRows = [
+  {
+    date: '2026-05-22',
+    stage: 'Stage 2 cssRoot → css',
+    desc: '所有简单单根组件的兜底逃生口从 cssRoot 改名为 css(更扁平)。',
+  },
+  {
+    date: '2026-05-22',
+    stage: 'B5 Size5 union(已撤销)',
+    desc: "尝试 size?: factory | Size5,允许 size='small' 简写,但 IDE 补全冲突 + 跟其他 prop 不一致,撤销。",
+  },
+  {
+    date: '2026-05-23',
+    stage: 'Pure chain factory(当前)',
+    desc: '所有 size/color/spacing/layout 类一律 factory。variant 类保留字面量但内联。文档:.claude/decisions/2026-05-23-prop-shape-pure-factory.md',
+  },
+  {
+    date: '2026-05-24',
+    stage: '数值尺寸用 number(iem 倍数)',
+    desc: '复杂交互组件(ZButton/ZInput)的 size prop 退化成 number,组件内全 iem 联动。简单组件仍走 factory。',
+  },
+]
+
+const typeNColumns = [
+  { key: 'kind', label: '类别', mono: true, width: '180px' },
+  { key: 'ex', label: '例子', mono: true, width: '260px' },
+  { key: 'desc', label: '为什么不走 factory' },
+]
+const typeNRows = [
+  {
+    kind: '真二态 boolean',
+    ex: 'disabled / checked / loading',
+    desc: '只有 true/false,套 factory 多此一举。',
+  },
+  {
+    kind: '业务字符串 union',
+    ex: "trigger: 'hover' | 'click'",
+    desc: '触发行为不是 CSS,跟 chain 无关。',
+  },
+  {
+    kind: '原生 HTML 字段',
+    ex: "type: 'button' | 'submit'",
+    desc: '直接透传到 DOM 属性,跟 HTML 规范对齐。',
+  },
+  {
+    kind: '第三方继承类型',
+    ex: 'placement: Placement(@floating-ui)',
+    desc: '走第三方类型生态,避免重新定义。',
+  },
+]
+
+const tabooColumns = [
+  { key: 'bad', label: '错误形态', mono: true, width: '320px' },
+  { key: 'good', label: '正确形态', mono: true, width: '320px' },
+]
+const tabooRows = [
+  { bad: "justify?: 'between' (配 MAP 翻译表)", good: 'justify?: factory(Type A)' },
+  { bad: "size?: 'small' | 'middle' | 'large'(简单组件)", good: 'size?: factory(Type C)' },
+  { bad: "color?: 'primary' | 'danger'", good: 'color?: factory(Type A)' },
+  { bad: "direction?: 'horizontal' | 'vertical'", good: 'direction?: factory(操作 flexDirection)' },
+  { bad: 'export type ZXxxVariant = ...(独立 alias)', good: '内联到 props interface(Type V)' },
+  { bad: '组件内 SIZE_MAP: Record<size, css-value>', good: '直接 factory + chain token access' },
+]
 </script>
 
 <template>
@@ -8,46 +116,21 @@ import ApiTable from '../components/ApiTable.vue'
     <ZTitle :level="1">props 范式</ZTitle>
     <ZParagraph>
       zui-vue 所有组件的 prop 接口遵循<strong>一套统一的形态规则</strong>:外观维度(color / size /
-      direction / 等)统一走 <ZCode code="chain factory" />,视觉变体走<strong>内联字面量 union</strong>,
-      真二态状态走 <ZCode code="boolean" />,业务/原生 HTML 字段保留原类型。这套规则让每个组件的 API
-      表面极小,IDE 补全总落在<strong>chain 端</strong>(token / keyword / unit method / modifier),
-      不爆 prop 本身的字面量噪声。
+      direction / 等)统一走 <ZCode code="chain factory" />,视觉变体走<strong
+        >内联字面量 union</strong
+      >, 真二态状态走 <ZCode code="boolean" />,业务/原生 HTML 字段保留原类型。这套规则让每个组件的
+      API 表面极小,IDE 补全总落在<strong>chain 端</strong>(token / keyword / unit method /
+      modifier), 不爆 prop 本身的字面量噪声。
     </ZParagraph>
 
     <ZTitle :level="2">5 种 prop 形态总览</ZTitle>
-    <ApiTable
-      :columns="[
-        { key: 'type', label: '类型', mono: true, width: '110px' },
-        { key: 'name', label: '名称',  width: '180px' },
-        { key: 'shape', label: '示例签名', mono: true, width: '320px' },
-        { key: 'desc', label: '说明' },
-      ]"
-      :rows="[
-        { type: 'Type A', name: '单属性 factory',   shape: '((c: Chain[\\'color\\']) => void) | undefined',    desc: 'prop 名 ≈ CSS 属性名,carrier 直接对应该属性。如 color / direction / justify / align。' },
-        { type: 'Type B', name: '复合 wire factory', shape: '((d: Chain[\\'animationDuration\\']) => void) | undefined', desc: '启用即 wire 一组规则(name/iteration/timing 等自动加),用户只控关键参数(如 spin 的速度)。' },
-        { type: 'Type C', name: '一对多 factory',    shape: '((w: Chain[\\'width\\']) => void) | undefined',    desc: '同一 factory 作用到多个 CSS 属性。如 ZIcon.size = width + height 同步。' },
-        { type: 'Type V', name: 'variant 字面量 union', shape: '\\'filled\\' | \\'outlined\\' | \\'text\\'',     desc: '视觉变体。内联到 props,不导出独立 type alias。' },
-        { type: 'Type N', name: '真二态 / 原生 / 第三方', shape: 'boolean | \\'button\\' | Placement',           desc: '布尔状态、原生 HTML 字段、第三方继承(如 floating-ui Placement)保留原类型。' },
-      ]"
-    />
+    <ApiTable :columns="shapeColumns" :rows="shapeRows" />
 
     <ZTitle :level="2">决策史</ZTitle>
     <ZParagraph>
       props 范式经历过两次大调整,最终落定在「全 chain factory + variant 字面量」组合:
     </ZParagraph>
-    <ApiTable
-      :columns="[
-        { key: 'date',   label: '日期',     mono: true, width: '120px' },
-        { key: 'stage',  label: '决策',     width: '220px' },
-        { key: 'desc',   label: '内容' },
-      ]"
-      :rows="[
-        { date: '2026-05-22', stage: 'Stage 2 cssRoot → css',         desc: '所有简单单根组件的兜底逃生口从 cssRoot 改名为 css(更扁平)。' },
-        { date: '2026-05-22', stage: 'B5 Size5 union(已撤销)',         desc: '尝试 size?: factory | Size5,允许 size=\\'small\\' 简写,但 IDE 补全冲突 + 跟其他 prop 不一致,撤销。' },
-        { date: '2026-05-23', stage: 'Pure chain factory(当前)',       desc: '所有 size/color/spacing/layout 类一律 factory。variant 类保留字面量但内联。文档:.claude/decisions/2026-05-23-prop-shape-pure-factory.md' },
-        { date: '2026-05-24', stage: '数值尺寸用 number(iem 倍数)',     desc: '复杂交互组件(ZButton/ZInput)的 size prop 退化成 number,组件内全 iem 联动。简单组件仍走 factory。' },
-      ]"
-    />
+    <ApiTable :columns="historyColumns" :rows="historyRows" />
 
     <ZTitle :level="2">Type A —— 单属性 carrier factory</ZTitle>
     <ZParagraph>
@@ -193,14 +276,15 @@ const cls = computed(() => icss(theme.value, (s) => {
 <ZInput :size=&quot;1.25&quot; />`"
     />
     <ZParagraph>
-      <strong>简单展示组件</strong>(ZIcon / ZText / ZBadge)还是走 factory——它们只有「一个维度」要控制,
-      用 factory 让用户能直接选 token / 单位 / keyword。
+      <strong>简单展示组件</strong>(ZIcon / ZText / ZBadge)还是走
+      factory——它们只有「一个维度」要控制, 用 factory 让用户能直接选 token / 单位 / keyword。
     </ZParagraph>
 
     <ZTitle :level="2">Type V —— variant 内联字面量 union</ZTitle>
     <ZParagraph>
-      <strong>视觉变体</strong>(filled / outlined / text / ghost / link 等)走字符串字面量。
-      内联到 props 接口,不导出独立 <ZCode code="type ZButtonVariant = ..." /> 别名(避免给用户额外的导入心智)。
+      <strong>视觉变体</strong>(filled / outlined / text / ghost / link 等)走字符串字面量。 内联到
+      props 接口,不导出独立
+      <ZCode code="type ZButtonVariant = ..." /> 别名(避免给用户额外的导入心智)。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -234,27 +318,14 @@ const buttonVariants = defineVariants(theme, {
     />
 
     <ZTitle :level="2">Type N —— 真二态 / 原生 / 第三方</ZTitle>
-    <ZParagraph>
-      下列字段<strong>保留原类型</strong>,不要为了"风格统一"硬塞进 factory:
-    </ZParagraph>
-    <ApiTable
-      :columns="[
-        { key: 'kind',  label: '类别',    mono: true, width: '180px' },
-        { key: 'ex',    label: '例子',    mono: true, width: '260px' },
-        { key: 'desc',  label: '为什么不走 factory' },
-      ]"
-      :rows="[
-        { kind: '真二态 boolean',    ex: 'disabled / checked / loading', desc: '只有 true/false,套 factory 多此一举。' },
-        { kind: '业务字符串 union',  ex: 'trigger: \\'hover\\' | \\'click\\'', desc: '触发行为不是 CSS,跟 chain 无关。' },
-        { kind: '原生 HTML 字段',    ex: 'type: \\'button\\' | \\'submit\\'', desc: '直接透传到 DOM 属性,跟 HTML 规范对齐。' },
-        { kind: '第三方继承类型',    ex: 'placement: Placement(@floating-ui)', desc: '走第三方类型生态,避免重新定义。' },
-      ]"
-    />
+    <ZParagraph> 下列字段<strong>保留原类型</strong>,不要为了"风格统一"硬塞进 factory: </ZParagraph>
+    <ApiTable :columns="typeNColumns" :rows="typeNRows" />
 
     <ZTitle :level="2">主题 token 引用</ZTitle>
     <ZParagraph>
-      所有 chain factory 内,用户都能访问当前 theme 的全部 token。<strong><ZCode code="_" />
-      前缀</strong>表示「这是一个 schema token,不是 CSS keyword」。
+      所有 chain factory 内,用户都能访问当前 theme 的全部 token。<strong
+        ><ZCode code="_" /> 前缀</strong
+      >表示「这是一个 schema token,不是 CSS keyword」。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -316,25 +387,12 @@ const buttonVariants = defineVariants(theme, {
 
     <ZTitle :level="2">禁忌</ZTitle>
     <ZParagraph>下面这些写法<strong>违反范式,必须改</strong>:</ZParagraph>
-    <ApiTable
-      :columns="[
-        { key: 'bad', label: '错误形态', mono: true, width: '320px' },
-        { key: 'good', label: '正确形态', mono: true, width: '320px' },
-      ]"
-      :rows="[
-        { bad: 'justify?: \\'between\\' (配 MAP 翻译表)',         good: 'justify?: factory(Type A)' },
-        { bad: 'size?: \\'small\\' | \\'middle\\' | \\'large\\'(简单组件)', good: 'size?: factory(Type C)' },
-        { bad: 'color?: \\'primary\\' | \\'danger\\'',           good: 'color?: factory(Type A)' },
-        { bad: 'direction?: \\'horizontal\\' | \\'vertical\\'',   good: 'direction?: factory(操作 flexDirection)' },
-        { bad: 'export type ZXxxVariant = ...(独立 alias)',       good: '内联到 props interface(Type V)' },
-        { bad: '组件内 SIZE_MAP: Record<size, css-value>',         good: '直接 factory + chain token access' },
-      ]"
-    />
+    <ApiTable :columns="tabooColumns" :rows="tabooRows" />
 
     <ZTitle :level="2">undefined 显式标注</ZTitle>
     <ZParagraph>
-      所有 factory prop 类型签名<strong>显式加 <ZCode code="| undefined" /></strong>——与 TypeScript 严格选项
-      <ZCode code="exactOptionalPropertyTypes: true" /> 兼容(用户工程开了严格模式时可以传
+      所有 factory prop 类型签名<strong>显式加 <ZCode code="| undefined" /></strong>——与 TypeScript
+      严格选项 <ZCode code="exactOptionalPropertyTypes: true" /> 兼容(用户工程开了严格模式时可以传
       <ZCode code="undefined" /> 等同于不传)。
     </ZParagraph>
     <ZCode
@@ -353,10 +411,10 @@ interface Good {
 
     <ZTitle :level="2">参照实现</ZTitle>
     <ZParagraph>
-      <ZCode code="ZIcon" /> 是 chain factory props 范式的<strong>首个落地</strong>(2026-05-22),
-      4 个外观维度全 carrier factory:<ZCode code="size" /> / <ZCode code="color" /> /
-      <ZCode code="depth" /> / <ZCode code="spin" />,加一个 <ZCode code="css" /> 兜底。组件实现
-      ~150 行,完整覆盖 33 个测试 case,无 const map / 无 cx 拼接。后续 80+ 组件均按此画像。
+      <ZCode code="ZIcon" /> 是 chain factory props 范式的<strong>首个落地</strong>(2026-05-22), 4
+      个外观维度全 carrier factory:<ZCode code="size" /> / <ZCode code="color" /> /
+      <ZCode code="depth" /> / <ZCode code="spin" />,加一个 <ZCode code="css" /> 兜底。组件实现 ~150
+      行,完整覆盖 33 个测试 case,无 const map / 无 cx 拼接。后续 80+ 组件均按此画像。
     </ZParagraph>
   </section>
 </template>

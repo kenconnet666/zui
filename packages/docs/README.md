@@ -89,10 +89,10 @@ import VariantsDemoSource from './ZButton/VariantsDemo.vue?raw'
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '120px' },
-        { key: 'type',    label: '类型',   mono: true, width: '200px' },
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '200px' },
         { key: 'default', label: '默认值', mono: true, width: '120px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="propsRows"
     />
@@ -112,12 +112,12 @@ import VariantsDemoSource from './ZButton/VariantsDemo.vue?raw'
 
 ## API 表标准列
 
-| 表 | 列 | 说明 |
-|---|---|---|
-| Props | `name / type / default / desc` | name/type/default 用 `mono: true` |
-| Events | `name / payload / desc` | name/payload 用 mono |
-| Slots | `name / scope / desc` | 无 scope 时省略 scope 列 |
-| Expose | `name / type / desc` | name/type 用 mono |
+| 表     | 列                             | 说明                              |
+| ------ | ------------------------------ | --------------------------------- |
+| Props  | `name / type / default / desc` | name/type/default 用 `mono: true` |
+| Events | `name / payload / desc`        | name/payload 用 mono              |
+| Slots  | `name / scope / desc`          | 无 scope 时省略 scope 列          |
+| Expose | `name / type / desc`           | name/type 用 mono                 |
 
 ## DemoBlock 用法
 

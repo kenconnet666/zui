@@ -303,7 +303,7 @@ describe('R4 — preflight 全局版与 instance 版共享 single source', () =>
     const inst = createIcssInstance({
       css: () => 'x',
       cx: () => 'x',
-      injectGlobal: (s) => {
+      injectGlobal: s => {
         calls.push(s)
       },
       keyframes: () => 'kf',

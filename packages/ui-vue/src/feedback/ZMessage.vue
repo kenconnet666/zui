@@ -80,7 +80,7 @@ const emit = defineEmits<ZMessageEmits>()
 const theme = useZTheme()
 
 const containerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.fixed
     s.top.iem(1.5)
     s.left.pct(50)
@@ -96,7 +96,7 @@ const containerClass = computed(() =>
 )
 
 const itemClass = (item: ZMessageItem): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._small
@@ -119,26 +119,26 @@ const itemClass = (item: ZMessageItem): string =>
   })
 
 const bodyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._text
   }),
 )
 
 const transitionActiveClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.transitionProperty.all
     s.transitionDuration._small
     s.transitionTimingFunction._default
   }),
 )
 const enterFromClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.opacity._none
     s.transform('translateY(-0.75em)')
   }),
 )
 const leaveToClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.opacity._none
     s.transform('translateY(-0.5em)')
   }),
@@ -163,7 +163,7 @@ onMounted(() => {
 
 // 当 messages 增减时管理 timers
 watch(
-  () => props.messages.map((m) => m.id),
+  () => props.messages.map(m => m.id),
   (newIds, oldIds) => {
     for (const id of oldIds ?? []) {
       if (!newIds.includes(id)) {
@@ -176,7 +176,7 @@ watch(
     }
     for (const id of newIds) {
       if (!timers.has(id)) {
-        const item = props.messages.find((m) => m.id === id)
+        const item = props.messages.find(m => m.id === id)
         if (item) scheduleClose(item)
       }
     }

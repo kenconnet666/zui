@@ -28,7 +28,14 @@ import typography from './typography'
 import type { DocsGroup } from './_common'
 
 export { FILE_BANNER_ZH } from './banner'
-export type { PropertyDocZh, FullPropertyDoc, ExtendsPropertyDoc, KeywordGroup, SyntaxRow, DocsGroup } from './_common'
+export type {
+  PropertyDocZh,
+  FullPropertyDoc,
+  ExtendsPropertyDoc,
+  KeywordGroup,
+  SyntaxRow,
+  DocsGroup,
+} from './_common'
 
 /** 按分组返回所有 docs；generator 用来报"重复 key 在哪两个分组里"的诊断。 */
 export const DOCS_BY_GROUP: Record<string, DocsGroup> = {

@@ -10,11 +10,21 @@ import { BuiltinIcons } from '../gene/icons'
 
 type SemanticType = 'info' | 'success' | 'warning' | 'danger' | 'loading'
 const SEMANTIC_COLOR: Record<SemanticType, (c: Chain<ZuiSchema>['color']) => void> = {
-  info: (c) => { c._info },
-  success: (c) => { c._success },
-  warning: (c) => { c._warning },
-  danger: (c) => { c._danger },
-  loading: (c) => { c._info },
+  info: c => {
+    c._info
+  },
+  success: c => {
+    c._success
+  },
+  warning: c => {
+    c._warning
+  },
+  danger: c => {
+    c._danger
+  },
+  loading: c => {
+    c._info
+  },
 }
 const SEMANTIC_ICON: Record<SemanticType, Component> = {
   info: BuiltinIcons.info,
@@ -81,7 +91,7 @@ export function createNotificationApi(opts: CreateNotificationApiOptions = {}): 
   }
 
   function close(id: ZNotificationItem['id']): void {
-    const idx = items.findIndex((m) => m.id === id)
+    const idx = items.findIndex(m => m.id === id)
     if (idx >= 0) items.splice(idx, 1)
   }
 

@@ -40,7 +40,9 @@ import type {
  * 用 `Properties<string | number, string | number>` 让 length / time 等数值属性同时接受数字
  * （emotion 收到数字会自动加 px / ms）。
  */
-type CssValueOf<K extends keyof csstype.Properties> = NonNullable<csstype.Properties<string | number, string | number>[K]>
+type CssValueOf<K extends keyof csstype.Properties> = NonNullable<
+  csstype.Properties<string | number, string | number>[K]
+>
 
 /**
  * # zui CSS 属性值通用指南（中文）
@@ -432,7 +434,162 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/accent-color
    */
-  accentColor: ColorPropCarrier<CssValueOf<'accentColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  accentColor: ColorPropCarrier<
+    CssValueOf<'accentColor'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
    * flex / grid 容器**交叉轴方向**上**多行内容**之间的对齐方式。**仅在 `flexWrap: wrap/wrapReverse`（多行）或 grid 多行时生效**。
    *
@@ -508,7 +665,24 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/align-content
    */
-  alignContent: PropCarrier<CssValueOf<'alignContent'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | GlobalKw, unknown, never>
+  alignContent: PropCarrier<
+    CssValueOf<'alignContent'>,
+    never,
+    | 'flexStart'
+    | 'flexEnd'
+    | 'center'
+    | 'baseline'
+    | 'stretch'
+    | 'normal'
+    | 'start'
+    | 'end'
+    | 'spaceBetween'
+    | 'spaceAround'
+    | 'spaceEvenly'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * flex / grid 容器**交叉轴方向**上**所有子元素**的对齐方式（flex row 时控制垂直对齐）。
    *
@@ -579,7 +753,21 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/align-items
    */
-  alignItems: PropCarrier<CssValueOf<'alignItems'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | GlobalKw, unknown, never>
+  alignItems: PropCarrier<
+    CssValueOf<'alignItems'>,
+    never,
+    | 'flexStart'
+    | 'flexEnd'
+    | 'center'
+    | 'baseline'
+    | 'stretch'
+    | 'normal'
+    | 'start'
+    | 'end'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * flex / grid **子元素**在交叉轴方向上的对齐方式（覆盖父的 `alignItems`）。可让单个子元素与其他兄弟对齐方式不同。
    *
@@ -650,26 +838,41 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/align-self
    */
-  alignSelf: PropCarrier<CssValueOf<'alignSelf'>, never, 'flexStart' | 'flexEnd' | 'center' | 'baseline' | 'stretch' | 'normal' | 'start' | 'end' | 'auto' | GlobalKw, unknown, never>
+  alignSelf: PropCarrier<
+    CssValueOf<'alignSelf'>,
+    never,
+    | 'flexStart'
+    | 'flexEnd'
+    | 'center'
+    | 'baseline'
+    | 'stretch'
+    | 'normal'
+    | 'start'
+    | 'end'
+    | 'auto'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * **Syntax**: `[ normal | <baseline-position> | <content-distribution> | <overflow-position>? <content-position> ]#`
-     *
-     * **Initial value**: `normal`
-     */
+   * **Syntax**: `[ normal | <baseline-position> | <content-distribution> | <overflow-position>? <content-position> ]#`
+   *
+   * **Initial value**: `normal`
+   */
   alignTracks: PropFn<CssValueOf<'alignTracks'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `baseline | alphabetic | ideographic | middle | central | mathematical | text-before-edge | text-after-edge`
-     *
-     * **Initial value**: `baseline`
-     *
-     * | Chrome | Firefox | Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :-----: | :----: | :-: |
-     * | **1**  |   No    | **5.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/alignment-baseline
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `baseline | alphabetic | ideographic | middle | central | mathematical | text-before-edge | text-after-edge`
+   *
+   * **Initial value**: `baseline`
+   *
+   * | Chrome | Firefox | Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :-----: | :----: | :-: |
+   * | **1**  |   No    | **5.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/alignment-baseline
+   */
   alignmentBaseline: PropFn<CssValueOf<'alignmentBaseline'>>
   /**
    * 给元素**命名为锚点** —— 让其他绝对定位的元素可以**相对此锚点定位**（CSS Anchor Positioning，实验性）。
@@ -731,28 +934,28 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   anchorName: PropCarrier<CssValueOf<'anchorName'>, never, 'none' | GlobalKw, unknown, never>
   /**
-     * **Syntax**: `none | all | <dashed-ident>#`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  |   Firefox   | Safari |  Edge   | IE  |
-     * | :-----: | :---------: | :----: | :-----: | :-: |
-     * | **131** | **preview** | **26** | **131** | No  |
-     */
+   * **Syntax**: `none | all | <dashed-ident>#`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  |   Firefox   | Safari |  Edge   | IE  |
+   * | :-----: | :---------: | :----: | :-----: | :-: |
+   * | **131** | **preview** | **26** | **131** | No  |
+   */
   anchorScope: PropFn<CssValueOf<'anchorScope'>>
   /**
-     * Since July 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<single-animation-composition>#`
-     *
-     * **Initial value**: `replace`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **112** | **115** | **16** | **112** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-composition
-     */
+   * Since July 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `<single-animation-composition>#`
+   *
+   * **Initial value**: `replace`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **112** | **115** | **16** | **112** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-composition
+   */
   animationComposition: PropFn<CssValueOf<'animationComposition'>>
   /**
    * 设置 `@keyframes` 动画**开始前的延迟**。可负值（让动画从中间状态开始）。
@@ -809,7 +1012,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-delay
    */
-  animationDelay: PropCarrier<CssValueOf<'animationDelay'>, DurationTokens<T>, GlobalKw, TimeUnits, never>
+  animationDelay: PropCarrier<
+    CssValueOf<'animationDelay'>,
+    DurationTokens<T>,
+    GlobalKw,
+    TimeUnits,
+    never
+  >
   /**
    * 设置动画**播放方向** —— 正向、反向、交替（来回）。
    *
@@ -865,7 +1074,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-direction
    */
-  animationDirection: PropCarrier<CssValueOf<'animationDirection'>, never, 'normal' | 'reverse' | 'alternate' | 'alternateReverse' | GlobalKw, unknown, never>
+  animationDirection: PropCarrier<
+    CssValueOf<'animationDirection'>,
+    never,
+    'normal' | 'reverse' | 'alternate' | 'alternateReverse' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置 `@keyframes` **动画的持续时间**。0 表示动画立即跳到终态。
    *
@@ -926,7 +1141,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-duration
    */
-  animationDuration: PropCarrier<CssValueOf<'animationDuration'>, DurationTokens<T>, GlobalKw, TimeUnits, never>
+  animationDuration: PropCarrier<
+    CssValueOf<'animationDuration'>,
+    DurationTokens<T>,
+    GlobalKw,
+    TimeUnits,
+    never
+  >
   /**
    * 决定动画**结束后**（以及开始前延迟期间）元素保留**哪个状态** —— 起始 / 终止 / 双向 / 都不保留。
    *
@@ -986,7 +1207,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-fill-mode
    */
-  animationFillMode: PropCarrier<CssValueOf<'animationFillMode'>, never, 'none' | 'forwards' | 'backwards' | 'both' | GlobalKw, unknown, never>
+  animationFillMode: PropCarrier<
+    CssValueOf<'animationFillMode'>,
+    never,
+    'none' | 'forwards' | 'backwards' | 'both' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置动画**循环次数**。可为整数、小数（不完整循环）、或 `infinite`（无限循环）。
    *
@@ -1040,7 +1267,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-iteration-count
    */
-  animationIterationCount: PropCarrier<CssValueOf<'animationIterationCount'>, never, 'infinite' | GlobalKw, unknown, never>
+  animationIterationCount: PropCarrier<
+    CssValueOf<'animationIterationCount'>,
+    never,
+    'infinite' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 指定使用的 `@keyframes` **关键帧动画名称**。多个动画用逗号分隔，同时播放。
    *
@@ -1162,48 +1395,54 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-play-state
    */
-  animationPlayState: PropCarrier<CssValueOf<'animationPlayState'>, never, 'running' | 'paused' | GlobalKw, unknown, never>
+  animationPlayState: PropCarrier<
+    CssValueOf<'animationPlayState'>,
+    never,
+    'running' | 'paused' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ normal | <length-percentage> | <timeline-range-name> <length-percentage>? ]#`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **115** |   No    | **26** | **115** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-range-end
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ normal | <length-percentage> | <timeline-range-name> <length-percentage>? ]#`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **115** |   No    | **26** | **115** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-range-end
+   */
   animationRangeEnd: PropFn<CssValueOf<'animationRangeEnd'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ normal | <length-percentage> | <timeline-range-name> <length-percentage>? ]#`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **115** |   No    | **26** | **115** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-range-start
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ normal | <length-percentage> | <timeline-range-name> <length-percentage>? ]#`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **115** |   No    | **26** | **115** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-range-start
+   */
   animationRangeStart: PropFn<CssValueOf<'animationRangeStart'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `<single-animation-timeline>#`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **115** |   No    | **26** | **115** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-timeline
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `<single-animation-timeline>#`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **115** |   No    | **26** | **115** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-timeline
+   */
   animationTimeline: PropFn<CssValueOf<'animationTimeline'>>
   /**
    * 设置 `@keyframes` 动画的**速率曲线**。规则同 `transitionTimingFunction`，但作用于关键帧动画。
@@ -1275,7 +1514,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-timing-function
    */
-  animationTimingFunction: PropCarrier<CssValueOf<'animationTimingFunction'>, EasingTokens<T>, 'linear' | 'ease' | 'easeIn' | 'easeOut' | 'easeInOut' | 'stepStart' | 'stepEnd' | GlobalKw, unknown, never>
+  animationTimingFunction: PropCarrier<
+    CssValueOf<'animationTimingFunction'>,
+    EasingTokens<T>,
+    'linear' | 'ease' | 'easeIn' | 'easeOut' | 'easeInOut' | 'stepStart' | 'stepEnd' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 控制原生表单控件的**外观渲染** —— 用浏览器默认样式、平台原生样式、或完全去除让 CSS 接管。
    *
@@ -1341,7 +1586,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/appearance
    */
-  appearance: PropCarrier<CssValueOf<'appearance'>, never, 'none' | 'auto' | 'textfield' | 'menulistButton' | GlobalKw, unknown, never>
+  appearance: PropCarrier<
+    CssValueOf<'appearance'>,
+    never,
+    'none' | 'auto' | 'textfield' | 'menulistButton' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置元素的**宽高比**。只设了宽度时浏览器按比例自动算高度（反之亦然），无需手动维护两者同步。
    *
@@ -1431,7 +1682,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/aspect-ratio
    */
-  aspectRatio: PropCarrier<CssValueOf<'aspectRatio'>, AspectRatioTokens<T>, 'auto' | GlobalKw, unknown, never>
+  aspectRatio: PropCarrier<
+    CssValueOf<'aspectRatio'>,
+    AspectRatioTokens<T>,
+    'auto' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 给元素**身后的内容**应用滤镜（毛玻璃、玻璃拟态最常用）。元素本身不变，但**透过它看到的下层**被滤镜处理。
    *
@@ -1503,35 +1760,41 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/backdrop-filter
    */
-  backdropFilter: PropCarrier<CssValueOf<'backdropFilter'>, never, 'none' | GlobalKw, unknown, never>
+  backdropFilter: PropCarrier<
+    CssValueOf<'backdropFilter'>,
+    never,
+    'none' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `visible | hidden`
-     *
-     * **Initial value**: `visible`
-     *
-     * |  Chrome  | Firefox  |  Safari   |  Edge  |   IE   |
-     * | :------: | :------: | :-------: | :----: | :----: |
-     * |  **36**  |  **16**  | **15.4**  | **12** | **10** |
-     * | 12 _-x-_ | 10 _-x-_ | 5.1 _-x-_ |        |        |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/backface-visibility
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `visible | hidden`
+   *
+   * **Initial value**: `visible`
+   *
+   * |  Chrome  | Firefox  |  Safari   |  Edge  |   IE   |
+   * | :------: | :------: | :-------: | :----: | :----: |
+   * |  **36**  |  **16**  | **15.4**  | **12** | **10** |
+   * | 12 _-x-_ | 10 _-x-_ | 5.1 _-x-_ |        |        |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/backface-visibility
+   */
   backfaceVisibility: PropFn<CssValueOf<'backfaceVisibility'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<attachment>#`
-     *
-     * **Initial value**: `scroll`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **4** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-attachment
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<attachment>#`
+   *
+   * **Initial value**: `scroll`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **4** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-attachment
+   */
   backgroundAttachment: PropFn<CssValueOf<'backgroundAttachment'>>
   /**
    * 决定**多重背景**之间（或 background-image 与 background-color 之间）的**混合模式**。可叠加滤镜般的色彩效果。
@@ -1602,7 +1865,31 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-blend-mode
    */
-  backgroundBlendMode: PropCarrier<CssValueOf<'backgroundBlendMode'>, never, 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'colorDodge' | 'colorBurn' | 'hardLight' | 'softLight' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity' | 'plusDarker' | 'plusLighter' | GlobalKw, unknown, never>
+  backgroundBlendMode: PropCarrier<
+    CssValueOf<'backgroundBlendMode'>,
+    never,
+    | 'normal'
+    | 'multiply'
+    | 'screen'
+    | 'overlay'
+    | 'darken'
+    | 'lighten'
+    | 'colorDodge'
+    | 'colorBurn'
+    | 'hardLight'
+    | 'softLight'
+    | 'difference'
+    | 'exclusion'
+    | 'hue'
+    | 'saturation'
+    | 'color'
+    | 'luminosity'
+    | 'plusDarker'
+    | 'plusLighter'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 决定背景（image 和 color）**绘制范围** —— border 内 / padding 内 / content 内 / 仅文字。
    *
@@ -1659,7 +1946,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-clip
    */
-  backgroundClip: PropCarrier<CssValueOf<'backgroundClip'>, never, 'borderBox' | 'paddingBox' | 'contentBox' | 'text' | GlobalKw, unknown, never>
+  backgroundClip: PropCarrier<
+    CssValueOf<'backgroundClip'>,
+    never,
+    'borderBox' | 'paddingBox' | 'contentBox' | 'text' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置元素的**背景色**。叠在 `background-image` 之下，常用作底色。
    *
@@ -1787,62 +2080,217 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-color
    */
-  backgroundColor: ColorPropCarrier<CssValueOf<'backgroundColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  backgroundColor: ColorPropCarrier<
+    CssValueOf<'backgroundColor'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<bg-image>#`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **4** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-image
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<bg-image>#`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **4** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-image
+   */
   backgroundImage: PropFn<CssValueOf<'backgroundImage'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<visual-box>#`
-     *
-     * **Initial value**: `padding-box`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **4**  | **3**  | **12** | **9** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-origin
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<visual-box>#`
+   *
+   * **Initial value**: `padding-box`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **4**  | **3**  | **12** | **9** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-origin
+   */
   backgroundOrigin: PropFn<CssValueOf<'backgroundOrigin'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
-     *
-     * **Syntax**: `[ center | [ [ left | right | x-start | x-end ]? <length-percentage>? ]! ]#`
-     *
-     * **Initial value**: `0%`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  | **49**  | **1**  | **12** | **6** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-position-x
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
+   *
+   * **Syntax**: `[ center | [ [ left | right | x-start | x-end ]? <length-percentage>? ]! ]#`
+   *
+   * **Initial value**: `0%`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  | **49**  | **1**  | **12** | **6** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-position-x
+   */
   backgroundPositionX: PropFn<CssValueOf<'backgroundPositionX'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
-     *
-     * **Syntax**: `[ center | [ [ top | bottom | y-start | y-end ]? <length-percentage>? ]! ]#`
-     *
-     * **Initial value**: `0%`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  | **49**  | **1**  | **12** | **6** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-position-y
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
+   *
+   * **Syntax**: `[ center | [ [ top | bottom | y-start | y-end ]? <length-percentage>? ]! ]#`
+   *
+   * **Initial value**: `0%`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  | **49**  | **1**  | **12** | **6** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-position-y
+   */
   backgroundPositionY: PropFn<CssValueOf<'backgroundPositionY'>>
   /**
    * 决定 `background-image` 在容器中**是否平铺**、如何平铺。
@@ -1908,7 +2356,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-repeat
    */
-  backgroundRepeat: PropCarrier<CssValueOf<'backgroundRepeat'>, never, 'repeat' | 'noRepeat' | 'repeatX' | 'repeatY' | 'round' | 'space' | GlobalKw, unknown, never>
+  backgroundRepeat: PropCarrier<
+    CssValueOf<'backgroundRepeat'>,
+    never,
+    'repeat' | 'noRepeat' | 'repeatX' | 'repeatY' | 'round' | 'space' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置 `background-image` 的**显示尺寸** —— 拉伸 / 包含 / 覆盖 / 平铺时的图片大小。
    *
@@ -2008,115 +2462,121 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-size
    */
-  backgroundSize: PropCarrier<CssValueOf<'backgroundSize'>, never, 'auto' | 'cover' | 'contain' | GlobalKw, LengthUnits, never>
+  backgroundSize: PropCarrier<
+    CssValueOf<'backgroundSize'>,
+    never,
+    'auto' | 'cover' | 'contain' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * **Syntax**: `<length-percentage> | sub | super | baseline`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **1**  |   No    | **4**  | **79** | No  |
-     */
+   * **Syntax**: `<length-percentage> | sub | super | baseline`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **1**  |   No    | **4**  | **79** | No  |
+   */
   baselineShift: PropFn<CssValueOf<'baselineShift'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'width'>`
-     *
-     * **Initial value**: `auto`
-     *
-     * |            Chrome            | Firefox |             Safari             |  Edge  | IE  |
-     * | :--------------------------: | :-----: | :----------------------------: | :----: | :-: |
-     * |            **57**            | **41**  |            **12.1**            | **79** | No  |
-     * | 8 _(-webkit-logical-height)_ |         | 5.1 _(-webkit-logical-height)_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/block-size
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'width'>`
+   *
+   * **Initial value**: `auto`
+   *
+   * |            Chrome            | Firefox |             Safari             |  Edge  | IE  |
+   * | :--------------------------: | :-----: | :----------------------------: | :----: | :-: |
+   * |            **57**            | **41**  |            **12.1**            | **79** | No  |
+   * | 8 _(-webkit-logical-height)_ |         | 5.1 _(-webkit-logical-height)_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/block-size
+   */
   blockSize: PropFn<CssValueOf<'blockSize'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-color'>`
-     *
-     * **Initial value**: `currentcolor`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end-color
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-color'>`
+   *
+   * **Initial value**: `currentcolor`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end-color
+   */
   borderBlockEndColor: PropFn<CssValueOf<'borderBlockEndColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-style'>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end-style
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-style'>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end-style
+   */
   borderBlockEndStyle: PropFn<CssValueOf<'borderBlockEndStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-width'>`
-     *
-     * **Initial value**: `medium`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end-width
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-width'>`
+   *
+   * **Initial value**: `medium`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end-width
+   */
   borderBlockEndWidth: PropFn<CssValueOf<'borderBlockEndWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-color'>`
-     *
-     * **Initial value**: `currentcolor`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start-color
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-color'>`
+   *
+   * **Initial value**: `currentcolor`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start-color
+   */
   borderBlockStartColor: PropFn<CssValueOf<'borderBlockStartColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-style'>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start-style
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-style'>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start-style
+   */
   borderBlockStartStyle: PropFn<CssValueOf<'borderBlockStartStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-width'>`
-     *
-     * **Initial value**: `medium`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start-width
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-width'>`
+   *
+   * **Initial value**: `medium`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start-width
+   */
   borderBlockStartWidth: PropFn<CssValueOf<'borderBlockStartWidth'>>
   /**
    * 设置元素**下边框**的颜色。其他规则同 [`borderColor`]。
@@ -2254,7 +2714,162 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-color
    */
-  borderBottomColor: ColorPropCarrier<CssValueOf<'borderBottomColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  borderBottomColor: ColorPropCarrier<
+    CssValueOf<'borderBottomColor'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
    * 设置元素**左下角**的圆角半径。
    *
@@ -2349,7 +2964,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-left-radius
    */
-  borderBottomLeftRadius: PropCarrier<CssValueOf<'borderBottomLeftRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits, never>
+  borderBottomLeftRadius: PropCarrier<
+    CssValueOf<'borderBottomLeftRadius'>,
+    RadiusTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置元素**右下角**的圆角半径。
    *
@@ -2444,7 +3065,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-right-radius
    */
-  borderBottomRightRadius: PropCarrier<CssValueOf<'borderBottomRightRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits, never>
+  borderBottomRightRadius: PropCarrier<
+    CssValueOf<'borderBottomRightRadius'>,
+    RadiusTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置元素**下边框**的样式。规则同 `borderStyle`。
    *
@@ -2518,7 +3145,23 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-style
    */
-  borderBottomStyle: PropCarrier<CssValueOf<'borderBottomStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  borderBottomStyle: PropCarrier<
+    CssValueOf<'borderBottomStyle'>,
+    never,
+    | 'none'
+    | 'hidden'
+    | 'dotted'
+    | 'dashed'
+    | 'solid'
+    | 'double'
+    | 'groove'
+    | 'ridge'
+    | 'inset'
+    | 'outset'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置元素**下边框**的宽度。规则同 `borderWidth`。
    *
@@ -2607,7 +3250,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom-width
    */
-  borderBottomWidth: PropCarrier<CssValueOf<'borderBottomWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
+  borderBottomWidth: PropCarrier<
+    CssValueOf<'borderBottomWidth'>,
+    BordersTokens<T>,
+    'thin' | 'medium' | 'thick' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 决定 `<table>` 中相邻单元格**边框合并还是分离**。表格样式的核心开关。
    *
@@ -2664,193 +3313,199 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-collapse
    */
-  borderCollapse: PropCarrier<CssValueOf<'borderCollapse'>, never, 'collapse' | 'separate' | GlobalKw, unknown, never>
+  borderCollapse: PropCarrier<
+    CssValueOf<'borderCollapse'>,
+    never,
+    'collapse' | 'separate' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `<'border-top-left-radius'>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **89** | **66**  | **15** | **89** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-end-end-radius
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `<'border-top-left-radius'>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **89** | **66**  | **15** | **89** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-end-end-radius
+   */
   borderEndEndRadius: PropFn<CssValueOf<'borderEndEndRadius'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `<'border-top-left-radius'>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **89** | **66**  | **15** | **89** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-end-start-radius
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `<'border-top-left-radius'>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **89** | **66**  | **15** | **89** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-end-start-radius
+   */
   borderEndStartRadius: PropFn<CssValueOf<'borderEndStartRadius'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `[ <length [0,∞]> | <number [0,∞]> ]{1,4}  `
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |   IE   |
-     * | :----: | :-----: | :----: | :----: | :----: |
-     * | **15** | **15**  | **6**  | **12** | **11** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-outset
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `[ <length [0,∞]> | <number [0,∞]> ]{1,4}  `
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |   IE   |
+   * | :----: | :-----: | :----: | :----: | :----: |
+   * | **15** | **15**  | **6**  | **12** | **11** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-outset
+   */
   borderImageOutset: PropFn<CssValueOf<'borderImageOutset'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2016.
-     *
-     * **Syntax**: `[ stretch | repeat | round | space ]{1,2}`
-     *
-     * **Initial value**: `stretch`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |   IE   |
-     * | :----: | :-----: | :----: | :----: | :----: |
-     * | **15** | **15**  | **6**  | **12** | **11** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-repeat
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2016.
+   *
+   * **Syntax**: `[ stretch | repeat | round | space ]{1,2}`
+   *
+   * **Initial value**: `stretch`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |   IE   |
+   * | :----: | :-----: | :----: | :----: | :----: |
+   * | **15** | **15**  | **6**  | **12** | **11** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-repeat
+   */
   borderImageRepeat: PropFn<CssValueOf<'borderImageRepeat'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `[ <number [0,∞]> | <percentage [0,∞]> ]{1,4}  && fill?`
-     *
-     * **Initial value**: `100%`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |   IE   |
-     * | :----: | :-----: | :----: | :----: | :----: |
-     * | **15** | **15**  | **6**  | **12** | **11** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-slice
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `[ <number [0,∞]> | <percentage [0,∞]> ]{1,4}  && fill?`
+   *
+   * **Initial value**: `100%`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |   IE   |
+   * | :----: | :-----: | :----: | :----: | :----: |
+   * | **15** | **15**  | **6**  | **12** | **11** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-slice
+   */
   borderImageSlice: PropFn<CssValueOf<'borderImageSlice'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `none | <image>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |   IE   |
-     * | :----: | :-----: | :----: | :----: | :----: |
-     * | **15** | **15**  | **6**  | **12** | **11** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-source
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `none | <image>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |   IE   |
+   * | :----: | :-----: | :----: | :----: | :----: |
+   * | **15** | **15**  | **6**  | **12** | **11** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-source
+   */
   borderImageSource: PropFn<CssValueOf<'borderImageSource'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `[ <length-percentage [0,∞]> | <number [0,∞]> | auto ]{1,4}`
-     *
-     * **Initial value**: `1`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |   IE   |
-     * | :----: | :-----: | :----: | :----: | :----: |
-     * | **16** | **13**  | **6**  | **12** | **11** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-width
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `[ <length-percentage [0,∞]> | <number [0,∞]> | auto ]{1,4}`
+   *
+   * **Initial value**: `1`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |   IE   |
+   * | :----: | :-----: | :----: | :----: | :----: |
+   * | **16** | **13**  | **6**  | **12** | **11** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image-width
+   */
   borderImageWidth: PropFn<CssValueOf<'borderImageWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-color'>`
-     *
-     * **Initial value**: `currentcolor`
-     *
-     * | Chrome |           Firefox           |  Safari  |  Edge  | IE  |
-     * | :----: | :-------------------------: | :------: | :----: | :-: |
-     * | **69** |           **41**            | **12.1** | **79** | No  |
-     * |        | 3 _(-moz-border-end-color)_ |          |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end-color
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-color'>`
+   *
+   * **Initial value**: `currentcolor`
+   *
+   * | Chrome |           Firefox           |  Safari  |  Edge  | IE  |
+   * | :----: | :-------------------------: | :------: | :----: | :-: |
+   * | **69** |           **41**            | **12.1** | **79** | No  |
+   * |        | 3 _(-moz-border-end-color)_ |          |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end-color
+   */
   borderInlineEndColor: PropFn<CssValueOf<'borderInlineEndColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-style'>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome |           Firefox           |  Safari  |  Edge  | IE  |
-     * | :----: | :-------------------------: | :------: | :----: | :-: |
-     * | **69** |           **41**            | **12.1** | **79** | No  |
-     * |        | 3 _(-moz-border-end-style)_ |          |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end-style
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-style'>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome |           Firefox           |  Safari  |  Edge  | IE  |
+   * | :----: | :-------------------------: | :------: | :----: | :-: |
+   * | **69** |           **41**            | **12.1** | **79** | No  |
+   * |        | 3 _(-moz-border-end-style)_ |          |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end-style
+   */
   borderInlineEndStyle: PropFn<CssValueOf<'borderInlineEndStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-width'>`
-     *
-     * **Initial value**: `medium`
-     *
-     * | Chrome |           Firefox           |  Safari  |  Edge  | IE  |
-     * | :----: | :-------------------------: | :------: | :----: | :-: |
-     * | **69** |           **41**            | **12.1** | **79** | No  |
-     * |        | 3 _(-moz-border-end-width)_ |          |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end-width
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-width'>`
+   *
+   * **Initial value**: `medium`
+   *
+   * | Chrome |           Firefox           |  Safari  |  Edge  | IE  |
+   * | :----: | :-------------------------: | :------: | :----: | :-: |
+   * | **69** |           **41**            | **12.1** | **79** | No  |
+   * |        | 3 _(-moz-border-end-width)_ |          |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end-width
+   */
   borderInlineEndWidth: PropFn<CssValueOf<'borderInlineEndWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-color'>`
-     *
-     * **Initial value**: `currentcolor`
-     *
-     * | Chrome |            Firefox            |  Safari  |  Edge  | IE  |
-     * | :----: | :---------------------------: | :------: | :----: | :-: |
-     * | **69** |            **41**             | **12.1** | **79** | No  |
-     * |        | 3 _(-moz-border-start-color)_ |          |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start-color
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-color'>`
+   *
+   * **Initial value**: `currentcolor`
+   *
+   * | Chrome |            Firefox            |  Safari  |  Edge  | IE  |
+   * | :----: | :---------------------------: | :------: | :----: | :-: |
+   * | **69** |            **41**             | **12.1** | **79** | No  |
+   * |        | 3 _(-moz-border-start-color)_ |          |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start-color
+   */
   borderInlineStartColor: PropFn<CssValueOf<'borderInlineStartColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-style'>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome |            Firefox            |  Safari  |  Edge  | IE  |
-     * | :----: | :---------------------------: | :------: | :----: | :-: |
-     * | **69** |            **41**             | **12.1** | **79** | No  |
-     * |        | 3 _(-moz-border-start-style)_ |          |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start-style
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-style'>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome |            Firefox            |  Safari  |  Edge  | IE  |
+   * | :----: | :---------------------------: | :------: | :----: | :-: |
+   * | **69** |            **41**             | **12.1** | **79** | No  |
+   * |        | 3 _(-moz-border-start-style)_ |          |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start-style
+   */
   borderInlineStartStyle: PropFn<CssValueOf<'borderInlineStartStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-width'>`
-     *
-     * **Initial value**: `medium`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start-width
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-width'>`
+   *
+   * **Initial value**: `medium`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start-width
+   */
   borderInlineStartWidth: PropFn<CssValueOf<'borderInlineStartWidth'>>
   /**
    * 设置元素**左边框**的颜色。其他规则同 [`borderColor`]。
@@ -2988,7 +3643,162 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left-color
    */
-  borderLeftColor: ColorPropCarrier<CssValueOf<'borderLeftColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  borderLeftColor: ColorPropCarrier<
+    CssValueOf<'borderLeftColor'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
    * 设置元素**左边框**的样式。规则同 `borderStyle`。
    *
@@ -3062,7 +3872,23 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left-style
    */
-  borderLeftStyle: PropCarrier<CssValueOf<'borderLeftStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  borderLeftStyle: PropCarrier<
+    CssValueOf<'borderLeftStyle'>,
+    never,
+    | 'none'
+    | 'hidden'
+    | 'dotted'
+    | 'dashed'
+    | 'solid'
+    | 'double'
+    | 'groove'
+    | 'ridge'
+    | 'inset'
+    | 'outset'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置元素**左边框**的宽度。规则同 `borderWidth`。
    *
@@ -3151,7 +3977,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left-width
    */
-  borderLeftWidth: PropCarrier<CssValueOf<'borderLeftWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
+  borderLeftWidth: PropCarrier<
+    CssValueOf<'borderLeftWidth'>,
+    BordersTokens<T>,
+    'thin' | 'medium' | 'thick' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置元素**右边框**的颜色。其他规则同 [`borderColor`]。
    *
@@ -3288,7 +4120,162 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right-color
    */
-  borderRightColor: ColorPropCarrier<CssValueOf<'borderRightColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  borderRightColor: ColorPropCarrier<
+    CssValueOf<'borderRightColor'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
    * 设置元素**右边框**的样式。规则同 `borderStyle`。
    *
@@ -3362,7 +4349,23 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right-style
    */
-  borderRightStyle: PropCarrier<CssValueOf<'borderRightStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  borderRightStyle: PropCarrier<
+    CssValueOf<'borderRightStyle'>,
+    never,
+    | 'none'
+    | 'hidden'
+    | 'dotted'
+    | 'dashed'
+    | 'solid'
+    | 'double'
+    | 'groove'
+    | 'ridge'
+    | 'inset'
+    | 'outset'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置元素**右边框**的宽度。规则同 `borderWidth`。
    *
@@ -3451,7 +4454,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right-width
    */
-  borderRightWidth: PropCarrier<CssValueOf<'borderRightWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
+  borderRightWidth: PropCarrier<
+    CssValueOf<'borderRightWidth'>,
+    BordersTokens<T>,
+    'thin' | 'medium' | 'thick' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置 `<table>` 中相邻单元格**边框之间的距离**。仅在 `borderCollapse: separate` 时生效。
    *
@@ -3525,34 +4534,40 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-spacing
    */
-  borderSpacing: PropCarrier<CssValueOf<'borderSpacing'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  borderSpacing: PropCarrier<
+    CssValueOf<'borderSpacing'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `<'border-top-left-radius'>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **89** | **66**  | **15** | **89** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-start-end-radius
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `<'border-top-left-radius'>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **89** | **66**  | **15** | **89** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-start-end-radius
+   */
   borderStartEndRadius: PropFn<CssValueOf<'borderStartEndRadius'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `<'border-top-left-radius'>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **89** | **66**  | **15** | **89** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-start-start-radius
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `<'border-top-left-radius'>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **89** | **66**  | **15** | **89** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-start-start-radius
+   */
   borderStartStartRadius: PropFn<CssValueOf<'borderStartStartRadius'>>
   /**
    * 设置元素**上边框**的颜色。其他规则同 [`borderColor`]。
@@ -3690,7 +4705,162 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-color
    */
-  borderTopColor: ColorPropCarrier<CssValueOf<'borderTopColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  borderTopColor: ColorPropCarrier<
+    CssValueOf<'borderTopColor'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
    * 设置元素**左上角**的圆角半径。可用 2 个值指定该角的横/纵半径（椭圆角）。
    *
@@ -3785,7 +4955,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-left-radius
    */
-  borderTopLeftRadius: PropCarrier<CssValueOf<'borderTopLeftRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits, never>
+  borderTopLeftRadius: PropCarrier<
+    CssValueOf<'borderTopLeftRadius'>,
+    RadiusTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置元素**右上角**的圆角半径。
    *
@@ -3880,7 +5056,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-right-radius
    */
-  borderTopRightRadius: PropCarrier<CssValueOf<'borderTopRightRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits, never>
+  borderTopRightRadius: PropCarrier<
+    CssValueOf<'borderTopRightRadius'>,
+    RadiusTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置元素**上边框**的样式。规则同 `borderStyle`。
    *
@@ -3954,7 +5136,23 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-style
    */
-  borderTopStyle: PropCarrier<CssValueOf<'borderTopStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  borderTopStyle: PropCarrier<
+    CssValueOf<'borderTopStyle'>,
+    never,
+    | 'none'
+    | 'hidden'
+    | 'dotted'
+    | 'dashed'
+    | 'solid'
+    | 'double'
+    | 'groove'
+    | 'ridge'
+    | 'inset'
+    | 'outset'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置元素**上边框**的宽度。规则同 `borderWidth`。
    *
@@ -4043,7 +5241,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top-width
    */
-  borderTopWidth: PropCarrier<CssValueOf<'borderTopWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
+  borderTopWidth: PropCarrier<
+    CssValueOf<'borderTopWidth'>,
+    BordersTokens<T>,
+    'thin' | 'medium' | 'thick' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置定位元素距**底部**的偏移量。正值向上移，负值向下移。**只在 `position` 非 `static` 时生效**。其他规则同 [`inset`]。
    *
@@ -4204,7 +5408,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/box-decoration-break
    */
-  boxDecorationBreak: PropCarrier<CssValueOf<'boxDecorationBreak'>, never, 'slice' | 'clone' | GlobalKw, unknown, never>
+  boxDecorationBreak: PropCarrier<
+    CssValueOf<'boxDecorationBreak'>,
+    never,
+    'slice' | 'clone' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 给元素添加**阴影**。可叠加多组（逗号分隔），支持外/内阴影。CSS 中最常用的视觉增强属性。
    *
@@ -4296,7 +5506,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/box-shadow
    */
-  boxShadow: PropCarrier<CssValueOf<'boxShadow'>, ShadowTokens<T>, 'none' | GlobalKw, unknown, never>
+  boxShadow: PropCarrier<
+    CssValueOf<'boxShadow'>,
+    ShadowTokens<T>,
+    'none' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 决定元素的 `width` / `height` **是否包含** `padding` 和 `border`。CSS 历史上最经典的"踩坑点"。
    *
@@ -4379,7 +5595,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/box-sizing
    */
-  boxSizing: PropCarrier<CssValueOf<'boxSizing'>, never, 'borderBox' | 'contentBox' | GlobalKw, unknown, never>
+  boxSizing: PropCarrier<
+    CssValueOf<'boxSizing'>,
+    never,
+    'borderBox' | 'contentBox' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 控制元素**后**是否强制分页 / 分栏。规则同 `breakBefore`。
    *
@@ -4463,7 +5685,27 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/break-after
    */
-  breakAfter: PropCarrier<CssValueOf<'breakAfter'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'left' | 'right' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
+  breakAfter: PropCarrier<
+    CssValueOf<'breakAfter'>,
+    never,
+    | 'auto'
+    | 'avoid'
+    | 'always'
+    | 'all'
+    | 'avoidPage'
+    | 'page'
+    | 'left'
+    | 'right'
+    | 'recto'
+    | 'verso'
+    | 'avoidColumn'
+    | 'column'
+    | 'avoidRegion'
+    | 'region'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 控制元素**前**是否**强制分页 / 分栏 / 分区域**（打印分页 / 多栏布局换栏）。
    *
@@ -4547,7 +5789,27 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/break-before
    */
-  breakBefore: PropCarrier<CssValueOf<'breakBefore'>, never, 'auto' | 'avoid' | 'always' | 'all' | 'avoidPage' | 'page' | 'left' | 'right' | 'recto' | 'verso' | 'avoidColumn' | 'column' | 'avoidRegion' | 'region' | GlobalKw, unknown, never>
+  breakBefore: PropCarrier<
+    CssValueOf<'breakBefore'>,
+    never,
+    | 'auto'
+    | 'avoid'
+    | 'always'
+    | 'all'
+    | 'avoidPage'
+    | 'page'
+    | 'left'
+    | 'right'
+    | 'recto'
+    | 'verso'
+    | 'avoidColumn'
+    | 'column'
+    | 'avoidRegion'
+    | 'region'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 控制元素**内部**是否允许分页 / 分栏。常用于让卡片 / 表格行**不被打印分页拆断**。
    *
@@ -4592,7 +5854,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/break-inside
    */
-  breakInside: PropCarrier<CssValueOf<'breakInside'>, never, 'auto' | 'avoid' | 'avoidPage' | 'avoidColumn' | 'avoidRegion' | GlobalKw, unknown, never>
+  breakInside: PropCarrier<
+    CssValueOf<'breakInside'>,
+    never,
+    'auto' | 'avoid' | 'avoidPage' | 'avoidColumn' | 'avoidRegion' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 决定 `<caption>` 元素（表格标题）**显示在表格上方还是下方**。
    *
@@ -4638,7 +5906,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/caption-side
    */
-  captionSide: PropCarrier<CssValueOf<'captionSide'>, never, 'top' | 'bottom' | 'blockStart' | 'blockEnd' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
+  captionSide: PropCarrier<
+    CssValueOf<'captionSide'>,
+    never,
+    'top' | 'bottom' | 'blockStart' | 'blockEnd' | 'inlineStart' | 'inlineEnd' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置**文本输入光标**（caret）的颜色 —— `<input>` / `<textarea>` / `contenteditable` 元素聚焦时的闪烁竖线。
    *
@@ -4777,18 +6051,173 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/caret-color
    */
-  caretColor: ColorPropCarrier<CssValueOf<'caretColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  caretColor: ColorPropCarrier<
+    CssValueOf<'caretColor'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
-     * **Syntax**: `auto | bar | block | underscore`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari | Edge | IE  |
-     * | :----: | :-----: | :----: | :--: | :-: |
-     * |   No   |   No    |   No   |  No  | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/caret-shape
-     */
+   * **Syntax**: `auto | bar | block | underscore`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari | Edge | IE  |
+   * | :----: | :-----: | :----: | :--: | :-: |
+   * |   No   |   No    |   No   |  No  | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/caret-shape
+   */
   caretShape: PropFn<CssValueOf<'caretShape'>>
   /**
    * 让元素**不与浮动元素并排** —— 在它之前的浮动元素结束之后才开始布局。配合 `float` 使用。
@@ -4851,7 +6280,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/clear
    */
-  clear: PropCarrier<CssValueOf<'clear'>, never, 'left' | 'right' | 'none' | 'both' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
+  clear: PropCarrier<
+    CssValueOf<'clear'>,
+    never,
+    'left' | 'right' | 'none' | 'both' | 'inlineStart' | 'inlineEnd' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * **几何裁剪**:把元素显示区裁成任意形状/路径。与 mask 区别 —— clip-path 是**硬边裁切**(0/1),mask 是**alpha 渐变**。
    *
@@ -4929,18 +6364,18 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   clipPath: PropFn<CssValueOf<'clipPath'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `nonzero | evenodd`
-     *
-     * **Initial value**: `nonzero`
-     *
-     * | Chrome  | Firefox | Safari |  Edge  | IE  |
-     * | :-----: | :-----: | :----: | :----: | :-: |
-     * | **≤15** | **3.5** | **≤5** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/clip-rule
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `nonzero | evenodd`
+   *
+   * **Initial value**: `nonzero`
+   *
+   * | Chrome  | Firefox | Safari |  Edge  | IE  |
+   * | :-----: | :-----: | :----: | :----: | :-: |
+   * | **≤15** | **3.5** | **≤5** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/clip-rule
+   */
   clipRule: PropFn<CssValueOf<'clipRule'>>
   /**
    * 设置元素的**前景色** —— 文字色，并作为 `currentColor` 源被 `border-color` / `outline-color` / svg `fill` / `caret-color` 等在未显式设置时引用。
@@ -5076,35 +6511,190 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/color
    */
-  color: ColorPropCarrier<CssValueOf<'color'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  color: ColorPropCarrier<
+    CssValueOf<'color'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
-     * Since May 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `economy | exact`
-     *
-     * **Initial value**: `economy`
-     *
-     * |  Chrome  |       Firefox       |  Safari  |   Edge   | IE  |
-     * | :------: | :-----------------: | :------: | :------: | :-: |
-     * | **136**  |       **97**        | **15.4** | **136**  | No  |
-     * | 17 _-x-_ | 48 _(color-adjust)_ | 6 _-x-_  | 79 _-x-_ |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/print-color-adjust
-     */
+   * Since May 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `economy | exact`
+   *
+   * **Initial value**: `economy`
+   *
+   * |  Chrome  |       Firefox       |  Safari  |   Edge   | IE  |
+   * | :------: | :-----------------: | :------: | :------: | :-: |
+   * | **136**  |       **97**        | **15.4** | **136**  | No  |
+   * | 17 _-x-_ | 48 _(color-adjust)_ | 6 _-x-_  | 79 _-x-_ |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/print-color-adjust
+   */
   colorAdjust: PropFn<CssValueOf<'colorAdjust'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `auto | sRGB | linearRGB`
-     *
-     * **Initial value**: `linearRGB`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **1**  |  **3**  | **3**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/color-interpolation-filters
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `auto | sRGB | linearRGB`
+   *
+   * **Initial value**: `linearRGB`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **1**  |  **3**  | **3**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/color-interpolation-filters
+   */
   colorInterpolationFilters: PropFn<CssValueOf<'colorInterpolationFilters'>>
   /**
    * 告诉浏览器元素支持**哪种配色模式**（light / dark） —— 让原生表单 / 滚动条 / 系统色等自动适配。
@@ -5166,7 +6756,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/color-scheme
    */
-  colorScheme: PropCarrier<CssValueOf<'colorScheme'>, never, 'normal' | 'light' | 'dark' | 'lightDark' | 'only' | GlobalKw, unknown, never>
+  colorScheme: PropCarrier<
+    CssValueOf<'colorScheme'>,
+    never,
+    'normal' | 'light' | 'dark' | 'lightDark' | 'only' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 指定**栏数**（多栏布局的简单方式）。
    *
@@ -5253,7 +6849,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-fill
    */
-  columnFill: PropCarrier<CssValueOf<'columnFill'>, never, 'auto' | 'balance' | 'balanceAll' | GlobalKw, unknown, never>
+  columnFill: PropCarrier<
+    CssValueOf<'columnFill'>,
+    never,
+    'auto' | 'balance' | 'balanceAll' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 仅设置**列间距**（水平方向）。可单独覆盖 `gap` 简写的列间距值。
    *
@@ -5347,7 +6949,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-gap
    */
-  columnGap: PropCarrier<CssValueOf<'columnGap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits, never>
+  columnGap: PropCarrier<
+    CssValueOf<'columnGap'>,
+    SpacingTokens<T>,
+    'normal' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置**多栏布局**（`column-count` / `columns`）中**栏间分隔线**的颜色。类似栏间的 border。
    *
@@ -5481,7 +7089,162 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule-color
    */
-  columnRuleColor: ColorPropCarrier<CssValueOf<'columnRuleColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  columnRuleColor: ColorPropCarrier<
+    CssValueOf<'columnRuleColor'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
    * 设置**多栏布局**中**栏间分隔线**的样式。规则同 `borderStyle`。⚠️ 必须设非 `none` 才显示。
    *
@@ -5556,7 +7319,23 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule-style
    */
-  columnRuleStyle: PropCarrier<CssValueOf<'columnRuleStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  columnRuleStyle: PropCarrier<
+    CssValueOf<'columnRuleStyle'>,
+    never,
+    | 'none'
+    | 'hidden'
+    | 'dotted'
+    | 'dashed'
+    | 'solid'
+    | 'double'
+    | 'groove'
+    | 'ridge'
+    | 'inset'
+    | 'outset'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置**多栏布局**（`columns` / `columnCount`）中**栏间分隔线**的宽度。规则同 `borderWidth`。
    *
@@ -5646,7 +7425,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule-width
    */
-  columnRuleWidth: PropCarrier<CssValueOf<'columnRuleWidth'>, BordersTokens<T>, GlobalKw, LengthUnits, never>
+  columnRuleWidth: PropCarrier<
+    CssValueOf<'columnRuleWidth'>,
+    BordersTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 让元素**跨越所有栏**（多栏内容中的标题 / 横幅常用）。
    *
@@ -5698,7 +7483,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-span
    */
-  columnSpan: PropCarrier<CssValueOf<'columnSpan'>, never, 'none' | 'all' | GlobalKw, unknown, never>
+  columnSpan: PropCarrier<
+    CssValueOf<'columnSpan'>,
+    never,
+    'none' | 'all' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 指定**每栏的理想宽度**（栏数由容器宽度自动算）。
    *
@@ -6359,7 +8150,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/counter-increment
    */
-  counterIncrement: PropCarrier<CssValueOf<'counterIncrement'>, never, 'none' | GlobalKw, unknown, never>
+  counterIncrement: PropCarrier<
+    CssValueOf<'counterIncrement'>,
+    never,
+    'none' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * **重置 CSS 计数器**到指定值（默认 0）。配合 `content: counter(...)` 实现自定义编号。
    *
@@ -6568,48 +8365,90 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/cursor
    */
-  cursor: PropCarrier<CssValueOf<'cursor'>, CursorTokens<T>, 'auto' | 'default' | 'none' | 'pointer' | 'text' | 'verticalText' | 'wait' | 'progress' | 'help' | 'contextMenu' | 'cell' | 'crosshair' | 'move' | 'grab' | 'grabbing' | 'alias' | 'copy' | 'notAllowed' | 'noDrop' | 'allScroll' | 'zoomIn' | 'zoomOut' | 'colResize' | 'rowResize' | 'eResize' | 'nResize' | 'sResize' | 'wResize' | 'neResize' | 'nwResize' | 'seResize' | 'swResize' | 'ewResize' | 'nsResize' | 'neswResize' | 'nwseResize' | GlobalKw, unknown, never>
+  cursor: PropCarrier<
+    CssValueOf<'cursor'>,
+    CursorTokens<T>,
+    | 'auto'
+    | 'default'
+    | 'none'
+    | 'pointer'
+    | 'text'
+    | 'verticalText'
+    | 'wait'
+    | 'progress'
+    | 'help'
+    | 'contextMenu'
+    | 'cell'
+    | 'crosshair'
+    | 'move'
+    | 'grab'
+    | 'grabbing'
+    | 'alias'
+    | 'copy'
+    | 'notAllowed'
+    | 'noDrop'
+    | 'allScroll'
+    | 'zoomIn'
+    | 'zoomOut'
+    | 'colResize'
+    | 'rowResize'
+    | 'eResize'
+    | 'nResize'
+    | 'sResize'
+    | 'wResize'
+    | 'neResize'
+    | 'nwResize'
+    | 'seResize'
+    | 'swResize'
+    | 'ewResize'
+    | 'nsResize'
+    | 'neswResize'
+    | 'nwseResize'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `<length> | <percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **43** | **69**  | **9**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/cx
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `<length> | <percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **43** | **69**  | **9**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/cx
+   */
   cx: PropFn<CssValueOf<'cx'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `<length> | <percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **43** | **69**  | **9**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/cy
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `<length> | <percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **43** | **69**  | **9**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/cy
+   */
   cy: PropFn<CssValueOf<'cy'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | path(<string>)`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **52** | **97**  |   No   | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/d
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | path(<string>)`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **52** | **97**  |   No   | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/d
+   */
   d: PropFn<CssValueOf<'d'>>
   /**
    * 设置**文本流方向** —— 从左到右（LTR）或从右到左（RTL）。RTL 用于阿拉伯语 / 希伯来语。
@@ -6781,34 +8620,62 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/display
    */
-  display: PropCarrier<CssValueOf<'display'>, never, 'block' | 'inline' | 'inlineBlock' | 'flex' | 'inlineFlex' | 'grid' | 'inlineGrid' | 'none' | 'contents' | 'flowRoot' | 'ruby' | 'listItem' | 'table' | 'inlineTable' | 'tableCell' | 'tableRow' | 'tableColumn' | 'tableRowGroup' | 'tableHeaderGroup' | 'tableFooterGroup' | 'tableColumnGroup' | 'tableCaption' | GlobalKw, unknown, never>
+  display: PropCarrier<
+    CssValueOf<'display'>,
+    never,
+    | 'block'
+    | 'inline'
+    | 'inlineBlock'
+    | 'flex'
+    | 'inlineFlex'
+    | 'grid'
+    | 'inlineGrid'
+    | 'none'
+    | 'contents'
+    | 'flowRoot'
+    | 'ruby'
+    | 'listItem'
+    | 'table'
+    | 'inlineTable'
+    | 'tableCell'
+    | 'tableRow'
+    | 'tableColumn'
+    | 'tableRowGroup'
+    | 'tableHeaderGroup'
+    | 'tableFooterGroup'
+    | 'tableColumnGroup'
+    | 'tableCaption'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `auto | text-bottom | alphabetic | ideographic | middle | central | mathematical | hanging | text-top`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **1**  |  **1**  | **4**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/dominant-baseline
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `auto | text-bottom | alphabetic | ideographic | middle | central | mathematical | hanging | text-top`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **1**  |  **1**  | **4**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/dominant-baseline
+   */
   dominantBaseline: PropFn<CssValueOf<'dominantBaseline'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `show | hide`
-     *
-     * **Initial value**: `show`
-     *
-     * | Chrome | Firefox | Safari  |  Edge  |  IE   |
-     * | :----: | :-----: | :-----: | :----: | :---: |
-     * | **1**  |  **1**  | **1.2** | **12** | **8** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/empty-cells
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `show | hide`
+   *
+   * **Initial value**: `show`
+   *
+   * | Chrome | Firefox | Safari  |  Edge  |  IE   |
+   * | :----: | :-----: | :-----: | :----: | :---: |
+   * | **1**  |  **1**  | **1.2** | **12** | **8** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/empty-cells
+   */
   emptyCells: PropFn<CssValueOf<'emptyCells'>>
   /**
    * 控制 `<input>` / `<textarea>` / `<select>` 等表单元素的**尺寸自动调整模式** —— 是固定还是按内容增长。
@@ -6862,7 +8729,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/field-sizing
    */
-  fieldSizing: PropCarrier<CssValueOf<'fieldSizing'>, never, 'content' | 'fixed' | GlobalKw, unknown, never>
+  fieldSizing: PropCarrier<
+    CssValueOf<'fieldSizing'>,
+    never,
+    'content' | 'fixed' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * SVG 专属：设置 SVG 图形（`<path>` / `<circle>` / `<rect>` 等）的**填充颜色**。
    *
@@ -7018,34 +8891,189 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/fill
    */
-  fill: ColorPropCarrier<CssValueOf<'fill'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  fill: ColorPropCarrier<
+    CssValueOf<'fill'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `<'opacity'>`
-     *
-     * **Initial value**: `1`
-     *
-     * | Chrome | Firefox | Safari |  Edge   | IE  |
-     * | :----: | :-----: | :----: | :-----: | :-: |
-     * | **1**  |  **1**  | **4**  | **≤15** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/fill-opacity
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `<'opacity'>`
+   *
+   * **Initial value**: `1`
+   *
+   * | Chrome | Firefox | Safari |  Edge   | IE  |
+   * | :----: | :-----: | :----: | :-----: | :-: |
+   * | **1**  |  **1**  | **4**  | **≤15** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/fill-opacity
+   */
   fillOpacity: PropFn<CssValueOf<'fillOpacity'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `nonzero | evenodd`
-     *
-     * **Initial value**: `nonzero`
-     *
-     * | Chrome | Firefox | Safari |  Edge   | IE  |
-     * | :----: | :-----: | :----: | :-----: | :-: |
-     * | **1**  |  **3**  | **4**  | **≤15** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/fill-rule
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `nonzero | evenodd`
+   *
+   * **Initial value**: `nonzero`
+   *
+   * | Chrome | Firefox | Safari |  Edge   | IE  |
+   * | :----: | :-----: | :----: | :-----: | :-: |
+   * | **1**  |  **3**  | **4**  | **≤15** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/fill-rule
+   */
   fillRule: PropFn<CssValueOf<'fillRule'>>
   /**
    * 给元素应用**视觉滤镜** —— 模糊、亮度、对比度、灰度、阴影等。可链式叠加多个滤镜函数。
@@ -7233,7 +9261,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-basis
    */
-  flexBasis: PropCarrier<CssValueOf<'flexBasis'>, SizeTokens<T>, 'auto' | 'fill' | 'maxContent' | 'minContent' | 'fitContent' | 'content' | GlobalKw, LengthUnits, never>
+  flexBasis: PropCarrier<
+    CssValueOf<'flexBasis'>,
+    SizeTokens<T>,
+    'auto' | 'fill' | 'maxContent' | 'minContent' | 'fitContent' | 'content' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 决定 flex 容器的**主轴方向** —— 子元素是横向排列还是纵向排列、是否反向。仅对 `display: flex/inlineFlex` 容器生效。
    *
@@ -7299,7 +9333,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-direction
    */
-  flexDirection: PropCarrier<CssValueOf<'flexDirection'>, never, 'row' | 'rowReverse' | 'column' | 'columnReverse' | GlobalKw, unknown, never>
+  flexDirection: PropCarrier<
+    CssValueOf<'flexDirection'>,
+    never,
+    'row' | 'rowReverse' | 'column' | 'columnReverse' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * flex 子元素的**放大比例** —— 容器有剩余空间时，按此比例分配给各子元素。**默认 0**（不放大）。
    *
@@ -7479,7 +9519,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-wrap
    */
-  flexWrap: PropCarrier<CssValueOf<'flexWrap'>, never, 'nowrap' | 'wrap' | 'wrapReverse' | GlobalKw, unknown, never>
+  flexWrap: PropCarrier<
+    CssValueOf<'flexWrap'>,
+    never,
+    'nowrap' | 'wrap' | 'wrapReverse' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 让元素**浮动**到容器一侧，**脱离正常文档流**，文字 / 行内元素会环绕它。现代布局已被 flex / grid 取代，但 `<img>` 文字环绕仍是经典场景。
    *
@@ -7546,34 +9592,40 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/float
    */
-  float: PropCarrier<CssValueOf<'float'>, never, 'left' | 'right' | 'none' | 'inlineStart' | 'inlineEnd' | GlobalKw, unknown, never>
+  float: PropCarrier<
+    CssValueOf<'float'>,
+    never,
+    'left' | 'right' | 'none' | 'inlineStart' | 'inlineEnd' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `black`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |   IE    |
-     * | :----: | :-----: | :----: | :----: | :-----: |
-     * | **5**  |  **3**  | **6**  | **12** | **≤11** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flood-color
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `black`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |   IE    |
+   * | :----: | :-----: | :----: | :----: | :-----: |
+   * | **5**  |  **3**  | **6**  | **12** | **≤11** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flood-color
+   */
   floodColor: PropFn<CssValueOf<'floodColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<'opacity'>`
-     *
-     * **Initial value**: `black`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |   IE    |
-     * | :----: | :-----: | :----: | :----: | :-----: |
-     * | **5**  |  **3**  | **6**  | **12** | **≤11** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flood-opacity
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<'opacity'>`
+   *
+   * **Initial value**: `black`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |   IE    |
+   * | :----: | :-----: | :----: | :----: | :-----: |
+   * | **5**  |  **3**  | **6**  | **12** | **≤11** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flood-opacity
+   */
   floodOpacity: PropFn<CssValueOf<'floodOpacity'>>
   /**
    * 设置元素使用的**字体族**。可写具体字体名 + 回退族，或仅写通用族关键字。
@@ -7657,79 +9709,98 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-family
    */
-  fontFamily: PropCarrier<CssValueOf<'fontFamily'>, FontsTokens<T>, 'serif' | 'sansSerif' | 'monospace' | 'cursive' | 'fantasy' | 'systemUi' | 'uiSerif' | 'uiSansSerif' | 'uiMonospace' | 'uiRounded' | 'emoji' | 'math' | 'fangsong' | GlobalKw, unknown, never>
+  fontFamily: PropCarrier<
+    CssValueOf<'fontFamily'>,
+    FontsTokens<T>,
+    | 'serif'
+    | 'sansSerif'
+    | 'monospace'
+    | 'cursive'
+    | 'fantasy'
+    | 'systemUi'
+    | 'uiSerif'
+    | 'uiSansSerif'
+    | 'uiMonospace'
+    | 'uiRounded'
+    | 'emoji'
+    | 'math'
+    | 'fangsong'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `normal | <feature-tag-value>#`
-     *
-     * **Initial value**: `normal`
-     *
-     * |  Chrome  | Firefox  | Safari  |  Edge  |   IE   |
-     * | :------: | :------: | :-----: | :----: | :----: |
-     * |  **48**  |  **34**  | **9.1** | **15** | **10** |
-     * | 16 _-x-_ | 15 _-x-_ |         |        |        |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-feature-settings
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `normal | <feature-tag-value>#`
+   *
+   * **Initial value**: `normal`
+   *
+   * |  Chrome  | Firefox  | Safari  |  Edge  |   IE   |
+   * | :------: | :------: | :-----: | :----: | :----: |
+   * |  **48**  |  **34**  | **9.1** | **15** | **10** |
+   * | 16 _-x-_ | 15 _-x-_ |         |        |        |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-feature-settings
+   */
   fontFeatureSettings: PropFn<CssValueOf<'fontFeatureSettings'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `auto | normal | none`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :-----: | :----: | :-: |
-     * | **33** | **32**  |  **9**  | **79** | No  |
-     * |        |         | 6 _-x-_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-kerning
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `auto | normal | none`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :-----: | :----: | :-: |
+   * | **33** | **32**  |  **9**  | **79** | No  |
+   * |        |         | 6 _-x-_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-kerning
+   */
   fontKerning: PropFn<CssValueOf<'fontKerning'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `normal | <string>`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **143** | **34**  |   No   | **143** | No  |
-     * |         | 4 _-x-_ |        |         |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-language-override
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `normal | <string>`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **143** | **34**  |   No   | **143** | No  |
+   * |         | 4 _-x-_ |        |         |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-language-override
+   */
   fontLanguageOverride: PropFn<CssValueOf<'fontLanguageOverride'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2020.
-     *
-     * **Syntax**: `auto | none`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **79** | **62**  | **13.1** | **17** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-optical-sizing
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2020.
+   *
+   * **Syntax**: `auto | none`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **79** | **62**  | **13.1** | **17** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-optical-sizing
+   */
   fontOpticalSizing: PropFn<CssValueOf<'fontOpticalSizing'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2022.
-     *
-     * **Syntax**: `normal | light | dark | <palette-identifier> | <palette-mix()>`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **101** | **107** | **15.4** | **101** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-palette
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2022.
+   *
+   * **Syntax**: `normal | light | dark | <palette-identifier> | <palette-mix()>`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **101** | **107** | **15.4** | **101** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-palette
+   */
   fontPalette: PropFn<CssValueOf<'fontPalette'>>
   /**
    * 设置元素的**字号**。可用长度（px/rem/em 等）、百分比（相对父级字号）、关键字（绝对大小 / 相对大小）。
@@ -7833,245 +9904,261 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-size
    */
-  fontSize: PropCarrier<CssValueOf<'fontSize'>, FontSizeTokens<T>, 'xxSmall' | 'xSmall' | 'small' | 'medium' | 'large' | 'xLarge' | 'xxLarge' | 'xxxLarge' | 'smaller' | 'larger' | GlobalKw, LengthUnits, never>
+  fontSize: PropCarrier<
+    CssValueOf<'fontSize'>,
+    FontSizeTokens<T>,
+    | 'xxSmall'
+    | 'xSmall'
+    | 'small'
+    | 'medium'
+    | 'large'
+    | 'xLarge'
+    | 'xxLarge'
+    | 'xxxLarge'
+    | 'smaller'
+    | 'larger'
+    | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * Since July 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `none | [ ex-height | cap-height | ch-width | ic-width | ic-height ]? [ from-font | <number> ]`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **127** |  **3**  | **16.4** | **127** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-size-adjust
-     */
+   * Since July 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `none | [ ex-height | cap-height | ch-width | ic-width | ic-height ]? [ from-font | <number> ]`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **127** |  **3**  | **16.4** | **127** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-size-adjust
+   */
   fontSizeAdjust: PropFn<CssValueOf<'fontSizeAdjust'>>
   /**
-     * The **`font-smooth`** CSS property controls the application of anti-aliasing when fonts are rendered.
-     *
-     * **Syntax**: `auto | never | always | <absolute-size> | <length>`
-     *
-     * **Initial value**: `auto`
-     *
-     * |              Chrome              |              Firefox               |              Safari              |               Edge                | IE  |
-     * | :------------------------------: | :--------------------------------: | :------------------------------: | :-------------------------------: | :-: |
-     * | **5** _(-webkit-font-smoothing)_ | **25** _(-moz-osx-font-smoothing)_ | **4** _(-webkit-font-smoothing)_ | **79** _(-webkit-font-smoothing)_ | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-smooth
-     */
+   * The **`font-smooth`** CSS property controls the application of anti-aliasing when fonts are rendered.
+   *
+   * **Syntax**: `auto | never | always | <absolute-size> | <length>`
+   *
+   * **Initial value**: `auto`
+   *
+   * |              Chrome              |              Firefox               |              Safari              |               Edge                | IE  |
+   * | :------------------------------: | :--------------------------------: | :------------------------------: | :-------------------------------: | :-: |
+   * | **5** _(-webkit-font-smoothing)_ | **25** _(-moz-osx-font-smoothing)_ | **4** _(-webkit-font-smoothing)_ | **79** _(-webkit-font-smoothing)_ | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-smooth
+   */
   fontSmooth: PropFn<CssValueOf<'fontSmooth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `normal | italic | oblique <angle>?`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **4** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-style
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `normal | italic | oblique <angle>?`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **4** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-style
+   */
   fontStyle: PropFn<CssValueOf<'fontStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2022.
-     *
-     * **Syntax**: `none | [ weight || style || small-caps || position]`
-     *
-     * **Initial value**: `weight style small-caps position `
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **97** | **34**  | **9**  | **97** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2022.
+   *
+   * **Syntax**: `none | [ weight || style || small-caps || position]`
+   *
+   * **Initial value**: `weight style small-caps position `
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **97** | **34**  | **9**  | **97** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis
+   */
   fontSynthesis: PropFn<CssValueOf<'fontSynthesis'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `auto | none`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari | Edge | IE  |
-     * | :----: | :-----: | :----: | :--: | :-: |
-     * |   No   | **118** |   No   |  No  | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-position
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `auto | none`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox | Safari | Edge | IE  |
+   * | :----: | :-----: | :----: | :--: | :-: |
+   * |   No   | **118** |   No   |  No  | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-position
+   */
   fontSynthesisPosition: PropFn<CssValueOf<'fontSynthesisPosition'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
-     *
-     * **Syntax**: `auto | none`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **97** | **111** | **16.4** | **97** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-small-caps
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
+   *
+   * **Syntax**: `auto | none`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **97** | **111** | **16.4** | **97** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-small-caps
+   */
   fontSynthesisSmallCaps: PropFn<CssValueOf<'fontSynthesisSmallCaps'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
-     *
-     * **Syntax**: `auto | none`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **97** | **111** | **16.4** | **97** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-style
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
+   *
+   * **Syntax**: `auto | none`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **97** | **111** | **16.4** | **97** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-style
+   */
   fontSynthesisStyle: PropFn<CssValueOf<'fontSynthesisStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
-     *
-     * **Syntax**: `auto | none`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **97** | **111** | **16.4** | **97** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-weight
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
+   *
+   * **Syntax**: `auto | none`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **97** | **111** | **16.4** | **97** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-synthesis-weight
+   */
   fontSynthesisWeight: PropFn<CssValueOf<'fontSynthesisWeight'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `normal | none | [ <common-lig-values> || <discretionary-lig-values> || <historical-lig-values> || <contextual-alt-values> || stylistic( <feature-value-name> ) || historical-forms || styleset( <feature-value-name># ) || character-variant( <feature-value-name># ) || swash( <feature-value-name> ) || ornaments( <feature-value-name> ) || annotation( <feature-value-name> ) || [ small-caps | all-small-caps | petite-caps | all-petite-caps | unicase | titling-caps ] || <numeric-figure-values> || <numeric-spacing-values> || <numeric-fraction-values> || ordinal || slashed-zero || <east-asian-variant-values> || <east-asian-width-values> || ruby ]`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **4** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `normal | none | [ <common-lig-values> || <discretionary-lig-values> || <historical-lig-values> || <contextual-alt-values> || stylistic( <feature-value-name> ) || historical-forms || styleset( <feature-value-name># ) || character-variant( <feature-value-name># ) || swash( <feature-value-name> ) || ornaments( <feature-value-name> ) || annotation( <feature-value-name> ) || [ small-caps | all-small-caps | petite-caps | all-petite-caps | unicase | titling-caps ] || <numeric-figure-values> || <numeric-spacing-values> || <numeric-fraction-values> || ordinal || slashed-zero || <east-asian-variant-values> || <east-asian-width-values> || ruby ]`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **4** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant
+   */
   fontVariant: PropFn<CssValueOf<'fontVariant'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
-     *
-     * **Syntax**: `normal | [ stylistic( <feature-value-name> ) || historical-forms || styleset( <feature-value-name># ) || character-variant( <feature-value-name># ) || swash( <feature-value-name> ) || ornaments( <feature-value-name> ) || annotation( <feature-value-name> ) ]`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox | Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :-----: | :-----: | :-: |
-     * | **111** | **34**  | **9.1** | **111** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-alternates
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
+   *
+   * **Syntax**: `normal | [ stylistic( <feature-value-name> ) || historical-forms || styleset( <feature-value-name># ) || character-variant( <feature-value-name># ) || swash( <feature-value-name> ) || ornaments( <feature-value-name> ) || annotation( <feature-value-name> ) ]`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox | Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :-----: | :-----: | :-: |
+   * | **111** | **34**  | **9.1** | **111** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-alternates
+   */
   fontVariantAlternates: PropFn<CssValueOf<'fontVariantAlternates'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `normal | small-caps | all-small-caps | petite-caps | all-petite-caps | unicase | titling-caps`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome | Firefox | Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :-----: | :----: | :-: |
-     * | **52** | **34**  | **9.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-caps
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `normal | small-caps | all-small-caps | petite-caps | all-petite-caps | unicase | titling-caps`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome | Firefox | Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :-----: | :----: | :-: |
+   * | **52** | **34**  | **9.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-caps
+   */
   fontVariantCaps: PropFn<CssValueOf<'fontVariantCaps'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `normal | [ <east-asian-variant-values> || <east-asian-width-values> || ruby ]`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome | Firefox | Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :-----: | :----: | :-: |
-     * | **63** | **34**  | **9.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-east-asian
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `normal | [ <east-asian-variant-values> || <east-asian-width-values> || ruby ]`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome | Firefox | Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :-----: | :----: | :-: |
+   * | **63** | **34**  | **9.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-east-asian
+   */
   fontVariantEastAsian: PropFn<CssValueOf<'fontVariantEastAsian'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `normal | text | emoji | unicode`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **131** | **141** |   No   | **131** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-emoji
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `normal | text | emoji | unicode`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **131** | **141** |   No   | **131** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-emoji
+   */
   fontVariantEmoji: PropFn<CssValueOf<'fontVariantEmoji'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `normal | none | [ <common-lig-values> || <discretionary-lig-values> || <historical-lig-values> || <contextual-alt-values> ]`
-     *
-     * **Initial value**: `normal`
-     *
-     * |  Chrome  | Firefox | Safari  |  Edge  | IE  |
-     * | :------: | :-----: | :-----: | :----: | :-: |
-     * |  **34**  | **34**  | **9.1** | **79** | No  |
-     * | 31 _-x-_ |         | 7 _-x-_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-ligatures
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `normal | none | [ <common-lig-values> || <discretionary-lig-values> || <historical-lig-values> || <contextual-alt-values> ]`
+   *
+   * **Initial value**: `normal`
+   *
+   * |  Chrome  | Firefox | Safari  |  Edge  | IE  |
+   * | :------: | :-----: | :-----: | :----: | :-: |
+   * |  **34**  | **34**  | **9.1** | **79** | No  |
+   * | 31 _-x-_ |         | 7 _-x-_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-ligatures
+   */
   fontVariantLigatures: PropFn<CssValueOf<'fontVariantLigatures'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `normal | [ <numeric-figure-values> || <numeric-spacing-values> || <numeric-fraction-values> || ordinal || slashed-zero ]`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome | Firefox | Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :-----: | :----: | :-: |
-     * | **52** | **34**  | **9.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-numeric
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `normal | [ <numeric-figure-values> || <numeric-spacing-values> || <numeric-fraction-values> || ordinal || slashed-zero ]`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome | Firefox | Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :-----: | :----: | :-: |
+   * | **52** | **34**  | **9.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-numeric
+   */
   fontVariantNumeric: PropFn<CssValueOf<'fontVariantNumeric'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `normal | sub | super`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome | Firefox | Safari  | Edge | IE  |
-     * | :----: | :-----: | :-----: | :--: | :-: |
-     * |   No   | **34**  | **9.1** |  No  | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-position
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `normal | sub | super`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome | Firefox | Safari  | Edge | IE  |
+   * | :----: | :-----: | :-----: | :--: | :-: |
+   * |   No   | **34**  | **9.1** |  No  | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variant-position
+   */
   fontVariantPosition: PropFn<CssValueOf<'fontVariantPosition'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2018.
-     *
-     * **Syntax**: `normal | [ <string> <number> ]#`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **62** | **62**  | **11** | **17** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variation-settings
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2018.
+   *
+   * **Syntax**: `normal | [ <string> <number> ]#`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **62** | **62**  | **11** | **17** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-variation-settings
+   */
   fontVariationSettings: PropFn<CssValueOf<'fontVariationSettings'>>
   /**
    * 设置字体的**粗细**（重量）。可用关键字或数字（100-900，整百）；支持可变字体的任意精细值。
@@ -8147,45 +10234,51 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font-weight
    */
-  fontWeight: PropCarrier<CssValueOf<'fontWeight'>, FontWeightTokens<T>, 'normal' | 'bold' | 'lighter' | 'bolder' | GlobalKw, unknown, never>
+  fontWeight: PropCarrier<
+    CssValueOf<'fontWeight'>,
+    FontWeightTokens<T>,
+    'normal' | 'bold' | 'lighter' | 'bolder' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * **Syntax**: `normal | <percentage [0,∞]> | ultra-condensed | extra-condensed | condensed | semi-condensed | semi-expanded | expanded | extra-expanded | ultra-expanded`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome | Firefox |  Safari  | Edge | IE  |
-     * | :----: | :-----: | :------: | :--: | :-: |
-     * |   No   |   No    | **18.4** |  No  | No  |
-     */
+   * **Syntax**: `normal | <percentage [0,∞]> | ultra-condensed | extra-condensed | condensed | semi-condensed | semi-expanded | expanded | extra-expanded | ultra-expanded`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome | Firefox |  Safari  | Edge | IE  |
+   * | :----: | :-----: | :------: | :--: | :-: |
+   * |   No   |   No    | **18.4** |  No  | No  |
+   */
   fontWidth: PropFn<CssValueOf<'fontWidth'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `auto | none | preserve-parent-color`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |              Edge               |                 IE                  |
-     * | :----: | :-----: | :----: | :-----------------------------: | :---------------------------------: |
-     * | **89** | **113** |   No   |             **79**              | **10** _(-ms-high-contrast-adjust)_ |
-     * |        |         |        | 12 _(-ms-high-contrast-adjust)_ |                                     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/forced-color-adjust
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `auto | none | preserve-parent-color`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |              Edge               |                 IE                  |
+   * | :----: | :-----: | :----: | :-----------------------------: | :---------------------------------: |
+   * | **89** | **113** |   No   |             **79**              | **10** _(-ms-high-contrast-adjust)_ |
+   * |        |         |        | 12 _(-ms-high-contrast-adjust)_ |                                     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/forced-color-adjust
+   */
   forcedColorAdjust: PropFn<CssValueOf<'forcedColorAdjust'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `<track-size>+`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  |             IE              |
-     * | :----: | :-----: | :------: | :----: | :-------------------------: |
-     * | **57** | **70**  | **10.1** | **16** | **10** _(-ms-grid-columns)_ |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-auto-columns
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `<track-size>+`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  |             IE              |
+   * | :----: | :-----: | :------: | :----: | :-------------------------: |
+   * | **57** | **70**  | **10.1** | **16** | **10** _(-ms-grid-columns)_ |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-auto-columns
+   */
   gridAutoColumns: PropFn<CssValueOf<'gridAutoColumns'>>
   /**
    * grid 中**未显式定位的子元素**如何自动填入网格 —— 沿行还是沿列、是否填补空隙。
@@ -8245,132 +10338,138 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-auto-flow
    */
-  gridAutoFlow: PropCarrier<CssValueOf<'gridAutoFlow'>, never, 'row' | 'column' | 'dense' | 'rowDense' | 'columnDense' | GlobalKw, unknown, never>
+  gridAutoFlow: PropCarrier<
+    CssValueOf<'gridAutoFlow'>,
+    never,
+    'row' | 'column' | 'dense' | 'rowDense' | 'columnDense' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `<track-size>+`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  |            IE            |
-     * | :----: | :-----: | :------: | :----: | :----------------------: |
-     * | **57** | **70**  | **10.1** | **16** | **10** _(-ms-grid-rows)_ |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-auto-rows
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `<track-size>+`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  |            IE            |
+   * | :----: | :-----: | :------: | :----: | :----------------------: |
+   * | **57** | **70**  | **10.1** | **16** | **10** _(-ms-grid-rows)_ |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-auto-rows
+   */
   gridAutoRows: PropFn<CssValueOf<'gridAutoRows'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `<grid-line>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **57** | **52**  | **10.1** | **16** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-column-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `<grid-line>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **57** | **52**  | **10.1** | **16** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-column-end
+   */
   gridColumnEnd: PropFn<CssValueOf<'gridColumnEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `<grid-line>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **57** | **52**  | **10.1** | **16** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-column-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `<grid-line>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **57** | **52**  | **10.1** | **16** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-column-start
+   */
   gridColumnStart: PropFn<CssValueOf<'gridColumnStart'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `<grid-line>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **57** | **52**  | **10.1** | **16** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-row-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `<grid-line>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **57** | **52**  | **10.1** | **16** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-row-end
+   */
   gridRowEnd: PropFn<CssValueOf<'gridRowEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `<grid-line>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **57** | **52**  | **10.1** | **16** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-row-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `<grid-line>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **57** | **52**  | **10.1** | **16** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-row-start
+   */
   gridRowStart: PropFn<CssValueOf<'gridRowStart'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `none | <string>+`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **57** | **52**  | **10.1** | **16** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template-areas
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `none | <string>+`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **57** | **52**  | **10.1** | **16** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template-areas
+   */
   gridTemplateAreas: PropFn<CssValueOf<'gridTemplateAreas'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `none | <track-list> | <auto-track-list> | subgrid <line-name-list>?`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  |             IE              |
-     * | :----: | :-----: | :------: | :----: | :-------------------------: |
-     * | **57** | **52**  | **10.1** | **16** | **10** _(-ms-grid-columns)_ |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template-columns
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `none | <track-list> | <auto-track-list> | subgrid <line-name-list>?`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  |             IE              |
+   * | :----: | :-----: | :------: | :----: | :-------------------------: |
+   * | **57** | **52**  | **10.1** | **16** | **10** _(-ms-grid-columns)_ |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template-columns
+   */
   gridTemplateColumns: PropFn<CssValueOf<'gridTemplateColumns'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `none | <track-list> | <auto-track-list> | subgrid <line-name-list>?`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  |            IE            |
-     * | :----: | :-----: | :------: | :----: | :----------------------: |
-     * | **57** | **52**  | **10.1** | **16** | **10** _(-ms-grid-rows)_ |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template-rows
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `none | <track-list> | <auto-track-list> | subgrid <line-name-list>?`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  |            IE            |
+   * | :----: | :-----: | :------: | :----: | :----------------------: |
+   * | **57** | **52**  | **10.1** | **16** | **10** _(-ms-grid-rows)_ |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template-rows
+   */
   gridTemplateRows: PropFn<CssValueOf<'gridTemplateRows'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | [ first || [ force-end | allow-end ] || last ]`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari | Edge | IE  |
-     * | :----: | :-----: | :----: | :--: | :-: |
-     * |   No   |   No    | **10** |  No  | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hanging-punctuation
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | [ first || [ force-end | allow-end ] || last ]`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox | Safari | Edge | IE  |
+   * | :----: | :-----: | :----: | :--: | :-: |
+   * |   No   |   No    | **10** |  No  | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hanging-punctuation
+   */
   hangingPunctuation: PropFn<CssValueOf<'hangingPunctuation'>>
   /**
    * 设置元素的**内容区高度**。行为与 `width` 类似，但百分比参照父元素**高度**（且父高度需显式设置才生效）。
@@ -8456,177 +10555,183 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/height
    */
-  height: PropCarrier<CssValueOf<'height'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
+  height: PropCarrier<
+    CssValueOf<'height'>,
+    SizeTokens<T>,
+    'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `auto | <string>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox |  Safari   |   Edge   | IE  |
-     * | :-----: | :-----: | :-------: | :------: | :-: |
-     * | **106** | **98**  |  **17**   | **106**  | No  |
-     * | 6 _-x-_ |         | 5.1 _-x-_ | 79 _-x-_ |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hyphenate-character
-     */
+   * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `auto | <string>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox |  Safari   |   Edge   | IE  |
+   * | :-----: | :-----: | :-------: | :------: | :-: |
+   * | **106** | **98**  |  **17**   | **106**  | No  |
+   * | 6 _-x-_ |         | 5.1 _-x-_ | 79 _-x-_ |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hyphenate-character
+   */
   hyphenateCharacter: PropFn<CssValueOf<'hyphenateCharacter'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ auto | <integer> ]{1,3}`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **109** | **137** |   No   | **109** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hyphenate-limit-chars
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ auto | <integer> ]{1,3}`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **109** | **137** |   No   | **109** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hyphenate-limit-chars
+   */
   hyphenateLimitChars: PropFn<CssValueOf<'hyphenateLimitChars'>>
   /**
-     * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `none | manual | auto`
-     *
-     * **Initial value**: `manual`
-     *
-     * |  Chrome  | Firefox |  Safari   |  Edge  |      IE      |
-     * | :------: | :-----: | :-------: | :----: | :----------: |
-     * |  **55**  | **43**  |  **17**   | **79** | **10** _-x-_ |
-     * | 13 _-x-_ | 6 _-x-_ | 5.1 _-x-_ |        |              |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hyphens
-     */
+   * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `none | manual | auto`
+   *
+   * **Initial value**: `manual`
+   *
+   * |  Chrome  | Firefox |  Safari   |  Edge  |      IE      |
+   * | :------: | :-----: | :-------: | :----: | :----------: |
+   * |  **55**  | **43**  |  **17**   | **79** | **10** _-x-_ |
+   * | 13 _-x-_ | 6 _-x-_ | 5.1 _-x-_ |        |              |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/hyphens
+   */
   hyphens: PropFn<CssValueOf<'hyphens'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2020.
-     *
-     * **Syntax**: `from-image | <angle> | [ <angle>? flip ]`
-     *
-     * **Initial value**: `from-image`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **81** | **26**  | **13.1** | **81** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/image-orientation
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2020.
+   *
+   * **Syntax**: `from-image | <angle> | [ <angle>? flip ]`
+   *
+   * **Initial value**: `from-image`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **81** | **26**  | **13.1** | **81** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/image-orientation
+   */
   imageOrientation: PropFn<CssValueOf<'imageOrientation'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `auto | crisp-edges | pixelated | smooth`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **13** | **3.6** | **6**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/image-rendering
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `auto | crisp-edges | pixelated | smooth`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **13** | **3.6** | **6**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/image-rendering
+   */
   imageRendering: PropFn<CssValueOf<'imageRendering'>>
   /**
-     * The **`image-resolution`** CSS property specifies the intrinsic resolution of all raster images used in or on the element. It affects content images such as replaced elements and generated content, and decorative images such as `background-image` images.
-     *
-     * **Syntax**: `[ from-image || <resolution> ] && snap?`
-     *
-     * **Initial value**: `1dppx`
-     */
+   * The **`image-resolution`** CSS property specifies the intrinsic resolution of all raster images used in or on the element. It affects content images such as replaced elements and generated content, and decorative images such as `background-image` images.
+   *
+   * **Syntax**: `[ from-image || <resolution> ] && snap?`
+   *
+   * **Initial value**: `1dppx`
+   */
   imageResolution: PropFn<CssValueOf<'imageResolution'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `normal | [ <number> <integer>? ]`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox |   Safari    |  Edge   | IE  |
-     * | :-----: | :-----: | :---------: | :-----: | :-: |
-     * | **110** |   No    | **9** _-x-_ | **110** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/initial-letter
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `normal | [ <number> <integer>? ]`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox |   Safari    |  Edge   | IE  |
+   * | :-----: | :-----: | :---------: | :-----: | :-: |
+   * | **110** |   No    | **9** _-x-_ | **110** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/initial-letter
+   */
   initialLetter: PropFn<CssValueOf<'initialLetter'>>
   /**
-     * **Syntax**: `[ auto | alphabetic | hanging | ideographic ]`
-     *
-     * **Initial value**: `auto`
-     */
+   * **Syntax**: `[ auto | alphabetic | hanging | ideographic ]`
+   *
+   * **Initial value**: `auto`
+   */
   initialLetterAlign: PropFn<CssValueOf<'initialLetterAlign'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'width'>`
-     *
-     * **Initial value**: `auto`
-     *
-     * |           Chrome            | Firefox |            Safari             |  Edge  | IE  |
-     * | :-------------------------: | :-----: | :---------------------------: | :----: | :-: |
-     * |           **57**            | **41**  |           **12.1**            | **79** | No  |
-     * | 8 _(-webkit-logical-width)_ |         | 5.1 _(-webkit-logical-width)_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inline-size
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'width'>`
+   *
+   * **Initial value**: `auto`
+   *
+   * |           Chrome            | Firefox |            Safari             |  Edge  | IE  |
+   * | :-------------------------: | :-----: | :---------------------------: | :----: | :-: |
+   * |           **57**            | **41**  |           **12.1**            | **79** | No  |
+   * | 8 _(-webkit-logical-width)_ |         | 5.1 _(-webkit-logical-width)_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inline-size
+   */
   inlineSize: PropFn<CssValueOf<'inlineSize'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **63**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-block-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **63**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-block-end
+   */
   insetBlockEnd: PropFn<CssValueOf<'insetBlockEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **63**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-block-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **63**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-block-start
+   */
   insetBlockStart: PropFn<CssValueOf<'insetBlockStart'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **63**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-inline-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **63**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-inline-end
+   */
   insetInlineEnd: PropFn<CssValueOf<'insetInlineEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **63**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-inline-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **63**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-inline-start
+   */
   insetInlineStart: PropFn<CssValueOf<'insetInlineStart'>>
   /**
    * 允许 `auto` / `min-content` 等**内容驱动尺寸关键字**参与 `transition` / `@keyframes` 动画（默认这些值无法动画）。
@@ -8685,7 +10790,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/interpolate-size
    */
-  interpolateSize: PropCarrier<CssValueOf<'interpolateSize'>, never, 'allowKeywords' | 'numericOnly' | GlobalKw, unknown, never>
+  interpolateSize: PropCarrier<
+    CssValueOf<'interpolateSize'>,
+    never,
+    'allowKeywords' | 'numericOnly' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 控制元素是否创建**新的层叠上下文**（stacking context）。常用于让 `mix-blend-mode` 局部生效，不影响外部。
    *
@@ -8747,7 +10858,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/isolation
    */
-  isolation: PropCarrier<CssValueOf<'isolation'>, never, 'auto' | 'isolate' | GlobalKw, unknown, never>
+  isolation: PropCarrier<
+    CssValueOf<'isolation'>,
+    never,
+    'auto' | 'isolate' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * flex / grid 容器**主轴方向**上的对齐方式。控制子元素如何分配剩余空间（左对齐 / 居中 / 两端 / 等距等）。
    *
@@ -8842,7 +10959,25 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/justify-content
    */
-  justifyContent: PropCarrier<CssValueOf<'justifyContent'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | GlobalKw, unknown, never>
+  justifyContent: PropCarrier<
+    CssValueOf<'justifyContent'>,
+    never,
+    | 'flexStart'
+    | 'flexEnd'
+    | 'center'
+    | 'spaceBetween'
+    | 'spaceAround'
+    | 'spaceEvenly'
+    | 'normal'
+    | 'stretch'
+    | 'start'
+    | 'end'
+    | 'left'
+    | 'right'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * **grid** 容器中：所有子元素在**主轴方向**（行内方向）上的默认对齐方式。在 flex 容器中无效（用 `justifyContent`）。
    *
@@ -8936,7 +11071,25 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/justify-items
    */
-  justifyItems: PropCarrier<CssValueOf<'justifyItems'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | GlobalKw, unknown, never>
+  justifyItems: PropCarrier<
+    CssValueOf<'justifyItems'>,
+    never,
+    | 'flexStart'
+    | 'flexEnd'
+    | 'center'
+    | 'spaceBetween'
+    | 'spaceAround'
+    | 'spaceEvenly'
+    | 'normal'
+    | 'stretch'
+    | 'start'
+    | 'end'
+    | 'left'
+    | 'right'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * **grid 子元素**在**主轴方向**（行内方向）上的对齐方式（覆盖父的 `justifyItems`）。在 flex 子元素中无效。
    *
@@ -9030,12 +11183,31 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/justify-self
    */
-  justifySelf: PropCarrier<CssValueOf<'justifySelf'>, never, 'flexStart' | 'flexEnd' | 'center' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly' | 'normal' | 'stretch' | 'start' | 'end' | 'left' | 'right' | 'auto' | GlobalKw, unknown, never>
+  justifySelf: PropCarrier<
+    CssValueOf<'justifySelf'>,
+    never,
+    | 'flexStart'
+    | 'flexEnd'
+    | 'center'
+    | 'spaceBetween'
+    | 'spaceAround'
+    | 'spaceEvenly'
+    | 'normal'
+    | 'stretch'
+    | 'start'
+    | 'end'
+    | 'left'
+    | 'right'
+    | 'auto'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * **Syntax**: `[ normal | <content-distribution> | <overflow-position>? [ <content-position> | left | right ] ]#`
-     *
-     * **Initial value**: `normal`
-     */
+   * **Syntax**: `[ normal | <content-distribution> | <overflow-position>? [ <content-position> | left | right ] ]#`
+   *
+   * **Initial value**: `normal`
+   */
   justifyTracks: PropFn<CssValueOf<'justifyTracks'>>
   /**
    * 设置定位元素距**左侧**的偏移量。正值向右移，负值向左溢出。**只在 `position` 非 `static` 时生效**。其他规则同 [`inset`]。
@@ -9217,35 +11389,41 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/letter-spacing
    */
-  letterSpacing: PropCarrier<CssValueOf<'letterSpacing'>, LetterSpacingTokens<T>, 'normal' | GlobalKw, LengthUnits, never>
+  letterSpacing: PropCarrier<
+    CssValueOf<'letterSpacing'>,
+    LetterSpacingTokens<T>,
+    'normal' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `white`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |   IE    |
-     * | :----: | :-----: | :----: | :----: | :-----: |
-     * | **5**  |  **3**  | **6**  | **12** | **≤11** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/lighting-color
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `white`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |   IE    |
+   * | :----: | :-----: | :----: | :----: | :-----: |
+   * | **5**  |  **3**  | **6**  | **12** | **≤11** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/lighting-color
+   */
   lightingColor: PropFn<CssValueOf<'lightingColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `auto | loose | normal | strict | anywhere`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox | Safari  |  Edge  |   IE    |
-     * | :-----: | :-----: | :-----: | :----: | :-----: |
-     * | **58**  | **69**  | **11**  | **14** | **5.5** |
-     * | 1 _-x-_ |         | 3 _-x-_ |        |         |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/line-break
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `auto | loose | normal | strict | anywhere`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox | Safari  |  Edge  |   IE    |
+   * | :-----: | :-----: | :-----: | :----: | :-----: |
+   * | **58**  | **69**  | **11**  | **14** | **5.5** |
+   * | 1 _-x-_ |         | 3 _-x-_ |        |         |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/line-break
+   */
   lineBreak: PropFn<CssValueOf<'lineBreak'>>
   /**
    * 设置文字**行高** —— 每行文字占据的垂直空间。直接影响段落呼吸感与可读性。
@@ -9337,14 +11515,20 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/line-height
    */
-  lineHeight: PropCarrier<CssValueOf<'lineHeight'>, LineHeightTokens<T>, 'normal' | GlobalKw, LengthUnits, never>
+  lineHeight: PropCarrier<
+    CssValueOf<'lineHeight'>,
+    LineHeightTokens<T>,
+    'normal' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * The **`line-height-step`** CSS property sets the step unit for line box heights. When the property is set, line box heights are rounded up to the closest multiple of the unit.
-     *
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     */
+   * The **`line-height-step`** CSS property sets the step unit for line box heights. When the property is set, line box heights are rounded up to the closest multiple of the unit.
+   *
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   */
   lineHeightStep: PropFn<CssValueOf<'lineHeightStep'>>
   /**
    * 使用**图片**作为列表标记（替代 `listStyleType` 的字符）。
@@ -9397,7 +11581,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style-image
    */
-  listStyleImage: PropCarrier<CssValueOf<'listStyleImage'>, never, 'none' | GlobalKw, unknown, never>
+  listStyleImage: PropCarrier<
+    CssValueOf<'listStyleImage'>,
+    never,
+    'none' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 决定列表标记**在文本之外还是文本流之内**。
    *
@@ -9439,7 +11629,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style-position
    */
-  listStylePosition: PropCarrier<CssValueOf<'listStylePosition'>, never, 'inside' | 'outside' | GlobalKw, unknown, never>
+  listStylePosition: PropCarrier<
+    CssValueOf<'listStylePosition'>,
+    never,
+    'inside' | 'outside' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置列表项的**标记类型**（点 / 数字 / 罗马字 / 自定义）。
    *
@@ -9518,34 +11714,57 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style-type
    */
-  listStyleType: PropCarrier<CssValueOf<'listStyleType'>, never, 'disc' | 'circle' | 'square' | 'none' | 'decimal' | 'decimalLeadingZero' | 'lowerRoman' | 'upperRoman' | 'lowerAlpha' | 'upperAlpha' | 'lowerGreek' | 'armenian' | 'georgian' | 'hebrew' | 'hiragana' | 'katakana' | 'cjkIdeographic' | GlobalKw, unknown, never>
+  listStyleType: PropCarrier<
+    CssValueOf<'listStyleType'>,
+    never,
+    | 'disc'
+    | 'circle'
+    | 'square'
+    | 'none'
+    | 'decimal'
+    | 'decimalLeadingZero'
+    | 'lowerRoman'
+    | 'upperRoman'
+    | 'lowerAlpha'
+    | 'upperAlpha'
+    | 'lowerGreek'
+    | 'armenian'
+    | 'georgian'
+    | 'hebrew'
+    | 'hiragana'
+    | 'katakana'
+    | 'cjkIdeographic'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'margin-top'>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-block-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'margin-top'>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-block-end
+   */
   marginBlockEnd: PropFn<CssValueOf<'marginBlockEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'margin-top'>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-block-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'margin-top'>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-block-start
+   */
   marginBlockStart: PropFn<CssValueOf<'marginBlockStart'>>
   /**
    * 设置元素的**下外边距**。常用于段落 / 标题之间的垂直间隔。其他规则同 [`margin`]。
@@ -9652,36 +11871,42 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-bottom
    */
-  marginBottom: PropCarrier<CssValueOf<'marginBottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  marginBottom: PropCarrier<
+    CssValueOf<'marginBottom'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'margin-top'>`
-     *
-     * **Initial value**: `0`
-     *
-     * |          Chrome          |        Firefox        |          Safari          |  Edge  | IE  |
-     * | :----------------------: | :-------------------: | :----------------------: | :----: | :-: |
-     * |          **69**          |        **41**         |         **12.1**         | **79** | No  |
-     * | 2 _(-webkit-margin-end)_ | 3 _(-moz-margin-end)_ | 3 _(-webkit-margin-end)_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-inline-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'margin-top'>`
+   *
+   * **Initial value**: `0`
+   *
+   * |          Chrome          |        Firefox        |          Safari          |  Edge  | IE  |
+   * | :----------------------: | :-------------------: | :----------------------: | :----: | :-: |
+   * |          **69**          |        **41**         |         **12.1**         | **79** | No  |
+   * | 2 _(-webkit-margin-end)_ | 3 _(-moz-margin-end)_ | 3 _(-webkit-margin-end)_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-inline-end
+   */
   marginInlineEnd: PropFn<CssValueOf<'marginInlineEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'margin-top'>`
-     *
-     * **Initial value**: `0`
-     *
-     * |           Chrome           |         Firefox         |           Safari           |  Edge  | IE  |
-     * | :------------------------: | :---------------------: | :------------------------: | :----: | :-: |
-     * |           **69**           |         **41**          |          **12.1**          | **79** | No  |
-     * | 2 _(-webkit-margin-start)_ | 3 _(-moz-margin-start)_ | 3 _(-webkit-margin-start)_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-inline-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'margin-top'>`
+   *
+   * **Initial value**: `0`
+   *
+   * |           Chrome           |         Firefox         |           Safari           |  Edge  | IE  |
+   * | :------------------------: | :---------------------: | :------------------------: | :----: | :-: |
+   * |           **69**           |         **41**          |          **12.1**          | **79** | No  |
+   * | 2 _(-webkit-margin-start)_ | 3 _(-moz-margin-start)_ | 3 _(-webkit-margin-start)_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-inline-start
+   */
   marginInlineStart: PropFn<CssValueOf<'marginInlineStart'>>
   /**
    * 设置元素的**左外边距**。`auto` 可把元素推到容器右侧（左侧留空），是 flex 布局末尾对齐常用技巧。其他规则同 [`margin`]。
@@ -9788,7 +12013,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-left
    */
-  marginLeft: PropCarrier<CssValueOf<'marginLeft'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  marginLeft: PropCarrier<
+    CssValueOf<'marginLeft'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置元素的**右外边距**。正值向右推开相邻内容，`auto` 可把元素推到容器左侧（右侧留空）。其他规则同 [`margin`]。
    *
@@ -9894,7 +12125,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-right
    */
-  marginRight: PropCarrier<CssValueOf<'marginRight'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  marginRight: PropCarrier<
+    CssValueOf<'marginRight'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置元素的**上外边距**。正值向下推开相邻内容，负值让元素上移。其他规则同 [`margin`]。
    *
@@ -10000,157 +12237,163 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-top
    */
-  marginTop: PropCarrier<CssValueOf<'marginTop'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  marginTop: PropCarrier<
+    CssValueOf<'marginTop'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | in-flow | all`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |  Safari  | Edge | IE  |
-     * | :----: | :-----: | :------: | :--: | :-: |
-     * |   No   |   No    | **16.4** |  No  | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-trim
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | in-flow | all`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox |  Safari  | Edge | IE  |
+   * | :----: | :-----: | :------: | :--: | :-: |
+   * |   No   |   No    | **16.4** |  No  | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-trim
+   */
   marginTrim: PropFn<CssValueOf<'marginTrim'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `none | <url>`
-     *
-     * | Chrome | Firefox | Safari |  Edge   | IE  |
-     * | :----: | :-----: | :----: | :-----: | :-: |
-     * | **1**  |  **3**  | **4**  | **≤15** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `none | <url>`
+   *
+   * | Chrome | Firefox | Safari |  Edge   | IE  |
+   * | :----: | :-----: | :----: | :-----: | :-: |
+   * | **1**  |  **3**  | **4**  | **≤15** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker
+   */
   marker: PropFn<CssValueOf<'marker'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `none | <url>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari |  Edge   | IE  |
-     * | :----: | :-----: | :----: | :-----: | :-: |
-     * | **1**  |  **3**  | **4**  | **≤15** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `none | <url>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox | Safari |  Edge   | IE  |
+   * | :----: | :-----: | :----: | :-----: | :-: |
+   * | **1**  |  **3**  | **4**  | **≤15** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker-end
+   */
   markerEnd: PropFn<CssValueOf<'markerEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `none | <url>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari |  Edge   | IE  |
-     * | :----: | :-----: | :----: | :-----: | :-: |
-     * | **1**  |  **3**  | **4**  | **≤15** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker-mid
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `none | <url>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox | Safari |  Edge   | IE  |
+   * | :----: | :-----: | :----: | :-----: | :-: |
+   * | **1**  |  **3**  | **4**  | **≤15** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker-mid
+   */
   markerMid: PropFn<CssValueOf<'markerMid'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `none | <url>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari |  Edge   | IE  |
-     * | :----: | :-----: | :----: | :-----: | :-: |
-     * | **1**  |  **3**  | **4**  | **≤15** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `none | <url>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox | Safari |  Edge   | IE  |
+   * | :----: | :-----: | :----: | :-----: | :-: |
+   * | **1**  |  **3**  | **4**  | **≤15** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/marker-start
+   */
   markerStart: PropFn<CssValueOf<'markerStart'>>
   /**
-     * The **`mask-border-mode`** CSS property specifies the blending mode used in a mask border.
-     *
-     * **Syntax**: `luminance | alpha`
-     *
-     * **Initial value**: `alpha`
-     */
+   * The **`mask-border-mode`** CSS property specifies the blending mode used in a mask border.
+   *
+   * **Syntax**: `luminance | alpha`
+   *
+   * **Initial value**: `alpha`
+   */
   maskBorderMode: PropFn<CssValueOf<'maskBorderMode'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ <length> | <number> ]{1,4}`
-     *
-     * **Initial value**: `0`
-     *
-     * |                 Chrome                  | Firefox |                Safari                 |                   Edge                   | IE  |
-     * | :-------------------------------------: | :-----: | :-----------------------------------: | :--------------------------------------: | :-: |
-     * | **1** _(-webkit-mask-box-image-outset)_ |   No    |               **17.2**                | **79** _(-webkit-mask-box-image-outset)_ | No  |
-     * |                                         |         | 3.1 _(-webkit-mask-box-image-outset)_ |                                          |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-outset
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ <length> | <number> ]{1,4}`
+   *
+   * **Initial value**: `0`
+   *
+   * |                 Chrome                  | Firefox |                Safari                 |                   Edge                   | IE  |
+   * | :-------------------------------------: | :-----: | :-----------------------------------: | :--------------------------------------: | :-: |
+   * | **1** _(-webkit-mask-box-image-outset)_ |   No    |               **17.2**                | **79** _(-webkit-mask-box-image-outset)_ | No  |
+   * |                                         |         | 3.1 _(-webkit-mask-box-image-outset)_ |                                          |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-outset
+   */
   maskBorderOutset: PropFn<CssValueOf<'maskBorderOutset'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ stretch | repeat | round | space ]{1,2}`
-     *
-     * **Initial value**: `stretch`
-     *
-     * |                 Chrome                  | Firefox |                Safari                 |                   Edge                   | IE  |
-     * | :-------------------------------------: | :-----: | :-----------------------------------: | :--------------------------------------: | :-: |
-     * | **1** _(-webkit-mask-box-image-repeat)_ |   No    |               **17.2**                | **79** _(-webkit-mask-box-image-repeat)_ | No  |
-     * |                                         |         | 3.1 _(-webkit-mask-box-image-repeat)_ |                                          |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-repeat
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ stretch | repeat | round | space ]{1,2}`
+   *
+   * **Initial value**: `stretch`
+   *
+   * |                 Chrome                  | Firefox |                Safari                 |                   Edge                   | IE  |
+   * | :-------------------------------------: | :-----: | :-----------------------------------: | :--------------------------------------: | :-: |
+   * | **1** _(-webkit-mask-box-image-repeat)_ |   No    |               **17.2**                | **79** _(-webkit-mask-box-image-repeat)_ | No  |
+   * |                                         |         | 3.1 _(-webkit-mask-box-image-repeat)_ |                                          |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-repeat
+   */
   maskBorderRepeat: PropFn<CssValueOf<'maskBorderRepeat'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `<number-percentage>{1,4} fill?`
-     *
-     * **Initial value**: `0`
-     *
-     * |                 Chrome                 | Firefox |                Safari                |                  Edge                   | IE  |
-     * | :------------------------------------: | :-----: | :----------------------------------: | :-------------------------------------: | :-: |
-     * | **1** _(-webkit-mask-box-image-slice)_ |   No    |               **17.2**               | **79** _(-webkit-mask-box-image-slice)_ | No  |
-     * |                                        |         | 3.1 _(-webkit-mask-box-image-slice)_ |                                         |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-slice
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `<number-percentage>{1,4} fill?`
+   *
+   * **Initial value**: `0`
+   *
+   * |                 Chrome                 | Firefox |                Safari                |                  Edge                   | IE  |
+   * | :------------------------------------: | :-----: | :----------------------------------: | :-------------------------------------: | :-: |
+   * | **1** _(-webkit-mask-box-image-slice)_ |   No    |               **17.2**               | **79** _(-webkit-mask-box-image-slice)_ | No  |
+   * |                                        |         | 3.1 _(-webkit-mask-box-image-slice)_ |                                         |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-slice
+   */
   maskBorderSlice: PropFn<CssValueOf<'maskBorderSlice'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | <image>`
-     *
-     * **Initial value**: `none`
-     *
-     * |                 Chrome                  | Firefox |                Safari                 |                   Edge                   | IE  |
-     * | :-------------------------------------: | :-----: | :-----------------------------------: | :--------------------------------------: | :-: |
-     * | **1** _(-webkit-mask-box-image-source)_ |   No    |               **17.2**                | **79** _(-webkit-mask-box-image-source)_ | No  |
-     * |                                         |         | 3.1 _(-webkit-mask-box-image-source)_ |                                          |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-source
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | <image>`
+   *
+   * **Initial value**: `none`
+   *
+   * |                 Chrome                  | Firefox |                Safari                 |                   Edge                   | IE  |
+   * | :-------------------------------------: | :-----: | :-----------------------------------: | :--------------------------------------: | :-: |
+   * | **1** _(-webkit-mask-box-image-source)_ |   No    |               **17.2**                | **79** _(-webkit-mask-box-image-source)_ | No  |
+   * |                                         |         | 3.1 _(-webkit-mask-box-image-source)_ |                                          |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-source
+   */
   maskBorderSource: PropFn<CssValueOf<'maskBorderSource'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ <length-percentage> | <number> | auto ]{1,4}`
-     *
-     * **Initial value**: `auto`
-     *
-     * |                 Chrome                 | Firefox |                Safari                |                  Edge                   | IE  |
-     * | :------------------------------------: | :-----: | :----------------------------------: | :-------------------------------------: | :-: |
-     * | **1** _(-webkit-mask-box-image-width)_ |   No    |               **17.2**               | **79** _(-webkit-mask-box-image-width)_ | No  |
-     * |                                        |         | 3.1 _(-webkit-mask-box-image-width)_ |                                         |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-width
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ <length-percentage> | <number> | auto ]{1,4}`
+   *
+   * **Initial value**: `auto`
+   *
+   * |                 Chrome                 | Firefox |                Safari                |                  Edge                   | IE  |
+   * | :------------------------------------: | :-----: | :----------------------------------: | :-------------------------------------: | :-: |
+   * | **1** _(-webkit-mask-box-image-width)_ |   No    |               **17.2**               | **79** _(-webkit-mask-box-image-width)_ | No  |
+   * |                                        |         | 3.1 _(-webkit-mask-box-image-width)_ |                                         |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border-width
+   */
   maskBorderWidth: PropFn<CssValueOf<'maskBorderWidth'>>
   /**
    * 蒙版**生效区域**裁剪边界:超出该边界的蒙版部分被裁掉。
@@ -10557,82 +12800,82 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   maskSize: PropFn<CssValueOf<'maskSize'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `luminance | alpha`
-     *
-     * **Initial value**: `luminance`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **24** | **35**  | **7**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-type
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `luminance | alpha`
+   *
+   * **Initial value**: `luminance`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **24** | **35**  | **7**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-type
+   */
   maskType: PropFn<CssValueOf<'maskType'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `[ pack | next ] || [ definite-first | ordered ]`
-     *
-     * **Initial value**: `pack`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `[ pack | next ] || [ definite-first | ordered ]`
+   *
+   * **Initial value**: `pack`
+   */
   masonryAutoFlow: PropFn<CssValueOf<'masonryAutoFlow'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `auto-add | add(<integer>) | <integer>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **109** | **117** |   No   | **109** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/math-depth
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `auto-add | add(<integer>) | <integer>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **109** | **117** |   No   | **109** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/math-depth
+   */
   mathDepth: PropFn<CssValueOf<'mathDepth'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `normal | compact`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **109** |   No    |   No   | **109** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/math-shift
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `normal | compact`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **109** |   No    |   No   | **109** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/math-shift
+   */
   mathShift: PropFn<CssValueOf<'mathShift'>>
   /**
-     * Since August 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `normal | compact`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **109** | **117** | **14.1** | **109** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/math-style
-     */
+   * Since August 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `normal | compact`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **109** | **117** | **14.1** | **109** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/math-style
+   */
   mathStyle: PropFn<CssValueOf<'mathStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'max-width'>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **57** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-block-size
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'max-width'>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **57** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-block-size
+   */
   maxBlockSize: PropFn<CssValueOf<'maxBlockSize'>>
   /**
    * 设置元素的**最大高度**上限。内容超出时通常配合 `overflow: auto/hidden` 截断或滚动。
@@ -10717,27 +12960,33 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-height
    */
-  maxHeight: PropCarrier<CssValueOf<'maxHeight'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
+  maxHeight: PropCarrier<
+    CssValueOf<'maxHeight'>,
+    SizeTokens<T>,
+    'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'max-width'>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |   Safari   |  Edge  | IE  |
-     * | :----: | :-----: | :--------: | :----: | :-: |
-     * | **57** | **41**  |  **12.1**  | **79** | No  |
-     * |        |         | 10.1 _-x-_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-inline-size
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'max-width'>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox |   Safari   |  Edge  | IE  |
+   * | :----: | :-----: | :--------: | :----: | :-: |
+   * | **57** | **41**  |  **12.1**  | **79** | No  |
+   * |        |         | 10.1 _-x-_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-inline-size
+   */
   maxInlineSize: PropFn<CssValueOf<'maxInlineSize'>>
   /**
-     * **Syntax**: `none | <integer>`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `none | <integer>`
+   *
+   * **Initial value**: `none`
+   */
   maxLines: PropFn<CssValueOf<'maxLines'>>
   /**
    * 设置元素的**最大宽度**上限。元素宽度不会超过此值，常用于响应式布局限制内容区最宽。
@@ -10827,20 +13076,26 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/max-width
    */
-  maxWidth: PropCarrier<CssValueOf<'maxWidth'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
+  maxWidth: PropCarrier<
+    CssValueOf<'maxWidth'>,
+    SizeTokens<T>,
+    'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'min-width'>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **57** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-block-size
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'min-width'>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **57** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-block-size
+   */
   minBlockSize: PropFn<CssValueOf<'minBlockSize'>>
   /**
    * 设置元素的**最小高度**下限。内容较少时不会缩到比此高度更小，常用于保证卡片/区块最低高度。
@@ -10923,20 +13178,26 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-height
    */
-  minHeight: PropCarrier<CssValueOf<'minHeight'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
+  minHeight: PropCarrier<
+    CssValueOf<'minHeight'>,
+    SizeTokens<T>,
+    'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'min-width'>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **57** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-inline-size
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'min-width'>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **57** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-inline-size
+   */
   minInlineSize: PropFn<CssValueOf<'minInlineSize'>>
   /**
    * 设置元素的**最小宽度**下限。元素宽度不会缩小到此值以下（即使父容器更窄），可防止内容被压碎。
@@ -11022,7 +13283,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/min-width
    */
-  minWidth: PropCarrier<CssValueOf<'minWidth'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
+  minWidth: PropCarrier<
+    CssValueOf<'minWidth'>,
+    SizeTokens<T>,
+    'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 决定元素**与下层内容**的**混合模式**（不仅是背景之间，还可与父级 / 兄弟元素混合）。
    *
@@ -11108,51 +13375,75 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mix-blend-mode
    */
-  mixBlendMode: PropCarrier<CssValueOf<'mixBlendMode'>, never, 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'colorDodge' | 'colorBurn' | 'hardLight' | 'softLight' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity' | 'plusDarker' | 'plusLighter' | GlobalKw, unknown, never>
+  mixBlendMode: PropCarrier<
+    CssValueOf<'mixBlendMode'>,
+    never,
+    | 'normal'
+    | 'multiply'
+    | 'screen'
+    | 'overlay'
+    | 'darken'
+    | 'lighten'
+    | 'colorDodge'
+    | 'colorBurn'
+    | 'hardLight'
+    | 'softLight'
+    | 'difference'
+    | 'exclusion'
+    | 'hue'
+    | 'saturation'
+    | 'color'
+    | 'luminosity'
+    | 'plusDarker'
+    | 'plusLighter'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `<length-percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * |         Chrome         | Firefox | Safari |  Edge  | IE  |
-     * | :--------------------: | :-----: | :----: | :----: | :-: |
-     * |         **55**         | **72**  | **16** | **79** | No  |
-     * | 46 _(motion-distance)_ |         |        |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-distance
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `<length-percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * |         Chrome         | Firefox | Safari |  Edge  | IE  |
+   * | :--------------------: | :-----: | :----: | :----: | :-: |
+   * |         **55**         | **72**  | **16** | **79** | No  |
+   * | 46 _(motion-distance)_ |         |        |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-distance
+   */
   motionDistance: PropFn<CssValueOf<'motionDistance'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `none | <offset-path> || <coord-box>`
-     *
-     * **Initial value**: `none`
-     *
-     * |       Chrome       | Firefox |  Safari  |  Edge  | IE  |
-     * | :----------------: | :-----: | :------: | :----: | :-: |
-     * |       **55**       | **72**  | **15.4** | **79** | No  |
-     * | 46 _(motion-path)_ |         |          |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-path
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `none | <offset-path> || <coord-box>`
+   *
+   * **Initial value**: `none`
+   *
+   * |       Chrome       | Firefox |  Safari  |  Edge  | IE  |
+   * | :----------------: | :-----: | :------: | :----: | :-: |
+   * |       **55**       | **72**  | **15.4** | **79** | No  |
+   * | 46 _(motion-path)_ |         |          |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-path
+   */
   motionPath: PropFn<CssValueOf<'motionPath'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `[ auto | reverse ] || <angle>`
-     *
-     * **Initial value**: `auto`
-     *
-     * |         Chrome         | Firefox | Safari |  Edge  | IE  |
-     * | :--------------------: | :-----: | :----: | :----: | :-: |
-     * |         **56**         | **72**  | **16** | **79** | No  |
-     * | 46 _(motion-rotation)_ |         |        |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-rotate
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `[ auto | reverse ] || <angle>`
+   *
+   * **Initial value**: `auto`
+   *
+   * |         Chrome         | Firefox | Safari |  Edge  | IE  |
+   * | :--------------------: | :-----: | :----: | :----: | :-: |
+   * |         **56**         | **72**  | **16** | **79** | No  |
+   * | 46 _(motion-rotation)_ |         |        |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-rotate
+   */
   motionRotation: PropFn<CssValueOf<'motionRotation'>>
   /**
    * 决定**替换元素**（`<img>` / `<video>`）的内容如何**适应容器**（拉伸 / 包含 / 覆盖等）。
@@ -11213,7 +13504,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/object-fit
    */
-  objectFit: PropCarrier<CssValueOf<'objectFit'>, never, 'fill' | 'contain' | 'cover' | 'none' | 'scaleDown' | GlobalKw, unknown, never>
+  objectFit: PropCarrier<
+    CssValueOf<'objectFit'>,
+    never,
+    'fill' | 'contain' | 'cover' | 'none' | 'scaleDown' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 决定**替换元素**（`<img>` / `<video>`）内容**在容器中的位置**（配合 `objectFit: cover/contain` 使用）。
    *
@@ -11295,106 +13592,112 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/object-position
    */
-  objectPosition: PropCarrier<CssValueOf<'objectPosition'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits, never>
+  objectPosition: PropCarrier<
+    CssValueOf<'objectPosition'>,
+    never,
+    'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * **Syntax**: `none | <basic-shape-rect>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **104** |   No    |   No   | **104** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/object-view-box
-     */
+   * **Syntax**: `none | <basic-shape-rect>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **104** |   No    |   No   | **104** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/object-view-box
+   */
   objectViewBox: PropFn<CssValueOf<'objectViewBox'>>
   /**
-     * Since August 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `auto | <position>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **116** | **72**  | **16** | **116** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-anchor
-     */
+   * Since August 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `auto | <position>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **116** | **72**  | **16** | **116** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-anchor
+   */
   offsetAnchor: PropFn<CssValueOf<'offsetAnchor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `<length-percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * |         Chrome         | Firefox | Safari |  Edge  | IE  |
-     * | :--------------------: | :-----: | :----: | :----: | :-: |
-     * |         **55**         | **72**  | **16** | **79** | No  |
-     * | 46 _(motion-distance)_ |         |        |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-distance
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `<length-percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * |         Chrome         | Firefox | Safari |  Edge  | IE  |
+   * | :--------------------: | :-----: | :----: | :----: | :-: |
+   * |         **55**         | **72**  | **16** | **79** | No  |
+   * | 46 _(motion-distance)_ |         |        |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-distance
+   */
   offsetDistance: PropFn<CssValueOf<'offsetDistance'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `none | <offset-path> || <coord-box>`
-     *
-     * **Initial value**: `none`
-     *
-     * |       Chrome       | Firefox |  Safari  |  Edge  | IE  |
-     * | :----------------: | :-----: | :------: | :----: | :-: |
-     * |       **55**       | **72**  | **15.4** | **79** | No  |
-     * | 46 _(motion-path)_ |         |          |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-path
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `none | <offset-path> || <coord-box>`
+   *
+   * **Initial value**: `none`
+   *
+   * |       Chrome       | Firefox |  Safari  |  Edge  | IE  |
+   * | :----------------: | :-----: | :------: | :----: | :-: |
+   * |       **55**       | **72**  | **15.4** | **79** | No  |
+   * | 46 _(motion-path)_ |         |          |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-path
+   */
   offsetPath: PropFn<CssValueOf<'offsetPath'>>
   /**
-     * Since January 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `normal | auto | <position>`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **116** | **122** | **16** | **116** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-position
-     */
+   * Since January 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `normal | auto | <position>`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **116** | **122** | **16** | **116** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-position
+   */
   offsetPosition: PropFn<CssValueOf<'offsetPosition'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `[ auto | reverse ] || <angle>`
-     *
-     * **Initial value**: `auto`
-     *
-     * |         Chrome         | Firefox | Safari |  Edge  | IE  |
-     * | :--------------------: | :-----: | :----: | :----: | :-: |
-     * |         **56**         | **72**  | **16** | **79** | No  |
-     * | 46 _(motion-rotation)_ |         |        |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-rotate
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `[ auto | reverse ] || <angle>`
+   *
+   * **Initial value**: `auto`
+   *
+   * |         Chrome         | Firefox | Safari |  Edge  | IE  |
+   * | :--------------------: | :-----: | :----: | :----: | :-: |
+   * |         **56**         | **72**  | **16** | **79** | No  |
+   * | 46 _(motion-rotation)_ |         |        |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-rotate
+   */
   offsetRotate: PropFn<CssValueOf<'offsetRotate'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `[ auto | reverse ] || <angle>`
-     *
-     * **Initial value**: `auto`
-     *
-     * |         Chrome         | Firefox | Safari |  Edge  | IE  |
-     * | :--------------------: | :-----: | :----: | :----: | :-: |
-     * |         **56**         | **72**  | **16** | **79** | No  |
-     * | 46 _(motion-rotation)_ |         |        |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-rotate
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `[ auto | reverse ] || <angle>`
+   *
+   * **Initial value**: `auto`
+   *
+   * |         Chrome         | Firefox | Safari |  Edge  | IE  |
+   * | :--------------------: | :-----: | :----: | :----: | :-: |
+   * |         **56**         | **72**  | **16** | **79** | No  |
+   * | 46 _(motion-rotation)_ |         |        |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset-rotate
+   */
   offsetRotation: PropFn<CssValueOf<'offsetRotation'>>
   /**
    * 设置元素的**整体透明度**（0 完全透明 → 1 完全不透明）。影响整个元素**包括子元素**。
@@ -11520,18 +13823,18 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   order: PropCarrier<CssValueOf<'order'>, never, GlobalKw, unknown, never>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `<integer>`
-     *
-     * **Initial value**: `2`
-     *
-     * | Chrome | Firefox | Safari  |  Edge  |  IE   |
-     * | :----: | :-----: | :-----: | :----: | :---: |
-     * | **25** |   No    | **1.3** | **12** | **8** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/orphans
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `<integer>`
+   *
+   * **Initial value**: `2`
+   *
+   * | Chrome | Firefox | Safari  |  Edge  |  IE   |
+   * | :----: | :-----: | :-----: | :----: | :---: |
+   * | **25** |   No    | **1.3** | **12** | **8** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/orphans
+   */
   orphans: PropFn<CssValueOf<'orphans'>>
   /**
    * 设置元素的**外轮廓 outline 颜色**。outline 不占空间、可跨圆角包绕，常用于焦点态高亮。
@@ -11669,7 +13972,162 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-color
    */
-  outlineColor: ColorPropCarrier<CssValueOf<'outlineColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  outlineColor: ColorPropCarrier<
+    CssValueOf<'outlineColor'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
    * 控制 **outline 与元素边缘的距离**。可为**负值**（outline 缩入元素内部），常用于焦点环呼吸感。
    *
@@ -11820,7 +14278,23 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-style
    */
-  outlineStyle: PropCarrier<CssValueOf<'outlineStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  outlineStyle: PropCarrier<
+    CssValueOf<'outlineStyle'>,
+    never,
+    | 'none'
+    | 'hidden'
+    | 'dotted'
+    | 'dashed'
+    | 'solid'
+    | 'double'
+    | 'groove'
+    | 'ridge'
+    | 'inset'
+    | 'outset'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置 **outline 的宽度**。outline 不占空间，可跨圆角包绕。
    *
@@ -11909,7 +14383,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline-width
    */
-  outlineWidth: PropCarrier<CssValueOf<'outlineWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
+  outlineWidth: PropCarrier<
+    CssValueOf<'outlineWidth'>,
+    BordersTokens<T>,
+    'thin' | 'medium' | 'thick' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 控制**滚动锚定**（scroll anchoring）—— 防止页面顶部加载新内容时**当前可视区跳动**。
    *
@@ -11964,69 +14444,75 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-anchor
    */
-  overflowAnchor: PropCarrier<CssValueOf<'overflowAnchor'>, never, 'auto' | 'none' | GlobalKw, unknown, never>
+  overflowAnchor: PropCarrier<
+    CssValueOf<'overflowAnchor'>,
+    never,
+    'auto' | 'none' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * Since September 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `visible | hidden | clip | scroll | auto`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **135** | **69**  | **26** | **135** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-block
-     */
+   * Since September 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `visible | hidden | clip | scroll | auto`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **135** | **69**  | **26** | **135** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-block
+   */
   overflowBlock: PropFn<CssValueOf<'overflowBlock'>>
   /**
-     * **Syntax**: `padding-box | content-box`
-     *
-     * **Initial value**: `padding-box`
-     */
+   * **Syntax**: `padding-box | content-box`
+   *
+   * **Initial value**: `padding-box`
+   */
   overflowClipBox: PropFn<CssValueOf<'overflowClipBox'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `<visual-box> || <length [0,∞]>`
-     *
-     * **Initial value**: `0px`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **90** | **102** |   No   | **90** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-clip-margin
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `<visual-box> || <length [0,∞]>`
+   *
+   * **Initial value**: `0px`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **90** | **102** |   No   | **90** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-clip-margin
+   */
   overflowClipMargin: PropFn<CssValueOf<'overflowClipMargin'>>
   /**
-     * Since September 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `visible | hidden | clip | scroll | auto`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **135** | **69**  | **26** | **135** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-inline
-     */
+   * Since September 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `visible | hidden | clip | scroll | auto`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **135** | **69**  | **26** | **135** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-inline
+   */
   overflowInline: PropFn<CssValueOf<'overflowInline'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2018.
-     *
-     * **Syntax**: `normal | break-word | anywhere`
-     *
-     * **Initial value**: `normal`
-     *
-     * |     Chrome      |      Firefox      |     Safari      |       Edge       |          IE           |
-     * | :-------------: | :---------------: | :-------------: | :--------------: | :-------------------: |
-     * |     **23**      |      **49**       |      **7**      |      **18**      | **5.5** _(word-wrap)_ |
-     * | 1 _(word-wrap)_ | 3.5 _(word-wrap)_ | 1 _(word-wrap)_ | 12 _(word-wrap)_ |                       |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-wrap
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2018.
+   *
+   * **Syntax**: `normal | break-word | anywhere`
+   *
+   * **Initial value**: `normal`
+   *
+   * |     Chrome      |      Firefox      |     Safari      |       Edge       |          IE           |
+   * | :-------------: | :---------------: | :-------------: | :--------------: | :-------------------: |
+   * |     **23**      |      **49**       |      **7**      |      **18**      | **5.5** _(word-wrap)_ |
+   * | 1 _(word-wrap)_ | 3.5 _(word-wrap)_ | 1 _(word-wrap)_ | 12 _(word-wrap)_ |                       |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-wrap
+   */
   overflowWrap: PropFn<CssValueOf<'overflowWrap'>>
   /**
    * 控制元素**水平方向**内容溢出的处理。其他规则同 [`overflow`]，但只接受单值。
@@ -12099,7 +14585,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-x
    */
-  overflowX: PropCarrier<CssValueOf<'overflowX'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
+  overflowX: PropCarrier<
+    CssValueOf<'overflowX'>,
+    never,
+    'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 控制元素**垂直方向**内容溢出的处理。其他规则同 [`overflow`]，但只接受单值。
    *
@@ -12171,104 +14663,110 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow-y
    */
-  overflowY: PropCarrier<CssValueOf<'overflowY'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
+  overflowY: PropCarrier<
+    CssValueOf<'overflowY'>,
+    never,
+    'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | auto`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **117** |   No    |   No   | **117** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overlay
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | auto`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **117** |   No    |   No   | **117** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overlay
+   */
   overlay: PropFn<CssValueOf<'overlay'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `contain | none | auto`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **77** | **73**  | **16** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-block
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `contain | none | auto`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **77** | **73**  | **16** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-block
+   */
   overscrollBehaviorBlock: PropFn<CssValueOf<'overscrollBehaviorBlock'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `contain | none | auto`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **77** | **73**  | **16** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-inline
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `contain | none | auto`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **77** | **73**  | **16** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-inline
+   */
   overscrollBehaviorInline: PropFn<CssValueOf<'overscrollBehaviorInline'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `contain | none | auto`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **63** | **59**  | **16** | **18** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-x
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `contain | none | auto`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **63** | **59**  | **16** | **18** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-x
+   */
   overscrollBehaviorX: PropFn<CssValueOf<'overscrollBehaviorX'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `contain | none | auto`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **63** | **59**  | **16** | **18** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-y
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `contain | none | auto`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **63** | **59**  | **16** | **18** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior-y
+   */
   overscrollBehaviorY: PropFn<CssValueOf<'overscrollBehaviorY'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'padding-top'>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-block-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'padding-top'>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-block-end
+   */
   paddingBlockEnd: PropFn<CssValueOf<'paddingBlockEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'padding-top'>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-block-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'padding-top'>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-block-start
+   */
   paddingBlockStart: PropFn<CssValueOf<'paddingBlockStart'>>
   /**
    * 设置元素的**下内边距**。⚠️ 百分比参照**父容器宽度**（非高度）。其他规则同 [`padding`]。
@@ -12367,36 +14865,42 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-bottom
    */
-  paddingBottom: PropCarrier<CssValueOf<'paddingBottom'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  paddingBottom: PropCarrier<
+    CssValueOf<'paddingBottom'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'padding-top'>`
-     *
-     * **Initial value**: `0`
-     *
-     * |          Chrome           |        Firefox         |          Safari           |  Edge  | IE  |
-     * | :-----------------------: | :--------------------: | :-----------------------: | :----: | :-: |
-     * |          **69**           |         **41**         |         **12.1**          | **79** | No  |
-     * | 2 _(-webkit-padding-end)_ | 3 _(-moz-padding-end)_ | 3 _(-webkit-padding-end)_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-inline-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'padding-top'>`
+   *
+   * **Initial value**: `0`
+   *
+   * |          Chrome           |        Firefox         |          Safari           |  Edge  | IE  |
+   * | :-----------------------: | :--------------------: | :-----------------------: | :----: | :-: |
+   * |          **69**           |         **41**         |         **12.1**          | **79** | No  |
+   * | 2 _(-webkit-padding-end)_ | 3 _(-moz-padding-end)_ | 3 _(-webkit-padding-end)_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-inline-end
+   */
   paddingInlineEnd: PropFn<CssValueOf<'paddingInlineEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'padding-top'>`
-     *
-     * **Initial value**: `0`
-     *
-     * |           Chrome            |         Firefox          |           Safari            |  Edge  | IE  |
-     * | :-------------------------: | :----------------------: | :-------------------------: | :----: | :-: |
-     * |           **69**            |          **41**          |          **12.1**           | **79** | No  |
-     * | 2 _(-webkit-padding-start)_ | 3 _(-moz-padding-start)_ | 3 _(-webkit-padding-start)_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-inline-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'padding-top'>`
+   *
+   * **Initial value**: `0`
+   *
+   * |           Chrome            |         Firefox          |           Safari            |  Edge  | IE  |
+   * | :-------------------------: | :----------------------: | :-------------------------: | :----: | :-: |
+   * |           **69**            |          **41**          |          **12.1**           | **79** | No  |
+   * | 2 _(-webkit-padding-start)_ | 3 _(-moz-padding-start)_ | 3 _(-webkit-padding-start)_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-inline-start
+   */
   paddingInlineStart: PropFn<CssValueOf<'paddingInlineStart'>>
   /**
    * 设置元素的**左内边距**。其他规则同 [`padding`]。
@@ -12495,7 +14999,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-left
    */
-  paddingLeft: PropCarrier<CssValueOf<'paddingLeft'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  paddingLeft: PropCarrier<
+    CssValueOf<'paddingLeft'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置元素的**右内边距**。其他规则同 [`padding`]。
    *
@@ -12593,7 +15103,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-right
    */
-  paddingRight: PropCarrier<CssValueOf<'paddingRight'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  paddingRight: PropCarrier<
+    CssValueOf<'paddingRight'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 设置元素的**上内边距**。⚠️ 百分比参照**父容器宽度**（非高度），常用于实现固定宽高比容器。其他规则同 [`padding`]。
    *
@@ -12691,34 +15207,40 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-top
    */
-  paddingTop: PropCarrier<CssValueOf<'paddingTop'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  paddingTop: PropCarrier<
+    CssValueOf<'paddingTop'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since February 2023.
-     *
-     * **Syntax**: `auto | <custom-ident>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **85** | **110** | **1**  | **85** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/page
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since February 2023.
+   *
+   * **Syntax**: `auto | <custom-ident>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **85** | **110** | **1**  | **85** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/page
+   */
   page: PropFn<CssValueOf<'page'>>
   /**
-     * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `normal | [ fill || stroke || markers ]`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **123** | **60**  | **11** | **123** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/paint-order
-     */
+   * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `normal | [ fill || stroke || markers ]`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **123** | **60**  | **11** | **123** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/paint-order
+   */
   paintOrder: PropFn<CssValueOf<'paintOrder'>>
   /**
    * 设置 **3D 透视距离** —— 观察者到 Z=0 平面的距离。值越小透视越强烈（夸张），越大越平。设此属性可让子元素的 3D 变换看起来"立体"。
@@ -12814,19 +15336,19 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   perspective: PropCarrier<CssValueOf<'perspective'>, never, 'none' | GlobalKw, LengthUnits, never>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<position>`
-     *
-     * **Initial value**: `50% 50%`
-     *
-     * |  Chrome  | Firefox  | Safari  |  Edge  |   IE   |
-     * | :------: | :------: | :-----: | :----: | :----: |
-     * |  **36**  |  **16**  |  **9**  | **12** | **10** |
-     * | 12 _-x-_ | 10 _-x-_ | 4 _-x-_ |        |        |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/perspective-origin
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<position>`
+   *
+   * **Initial value**: `50% 50%`
+   *
+   * |  Chrome  | Firefox  | Safari  |  Edge  |   IE   |
+   * | :------: | :------: | :-----: | :----: | :----: |
+   * |  **36**  |  **16**  |  **9**  | **12** | **10** |
+   * | 12 _-x-_ | 10 _-x-_ | 4 _-x-_ |        |        |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/perspective-origin
+   */
   perspectiveOrigin: PropFn<CssValueOf<'perspectiveOrigin'>>
   /**
    * 控制元素**是否响应鼠标 / 触摸事件**（点击、hover、拖动）。`none` 让元素**事件穿透**到下方。
@@ -12906,7 +15428,23 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/pointer-events
    */
-  pointerEvents: PropCarrier<CssValueOf<'pointerEvents'>, never, 'none' | 'auto' | 'visiblePainted' | 'visibleFill' | 'visibleStroke' | 'visible' | 'painted' | 'fill' | 'stroke' | 'all' | GlobalKw, unknown, never>
+  pointerEvents: PropCarrier<
+    CssValueOf<'pointerEvents'>,
+    never,
+    | 'none'
+    | 'auto'
+    | 'visiblePainted'
+    | 'visibleFill'
+    | 'visibleStroke'
+    | 'visible'
+    | 'painted'
+    | 'fill'
+    | 'stroke'
+    | 'all'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 决定元素的**定位上下文** —— 影响该元素如何参与文档流，以及 `top` / `right` / `bottom` / `left` / `inset` / `z-index` 是否生效、以谁为基准。
    *
@@ -12985,7 +15523,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position
    */
-  position: PropCarrier<CssValueOf<'position'>, never, 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky' | GlobalKw, unknown, never>
+  position: PropCarrier<
+    CssValueOf<'position'>,
+    never,
+    'static' | 'relative' | 'absolute' | 'fixed' | 'sticky' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 绑定到一个已命名的**锚点元素**，让自己相对该锚点定位（CSS Anchor Positioning，实验性）。
    *
@@ -13029,105 +15573,111 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-anchor
    */
-  positionAnchor: PropCarrier<CssValueOf<'positionAnchor'>, never, 'auto' | GlobalKw, unknown, never>
+  positionAnchor: PropCarrier<
+    CssValueOf<'positionAnchor'>,
+    never,
+    'auto' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | <position-area>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  |   Firefox   | Safari |  Edge   | IE  |
-     * | :-----: | :---------: | :----: | :-----: | :-: |
-     * | **129** | **preview** | **26** | **129** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-area
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | <position-area>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  |   Firefox   | Safari |  Edge   | IE  |
+   * | :-----: | :---------: | :----: | :-----: | :-: |
+   * | **129** | **preview** | **26** | **129** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-area
+   */
   positionArea: PropFn<CssValueOf<'positionArea'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | [ [<dashed-ident> || <try-tactic>] | <'position-area'> ]#`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  |   Firefox   | Safari |  Edge   | IE  |
-     * | :-----: | :---------: | :----: | :-----: | :-: |
-     * | **128** | **preview** | **26** | **128** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-try-fallbacks
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | [ [<dashed-ident> || <try-tactic>] | <'position-area'> ]#`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  |   Firefox   | Safari |  Edge   | IE  |
+   * | :-----: | :---------: | :----: | :-----: | :-: |
+   * | **128** | **preview** | **26** | **128** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-try-fallbacks
+   */
   positionTryFallbacks: PropFn<CssValueOf<'positionTryFallbacks'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `normal | <try-size>`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **125** |   No    | **26** | **125** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-try-order
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `normal | <try-size>`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **125** |   No    | **26** | **125** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-try-order
+   */
   positionTryOrder: PropFn<CssValueOf<'positionTryOrder'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `always | [ anchors-valid || anchors-visible || no-overflow ]`
-     *
-     * **Initial value**: `anchors-visible`
-     *
-     * | Chrome  |   Firefox   | Safari |  Edge   | IE  |
-     * | :-----: | :---------: | :----: | :-----: | :-: |
-     * | **125** | **preview** |   No   | **125** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-visibility
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `always | [ anchors-valid || anchors-visible || no-overflow ]`
+   *
+   * **Initial value**: `anchors-visible`
+   *
+   * | Chrome  |   Firefox   | Safari |  Edge   | IE  |
+   * | :-----: | :---------: | :----: | :-----: | :-: |
+   * | **125** | **preview** |   No   | **125** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-visibility
+   */
   positionVisibility: PropFn<CssValueOf<'positionVisibility'>>
   /**
-     * Since May 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `economy | exact`
-     *
-     * **Initial value**: `economy`
-     *
-     * |  Chrome  |       Firefox       |  Safari  |   Edge   | IE  |
-     * | :------: | :-----------------: | :------: | :------: | :-: |
-     * | **136**  |       **97**        | **15.4** | **136**  | No  |
-     * | 17 _-x-_ | 48 _(color-adjust)_ | 6 _-x-_  | 79 _-x-_ |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/print-color-adjust
-     */
+   * Since May 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `economy | exact`
+   *
+   * **Initial value**: `economy`
+   *
+   * |  Chrome  |       Firefox       |  Safari  |   Edge   | IE  |
+   * | :------: | :-----------------: | :------: | :------: | :-: |
+   * | **136**  |       **97**        | **15.4** | **136**  | No  |
+   * | 17 _-x-_ | 48 _(color-adjust)_ | 6 _-x-_  | 79 _-x-_ |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/print-color-adjust
+   */
   printColorAdjust: PropFn<CssValueOf<'printColorAdjust'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | auto | [ <string> <string> ]+`
-     *
-     * **Initial value**: depends on user agent
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **11** | **1.5** | **9**  | **12** | **8** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/quotes
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | auto | [ <string> <string> ]+`
+   *
+   * **Initial value**: depends on user agent
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **11** | **1.5** | **9**  | **12** | **8** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/quotes
+   */
   quotes: PropFn<CssValueOf<'quotes'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `<length> | <percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **43** | **69**  | **9**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/r
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `<length> | <percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **43** | **69**  | **9**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/r
+   */
   r: PropFn<CssValueOf<'r'>>
   /**
    * 允许用户**手动调整元素尺寸**（拖右下角）。最常用于 `<textarea>` 让用户拖动改大小。
@@ -13190,7 +15740,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/resize
    */
-  resize: PropCarrier<CssValueOf<'resize'>, never, 'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline' | GlobalKw, unknown, never>
+  resize: PropCarrier<
+    CssValueOf<'resize'>,
+    never,
+    'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置定位元素距**右侧**的偏移量。正值向左移（向内缩），负值向右溢出。**只在 `position` 非 `static` 时生效**。其他规则同 [`inset`]。
    *
@@ -13458,81 +16014,87 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/row-gap
    */
-  rowGap: PropCarrier<CssValueOf<'rowGap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits, never>
+  rowGap: PropCarrier<
+    CssValueOf<'rowGap'>,
+    SpacingTokens<T>,
+    'normal' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `start | center | space-between | space-around`
-     *
-     * **Initial value**: `space-around`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **128** | **38**  | **18.2** | **128** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ruby-align
-     */
+   * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `start | center | space-between | space-around`
+   *
+   * **Initial value**: `space-around`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **128** | **38**  | **18.2** | **128** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ruby-align
+   */
   rubyAlign: PropFn<CssValueOf<'rubyAlign'>>
   /**
-     * **Syntax**: `separate | collapse | auto`
-     *
-     * **Initial value**: `separate`
-     */
+   * **Syntax**: `separate | collapse | auto`
+   *
+   * **Initial value**: `separate`
+   */
   rubyMerge: PropFn<CssValueOf<'rubyMerge'>>
   /**
-     * **Syntax**: `auto | none`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  | Edge | IE  |
-     * | :----: | :-----: | :------: | :--: | :-: |
-     * |   No   |   No    | **18.2** |  No  | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ruby-overhang
-     */
+   * **Syntax**: `auto | none`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  | Edge | IE  |
+   * | :----: | :-----: | :------: | :--: | :-: |
+   * |   No   |   No    | **18.2** |  No  | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ruby-overhang
+   */
   rubyOverhang: PropFn<CssValueOf<'rubyOverhang'>>
   /**
-     * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `[ alternate || [ over | under ] ] | inter-character`
-     *
-     * **Initial value**: `alternate`
-     *
-     * | Chrome  | Firefox |  Safari  | Edge  | IE  |
-     * | :-----: | :-----: | :------: | :---: | :-: |
-     * | **84**  | **38**  | **18.2** | 12-79 | No  |
-     * | 1 _-x-_ |         | 7 _-x-_  |       |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ruby-position
-     */
+   * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `[ alternate || [ over | under ] ] | inter-character`
+   *
+   * **Initial value**: `alternate`
+   *
+   * | Chrome  | Firefox |  Safari  | Edge  | IE  |
+   * | :-----: | :-----: | :------: | :---: | :-: |
+   * | **84**  | **38**  | **18.2** | 12-79 | No  |
+   * | 1 _-x-_ |         | 7 _-x-_  |       |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ruby-position
+   */
   rubyPosition: PropFn<CssValueOf<'rubyPosition'>>
   /**
-     * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<length> | <percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **43** | **69**  | **17.4** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/rx
-     */
+   * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `<length> | <percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **43** | **69**  | **17.4** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/rx
+   */
   rx: PropFn<CssValueOf<'rx'>>
   /**
-     * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<length> | <percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **43** | **69**  | **17.4** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ry
-     */
+   * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `<length> | <percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **43** | **69**  | **17.4** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/ry
+   */
   ry: PropFn<CssValueOf<'ry'>>
   /**
    * 设置元素的**缩放比例**（CSS Transforms 2 独立属性）。1.0 = 原始大小，2 = 双倍，0.5 = 一半。
@@ -13666,44 +16228,50 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-behavior
    */
-  scrollBehavior: PropCarrier<CssValueOf<'scrollBehavior'>, never, 'auto' | 'smooth' | GlobalKw, unknown, never>
+  scrollBehavior: PropCarrier<
+    CssValueOf<'scrollBehavior'>,
+    never,
+    'auto' | 'smooth' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * **Syntax**: `none | nearest`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **133** |   No    |   No   | **133** | No  |
-     */
+   * **Syntax**: `none | nearest`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **133** |   No    |   No   | **133** | No  |
+   */
   scrollInitialTarget: PropFn<CssValueOf<'scrollInitialTarget'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **69** | **68**  | **15** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-block-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **69** | **68**  | **15** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-block-end
+   */
   scrollMarginBlockEnd: PropFn<CssValueOf<'scrollMarginBlockEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **69** | **68**  | **15** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-block-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **69** | **68**  | **15** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-block-start
+   */
   scrollMarginBlockStart: PropFn<CssValueOf<'scrollMarginBlockStart'>>
   /**
    * snap 对齐时**下方**的外边距偏移。
@@ -13781,34 +16349,40 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-bottom
    */
-  scrollMarginBottom: PropCarrier<CssValueOf<'scrollMarginBottom'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollMarginBottom: PropCarrier<
+    CssValueOf<'scrollMarginBottom'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **69** | **68**  | **15** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-inline-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **69** | **68**  | **15** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-inline-end
+   */
   scrollMarginInlineEnd: PropFn<CssValueOf<'scrollMarginInlineEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **69** | **68**  | **15** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-inline-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **69** | **68**  | **15** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-inline-start
+   */
   scrollMarginInlineStart: PropFn<CssValueOf<'scrollMarginInlineStart'>>
   /**
    * snap 对齐时**左侧**的外边距偏移。
@@ -13886,7 +16460,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-left
    */
-  scrollMarginLeft: PropCarrier<CssValueOf<'scrollMarginLeft'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollMarginLeft: PropCarrier<
+    CssValueOf<'scrollMarginLeft'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * snap 对齐时**右侧**的外边距偏移。
    *
@@ -13963,7 +16543,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-right
    */
-  scrollMarginRight: PropCarrier<CssValueOf<'scrollMarginRight'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollMarginRight: PropCarrier<
+    CssValueOf<'scrollMarginRight'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * snap 对齐时**上方**的外边距偏移。常用于锚点跳转时避开固定头部。
    *
@@ -14038,34 +16624,40 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-top
    */
-  scrollMarginTop: PropCarrier<CssValueOf<'scrollMarginTop'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollMarginTop: PropCarrier<
+    CssValueOf<'scrollMarginTop'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `auto | <length-percentage>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **69** | **68**  | **15** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-block-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `auto | <length-percentage>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **69** | **68**  | **15** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-block-end
+   */
   scrollPaddingBlockEnd: PropFn<CssValueOf<'scrollPaddingBlockEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `auto | <length-percentage>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **69** | **68**  | **15** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-block-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `auto | <length-percentage>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **69** | **68**  | **15** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-block-start
+   */
   scrollPaddingBlockStart: PropFn<CssValueOf<'scrollPaddingBlockStart'>>
   /**
    * 滚动容器**底部**的内边距偏移。
@@ -14143,34 +16735,40 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-bottom
    */
-  scrollPaddingBottom: PropCarrier<CssValueOf<'scrollPaddingBottom'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollPaddingBottom: PropCarrier<
+    CssValueOf<'scrollPaddingBottom'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `auto | <length-percentage>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **69** | **68**  | **15** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-inline-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `auto | <length-percentage>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **69** | **68**  | **15** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-inline-end
+   */
   scrollPaddingInlineEnd: PropFn<CssValueOf<'scrollPaddingInlineEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
-     *
-     * **Syntax**: `auto | <length-percentage>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **69** | **68**  | **15** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-inline-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2021.
+   *
+   * **Syntax**: `auto | <length-percentage>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **69** | **68**  | **15** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-inline-start
+   */
   scrollPaddingInlineStart: PropFn<CssValueOf<'scrollPaddingInlineStart'>>
   /**
    * 滚动容器**左侧**的内边距偏移。
@@ -14248,7 +16846,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-left
    */
-  scrollPaddingLeft: PropCarrier<CssValueOf<'scrollPaddingLeft'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollPaddingLeft: PropCarrier<
+    CssValueOf<'scrollPaddingLeft'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 滚动容器**右侧**的内边距偏移。
    *
@@ -14325,7 +16929,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-right
    */
-  scrollPaddingRight: PropCarrier<CssValueOf<'scrollPaddingRight'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollPaddingRight: PropCarrier<
+    CssValueOf<'scrollPaddingRight'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 滚动容器**顶部**的内边距偏移。最常用 —— 让出固定头部空间。
    *
@@ -14402,7 +17012,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-top
    */
-  scrollPaddingTop: PropCarrier<CssValueOf<'scrollPaddingTop'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollPaddingTop: PropCarrier<
+    CssValueOf<'scrollPaddingTop'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 在**滚动项**（snap children）上设置**对齐点** —— 滚动停止时该 item 的哪一边对齐到容器边缘。
    *
@@ -14447,66 +17063,72 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-snap-align
    */
-  scrollSnapAlign: PropCarrier<CssValueOf<'scrollSnapAlign'>, never, 'none' | 'start' | 'end' | 'center' | GlobalKw, unknown, never>
+  scrollSnapAlign: PropCarrier<
+    CssValueOf<'scrollSnapAlign'>,
+    never,
+    'none' | 'start' | 'end' | 'center' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |              Safari              |  Edge  | IE  |
-     * | :----: | :-----: | :------------------------------: | :----: | :-: |
-     * | **69** | **68**  |             **14.1**             | **79** | No  |
-     * |        |         | 11 _(scroll-snap-margin-bottom)_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-bottom
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |              Safari              |  Edge  | IE  |
+   * | :----: | :-----: | :------------------------------: | :----: | :-: |
+   * | **69** | **68**  |             **14.1**             | **79** | No  |
+   * |        |         | 11 _(scroll-snap-margin-bottom)_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-bottom
+   */
   scrollSnapMarginBottom: PropFn<CssValueOf<'scrollSnapMarginBottom'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |             Safari             |  Edge  | IE  |
-     * | :----: | :-----: | :----------------------------: | :----: | :-: |
-     * | **69** | **68**  |            **14.1**            | **79** | No  |
-     * |        |         | 11 _(scroll-snap-margin-left)_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-left
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |             Safari             |  Edge  | IE  |
+   * | :----: | :-----: | :----------------------------: | :----: | :-: |
+   * | **69** | **68**  |            **14.1**            | **79** | No  |
+   * |        |         | 11 _(scroll-snap-margin-left)_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-left
+   */
   scrollSnapMarginLeft: PropFn<CssValueOf<'scrollSnapMarginLeft'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |             Safari              |  Edge  | IE  |
-     * | :----: | :-----: | :-----------------------------: | :----: | :-: |
-     * | **69** | **68**  |            **14.1**             | **79** | No  |
-     * |        |         | 11 _(scroll-snap-margin-right)_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-right
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |             Safari              |  Edge  | IE  |
+   * | :----: | :-----: | :-----------------------------: | :----: | :-: |
+   * | **69** | **68**  |            **14.1**             | **79** | No  |
+   * |        |         | 11 _(scroll-snap-margin-right)_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-right
+   */
   scrollSnapMarginRight: PropFn<CssValueOf<'scrollSnapMarginRight'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |            Safari             |  Edge  | IE  |
-     * | :----: | :-----: | :---------------------------: | :----: | :-: |
-     * | **69** | **68**  |           **14.1**            | **79** | No  |
-     * |        |         | 11 _(scroll-snap-margin-top)_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-top
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |            Safari             |  Edge  | IE  |
+   * | :----: | :-----: | :---------------------------: | :----: | :-: |
+   * | **69** | **68**  |           **14.1**            | **79** | No  |
+   * |        |         | 11 _(scroll-snap-margin-top)_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-top
+   */
   scrollSnapMarginTop: PropFn<CssValueOf<'scrollSnapMarginTop'>>
   /**
    * 决定滚动是否**必须停在每个 snap point**（不允许快速滑过多个）。
@@ -14559,7 +17181,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-snap-stop
    */
-  scrollSnapStop: PropCarrier<CssValueOf<'scrollSnapStop'>, never, 'normal' | 'always' | GlobalKw, unknown, never>
+  scrollSnapStop: PropCarrier<
+    CssValueOf<'scrollSnapStop'>,
+    never,
+    'normal' | 'always' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 在**滚动容器**上启用**滚动捕捉** —— 滚动结束时自动对齐到子元素。常用于卡片轮播、全屏滑动。
    *
@@ -14637,172 +17265,178 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-snap-type
    */
-  scrollSnapType: PropCarrier<CssValueOf<'scrollSnapType'>, never, 'none' | 'x' | 'y' | 'block' | 'inline' | 'both' | 'mandatory' | 'proximity' | GlobalKw, unknown, never>
+  scrollSnapType: PropCarrier<
+    CssValueOf<'scrollSnapType'>,
+    never,
+    'none' | 'x' | 'y' | 'block' | 'inline' | 'both' | 'mandatory' | 'proximity' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ block | inline | x | y ]#`
-     *
-     * **Initial value**: `block`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **115** |   No    | **26** | **115** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-timeline-axis
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ block | inline | x | y ]#`
+   *
+   * **Initial value**: `block`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **115** |   No    | **26** | **115** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-timeline-axis
+   */
   scrollTimelineAxis: PropFn<CssValueOf<'scrollTimelineAxis'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ none | <dashed-ident> ]#`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **115** |   No    | **26** | **115** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-timeline-name
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ none | <dashed-ident> ]#`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **115** |   No    | **26** | **115** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-timeline-name
+   */
   scrollTimelineName: PropFn<CssValueOf<'scrollTimelineName'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `auto | <color>{2}`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **121** | **64**  |   No   | **121** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scrollbar-color
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `auto | <color>{2}`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **121** | **64**  |   No   | **121** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scrollbar-color
+   */
   scrollbarColor: PropFn<CssValueOf<'scrollbarColor'>>
   /**
-     * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `auto | stable && both-edges?`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **94** | **97**  | **18.2** | **94** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scrollbar-gutter
-     */
+   * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `auto | stable && both-edges?`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **94** | **97**  | **18.2** | **94** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scrollbar-gutter
+   */
   scrollbarGutter: PropFn<CssValueOf<'scrollbarGutter'>>
   /**
-     * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `auto | thin | none`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **121** | **64**  | **18.2** | **121** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scrollbar-width
-     */
+   * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `auto | thin | none`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **121** | **64**  | **18.2** | **121** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scrollbar-width
+   */
   scrollbarWidth: PropFn<CssValueOf<'scrollbarWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<opacity-value>`
-     *
-     * **Initial value**: `0.0`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **37** | **62**  | **10.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-image-threshold
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<opacity-value>`
+   *
+   * **Initial value**: `0.0`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **37** | **62**  | **10.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-image-threshold
+   */
   shapeImageThreshold: PropFn<CssValueOf<'shapeImageThreshold'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<length-percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **37** | **62**  | **10.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-margin
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<length-percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **37** | **62**  | **10.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-margin
+   */
   shapeMargin: PropFn<CssValueOf<'shapeMargin'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `none | [ <shape-box> || <basic-shape> ] | <image>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **37** | **62**  | **10.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-outside
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `none | [ <shape-box> || <basic-shape> ] | <image>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **37** | **62**  | **10.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-outside
+   */
   shapeOutside: PropFn<CssValueOf<'shapeOutside'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `auto | optimizeSpeed | crispEdges | geometricPrecision`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **1**  |  **3**  | **4**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-rendering
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `auto | optimizeSpeed | crispEdges | geometricPrecision`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **1**  |  **3**  | **4**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/shape-rendering
+   */
   shapeRendering: PropFn<CssValueOf<'shapeRendering'>>
   /**
-     * **Syntax**: `normal | spell-out || digits || [ literal-punctuation | no-punctuation ]`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  | Edge | IE  |
-     * | :----: | :-----: | :------: | :--: | :-: |
-     * |   No   |   No    | **11.1** |  No  | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/speak-as
-     */
+   * **Syntax**: `normal | spell-out || digits || [ literal-punctuation | no-punctuation ]`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  | Edge | IE  |
+   * | :----: | :-----: | :------: | :--: | :-: |
+   * |   No   |   No    | **11.1** |  No  | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/speak-as
+   */
   speakAs: PropFn<CssValueOf<'speakAs'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `<'color'>`
-     *
-     * **Initial value**: `black`
-     *
-     * | Chrome | Firefox | Safari |  Edge   | IE  |
-     * | :----: | :-----: | :----: | :-----: | :-: |
-     * | **1**  |  **3**  | **4**  | **≤15** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stop-color
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `<'color'>`
+   *
+   * **Initial value**: `black`
+   *
+   * | Chrome | Firefox | Safari |  Edge   | IE  |
+   * | :----: | :-----: | :----: | :-----: | :-: |
+   * | **1**  |  **3**  | **4**  | **≤15** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stop-color
+   */
   stopColor: PropFn<CssValueOf<'stopColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `<'opacity'>`
-     *
-     * **Initial value**: `black`
-     *
-     * | Chrome | Firefox | Safari |  Edge   | IE  |
-     * | :----: | :-----: | :----: | :-----: | :-: |
-     * | **1**  |  **3**  | **4**  | **≤15** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stop-opacity
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `<'opacity'>`
+   *
+   * **Initial value**: `black`
+   *
+   * | Chrome | Firefox | Safari |  Edge   | IE  |
+   * | :----: | :-----: | :----: | :-----: | :-: |
+   * | **1**  |  **3**  | **4**  | **≤15** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stop-opacity
+   */
   stopOpacity: PropFn<CssValueOf<'stopOpacity'>>
   /**
    * SVG 专属：设置 SVG 图形的**描边颜色**（线条 / 轮廓）。配合 `stroke-width` 控制粗细。
@@ -14949,16 +17583,171 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke
    */
-  stroke: ColorPropCarrier<CssValueOf<'stroke'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  stroke: ColorPropCarrier<
+    CssValueOf<'stroke'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `transparent`
-     *
-     * | Chrome | Firefox |  Safari  | Edge | IE  |
-     * | :----: | :-----: | :------: | :--: | :-: |
-     * |   No   |   No    | **11.1** |  No  | No  |
-     */
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `transparent`
+   *
+   * | Chrome | Firefox |  Safari  | Edge | IE  |
+   * | :----: | :-----: | :------: | :--: | :-: |
+   * |   No   |   No    | **11.1** |  No  | No  |
+   */
   strokeColor: PropFn<CssValueOf<'strokeColor'>>
   /**
    * SVG 专属：设置**虚线描边**的模式（实线段长度和间隔长度）。可创建虚线、点状线、复杂图案。
@@ -15026,7 +17815,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-dasharray
    */
-  strokeDasharray: PropCarrier<CssValueOf<'strokeDasharray'>, never, 'none' | GlobalKw, unknown, never>
+  strokeDasharray: PropCarrier<
+    CssValueOf<'strokeDasharray'>,
+    never,
+    'none' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * SVG 专属：设置**虚线描边的起始偏移** —— 让虚线从路径的哪个位置开始。常用于实现"画线 / 进度环"动画。
    *
@@ -15175,7 +17970,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-linecap
    */
-  strokeLinecap: PropCarrier<CssValueOf<'strokeLinecap'>, never, 'butt' | 'round' | 'square' | GlobalKw, unknown, never>
+  strokeLinecap: PropCarrier<
+    CssValueOf<'strokeLinecap'>,
+    never,
+    'butt' | 'round' | 'square' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * SVG 专属：决定**描边拐角**的形状（尖角 / 圆角 / 斜切 / 弧形）。
    *
@@ -15246,34 +18047,40 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-linejoin
    */
-  strokeLinejoin: PropCarrier<CssValueOf<'strokeLinejoin'>, never, 'miter' | 'round' | 'bevel' | 'arcs' | 'miterClip' | GlobalKw, unknown, never>
+  strokeLinejoin: PropCarrier<
+    CssValueOf<'strokeLinejoin'>,
+    never,
+    'miter' | 'round' | 'bevel' | 'arcs' | 'miterClip' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `<number>`
-     *
-     * **Initial value**: `4`
-     *
-     * | Chrome | Firefox | Safari |  Edge   | IE  |
-     * | :----: | :-----: | :----: | :-----: | :-: |
-     * | **1**  | **1.5** | **4**  | **≤15** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-miterlimit
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `<number>`
+   *
+   * **Initial value**: `4`
+   *
+   * | Chrome | Firefox | Safari |  Edge   | IE  |
+   * | :----: | :-----: | :----: | :-----: | :-: |
+   * | **1**  | **1.5** | **4**  | **≤15** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-miterlimit
+   */
   strokeMiterlimit: PropFn<CssValueOf<'strokeMiterlimit'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `<'opacity'>`
-     *
-     * **Initial value**: `1`
-     *
-     * | Chrome | Firefox | Safari |  Edge   | IE  |
-     * | :----: | :-----: | :----: | :-----: | :-: |
-     * | **1**  | **1.5** | **4**  | **≤15** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-opacity
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `<'opacity'>`
+   *
+   * **Initial value**: `1`
+   *
+   * | Chrome | Firefox | Safari |  Edge   | IE  |
+   * | :----: | :-----: | :----: | :-----: | :-: |
+   * | **1**  | **1.5** | **4**  | **≤15** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-opacity
+   */
   strokeOpacity: PropFn<CssValueOf<'strokeOpacity'>>
   /**
    * SVG 专属：设置图形**描边的粗细**。仅在 SVG 元素（`<path>` / `<circle>` 等）上生效。
@@ -15361,21 +18168,27 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/stroke-width
    */
-  strokeWidth: PropCarrier<CssValueOf<'strokeWidth'>, BordersTokens<T>, GlobalKw, LengthUnits, never>
+  strokeWidth: PropCarrier<
+    CssValueOf<'strokeWidth'>,
+    BordersTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2021.
-     *
-     * **Syntax**: `<integer> | <length>`
-     *
-     * **Initial value**: `8`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **21** | **91**  | **7**  | **79** | No  |
-     * |        | 4 _-x-_ |        |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/tab-size
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2021.
+   *
+   * **Syntax**: `<integer> | <length>`
+   *
+   * **Initial value**: `8`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **21** | **91**  | **7**  | **79** | No  |
+   * |        | 4 _-x-_ |        |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/tab-size
+   */
   tabSize: PropFn<CssValueOf<'tabSize'>>
   /**
    * 决定 `<table>` 列宽**算法**。
@@ -15428,7 +18241,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/table-layout
    */
-  tableLayout: PropCarrier<CssValueOf<'tableLayout'>, never, 'auto' | 'fixed' | GlobalKw, unknown, never>
+  tableLayout: PropCarrier<
+    CssValueOf<'tableLayout'>,
+    never,
+    'auto' | 'fixed' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置文本**水平对齐方式** —— 左对齐、居中、右对齐、两端对齐等。
    *
@@ -15496,99 +18315,113 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-align
    */
-  textAlign: PropCarrier<CssValueOf<'textAlign'>, never, 'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'matchParent' | 'justifyAll' | GlobalKw, unknown, never>
+  textAlign: PropCarrier<
+    CssValueOf<'textAlign'>,
+    never,
+    | 'left'
+    | 'right'
+    | 'center'
+    | 'justify'
+    | 'start'
+    | 'end'
+    | 'matchParent'
+    | 'justifyAll'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `auto | start | end | left | right | center | justify`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |   IE    |
-     * | :----: | :-----: | :----: | :----: | :-----: |
-     * | **47** | **49**  | **16** | **12** | **5.5** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-align-last
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `auto | start | end | left | right | center | justify`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |   IE    |
+   * | :----: | :-----: | :----: | :----: | :-----: |
+   * | **47** | **49**  | **16** | **12** | **5.5** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-align-last
+   */
   textAlignLast: PropFn<CssValueOf<'textAlignLast'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2016.
-     *
-     * **Syntax**: `start | middle | end`
-     *
-     * **Initial value**: `start`
-     *
-     * | Chrome | Firefox | Safari |  Edge   | IE  |
-     * | :----: | :-----: | :----: | :-----: | :-: |
-     * | **1**  |  **3**  | **4**  | **≤14** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-anchor
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2016.
+   *
+   * **Syntax**: `start | middle | end`
+   *
+   * **Initial value**: `start`
+   *
+   * | Chrome | Firefox | Safari |  Edge   | IE  |
+   * | :----: | :-----: | :----: | :-----: | :-: |
+   * | **1**  |  **3**  | **4**  | **≤14** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-anchor
+   */
   textAnchor: PropFn<CssValueOf<'textAnchor'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `normal | <autospace> | auto`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **140** | **145** | **18.4** | **140** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-autospace
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `normal | <autospace> | auto`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **140** | **145** | **18.4** | **140** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-autospace
+   */
   textAutospace: PropFn<CssValueOf<'textAutospace'>>
   /**
-     * **Syntax**: `normal | <'text-box-trim'> || <'text-box-edge'>`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **133** |   No    | **18.2** | **133** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-box
-     */
+   * **Syntax**: `normal | <'text-box-trim'> || <'text-box-edge'>`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **133** |   No    | **18.2** | **133** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-box
+   */
   textBox: PropFn<CssValueOf<'textBox'>>
   /**
-     * **Syntax**: `auto | <text-edge>`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **133** |   No    | **18.2** | **133** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-box-edge
-     */
+   * **Syntax**: `auto | <text-edge>`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **133** |   No    | **18.2** | **133** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-box-edge
+   */
   textBoxEdge: PropFn<CssValueOf<'textBoxEdge'>>
   /**
-     * **Syntax**: `none | trim-start | trim-end | trim-both`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **133** |   No    | **18.2** | **133** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-box-trim
-     */
+   * **Syntax**: `none | trim-start | trim-end | trim-both`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **133** |   No    | **18.2** | **133** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-box-trim
+   */
   textBoxTrim: PropFn<CssValueOf<'textBoxTrim'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `none | all | [ digits <integer>? ]`
-     *
-     * **Initial value**: `none`
-     *
-     * |           Chrome           | Firefox |            Safari            |  Edge  |                   IE                   |
-     * | :------------------------: | :-----: | :--------------------------: | :----: | :------------------------------------: |
-     * |           **48**           | **48**  |           **15.4**           | **79** | **11** _(-ms-text-combine-horizontal)_ |
-     * | 9 _(-webkit-text-combine)_ |         | 5.1 _(-webkit-text-combine)_ |        |                                        |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-combine-upright
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `none | all | [ digits <integer>? ]`
+   *
+   * **Initial value**: `none`
+   *
+   * |           Chrome           | Firefox |            Safari            |  Edge  |                   IE                   |
+   * | :------------------------: | :-----: | :--------------------------: | :----: | :------------------------------------: |
+   * |           **48**           | **48**  |           **15.4**           | **79** | **11** _(-ms-text-combine-horizontal)_ |
+   * | 9 _(-webkit-text-combine)_ |         | 5.1 _(-webkit-text-combine)_ |        |                                        |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-combine-upright
+   */
   textCombineUpright: PropFn<CssValueOf<'textCombineUpright'>>
   /**
    * 设置**文本装饰线**（下划线 / 删除线 / 上划线）的颜色。未设置时跟随 `color`。
@@ -15720,7 +18553,162 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-color
    */
-  textDecorationColor: ColorPropCarrier<CssValueOf<'textDecorationColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  textDecorationColor: ColorPropCarrier<
+    CssValueOf<'textDecorationColor'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
    * 设置**文本装饰线**的类型（下划线 / 删除线 / 上划线 / 拼写错误）。可多选叠加。
    *
@@ -15789,35 +18777,41 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-line
    */
-  textDecorationLine: PropCarrier<CssValueOf<'textDecorationLine'>, never, 'none' | 'underline' | 'overline' | 'lineThrough' | 'spellingError' | 'grammarError' | GlobalKw, unknown, never>
+  textDecorationLine: PropCarrier<
+    CssValueOf<'textDecorationLine'>,
+    never,
+    'none' | 'underline' | 'overline' | 'lineThrough' | 'spellingError' | 'grammarError' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | [ objects || [ spaces | [ leading-spaces || trailing-spaces ] ] || edges || box-decoration ]`
-     *
-     * **Initial value**: `objects`
-     *
-     * | Chrome | Firefox |  Safari  | Edge | IE  |
-     * | :----: | :-----: | :------: | :--: | :-: |
-     * | 57-64  |   No    | **12.1** |  No  | No  |
-     * |        |         | 7 _-x-_  |      |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-skip
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | [ objects || [ spaces | [ leading-spaces || trailing-spaces ] ] || edges || box-decoration ]`
+   *
+   * **Initial value**: `objects`
+   *
+   * | Chrome | Firefox |  Safari  | Edge | IE  |
+   * | :----: | :-----: | :------: | :--: | :-: |
+   * | 57-64  |   No    | **12.1** |  No  | No  |
+   * |        |         | 7 _-x-_  |      |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-skip
+   */
   textDecorationSkip: PropFn<CssValueOf<'textDecorationSkip'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `auto | all | none`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **64** | **70**  | **15.4** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-skip-ink
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `auto | all | none`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **64** | **70**  | **15.4** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-skip-ink
+   */
   textDecorationSkipInk: PropFn<CssValueOf<'textDecorationSkipInk'>>
   /**
    * 设置文本装饰线的**样式**（实线 / 虚线 / 双线 / 波浪线）。
@@ -15864,7 +18858,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-style
    */
-  textDecorationStyle: PropCarrier<CssValueOf<'textDecorationStyle'>, never, 'solid' | 'double' | 'dotted' | 'dashed' | 'wavy' | GlobalKw, unknown, never>
+  textDecorationStyle: PropCarrier<
+    CssValueOf<'textDecorationStyle'>,
+    never,
+    'solid' | 'double' | 'dotted' | 'dashed' | 'wavy' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置文本装饰线的**粗细**。可精细控制下划线 / 删除线粗细。
    *
@@ -15942,51 +18942,57 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration-thickness
    */
-  textDecorationThickness: PropCarrier<CssValueOf<'textDecorationThickness'>, never, 'auto' | 'fromFont' | GlobalKw, LengthUnits, never>
+  textDecorationThickness: PropCarrier<
+    CssValueOf<'textDecorationThickness'>,
+    never,
+    'auto' | 'fromFont' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `currentcolor`
-     *
-     * |  Chrome  | Firefox | Safari |   Edge   | IE  |
-     * | :------: | :-----: | :----: | :------: | :-: |
-     * |  **99**  | **46**  | **7**  |  **99**  | No  |
-     * | 25 _-x-_ |         |        | 79 _-x-_ |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis-color
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `currentcolor`
+   *
+   * |  Chrome  | Firefox | Safari |   Edge   | IE  |
+   * | :------: | :-----: | :----: | :------: | :-: |
+   * |  **99**  | **46**  | **7**  |  **99**  | No  |
+   * | 25 _-x-_ |         |        | 79 _-x-_ |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis-color
+   */
   textEmphasisColor: PropFn<CssValueOf<'textEmphasisColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `auto | [ over | under ] && [ right | left ]?`
-     *
-     * **Initial value**: `auto`
-     *
-     * |  Chrome  | Firefox | Safari |   Edge   | IE  |
-     * | :------: | :-----: | :----: | :------: | :-: |
-     * |  **99**  | **46**  | **7**  |  **99**  | No  |
-     * | 25 _-x-_ |         |        | 79 _-x-_ |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis-position
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `auto | [ over | under ] && [ right | left ]?`
+   *
+   * **Initial value**: `auto`
+   *
+   * |  Chrome  | Firefox | Safari |   Edge   | IE  |
+   * | :------: | :-----: | :----: | :------: | :-: |
+   * |  **99**  | **46**  | **7**  |  **99**  | No  |
+   * | 25 _-x-_ |         |        | 79 _-x-_ |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis-position
+   */
   textEmphasisPosition: PropFn<CssValueOf<'textEmphasisPosition'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `none | [ [ filled | open ] || [ dot | circle | double-circle | triangle | sesame ] ] | <string>`
-     *
-     * **Initial value**: `none`
-     *
-     * |  Chrome  | Firefox | Safari |   Edge   | IE  |
-     * | :------: | :-----: | :----: | :------: | :-: |
-     * |  **99**  | **46**  | **7**  |  **99**  | No  |
-     * | 25 _-x-_ |         |        | 79 _-x-_ |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis-style
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `none | [ [ filled | open ] || [ dot | circle | double-circle | triangle | sesame ] ] | <string>`
+   *
+   * **Initial value**: `none`
+   *
+   * |  Chrome  | Firefox | Safari |   Edge   | IE  |
+   * | :------: | :-----: | :----: | :------: | :-: |
+   * |  **99**  | **46**  | **7**  |  **99**  | No  |
+   * | 25 _-x-_ |         |        | 79 _-x-_ |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis-style
+   */
   textEmphasisStyle: PropFn<CssValueOf<'textEmphasisStyle'>>
   /**
    * 设置**首行缩进** —— 段落第一行的左侧（或 LTR/RTL 起点侧）额外缩进。中文排版常用 2 字符。
@@ -16070,18 +19076,18 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   textIndent: PropCarrier<CssValueOf<'textIndent'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `auto | inter-character | inter-word | none`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari | Edge  |   IE   |
-     * | :----: | :-----: | :----: | :---: | :----: |
-     * |   No   | **55**  |   No   | 12-79 | **11** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-justify
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `auto | inter-character | inter-word | none`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari | Edge  |   IE   |
+   * | :----: | :-----: | :----: | :---: | :----: |
+   * |   No   | **55**  |   No   | 12-79 | **11** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-justify
+   */
   textJustify: PropFn<CssValueOf<'textJustify'>>
   /**
    * 在竖排书写（`writingMode: verticalRl/verticalLr`）时，控制单个**字符的朝向**。
@@ -16126,7 +19132,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-orientation
    */
-  textOrientation: PropCarrier<CssValueOf<'textOrientation'>, never, 'mixed' | 'upright' | 'sideways' | GlobalKw, unknown, never>
+  textOrientation: PropCarrier<
+    CssValueOf<'textOrientation'>,
+    never,
+    'mixed' | 'upright' | 'sideways' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 决定**溢出文本**的处理方式（截断或省略号）。需配合 `overflow: hidden` + `whiteSpace: nowrap`（或 line-clamp）才生效。
    *
@@ -16189,20 +19201,26 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-overflow
    */
-  textOverflow: PropCarrier<CssValueOf<'textOverflow'>, never, 'clip' | 'ellipsis' | GlobalKw, unknown, never>
+  textOverflow: PropCarrier<
+    CssValueOf<'textOverflow'>,
+    never,
+    'clip' | 'ellipsis' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `auto | optimizeSpeed | optimizeLegibility | geometricPrecision`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **4**  |  **1**  | **5**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-rendering
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `auto | optimizeSpeed | optimizeLegibility | geometricPrecision`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **4**  |  **1**  | **5**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-rendering
+   */
   textRendering: PropFn<CssValueOf<'textRendering'>>
   /**
    * 给**文字**添加阴影。比 `boxShadow` 简化，**无 `spread`，无 `inset`**。可叠加多组。
@@ -16276,34 +19294,40 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-shadow
    */
-  textShadow: PropCarrier<CssValueOf<'textShadow'>, ShadowTokens<T>, 'none' | GlobalKw, unknown, never>
+  textShadow: PropCarrier<
+    CssValueOf<'textShadow'>,
+    ShadowTokens<T>,
+    'none' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | auto | <percentage>`
-     *
-     * **Initial value**: `auto` for smartphone browsers supporting inflation, `none` in other cases (and then not modifiable).
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **54** |   No    |   No   | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-size-adjust
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | auto | <percentage>`
+   *
+   * **Initial value**: `auto` for smartphone browsers supporting inflation, `none` in other cases (and then not modifiable).
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **54** |   No    |   No   | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-size-adjust
+   */
   textSizeAdjust: PropFn<CssValueOf<'textSizeAdjust'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `space-all | normal | space-first | trim-start`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **123** |   No    |   No   | **123** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-spacing-trim
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `space-all | normal | space-first | trim-start`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **123** |   No    |   No   | **123** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-spacing-trim
+   */
   textSpacingTrim: PropFn<CssValueOf<'textSpacingTrim'>>
   /**
    * 控制文字的**大小写转换** / 全角半角转换（不修改 DOM，仅显示层变换）。
@@ -16364,77 +19388,90 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-transform
    */
-  textTransform: PropCarrier<CssValueOf<'textTransform'>, never, 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'fullWidth' | 'fullSizeKana' | 'mathAuto' | GlobalKw, unknown, never>
+  textTransform: PropCarrier<
+    CssValueOf<'textTransform'>,
+    never,
+    | 'none'
+    | 'capitalize'
+    | 'uppercase'
+    | 'lowercase'
+    | 'fullWidth'
+    | 'fullSizeKana'
+    | 'mathAuto'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2020.
-     *
-     * **Syntax**: `auto | <length> | <percentage> `
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **70**  | **12.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-underline-offset
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2020.
+   *
+   * **Syntax**: `auto | <length> | <percentage> `
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **70**  | **12.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-underline-offset
+   */
   textUnderlineOffset: PropFn<CssValueOf<'textUnderlineOffset'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `auto | from-font | [ under || [ left | right ] ]`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  |  IE   |
-     * | :----: | :-----: | :------: | :----: | :---: |
-     * | **33** | **74**  | **12.1** | **12** | **6** |
-     * |        |         | 9 _-x-_  |        |       |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-underline-position
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `auto | from-font | [ under || [ left | right ] ]`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  |  IE   |
+   * | :----: | :-----: | :------: | :----: | :---: |
+   * | **33** | **74**  | **12.1** | **12** | **6** |
+   * |        |         | 9 _-x-_  |        |       |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-underline-position
+   */
   textUnderlinePosition: PropFn<CssValueOf<'textUnderlinePosition'>>
   /**
-     * Since October 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `wrap | nowrap`
-     *
-     * **Initial value**: `wrap`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **130** | **124** | **17.4** | **130** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-wrap-mode
-     */
+   * Since October 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `wrap | nowrap`
+   *
+   * **Initial value**: `wrap`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **130** | **124** | **17.4** | **130** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-wrap-mode
+   */
   textWrapMode: PropFn<CssValueOf<'textWrapMode'>>
   /**
-     * Since October 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `auto | balance | stable | pretty`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **130** | **124** | **17.5** | **130** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-wrap-style
-     */
+   * Since October 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `auto | balance | stable | pretty`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **130** | **124** | **17.5** | **130** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-wrap-style
+   */
   textWrapStyle: PropFn<CssValueOf<'textWrapStyle'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | <dashed-ident>#`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **116** |   No    | **26** | **116** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/timeline-scope
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | <dashed-ident>#`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **116** |   No    | **26** | **116** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/timeline-scope
+   */
   timelineScope: PropFn<CssValueOf<'timelineScope'>>
   /**
    * 设置定位元素距**顶部**的偏移量。正值向下移，负值向上移。**只在 `position` 非 `static` 时生效**。其他规则同 [`inset`]。
@@ -16601,35 +19638,51 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/touch-action
    */
-  touchAction: PropCarrier<CssValueOf<'touchAction'>, never, 'auto' | 'none' | 'panX' | 'panY' | 'panLeft' | 'panRight' | 'panUp' | 'panDown' | 'pinchZoom' | 'manipulation' | GlobalKw, unknown, never>
+  touchAction: PropCarrier<
+    CssValueOf<'touchAction'>,
+    never,
+    | 'auto'
+    | 'none'
+    | 'panX'
+    | 'panY'
+    | 'panLeft'
+    | 'panRight'
+    | 'panUp'
+    | 'panDown'
+    | 'pinchZoom'
+    | 'manipulation'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | <transform-list>`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  |  Firefox  |  Safari   |  Edge  |   IE    |
-     * | :-----: | :-------: | :-------: | :----: | :-----: |
-     * | **36**  |  **16**   |   **9**   | **12** | **10**  |
-     * | 1 _-x-_ | 3.5 _-x-_ | 3.1 _-x-_ |        | 9 _-x-_ |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | <transform-list>`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  |  Firefox  |  Safari   |  Edge  |   IE    |
+   * | :-----: | :-------: | :-------: | :----: | :-----: |
+   * | **36**  |  **16**   |   **9**   | **12** | **10**  |
+   * | 1 _-x-_ | 3.5 _-x-_ | 3.1 _-x-_ |        | 9 _-x-_ |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform
+   */
   transform: PropFn<CssValueOf<'transform'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `content-box | border-box | fill-box | stroke-box | view-box`
-     *
-     * **Initial value**: `view-box`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **64** | **55**  | **11** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform-box
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `content-box | border-box | fill-box | stroke-box | view-box`
+   *
+   * **Initial value**: `view-box`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **64** | **55**  | **11** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform-box
+   */
   transformBox: PropFn<CssValueOf<'transformBox'>>
   /**
    * 设置 `transform` 变换的**原点位置** —— 旋转/缩放围绕哪个点进行。默认元素中心 (50% 50%)。
@@ -16725,35 +19778,41 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform-origin
    */
-  transformOrigin: PropCarrier<CssValueOf<'transformOrigin'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits, never>
+  transformOrigin: PropCarrier<
+    CssValueOf<'transformOrigin'>,
+    never,
+    'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `flat | preserve-3d`
-     *
-     * **Initial value**: `flat`
-     *
-     * |  Chrome  | Firefox  | Safari  |  Edge  | IE  |
-     * | :------: | :------: | :-----: | :----: | :-: |
-     * |  **36**  |  **16**  |  **9**  | **12** | No  |
-     * | 12 _-x-_ | 10 _-x-_ | 4 _-x-_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform-style
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `flat | preserve-3d`
+   *
+   * **Initial value**: `flat`
+   *
+   * |  Chrome  | Firefox  | Safari  |  Edge  | IE  |
+   * | :------: | :------: | :-----: | :----: | :-: |
+   * |  **36**  |  **16**  |  **9**  | **12** | No  |
+   * | 12 _-x-_ | 10 _-x-_ | 4 _-x-_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transform-style
+   */
   transformStyle: PropFn<CssValueOf<'transformStyle'>>
   /**
-     * Since August 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<transition-behavior-value>#`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **117** | **129** | **17.4** | **117** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-behavior
-     */
+   * Since August 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `<transition-behavior-value>#`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **117** | **129** | **17.4** | **117** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-behavior
+   */
   transitionBehavior: PropFn<CssValueOf<'transitionBehavior'>>
   /**
    * 设置 CSS 过渡**开始前的延迟**。可为负值（让过渡从中间状态开始）。
@@ -16810,7 +19869,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-delay
    */
-  transitionDelay: PropCarrier<CssValueOf<'transitionDelay'>, DurationTokens<T>, GlobalKw, TimeUnits, never>
+  transitionDelay: PropCarrier<
+    CssValueOf<'transitionDelay'>,
+    DurationTokens<T>,
+    GlobalKw,
+    TimeUnits,
+    never
+  >
   /**
    * 设置 CSS 过渡（`transition`）的**持续时间**。0 表示无过渡（即时变化）。
    *
@@ -16871,7 +19936,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-duration
    */
-  transitionDuration: PropCarrier<CssValueOf<'transitionDuration'>, DurationTokens<T>, GlobalKw, TimeUnits, never>
+  transitionDuration: PropCarrier<
+    CssValueOf<'transitionDuration'>,
+    DurationTokens<T>,
+    GlobalKw,
+    TimeUnits,
+    never
+  >
   /**
    * 指定**哪些 CSS 属性**要应用过渡动画。可以是单个属性名、多个属性名、或 `all` / `none`。
    *
@@ -16947,7 +20018,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-property
    */
-  transitionProperty: PropCarrier<CssValueOf<'transitionProperty'>, TransitionPropertyTokens<T>, 'none' | 'all' | GlobalKw, unknown, never>
+  transitionProperty: PropCarrier<
+    CssValueOf<'transitionProperty'>,
+    TransitionPropertyTokens<T>,
+    'none' | 'all' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置 CSS 过渡的**速率曲线**（缓动函数）—— 决定过渡是匀速、加速、减速还是阶梯式。
    *
@@ -17018,7 +20095,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition-timing-function
    */
-  transitionTimingFunction: PropCarrier<CssValueOf<'transitionTimingFunction'>, EasingTokens<T>, 'linear' | 'ease' | 'easeIn' | 'easeOut' | 'easeInOut' | 'stepStart' | 'stepEnd' | GlobalKw, unknown, never>
+  transitionTimingFunction: PropCarrier<
+    CssValueOf<'transitionTimingFunction'>,
+    EasingTokens<T>,
+    'linear' | 'ease' | 'easeIn' | 'easeOut' | 'easeInOut' | 'stepStart' | 'stepEnd' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置元素的**平移量**（CSS Transforms 2 独立属性）。等价于 `transform: translate()`，可单独动画化。
    *
@@ -17116,18 +20199,18 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   translate: PropCarrier<CssValueOf<'translate'>, never, 'none' | GlobalKw, LengthUnits, never>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `normal | embed | isolate | bidi-override | isolate-override | plaintext`
-     *
-     * **Initial value**: `normal`
-     *
-     * | Chrome | Firefox | Safari  |  Edge  |   IE    |
-     * | :----: | :-----: | :-----: | :----: | :-----: |
-     * | **2**  |  **1**  | **1.3** | **12** | **5.5** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/unicode-bidi
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `normal | embed | isolate | bidi-override | isolate-override | plaintext`
+   *
+   * **Initial value**: `normal`
+   *
+   * | Chrome | Firefox | Safari  |  Edge  |   IE    |
+   * | :----: | :-----: | :-----: | :----: | :-----: |
+   * | **2**  |  **1**  | **1.3** | **12** | **5.5** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/unicode-bidi
+   */
   unicodeBidi: PropFn<CssValueOf<'unicodeBidi'>>
   /**
    * 控制文本是否**可被用户选中**（鼠标拖选、键盘 Ctrl+A 等）。
@@ -17190,102 +20273,108 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/user-select
    */
-  userSelect: PropCarrier<CssValueOf<'userSelect'>, never, 'none' | 'auto' | 'text' | 'all' | 'contain' | GlobalKw, unknown, never>
+  userSelect: PropCarrier<
+    CssValueOf<'userSelect'>,
+    never,
+    'none' | 'auto' | 'text' | 'all' | 'contain' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `none | non-scaling-stroke | non-scaling-size | non-rotation | fixed-position`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox | Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :-----: | :----: | :-: |
-     * | **6**  | **15**  | **5.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/vector-effect
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `none | non-scaling-stroke | non-scaling-size | non-rotation | fixed-position`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox | Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :-----: | :----: | :-: |
+   * | **6**  | **15**  | **5.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/vector-effect
+   */
   vectorEffect: PropFn<CssValueOf<'vectorEffect'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `baseline | sub | super | text-top | text-bottom | middle | top | bottom | <percentage> | <length>`
-     *
-     * **Initial value**: `baseline`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **4** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/vertical-align
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `baseline | sub | super | text-top | text-bottom | middle | top | bottom | <percentage> | <length>`
+   *
+   * **Initial value**: `baseline`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **4** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/vertical-align
+   */
   verticalAlign: PropFn<CssValueOf<'verticalAlign'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ block | inline | x | y ]#`
-     *
-     * **Initial value**: `block`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **115** |   No    | **26** | **115** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline-axis
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ block | inline | x | y ]#`
+   *
+   * **Initial value**: `block`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **115** |   No    | **26** | **115** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline-axis
+   */
   viewTimelineAxis: PropFn<CssValueOf<'viewTimelineAxis'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ [ auto | <length-percentage> ]{1,2} ]#`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **115** |   No    | **26** | **115** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline-inset
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ [ auto | <length-percentage> ]{1,2} ]#`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **115** |   No    | **26** | **115** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline-inset
+   */
   viewTimelineInset: PropFn<CssValueOf<'viewTimelineInset'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ none | <dashed-ident> ]#`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **115** |   No    | **26** | **115** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline-name
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ none | <dashed-ident> ]#`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **115** |   No    | **26** | **115** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline-name
+   */
   viewTimelineName: PropFn<CssValueOf<'viewTimelineName'>>
   /**
-     * **Syntax**: `none | <custom-ident>+`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **125** | **144** | **18.2** | **125** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-transition-class
-     */
+   * **Syntax**: `none | <custom-ident>+`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **125** | **144** | **18.2** | **125** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-transition-class
+   */
   viewTransitionClass: PropFn<CssValueOf<'viewTransitionClass'>>
   /**
-     * Since October 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `none | <custom-ident> | match-element`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **111** | **144** | **18** | **111** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-transition-name
-     */
+   * Since October 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `none | <custom-ident> | match-element`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **111** | **144** | **18** | **111** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-transition-name
+   */
   viewTransitionName: PropFn<CssValueOf<'viewTransitionName'>>
   /**
    * 控制元素是否**可见**（但仍占空间，与 `display: none` 不同）。还可用于表格行 / 列的隐藏。
@@ -17351,7 +20440,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/visibility
    */
-  visibility: PropCarrier<CssValueOf<'visibility'>, never, 'visible' | 'hidden' | 'collapse' | GlobalKw, unknown, never>
+  visibility: PropCarrier<
+    CssValueOf<'visibility'>,
+    never,
+    'visible' | 'hidden' | 'collapse' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 控制文本中**空白字符**（空格、换行、tab）的处理 + 是否换行。CSS 中最容易混淆的属性之一。
    *
@@ -17419,34 +20514,48 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/white-space
    */
-  whiteSpace: PropCarrier<CssValueOf<'whiteSpace'>, never, 'normal' | 'nowrap' | 'pre' | 'preWrap' | 'preLine' | 'breakSpaces' | 'wrap' | 'collapse' | GlobalKw, unknown, never>
+  whiteSpace: PropCarrier<
+    CssValueOf<'whiteSpace'>,
+    never,
+    | 'normal'
+    | 'nowrap'
+    | 'pre'
+    | 'preWrap'
+    | 'preLine'
+    | 'breakSpaces'
+    | 'wrap'
+    | 'collapse'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `collapse | preserve | preserve-breaks | preserve-spaces | break-spaces`
-     *
-     * **Initial value**: `collapse`
-     *
-     * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
-     * | :-----: | :-----: | :------: | :-----: | :-: |
-     * | **114** | **124** | **17.4** | **114** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/white-space-collapse
-     */
+   * Since March 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `collapse | preserve | preserve-breaks | preserve-spaces | break-spaces`
+   *
+   * **Initial value**: `collapse`
+   *
+   * | Chrome  | Firefox |  Safari  |  Edge   | IE  |
+   * | :-----: | :-----: | :------: | :-----: | :-: |
+   * | **114** | **124** | **17.4** | **114** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/white-space-collapse
+   */
   whiteSpaceCollapse: PropFn<CssValueOf<'whiteSpaceCollapse'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `<integer>`
-     *
-     * **Initial value**: `2`
-     *
-     * | Chrome | Firefox | Safari  |  Edge  |  IE   |
-     * | :----: | :-----: | :-----: | :----: | :---: |
-     * | **25** |   No    | **1.3** | **12** | **8** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/widows
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `<integer>`
+   *
+   * **Initial value**: `2`
+   *
+   * | Chrome | Firefox | Safari  |  Edge  |  IE   |
+   * | :----: | :-----: | :-----: | :----: | :---: |
+   * | **25** |   No    | **1.3** | **12** | **8** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/widows
+   */
   widows: PropFn<CssValueOf<'widows'>>
   /**
    * 设置元素的**内容区宽度**（content-box 模式）或**边框盒宽度**（border-box 模式）。
@@ -17549,7 +20658,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/width
    */
-  width: PropCarrier<CssValueOf<'width'>, SizeTokens<T>, 'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw, LengthUnits, never>
+  width: PropCarrier<
+    CssValueOf<'width'>,
+    SizeTokens<T>,
+    'auto' | 'minContent' | 'maxContent' | 'fitContent' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 提示浏览器某元素**即将变化** —— 让浏览器**提前优化**该元素（创建合成层、GPU 加速）。
    *
@@ -17618,7 +20733,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/will-change
    */
-  willChange: PropCarrier<CssValueOf<'willChange'>, never, 'auto' | 'scrollPosition' | 'contents' | GlobalKw, unknown, never>
+  willChange: PropCarrier<
+    CssValueOf<'willChange'>,
+    never,
+    'auto' | 'scrollPosition' | 'contents' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 控制**单词何时可断行** —— 处理英文长单词溢出、CJK 文本断行规则。
    *
@@ -17682,7 +20803,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/word-break
    */
-  wordBreak: PropCarrier<CssValueOf<'wordBreak'>, never, 'normal' | 'breakAll' | 'keepAll' | 'breakWord' | 'autoPhrase' | GlobalKw, unknown, never>
+  wordBreak: PropCarrier<
+    CssValueOf<'wordBreak'>,
+    never,
+    'normal' | 'breakAll' | 'keepAll' | 'breakWord' | 'autoPhrase' | GlobalKw,
+    unknown,
+    never
+  >
   /**
    * 设置**单词之间**的额外间距（按空白字符识别单词）。对 CJK 文字效果有限（无空格分词）。
    *
@@ -17756,14 +20883,20 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/word-spacing
    */
-  wordSpacing: PropCarrier<CssValueOf<'wordSpacing'>, never, 'normal' | GlobalKw, LengthUnits, never>
+  wordSpacing: PropCarrier<
+    CssValueOf<'wordSpacing'>,
+    never,
+    'normal' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2018.
-     *
-     * **Syntax**: `normal | break-word`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2018.
+   *
+   * **Syntax**: `normal | break-word`
+   *
+   * **Initial value**: `normal`
+   */
   wordWrap: PropFn<CssValueOf<'wordWrap'>>
   /**
    * 设置**书写方向** —— 横排 / 竖排，从左到右 / 从右到左。CJK 古典竖排、日文 / 蒙文等需要。
@@ -17810,34 +20943,40 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/writing-mode
    */
-  writingMode: PropCarrier<CssValueOf<'writingMode'>, never, 'horizontalTb' | 'verticalRl' | 'verticalLr' | 'sidewaysRl' | 'sidewaysLr' | GlobalKw, unknown, never>
+  writingMode: PropCarrier<
+    CssValueOf<'writingMode'>,
+    never,
+    'horizontalTb' | 'verticalRl' | 'verticalLr' | 'sidewaysRl' | 'sidewaysLr' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `<length> | <percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **42** | **69**  | **9**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/x
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `<length> | <percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **42** | **69**  | **9**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/x
+   */
   x: PropFn<CssValueOf<'x'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `<length> | <percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **42** | **69**  | **9**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/y
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `<length> | <percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **42** | **69**  | **9**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/y
+   */
   y: PropFn<CssValueOf<'y'>>
   /**
    * 控制元素的**层叠顺序**（z 轴前后）。数值越大越靠前。**仅对 `position` 非 `static` 的元素生效**。
@@ -17912,69 +21051,69 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   zIndex: PropCarrier<CssValueOf<'zIndex'>, ZIndexTokens<T>, 'auto' | GlobalKw, unknown, never>
   /**
-     * Since May 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `normal | reset | <number [0,∞]> || <percentage [0,∞]>`
-     *
-     * **Initial value**: `1`
-     *
-     * | Chrome | Firefox | Safari  |  Edge  |   IE    |
-     * | :----: | :-----: | :-----: | :----: | :-----: |
-     * | **1**  | **126** | **3.1** | **12** | **5.5** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/zoom
-     */
+   * Since May 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `normal | reset | <number [0,∞]> || <percentage [0,∞]>`
+   *
+   * **Initial value**: `1`
+   *
+   * | Chrome | Firefox | Safari  |  Edge  |   IE    |
+   * | :----: | :-----: | :-----: | :----: | :-----: |
+   * | **1**  | **126** | **3.1** | **12** | **5.5** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/zoom
+   */
   zoom: PropFn<CssValueOf<'zoom'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `initial | inherit | unset | revert | revert-layer`
-     *
-     * **Initial value**: There is no practical initial value for it.
-     *
-     * | Chrome | Firefox | Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :-----: | :----: | :-: |
-     * | **37** | **27**  | **9.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/all
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `initial | inherit | unset | revert | revert-layer`
+   *
+   * **Initial value**: There is no practical initial value for it.
+   *
+   * | Chrome | Firefox | Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :-----: | :----: | :-: |
+   * | **37** | **27**  | **9.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/all
+   */
   all: PropFn<CssValueOf<'all'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation>#`
-     *
-     * | Chrome  | Firefox | Safari  |  Edge  |   IE   |
-     * | :-----: | :-----: | :-----: | :----: | :----: |
-     * | **43**  | **16**  |  **9**  | **12** | **10** |
-     * | 3 _-x-_ | 5 _-x-_ | 4 _-x-_ |        |        |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation>#`
+   *
+   * | Chrome  | Firefox | Safari  |  Edge  |   IE   |
+   * | :-----: | :-----: | :-----: | :----: | :----: |
+   * | **43**  | **16**  |  **9**  | **12** | **10** |
+   * | 3 _-x-_ | 5 _-x-_ | 4 _-x-_ |        |        |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation
+   */
   animation: PropFn<CssValueOf<'animation'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ <'animation-range-start'> <'animation-range-end'>? ]#`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **115** |   No    | **26** | **115** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-range
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ <'animation-range-start'> <'animation-range-end'>? ]#`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **115** |   No    | **26** | **115** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/animation-range
+   */
   animationRange: PropFn<CssValueOf<'animationRange'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<bg-layer>#? , <final-bg-layer>`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **4** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<bg-layer>#? , <final-bg-layer>`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **4** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background
+   */
   background: PropFn<CssValueOf<'background'>>
   /**
    * 设置 `background-image` **在容器中的位置**。可用关键字、百分比、长度，单值或多值组合。
@@ -18081,108 +21220,114 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/background-position
    */
-  backgroundPosition: PropCarrier<CssValueOf<'backgroundPosition'>, never, 'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw, LengthUnits, never>
+  backgroundPosition: PropCarrier<
+    CssValueOf<'backgroundPosition'>,
+    never,
+    'top' | 'bottom' | 'left' | 'right' | 'center' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<line-width> || <line-style> || <color>`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **4** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<line-width> || <line-style> || <color>`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **4** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border
+   */
   border: PropFn<CssValueOf<'border'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'border-block-start'>`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **66**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'border-block-start'>`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **66**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block
+   */
   borderBlock: PropFn<CssValueOf<'borderBlock'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'border-top-color'>{1,2}`
-     *
-     * **Initial value**: `currentcolor`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **66**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-color
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'border-top-color'>{1,2}`
+   *
+   * **Initial value**: `currentcolor`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **66**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-color
+   */
   borderBlockColor: PropFn<CssValueOf<'borderBlockColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-width'> || <'border-top-style'> || <color>`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-width'> || <'border-top-style'> || <color>`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-end
+   */
   borderBlockEnd: PropFn<CssValueOf<'borderBlockEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-width'> || <'border-top-style'> || <color>`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-width'> || <'border-top-style'> || <color>`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-start
+   */
   borderBlockStart: PropFn<CssValueOf<'borderBlockStart'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'border-top-style'>{1,2}`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **66**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-style
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'border-top-style'>{1,2}`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **66**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-style
+   */
   borderBlockStyle: PropFn<CssValueOf<'borderBlockStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'border-top-width'>{1,2}`
-     *
-     * **Initial value**: `medium`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **66**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-width
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'border-top-width'>{1,2}`
+   *
+   * **Initial value**: `medium`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **66**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-block-width
+   */
   borderBlockWidth: PropFn<CssValueOf<'borderBlockWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<line-width> || <line-style> || <color>`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **4** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<line-width> || <line-style> || <color>`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **4** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-bottom
+   */
   borderBottom: PropFn<CssValueOf<'borderBottom'>>
   /**
    * 设置元素**四条边框**的颜色（简写，可一次设 1/2/3/4 个值）。
@@ -18320,109 +21465,264 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-color
    */
-  borderColor: ColorPropCarrier<CssValueOf<'borderColor'>, ColorTokens<T>, 'white' | 'black' | 'transparent' | 'currentColor' | 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategray' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'whitesmoke' | 'yellow' | 'yellowgreen' | GlobalKw, never>
+  borderColor: ColorPropCarrier<
+    CssValueOf<'borderColor'>,
+    ColorTokens<T>,
+    | 'white'
+    | 'black'
+    | 'transparent'
+    | 'currentColor'
+    | 'aliceblue'
+    | 'antiquewhite'
+    | 'aqua'
+    | 'aquamarine'
+    | 'azure'
+    | 'beige'
+    | 'bisque'
+    | 'blanchedalmond'
+    | 'blue'
+    | 'blueviolet'
+    | 'brown'
+    | 'burlywood'
+    | 'cadetblue'
+    | 'chartreuse'
+    | 'chocolate'
+    | 'coral'
+    | 'cornflowerblue'
+    | 'cornsilk'
+    | 'crimson'
+    | 'cyan'
+    | 'darkblue'
+    | 'darkcyan'
+    | 'darkgoldenrod'
+    | 'darkgray'
+    | 'darkgreen'
+    | 'darkgrey'
+    | 'darkkhaki'
+    | 'darkmagenta'
+    | 'darkolivegreen'
+    | 'darkorange'
+    | 'darkorchid'
+    | 'darkred'
+    | 'darksalmon'
+    | 'darkseagreen'
+    | 'darkslateblue'
+    | 'darkslategray'
+    | 'darkslategrey'
+    | 'darkturquoise'
+    | 'darkviolet'
+    | 'deeppink'
+    | 'deepskyblue'
+    | 'dimgray'
+    | 'dimgrey'
+    | 'dodgerblue'
+    | 'firebrick'
+    | 'floralwhite'
+    | 'forestgreen'
+    | 'fuchsia'
+    | 'gainsboro'
+    | 'ghostwhite'
+    | 'gold'
+    | 'goldenrod'
+    | 'gray'
+    | 'green'
+    | 'greenyellow'
+    | 'grey'
+    | 'honeydew'
+    | 'hotpink'
+    | 'indianred'
+    | 'indigo'
+    | 'ivory'
+    | 'khaki'
+    | 'lavender'
+    | 'lavenderblush'
+    | 'lawngreen'
+    | 'lemonchiffon'
+    | 'lightblue'
+    | 'lightcoral'
+    | 'lightcyan'
+    | 'lightgoldenrodyellow'
+    | 'lightgray'
+    | 'lightgreen'
+    | 'lightgrey'
+    | 'lightpink'
+    | 'lightsalmon'
+    | 'lightseagreen'
+    | 'lightskyblue'
+    | 'lightslategray'
+    | 'lightslategrey'
+    | 'lightsteelblue'
+    | 'lightyellow'
+    | 'lime'
+    | 'limegreen'
+    | 'linen'
+    | 'magenta'
+    | 'maroon'
+    | 'mediumaquamarine'
+    | 'mediumblue'
+    | 'mediumorchid'
+    | 'mediumpurple'
+    | 'mediumseagreen'
+    | 'mediumslateblue'
+    | 'mediumspringgreen'
+    | 'mediumturquoise'
+    | 'mediumvioletred'
+    | 'midnightblue'
+    | 'mintcream'
+    | 'mistyrose'
+    | 'moccasin'
+    | 'navajowhite'
+    | 'navy'
+    | 'oldlace'
+    | 'olive'
+    | 'olivedrab'
+    | 'orange'
+    | 'orangered'
+    | 'orchid'
+    | 'palegoldenrod'
+    | 'palegreen'
+    | 'paleturquoise'
+    | 'palevioletred'
+    | 'papayawhip'
+    | 'peachpuff'
+    | 'peru'
+    | 'pink'
+    | 'plum'
+    | 'powderblue'
+    | 'purple'
+    | 'rebeccapurple'
+    | 'red'
+    | 'rosybrown'
+    | 'royalblue'
+    | 'saddlebrown'
+    | 'salmon'
+    | 'sandybrown'
+    | 'seagreen'
+    | 'seashell'
+    | 'sienna'
+    | 'silver'
+    | 'skyblue'
+    | 'slateblue'
+    | 'slategray'
+    | 'slategrey'
+    | 'snow'
+    | 'springgreen'
+    | 'steelblue'
+    | 'tan'
+    | 'teal'
+    | 'thistle'
+    | 'tomato'
+    | 'turquoise'
+    | 'violet'
+    | 'wheat'
+    | 'whitesmoke'
+    | 'yellow'
+    | 'yellowgreen'
+    | GlobalKw,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<'border-image-source'> || <'border-image-slice'> [ / <'border-image-width'> | / <'border-image-width'>? / <'border-image-outset'> ]? || <'border-image-repeat'>`
-     *
-     * | Chrome  |  Firefox  | Safari  |  Edge  |   IE   |
-     * | :-----: | :-------: | :-----: | :----: | :----: |
-     * | **16**  |  **15**   |  **6**  | **12** | **11** |
-     * | 7 _-x-_ | 3.5 _-x-_ | 3 _-x-_ |        |        |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<'border-image-source'> || <'border-image-slice'> [ / <'border-image-width'> | / <'border-image-width'>? / <'border-image-outset'> ]? || <'border-image-repeat'>`
+   *
+   * | Chrome  |  Firefox  | Safari  |  Edge  |   IE   |
+   * | :-----: | :-------: | :-----: | :----: | :----: |
+   * | **16**  |  **15**   |  **6**  | **12** | **11** |
+   * | 7 _-x-_ | 3.5 _-x-_ | 3 _-x-_ |        |        |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-image
+   */
   borderImage: PropFn<CssValueOf<'borderImage'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'border-block-start'>`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **66**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'border-block-start'>`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **66**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline
+   */
   borderInline: PropFn<CssValueOf<'borderInline'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'border-top-color'>{1,2}`
-     *
-     * **Initial value**: `currentcolor`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **66**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-color
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'border-top-color'>{1,2}`
+   *
+   * **Initial value**: `currentcolor`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **66**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-color
+   */
   borderInlineColor: PropFn<CssValueOf<'borderInlineColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-width'> || <'border-top-style'> || <color>`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-width'> || <'border-top-style'> || <color>`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-end
+   */
   borderInlineEnd: PropFn<CssValueOf<'borderInlineEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-width'> || <'border-top-style'> || <color>`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **69** | **41**  | **12.1** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-width'> || <'border-top-style'> || <color>`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **69** | **41**  | **12.1** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-start
+   */
   borderInlineStart: PropFn<CssValueOf<'borderInlineStart'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'border-top-style'>{1,2}`
-     *
-     * **Initial value**: `none`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **66**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-style
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'border-top-style'>{1,2}`
+   *
+   * **Initial value**: `none`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **66**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-style
+   */
   borderInlineStyle: PropFn<CssValueOf<'borderInlineStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'border-top-width'>{1,2}`
-     *
-     * **Initial value**: `medium`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **66**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-width
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'border-top-width'>{1,2}`
+   *
+   * **Initial value**: `medium`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **66**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-inline-width
+   */
   borderInlineWidth: PropFn<CssValueOf<'borderInlineWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<line-width> || <line-style> || <color>`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **4** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<line-width> || <line-style> || <color>`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **4** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-left
+   */
   borderLeft: PropFn<CssValueOf<'borderLeft'>>
   /**
    * 设置元素**四个圆角**的半径（简写）。支持单值四角统一、多值各角不同、`/` 分隔横纵半径做椭圆角。
@@ -18521,18 +21821,24 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-radius
    */
-  borderRadius: PropCarrier<CssValueOf<'borderRadius'>, RadiusTokens<T>, GlobalKw, LengthUnits, never>
+  borderRadius: PropCarrier<
+    CssValueOf<'borderRadius'>,
+    RadiusTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<line-width> || <line-style> || <color>`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |   IE    |
-     * | :----: | :-----: | :----: | :----: | :-----: |
-     * | **1**  |  **1**  | **1**  | **12** | **5.5** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<line-width> || <line-style> || <color>`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |   IE    |
+   * | :----: | :-----: | :----: | :----: | :-----: |
+   * | **1**  |  **1**  | **1**  | **12** | **5.5** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-right
+   */
   borderRight: PropFn<CssValueOf<'borderRight'>>
   /**
    * 设置元素**四条边框的样式**。这是显示边框的**开关** —— 默认 `none` 不显示，必须显式设为 `solid` 等才能看到边框。
@@ -18608,18 +21914,34 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-style
    */
-  borderStyle: PropCarrier<CssValueOf<'borderStyle'>, never, 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | GlobalKw, unknown, never>
+  borderStyle: PropCarrier<
+    CssValueOf<'borderStyle'>,
+    never,
+    | 'none'
+    | 'hidden'
+    | 'dotted'
+    | 'dashed'
+    | 'solid'
+    | 'double'
+    | 'groove'
+    | 'ridge'
+    | 'inset'
+    | 'outset'
+    | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<line-width> || <line-style> || <color>`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **4** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<line-width> || <line-style> || <color>`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **4** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-top
+   */
   borderTop: PropFn<CssValueOf<'borderTop'>>
   /**
    * 设置元素**四条边框的宽度**（简写，可一次设 1/2/3/4 个值）。⚠️ 必须配合非 `none` 的 `borderStyle` 才会显示。
@@ -18710,21 +22032,27 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/border-width
    */
-  borderWidth: PropCarrier<CssValueOf<'borderWidth'>, BordersTokens<T>, 'thin' | 'medium' | 'thick' | GlobalKw, LengthUnits, never>
+  borderWidth: PropCarrier<
+    CssValueOf<'borderWidth'>,
+    BordersTokens<T>,
+    'thin' | 'medium' | 'thick' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /** **Syntax**: `<'caret-color'> || <'caret-shape'>` */
   caret: PropFn<CssValueOf<'caret'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<'column-rule-width'> || <'column-rule-style'> || <'column-rule-color'>`
-     *
-     * | Chrome  | Firefox | Safari  |  Edge  |   IE   |
-     * | :-----: | :-----: | :-----: | :----: | :----: |
-     * | **50**  | **52**  |  **9**  | **12** | **10** |
-     * | 1 _-x-_ |         | 3 _-x-_ |        |        |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<'column-rule-width'> || <'column-rule-style'> || <'column-rule-color'>`
+   *
+   * | Chrome  | Firefox | Safari  |  Edge  |   IE   |
+   * | :-----: | :-----: | :-----: | :----: | :----: |
+   * | **50**  | **52**  |  **9**  | **12** | **10** |
+   * | 1 _-x-_ |         | 3 _-x-_ |        |        |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/column-rule
+   */
   columnRule: PropFn<CssValueOf<'columnRule'>>
   /**
    * 把元素内容**分成多栏**（类似报纸 / 杂志排版）。可指定栏数或栏宽。
@@ -18910,42 +22238,42 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   container: PropFn<CssValueOf<'container'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]`
-     *
-     * |  Chrome  | Firefox | Safari  |  Edge  |    IE    |
-     * | :------: | :-----: | :-----: | :----: | :------: |
-     * |  **29**  | **22**  |  **9**  | **12** |  **11**  |
-     * | 21 _-x-_ |         | 7 _-x-_ |        | 10 _-x-_ |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]`
+   *
+   * |  Chrome  | Firefox | Safari  |  Edge  |    IE    |
+   * | :------: | :-----: | :-----: | :----: | :------: |
+   * |  **29**  | **22**  |  **9**  | **12** |  **11**  |
+   * | 21 _-x-_ |         | 7 _-x-_ |        | 10 _-x-_ |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex
+   */
   flex: PropFn<CssValueOf<'flex'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<'flex-direction'> || <'flex-wrap'>`
-     *
-     * |  Chrome  | Firefox | Safari  |  Edge  |   IE   |
-     * | :------: | :-----: | :-----: | :----: | :----: |
-     * |  **29**  | **28**  |  **9**  | **12** | **11** |
-     * | 21 _-x-_ |         | 7 _-x-_ |        |        |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-flow
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<'flex-direction'> || <'flex-wrap'>`
+   *
+   * |  Chrome  | Firefox | Safari  |  Edge  |   IE   |
+   * | :------: | :-----: | :-----: | :----: | :----: |
+   * |  **29**  | **28**  |  **9**  | **12** | **11** |
+   * | 21 _-x-_ |         | 7 _-x-_ |        |        |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/flex-flow
+   */
   flexFlow: PropFn<CssValueOf<'flexFlow'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `[ [ <'font-style'> || <font-variant-css2> || <'font-weight'> || <font-width-css3> ]? <'font-size'> [ / <'line-height'> ]? <'font-family'># ] | <system-family-name>`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **3** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `[ [ <'font-style'> || <font-variant-css2> || <'font-weight'> || <font-width-css3> ]? <'font-size'> [ / <'line-height'> ]? <'font-family'># ] | <system-family-name>`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **3** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/font
+   */
   font: PropFn<CssValueOf<'font'>>
   /**
    * flex / grid / 多栏布局中**子元素之间的间距**（同时设行/列间距的简写）。比传统 `margin` 方案更优 —— 不会在边缘产生多余间距。
@@ -19042,16 +22370,16 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   gap: PropCarrier<CssValueOf<'gap'>, SpacingTokens<T>, 'normal' | GlobalKw, LengthUnits, never>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `<'grid-template'> | <'grid-template-rows'> / [ auto-flow && dense? ] <'grid-auto-columns'>? | [ auto-flow && dense? ] <'grid-auto-rows'>? / <'grid-template-columns'>`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **57** | **52**  | **10.1** | **16** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `<'grid-template'> | <'grid-template-rows'> / [ auto-flow && dense? ] <'grid-auto-columns'>? | [ auto-flow && dense? ] <'grid-auto-rows'>? / <'grid-template-columns'>`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **57** | **52**  | **10.1** | **16** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid
+   */
   grid: PropFn<CssValueOf<'grid'>>
   /**
    * grid 子元素的**完整位置简写**（4 个值：row-start / column-start / row-end / column-end），或引用 `gridTemplateAreas` 中命名的区域。
@@ -19249,16 +22577,16 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   gridRow: PropCarrier<CssValueOf<'gridRow'>, never, 'auto' | GlobalKw, unknown, never>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `none | [ <'grid-template-rows'> / <'grid-template-columns'> ] | [ <line-names>? <string> <track-size>? <line-names>? ]+ [ / <explicit-track-list> ]?`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **57** | **52**  | **10.1** | **16** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `none | [ <'grid-template-rows'> / <'grid-template-columns'> ] | [ <line-names>? <string> <track-size>? <line-names>? ]+ [ / <explicit-track-list> ]?`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **57** | **52**  | **10.1** | **16** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/grid-template
+   */
   gridTemplate: PropFn<CssValueOf<'gridTemplate'>>
   /**
    * **定位偏移简写**：同时设置 `top` / `right` / `bottom` / `left` 四个偏移值。**只在 `position` 非 `static` 时生效**。
@@ -19360,55 +22688,55 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   inset: PropCarrier<CssValueOf<'inset'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>{1,2}`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **63**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-block
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>{1,2}`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **63**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-block
+   */
   insetBlock: PropFn<CssValueOf<'insetBlock'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>{1,2}`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  | IE  |
-     * | :----: | :-----: | :------: | :----: | :-: |
-     * | **87** | **63**  | **14.1** | **87** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-inline
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>{1,2}`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  | IE  |
+   * | :----: | :-----: | :------: | :----: | :-: |
+   * | **87** | **63**  | **14.1** | **87** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/inset-inline
+   */
   insetInline: PropFn<CssValueOf<'insetInline'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | <integer>`
-     *
-     * **Initial value**: `none`
-     *
-     * |   Chrome    |   Firefox    |  Safari   |     Edge     | IE  |
-     * | :---------: | :----------: | :-------: | :----------: | :-: |
-     * | **6** _-x-_ | **68** _-x-_ | 18.2-18.4 | **17** _-x-_ | No  |
-     * |             |              |  5 _-x-_  |              |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/line-clamp
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | <integer>`
+   *
+   * **Initial value**: `none`
+   *
+   * |   Chrome    |   Firefox    |  Safari   |     Edge     | IE  |
+   * | :---------: | :----------: | :-------: | :----------: | :-: |
+   * | **6** _-x-_ | **68** _-x-_ | 18.2-18.4 | **17** _-x-_ | No  |
+   * |             |              |  5 _-x-_  |              |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/line-clamp
+   */
   lineClamp: PropFn<CssValueOf<'lineClamp'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<'list-style-type'> || <'list-style-position'> || <'list-style-image'>`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **4** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<'list-style-type'> || <'list-style-position'> || <'list-style-image'>`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **4** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/list-style
+   */
   listStyle: PropFn<CssValueOf<'listStyle'>>
   /**
    * 设置元素**四条边外边距**（简写，可一次设 1/2/3/4 个值）。外边距是元素边框外到相邻元素之间的透明空间。
@@ -19621,7 +22949,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-block
    */
-  marginBlock: PropCarrier<CssValueOf<'marginBlock'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  marginBlock: PropCarrier<
+    CssValueOf<'marginBlock'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * **逻辑属性**：同时设置元素行轴（Inline Axis）起止两端的外边距。水平书写模式下等同 `marginLeft + marginRight`。`marginInline.auto` 水平居中（等同 `margin: 0 auto`）。其他规则同 [`margin`]。
    *
@@ -19727,7 +23061,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/margin-inline
    */
-  marginInline: PropCarrier<CssValueOf<'marginInline'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  marginInline: PropCarrier<
+    CssValueOf<'marginInline'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * **遮罩**简写 —— 用一张图像/渐变作为元素**透明度模板**:模板黑色区域元素**隐藏**、白色**显示**、灰色按 alpha 半透明。一句话设全部 8 个子属性。
    *
@@ -19794,55 +23134,55 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    */
   mask: PropFn<CssValueOf<'mask'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `<'mask-border-source'> || <'mask-border-slice'> [ / <'mask-border-width'>? [ / <'mask-border-outset'> ]? ]? || <'mask-border-repeat'> || <'mask-border-mode'>`
-     *
-     * |              Chrome              | Firefox |             Safari             |               Edge                | IE  |
-     * | :------------------------------: | :-----: | :----------------------------: | :-------------------------------: | :-: |
-     * | **1** _(-webkit-mask-box-image)_ |   No    |            **17.2**            | **79** _(-webkit-mask-box-image)_ | No  |
-     * |                                  |         | 3.1 _(-webkit-mask-box-image)_ |                                   |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `<'mask-border-source'> || <'mask-border-slice'> [ / <'mask-border-width'>? [ / <'mask-border-outset'> ]? ]? || <'mask-border-repeat'> || <'mask-border-mode'>`
+   *
+   * |              Chrome              | Firefox |             Safari             |               Edge                | IE  |
+   * | :------------------------------: | :-----: | :----------------------------: | :-------------------------------: | :-: |
+   * | **1** _(-webkit-mask-box-image)_ |   No    |            **17.2**            | **79** _(-webkit-mask-box-image)_ | No  |
+   * |                                  |         | 3.1 _(-webkit-mask-box-image)_ |                                   |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/mask-border
+   */
   maskBorder: PropFn<CssValueOf<'maskBorder'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `[ <'offset-position'>? [ <'offset-path'> [ <'offset-distance'> || <'offset-rotate'> ]? ]? ]! [ / <'offset-anchor'> ]?`
-     *
-     * |    Chrome     | Firefox | Safari |  Edge  | IE  |
-     * | :-----------: | :-----: | :----: | :----: | :-: |
-     * |    **55**     | **72**  | **16** | **79** | No  |
-     * | 46 _(motion)_ |         |        |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `[ <'offset-position'>? [ <'offset-path'> [ <'offset-distance'> || <'offset-rotate'> ]? ]? ]! [ / <'offset-anchor'> ]?`
+   *
+   * |    Chrome     | Firefox | Safari |  Edge  | IE  |
+   * | :-----------: | :-----: | :----: | :----: | :-: |
+   * |    **55**     | **72**  | **16** | **79** | No  |
+   * | 46 _(motion)_ |         |        |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset
+   */
   motion: PropFn<CssValueOf<'motion'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `[ <'offset-position'>? [ <'offset-path'> [ <'offset-distance'> || <'offset-rotate'> ]? ]? ]! [ / <'offset-anchor'> ]?`
-     *
-     * |    Chrome     | Firefox | Safari |  Edge  | IE  |
-     * | :-----------: | :-----: | :----: | :----: | :-: |
-     * |    **55**     | **72**  | **16** | **79** | No  |
-     * | 46 _(motion)_ |         |        |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `[ <'offset-position'>? [ <'offset-path'> [ <'offset-distance'> || <'offset-rotate'> ]? ]? ]! [ / <'offset-anchor'> ]?`
+   *
+   * |    Chrome     | Firefox | Safari |  Edge  | IE  |
+   * | :-----------: | :-----: | :----: | :----: | :-: |
+   * |    **55**     | **72**  | **16** | **79** | No  |
+   * | 46 _(motion)_ |         |        |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/offset
+   */
   offset: PropFn<CssValueOf<'offset'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
-     *
-     * **Syntax**: `<'outline-width'> || <'outline-style'> || <'outline-color'>`
-     *
-     * | Chrome | Firefox |  Safari  |  Edge  |  IE   |
-     * | :----: | :-----: | :------: | :----: | :---: |
-     * | **94** | **88**  | **16.4** | **94** | **8** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
+   *
+   * **Syntax**: `<'outline-width'> || <'outline-style'> || <'outline-color'>`
+   *
+   * | Chrome | Firefox |  Safari  |  Edge  |  IE   |
+   * | :----: | :-----: | :------: | :----: | :---: |
+   * | **94** | **88**  | **16.4** | **94** | **8** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/outline
+   */
   outline: PropFn<CssValueOf<'outline'>>
   /**
    * 控制元素**内容溢出容器时**的处理方式（裁剪 / 滚动 / 显示）。可作 X 和 Y 两轴的简写。
@@ -19916,20 +23256,26 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overflow
    */
-  overflow: PropCarrier<CssValueOf<'overflow'>, never, 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw, unknown, never>
+  overflow: PropCarrier<
+    CssValueOf<'overflow'>,
+    never,
+    'visible' | 'hidden' | 'scroll' | 'auto' | 'clip' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `[ contain | none | auto ]{1,2}`
-     *
-     * **Initial value**: `auto`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **63** | **59**  | **16** | **18** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `[ contain | none | auto ]{1,2}`
+   *
+   * **Initial value**: `auto`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **63** | **59**  | **16** | **18** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/overscroll-behavior
+   */
   overscrollBehavior: PropFn<CssValueOf<'overscrollBehavior'>>
   /**
    * 设置元素**四条边内边距**（简写，可一次设 1/2/3/4 个值）。内边距是内容区与边框之间的透明空间，会撑大元素盒子（content-box 模式），背景色/图会延伸到内边距区域。
@@ -20028,7 +23374,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding
    */
-  padding: PropCarrier<CssValueOf<'padding'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  padding: PropCarrier<
+    CssValueOf<'padding'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * **逻辑属性**：同时设置元素块轴两端的内边距。水平书写模式下等同 `paddingTop + paddingBottom`。其他规则同 [`padding`]。
    *
@@ -20126,7 +23478,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-block
    */
-  paddingBlock: PropCarrier<CssValueOf<'paddingBlock'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  paddingBlock: PropCarrier<
+    CssValueOf<'paddingBlock'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * **逻辑属性**：同时设置元素行轴两端的内边距。水平书写模式下等同 `paddingLeft + paddingRight`。其他规则同 [`padding`]。
    *
@@ -20224,54 +23582,60 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/padding-inline
    */
-  paddingInline: PropCarrier<CssValueOf<'paddingInline'>, SpacingTokens<T>, 'auto' | GlobalKw, LengthUnits, never>
+  paddingInline: PropCarrier<
+    CssValueOf<'paddingInline'>,
+    SpacingTokens<T>,
+    'auto' | GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'align-content'> <'justify-content'>?`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **59** | **45**  | **9**  | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/place-content
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'align-content'> <'justify-content'>?`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **59** | **45**  | **9**  | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/place-content
+   */
   placeContent: PropFn<CssValueOf<'placeContent'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'align-items'> <'justify-items'>?`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **59** | **45**  | **11** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/place-items
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'align-items'> <'justify-items'>?`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **59** | **45**  | **11** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/place-items
+   */
   placeItems: PropFn<CssValueOf<'placeItems'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'align-self'> <'justify-self'>?`
-     *
-     * | Chrome | Firefox | Safari |  Edge  | IE  |
-     * | :----: | :-----: | :----: | :----: | :-: |
-     * | **59** | **45**  | **11** | **79** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/place-self
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'align-self'> <'justify-self'>?`
+   *
+   * | Chrome | Firefox | Safari |  Edge  | IE  |
+   * | :----: | :-----: | :----: | :----: | :-: |
+   * | **59** | **45**  | **11** | **79** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/place-self
+   */
   placeSelf: PropFn<CssValueOf<'placeSelf'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `<'position-try-order'>? <'position-try-fallbacks'>`
-     *
-     * | Chrome  |   Firefox   | Safari |  Edge   | IE  |
-     * | :-----: | :---------: | :----: | :-----: | :-: |
-     * | **125** | **preview** | **26** | **125** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-try
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `<'position-try-order'>? <'position-try-fallbacks'>`
+   *
+   * | Chrome  |   Firefox   | Safari |  Edge   | IE  |
+   * | :-----: | :---------: | :----: | :-----: | :-: |
+   * | **125** | **preview** | **26** | **125** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/position-try
+   */
   positionTry: PropFn<CssValueOf<'positionTry'>>
   /**
    * 设置 snap item **对齐时**距容器边缘的**外边距偏移**（简写，1/2/3/4 值，类似 `margin`）。让 snap 时留出呼吸空间。
@@ -20349,7 +23713,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin
    */
-  scrollMargin: PropCarrier<CssValueOf<'scrollMargin'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollMargin: PropCarrier<
+    CssValueOf<'scrollMargin'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * snap 对齐时**块方向**（横排 = 纵轴）的外边距偏移（简写，1 或 2 值）。
    *
@@ -20425,7 +23795,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-block
    */
-  scrollMarginBlock: PropCarrier<CssValueOf<'scrollMarginBlock'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollMarginBlock: PropCarrier<
+    CssValueOf<'scrollMarginBlock'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * snap 对齐时**行内方向**（横排 = 横轴）的外边距偏移（简写）。
    *
@@ -20501,7 +23877,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin-inline
    */
-  scrollMarginInline: PropCarrier<CssValueOf<'scrollMarginInline'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollMarginInline: PropCarrier<
+    CssValueOf<'scrollMarginInline'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 在**滚动容器**上设置**内边距偏移** —— 让 snap point 距容器边缘留出空间（如固定头部、侧栏）。
    *
@@ -20578,7 +23960,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding
    */
-  scrollPadding: PropCarrier<CssValueOf<'scrollPadding'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollPadding: PropCarrier<
+    CssValueOf<'scrollPadding'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 滚动容器**块方向**（横排 = 纵轴）的内边距偏移（简写）。
    *
@@ -20655,7 +24043,13 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-block
    */
-  scrollPaddingBlock: PropCarrier<CssValueOf<'scrollPaddingBlock'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollPaddingBlock: PropCarrier<
+    CssValueOf<'scrollPaddingBlock'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
    * 滚动容器**行内方向**（横排 = 横轴）的内边距偏移（简写）。
    *
@@ -20732,56 +24126,62 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-padding-inline
    */
-  scrollPaddingInline: PropCarrier<CssValueOf<'scrollPaddingInline'>, SpacingTokens<T>, GlobalKw, LengthUnits, never>
+  scrollPaddingInline: PropCarrier<
+    CssValueOf<'scrollPaddingInline'>,
+    SpacingTokens<T>,
+    GlobalKw,
+    LengthUnits,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2021.
-     *
-     * **Syntax**: `<length>{1,4}`
-     *
-     * | Chrome | Firefox |          Safari           |  Edge  | IE  |
-     * | :----: | :-----: | :-----------------------: | :----: | :-: |
-     * | **69** |  68-90  |         **14.1**          | **79** | No  |
-     * |        |         | 11 _(scroll-snap-margin)_ |        |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2021.
+   *
+   * **Syntax**: `<length>{1,4}`
+   *
+   * | Chrome | Firefox |          Safari           |  Edge  | IE  |
+   * | :----: | :-----: | :-----------------------: | :----: | :-: |
+   * | **69** |  68-90  |         **14.1**          | **79** | No  |
+   * |        |         | 11 _(scroll-snap-margin)_ |        |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-margin
+   */
   scrollSnapMargin: PropFn<CssValueOf<'scrollSnapMargin'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ <'scroll-timeline-name'> <'scroll-timeline-axis'>? ]#`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **115** |   No    | **26** | **115** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-timeline
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ <'scroll-timeline-name'> <'scroll-timeline-axis'>? ]#`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **115** |   No    | **26** | **115** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/scroll-timeline
+   */
   scrollTimeline: PropFn<CssValueOf<'scrollTimeline'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<'text-decoration-line'> || <'text-decoration-style'> || <'text-decoration-color'> || <'text-decoration-thickness'>`
-     *
-     * | Chrome | Firefox | Safari |  Edge  |  IE   |
-     * | :----: | :-----: | :----: | :----: | :---: |
-     * | **1**  |  **1**  | **1**  | **12** | **3** |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<'text-decoration-line'> || <'text-decoration-style'> || <'text-decoration-color'> || <'text-decoration-thickness'>`
+   *
+   * | Chrome | Firefox | Safari |  Edge  |  IE   |
+   * | :----: | :-----: | :----: | :----: | :---: |
+   * | **1**  |  **1**  | **1**  | **12** | **3** |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-decoration
+   */
   textDecoration: PropFn<CssValueOf<'textDecoration'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `<'text-emphasis-style'> || <'text-emphasis-color'>`
-     *
-     * |  Chrome  | Firefox | Safari |   Edge   | IE  |
-     * | :------: | :-----: | :----: | :------: | :-: |
-     * |  **99**  | **46**  | **7**  |  **99**  | No  |
-     * | 25 _-x-_ |         |        | 79 _-x-_ |     |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `<'text-emphasis-style'> || <'text-emphasis-color'>`
+   *
+   * |  Chrome  | Firefox | Safari |   Edge   | IE  |
+   * | :------: | :-----: | :----: | :------: | :-: |
+   * |  **99**  | **46**  | **7**  |  **99**  | No  |
+   * | 25 _-x-_ |         |        | 79 _-x-_ |     |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-emphasis
+   */
   textEmphasis: PropFn<CssValueOf<'textEmphasis'>>
   /**
    * 控制**文本换行算法**（CSS Text 4）—— 让长段落的换行更美观（避免孤行、平衡每行长度）。
@@ -20846,1739 +24246,1745 @@ export interface IcxPropMethods<T extends ThemeSchema> {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/text-wrap
    */
-  textWrap: PropCarrier<CssValueOf<'textWrap'>, never, 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable' | GlobalKw, unknown, never>
+  textWrap: PropCarrier<
+    CssValueOf<'textWrap'>,
+    never,
+    'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable' | GlobalKw,
+    unknown,
+    never
+  >
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-transition>#`
-     *
-     * | Chrome  | Firefox |  Safari   |  Edge  |   IE   |
-     * | :-----: | :-----: | :-------: | :----: | :----: |
-     * | **26**  | **16**  |   **9**   | **12** | **10** |
-     * | 1 _-x-_ |         | 3.1 _-x-_ |        |        |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-transition>#`
+   *
+   * | Chrome  | Firefox |  Safari   |  Edge  |   IE   |
+   * | :-----: | :-----: | :-------: | :----: | :----: |
+   * | **26**  | **16**  |   **9**   | **12** | **10** |
+   * | 1 _-x-_ |         | 3.1 _-x-_ |        |        |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/transition
+   */
   transition: PropFn<CssValueOf<'transition'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ <'view-timeline-name'> [ <'view-timeline-axis'> || <'view-timeline-inset'> ]? ]#`
-     *
-     * | Chrome  | Firefox | Safari |  Edge   | IE  |
-     * | :-----: | :-----: | :----: | :-----: | :-: |
-     * | **115** |   No    | **26** | **115** | No  |
-     *
-     * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ <'view-timeline-name'> [ <'view-timeline-axis'> || <'view-timeline-inset'> ]? ]#`
+   *
+   * | Chrome  | Firefox | Safari |  Edge   | IE  |
+   * | :-----: | :-----: | :----: | :-----: | :-: |
+   * | **115** |   No    | **26** | **115** | No  |
+   *
+   * @see https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/view-timeline
+   */
   viewTimeline: PropFn<CssValueOf<'viewTimeline'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<time>#`
-     *
-     * **Initial value**: `0s`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<time>#`
+   *
+   * **Initial value**: `0s`
+   */
   MozAnimationDelay: PropFn<CssValueOf<'MozAnimationDelay'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-direction>#`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-direction>#`
+   *
+   * **Initial value**: `normal`
+   */
   MozAnimationDirection: PropFn<CssValueOf<'MozAnimationDirection'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `[ auto | <time [0s,∞]> ]#`
-     *
-     * **Initial value**: `0s`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `[ auto | <time [0s,∞]> ]#`
+   *
+   * **Initial value**: `0s`
+   */
   MozAnimationDuration: PropFn<CssValueOf<'MozAnimationDuration'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-fill-mode>#`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-fill-mode>#`
+   *
+   * **Initial value**: `none`
+   */
   MozAnimationFillMode: PropFn<CssValueOf<'MozAnimationFillMode'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-iteration-count>#`
-     *
-     * **Initial value**: `1`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-iteration-count>#`
+   *
+   * **Initial value**: `1`
+   */
   MozAnimationIterationCount: PropFn<CssValueOf<'MozAnimationIterationCount'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `[ none | <keyframes-name> ]#`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `[ none | <keyframes-name> ]#`
+   *
+   * **Initial value**: `none`
+   */
   MozAnimationName: PropFn<CssValueOf<'MozAnimationName'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-play-state>#`
-     *
-     * **Initial value**: `running`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-play-state>#`
+   *
+   * **Initial value**: `running`
+   */
   MozAnimationPlayState: PropFn<CssValueOf<'MozAnimationPlayState'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<easing-function>#`
-     *
-     * **Initial value**: `ease`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<easing-function>#`
+   *
+   * **Initial value**: `ease`
+   */
   MozAnimationTimingFunction: PropFn<CssValueOf<'MozAnimationTimingFunction'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `none | button | button-arrow-down | button-arrow-next | button-arrow-previous | button-arrow-up | button-bevel | button-focus | caret | checkbox | checkbox-container | checkbox-label | checkmenuitem | dualbutton | groupbox | listbox | listitem | menuarrow | menubar | menucheckbox | menuimage | menuitem | menuitemtext | menulist | menulist-button | menulist-text | menulist-textfield | menupopup | menuradio | menuseparator | meterbar | meterchunk | progressbar | progressbar-vertical | progresschunk | progresschunk-vertical | radio | radio-container | radio-label | radiomenuitem | range | range-thumb | resizer | resizerpanel | scale-horizontal | scalethumbend | scalethumb-horizontal | scalethumbstart | scalethumbtick | scalethumb-vertical | scale-vertical | scrollbarbutton-down | scrollbarbutton-left | scrollbarbutton-right | scrollbarbutton-up | scrollbarthumb-horizontal | scrollbarthumb-vertical | scrollbartrack-horizontal | scrollbartrack-vertical | searchfield | separator | sheet | spinner | spinner-downbutton | spinner-textfield | spinner-upbutton | splitter | statusbar | statusbarpanel | tab | tabpanel | tabpanels | tab-scroll-arrow-back | tab-scroll-arrow-forward | textfield | textfield-multiline | toolbar | toolbarbutton | toolbarbutton-dropdown | toolbargripper | toolbox | tooltip | treeheader | treeheadercell | treeheadersortarrow | treeitem | treeline | treetwisty | treetwistyopen | treeview | -moz-mac-unified-toolbar | -moz-win-borderless-glass | -moz-win-browsertabbar-toolbox | -moz-win-communicationstext | -moz-win-communications-toolbox | -moz-win-exclude-glass | -moz-win-glass | -moz-win-mediatext | -moz-win-media-toolbox | -moz-window-button-box | -moz-window-button-box-maximized | -moz-window-button-close | -moz-window-button-maximize | -moz-window-button-minimize | -moz-window-button-restore | -moz-window-frame-bottom | -moz-window-frame-left | -moz-window-frame-right | -moz-window-titlebar | -moz-window-titlebar-maximized`
-     *
-     * **Initial value**: `none` (but this value is overridden in the user agent CSS)
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `none | button | button-arrow-down | button-arrow-next | button-arrow-previous | button-arrow-up | button-bevel | button-focus | caret | checkbox | checkbox-container | checkbox-label | checkmenuitem | dualbutton | groupbox | listbox | listitem | menuarrow | menubar | menucheckbox | menuimage | menuitem | menuitemtext | menulist | menulist-button | menulist-text | menulist-textfield | menupopup | menuradio | menuseparator | meterbar | meterchunk | progressbar | progressbar-vertical | progresschunk | progresschunk-vertical | radio | radio-container | radio-label | radiomenuitem | range | range-thumb | resizer | resizerpanel | scale-horizontal | scalethumbend | scalethumb-horizontal | scalethumbstart | scalethumbtick | scalethumb-vertical | scale-vertical | scrollbarbutton-down | scrollbarbutton-left | scrollbarbutton-right | scrollbarbutton-up | scrollbarthumb-horizontal | scrollbarthumb-vertical | scrollbartrack-horizontal | scrollbartrack-vertical | searchfield | separator | sheet | spinner | spinner-downbutton | spinner-textfield | spinner-upbutton | splitter | statusbar | statusbarpanel | tab | tabpanel | tabpanels | tab-scroll-arrow-back | tab-scroll-arrow-forward | textfield | textfield-multiline | toolbar | toolbarbutton | toolbarbutton-dropdown | toolbargripper | toolbox | tooltip | treeheader | treeheadercell | treeheadersortarrow | treeitem | treeline | treetwisty | treetwistyopen | treeview | -moz-mac-unified-toolbar | -moz-win-borderless-glass | -moz-win-browsertabbar-toolbox | -moz-win-communicationstext | -moz-win-communications-toolbox | -moz-win-exclude-glass | -moz-win-glass | -moz-win-mediatext | -moz-win-media-toolbox | -moz-window-button-box | -moz-window-button-box-maximized | -moz-window-button-close | -moz-window-button-maximize | -moz-window-button-minimize | -moz-window-button-restore | -moz-window-frame-bottom | -moz-window-frame-left | -moz-window-frame-right | -moz-window-titlebar | -moz-window-titlebar-maximized`
+   *
+   * **Initial value**: `none` (but this value is overridden in the user agent CSS)
+   */
   MozAppearance: PropFn<CssValueOf<'MozAppearance'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `visible | hidden`
-     *
-     * **Initial value**: `visible`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `visible | hidden`
+   *
+   * **Initial value**: `visible`
+   */
   MozBackfaceVisibility: PropFn<CssValueOf<'MozBackfaceVisibility'>>
   /**
-     * **Syntax**: `<url> | none`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `<url> | none`
+   *
+   * **Initial value**: `none`
+   */
   MozBinding: PropFn<CssValueOf<'MozBinding'>>
   /**
-     * **Syntax**: `<color>+ | none`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `<color>+ | none`
+   *
+   * **Initial value**: `none`
+   */
   MozBorderBottomColors: PropFn<CssValueOf<'MozBorderBottomColors'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-color'>`
-     *
-     * **Initial value**: `currentcolor`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-color'>`
+   *
+   * **Initial value**: `currentcolor`
+   */
   MozBorderEndColor: PropFn<CssValueOf<'MozBorderEndColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-style'>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-style'>`
+   *
+   * **Initial value**: `none`
+   */
   MozBorderEndStyle: PropFn<CssValueOf<'MozBorderEndStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-width'>`
-     *
-     * **Initial value**: `medium`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-width'>`
+   *
+   * **Initial value**: `medium`
+   */
   MozBorderEndWidth: PropFn<CssValueOf<'MozBorderEndWidth'>>
   /**
-     * **Syntax**: `<color>+ | none`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `<color>+ | none`
+   *
+   * **Initial value**: `none`
+   */
   MozBorderLeftColors: PropFn<CssValueOf<'MozBorderLeftColors'>>
   /**
-     * **Syntax**: `<color>+ | none`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `<color>+ | none`
+   *
+   * **Initial value**: `none`
+   */
   MozBorderRightColors: PropFn<CssValueOf<'MozBorderRightColors'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-color'>`
-     *
-     * **Initial value**: `currentcolor`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-color'>`
+   *
+   * **Initial value**: `currentcolor`
+   */
   MozBorderStartColor: PropFn<CssValueOf<'MozBorderStartColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'border-top-style'>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'border-top-style'>`
+   *
+   * **Initial value**: `none`
+   */
   MozBorderStartStyle: PropFn<CssValueOf<'MozBorderStartStyle'>>
   /**
-     * **Syntax**: `<color>+ | none`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `<color>+ | none`
+   *
+   * **Initial value**: `none`
+   */
   MozBorderTopColors: PropFn<CssValueOf<'MozBorderTopColors'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `content-box | border-box`
-     *
-     * **Initial value**: `content-box`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `content-box | border-box`
+   *
+   * **Initial value**: `content-box`
+   */
   MozBoxSizing: PropFn<CssValueOf<'MozBoxSizing'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `currentcolor`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `currentcolor`
+   */
   MozColumnRuleColor: PropFn<CssValueOf<'MozColumnRuleColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<'border-style'>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<'border-style'>`
+   *
+   * **Initial value**: `none`
+   */
   MozColumnRuleStyle: PropFn<CssValueOf<'MozColumnRuleStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<'border-width'>`
-     *
-     * **Initial value**: `medium`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<'border-width'>`
+   *
+   * **Initial value**: `medium`
+   */
   MozColumnRuleWidth: PropFn<CssValueOf<'MozColumnRuleWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2016.
-     *
-     * **Syntax**: `<length> | auto`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2016.
+   *
+   * **Syntax**: `<length> | auto`
+   *
+   * **Initial value**: `auto`
+   */
   MozColumnWidth: PropFn<CssValueOf<'MozColumnWidth'>>
   /**
-     * **Syntax**: `none | [ fill | fill-opacity | stroke | stroke-opacity ]#`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `none | [ fill | fill-opacity | stroke | stroke-opacity ]#`
+   *
+   * **Initial value**: `none`
+   */
   MozContextProperties: PropFn<CssValueOf<'MozContextProperties'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `normal | <feature-tag-value>#`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `normal | <feature-tag-value>#`
+   *
+   * **Initial value**: `normal`
+   */
   MozFontFeatureSettings: PropFn<CssValueOf<'MozFontFeatureSettings'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `normal | <string>`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `normal | <string>`
+   *
+   * **Initial value**: `normal`
+   */
   MozFontLanguageOverride: PropFn<CssValueOf<'MozFontLanguageOverride'>>
   /**
-     * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `none | manual | auto`
-     *
-     * **Initial value**: `manual`
-     */
+   * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `none | manual | auto`
+   *
+   * **Initial value**: `manual`
+   */
   MozHyphens: PropFn<CssValueOf<'MozHyphens'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'margin-top'>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'margin-top'>`
+   *
+   * **Initial value**: `0`
+   */
   MozMarginEnd: PropFn<CssValueOf<'MozMarginEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'margin-top'>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'margin-top'>`
+   *
+   * **Initial value**: `0`
+   */
   MozMarginStart: PropFn<CssValueOf<'MozMarginStart'>>
   /**
-     * The **`-moz-orient`** CSS property specifies the orientation of the element to which it's applied.
-     *
-     * **Syntax**: `inline | block | horizontal | vertical`
-     *
-     * **Initial value**: `inline`
-     */
+   * The **`-moz-orient`** CSS property specifies the orientation of the element to which it's applied.
+   *
+   * **Syntax**: `inline | block | horizontal | vertical`
+   *
+   * **Initial value**: `inline`
+   */
   MozOrient: PropFn<CssValueOf<'MozOrient'>>
   /**
-     * The **`font-smooth`** CSS property controls the application of anti-aliasing when fonts are rendered.
-     *
-     * **Syntax**: `auto | never | always | <absolute-size> | <length>`
-     *
-     * **Initial value**: `auto`
-     */
+   * The **`font-smooth`** CSS property controls the application of anti-aliasing when fonts are rendered.
+   *
+   * **Syntax**: `auto | never | always | <absolute-size> | <length>`
+   *
+   * **Initial value**: `auto`
+   */
   MozOsxFontSmoothing: PropFn<CssValueOf<'MozOsxFontSmoothing'>>
   /**
-     * **Syntax**: `<outline-radius>`
-     *
-     * **Initial value**: `0`
-     */
+   * **Syntax**: `<outline-radius>`
+   *
+   * **Initial value**: `0`
+   */
   MozOutlineRadiusBottomleft: PropFn<CssValueOf<'MozOutlineRadiusBottomleft'>>
   /**
-     * **Syntax**: `<outline-radius>`
-     *
-     * **Initial value**: `0`
-     */
+   * **Syntax**: `<outline-radius>`
+   *
+   * **Initial value**: `0`
+   */
   MozOutlineRadiusBottomright: PropFn<CssValueOf<'MozOutlineRadiusBottomright'>>
   /**
-     * **Syntax**: `<outline-radius>`
-     *
-     * **Initial value**: `0`
-     */
+   * **Syntax**: `<outline-radius>`
+   *
+   * **Initial value**: `0`
+   */
   MozOutlineRadiusTopleft: PropFn<CssValueOf<'MozOutlineRadiusTopleft'>>
   /**
-     * **Syntax**: `<outline-radius>`
-     *
-     * **Initial value**: `0`
-     */
+   * **Syntax**: `<outline-radius>`
+   *
+   * **Initial value**: `0`
+   */
   MozOutlineRadiusTopright: PropFn<CssValueOf<'MozOutlineRadiusTopright'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'padding-top'>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'padding-top'>`
+   *
+   * **Initial value**: `0`
+   */
   MozPaddingEnd: PropFn<CssValueOf<'MozPaddingEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'padding-top'>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'padding-top'>`
+   *
+   * **Initial value**: `0`
+   */
   MozPaddingStart: PropFn<CssValueOf<'MozPaddingStart'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | <length>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | <length>`
+   *
+   * **Initial value**: `none`
+   */
   MozPerspective: PropFn<CssValueOf<'MozPerspective'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<position>`
-     *
-     * **Initial value**: `50% 50%`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<position>`
+   *
+   * **Initial value**: `50% 50%`
+   */
   MozPerspectiveOrigin: PropFn<CssValueOf<'MozPerspectiveOrigin'>>
   /**
-     * **Syntax**: `ignore | stretch-to-fit`
-     *
-     * **Initial value**: `stretch-to-fit`
-     */
+   * **Syntax**: `ignore | stretch-to-fit`
+   *
+   * **Initial value**: `stretch-to-fit`
+   */
   MozStackSizing: PropFn<CssValueOf<'MozStackSizing'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2021.
-     *
-     * **Syntax**: `<integer> | <length>`
-     *
-     * **Initial value**: `8`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2021.
+   *
+   * **Syntax**: `<integer> | <length>`
+   *
+   * **Initial value**: `8`
+   */
   MozTabSize: PropFn<CssValueOf<'MozTabSize'>>
   /**
-     * **Syntax**: `none | blink`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `none | blink`
+   *
+   * **Initial value**: `none`
+   */
   MozTextBlink: PropFn<CssValueOf<'MozTextBlink'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | auto | <percentage>`
-     *
-     * **Initial value**: `auto` for smartphone browsers supporting inflation, `none` in other cases (and then not modifiable).
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | auto | <percentage>`
+   *
+   * **Initial value**: `auto` for smartphone browsers supporting inflation, `none` in other cases (and then not modifiable).
+   */
   MozTextSizeAdjust: PropFn<CssValueOf<'MozTextSizeAdjust'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | <transform-list>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | <transform-list>`
+   *
+   * **Initial value**: `none`
+   */
   MozTransform: PropFn<CssValueOf<'MozTransform'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `[ <length-percentage> | left | center | right | top | bottom ] | [ [ <length-percentage> | left | center | right ] && [ <length-percentage> | top | center | bottom ] ] <length>?`
-     *
-     * **Initial value**: `50% 50% 0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `[ <length-percentage> | left | center | right | top | bottom ] | [ [ <length-percentage> | left | center | right ] && [ <length-percentage> | top | center | bottom ] ] <length>?`
+   *
+   * **Initial value**: `50% 50% 0`
+   */
   MozTransformOrigin: PropFn<CssValueOf<'MozTransformOrigin'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `flat | preserve-3d`
-     *
-     * **Initial value**: `flat`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `flat | preserve-3d`
+   *
+   * **Initial value**: `flat`
+   */
   MozTransformStyle: PropFn<CssValueOf<'MozTransformStyle'>>
   /**
-     * The **`user-modify`** property has no effect in Firefox. It was originally planned to determine whether or not the content of an element can be edited by a user.
-     *
-     * **Syntax**: `read-only | read-write | write-only`
-     *
-     * **Initial value**: `read-only`
-     */
+   * The **`user-modify`** property has no effect in Firefox. It was originally planned to determine whether or not the content of an element can be edited by a user.
+   *
+   * **Syntax**: `read-only | read-write | write-only`
+   *
+   * **Initial value**: `read-only`
+   */
   MozUserModify: PropFn<CssValueOf<'MozUserModify'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `auto | text | none | all`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `auto | text | none | all`
+   *
+   * **Initial value**: `auto`
+   */
   MozUserSelect: PropFn<CssValueOf<'MozUserSelect'>>
   /**
-     * **Syntax**: `drag | no-drag`
-     *
-     * **Initial value**: `drag`
-     */
+   * **Syntax**: `drag | no-drag`
+   *
+   * **Initial value**: `drag`
+   */
   MozWindowDragging: PropFn<CssValueOf<'MozWindowDragging'>>
   /**
-     * **Syntax**: `default | menu | tooltip | sheet | none`
-     *
-     * **Initial value**: `default`
-     */
+   * **Syntax**: `default | menu | tooltip | sheet | none`
+   *
+   * **Initial value**: `default`
+   */
   MozWindowShadow: PropFn<CssValueOf<'MozWindowShadow'>>
   /**
-     * **Syntax**: `false | true`
-     *
-     * **Initial value**: `false`
-     */
+   * **Syntax**: `false | true`
+   *
+   * **Initial value**: `false`
+   */
   msAccelerator: PropFn<CssValueOf<'msAccelerator'>>
   /**
-     * **Syntax**: `tb | rl | bt | lr`
-     *
-     * **Initial value**: `tb`
-     */
+   * **Syntax**: `tb | rl | bt | lr`
+   *
+   * **Initial value**: `tb`
+   */
   msBlockProgression: PropFn<CssValueOf<'msBlockProgression'>>
   /**
-     * **Syntax**: `none | chained`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `none | chained`
+   *
+   * **Initial value**: `none`
+   */
   msContentZoomChaining: PropFn<CssValueOf<'msContentZoomChaining'>>
   /**
-     * **Syntax**: `<percentage>`
-     *
-     * **Initial value**: `400%`
-     */
+   * **Syntax**: `<percentage>`
+   *
+   * **Initial value**: `400%`
+   */
   msContentZoomLimitMax: PropFn<CssValueOf<'msContentZoomLimitMax'>>
   /**
-     * **Syntax**: `<percentage>`
-     *
-     * **Initial value**: `100%`
-     */
+   * **Syntax**: `<percentage>`
+   *
+   * **Initial value**: `100%`
+   */
   msContentZoomLimitMin: PropFn<CssValueOf<'msContentZoomLimitMin'>>
   /**
-     * **Syntax**: `snapInterval( <percentage>, <percentage> ) | snapList( <percentage># )`
-     *
-     * **Initial value**: `snapInterval(0%, 100%)`
-     */
+   * **Syntax**: `snapInterval( <percentage>, <percentage> ) | snapList( <percentage># )`
+   *
+   * **Initial value**: `snapInterval(0%, 100%)`
+   */
   msContentZoomSnapPoints: PropFn<CssValueOf<'msContentZoomSnapPoints'>>
   /**
-     * **Syntax**: `none | proximity | mandatory`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `none | proximity | mandatory`
+   *
+   * **Initial value**: `none`
+   */
   msContentZoomSnapType: PropFn<CssValueOf<'msContentZoomSnapType'>>
   /**
-     * **Syntax**: `none | zoom`
-     *
-     * **Initial value**: zoom for the top level element, none for all other elements
-     */
+   * **Syntax**: `none | zoom`
+   *
+   * **Initial value**: zoom for the top level element, none for all other elements
+   */
   msContentZooming: PropFn<CssValueOf<'msContentZooming'>>
   /**
-     * **Syntax**: `<string>`
-     *
-     * **Initial value**: "" (the empty string)
-     */
+   * **Syntax**: `<string>`
+   *
+   * **Initial value**: "" (the empty string)
+   */
   msFilter: PropFn<CssValueOf<'msFilter'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `row | row-reverse | column | column-reverse`
-     *
-     * **Initial value**: `row`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `row | row-reverse | column | column-reverse`
+   *
+   * **Initial value**: `row`
+   */
   msFlexDirection: PropFn<CssValueOf<'msFlexDirection'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<number>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<number>`
+   *
+   * **Initial value**: `0`
+   */
   msFlexPositive: PropFn<CssValueOf<'msFlexPositive'>>
   /**
-     * **Syntax**: `[ none | <custom-ident> ]#`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `[ none | <custom-ident> ]#`
+   *
+   * **Initial value**: `none`
+   */
   msFlowFrom: PropFn<CssValueOf<'msFlowFrom'>>
   /**
-     * **Syntax**: `[ none | <custom-ident> ]#`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `[ none | <custom-ident> ]#`
+   *
+   * **Initial value**: `none`
+   */
   msFlowInto: PropFn<CssValueOf<'msFlowInto'>>
   /**
-     * **Syntax**: `none | <track-list> | <auto-track-list>`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `none | <track-list> | <auto-track-list>`
+   *
+   * **Initial value**: `none`
+   */
   msGridColumns: PropFn<CssValueOf<'msGridColumns'>>
   /**
-     * **Syntax**: `none | <track-list> | <auto-track-list>`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `none | <track-list> | <auto-track-list>`
+   *
+   * **Initial value**: `none`
+   */
   msGridRows: PropFn<CssValueOf<'msGridRows'>>
   /**
-     * **Syntax**: `auto | none`
-     *
-     * **Initial value**: `auto`
-     */
+   * **Syntax**: `auto | none`
+   *
+   * **Initial value**: `auto`
+   */
   msHighContrastAdjust: PropFn<CssValueOf<'msHighContrastAdjust'>>
   /**
-     * **Syntax**: `auto | <integer>{1,3}`
-     *
-     * **Initial value**: `auto`
-     */
+   * **Syntax**: `auto | <integer>{1,3}`
+   *
+   * **Initial value**: `auto`
+   */
   msHyphenateLimitChars: PropFn<CssValueOf<'msHyphenateLimitChars'>>
   /**
-     * **Syntax**: `no-limit | <integer>`
-     *
-     * **Initial value**: `no-limit`
-     */
+   * **Syntax**: `no-limit | <integer>`
+   *
+   * **Initial value**: `no-limit`
+   */
   msHyphenateLimitLines: PropFn<CssValueOf<'msHyphenateLimitLines'>>
   /**
-     * **Syntax**: `<percentage> | <length>`
-     *
-     * **Initial value**: `0`
-     */
+   * **Syntax**: `<percentage> | <length>`
+   *
+   * **Initial value**: `0`
+   */
   msHyphenateLimitZone: PropFn<CssValueOf<'msHyphenateLimitZone'>>
   /**
-     * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `none | manual | auto`
-     *
-     * **Initial value**: `manual`
-     */
+   * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `none | manual | auto`
+   *
+   * **Initial value**: `manual`
+   */
   msHyphens: PropFn<CssValueOf<'msHyphens'>>
   /**
-     * **Syntax**: `auto | after`
-     *
-     * **Initial value**: `auto`
-     */
+   * **Syntax**: `auto | after`
+   *
+   * **Initial value**: `auto`
+   */
   msImeAlign: PropFn<CssValueOf<'msImeAlign'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `auto | loose | normal | strict | anywhere`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `auto | loose | normal | strict | anywhere`
+   *
+   * **Initial value**: `auto`
+   */
   msLineBreak: PropFn<CssValueOf<'msLineBreak'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<integer>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<integer>`
+   *
+   * **Initial value**: `0`
+   */
   msOrder: PropFn<CssValueOf<'msOrder'>>
   /**
-     * **Syntax**: `auto | none | scrollbar | -ms-autohiding-scrollbar`
-     *
-     * **Initial value**: `auto`
-     */
+   * **Syntax**: `auto | none | scrollbar | -ms-autohiding-scrollbar`
+   *
+   * **Initial value**: `auto`
+   */
   msOverflowStyle: PropFn<CssValueOf<'msOverflowStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `visible | hidden | clip | scroll | auto`
-     *
-     * **Initial value**: `visible`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `visible | hidden | clip | scroll | auto`
+   *
+   * **Initial value**: `visible`
+   */
   msOverflowX: PropFn<CssValueOf<'msOverflowX'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `visible | hidden | clip | scroll | auto`
-     *
-     * **Initial value**: `visible`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `visible | hidden | clip | scroll | auto`
+   *
+   * **Initial value**: `visible`
+   */
   msOverflowY: PropFn<CssValueOf<'msOverflowY'>>
   /**
-     * **Syntax**: `chained | none`
-     *
-     * **Initial value**: `chained`
-     */
+   * **Syntax**: `chained | none`
+   *
+   * **Initial value**: `chained`
+   */
   msScrollChaining: PropFn<CssValueOf<'msScrollChaining'>>
   /**
-     * **Syntax**: `auto | <length>`
-     *
-     * **Initial value**: `auto`
-     */
+   * **Syntax**: `auto | <length>`
+   *
+   * **Initial value**: `auto`
+   */
   msScrollLimitXMax: PropFn<CssValueOf<'msScrollLimitXMax'>>
   /**
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     */
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   */
   msScrollLimitXMin: PropFn<CssValueOf<'msScrollLimitXMin'>>
   /**
-     * **Syntax**: `auto | <length>`
-     *
-     * **Initial value**: `auto`
-     */
+   * **Syntax**: `auto | <length>`
+   *
+   * **Initial value**: `auto`
+   */
   msScrollLimitYMax: PropFn<CssValueOf<'msScrollLimitYMax'>>
   /**
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     */
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   */
   msScrollLimitYMin: PropFn<CssValueOf<'msScrollLimitYMin'>>
   /**
-     * **Syntax**: `none | railed`
-     *
-     * **Initial value**: `railed`
-     */
+   * **Syntax**: `none | railed`
+   *
+   * **Initial value**: `railed`
+   */
   msScrollRails: PropFn<CssValueOf<'msScrollRails'>>
   /**
-     * **Syntax**: `snapInterval( <length-percentage>, <length-percentage> ) | snapList( <length-percentage># )`
-     *
-     * **Initial value**: `snapInterval(0px, 100%)`
-     */
+   * **Syntax**: `snapInterval( <length-percentage>, <length-percentage> ) | snapList( <length-percentage># )`
+   *
+   * **Initial value**: `snapInterval(0px, 100%)`
+   */
   msScrollSnapPointsX: PropFn<CssValueOf<'msScrollSnapPointsX'>>
   /**
-     * **Syntax**: `snapInterval( <length-percentage>, <length-percentage> ) | snapList( <length-percentage># )`
-     *
-     * **Initial value**: `snapInterval(0px, 100%)`
-     */
+   * **Syntax**: `snapInterval( <length-percentage>, <length-percentage> ) | snapList( <length-percentage># )`
+   *
+   * **Initial value**: `snapInterval(0px, 100%)`
+   */
   msScrollSnapPointsY: PropFn<CssValueOf<'msScrollSnapPointsY'>>
   /**
-     * **Syntax**: `none | proximity | mandatory`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `none | proximity | mandatory`
+   *
+   * **Initial value**: `none`
+   */
   msScrollSnapType: PropFn<CssValueOf<'msScrollSnapType'>>
   /**
-     * **Syntax**: `none | vertical-to-horizontal`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `none | vertical-to-horizontal`
+   *
+   * **Initial value**: `none`
+   */
   msScrollTranslation: PropFn<CssValueOf<'msScrollTranslation'>>
   /**
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: depends on user agent
-     */
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: depends on user agent
+   */
   msScrollbar3dlightColor: PropFn<CssValueOf<'msScrollbar3dlightColor'>>
   /**
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `ButtonText`
-     */
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `ButtonText`
+   */
   msScrollbarArrowColor: PropFn<CssValueOf<'msScrollbarArrowColor'>>
   /**
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: depends on user agent
-     */
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: depends on user agent
+   */
   msScrollbarBaseColor: PropFn<CssValueOf<'msScrollbarBaseColor'>>
   /**
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `ThreeDDarkShadow`
-     */
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `ThreeDDarkShadow`
+   */
   msScrollbarDarkshadowColor: PropFn<CssValueOf<'msScrollbarDarkshadowColor'>>
   /**
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `ThreeDFace`
-     */
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `ThreeDFace`
+   */
   msScrollbarFaceColor: PropFn<CssValueOf<'msScrollbarFaceColor'>>
   /**
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `ThreeDHighlight`
-     */
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `ThreeDHighlight`
+   */
   msScrollbarHighlightColor: PropFn<CssValueOf<'msScrollbarHighlightColor'>>
   /**
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `ThreeDDarkShadow`
-     */
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `ThreeDDarkShadow`
+   */
   msScrollbarShadowColor: PropFn<CssValueOf<'msScrollbarShadowColor'>>
   /**
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `Scrollbar`
-     */
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `Scrollbar`
+   */
   msScrollbarTrackColor: PropFn<CssValueOf<'msScrollbarTrackColor'>>
   /**
-     * **Syntax**: `none | ideograph-alpha | ideograph-numeric | ideograph-parenthesis | ideograph-space`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `none | ideograph-alpha | ideograph-numeric | ideograph-parenthesis | ideograph-space`
+   *
+   * **Initial value**: `none`
+   */
   msTextAutospace: PropFn<CssValueOf<'msTextAutospace'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `none | all | [ digits <integer>? ]`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `none | all | [ digits <integer>? ]`
+   *
+   * **Initial value**: `none`
+   */
   msTextCombineHorizontal: PropFn<CssValueOf<'msTextCombineHorizontal'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `[ clip | ellipsis | <string> ]{1,2}`
-     *
-     * **Initial value**: `clip`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `[ clip | ellipsis | <string> ]{1,2}`
+   *
+   * **Initial value**: `clip`
+   */
   msTextOverflow: PropFn<CssValueOf<'msTextOverflow'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2019.
-     *
-     * **Syntax**: `auto | none | [ [ pan-x | pan-left | pan-right ] || [ pan-y | pan-up | pan-down ] || pinch-zoom ] | manipulation`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2019.
+   *
+   * **Syntax**: `auto | none | [ [ pan-x | pan-left | pan-right ] || [ pan-y | pan-up | pan-down ] || pinch-zoom ] | manipulation`
+   *
+   * **Initial value**: `auto`
+   */
   msTouchAction: PropFn<CssValueOf<'msTouchAction'>>
   /**
-     * **Syntax**: `grippers | none`
-     *
-     * **Initial value**: `grippers`
-     */
+   * **Syntax**: `grippers | none`
+   *
+   * **Initial value**: `grippers`
+   */
   msTouchSelect: PropFn<CssValueOf<'msTouchSelect'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | <transform-list>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | <transform-list>`
+   *
+   * **Initial value**: `none`
+   */
   msTransform: PropFn<CssValueOf<'msTransform'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `[ <length-percentage> | left | center | right | top | bottom ] | [ [ <length-percentage> | left | center | right ] && [ <length-percentage> | top | center | bottom ] ] <length>?`
-     *
-     * **Initial value**: `50% 50% 0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `[ <length-percentage> | left | center | right | top | bottom ] | [ [ <length-percentage> | left | center | right ] && [ <length-percentage> | top | center | bottom ] ] <length>?`
+   *
+   * **Initial value**: `50% 50% 0`
+   */
   msTransformOrigin: PropFn<CssValueOf<'msTransformOrigin'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<time>#`
-     *
-     * **Initial value**: `0s`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<time>#`
+   *
+   * **Initial value**: `0s`
+   */
   msTransitionDelay: PropFn<CssValueOf<'msTransitionDelay'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<time>#`
-     *
-     * **Initial value**: `0s`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<time>#`
+   *
+   * **Initial value**: `0s`
+   */
   msTransitionDuration: PropFn<CssValueOf<'msTransitionDuration'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | <single-transition-property>#`
-     *
-     * **Initial value**: all
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | <single-transition-property>#`
+   *
+   * **Initial value**: all
+   */
   msTransitionProperty: PropFn<CssValueOf<'msTransitionProperty'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<easing-function>#`
-     *
-     * **Initial value**: `ease`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<easing-function>#`
+   *
+   * **Initial value**: `ease`
+   */
   msTransitionTimingFunction: PropFn<CssValueOf<'msTransitionTimingFunction'>>
   /**
-     * **Syntax**: `none | element | text`
-     *
-     * **Initial value**: `text`
-     */
+   * **Syntax**: `none | element | text`
+   *
+   * **Initial value**: `text`
+   */
   msUserSelect: PropFn<CssValueOf<'msUserSelect'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `normal | break-all | keep-all | break-word | auto-phrase`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `normal | break-all | keep-all | break-word | auto-phrase`
+   *
+   * **Initial value**: `normal`
+   */
   msWordBreak: PropFn<CssValueOf<'msWordBreak'>>
   /**
-     * **Syntax**: `auto | both | start | end | maximum | clear`
-     *
-     * **Initial value**: `auto`
-     */
+   * **Syntax**: `auto | both | start | end | maximum | clear`
+   *
+   * **Initial value**: `auto`
+   */
   msWrapFlow: PropFn<CssValueOf<'msWrapFlow'>>
   /**
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     */
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   */
   msWrapMargin: PropFn<CssValueOf<'msWrapMargin'>>
   /**
-     * **Syntax**: `wrap | none`
-     *
-     * **Initial value**: `wrap`
-     */
+   * **Syntax**: `wrap | none`
+   *
+   * **Initial value**: `wrap`
+   */
   msWrapThrough: PropFn<CssValueOf<'msWrapThrough'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `horizontal-tb | vertical-rl | vertical-lr | sideways-rl | sideways-lr`
-     *
-     * **Initial value**: `horizontal-tb`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `horizontal-tb | vertical-rl | vertical-lr | sideways-rl | sideways-lr`
+   *
+   * **Initial value**: `horizontal-tb`
+   */
   msWritingMode: PropFn<CssValueOf<'msWritingMode'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `normal | <baseline-position> | <content-distribution> | <overflow-position>? <content-position>`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `normal | <baseline-position> | <content-distribution> | <overflow-position>? <content-position>`
+   *
+   * **Initial value**: `normal`
+   */
   WebkitAlignContent: PropFn<CssValueOf<'WebkitAlignContent'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `normal | stretch | <baseline-position> | [ <overflow-position>? <self-position> ] | anchor-center`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `normal | stretch | <baseline-position> | [ <overflow-position>? <self-position> ] | anchor-center`
+   *
+   * **Initial value**: `normal`
+   */
   WebkitAlignItems: PropFn<CssValueOf<'WebkitAlignItems'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `auto | normal | stretch | <baseline-position> | <overflow-position>? <self-position> | anchor-center`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `auto | normal | stretch | <baseline-position> | <overflow-position>? <self-position> | anchor-center`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitAlignSelf: PropFn<CssValueOf<'WebkitAlignSelf'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<time>#`
-     *
-     * **Initial value**: `0s`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<time>#`
+   *
+   * **Initial value**: `0s`
+   */
   WebkitAnimationDelay: PropFn<CssValueOf<'WebkitAnimationDelay'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-direction>#`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-direction>#`
+   *
+   * **Initial value**: `normal`
+   */
   WebkitAnimationDirection: PropFn<CssValueOf<'WebkitAnimationDirection'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `[ auto | <time [0s,∞]> ]#`
-     *
-     * **Initial value**: `0s`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `[ auto | <time [0s,∞]> ]#`
+   *
+   * **Initial value**: `0s`
+   */
   WebkitAnimationDuration: PropFn<CssValueOf<'WebkitAnimationDuration'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-fill-mode>#`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-fill-mode>#`
+   *
+   * **Initial value**: `none`
+   */
   WebkitAnimationFillMode: PropFn<CssValueOf<'WebkitAnimationFillMode'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-iteration-count>#`
-     *
-     * **Initial value**: `1`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-iteration-count>#`
+   *
+   * **Initial value**: `1`
+   */
   WebkitAnimationIterationCount: PropFn<CssValueOf<'WebkitAnimationIterationCount'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `[ none | <keyframes-name> ]#`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `[ none | <keyframes-name> ]#`
+   *
+   * **Initial value**: `none`
+   */
   WebkitAnimationName: PropFn<CssValueOf<'WebkitAnimationName'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-play-state>#`
-     *
-     * **Initial value**: `running`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-play-state>#`
+   *
+   * **Initial value**: `running`
+   */
   WebkitAnimationPlayState: PropFn<CssValueOf<'WebkitAnimationPlayState'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<easing-function>#`
-     *
-     * **Initial value**: `ease`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<easing-function>#`
+   *
+   * **Initial value**: `ease`
+   */
   WebkitAnimationTimingFunction: PropFn<CssValueOf<'WebkitAnimationTimingFunction'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `none | button | button-bevel | caret | checkbox | default-button | inner-spin-button | listbox | listitem | media-controls-background | media-controls-fullscreen-background | media-current-time-display | media-enter-fullscreen-button | media-exit-fullscreen-button | media-fullscreen-button | media-mute-button | media-overlay-play-button | media-play-button | media-seek-back-button | media-seek-forward-button | media-slider | media-sliderthumb | media-time-remaining-display | media-toggle-closed-captions-button | media-volume-slider | media-volume-slider-container | media-volume-sliderthumb | menulist | menulist-button | menulist-text | menulist-textfield | meter | progress-bar | progress-bar-value | push-button | radio | searchfield | searchfield-cancel-button | searchfield-decoration | searchfield-results-button | searchfield-results-decoration | slider-horizontal | slider-vertical | sliderthumb-horizontal | sliderthumb-vertical | square-button | textarea | textfield | -apple-pay-button`
-     *
-     * **Initial value**: `none` (but this value is overridden in the user agent CSS)
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `none | button | button-bevel | caret | checkbox | default-button | inner-spin-button | listbox | listitem | media-controls-background | media-controls-fullscreen-background | media-current-time-display | media-enter-fullscreen-button | media-exit-fullscreen-button | media-fullscreen-button | media-mute-button | media-overlay-play-button | media-play-button | media-seek-back-button | media-seek-forward-button | media-slider | media-sliderthumb | media-time-remaining-display | media-toggle-closed-captions-button | media-volume-slider | media-volume-slider-container | media-volume-sliderthumb | menulist | menulist-button | menulist-text | menulist-textfield | meter | progress-bar | progress-bar-value | push-button | radio | searchfield | searchfield-cancel-button | searchfield-decoration | searchfield-results-button | searchfield-results-decoration | slider-horizontal | slider-vertical | sliderthumb-horizontal | sliderthumb-vertical | square-button | textarea | textfield | -apple-pay-button`
+   *
+   * **Initial value**: `none` (but this value is overridden in the user agent CSS)
+   */
   WebkitAppearance: PropFn<CssValueOf<'WebkitAppearance'>>
   /**
-     * Since September 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `none | <filter-value-list>`
-     *
-     * **Initial value**: `none`
-     */
+   * Since September 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `none | <filter-value-list>`
+   *
+   * **Initial value**: `none`
+   */
   WebkitBackdropFilter: PropFn<CssValueOf<'WebkitBackdropFilter'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `visible | hidden`
-     *
-     * **Initial value**: `visible`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `visible | hidden`
+   *
+   * **Initial value**: `visible`
+   */
   WebkitBackfaceVisibility: PropFn<CssValueOf<'WebkitBackfaceVisibility'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<bg-clip>#`
-     *
-     * **Initial value**: `border-box`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<bg-clip>#`
+   *
+   * **Initial value**: `border-box`
+   */
   WebkitBackgroundClip: PropFn<CssValueOf<'WebkitBackgroundClip'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<visual-box>#`
-     *
-     * **Initial value**: `padding-box`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<visual-box>#`
+   *
+   * **Initial value**: `padding-box`
+   */
   WebkitBackgroundOrigin: PropFn<CssValueOf<'WebkitBackgroundOrigin'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<bg-size>#`
-     *
-     * **Initial value**: `auto auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<bg-size>#`
+   *
+   * **Initial value**: `auto auto`
+   */
   WebkitBackgroundSize: PropFn<CssValueOf<'WebkitBackgroundSize'>>
   /**
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `currentcolor`
-     */
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `currentcolor`
+   */
   WebkitBorderBeforeColor: PropFn<CssValueOf<'WebkitBorderBeforeColor'>>
   /**
-     * **Syntax**: `<'border-style'>`
-     *
-     * **Initial value**: `none`
-     */
+   * **Syntax**: `<'border-style'>`
+   *
+   * **Initial value**: `none`
+   */
   WebkitBorderBeforeStyle: PropFn<CssValueOf<'WebkitBorderBeforeStyle'>>
   /**
-     * **Syntax**: `<'border-width'>`
-     *
-     * **Initial value**: `medium`
-     */
+   * **Syntax**: `<'border-width'>`
+   *
+   * **Initial value**: `medium`
+   */
   WebkitBorderBeforeWidth: PropFn<CssValueOf<'WebkitBorderBeforeWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<length-percentage [0,∞]>{1,2}`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<length-percentage [0,∞]>{1,2}`
+   *
+   * **Initial value**: `0`
+   */
   WebkitBorderBottomLeftRadius: PropFn<CssValueOf<'WebkitBorderBottomLeftRadius'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<length-percentage [0,∞]>{1,2}`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<length-percentage [0,∞]>{1,2}`
+   *
+   * **Initial value**: `0`
+   */
   WebkitBorderBottomRightRadius: PropFn<CssValueOf<'WebkitBorderBottomRightRadius'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `[ <number [0,∞]> | <percentage [0,∞]> ]{1,4}  && fill?`
-     *
-     * **Initial value**: `100%`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `[ <number [0,∞]> | <percentage [0,∞]> ]{1,4}  && fill?`
+   *
+   * **Initial value**: `100%`
+   */
   WebkitBorderImageSlice: PropFn<CssValueOf<'WebkitBorderImageSlice'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<length-percentage [0,∞]>{1,2}`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<length-percentage [0,∞]>{1,2}`
+   *
+   * **Initial value**: `0`
+   */
   WebkitBorderTopLeftRadius: PropFn<CssValueOf<'WebkitBorderTopLeftRadius'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<length-percentage [0,∞]>{1,2}`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<length-percentage [0,∞]>{1,2}`
+   *
+   * **Initial value**: `0`
+   */
   WebkitBorderTopRightRadius: PropFn<CssValueOf<'WebkitBorderTopRightRadius'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `slice | clone`
-     *
-     * **Initial value**: `slice`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `slice | clone`
+   *
+   * **Initial value**: `slice`
+   */
   WebkitBoxDecorationBreak: PropFn<CssValueOf<'WebkitBoxDecorationBreak'>>
   /**
-     * The **`-webkit-box-reflect`** CSS property lets you reflect the content of an element in one specific direction.
-     *
-     * **Syntax**: `[ above | below | right | left ]? <length>? <image>?`
-     *
-     * **Initial value**: `none`
-     */
+   * The **`-webkit-box-reflect`** CSS property lets you reflect the content of an element in one specific direction.
+   *
+   * **Syntax**: `[ above | below | right | left ]? <length>? <image>?`
+   *
+   * **Initial value**: `none`
+   */
   WebkitBoxReflect: PropFn<CssValueOf<'WebkitBoxReflect'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `none | <shadow>#`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `none | <shadow>#`
+   *
+   * **Initial value**: `none`
+   */
   WebkitBoxShadow: PropFn<CssValueOf<'WebkitBoxShadow'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `content-box | border-box`
-     *
-     * **Initial value**: `content-box`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `content-box | border-box`
+   *
+   * **Initial value**: `content-box`
+   */
   WebkitBoxSizing: PropFn<CssValueOf<'WebkitBoxSizing'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<clip-source> | [ <basic-shape> || <geometry-box> ] | none`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<clip-source> | [ <basic-shape> || <geometry-box> ] | none`
+   *
+   * **Initial value**: `none`
+   */
   WebkitClipPath: PropFn<CssValueOf<'WebkitClipPath'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<integer> | auto`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<integer> | auto`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitColumnCount: PropFn<CssValueOf<'WebkitColumnCount'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `auto | balance`
-     *
-     * **Initial value**: `balance`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `auto | balance`
+   *
+   * **Initial value**: `balance`
+   */
   WebkitColumnFill: PropFn<CssValueOf<'WebkitColumnFill'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `currentcolor`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `currentcolor`
+   */
   WebkitColumnRuleColor: PropFn<CssValueOf<'WebkitColumnRuleColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<'border-style'>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<'border-style'>`
+   *
+   * **Initial value**: `none`
+   */
   WebkitColumnRuleStyle: PropFn<CssValueOf<'WebkitColumnRuleStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<'border-width'>`
-     *
-     * **Initial value**: `medium`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<'border-width'>`
+   *
+   * **Initial value**: `medium`
+   */
   WebkitColumnRuleWidth: PropFn<CssValueOf<'WebkitColumnRuleWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `none | all`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `none | all`
+   *
+   * **Initial value**: `none`
+   */
   WebkitColumnSpan: PropFn<CssValueOf<'WebkitColumnSpan'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2016.
-     *
-     * **Syntax**: `<length> | auto`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since November 2016.
+   *
+   * **Syntax**: `<length> | auto`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitColumnWidth: PropFn<CssValueOf<'WebkitColumnWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
-     *
-     * **Syntax**: `none | <filter-value-list>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
+   *
+   * **Syntax**: `none | <filter-value-list>`
+   *
+   * **Initial value**: `none`
+   */
   WebkitFilter: PropFn<CssValueOf<'WebkitFilter'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `content | <'width'>`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `content | <'width'>`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitFlexBasis: PropFn<CssValueOf<'WebkitFlexBasis'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `row | row-reverse | column | column-reverse`
-     *
-     * **Initial value**: `row`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `row | row-reverse | column | column-reverse`
+   *
+   * **Initial value**: `row`
+   */
   WebkitFlexDirection: PropFn<CssValueOf<'WebkitFlexDirection'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<number>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<number>`
+   *
+   * **Initial value**: `0`
+   */
   WebkitFlexGrow: PropFn<CssValueOf<'WebkitFlexGrow'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<number>`
-     *
-     * **Initial value**: `1`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<number>`
+   *
+   * **Initial value**: `1`
+   */
   WebkitFlexShrink: PropFn<CssValueOf<'WebkitFlexShrink'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `nowrap | wrap | wrap-reverse`
-     *
-     * **Initial value**: `nowrap`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `nowrap | wrap | wrap-reverse`
+   *
+   * **Initial value**: `nowrap`
+   */
   WebkitFlexWrap: PropFn<CssValueOf<'WebkitFlexWrap'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `normal | <feature-tag-value>#`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `normal | <feature-tag-value>#`
+   *
+   * **Initial value**: `normal`
+   */
   WebkitFontFeatureSettings: PropFn<CssValueOf<'WebkitFontFeatureSettings'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `auto | normal | none`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `auto | normal | none`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitFontKerning: PropFn<CssValueOf<'WebkitFontKerning'>>
   /**
-     * The **`font-smooth`** CSS property controls the application of anti-aliasing when fonts are rendered.
-     *
-     * **Syntax**: `auto | never | always | <absolute-size> | <length>`
-     *
-     * **Initial value**: `auto`
-     */
+   * The **`font-smooth`** CSS property controls the application of anti-aliasing when fonts are rendered.
+   *
+   * **Syntax**: `auto | never | always | <absolute-size> | <length>`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitFontSmoothing: PropFn<CssValueOf<'WebkitFontSmoothing'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `normal | none | [ <common-lig-values> || <discretionary-lig-values> || <historical-lig-values> || <contextual-alt-values> ]`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `normal | none | [ <common-lig-values> || <discretionary-lig-values> || <historical-lig-values> || <contextual-alt-values> ]`
+   *
+   * **Initial value**: `normal`
+   */
   WebkitFontVariantLigatures: PropFn<CssValueOf<'WebkitFontVariantLigatures'>>
   /**
-     * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `auto | <string>`
-     *
-     * **Initial value**: `auto`
-     */
+   * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `auto | <string>`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitHyphenateCharacter: PropFn<CssValueOf<'WebkitHyphenateCharacter'>>
   /**
-     * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `none | manual | auto`
-     *
-     * **Initial value**: `manual`
-     */
+   * Since September 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `none | manual | auto`
+   *
+   * **Initial value**: `manual`
+   */
   WebkitHyphens: PropFn<CssValueOf<'WebkitHyphens'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `normal | [ <number> <integer>? ]`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `normal | [ <number> <integer>? ]`
+   *
+   * **Initial value**: `normal`
+   */
   WebkitInitialLetter: PropFn<CssValueOf<'WebkitInitialLetter'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `normal | <content-distribution> | <overflow-position>? [ <content-position> | left | right ]`
-     *
-     * **Initial value**: `normal`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `normal | <content-distribution> | <overflow-position>? [ <content-position> | left | right ]`
+   *
+   * **Initial value**: `normal`
+   */
   WebkitJustifyContent: PropFn<CssValueOf<'WebkitJustifyContent'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `auto | loose | normal | strict | anywhere`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `auto | loose | normal | strict | anywhere`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitLineBreak: PropFn<CssValueOf<'WebkitLineBreak'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | <integer>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | <integer>`
+   *
+   * **Initial value**: `none`
+   */
   WebkitLineClamp: PropFn<CssValueOf<'WebkitLineClamp'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'width'>`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'width'>`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitLogicalHeight: PropFn<CssValueOf<'WebkitLogicalHeight'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'width'>`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'width'>`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitLogicalWidth: PropFn<CssValueOf<'WebkitLogicalWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'margin-top'>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'margin-top'>`
+   *
+   * **Initial value**: `0`
+   */
   WebkitMarginEnd: PropFn<CssValueOf<'WebkitMarginEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'margin-top'>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'margin-top'>`
+   *
+   * **Initial value**: `0`
+   */
   WebkitMarginStart: PropFn<CssValueOf<'WebkitMarginStart'>>
   /**
-     * **Syntax**: `<attachment>#`
-     *
-     * **Initial value**: `scroll`
-     */
+   * **Syntax**: `<attachment>#`
+   *
+   * **Initial value**: `scroll`
+   */
   WebkitMaskAttachment: PropFn<CssValueOf<'WebkitMaskAttachment'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ <length> | <number> ]{1,4}`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ <length> | <number> ]{1,4}`
+   *
+   * **Initial value**: `0`
+   */
   WebkitMaskBoxImageOutset: PropFn<CssValueOf<'WebkitMaskBoxImageOutset'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ stretch | repeat | round | space ]{1,2}`
-     *
-     * **Initial value**: `stretch`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ stretch | repeat | round | space ]{1,2}`
+   *
+   * **Initial value**: `stretch`
+   */
   WebkitMaskBoxImageRepeat: PropFn<CssValueOf<'WebkitMaskBoxImageRepeat'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `<number-percentage>{1,4} fill?`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `<number-percentage>{1,4} fill?`
+   *
+   * **Initial value**: `0`
+   */
   WebkitMaskBoxImageSlice: PropFn<CssValueOf<'WebkitMaskBoxImageSlice'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | <image>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | <image>`
+   *
+   * **Initial value**: `none`
+   */
   WebkitMaskBoxImageSource: PropFn<CssValueOf<'WebkitMaskBoxImageSource'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `[ <length-percentage> | <number> | auto ]{1,4}`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `[ <length-percentage> | <number> | auto ]{1,4}`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitMaskBoxImageWidth: PropFn<CssValueOf<'WebkitMaskBoxImageWidth'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `[ <coord-box> | no-clip | border | padding | content | text ]#`
-     *
-     * **Initial value**: `border`
-     */
+   * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `[ <coord-box> | no-clip | border | padding | content | text ]#`
+   *
+   * **Initial value**: `border`
+   */
   WebkitMaskClip: PropFn<CssValueOf<'WebkitMaskClip'>>
   /**
-     * The **`-webkit-mask-composite`** property specifies the manner in which multiple mask images applied to the same element are composited with one another. Mask images are composited in the opposite order that they are declared with the `-webkit-mask-image` property.
-     *
-     * **Syntax**: `<composite-style>#`
-     *
-     * **Initial value**: `source-over`
-     */
+   * The **`-webkit-mask-composite`** property specifies the manner in which multiple mask images applied to the same element are composited with one another. Mask images are composited in the opposite order that they are declared with the `-webkit-mask-image` property.
+   *
+   * **Syntax**: `<composite-style>#`
+   *
+   * **Initial value**: `source-over`
+   */
   WebkitMaskComposite: PropFn<CssValueOf<'WebkitMaskComposite'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<mask-reference>#`
-     *
-     * **Initial value**: `none`
-     */
+   * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `<mask-reference>#`
+   *
+   * **Initial value**: `none`
+   */
   WebkitMaskImage: PropFn<CssValueOf<'WebkitMaskImage'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `[ <coord-box> | border | padding | content ]#`
-     *
-     * **Initial value**: `padding`
-     */
+   * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `[ <coord-box> | border | padding | content ]#`
+   *
+   * **Initial value**: `padding`
+   */
   WebkitMaskOrigin: PropFn<CssValueOf<'WebkitMaskOrigin'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<position>#`
-     *
-     * **Initial value**: `0% 0%`
-     */
+   * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `<position>#`
+   *
+   * **Initial value**: `0% 0%`
+   */
   WebkitMaskPosition: PropFn<CssValueOf<'WebkitMaskPosition'>>
   /**
-     * The `-webkit-mask-position-x` CSS property sets the initial horizontal position of a mask image.
-     *
-     * **Syntax**: `[ <length-percentage> | left | center | right ]#`
-     *
-     * **Initial value**: `0%`
-     */
+   * The `-webkit-mask-position-x` CSS property sets the initial horizontal position of a mask image.
+   *
+   * **Syntax**: `[ <length-percentage> | left | center | right ]#`
+   *
+   * **Initial value**: `0%`
+   */
   WebkitMaskPositionX: PropFn<CssValueOf<'WebkitMaskPositionX'>>
   /**
-     * The `-webkit-mask-position-y` CSS property sets the initial vertical position of a mask image.
-     *
-     * **Syntax**: `[ <length-percentage> | top | center | bottom ]#`
-     *
-     * **Initial value**: `0%`
-     */
+   * The `-webkit-mask-position-y` CSS property sets the initial vertical position of a mask image.
+   *
+   * **Syntax**: `[ <length-percentage> | top | center | bottom ]#`
+   *
+   * **Initial value**: `0%`
+   */
   WebkitMaskPositionY: PropFn<CssValueOf<'WebkitMaskPositionY'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<repeat-style>#`
-     *
-     * **Initial value**: `repeat`
-     */
+   * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `<repeat-style>#`
+   *
+   * **Initial value**: `repeat`
+   */
   WebkitMaskRepeat: PropFn<CssValueOf<'WebkitMaskRepeat'>>
   /**
-     * The `-webkit-mask-repeat-x` property specifies whether and how a mask image is repeated (tiled) horizontally.
-     *
-     * **Syntax**: `repeat | no-repeat | space | round`
-     *
-     * **Initial value**: `repeat`
-     */
+   * The `-webkit-mask-repeat-x` property specifies whether and how a mask image is repeated (tiled) horizontally.
+   *
+   * **Syntax**: `repeat | no-repeat | space | round`
+   *
+   * **Initial value**: `repeat`
+   */
   WebkitMaskRepeatX: PropFn<CssValueOf<'WebkitMaskRepeatX'>>
   /**
-     * The `-webkit-mask-repeat-y` property sets whether and how a mask image is repeated (tiled) vertically.
-     *
-     * **Syntax**: `repeat | no-repeat | space | round`
-     *
-     * **Initial value**: `repeat`
-     */
+   * The `-webkit-mask-repeat-y` property sets whether and how a mask image is repeated (tiled) vertically.
+   *
+   * **Syntax**: `repeat | no-repeat | space | round`
+   *
+   * **Initial value**: `repeat`
+   */
   WebkitMaskRepeatY: PropFn<CssValueOf<'WebkitMaskRepeatY'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `<bg-size>#`
-     *
-     * **Initial value**: `auto auto`
-     */
+   * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `<bg-size>#`
+   *
+   * **Initial value**: `auto auto`
+   */
   WebkitMaskSize: PropFn<CssValueOf<'WebkitMaskSize'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'max-width'>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'max-width'>`
+   *
+   * **Initial value**: `none`
+   */
   WebkitMaxInlineSize: PropFn<CssValueOf<'WebkitMaxInlineSize'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<integer>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<integer>`
+   *
+   * **Initial value**: `0`
+   */
   WebkitOrder: PropFn<CssValueOf<'WebkitOrder'>>
   /**
-     * **Syntax**: `auto | touch`
-     *
-     * **Initial value**: `auto`
-     */
+   * **Syntax**: `auto | touch`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitOverflowScrolling: PropFn<CssValueOf<'WebkitOverflowScrolling'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'padding-top'>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'padding-top'>`
+   *
+   * **Initial value**: `0`
+   */
   WebkitPaddingEnd: PropFn<CssValueOf<'WebkitPaddingEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<'padding-top'>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<'padding-top'>`
+   *
+   * **Initial value**: `0`
+   */
   WebkitPaddingStart: PropFn<CssValueOf<'WebkitPaddingStart'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | <length>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | <length>`
+   *
+   * **Initial value**: `none`
+   */
   WebkitPerspective: PropFn<CssValueOf<'WebkitPerspective'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<position>`
-     *
-     * **Initial value**: `50% 50%`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<position>`
+   *
+   * **Initial value**: `50% 50%`
+   */
   WebkitPerspectiveOrigin: PropFn<CssValueOf<'WebkitPerspectiveOrigin'>>
   /**
-     * Since May 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `economy | exact`
-     *
-     * **Initial value**: `economy`
-     */
+   * Since May 2025, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `economy | exact`
+   *
+   * **Initial value**: `economy`
+   */
   WebkitPrintColorAdjust: PropFn<CssValueOf<'WebkitPrintColorAdjust'>>
   /**
-     * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `[ alternate || [ over | under ] ] | inter-character`
-     *
-     * **Initial value**: `alternate`
-     */
+   * Since December 2024, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `[ alternate || [ over | under ] ] | inter-character`
+   *
+   * **Initial value**: `alternate`
+   */
   WebkitRubyPosition: PropFn<CssValueOf<'WebkitRubyPosition'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2022.
-     *
-     * **Syntax**: `none | [ x | y | block | inline | both ] [ mandatory | proximity ]?`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2022.
+   *
+   * **Syntax**: `none | [ x | y | block | inline | both ] [ mandatory | proximity ]?`
+   *
+   * **Initial value**: `none`
+   */
   WebkitScrollSnapType: PropFn<CssValueOf<'WebkitScrollSnapType'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<length-percentage>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<length-percentage>`
+   *
+   * **Initial value**: `0`
+   */
   WebkitShapeMargin: PropFn<CssValueOf<'WebkitShapeMargin'>>
   /**
-     * **`-webkit-tap-highlight-color`** is a non-standard CSS property that sets the color of the highlight that appears over a link while it's being tapped. The highlighting indicates to the user that their tap is being successfully recognized, and indicates which element they're tapping on.
-     *
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `black`
-     */
+   * **`-webkit-tap-highlight-color`** is a non-standard CSS property that sets the color of the highlight that appears over a link while it's being tapped. The highlighting indicates to the user that their tap is being successfully recognized, and indicates which element they're tapping on.
+   *
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `black`
+   */
   WebkitTapHighlightColor: PropFn<CssValueOf<'WebkitTapHighlightColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `none | all | [ digits <integer>? ]`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `none | all | [ digits <integer>? ]`
+   *
+   * **Initial value**: `none`
+   */
   WebkitTextCombine: PropFn<CssValueOf<'WebkitTextCombine'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `currentcolor`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `currentcolor`
+   */
   WebkitTextDecorationColor: PropFn<CssValueOf<'WebkitTextDecorationColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `none | [ underline || overline || line-through || blink ] | spelling-error | grammar-error`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `none | [ underline || overline || line-through || blink ] | spelling-error | grammar-error`
+   *
+   * **Initial value**: `none`
+   */
   WebkitTextDecorationLine: PropFn<CssValueOf<'WebkitTextDecorationLine'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | [ objects || [ spaces | [ leading-spaces || trailing-spaces ] ] || edges || box-decoration ]`
-     *
-     * **Initial value**: `objects`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | [ objects || [ spaces | [ leading-spaces || trailing-spaces ] ] || edges || box-decoration ]`
+   *
+   * **Initial value**: `objects`
+   */
   WebkitTextDecorationSkip: PropFn<CssValueOf<'WebkitTextDecorationSkip'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `solid | double | dotted | dashed | wavy`
-     *
-     * **Initial value**: `solid`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `solid | double | dotted | dashed | wavy`
+   *
+   * **Initial value**: `solid`
+   */
   WebkitTextDecorationStyle: PropFn<CssValueOf<'WebkitTextDecorationStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `currentcolor`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `currentcolor`
+   */
   WebkitTextEmphasisColor: PropFn<CssValueOf<'WebkitTextEmphasisColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `auto | [ over | under ] && [ right | left ]?`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `auto | [ over | under ] && [ right | left ]?`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitTextEmphasisPosition: PropFn<CssValueOf<'WebkitTextEmphasisPosition'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `none | [ [ filled | open ] || [ dot | circle | double-circle | triangle | sesame ] ] | <string>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `none | [ [ filled | open ] || [ dot | circle | double-circle | triangle | sesame ] ] | <string>`
+   *
+   * **Initial value**: `none`
+   */
   WebkitTextEmphasisStyle: PropFn<CssValueOf<'WebkitTextEmphasisStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
-     *
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `currentcolor`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2016.
+   *
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `currentcolor`
+   */
   WebkitTextFillColor: PropFn<CssValueOf<'WebkitTextFillColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2020.
-     *
-     * **Syntax**: `mixed | upright | sideways`
-     *
-     * **Initial value**: `mixed`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2020.
+   *
+   * **Syntax**: `mixed | upright | sideways`
+   *
+   * **Initial value**: `mixed`
+   */
   WebkitTextOrientation: PropFn<CssValueOf<'WebkitTextOrientation'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | auto | <percentage>`
-     *
-     * **Initial value**: `auto` for smartphone browsers supporting inflation, `none` in other cases (and then not modifiable).
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | auto | <percentage>`
+   *
+   * **Initial value**: `auto` for smartphone browsers supporting inflation, `none` in other cases (and then not modifiable).
+   */
   WebkitTextSizeAdjust: PropFn<CssValueOf<'WebkitTextSizeAdjust'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `currentcolor`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `currentcolor`
+   */
   WebkitTextStrokeColor: PropFn<CssValueOf<'WebkitTextStrokeColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `<length>`
-     *
-     * **Initial value**: `0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `<length>`
+   *
+   * **Initial value**: `0`
+   */
   WebkitTextStrokeWidth: PropFn<CssValueOf<'WebkitTextStrokeWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `auto | from-font | [ under || [ left | right ] ]`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `auto | from-font | [ under || [ left | right ] ]`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitTextUnderlinePosition: PropFn<CssValueOf<'WebkitTextUnderlinePosition'>>
   /**
-     * The `-webkit-touch-callout` CSS property controls the display of the default callout shown when you touch and hold a touch target.
-     *
-     * **Syntax**: `default | none`
-     *
-     * **Initial value**: `default`
-     */
+   * The `-webkit-touch-callout` CSS property controls the display of the default callout shown when you touch and hold a touch target.
+   *
+   * **Syntax**: `default | none`
+   *
+   * **Initial value**: `default`
+   */
   WebkitTouchCallout: PropFn<CssValueOf<'WebkitTouchCallout'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | <transform-list>`
-     *
-     * **Initial value**: `none`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | <transform-list>`
+   *
+   * **Initial value**: `none`
+   */
   WebkitTransform: PropFn<CssValueOf<'WebkitTransform'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `[ <length-percentage> | left | center | right | top | bottom ] | [ [ <length-percentage> | left | center | right ] && [ <length-percentage> | top | center | bottom ] ] <length>?`
-     *
-     * **Initial value**: `50% 50% 0`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `[ <length-percentage> | left | center | right | top | bottom ] | [ [ <length-percentage> | left | center | right ] && [ <length-percentage> | top | center | bottom ] ] <length>?`
+   *
+   * **Initial value**: `50% 50% 0`
+   */
   WebkitTransformOrigin: PropFn<CssValueOf<'WebkitTransformOrigin'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `flat | preserve-3d`
-     *
-     * **Initial value**: `flat`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `flat | preserve-3d`
+   *
+   * **Initial value**: `flat`
+   */
   WebkitTransformStyle: PropFn<CssValueOf<'WebkitTransformStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<time>#`
-     *
-     * **Initial value**: `0s`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<time>#`
+   *
+   * **Initial value**: `0s`
+   */
   WebkitTransitionDelay: PropFn<CssValueOf<'WebkitTransitionDelay'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<time>#`
-     *
-     * **Initial value**: `0s`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<time>#`
+   *
+   * **Initial value**: `0s`
+   */
   WebkitTransitionDuration: PropFn<CssValueOf<'WebkitTransitionDuration'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | <single-transition-property>#`
-     *
-     * **Initial value**: all
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | <single-transition-property>#`
+   *
+   * **Initial value**: all
+   */
   WebkitTransitionProperty: PropFn<CssValueOf<'WebkitTransitionProperty'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<easing-function>#`
-     *
-     * **Initial value**: `ease`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<easing-function>#`
+   *
+   * **Initial value**: `ease`
+   */
   WebkitTransitionTimingFunction: PropFn<CssValueOf<'WebkitTransitionTimingFunction'>>
   /**
-     * **Syntax**: `read-only | read-write | read-write-plaintext-only`
-     *
-     * **Initial value**: `read-only`
-     */
+   * **Syntax**: `read-only | read-write | read-write-plaintext-only`
+   *
+   * **Initial value**: `read-only`
+   */
   WebkitUserModify: PropFn<CssValueOf<'WebkitUserModify'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `auto | text | none | all`
-     *
-     * **Initial value**: `auto`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `auto | text | none | all`
+   *
+   * **Initial value**: `auto`
+   */
   WebkitUserSelect: PropFn<CssValueOf<'WebkitUserSelect'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `horizontal-tb | vertical-rl | vertical-lr | sideways-rl | sideways-lr`
-     *
-     * **Initial value**: `horizontal-tb`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `horizontal-tb | vertical-rl | vertical-lr | sideways-rl | sideways-lr`
+   *
+   * **Initial value**: `horizontal-tb`
+   */
   WebkitWritingMode: PropFn<CssValueOf<'WebkitWritingMode'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation>#`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation>#`
+   */
   MozAnimation: PropFn<CssValueOf<'MozAnimation'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<'border-image-source'> || <'border-image-slice'> [ / <'border-image-width'> | / <'border-image-width'>? / <'border-image-outset'> ]? || <'border-image-repeat'>`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<'border-image-source'> || <'border-image-slice'> [ / <'border-image-width'> | / <'border-image-width'>? / <'border-image-outset'> ]? || <'border-image-repeat'>`
+   */
   MozBorderImage: PropFn<CssValueOf<'MozBorderImage'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<'column-rule-width'> || <'column-rule-style'> || <'column-rule-color'>`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<'column-rule-width'> || <'column-rule-style'> || <'column-rule-color'>`
+   */
   MozColumnRule: PropFn<CssValueOf<'MozColumnRule'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<'column-width'> || <'column-count'>`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<'column-width'> || <'column-count'>`
+   */
   MozColumns: PropFn<CssValueOf<'MozColumns'>>
   /** **Syntax**: `<outline-radius>{1,4} [ / <outline-radius>{1,4} ]?` */
   MozOutlineRadius: PropFn<CssValueOf<'MozOutlineRadius'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-transition>#`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-transition>#`
+   */
   MozTransition: PropFn<CssValueOf<'MozTransition'>>
   /** **Syntax**: `<'-ms-content-zoom-limit-min'> <'-ms-content-zoom-limit-max'>` */
   msContentZoomLimit: PropFn<CssValueOf<'msContentZoomLimit'>>
   /** **Syntax**: `<'-ms-content-zoom-snap-type'> || <'-ms-content-zoom-snap-points'>` */
   msContentZoomSnap: PropFn<CssValueOf<'msContentZoomSnap'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]`
+   */
   msFlex: PropFn<CssValueOf<'msFlex'>>
   /** **Syntax**: `<'-ms-scroll-limit-x-min'> <'-ms-scroll-limit-y-min'> <'-ms-scroll-limit-x-max'> <'-ms-scroll-limit-y-max'>` */
   msScrollLimit: PropFn<CssValueOf<'msScrollLimit'>>
@@ -22587,1126 +25993,1126 @@ export interface IcxPropMethods<T extends ThemeSchema> {
   /** **Syntax**: `<'-ms-scroll-snap-type'> <'-ms-scroll-snap-points-y'>` */
   msScrollSnapY: PropFn<CssValueOf<'msScrollSnapY'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-transition>#`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-transition>#`
+   */
   msTransition: PropFn<CssValueOf<'msTransition'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation>#`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation>#`
+   */
   WebkitAnimation: PropFn<CssValueOf<'WebkitAnimation'>>
   /**
-     * The **`-webkit-border-before`** CSS property is a shorthand property for setting the individual logical block start border property values in a single place in the style sheet.
-     *
-     * **Syntax**: `<'border-width'> || <'border-style'> || <color>`
-     */
+   * The **`-webkit-border-before`** CSS property is a shorthand property for setting the individual logical block start border property values in a single place in the style sheet.
+   *
+   * **Syntax**: `<'border-width'> || <'border-style'> || <color>`
+   */
   WebkitBorderBefore: PropFn<CssValueOf<'WebkitBorderBefore'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<'border-image-source'> || <'border-image-slice'> [ / <'border-image-width'> | / <'border-image-width'>? / <'border-image-outset'> ]? || <'border-image-repeat'>`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<'border-image-source'> || <'border-image-slice'> [ / <'border-image-width'> | / <'border-image-width'>? / <'border-image-outset'> ]? || <'border-image-repeat'>`
+   */
   WebkitBorderImage: PropFn<CssValueOf<'WebkitBorderImage'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<length-percentage [0,∞]>{1,4} [ / <length-percentage [0,∞]>{1,4} ]?`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<length-percentage [0,∞]>{1,4} [ / <length-percentage [0,∞]>{1,4} ]?`
+   */
   WebkitBorderRadius: PropFn<CssValueOf<'WebkitBorderRadius'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<'column-rule-width'> || <'column-rule-style'> || <'column-rule-color'>`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<'column-rule-width'> || <'column-rule-style'> || <'column-rule-color'>`
+   */
   WebkitColumnRule: PropFn<CssValueOf<'WebkitColumnRule'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<'column-width'> || <'column-count'>`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<'column-width'> || <'column-count'>`
+   */
   WebkitColumns: PropFn<CssValueOf<'WebkitColumns'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]`
+   */
   WebkitFlex: PropFn<CssValueOf<'WebkitFlex'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<'flex-direction'> || <'flex-wrap'>`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<'flex-direction'> || <'flex-wrap'>`
+   */
   WebkitFlexFlow: PropFn<CssValueOf<'WebkitFlexFlow'>>
   /**
-     * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
-     *
-     * **Syntax**: `[ <mask-reference> || <position> [ / <bg-size> ]? || <repeat-style> || [ <visual-box> | border | padding | content | text ] || [ <visual-box> | border | padding | content ] ]#`
-     */
+   * Since December 2023, this feature works across the latest devices and browser versions. This feature might not work in older devices or browsers.
+   *
+   * **Syntax**: `[ <mask-reference> || <position> [ / <bg-size> ]? || <repeat-style> || [ <visual-box> | border | padding | content | text ] || [ <visual-box> | border | padding | content ] ]#`
+   */
   WebkitMask: PropFn<CssValueOf<'WebkitMask'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `<'mask-border-source'> || <'mask-border-slice'> [ / <'mask-border-width'>? [ / <'mask-border-outset'> ]? ]? || <'mask-border-repeat'> || <'mask-border-mode'>`
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `<'mask-border-source'> || <'mask-border-slice'> [ / <'mask-border-width'>? [ / <'mask-border-outset'> ]? ]? || <'mask-border-repeat'> || <'mask-border-mode'>`
+   */
   WebkitMaskBoxImage: PropFn<CssValueOf<'WebkitMaskBoxImage'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
-     *
-     * **Syntax**: `<'text-emphasis-style'> || <'text-emphasis-color'>`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2022.
+   *
+   * **Syntax**: `<'text-emphasis-style'> || <'text-emphasis-color'>`
+   */
   WebkitTextEmphasis: PropFn<CssValueOf<'WebkitTextEmphasis'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
-     *
-     * **Syntax**: `<length> || <color>`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2017.
+   *
+   * **Syntax**: `<length> || <color>`
+   */
   WebkitTextStroke: PropFn<CssValueOf<'WebkitTextStroke'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-transition>#`
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-transition>#`
+   */
   WebkitTransition: PropFn<CssValueOf<'WebkitTransition'>>
   /**
-     * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
-     *
-     * **Syntax**: `start | center | end | baseline | stretch`
-     *
-     * **Initial value**: `stretch`
-     *
-     * @deprecated
-     */
+   * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
+   *
+   * **Syntax**: `start | center | end | baseline | stretch`
+   *
+   * **Initial value**: `stretch`
+   *
+   * @deprecated
+   */
   boxAlign: PropFn<CssValueOf<'boxAlign'>>
   /**
-     * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
-     *
-     * **Syntax**: `normal | reverse | inherit`
-     *
-     * **Initial value**: `normal`
-     *
-     * @deprecated
-     */
+   * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
+   *
+   * **Syntax**: `normal | reverse | inherit`
+   *
+   * **Initial value**: `normal`
+   *
+   * @deprecated
+   */
   boxDirection: PropFn<CssValueOf<'boxDirection'>>
   /**
-     * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
-     *
-     * **Syntax**: `<number>`
-     *
-     * **Initial value**: `0`
-     *
-     * @deprecated
-     */
+   * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
+   *
+   * **Syntax**: `<number>`
+   *
+   * **Initial value**: `0`
+   *
+   * @deprecated
+   */
   boxFlex: PropFn<CssValueOf<'boxFlex'>>
   /**
-     * The **`box-flex-group`** CSS property assigns the flexbox's child elements to a flex group.
-     *
-     * **Syntax**: `<integer>`
-     *
-     * **Initial value**: `1`
-     *
-     * @deprecated
-     */
+   * The **`box-flex-group`** CSS property assigns the flexbox's child elements to a flex group.
+   *
+   * **Syntax**: `<integer>`
+   *
+   * **Initial value**: `1`
+   *
+   * @deprecated
+   */
   boxFlexGroup: PropFn<CssValueOf<'boxFlexGroup'>>
   /**
-     * The **`box-lines`** CSS property determines whether the box may have a single or multiple lines (rows for horizontally oriented boxes, columns for vertically oriented boxes).
-     *
-     * **Syntax**: `single | multiple`
-     *
-     * **Initial value**: `single`
-     *
-     * @deprecated
-     */
+   * The **`box-lines`** CSS property determines whether the box may have a single or multiple lines (rows for horizontally oriented boxes, columns for vertically oriented boxes).
+   *
+   * **Syntax**: `single | multiple`
+   *
+   * **Initial value**: `single`
+   *
+   * @deprecated
+   */
   boxLines: PropFn<CssValueOf<'boxLines'>>
   /**
-     * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
-     *
-     * **Syntax**: `<integer>`
-     *
-     * **Initial value**: `1`
-     *
-     * @deprecated
-     */
+   * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
+   *
+   * **Syntax**: `<integer>`
+   *
+   * **Initial value**: `1`
+   *
+   * @deprecated
+   */
   boxOrdinalGroup: PropFn<CssValueOf<'boxOrdinalGroup'>>
   /**
-     * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
-     *
-     * **Syntax**: `horizontal | vertical | inline-axis | block-axis | inherit`
-     *
-     * **Initial value**: `inline-axis`
-     *
-     * @deprecated
-     */
+   * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
+   *
+   * **Syntax**: `horizontal | vertical | inline-axis | block-axis | inherit`
+   *
+   * **Initial value**: `inline-axis`
+   *
+   * @deprecated
+   */
   boxOrient: PropFn<CssValueOf<'boxOrient'>>
   /**
-     * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
-     *
-     * **Syntax**: `start | center | end | justify`
-     *
-     * **Initial value**: `start`
-     *
-     * @deprecated
-     */
+   * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
+   *
+   * **Syntax**: `start | center | end | justify`
+   *
+   * **Initial value**: `start`
+   *
+   * @deprecated
+   */
   boxPack: PropFn<CssValueOf<'boxPack'>>
   /**
-     * The **`clip`** CSS property defines a visible portion of an element. The `clip` property applies only to absolutely positioned elements — that is, elements with `position:absolute` or `position:fixed`.
-     *
-     * **Syntax**: `<shape> | auto`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * The **`clip`** CSS property defines a visible portion of an element. The `clip` property applies only to absolutely positioned elements — that is, elements with `position:absolute` or `position:fixed`.
+   *
+   * **Syntax**: `<shape> | auto`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   clip: PropFn<CssValueOf<'clip'>>
   /**
-     * The **`font-stretch`** CSS property selects a normal, condensed, or expanded face from a font.
-     *
-     * **Syntax**: `<font-stretch-absolute>`
-     *
-     * **Initial value**: `normal`
-     *
-     * @deprecated
-     */
+   * The **`font-stretch`** CSS property selects a normal, condensed, or expanded face from a font.
+   *
+   * **Syntax**: `<font-stretch-absolute>`
+   *
+   * **Initial value**: `normal`
+   *
+   * @deprecated
+   */
   fontStretch: PropFn<CssValueOf<'fontStretch'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<length-percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<length-percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * @deprecated
+   */
   gridColumnGap: PropFn<CssValueOf<'gridColumnGap'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `<'grid-row-gap'> <'grid-column-gap'>?`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `<'grid-row-gap'> <'grid-column-gap'>?`
+   *
+   * @deprecated
+   */
   gridGap: PropFn<CssValueOf<'gridGap'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
-     *
-     * **Syntax**: `<length-percentage>`
-     *
-     * **Initial value**: `0`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since October 2017.
+   *
+   * **Syntax**: `<length-percentage>`
+   *
+   * **Initial value**: `0`
+   *
+   * @deprecated
+   */
   gridRowGap: PropFn<CssValueOf<'gridRowGap'>>
   /**
-     * **Syntax**: `auto | normal | active | inactive | disabled`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * **Syntax**: `auto | normal | active | inactive | disabled`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   imeMode: PropFn<CssValueOf<'imeMode'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | <position-area>`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | <position-area>`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   insetArea: PropFn<CssValueOf<'insetArea'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>{1,2}`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>{1,2}`
+   *
+   * @deprecated
+   */
   offsetBlock: PropFn<CssValueOf<'offsetBlock'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   offsetBlockEnd: PropFn<CssValueOf<'offsetBlockEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   offsetBlockStart: PropFn<CssValueOf<'offsetBlockStart'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>{1,2}`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>{1,2}`
+   *
+   * @deprecated
+   */
   offsetInline: PropFn<CssValueOf<'offsetInline'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   offsetInlineEnd: PropFn<CssValueOf<'offsetInlineEnd'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
-     *
-     * **Syntax**: `<'top'>`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2021.
+   *
+   * **Syntax**: `<'top'>`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   offsetInlineStart: PropFn<CssValueOf<'offsetInlineStart'>>
   /**
-     * The **`page-break-after`** CSS property adjusts page breaks _after_ the current element.
-     *
-     * **Syntax**: `auto | always | avoid | left | right | recto | verso`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * The **`page-break-after`** CSS property adjusts page breaks _after_ the current element.
+   *
+   * **Syntax**: `auto | always | avoid | left | right | recto | verso`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   pageBreakAfter: PropFn<CssValueOf<'pageBreakAfter'>>
   /**
-     * The **`page-break-before`** CSS property adjusts page breaks _before_ the current element.
-     *
-     * **Syntax**: `auto | always | avoid | left | right | recto | verso`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * The **`page-break-before`** CSS property adjusts page breaks _before_ the current element.
+   *
+   * **Syntax**: `auto | always | avoid | left | right | recto | verso`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   pageBreakBefore: PropFn<CssValueOf<'pageBreakBefore'>>
   /**
-     * The **`page-break-inside`** CSS property adjusts page breaks _inside_ the current element.
-     *
-     * **Syntax**: `auto | avoid`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * The **`page-break-inside`** CSS property adjusts page breaks _inside_ the current element.
+   *
+   * **Syntax**: `auto | avoid`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   pageBreakInside: PropFn<CssValueOf<'pageBreakInside'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `none | [ [<dashed-ident> || <try-tactic>] | <'position-area'> ]#`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `none | [ [<dashed-ident> || <try-tactic>] | <'position-area'> ]#`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   positionTryOptions: PropFn<CssValueOf<'positionTryOptions'>>
   /**
-     * **Syntax**: `none | <position>#`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * **Syntax**: `none | <position>#`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   scrollSnapCoordinate: PropFn<CssValueOf<'scrollSnapCoordinate'>>
   /**
-     * **Syntax**: `<position>`
-     *
-     * **Initial value**: `0px 0px`
-     *
-     * @deprecated
-     */
+   * **Syntax**: `<position>`
+   *
+   * **Initial value**: `0px 0px`
+   *
+   * @deprecated
+   */
   scrollSnapDestination: PropFn<CssValueOf<'scrollSnapDestination'>>
   /**
-     * **Syntax**: `none | repeat( <length-percentage> )`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * **Syntax**: `none | repeat( <length-percentage> )`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   scrollSnapPointsX: PropFn<CssValueOf<'scrollSnapPointsX'>>
   /**
-     * **Syntax**: `none | repeat( <length-percentage> )`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * **Syntax**: `none | repeat( <length-percentage> )`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   scrollSnapPointsY: PropFn<CssValueOf<'scrollSnapPointsY'>>
   /**
-     * **Syntax**: `none | mandatory | proximity`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * **Syntax**: `none | mandatory | proximity`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   scrollSnapTypeX: PropFn<CssValueOf<'scrollSnapTypeX'>>
   /**
-     * **Syntax**: `none | mandatory | proximity`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * **Syntax**: `none | mandatory | proximity`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   scrollSnapTypeY: PropFn<CssValueOf<'scrollSnapTypeY'>>
   /**
-     * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
-     *
-     * **Syntax**: `start | center | end | baseline | stretch`
-     *
-     * **Initial value**: `stretch`
-     *
-     * @deprecated
-     */
+   * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
+   *
+   * **Syntax**: `start | center | end | baseline | stretch`
+   *
+   * **Initial value**: `stretch`
+   *
+   * @deprecated
+   */
   KhtmlBoxAlign: PropFn<CssValueOf<'KhtmlBoxAlign'>>
   /**
-     * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
-     *
-     * **Syntax**: `normal | reverse | inherit`
-     *
-     * **Initial value**: `normal`
-     *
-     * @deprecated
-     */
+   * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
+   *
+   * **Syntax**: `normal | reverse | inherit`
+   *
+   * **Initial value**: `normal`
+   *
+   * @deprecated
+   */
   KhtmlBoxDirection: PropFn<CssValueOf<'KhtmlBoxDirection'>>
   /**
-     * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
-     *
-     * **Syntax**: `<number>`
-     *
-     * **Initial value**: `0`
-     *
-     * @deprecated
-     */
+   * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
+   *
+   * **Syntax**: `<number>`
+   *
+   * **Initial value**: `0`
+   *
+   * @deprecated
+   */
   KhtmlBoxFlex: PropFn<CssValueOf<'KhtmlBoxFlex'>>
   /**
-     * The **`box-flex-group`** CSS property assigns the flexbox's child elements to a flex group.
-     *
-     * **Syntax**: `<integer>`
-     *
-     * **Initial value**: `1`
-     *
-     * @deprecated
-     */
+   * The **`box-flex-group`** CSS property assigns the flexbox's child elements to a flex group.
+   *
+   * **Syntax**: `<integer>`
+   *
+   * **Initial value**: `1`
+   *
+   * @deprecated
+   */
   KhtmlBoxFlexGroup: PropFn<CssValueOf<'KhtmlBoxFlexGroup'>>
   /**
-     * The **`box-lines`** CSS property determines whether the box may have a single or multiple lines (rows for horizontally oriented boxes, columns for vertically oriented boxes).
-     *
-     * **Syntax**: `single | multiple`
-     *
-     * **Initial value**: `single`
-     *
-     * @deprecated
-     */
+   * The **`box-lines`** CSS property determines whether the box may have a single or multiple lines (rows for horizontally oriented boxes, columns for vertically oriented boxes).
+   *
+   * **Syntax**: `single | multiple`
+   *
+   * **Initial value**: `single`
+   *
+   * @deprecated
+   */
   KhtmlBoxLines: PropFn<CssValueOf<'KhtmlBoxLines'>>
   /**
-     * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
-     *
-     * **Syntax**: `<integer>`
-     *
-     * **Initial value**: `1`
-     *
-     * @deprecated
-     */
+   * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
+   *
+   * **Syntax**: `<integer>`
+   *
+   * **Initial value**: `1`
+   *
+   * @deprecated
+   */
   KhtmlBoxOrdinalGroup: PropFn<CssValueOf<'KhtmlBoxOrdinalGroup'>>
   /**
-     * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
-     *
-     * **Syntax**: `horizontal | vertical | inline-axis | block-axis | inherit`
-     *
-     * **Initial value**: `inline-axis`
-     *
-     * @deprecated
-     */
+   * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
+   *
+   * **Syntax**: `horizontal | vertical | inline-axis | block-axis | inherit`
+   *
+   * **Initial value**: `inline-axis`
+   *
+   * @deprecated
+   */
   KhtmlBoxOrient: PropFn<CssValueOf<'KhtmlBoxOrient'>>
   /**
-     * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
-     *
-     * **Syntax**: `start | center | end | justify`
-     *
-     * **Initial value**: `start`
-     *
-     * @deprecated
-     */
+   * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
+   *
+   * **Syntax**: `start | center | end | justify`
+   *
+   * **Initial value**: `start`
+   *
+   * @deprecated
+   */
   KhtmlBoxPack: PropFn<CssValueOf<'KhtmlBoxPack'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
-     *
-     * **Syntax**: `auto | loose | normal | strict | anywhere`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2020.
+   *
+   * **Syntax**: `auto | loose | normal | strict | anywhere`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   KhtmlLineBreak: PropFn<CssValueOf<'KhtmlLineBreak'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<opacity-value>`
-     *
-     * **Initial value**: `1`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<opacity-value>`
+   *
+   * **Initial value**: `1`
+   *
+   * @deprecated
+   */
   KhtmlOpacity: PropFn<CssValueOf<'KhtmlOpacity'>>
   /**
-     * This feature is not Baseline because it does not work in some of the most widely-used browsers.
-     *
-     * **Syntax**: `auto | text | none | all`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * This feature is not Baseline because it does not work in some of the most widely-used browsers.
+   *
+   * **Syntax**: `auto | text | none | all`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   KhtmlUserSelect: PropFn<CssValueOf<'KhtmlUserSelect'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<bg-clip>#`
-     *
-     * **Initial value**: `border-box`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<bg-clip>#`
+   *
+   * **Initial value**: `border-box`
+   *
+   * @deprecated
+   */
   MozBackgroundClip: PropFn<CssValueOf<'MozBackgroundClip'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<visual-box>#`
-     *
-     * **Initial value**: `padding-box`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<visual-box>#`
+   *
+   * **Initial value**: `padding-box`
+   *
+   * @deprecated
+   */
   MozBackgroundOrigin: PropFn<CssValueOf<'MozBackgroundOrigin'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<bg-size>#`
-     *
-     * **Initial value**: `auto auto`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<bg-size>#`
+   *
+   * **Initial value**: `auto auto`
+   *
+   * @deprecated
+   */
   MozBackgroundSize: PropFn<CssValueOf<'MozBackgroundSize'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<length-percentage [0,∞]>{1,4} [ / <length-percentage [0,∞]>{1,4} ]?`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<length-percentage [0,∞]>{1,4} [ / <length-percentage [0,∞]>{1,4} ]?`
+   *
+   * @deprecated
+   */
   MozBorderRadius: PropFn<CssValueOf<'MozBorderRadius'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<length-percentage [0,∞]>{1,2}`
-     *
-     * **Initial value**: `0`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<length-percentage [0,∞]>{1,2}`
+   *
+   * **Initial value**: `0`
+   *
+   * @deprecated
+   */
   MozBorderRadiusBottomleft: PropFn<CssValueOf<'MozBorderRadiusBottomleft'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<length-percentage [0,∞]>{1,2}`
-     *
-     * **Initial value**: `0`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<length-percentage [0,∞]>{1,2}`
+   *
+   * **Initial value**: `0`
+   *
+   * @deprecated
+   */
   MozBorderRadiusBottomright: PropFn<CssValueOf<'MozBorderRadiusBottomright'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<length-percentage [0,∞]>{1,2}`
-     *
-     * **Initial value**: `0`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<length-percentage [0,∞]>{1,2}`
+   *
+   * **Initial value**: `0`
+   *
+   * @deprecated
+   */
   MozBorderRadiusTopleft: PropFn<CssValueOf<'MozBorderRadiusTopleft'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<length-percentage [0,∞]>{1,2}`
-     *
-     * **Initial value**: `0`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<length-percentage [0,∞]>{1,2}`
+   *
+   * **Initial value**: `0`
+   *
+   * @deprecated
+   */
   MozBorderRadiusTopright: PropFn<CssValueOf<'MozBorderRadiusTopright'>>
   /**
-     * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
-     *
-     * **Syntax**: `start | center | end | baseline | stretch`
-     *
-     * **Initial value**: `stretch`
-     *
-     * @deprecated
-     */
+   * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
+   *
+   * **Syntax**: `start | center | end | baseline | stretch`
+   *
+   * **Initial value**: `stretch`
+   *
+   * @deprecated
+   */
   MozBoxAlign: PropFn<CssValueOf<'MozBoxAlign'>>
   /**
-     * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
-     *
-     * **Syntax**: `normal | reverse | inherit`
-     *
-     * **Initial value**: `normal`
-     *
-     * @deprecated
-     */
+   * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
+   *
+   * **Syntax**: `normal | reverse | inherit`
+   *
+   * **Initial value**: `normal`
+   *
+   * @deprecated
+   */
   MozBoxDirection: PropFn<CssValueOf<'MozBoxDirection'>>
   /**
-     * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
-     *
-     * **Syntax**: `<number>`
-     *
-     * **Initial value**: `0`
-     *
-     * @deprecated
-     */
+   * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
+   *
+   * **Syntax**: `<number>`
+   *
+   * **Initial value**: `0`
+   *
+   * @deprecated
+   */
   MozBoxFlex: PropFn<CssValueOf<'MozBoxFlex'>>
   /**
-     * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
-     *
-     * **Syntax**: `<integer>`
-     *
-     * **Initial value**: `1`
-     *
-     * @deprecated
-     */
+   * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
+   *
+   * **Syntax**: `<integer>`
+   *
+   * **Initial value**: `1`
+   *
+   * @deprecated
+   */
   MozBoxOrdinalGroup: PropFn<CssValueOf<'MozBoxOrdinalGroup'>>
   /**
-     * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
-     *
-     * **Syntax**: `horizontal | vertical | inline-axis | block-axis | inherit`
-     *
-     * **Initial value**: `inline-axis`
-     *
-     * @deprecated
-     */
+   * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
+   *
+   * **Syntax**: `horizontal | vertical | inline-axis | block-axis | inherit`
+   *
+   * **Initial value**: `inline-axis`
+   *
+   * @deprecated
+   */
   MozBoxOrient: PropFn<CssValueOf<'MozBoxOrient'>>
   /**
-     * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
-     *
-     * **Syntax**: `start | center | end | justify`
-     *
-     * **Initial value**: `start`
-     *
-     * @deprecated
-     */
+   * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
+   *
+   * **Syntax**: `start | center | end | justify`
+   *
+   * **Initial value**: `start`
+   *
+   * @deprecated
+   */
   MozBoxPack: PropFn<CssValueOf<'MozBoxPack'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `none | <shadow>#`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `none | <shadow>#`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   MozBoxShadow: PropFn<CssValueOf<'MozBoxShadow'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `<integer> | auto`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `<integer> | auto`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   MozColumnCount: PropFn<CssValueOf<'MozColumnCount'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
-     *
-     * **Syntax**: `auto | balance`
-     *
-     * **Initial value**: `balance`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2017.
+   *
+   * **Syntax**: `auto | balance`
+   *
+   * **Initial value**: `balance`
+   *
+   * @deprecated
+   */
   MozColumnFill: PropFn<CssValueOf<'MozColumnFill'>>
   /**
-     * The non-standard **`-moz-float-edge`** CSS property specifies whether the height and width properties of the element include the margin, border, or padding thickness.
-     *
-     * **Syntax**: `border-box | content-box | margin-box | padding-box`
-     *
-     * **Initial value**: `content-box`
-     *
-     * @deprecated
-     */
+   * The non-standard **`-moz-float-edge`** CSS property specifies whether the height and width properties of the element include the margin, border, or padding thickness.
+   *
+   * **Syntax**: `border-box | content-box | margin-box | padding-box`
+   *
+   * **Initial value**: `content-box`
+   *
+   * @deprecated
+   */
   MozFloatEdge: PropFn<CssValueOf<'MozFloatEdge'>>
   /**
-     * The **`-moz-force-broken-image-icon`** extended CSS property can be used to force the broken image icon to be shown even when a broken image has an `alt` attribute.
-     *
-     * **Syntax**: `0 | 1`
-     *
-     * **Initial value**: `0`
-     *
-     * @deprecated
-     */
+   * The **`-moz-force-broken-image-icon`** extended CSS property can be used to force the broken image icon to be shown even when a broken image has an `alt` attribute.
+   *
+   * **Syntax**: `0 | 1`
+   *
+   * **Initial value**: `0`
+   *
+   * @deprecated
+   */
   MozForceBrokenImageIcon: PropFn<CssValueOf<'MozForceBrokenImageIcon'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<opacity-value>`
-     *
-     * **Initial value**: `1`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<opacity-value>`
+   *
+   * **Initial value**: `1`
+   *
+   * @deprecated
+   */
   MozOpacity: PropFn<CssValueOf<'MozOpacity'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
-     *
-     * **Syntax**: `<'outline-width'> || <'outline-style'> || <'outline-color'>`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2023.
+   *
+   * **Syntax**: `<'outline-width'> || <'outline-style'> || <'outline-color'>`
+   *
+   * @deprecated
+   */
   MozOutline: PropFn<CssValueOf<'MozOutline'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `auto | <color>`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `auto | <color>`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   MozOutlineColor: PropFn<CssValueOf<'MozOutlineColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `auto | <outline-line-style>`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `auto | <outline-line-style>`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   MozOutlineStyle: PropFn<CssValueOf<'MozOutlineStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<line-width>`
-     *
-     * **Initial value**: `medium`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<line-width>`
+   *
+   * **Initial value**: `medium`
+   *
+   * @deprecated
+   */
   MozOutlineWidth: PropFn<CssValueOf<'MozOutlineWidth'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
-     *
-     * **Syntax**: `auto | start | end | left | right | center | justify`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2022.
+   *
+   * **Syntax**: `auto | start | end | left | right | center | justify`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   MozTextAlignLast: PropFn<CssValueOf<'MozTextAlignLast'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<color>`
-     *
-     * **Initial value**: `currentcolor`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<color>`
+   *
+   * **Initial value**: `currentcolor`
+   *
+   * @deprecated
+   */
   MozTextDecorationColor: PropFn<CssValueOf<'MozTextDecorationColor'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `none | [ underline || overline || line-through || blink ] | spelling-error | grammar-error`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `none | [ underline || overline || line-through || blink ] | spelling-error | grammar-error`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   MozTextDecorationLine: PropFn<CssValueOf<'MozTextDecorationLine'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `solid | double | dotted | dashed | wavy`
-     *
-     * **Initial value**: `solid`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `solid | double | dotted | dashed | wavy`
+   *
+   * **Initial value**: `solid`
+   *
+   * @deprecated
+   */
   MozTextDecorationStyle: PropFn<CssValueOf<'MozTextDecorationStyle'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<time>#`
-     *
-     * **Initial value**: `0s`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<time>#`
+   *
+   * **Initial value**: `0s`
+   *
+   * @deprecated
+   */
   MozTransitionDelay: PropFn<CssValueOf<'MozTransitionDelay'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<time>#`
-     *
-     * **Initial value**: `0s`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<time>#`
+   *
+   * **Initial value**: `0s`
+   *
+   * @deprecated
+   */
   MozTransitionDuration: PropFn<CssValueOf<'MozTransitionDuration'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | <single-transition-property>#`
-     *
-     * **Initial value**: all
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | <single-transition-property>#`
+   *
+   * **Initial value**: all
+   *
+   * @deprecated
+   */
   MozTransitionProperty: PropFn<CssValueOf<'MozTransitionProperty'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<easing-function>#`
-     *
-     * **Initial value**: `ease`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<easing-function>#`
+   *
+   * **Initial value**: `ease`
+   *
+   * @deprecated
+   */
   MozTransitionTimingFunction: PropFn<CssValueOf<'MozTransitionTimingFunction'>>
   /**
-     * The **`-moz-user-focus`** CSS property is used to indicate whether an element can have the focus.
-     *
-     * **Syntax**: `ignore | normal | select-after | select-before | select-menu | select-same | select-all | none`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * The **`-moz-user-focus`** CSS property is used to indicate whether an element can have the focus.
+   *
+   * **Syntax**: `ignore | normal | select-after | select-before | select-menu | select-same | select-all | none`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   MozUserFocus: PropFn<CssValueOf<'MozUserFocus'>>
   /**
-     * In Mozilla applications, **`-moz-user-input`** determines if an element will accept user input.
-     *
-     * **Syntax**: `auto | none | enabled | disabled`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * In Mozilla applications, **`-moz-user-input`** determines if an element will accept user input.
+   *
+   * **Syntax**: `auto | none | enabled | disabled`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   MozUserInput: PropFn<CssValueOf<'MozUserInput'>>
   /**
-     * **Syntax**: `auto | normal | active | inactive | disabled`
-     *
-     * **Initial value**: `auto`
-     *
-     * @deprecated
-     */
+   * **Syntax**: `auto | normal | active | inactive | disabled`
+   *
+   * **Initial value**: `auto`
+   *
+   * @deprecated
+   */
   msImeMode: PropFn<CssValueOf<'msImeMode'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation>#`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation>#`
+   *
+   * @deprecated
+   */
   OAnimation: PropFn<CssValueOf<'OAnimation'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<time>#`
-     *
-     * **Initial value**: `0s`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<time>#`
+   *
+   * **Initial value**: `0s`
+   *
+   * @deprecated
+   */
   OAnimationDelay: PropFn<CssValueOf<'OAnimationDelay'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-direction>#`
-     *
-     * **Initial value**: `normal`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-direction>#`
+   *
+   * **Initial value**: `normal`
+   *
+   * @deprecated
+   */
   OAnimationDirection: PropFn<CssValueOf<'OAnimationDirection'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `[ auto | <time [0s,∞]> ]#`
-     *
-     * **Initial value**: `0s`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `[ auto | <time [0s,∞]> ]#`
+   *
+   * **Initial value**: `0s`
+   *
+   * @deprecated
+   */
   OAnimationDuration: PropFn<CssValueOf<'OAnimationDuration'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-fill-mode>#`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-fill-mode>#`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   OAnimationFillMode: PropFn<CssValueOf<'OAnimationFillMode'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-iteration-count>#`
-     *
-     * **Initial value**: `1`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-iteration-count>#`
+   *
+   * **Initial value**: `1`
+   *
+   * @deprecated
+   */
   OAnimationIterationCount: PropFn<CssValueOf<'OAnimationIterationCount'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `[ none | <keyframes-name> ]#`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `[ none | <keyframes-name> ]#`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   OAnimationName: PropFn<CssValueOf<'OAnimationName'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-animation-play-state>#`
-     *
-     * **Initial value**: `running`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-animation-play-state>#`
+   *
+   * **Initial value**: `running`
+   *
+   * @deprecated
+   */
   OAnimationPlayState: PropFn<CssValueOf<'OAnimationPlayState'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<easing-function>#`
-     *
-     * **Initial value**: `ease`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<easing-function>#`
+   *
+   * **Initial value**: `ease`
+   *
+   * @deprecated
+   */
   OAnimationTimingFunction: PropFn<CssValueOf<'OAnimationTimingFunction'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<bg-size>#`
-     *
-     * **Initial value**: `auto auto`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<bg-size>#`
+   *
+   * **Initial value**: `auto auto`
+   *
+   * @deprecated
+   */
   OBackgroundSize: PropFn<CssValueOf<'OBackgroundSize'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `<'border-image-source'> || <'border-image-slice'> [ / <'border-image-width'> | / <'border-image-width'>? / <'border-image-outset'> ]? || <'border-image-repeat'>`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `<'border-image-source'> || <'border-image-slice'> [ / <'border-image-width'> | / <'border-image-width'>? / <'border-image-outset'> ]? || <'border-image-repeat'>`
+   *
+   * @deprecated
+   */
   OBorderImage: PropFn<CssValueOf<'OBorderImage'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `fill | contain | cover | none | scale-down`
-     *
-     * **Initial value**: `fill`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `fill | contain | cover | none | scale-down`
+   *
+   * **Initial value**: `fill`
+   *
+   * @deprecated
+   */
   OObjectFit: PropFn<CssValueOf<'OObjectFit'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
-     *
-     * **Syntax**: `<position>`
-     *
-     * **Initial value**: `50% 50%`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since January 2020.
+   *
+   * **Syntax**: `<position>`
+   *
+   * **Initial value**: `50% 50%`
+   *
+   * @deprecated
+   */
   OObjectPosition: PropFn<CssValueOf<'OObjectPosition'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2021.
-     *
-     * **Syntax**: `<integer> | <length>`
-     *
-     * **Initial value**: `8`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since August 2021.
+   *
+   * **Syntax**: `<integer> | <length>`
+   *
+   * **Initial value**: `8`
+   *
+   * @deprecated
+   */
   OTabSize: PropFn<CssValueOf<'OTabSize'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
-     *
-     * **Syntax**: `[ clip | ellipsis | <string> ]{1,2}`
-     *
-     * **Initial value**: `clip`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015.
+   *
+   * **Syntax**: `[ clip | ellipsis | <string> ]{1,2}`
+   *
+   * **Initial value**: `clip`
+   *
+   * @deprecated
+   */
   OTextOverflow: PropFn<CssValueOf<'OTextOverflow'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | <transform-list>`
-     *
-     * **Initial value**: `none`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | <transform-list>`
+   *
+   * **Initial value**: `none`
+   *
+   * @deprecated
+   */
   OTransform: PropFn<CssValueOf<'OTransform'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `[ <length-percentage> | left | center | right | top | bottom ] | [ [ <length-percentage> | left | center | right ] && [ <length-percentage> | top | center | bottom ] ] <length>?`
-     *
-     * **Initial value**: `50% 50% 0`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `[ <length-percentage> | left | center | right | top | bottom ] | [ [ <length-percentage> | left | center | right ] && [ <length-percentage> | top | center | bottom ] ] <length>?`
+   *
+   * **Initial value**: `50% 50% 0`
+   *
+   * @deprecated
+   */
   OTransformOrigin: PropFn<CssValueOf<'OTransformOrigin'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<single-transition>#`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<single-transition>#`
+   *
+   * @deprecated
+   */
   OTransition: PropFn<CssValueOf<'OTransition'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<time>#`
-     *
-     * **Initial value**: `0s`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<time>#`
+   *
+   * **Initial value**: `0s`
+   *
+   * @deprecated
+   */
   OTransitionDelay: PropFn<CssValueOf<'OTransitionDelay'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<time>#`
-     *
-     * **Initial value**: `0s`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<time>#`
+   *
+   * **Initial value**: `0s`
+   *
+   * @deprecated
+   */
   OTransitionDuration: PropFn<CssValueOf<'OTransitionDuration'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `none | <single-transition-property>#`
-     *
-     * **Initial value**: all
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `none | <single-transition-property>#`
+   *
+   * **Initial value**: all
+   *
+   * @deprecated
+   */
   OTransitionProperty: PropFn<CssValueOf<'OTransitionProperty'>>
   /**
-     * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
-     *
-     * **Syntax**: `<easing-function>#`
-     *
-     * **Initial value**: `ease`
-     *
-     * @deprecated
-     */
+   * This feature is well established and works across many devices and browser versions. It’s been available across browsers since September 2015.
+   *
+   * **Syntax**: `<easing-function>#`
+   *
+   * **Initial value**: `ease`
+   *
+   * @deprecated
+   */
   OTransitionTimingFunction: PropFn<CssValueOf<'OTransitionTimingFunction'>>
   /**
-     * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
-     *
-     * **Syntax**: `start | center | end | baseline | stretch`
-     *
-     * **Initial value**: `stretch`
-     *
-     * @deprecated
-     */
+   * The **`box-align`** CSS property specifies how an element aligns its contents across its layout in a perpendicular direction. The effect of the property is only visible if there is extra space in the box.
+   *
+   * **Syntax**: `start | center | end | baseline | stretch`
+   *
+   * **Initial value**: `stretch`
+   *
+   * @deprecated
+   */
   WebkitBoxAlign: PropFn<CssValueOf<'WebkitBoxAlign'>>
   /**
-     * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
-     *
-     * **Syntax**: `normal | reverse | inherit`
-     *
-     * **Initial value**: `normal`
-     *
-     * @deprecated
-     */
+   * The **`box-direction`** CSS property specifies whether a box lays out its contents normally (from the top or left edge), or in reverse (from the bottom or right edge).
+   *
+   * **Syntax**: `normal | reverse | inherit`
+   *
+   * **Initial value**: `normal`
+   *
+   * @deprecated
+   */
   WebkitBoxDirection: PropFn<CssValueOf<'WebkitBoxDirection'>>
   /**
-     * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
-     *
-     * **Syntax**: `<number>`
-     *
-     * **Initial value**: `0`
-     *
-     * @deprecated
-     */
+   * The **`-moz-box-flex`** and **`-webkit-box-flex`** CSS properties specify how a `-moz-box` or `-webkit-box` grows to fill the box that contains it, in the direction of the containing box's layout.
+   *
+   * **Syntax**: `<number>`
+   *
+   * **Initial value**: `0`
+   *
+   * @deprecated
+   */
   WebkitBoxFlex: PropFn<CssValueOf<'WebkitBoxFlex'>>
   /**
-     * The **`box-flex-group`** CSS property assigns the flexbox's child elements to a flex group.
-     *
-     * **Syntax**: `<integer>`
-     *
-     * **Initial value**: `1`
-     *
-     * @deprecated
-     */
+   * The **`box-flex-group`** CSS property assigns the flexbox's child elements to a flex group.
+   *
+   * **Syntax**: `<integer>`
+   *
+   * **Initial value**: `1`
+   *
+   * @deprecated
+   */
   WebkitBoxFlexGroup: PropFn<CssValueOf<'WebkitBoxFlexGroup'>>
   /**
-     * The **`box-lines`** CSS property determines whether the box may have a single or multiple lines (rows for horizontally oriented boxes, columns for vertically oriented boxes).
-     *
-     * **Syntax**: `single | multiple`
-     *
-     * **Initial value**: `single`
-     *
-     * @deprecated
-     */
+   * The **`box-lines`** CSS property determines whether the box may have a single or multiple lines (rows for horizontally oriented boxes, columns for vertically oriented boxes).
+   *
+   * **Syntax**: `single | multiple`
+   *
+   * **Initial value**: `single`
+   *
+   * @deprecated
+   */
   WebkitBoxLines: PropFn<CssValueOf<'WebkitBoxLines'>>
   /**
-     * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
-     *
-     * **Syntax**: `<integer>`
-     *
-     * **Initial value**: `1`
-     *
-     * @deprecated
-     */
+   * The **`box-ordinal-group`** CSS property assigns the flexbox's child elements to an ordinal group.
+   *
+   * **Syntax**: `<integer>`
+   *
+   * **Initial value**: `1`
+   *
+   * @deprecated
+   */
   WebkitBoxOrdinalGroup: PropFn<CssValueOf<'WebkitBoxOrdinalGroup'>>
   /**
-     * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
-     *
-     * **Syntax**: `horizontal | vertical | inline-axis | block-axis | inherit`
-     *
-     * **Initial value**: `inline-axis`
-     *
-     * @deprecated
-     */
+   * The **`box-orient`** CSS property sets whether an element lays out its contents horizontally or vertically.
+   *
+   * **Syntax**: `horizontal | vertical | inline-axis | block-axis | inherit`
+   *
+   * **Initial value**: `inline-axis`
+   *
+   * @deprecated
+   */
   WebkitBoxOrient: PropFn<CssValueOf<'WebkitBoxOrient'>>
   /**
-     * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
-     *
-     * **Syntax**: `start | center | end | justify`
-     *
-     * **Initial value**: `start`
-     *
-     * @deprecated
-     */
+   * The **`-moz-box-pack`** and **`-webkit-box-pack`** CSS properties specify how a `-moz-box` or `-webkit-box` packs its contents in the direction of its layout. The effect of this is only visible if there is extra space in the box.
+   *
+   * **Syntax**: `start | center | end | justify`
+   *
+   * **Initial value**: `start`
+   *
+   * @deprecated
+   */
   WebkitBoxPack: PropFn<CssValueOf<'WebkitBoxPack'>>
   colorInterpolation: PropFn<CssValueOf<'colorInterpolation'>>
   colorRendering: PropFn<CssValueOf<'colorRendering'>>

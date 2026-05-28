@@ -55,10 +55,7 @@ function detachListener(): void {
  * @param onEscape - 触发回调
  * @param opts.enabled - 控制此 handler 是否生效的 ref;默认 `ref(true)`(始终生效)
  */
-export function useEscapeStack(
-  onEscape: () => void,
-  opts: { enabled?: Ref<boolean> } = {},
-): void {
+export function useEscapeStack(onEscape: () => void, opts: { enabled?: Ref<boolean> } = {}): void {
   const enabled = opts.enabled ?? ref(true)
   const entry: EscapeEntry = {
     id: ++entryIdCounter,
@@ -71,8 +68,8 @@ export function useEscapeStack(
 
   // 监听 enabled 变化,若全部 disabled 则 detach listener 节省资源
   watch(
-    () => stack.some((e) => e.enabled.value),
-    (anyEnabled) => {
+    () => stack.some(e => e.enabled.value),
+    anyEnabled => {
       if (anyEnabled) attachListener()
       else detachListener()
     },
@@ -80,7 +77,7 @@ export function useEscapeStack(
   )
 
   onScopeDispose(() => {
-    const idx = stack.findIndex((e) => e.id === entry.id)
+    const idx = stack.findIndex(e => e.id === entry.id)
     if (idx >= 0) stack.splice(idx, 1)
     if (stack.length === 0) detachListener()
   })

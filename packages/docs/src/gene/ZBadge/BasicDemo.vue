@@ -3,7 +3,7 @@ import { ZBadge, ZButton, ZFlex, ZAvatar } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :gap="(g) => g.iem(2)" :wrap="(w) => w.wrap" :align="(a) => a.center">
+  <ZFlex :gap="g => g.iem(2)" :wrap="w => w.wrap" :align="a => a.center">
     <!-- 数字角标 -->
     <ZBadge :value="5">
       <ZButton variant="outlined">消息</ZButton>
@@ -20,14 +20,14 @@ import { ZBadge, ZButton, ZFlex, ZAvatar } from '@kenconnet666/zui-vue'
     </ZBadge>
 
     <!-- 自定义颜色 -->
-    <ZBadge :value="3" :color="(c) => c._primary">
+    <ZBadge :value="3" :color="c => c._primary">
       <ZAvatar text="AB" :size="2.5" />
     </ZBadge>
 
     <!-- inline（无 slot） -->
-    <ZFlex :gap="(g) => g.iem(0.5)" :align="(a) => a.center">
+    <ZFlex :gap="g => g.iem(0.5)" :align="a => a.center">
       <span>状态</span>
-      <ZBadge :dot="true" :color="(c) => c._success" />
+      <ZBadge :dot="true" :color="c => c._success" />
       <span>在线</span>
     </ZFlex>
 

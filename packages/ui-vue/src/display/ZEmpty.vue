@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<ZEmptyProps>(), {
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.alignItems.center
@@ -47,7 +47,7 @@ const rootClass = computed(() =>
 )
 
 const imgClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.color._border
     s.width.iem(props.size)

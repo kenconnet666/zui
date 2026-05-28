@@ -106,7 +106,8 @@ s.transform('rotate(45deg) scale(1.2) translate(10px, 20px)')
     ],
     initialValue: 'none',
     inherits: false,
-    browserNote: 'CSS Transforms 2 独立属性 Chrome 104 / Firefox 72 / Safari 14.1+。旧浏览器用 `transform: rotate()`。',
+    browserNote:
+      'CSS Transforms 2 独立属性 Chrome 104 / Firefox 72 / Safari 14.1+。旧浏览器用 `transform: rotate()`。',
   },
 
   // ════════════════════════════════════════════════════════════════════

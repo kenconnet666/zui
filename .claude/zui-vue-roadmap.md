@@ -22,29 +22,29 @@
 
 ## 1. 已锁定决策(不再问用户,直接照做)
 
-| # | 决策 | 说明 |
-|:-:|---|---|
-| L1 | **目录扁平化** | `components/` 取消,各分类(gene/layout/input/display/feedback/navigation/tool)直接放 `src/` 根 |
-| L2 | **provider 子结构** | `src/provider/{theme,locale,date}/` 各放对应内容(含 useZTheme/Locale/Date)+ provider 根放 ZBox/keys/units/index |
-| L3 | **删除 `src/composables/`** | useStyles / useVariants / useResponsive 全无组件使用,业务方自取 `@vueuse/core` |
-| L4 | **`cssRoot` 全局重命名为 `css`** | ZBox + 6 已有组件 + tests + docs + skill + CHANGELOG |
-| L5 | **复合组件子节点配置 `sx{Name}` 模型** | 子节点 props/attrs/css **平铺为一个对象**(不再嵌套);例 `sxHead: { css?, class?, style?, onClick?, id?, 'aria-*'?, ... }` |
-| L6 | **简单单根组件** | 只有 `css` prop,不需要 `sxRoot` |
-| L7 | **图标系统** | peerDep 改为 **`@vicons/material`**(替换 `@vicons/ionicons5`,跟 M3 主题更搭),组件内置图标通过 `BuiltinIcons` 语义 map + `<ZIcon :component>` 调用 |
-| L8 | **主题美学采用方案 C2(M3 美化)** | M2 经典色 + M3 motion/elevation/shape;具体值见 §4 |
-| L9 | **shadow 替换为 M3 elevation(双层阴影)** | 见 §4.3 |
-| L10 | **radius.huge 从 `iem(1.5)`(24px)改 `iem(1.75)`(28px)** | 对齐 M3 FAB / Dialog |
-| L11 | **加状态色 token `focusRing` + `overlayBg`** | 见 §4.5 |
-| L12 | **取消所有 subpath exports**,只暴露主入口 `@kenconnet666/zui-vue` | `package.json/exports` 与 `vite.config.ts/entry` 单入口化 |
-| L13 | **工具 hooks 优先 VueUse,不够包装,最后自写** | 自写仅限 `useRipple`(其它包装 floating-ui/Teleport/onKeyStroke 等)。放 `src/_hooks/` |
-| L14 | **i18n 沿用 ZLocale**(不引 vue-i18n) | 现有 namespace 已就位,新组件加 namespace 时增量补 |
-| L16 | **全 chain factory props 范式(2026-05-23 撤销 Size5 union)** | 见 `.claude/decisions/2026-05-23-prop-shape-pure-factory.md`。所有 size/color/spacing/layout 类 props 一律 chain factory(Type A/B/C);variant 类保留字面量(Type V)但内联到 props 不导出独立 alias;真二态 boolean / JS 逻辑字符串 / 原生 HTML 属性 / 第三方继承类型保留(Type N) |
-| L15 | ~~**6 维度 carrier factory + cssRoot(改 `css`) 范式**~~ **[已撤销 2026-05-22]** | 现行:`factory \| Size5 \| undefined` union(决策文档 `.claude/decisions/2026-05-22-prop-shape-union.md`)。`css` 兜底口保留。 |
-| L16 | **状态色衍生**(hover/active/disabled 等)走 chain modifier(`.darken/.lighten/.alpha`),不进 schema | 独立语义色(如 textSecondary)才进 schema |
-| L17 | **size 维度** | 交互组件有(Button/Input/Select),展示组件按需(Card/Tag 可省) |
-| L18 | **ZButton 推到 Phase β 后期** | 需要先有 `useRipple` / `useFocusVisible`(用 CSS `:focus-visible`)/ icon loading 等基建 |
-| L19 | **测试深度** | 对齐 ZIcon(35 spec)/ ZText(21 spec)水平,每组件 8-15 个 case 覆盖渲染+props+a11y+边界 |
-| L20 | **a11y 内建** | 按 W3C ARIA 实现(Dialog `aria-modal`、Combobox `combobox` role、Tab `tablist` 等) |
+|  #  | 决策                                                                                             | 说明                                                                                                                                                                                                                                                                          |
+| :-: | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| L1  | **目录扁平化**                                                                                   | `components/` 取消,各分类(gene/layout/input/display/feedback/navigation/tool)直接放 `src/` 根                                                                                                                                                                                 |
+| L2  | **provider 子结构**                                                                              | `src/provider/{theme,locale,date}/` 各放对应内容(含 useZTheme/Locale/Date)+ provider 根放 ZBox/keys/units/index                                                                                                                                                               |
+| L3  | **删除 `src/composables/`**                                                                      | useStyles / useVariants / useResponsive 全无组件使用,业务方自取 `@vueuse/core`                                                                                                                                                                                                |
+| L4  | **`cssRoot` 全局重命名为 `css`**                                                                 | ZBox + 6 已有组件 + tests + docs + skill + CHANGELOG                                                                                                                                                                                                                          |
+| L5  | **复合组件子节点配置 `sx{Name}` 模型**                                                           | 子节点 props/attrs/css **平铺为一个对象**(不再嵌套);例 `sxHead: { css?, class?, style?, onClick?, id?, 'aria-*'?, ... }`                                                                                                                                                      |
+| L6  | **简单单根组件**                                                                                 | 只有 `css` prop,不需要 `sxRoot`                                                                                                                                                                                                                                               |
+| L7  | **图标系统**                                                                                     | peerDep 改为 **`@vicons/material`**(替换 `@vicons/ionicons5`,跟 M3 主题更搭),组件内置图标通过 `BuiltinIcons` 语义 map + `<ZIcon :component>` 调用                                                                                                                             |
+| L8  | **主题美学采用方案 C2(M3 美化)**                                                                 | M2 经典色 + M3 motion/elevation/shape;具体值见 §4                                                                                                                                                                                                                             |
+| L9  | **shadow 替换为 M3 elevation(双层阴影)**                                                         | 见 §4.3                                                                                                                                                                                                                                                                       |
+| L10 | **radius.huge 从 `iem(1.5)`(24px)改 `iem(1.75)`(28px)**                                          | 对齐 M3 FAB / Dialog                                                                                                                                                                                                                                                          |
+| L11 | **加状态色 token `focusRing` + `overlayBg`**                                                     | 见 §4.5                                                                                                                                                                                                                                                                       |
+| L12 | **取消所有 subpath exports**,只暴露主入口 `@kenconnet666/zui-vue`                                | `package.json/exports` 与 `vite.config.ts/entry` 单入口化                                                                                                                                                                                                                     |
+| L13 | **工具 hooks 优先 VueUse,不够包装,最后自写**                                                     | 自写仅限 `useRipple`(其它包装 floating-ui/Teleport/onKeyStroke 等)。放 `src/_hooks/`                                                                                                                                                                                          |
+| L14 | **i18n 沿用 ZLocale**(不引 vue-i18n)                                                             | 现有 namespace 已就位,新组件加 namespace 时增量补                                                                                                                                                                                                                             |
+| L16 | **全 chain factory props 范式(2026-05-23 撤销 Size5 union)**                                     | 见 `.claude/decisions/2026-05-23-prop-shape-pure-factory.md`。所有 size/color/spacing/layout 类 props 一律 chain factory(Type A/B/C);variant 类保留字面量(Type V)但内联到 props 不导出独立 alias;真二态 boolean / JS 逻辑字符串 / 原生 HTML 属性 / 第三方继承类型保留(Type N) |
+| L15 | ~~**6 维度 carrier factory + cssRoot(改 `css`) 范式**~~ **[已撤销 2026-05-22]**                  | 现行:`factory \| Size5 \| undefined` union(决策文档 `.claude/decisions/2026-05-22-prop-shape-union.md`)。`css` 兜底口保留。                                                                                                                                                   |
+| L16 | **状态色衍生**(hover/active/disabled 等)走 chain modifier(`.darken/.lighten/.alpha`),不进 schema | 独立语义色(如 textSecondary)才进 schema                                                                                                                                                                                                                                       |
+| L17 | **size 维度**                                                                                    | 交互组件有(Button/Input/Select),展示组件按需(Card/Tag 可省)                                                                                                                                                                                                                   |
+| L18 | **ZButton 推到 Phase β 后期**                                                                    | 需要先有 `useRipple` / `useFocusVisible`(用 CSS `:focus-visible`)/ icon loading 等基建                                                                                                                                                                                        |
+| L19 | **测试深度**                                                                                     | 对齐 ZIcon(35 spec)/ ZText(21 spec)水平,每组件 8-15 个 case 覆盖渲染+props+a11y+边界                                                                                                                                                                                          |
+| L20 | **a11y 内建**                                                                                    | 按 W3C ARIA 实现(Dialog `aria-modal`、Combobox `combobox` role、Tab `tablist` 等)                                                                                                                                                                                             |
 
 ---
 
@@ -59,6 +59,7 @@
 ### 2.2 单组件实现工作流
 
 每个组件 = 5 步,按序:
+
 1. **SFC**:在对应分类目录创建 `Z<Name>.vue`(双 `<script>` 块,props 接口在 module scope,运行时在 setup)
 2. **类型** + **chain factory**:6 维度 carrier factory(按需精简)+ 状态 prop + `css` + 复合则加 `sx{Name}`
 3. **spec**:在 `packages/ui-vue/tests/<name>.spec.ts` 写 8-15 个测试(模板见 §7.2)
@@ -125,9 +126,9 @@ export interface ZCardProps {
   tag?: string
 
   // ── 子节点配置(平铺对象,含 css + class + style + 任意 attr) ──
-  sxHead?: SxObject     // 头部
-  sxBody?: SxObject     // 主体
-  sxFoot?: SxObject     // 底部
+  sxHead?: SxObject // 头部
+  sxBody?: SxObject // 主体
+  sxFoot?: SxObject // 底部
 }
 ```
 
@@ -177,13 +178,26 @@ export function extractSxAttrs(sx?: SxObject): {
 ```vue
 <template>
   <component :is="tag" :class="rootClass">
-    <div :class="[headClass, sxHeadAttrs.class]" :style="sxHeadAttrs.style" v-bind="sxHeadAttrs.attrs">
+    <div
+      :class="[headClass, sxHeadAttrs.class]"
+      :style="sxHeadAttrs.style"
+      v-bind="sxHeadAttrs.attrs"
+    >
       <slot name="head">{{ title }}</slot>
     </div>
-    <div :class="[bodyClass, sxBodyAttrs.class]" :style="sxBodyAttrs.style" v-bind="sxBodyAttrs.attrs">
+    <div
+      :class="[bodyClass, sxBodyAttrs.class]"
+      :style="sxBodyAttrs.style"
+      v-bind="sxBodyAttrs.attrs"
+    >
       <slot />
     </div>
-    <div v-if="$slots.foot || sxFoot" :class="[footClass, sxFootAttrs.class]" :style="sxFootAttrs.style" v-bind="sxFootAttrs.attrs">
+    <div
+      v-if="$slots.foot || sxFoot"
+      :class="[footClass, sxFootAttrs.class]"
+      :style="sxFootAttrs.style"
+      v-bind="sxFootAttrs.attrs"
+    >
       <slot name="foot" />
     </div>
   </component>
@@ -198,23 +212,23 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     // 组件级默认
     s.borderRadius._middle
     s.borderWidth._thin
     s.borderColor._border
     // 用户根 css
     props.css?.(s)
-  })
+  }),
 )
 
 const headClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._middle
     s.borderBottomWidth._thin
     s.borderBottomColor._border
     applySx(s, props.sxHead)
-  })
+  }),
 )
 
 const sxHeadAttrs = computed(() => extractSxAttrs(props.sxHead))
@@ -227,13 +241,13 @@ const sxHeadAttrs = computed(() => extractSxAttrs(props.sxHead))
 ```vue
 <ZCard
   title="任务详情"
-  :css="(s) => s.boxShadow._middle"
+  :css="s => s.boxShadow._middle"
   :sx-head="{
-    css: (s) => s.background.color._primary.alpha(8),
+    css: s => s.background.color._primary.alpha(8),
     onClick: handleHeadClick,
     'aria-label': 'card header',
   }"
-  :sx-body="{ css: (s) => s.padding._large }"
+  :sx-body="{ css: s => s.padding._large }"
 >
   正文内容
 </ZCard>
@@ -336,13 +350,13 @@ export type SemanticColorTokens =
 
 ```ts
 // 交互组件统一模式
-s._hover((h) => {
-  h.background.color._primary.alpha(8)   // hover state layer
+s._hover(h => {
+  h.background.color._primary.alpha(8) // hover state layer
 })
-s._active((a) => {
-  a.background.color._primary.alpha(12)  // pressed
+s._active(a => {
+  a.background.color._primary.alpha(12) // pressed
 })
-s._focusVisible((f) => {
+s._focusVisible(f => {
   f.outlineWidth._middle
   f.outlineStyle.solid
   f.outlineColor._focusRing.alpha(40)
@@ -376,7 +390,7 @@ s._focusVisible((f) => {
 - [x] 移动 `src/provider/useZLocale.ts` → `src/provider/locale/useZLocale.ts`
 - [x] 移动 `src/provider/useZDate.ts` → `src/provider/date/useZDate.ts`
 - [x] 新建 `src/provider/date/index.ts`(导出 useZDate / 类型)
-- [x] 移动 `src/components/gene/*` → `src/gene/*`(6 个 SFC + index.ts + _typography-base.ts)
+- [x] 移动 `src/components/gene/*` → `src/gene/*`(6 个 SFC + index.ts + \_typography-base.ts)
 - [x] 新建空目录 `src/layout/` `src/input/` `src/display/` `src/feedback/` `src/navigation/` `src/tool/`(各加 placeholder `index.ts`,内容仅 `export {}`)
 - [x] **删除** `src/components/`(整目录)
 - [x] **删除** `src/composables/`(整目录)
@@ -400,7 +414,7 @@ s._focusVisible((f) => {
 - [x] tests 全部改 `cssRoot:` → `css:`(provider.spec / icon.spec / text.spec / title.spec / paragraph.spec / link.spec / divider.spec)
 - [x] docs/IconPage.vue 等改 `:css-root="..."` → `:css="..."`
 - [x] skill `.claude/skills/zui.md` 全文 cssRoot → css
-- [x] _typography-base.ts 注释里的 cssRoot 描述同步改
+- [x] \_typography-base.ts 注释里的 cssRoot 描述同步改
 - [x] **验证**:type-check ✓ / test 147/147 ✓ / build ✓
 - [x] CHANGELOG entry(BREAKING:cssRoot → css + SxObject 类型加入)
 
@@ -462,7 +476,7 @@ s._focusVisible((f) => {
 
 - [x] **ZFlex.vue** + spec(direction / wrap / justify / align / gap factory + inline + css 兜底)
 - [x] **ZGrid.vue** + spec(cols/rows 数字 / 字符串 / 响应式对象 + gap + justify/alignItems + inline)
-- [x] **ZSpace.vue** + spec(direction horizontal/vertical + size factory 覆盖 _small + align/wrap/inline)
+- [x] **ZSpace.vue** + spec(direction horizontal/vertical + size factory 覆盖 \_small + align/wrap/inline)
 - [x] **ZSpacer.vue** + spec(grow/shrink/basis factory + aria-hidden)
 - [x] `src/layout/index.ts` 导出(主入口经 `export * from './layout'` 自动)
 - [x] **验证**:type-check ✓ / test 200/200 ✓ / build ✓
@@ -536,29 +550,35 @@ s._focusVisible((f) => {
 > 在 α 完整通过 + 用户使用反馈无大问题后开。无人值守模式自行决策,gene 部分先做。
 
 **gene 补全** ✅ 2026-05-23
+
 - [x] ZAvatar(image + text fallback + size + shape circle/square + color)
 - [x] ZTag(filled/outlined/soft + closable + round + size + color carrier)
 - [x] ZBadge(value/dot/max/showZero + offset + 浮挂模式 / inline 模式)
-- [x] ZCode(inline / block + fonts._mono + 边框 + bgMuted)
+- [x] ZCode(inline / block + fonts.\_mono + 边框 + bgMuted)
 - [x] ZBlockquote(`<blockquote>` + 左侧 4px 强调色 border)
 - [x] ZEllipsis(单行 / 多行 `-webkit-line-clamp` + tag)
 - [x] 验证:type-check ✓ / tests 381/381 ✓ / build ✓
 
 **layout 补全** ✅ 2026-05-23
+
 - [x] ZAffix / ZScrollbar
 
 **input 补全** ✅ 2026-05-23
+
 - [x] ZSlider / ZRate / ZAutoComplete / ZDatePicker / ZTimePicker / ZColorPicker / ZCascader / ZTreeSelect / ZUpload
 - [x] ZSelect 升级:多选(filterable 已有,远程搜索 / 分组留 Phase β+)
 
 **display 补全** ✅ 2026-05-23
+
 - [x] ZList / ZEmpty / ZResult / ZSkeleton / ZTooltip / ZPopover / ZCollapse / ZTree / ZTimeline / ZImage / ZCalendar / ZStatistic / ZProgress
 - [x] ZTable 升级:排序 / 选择(列冻结 / expandable rows 留 Phase β+)
 
 **feedback 补全** ✅ 2026-05-23
+
 - [x] ZDrawer / ZNotification / ZPopconfirm / ZLoadingBar
 
 **navigation 补全** ✅ 2026-05-23
+
 - [x] ZDropdown / ZSteps / ZAnchor / ZBackTop
 
 ### Stage 8 ── Phase γ / P2 锦上花 ✅ 2026-05-23 完成
@@ -678,7 +698,11 @@ const sxBodyAttrs = computed(() => extractSxAttrs(props.sxBody))
 
 <template>
   <component :is="tag" :class="className">
-    <div :class="[bodyClass, sxBodyAttrs.class]" :style="sxBodyAttrs.style" v-bind="sxBodyAttrs.attrs">
+    <div
+      :class="[bodyClass, sxBodyAttrs.class]"
+      :style="sxBodyAttrs.style"
+      v-bind="sxBodyAttrs.attrs"
+    >
       <slot />
     </div>
   </component>
@@ -767,23 +791,26 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 **目标**:把全库 `s._prop('propName', 'value')` 这类弱类型字符串调用替换为 chain carrier 强类型写法,并统一 px 字面量为 iem 单位(跟 ZBox iem 联动)。
 
 **改动统计**:
+
 - 75 个 SFC / 382 处 `_prop` 调用 → **378 处替换为强类型 chain**(98.95%)
 - 剩 4 处合理保留:`ZGrid` 2 处(动态 prop 名)/ `ZSlider` 2 处(CSS custom property)
 - 并行实施:3 个 general-purpose Agent 各负责一组(gene+layout+tool+display 36 文件 / input 21 文件 / feedback+navigation 17 文件)+ 主程收尾(ZButton focusVisible / ZTag/ZAvatar borderRadius / ZTimeline 竖线 / ZSwitch 动态 left/right / ZNotification 动态 vert/horiz / ZModal calc 公式 iem 化 / ZCascader `:last-child` bug 修)
 
 **iem 化收益**:
+
 - `'calc(N * var(--zui-iem, 16px))'` 字面量 → 纯 chain `s.prop.iem(N)`
 - `'Npx'` 字面量(N 是 iem 倍数:8/12/16/20/24/32/40/48...)→ `s.prop.iem(N/16)`
 - 1080p / iem=16px 基准下各组件物理尺寸合理性验证:ZInput middle 32px / ZButton middle 32-36px / ZAvatar middle 40px / ZModal width 480px / ZDrawer 320px / ZTooltip maxWidth 320px
 
 **搭车修复**:
+
 - ZCascader `_prop('lastChild', '')` 无效写法 → `_lastChild((c) => c.borderRightStyle.none)`
 - ZSlider linear-gradient `_prop('background', ...)` → `s.background('...')`
 - ZUpload inline `var(--zui-color-textSecondary)` 不存在的 CSS var → 改 chain class
 - ZButton focus-visible outline 走完整 chain(`outlineWidth._middle + outlineStyle.solid + outlineOffset.px(2)`)
 - ZButton link variant `textDecoration` 改回简写(spec 检查 `text-decoration:` 而非 `text-decoration-line:`)
 
-**验证**:type-check ✓ / mcp__idea__get_file_problems 全部 errors=[] / tests 待确认
+**验证**:type-check ✓ / mcp**idea**get_file_problems 全部 errors=[] / tests 待确认
 
 **下一步**:跑全套测试确认 + 用户审 + commit
 
@@ -794,6 +821,7 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 **决策文档**:`.claude/decisions/2026-05-22-prop-shape-union.md`(撤销"chain factory only",改 `factory | Size5 | undefined` union)
 
 **改动统计**:
+
 - 新基建:`src/_internal/size-prop.ts`(Size5/SizeProp/SizePropMulti/SizeMap + applySizeProp/makeSizeMap)+ `src/_internal/component-sizes.ts`(INPUT_SIZE_MAP / COMPACT_PADDING_MAP 共享 SIZE_MAP)
 - 改造 25 个 SFC(详见 CHANGELOG.md):
   - gene 10:ZIcon / ZText / ZTitle / ZParagraph / ZLink / ZSpace / ZAvatar(**BREAKING:`number` 砍掉**)/ ZTag / ZSegmented / ZButton
@@ -811,6 +839,7 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 ### 2026-05-23 🎉 Phase α/β/γ 全部完成(80+ 组件 / 540 tests / 16 commits)
 
 **总览**:
+
 - **Phase α**(21 P0):layout 4 + gene 7 + feedback 5 + display 2 + input 10 + navigation 4 + hooks 5
 - **Phase β**(高频补全 30+):gene 6(装饰) + 浮层 3(Tooltip/Popover/Drawer) + display 6(Empty/Skeleton/Result/List/Progress/Collapse) + feedback 3(Dropdown/Popconfirm/Notification) + input 2(Slider/Rate) + display 6(Timeline/Statistic/Image/Tree/Calendar 等) + nav 3(Steps/BackTop/Anchor) + layout 2(Affix/Scrollbar) + input 5(Upload/DatePicker/TimePicker/ColorPicker/AutoComplete) + 升级(ZTable 排序+选择 / ZSelect 多选 / ZTreeSelect / ZTour)
 - **Phase γ**(锦上花 13):gene 2(Segmented/GradientText) + layout 1(Split) + tool 5(Countdown/NumberAnimation/Marquee/Watermark/QRCode) + input 3(Mention/Cascader/DynamicTags/Transfer) + display 2(Carousel/Descriptions) + nav 1(PageHeader)
@@ -818,12 +847,14 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 **测试**:48 spec 文件,540 case,全绿。**type-check ✓ / build ✓**。
 
 **技术债务两轮修复**:
+
 - 批 1(commit 261f6ff):ZButton/ZTag/ZBlockquote 视觉缺陷 + Modal/Drawer scroll lock 共享化
 - 批 2(commit b9ae101):qrcode 移 peerDep + Set/Map → array.includes(避免 Vue reactive 边界)+ color-bridge helper 统一 cast + dead code 清理
 
 **剩余 Phase δ**(roadmap §9,按需开):VirtualList / 富文本 / DataGrid 企业版 / Schema-driven Form。
 
 ### 2026-05-23 Stage 7 浮层批完成(ZTooltip / ZPopover / ZDrawer)
+
 - 改动:display/ZTooltip(usePopper + Teleport,4 trigger 模式)、display/ZPopover(类 Tooltip 但富内容 + onClickOutside + useEscapeStack)、feedback/ZDrawer(类 Modal 4 placement 滑入)
 - 测试 15 case;总 396/396
 - 验证:type-check ✓ / tests 396/396 ✓ / build ✓
@@ -831,6 +862,7 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 - 测试细节:Teleport 跨 spec 会留 portal DOM,加 beforeEach + wrapper.unmount() 双清理
 
 ### 2026-05-23 Stage 7 gene 补全完成(无人值守自主推进,进入 Phase β)
+
 - 改动:gene 加 6 个简单装饰组件 — ZAvatar / ZTag / ZBadge / ZCode / ZBlockquote / ZEllipsis;index 导出
 - 测试 23 case;总 381/381
 - 验证:type-check ✓ / tests 381/381 ✓ / build ✓
@@ -838,6 +870,7 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 - 下一步:Phase β 其它分类(feedback ZDrawer/ZNotification/ZPopconfirm, display ZTooltip/ZPopover/ZCollapse,etc.)
 
 ### 2026-05-23 Stage 6.5 + 6.6 完成 = Phase α 收尾(无人值守自主推进,跳过 STOP #4)
+
 - 改动:display/ZTable(配置式 columns + render 函数 + rowKey 函数 + bordered/striped),gene/ZButton(5 variant + loading + ripple + focus-visible)
 - 测试:ZTable 9 + ZButton 19 = 28 case;**总 358/358 全绿**
 - 验证:type-check ✓ / tests 358/358 ✓ / build ✓
@@ -847,6 +880,7 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 - 下一步:Stage 7 Phase β 高频补全(待用户优先级 sync)
 
 ### 2026-05-23 Stage 6.4 完成(无人值守自主推进)
+
 - 改动:navigation/ZBreadcrumb / ZPagination(用 locale.pagination 文案)/ ZTabs(line/card/segment + closable + addable)/ ZMenu(树形 items + submenu 内联展开 + collapsed)
 - 测试 29 case;总 330/330
 - 验证:type-check ✓ / tests 330/330 ✓ / build ✓
@@ -854,6 +888,7 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 - 下一步:Stage 6.5 ZTable(基础 columns 配置式)
 
 ### 2026-05-23 Stage 6.3 完成(无人值守自主推进)
+
 - 改动:补 ZSelect(usePopper + ZPortal + onClickOutside + useEscapeStack)、ZForm + ZFormItem(async-validator 集成,provide/inject ctx,validate() 全表单)
 - 测试 17 case(z-select 10 + z-form 7);总 301/301
 - 验证:type-check ✓ / tests 301/301 ✓ / build ✓
@@ -861,6 +896,7 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 - 下一步:Stage 6.4 导航(ZMenu / ZTabs / ZBreadcrumb / ZPagination)
 
 ### 2026-05-23 Stage 6.2 完成(无人值守自主推进)
+
 - 改动:`feedback/ZAlert + ZSpin + ZModal + ZMessage + messageApi`(5 SFC + 1 helper),`display/ZCard`;各 sx 子节点(sxHead/sxBody/sxFoot/sxMask/sxClose 等);ZModal 用 Teleport + `useEscapeStack` + body scroll lock;`createMessageApi()` 工厂走 createApp 临时实例方案
 - 测试 6 spec(43 case,243/243 全绿)
 - 验证:type-check ✓ / tests 243/243 ✓ / build ✓
@@ -868,11 +904,13 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 - 下一步:Stage 6.3 数据录入(8+ 组件)
 
 ### 2026-05-23 Stage 6.1 完成(无人值守自主推进)
+
 - 改动:新建 `src/layout/{ZFlex,ZGrid,ZSpace,ZSpacer}.vue` + 4 spec(32 case);`src/layout/index.ts` 导出
 - 验证:type-check ✓ / tests 200/200 ✓ / build ✓
 - 下一步:Stage 6.2 反馈+展示基础(ZAlert / ZSpin / ZCard / ZModal / ZMessage)
 
 ### 2026-05-23 Stage 5 完成(无人值守自主推进,跳过 STOP #3 API review)
+
 - 改动:新建 `src/_hooks/`(5 个 hook):`useZId` / `usePortal`(+ `ZPortal` 组件) / `useEscapeStack` / `usePopper`(包装 floating-ui) / `useRipple`(自写,pointerdown 注入 span + @keyframes + animationend 清理);`src/index.ts` 加 `export * from './_hooks'`
 - 测试:5 spec 文件、21 个 case(原 147 + 21 = 168/168)
 - 验证:type-check ✓ / tests 168/168 ✓ / build ✓
@@ -880,6 +918,7 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 - 下一步:Stage 6.1 布局四件套(ZFlex / ZGrid / ZSpace / ZSpacer)
 
 ### 2026-05-23 Stage 4 完成(无人值守自主推进,跳过 STOP #2 视觉验收)
+
 - 改动:`SemanticColorTokens` 加 `focusRing` + `overlayBg`(10 → 12 个语义色);zuiLight color 全套换 Material 700 / Orange 700;zuiDark color 全套换 Material 200/300/400 shade,bg 改 M3 `#121212`;两套 shadow 全部换 M3 双层 elevation(level 1-5);radius.huge 24px → 28px 对齐 M3 FAB
 - 验证:type-check ✓ / tests 147/147 ✓ / build ✓
 - 文档:`.claude/decisions/2026-05-23-stage4-theme-aesthetics-m3.md`
@@ -887,22 +926,26 @@ ui-vue 当前没 `lint` script,ESLint 通过 IDE inspection 自动跑。`get_fil
 - 下一步:Stage 5 内部 hooks 基建(STOP 节点 #3)
 
 ### 2026-05-23 Stage 3 完成(无人值守自主推进)
+
 - 改动:peerDep `@vicons/ionicons5` → `@vicons/material`(BREAKING,required 不再 optional);新建 `src/gene/icons.ts`(re-export material 全量 + `BuiltinIcons` 15 项语义 map,Outlined 变体);`src/gene/index.ts` 加 icons re-export;docs/IconPage.vue 同步 import 用 `as` 别名兼容;docs/package.json 同步
 - 验证:type-check ✓ / tests 147/147 ✓ / build ✓
 - 下一步:Stage 4 主题美学(M3 / C2 方案)— **STOP 节点 #2**,需写决策文档继续
 
 ### 2026-05-23 Stage 2 完成(无人值守自主推进)
+
 - 改动:`cssRoot` / `:css-root` 全局重命名为 `css` / `:css`(影响 ZBox.vue + gene 6 SFC + 5 spec + IconPage + skill);新建 `src/_internal/sx.ts`(`SxObject` 类型 + `applySx` + `extractSxAttrs` helper,供后续复合组件使用)
 - 验证:type-check ✓ / tests 147/147 ✓ / build ✓
 - 下一步:Stage 3 图标系统切换 @vicons/ionicons5 → @vicons/material
 
 ### 2026-05-23 Stage 1 完成(无人值守自主推进)
+
 - 改动:目录扁平化(`components/gene` → `gene/`,`theme` → `provider/theme`,`locale` → `provider/locale`,`provider/useZ*` → `provider/{theme,locale,date}/useZ*`),删 `composables/`,新建 6 个分类占位 `{layout,input,display,feedback,navigation,tool}/index.ts`,单入口化(vite.config + package.json/exports)
 - 验证:type-check ✓ / tests 147/147 ✓ / build ✓
 - 文档:`.claude/decisions/2026-05-23-stage1-flatten-and-single-entry.md`
 - 下一步:Stage 2 cssRoot → css + SxObject 类型 + helper
 
 ### 2026-05-22 路线图文档初版
+
 - 改动:写 `.claude/zui-vue-roadmap.md`(本文件)
 - 验证:N/A(纯文档)
 - 下一步:Stage 1.1 开始目录搬迁
@@ -935,4 +978,3 @@ provider 入口:         C:\code\zui\packages\ui-vue\src\provider\index.ts
 gene 入口:             C:\code\zui\packages\ui-vue\src\gene\index.ts
 CHANGELOG:             C:\code\zui\packages\ui-vue\CHANGELOG.md
 ```
-

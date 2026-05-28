@@ -38,18 +38,14 @@ describe('ZMenu', () => {
 
   it('disabled 项点击不 emit', async () => {
     const w = mount(ZMenu, { props: { value: '', items: ITEMS } })
-    const aboutBtn = w
-      .findAll('[role="menuitem"]')
-      .find((b) => b.text().includes('About'))!
+    const aboutBtn = w.findAll('[role="menuitem"]').find(b => b.text().includes('About'))!
     await aboutBtn.trigger('click')
     expect(w.emitted('update:value')).toBeFalsy()
   })
 
   it('submenu 点击 → toggle expand,不 emit select', async () => {
     const w = mount(ZMenu, { props: { value: '', items: ITEMS } })
-    const docsBtn = w
-      .findAll('[role="menuitem"]')
-      .find((b) => b.text().includes('Docs'))!
+    const docsBtn = w.findAll('[role="menuitem"]').find(b => b.text().includes('Docs'))!
     expect(docsBtn.attributes('aria-expanded')).toBe('false')
     await docsBtn.trigger('click')
     expect(docsBtn.attributes('aria-expanded')).toBe('true')
@@ -60,11 +56,9 @@ describe('ZMenu', () => {
 
   it('展开后点 leaf child → emit select 子 key', async () => {
     const w = mount(ZMenu, { props: { value: '', items: ITEMS } })
-    const docsBtn = w
-      .findAll('[role="menuitem"]')
-      .find((b) => b.text().includes('Docs'))!
+    const docsBtn = w.findAll('[role="menuitem"]').find(b => b.text().includes('Docs'))!
     await docsBtn.trigger('click')
-    const childBtn = w.findAll('[role="menuitem"]').find((b) => b.text().includes('API'))!
+    const childBtn = w.findAll('[role="menuitem"]').find(b => b.text().includes('API'))!
     await childBtn.trigger('click')
     expect(w.emitted('update:value')![0]).toEqual(['docs-b'])
   })
@@ -78,9 +72,7 @@ describe('ZMenu', () => {
   it('value=home → 高亮当前选中', () => {
     const w = mount(ZMenu, { props: { value: 'home', items: ITEMS } })
     // 简单检查:Home 按钮存在
-    const homeBtn = w
-      .findAll('[role="menuitem"]')
-      .find((b) => b.text().includes('Home'))!
+    const homeBtn = w.findAll('[role="menuitem"]').find(b => b.text().includes('Home'))!
     expect(homeBtn.exists()).toBe(true)
   })
 })

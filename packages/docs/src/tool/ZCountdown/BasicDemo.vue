@@ -13,7 +13,14 @@ function reset() {
   <ZFlex :direction="d => d.column" :gap="g => g._middle">
     <ZFlex :align="a => a.center" :gap="g => g._middle">
       <ZText>默认格式 (h:m:s)：</ZText>
-      <ZTag :css="s => { s.fontSize._large; s.fontWeight._semibold }">
+      <ZTag
+        :css="
+          s => {
+            s.fontSize._large
+            s.fontWeight._semibold
+          }
+        "
+      >
         <ZCountdown :value="target" />
       </ZTag>
     </ZFlex>

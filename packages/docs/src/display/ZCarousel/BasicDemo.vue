@@ -16,13 +16,24 @@ const current = ref(0)
     <ZCarousel
       v-model:current="current"
       :items="slides"
-      :css="s => { s.height.iem(12) }"
+      :css="
+        s => {
+          s.height.iem(12)
+        }
+      "
     >
       <template #default="{ item }">
         <ZFlex
           :align="a => a.center"
           :justify="j => j.center"
-          :css="s => { s.height.pct(100); s.backgroundColor(item.color); s.color.white; s.fontSize._large }"
+          :css="
+            s => {
+              s.height.pct(100)
+              s.backgroundColor(item.color)
+              s.color.white
+              s.fontSize._large
+            }
+          "
         >
           {{ item.label }}
         </ZFlex>
@@ -35,13 +46,23 @@ const current = ref(0)
       :autoplay="true"
       :interval="2000"
       :show-arrows="false"
-      :css="s => { s.height.iem(8) }"
+      :css="
+        s => {
+          s.height.iem(8)
+        }
+      "
     >
       <template #default="{ item }">
         <ZFlex
           :align="a => a.center"
           :justify="j => j.center"
-          :css="s => { s.height.pct(100); s.backgroundColor(item.color); s.color.white }"
+          :css="
+            s => {
+              s.height.pct(100)
+              s.backgroundColor(item.color)
+              s.color.white
+            }
+          "
         >
           {{ item.label }}（自动播放，无箭头）
         </ZFlex>

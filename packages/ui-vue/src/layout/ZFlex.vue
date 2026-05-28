@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<ZFlexProps>(), {
 const theme = useZTheme()
 
 const className = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     if (props.inline) s.display.inlineFlex
     else s.display.flex
     if (props.direction) s.flexDirection(props.direction)

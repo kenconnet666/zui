@@ -9,6 +9,7 @@
 填充 `packages/core/src/types/docs-zh/<group>.ts` 中文文档，每个属性符合下面"模板规范"。
 
 写完后必须：
+
 1. 跑 `node scripts/generate-properties.mjs`（应零报错）
 2. 跑 `pnpm --filter @kenconnet666/zui-core run type-check`（应零报错）
 3. 抽查生成的 `packages/core/src/types/properties.generated.ts` 中你负责的属性 JSDoc 渲染正常
@@ -39,6 +40,7 @@
 **不要**自己写 "全局关键字" 分组 —— generator 会自动追加。
 
 每分组：
+
 ```ts
 {
   label: '5 个定位关键字',
@@ -51,6 +53,7 @@
 ```
 
 **所有关键字必须写出效果**：
+
 - 默认值要标注 "**默认值**"
 - 类似 `auto` / `none` / `normal` / `inherit` 这种容易理解错的，要解释具体含义
 - "跟随父级 / 撑满父容器 / 内容驱动 / 系统主题色" 等机制必须显式说
@@ -60,6 +63,7 @@
 markdown 字符串。多段用 `\n\n` 分隔。
 
 适合写：
+
 - 同族关系（如 `paddingTop` 与 `padding` 简写的关系）
 - 百分比参照基准（如 `paddingTop` 百分比参照"父宽度"，反直觉）
 - 配合属性（如 `borderColor` 必须配 `borderStyle != none` 才显示）
@@ -114,16 +118,16 @@ paddingTop: {
 
 ---
 
-## 可用的 _common 工具
+## 可用的 \_common 工具
 
 ```ts
 import {
-  type DocsGroup,            // const colors: DocsGroup = { ... }
-  type PropertyDocZh,         // 单个属性类型
-  COLOR_SYNTAX_ROWS,          // 颜色属性的 11 行 Syntax 共享数据
-  LENGTH_SYNTAX_ROWS,         // 长度属性的 3 行 Syntax 共享数据
-  colorTokenUsage,            // 函数：生成 "### 主题 token 写法" 片段（颜色属性用）
-  lengthUnitsSnippet,         // 函数：生成 "### 长度单位 / 数学函数" 片段（长度属性用）
+  type DocsGroup, // const colors: DocsGroup = { ... }
+  type PropertyDocZh, // 单个属性类型
+  COLOR_SYNTAX_ROWS, // 颜色属性的 11 行 Syntax 共享数据
+  LENGTH_SYNTAX_ROWS, // 长度属性的 3 行 Syntax 共享数据
+  colorTokenUsage, // 函数：生成 "### 主题 token 写法" 片段（颜色属性用）
+  lengthUnitsSnippet, // 函数：生成 "### 长度单位 / 数学函数" 片段（长度属性用）
 } from './_common'
 ```
 
@@ -134,6 +138,7 @@ import {
 `packages/core/src/types/docs-zh/colors.ts` 已写好 14 个颜色属性，**先完整读这个文件再动手**。
 
 关键参考点：
+
 - `color` —— 最详细模板（包含命名色 / token 用法 / 常见陷阱 / 函数态形式）
 - `borderColor` —— 简写属性（含 1/2/3/4 值分配规则）
 - `borderTopColor` etc —— 用 `extends` 同族复用
@@ -146,6 +151,7 @@ import {
 ## 验证流程
 
 完成后**必须**：
+
 1. `node scripts/generate-properties.mjs` —— 应输出 `[gen-properties] 已生成: ...`，无错误
 2. 检查 `packages/core/src/types/properties.generated.ts` 中你的属性 JSDoc 渲染（用 grep 找）
 3. `pnpm --filter @kenconnet666/zui-core run type-check` —— 应零报错
@@ -160,6 +166,7 @@ import {
 - 只填充你被分配的分组文件
 
 如果某个属性的 keyword 不清楚怎么用，请查：
+
 - MDN：`https://developer.mozilla.org/docs/Web/CSS/Reference/Properties/<prop>`
 - `enhanced-props.ts` 中找到该属性的 keywords 数组，按 CSS spec 解释
 - csstype 注释（properties.generated.ts 中该属性的旧 JSDoc 有 syntax + 兼容表）

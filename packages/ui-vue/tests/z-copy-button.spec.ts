@@ -22,7 +22,7 @@ beforeEach(() => {
     value: { writeText: vi.fn(() => Promise.resolve()) },
   })
   // 清掉上一轮的 message host
-  document.querySelectorAll('[data-zui-message-host]').forEach((n) => n.remove())
+  document.querySelectorAll('[data-zui-message-host]').forEach(n => n.remove())
 })
 afterEach(() => {
   vi.useRealTimers()

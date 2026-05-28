@@ -9,9 +9,9 @@ import { ZImage, ZAnchor, ZScrollbar, ZAutoComplete } from '../src'
 let wrappers: VueWrapper[] = []
 
 function cleanup(): void {
-  wrappers.forEach((w) => w.unmount())
+  wrappers.forEach(w => w.unmount())
   wrappers = []
-  document.body.querySelectorAll('[role="listbox"]').forEach((el) => el.remove())
+  document.body.querySelectorAll('[role="listbox"]').forEach(el => el.remove())
 }
 
 beforeEach(cleanup)
@@ -72,7 +72,7 @@ describe('ZAnchor', () => {
       },
     })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     // level=2 → padding-left 0.75iem;level=3 → 1.5iem
     expect(css).toMatch(/padding-left:calc\(0\.75 \* var\(--zui-iem/)

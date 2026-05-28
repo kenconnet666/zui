@@ -21,13 +21,17 @@ function handleChange(files: File[]): void {
 
 <template>
   <ZFlex :direction="d => d.column" :gap="g => g._large">
-    <ZUpload
-      v-model:file-list="fileList"
-      :multiple="true"
-      @change="handleChange"
-    />
+    <ZUpload v-model:file-list="fileList" :multiple="true" @change="handleChange" />
 
-    <ZText v-if="fileList.length" :css="s => { s.color._textSecondary; s.fontSize._small }">
+    <ZText
+      v-if="fileList.length"
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+    >
       已选 {{ fileList.length }} 个文件
     </ZText>
 

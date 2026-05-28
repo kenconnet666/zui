@@ -116,7 +116,7 @@ const focused = ref(false)
 const innerValue = computed(() => (props.value ?? '').toString())
 
 const wrapperClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -145,7 +145,7 @@ const wrapperClass = computed(() =>
 )
 
 const inputClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.borderStyle.none
     s.backgroundColor.transparent
@@ -164,7 +164,7 @@ const inputClass = computed(() =>
 const sxInputAttrs = computed(() => extractSxAttrs(props.sxInput))
 
 const affixClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.color._textSecondary
@@ -173,7 +173,7 @@ const affixClass = computed(() =>
 )
 
 const clearBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -182,7 +182,7 @@ const clearBtnClass = computed(() =>
     s.borderStyle.none
     s.padding.px(0)
     s.color._textSecondary
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.color._text
     })
     applySx(s, props.sxClear)
@@ -191,7 +191,7 @@ const clearBtnClass = computed(() =>
 const sxClearAttrs = computed(() => extractSxAttrs(props.sxClear))
 
 const countClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._tiny
     s.color._textSecondary
     s.flexShrink(0)

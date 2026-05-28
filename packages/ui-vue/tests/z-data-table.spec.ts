@@ -44,7 +44,7 @@ function fakeScrollEl(el: HTMLElement, clientHeight: number): void {
   Object.defineProperty(el, 'scrollTop', {
     configurable: true,
     get: () => scrollTop,
-    set: (v) => {
+    set: v => {
       scrollTop = v
       el.dispatchEvent(new Event('scroll'))
     },
@@ -56,9 +56,13 @@ function mountDT(props: Record<string, unknown>) {
   const Host = defineComponent({
     setup() {
       return () =>
-        h(ZBox, { iem: '16px' }, {
-          default: () => h(ZDataTable, props),
-        })
+        h(
+          ZBox,
+          { iem: '16px' },
+          {
+            default: () => h(ZDataTable, props),
+          },
+        )
     },
   })
   const w = mount(Host)
@@ -96,7 +100,11 @@ describe('ZDataTable — 基础结构', () => {
 
   it('emptyText 自定义', () => {
     const { w } = mountDT({
-      rows: [], columns: COLUMNS, rowSize: 3, height: 20, emptyText: '无结果',
+      rows: [],
+      columns: COLUMNS,
+      rowSize: 3,
+      height: 20,
+      emptyText: '无结果',
     })
     expect(w.text()).toContain('无结果')
     w.unmount()
@@ -109,18 +117,25 @@ describe('ZDataTable — 排序', () => {
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZDataTable, {
-                rows: SAMPLE, columns: COLUMNS, rowSize: 3, height: 20,
-                'onUpdate:sort': (s: ZDataTableSort) => events.push([s]),
-              } as Record<string, unknown>),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(ZDataTable, {
+                  rows: SAMPLE,
+                  columns: COLUMNS,
+                  rowSize: 3,
+                  height: 20,
+                  'onUpdate:sort': (s: ZDataTableSort) => events.push([s]),
+                } as Record<string, unknown>),
+            },
+          )
       },
     })
     const w = mount(Host)
     const headers = w.findAll('[role="columnheader"]')
-    await headers[0]!.trigger('click')  // ID 列
+    await headers[0]!.trigger('click') // ID 列
     expect(events[0]?.[0]).toEqual({ key: 'id', order: 'asc' })
     w.unmount()
   })
@@ -130,14 +145,21 @@ describe('ZDataTable — 排序', () => {
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZDataTable, {
-                rows: SAMPLE, columns: COLUMNS, rowSize: 3, height: 20,
-                sort: sort.value,
-                'onUpdate:sort': (s: ZDataTableSort | null) => (sort.value = s),
-              } as Record<string, unknown>),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(ZDataTable, {
+                  rows: SAMPLE,
+                  columns: COLUMNS,
+                  rowSize: 3,
+                  height: 20,
+                  sort: sort.value,
+                  'onUpdate:sort': (s: ZDataTableSort | null) => (sort.value = s),
+                } as Record<string, unknown>),
+            },
+          )
       },
     })
     const w = mount(Host)
@@ -152,14 +174,21 @@ describe('ZDataTable — 排序', () => {
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZDataTable, {
-                rows: SAMPLE, columns: COLUMNS, rowSize: 3, height: 20,
-                sort: sort.value,
-                'onUpdate:sort': (s: ZDataTableSort | null) => (sort.value = s),
-              } as Record<string, unknown>),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(ZDataTable, {
+                  rows: SAMPLE,
+                  columns: COLUMNS,
+                  rowSize: 3,
+                  height: 20,
+                  sort: sort.value,
+                  'onUpdate:sort': (s: ZDataTableSort | null) => (sort.value = s),
+                } as Record<string, unknown>),
+            },
+          )
       },
     })
     const w = mount(Host)
@@ -174,13 +203,20 @@ describe('ZDataTable — 排序', () => {
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZDataTable, {
-                rows: SAMPLE, columns: COLUMNS, rowSize: 3, height: 20,
-                sort: sort.value,
-              } as Record<string, unknown>),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(ZDataTable, {
+                  rows: SAMPLE,
+                  columns: COLUMNS,
+                  rowSize: 3,
+                  height: 20,
+                  sort: sort.value,
+                } as Record<string, unknown>),
+            },
+          )
       },
     })
     const w = mount(Host)
@@ -207,7 +243,10 @@ describe('ZDataTable — 选中', () => {
 
   it("selection='multiple' → 渲染表头全选 checkbox", () => {
     const { w } = mountDT({
-      rows: SAMPLE, columns: COLUMNS, rowSize: 3, height: 20,
+      rows: SAMPLE,
+      columns: COLUMNS,
+      rowSize: 3,
+      height: 20,
       selection: 'multiple',
     })
     // 表头一个全选 checkbox(行内的还没渲染,因为 viewport 没注入)
@@ -216,20 +255,27 @@ describe('ZDataTable — 选中', () => {
     w.unmount()
   })
 
-  it("multiple 行点击 → toggle selected", async () => {
+  it('multiple 行点击 → toggle selected', async () => {
     const selected = ref<(string | number)[]>([])
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZDataTable, {
-                rows: SAMPLE, columns: COLUMNS, rowSize: 3, height: 20,
-                selection: 'multiple',
-                selected: selected.value,
-                'onUpdate:selected': (s: (string | number)[]) => (selected.value = s),
-              } as Record<string, unknown>),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(ZDataTable, {
+                  rows: SAMPLE,
+                  columns: COLUMNS,
+                  rowSize: 3,
+                  height: 20,
+                  selection: 'multiple',
+                  selected: selected.value,
+                  'onUpdate:selected': (s: (string | number)[]) => (selected.value = s),
+                } as Record<string, unknown>),
+            },
+          )
       },
     })
     const w = mount(Host)
@@ -248,20 +294,27 @@ describe('ZDataTable — 选中', () => {
     w.unmount()
   })
 
-  it("single 模式只保留一个", async () => {
+  it('single 模式只保留一个', async () => {
     const selected = ref<(string | number)[]>([])
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZDataTable, {
-                rows: SAMPLE, columns: COLUMNS, rowSize: 3, height: 20,
-                selection: 'single',
-                selected: selected.value,
-                'onUpdate:selected': (s: (string | number)[]) => (selected.value = s),
-              } as Record<string, unknown>),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(ZDataTable, {
+                  rows: SAMPLE,
+                  columns: COLUMNS,
+                  rowSize: 3,
+                  height: 20,
+                  selection: 'single',
+                  selected: selected.value,
+                  'onUpdate:selected': (s: (string | number)[]) => (selected.value = s),
+                } as Record<string, unknown>),
+            },
+          )
       },
     })
     const w = mount(Host)
@@ -284,15 +337,22 @@ describe('ZDataTable — 选中', () => {
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZDataTable, {
-                rows: SAMPLE, columns: COLUMNS, rowSize: 3, height: 20,
-                selection: 'multiple',
-                selected: selected.value,
-                'onUpdate:selected': (s: (string | number)[]) => (selected.value = s),
-              } as Record<string, unknown>),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(ZDataTable, {
+                  rows: SAMPLE,
+                  columns: COLUMNS,
+                  rowSize: 3,
+                  height: 20,
+                  selection: 'multiple',
+                  selected: selected.value,
+                  'onUpdate:selected': (s: (string | number)[]) => (selected.value = s),
+                } as Record<string, unknown>),
+            },
+          )
       },
     })
     const w = mount(Host)
@@ -311,13 +371,20 @@ describe('ZDataTable — 行点击 emit', () => {
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZBox, { iem: '16px' }, {
-            default: () =>
-              h(ZDataTable, {
-                rows: SAMPLE, columns: COLUMNS, rowSize: 3, height: 20,
-                onRowClick: (row: Row, index: number) => events.push([row, index]),
-              } as Record<string, unknown>),
-          })
+          h(
+            ZBox,
+            { iem: '16px' },
+            {
+              default: () =>
+                h(ZDataTable, {
+                  rows: SAMPLE,
+                  columns: COLUMNS,
+                  rowSize: 3,
+                  height: 20,
+                  onRowClick: (row: Row, index: number) => events.push([row, index]),
+                } as Record<string, unknown>),
+            },
+          )
       },
     })
     const w = mount(Host)
@@ -337,7 +404,11 @@ describe('ZDataTable — 行点击 emit', () => {
 describe('ZDataTable — loading + bordered + stripe', () => {
   it('loading=true → 显示遮罩', () => {
     const { w } = mountDT({
-      rows: SAMPLE, columns: COLUMNS, rowSize: 3, height: 20, loading: true,
+      rows: SAMPLE,
+      columns: COLUMNS,
+      rowSize: 3,
+      height: 20,
+      loading: true,
     })
     const mask = w.find('[role="status"][aria-busy="true"]')
     expect(mask.exists()).toBe(true)
@@ -346,10 +417,14 @@ describe('ZDataTable — loading + bordered + stripe', () => {
 
   it('bordered → 边框样式', () => {
     mountDT({
-      rows: SAMPLE, columns: COLUMNS, rowSize: 3, height: 20, bordered: true,
+      rows: SAMPLE,
+      columns: COLUMNS,
+      rowSize: 3,
+      height: 20,
+      bordered: true,
     })
     const css = Array.from(document.querySelectorAll('style'))
-      .map((el) => el.textContent ?? '')
+      .map(el => el.textContent ?? '')
       .join('\n')
     expect(css).toMatch(/border-width:1px/)
   })
@@ -362,11 +437,14 @@ describe('ZDataTable — 自定义渲染', () => {
       {
         key: 'name',
         title: '姓名',
-        render: (row) => `<${row.name}>` as unknown as string,  // 字符串模式
+        render: row => `<${row.name}>` as unknown as string, // 字符串模式
       },
     ]
     const { w, root } = mountDT({
-      rows: SAMPLE.slice(0, 2), columns: customColumns, rowSize: 3, height: 20,
+      rows: SAMPLE.slice(0, 2),
+      columns: customColumns,
+      rowSize: 3,
+      height: 20,
     })
     const vl = root.querySelector('[data-zv-wrapper]')?.parentElement as HTMLElement
     fakeScrollEl(vl, 200)

@@ -146,7 +146,7 @@ function toggle(): void {
 
 watch(
   () => props.visible,
-  (v) => {
+  v => {
     if (props.trigger === 'manual') innerVisible.value = v
   },
   { immediate: true },
@@ -174,7 +174,7 @@ const contentHandlers = computed(() => {
 })
 
 const tooltipClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.zIndex._tooltip
     s.backgroundColor._text
@@ -198,7 +198,7 @@ const tooltipClass = computed(() =>
 const sxContentAttrs = computed(() => extractSxAttrs(props.sxContent))
 
 const triggerWrapClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     applySx(s, props.sxTrigger)
   }),

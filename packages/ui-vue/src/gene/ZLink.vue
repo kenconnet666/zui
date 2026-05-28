@@ -88,7 +88,7 @@ const props = withDefaults(defineProps<ZLinkProps>(), {
 const theme = useZTheme()
 
 const className = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     // ─── 组件默认(放最前) ───
     if (!props.color) s.color._primary // 默认 primary,用户传 color 在 applyTypographyBase 中覆盖
     s.cursor.pointer

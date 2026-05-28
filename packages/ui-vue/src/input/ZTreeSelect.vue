@@ -172,7 +172,7 @@ watch(
 )
 
 const triggerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -195,14 +195,14 @@ const triggerClass = computed(() =>
 )
 
 const textClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     if (!selectedLabel.value) s.color._textSecondary
   }),
 )
 
 const dropdownClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.zIndex._popover
     s.backgroundColor._bg
@@ -217,7 +217,7 @@ const dropdownClass = computed(() =>
 )
 
 const arrowClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.transitionProperty._transform
     s.transitionDuration._small
@@ -226,7 +226,7 @@ const arrowClass = computed(() =>
 )
 
 const clearBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -235,15 +235,13 @@ const clearBtnClass = computed(() =>
     s.borderStyle.none
     s.padding('0')
     s.color._textSecondary
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.color._text
     })
   }),
 )
 
-const showClear = computed(
-  () => props.clearable && !props.disabled && props.value !== null,
-)
+const showClear = computed(() => props.clearable && !props.disabled && props.value !== null)
 
 const downIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronDown }))
 const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))

@@ -16,7 +16,7 @@ import { ZDivider, zuiLight, type ZuiSchema } from '../src'
 
 function getInjectedCss(): string {
   return Array.from(document.querySelectorAll('style'))
-    .map((el) => el.textContent ?? '')
+    .map(el => el.textContent ?? '')
     .join('\n')
 }
 
@@ -94,7 +94,7 @@ describe('ZDivider — 水平 + 文字(有 slot)', () => {
 
   /** 取本次 mount 产生的 className(emotion 给每个独特 style 哈希一个 class)。 */
   function getOwnRule(w: ReturnType<typeof mount>, pseudo: '::before' | '::after'): string {
-    const cls = w.classes().find((c) => c.startsWith('css-'))
+    const cls = w.classes().find(c => c.startsWith('css-'))
     if (!cls) throw new Error('no emotion class on wrapper')
     const css = getInjectedCss()
     const re = new RegExp(`\\.${cls}${pseudo}\\s*\\{[^}]*\\}`)

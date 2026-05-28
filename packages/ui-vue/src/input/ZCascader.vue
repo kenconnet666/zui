@@ -139,7 +139,7 @@ const columns = computed<ZCascaderOption[][]>(() => {
   const result: ZCascaderOption[][] = [props.options]
   let current: ZCascaderOption[] | undefined = props.options
   for (const key of activePath.value) {
-    const node: ZCascaderOption | undefined = current?.find((o) => o.value === key)
+    const node: ZCascaderOption | undefined = current?.find(o => o.value === key)
     if (node?.children && node.children.length > 0) {
       result.push(node.children)
       current = node.children
@@ -154,7 +154,7 @@ function selectedLabels(): string[] {
   const labels: string[] = []
   let level: ZCascaderOption[] | undefined = props.options
   for (const k of props.value ?? []) {
-    const node: ZCascaderOption | undefined = level?.find((o) => o.value === k)
+    const node: ZCascaderOption | undefined = level?.find(o => o.value === k)
     if (!node) break
     labels.push(node.label)
     level = node.children
@@ -174,7 +174,7 @@ function pickInColumn(colIndex: number, opt: ZCascaderOption): void {
     const labels: string[] = []
     let level: ZCascaderOption[] | undefined = props.options
     for (const k of newPath) {
-      const n: ZCascaderOption | undefined = level?.find((o) => o.value === k)
+      const n: ZCascaderOption | undefined = level?.find(o => o.value === k)
       if (!n) break
       labels.push(n.label)
       level = n.children
@@ -194,7 +194,7 @@ function toggleOpen(): void {
 }
 
 const triggerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -217,14 +217,14 @@ const triggerClass = computed(() =>
 )
 
 const triggerTextClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     if (!displayText.value) s.color._textSecondary
   }),
 )
 
 const popperClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.zIndex._popover
     s.backgroundColor._bg
@@ -238,13 +238,13 @@ const popperClass = computed(() =>
 )
 
 const columnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.minWidth.iem(8)
     s.borderRightWidth._thin
     s.borderRightStyle.solid
     s.borderRightColor._border
     s.padding._tiny
-    s._lastChild((c) => {
+    s._lastChild(c => {
       c.borderRightStyle.none
     })
   }),
@@ -259,7 +259,7 @@ function columnHeight(col: ZCascaderOption[]): string {
 }
 
 const optionClass = (opt: ZCascaderOption, isActive: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.spaceBetween
@@ -276,7 +276,7 @@ const optionClass = (opt: ZCascaderOption, isActive: boolean): string =>
     } else {
       s.color._text
       if (!opt.disabled) {
-        s._hover((h2) => {
+        s._hover(h2 => {
           h2.backgroundColor._textSecondary.alpha(8)
         })
       }
@@ -285,7 +285,7 @@ const optionClass = (opt: ZCascaderOption, isActive: boolean): string =>
   })
 
 const arrowClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.transitionProperty._transform
     s.transitionDuration._small
@@ -321,13 +321,7 @@ defineExpose({ rootRef })
   </div>
 
   <Teleport to="body">
-    <div
-      v-if="open"
-      ref="popperRef"
-      :class="popperClass"
-      :style="floatingStyles"
-      role="listbox"
-    >
+    <div v-if="open" ref="popperRef" :class="popperClass" :style="floatingStyles" role="listbox">
       <div v-for="(col, ci) in columns" :key="ci" :class="columnClass">
         <ZVirtualList
           :items="col"

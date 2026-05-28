@@ -78,7 +78,7 @@ if (typeof document !== 'undefined' && !document.getElementById(SHIMMER_STYLE_ID
 }
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.gap._middle
     s.alignItems.flexStart
@@ -87,7 +87,7 @@ const rootClass = computed(() =>
 )
 
 const avatarClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.width.iem(2.5)
     s.height.iem(2.5)
     s.borderRadius._full
@@ -98,7 +98,7 @@ const avatarClass = computed(() =>
 )
 
 const linesContainerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.display.flex
     s.flexDirection.column
@@ -107,7 +107,7 @@ const linesContainerClass = computed(() =>
 )
 
 const titleBarClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.height.iem(1.25)
     s.width.pct(40)
     s.borderRadius._tiny
@@ -118,7 +118,7 @@ const titleBarClass = computed(() =>
 )
 
 const rowClass = (isLast: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.height.iem(0.875)
     s.width.pct(isLast ? 60 : 100)
     s.borderRadius._tiny

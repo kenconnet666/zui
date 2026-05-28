@@ -17,9 +17,10 @@ import ShapeDemoSource from './ZAvatar/ShapeDemo.vue?raw'
   <section>
     <ZTitle :level="1">ZAvatar 头像</ZTitle>
     <ZParagraph>
-      头像组件，内容优先级：<strong>default slot &gt; src（图片）&gt; text（缩写）&gt; 默认占位</strong>。
-      图片加载失败自动 fallback 到 text。
-      <ZCode code="size" /> 是 iem 倍数（默认 2.5 = 40px），<ZCode code="square" /> 切换方圆。
+      头像组件，内容优先级：<strong
+        >default slot &gt; src（图片）&gt; text（缩写）&gt; 默认占位</strong
+      >。 图片加载失败自动 fallback 到 text。 <ZCode code="size" /> 是 iem 倍数（默认 2.5 =
+      40px），<ZCode code="square" /> 切换方圆。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>
@@ -34,8 +35,8 @@ import ShapeDemoSource from './ZAvatar/ShapeDemo.vue?raw'
     <ZTitle :level="2">尺寸档位 (size)</ZTitle>
     <DemoBlock title="iem 倍数，width / height / fontSize 等比缩放" :source="SizeDemoSource">
       <template #desc>
-        参考档位：<ZCode code="1.5" />(24px) / <ZCode code="2" />(32px) /
-        <ZCode code="2.5" />(默认 40px) / <ZCode code="3" />(48px) / <ZCode code="4" />(64px)。
+        参考档位：<ZCode code="1.5" />(24px) / <ZCode code="2" />(32px) / <ZCode code="2.5" />(默认
+        40px) / <ZCode code="3" />(48px) / <ZCode code="4" />(64px)。
       </template>
       <SizeDemo />
     </DemoBlock>
@@ -52,30 +53,58 @@ import ShapeDemoSource from './ZAvatar/ShapeDemo.vue?raw'
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '120px' },
-        { key: 'type',    label: '类型',   mono: true, width: '260px' },
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '260px' },
         { key: 'default', label: '默认值', mono: true, width: '120px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'src',    type: 'string',                  default: '—',              desc: '图片地址，加载失败自动 fallback 到 text。' },
-        { name: 'alt',    type: 'string',                  default: `''`,             desc: '图片 alt 文字。' },
-        { name: 'text',   type: 'string',                  default: '—',              desc: '文字 fallback（通常 1-2 个字符首字母缩写）。' },
-        { name: 'size',   type: 'number',                  default: '2.5',            desc: 'iem 倍数（默认 2.5 = 40px @ 16px）。width / height / fontSize 等比缩。参考档位：1.5 / 2 / 2.5 / 3 / 4。' },
-        { name: 'square', type: 'boolean',                 default: 'false',          desc: '方形（borderRadius = size*0.15 iem），默认圆形（_full）。' },
-        { name: 'color',  type: '(c: ColorCarrier) => void', default: '_textSecondary', desc: '文字/图标模式背景色 factory（图片模式下不生效）。' },
-        { name: 'css',    type: '(s: Chain) => void',      default: '—',              desc: '兜底 CSS factory。' },
+        {
+          name: 'src',
+          type: 'string',
+          default: '—',
+          desc: '图片地址，加载失败自动 fallback 到 text。',
+        },
+        { name: 'alt', type: 'string', default: `''`, desc: '图片 alt 文字。' },
+        {
+          name: 'text',
+          type: 'string',
+          default: '—',
+          desc: '文字 fallback（通常 1-2 个字符首字母缩写）。',
+        },
+        {
+          name: 'size',
+          type: 'number',
+          default: '2.5',
+          desc: 'iem 倍数（默认 2.5 = 40px @ 16px）。width / height / fontSize 等比缩。参考档位：1.5 / 2 / 2.5 / 3 / 4。',
+        },
+        {
+          name: 'square',
+          type: 'boolean',
+          default: 'false',
+          desc: '方形（borderRadius = size*0.15 iem），默认圆形（_full）。',
+        },
+        {
+          name: 'color',
+          type: '(c: ColorCarrier) => void',
+          default: '_textSecondary',
+          desc: '文字/图标模式背景色 factory（图片模式下不生效）。',
+        },
+        { name: 'css', type: '(s: Chain) => void', default: '—', desc: '兜底 CSS factory。' },
       ]"
     />
 
     <ZTitle :level="2">Slots</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name', label: '插槽',    mono: true, width: '100px' },
+        { key: 'name', label: '插槽', mono: true, width: '100px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'default', desc: '自定义头像内容，优先级最高（高于 src / text）。可放图标、emoji 等。' },
+        {
+          name: 'default',
+          desc: '自定义头像内容，优先级最高（高于 src / text）。可放图标、emoji 等。',
+        },
       ]"
     />
   </section>

@@ -136,7 +136,7 @@ function onFocus(e: FocusEvent): void {
 }
 
 const wrapperClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.borderWidth._thin
@@ -154,7 +154,7 @@ const wrapperClass = computed(() =>
 )
 
 const inputClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.borderStyle.none
     s.backgroundColor.transparent
@@ -170,7 +170,7 @@ const inputClass = computed(() =>
 const sxInputAttrs = computed(() => extractSxAttrs(props.sxInput))
 
 const btnGroupClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.flexDirection.column
     s.flexShrink(0)
@@ -179,7 +179,7 @@ const btnGroupClass = computed(() =>
 )
 
 const btnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -192,7 +192,7 @@ const btnClass = computed(() =>
     s.padding.px(0)
     s.fontSize._small
     s.borderRadius._tiny
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.color._primary
       h2.backgroundColor._primary.alpha(8)
     })

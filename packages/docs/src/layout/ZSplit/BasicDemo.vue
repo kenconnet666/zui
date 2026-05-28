@@ -13,23 +13,33 @@ const vRatio = ref(0.35)
     <ZSplit
       v-model:ratio="hRatio"
       direction="horizontal"
-      :css="s => { s.height.iem(12); s.borderRadius._small; s.overflow.hidden; s.borderWidth.px(1); s.borderStyle.solid; s.borderColor._border }"
+      :css="
+        s => {
+          s.height.iem(12)
+          s.borderRadius._small
+          s.overflow.hidden
+          s.borderWidth.px(1)
+          s.borderStyle.solid
+          s.borderColor._border
+        }
+      "
     >
       <template #first>
         <ZFlex
           :justify="j => j.center"
           :align="a => a.center"
-          :css="s => { s.height.pct(100); s.backgroundColor._bgMuted }"
+          :css="
+            s => {
+              s.height.pct(100)
+              s.backgroundColor._bgMuted
+            }
+          "
         >
           <ZText>Left Panel</ZText>
         </ZFlex>
       </template>
       <template #second>
-        <ZFlex
-          :justify="j => j.center"
-          :align="a => a.center"
-          :css="s => s.height.pct(100)"
-        >
+        <ZFlex :justify="j => j.center" :align="a => a.center" :css="s => s.height.pct(100)">
           <ZText>Right Panel</ZText>
         </ZFlex>
       </template>
@@ -40,23 +50,33 @@ const vRatio = ref(0.35)
     <ZSplit
       v-model:ratio="vRatio"
       direction="vertical"
-      :css="s => { s.height.iem(14); s.borderRadius._small; s.overflow.hidden; s.borderWidth.px(1); s.borderStyle.solid; s.borderColor._border }"
+      :css="
+        s => {
+          s.height.iem(14)
+          s.borderRadius._small
+          s.overflow.hidden
+          s.borderWidth.px(1)
+          s.borderStyle.solid
+          s.borderColor._border
+        }
+      "
     >
       <template #first>
         <ZFlex
           :justify="j => j.center"
           :align="a => a.center"
-          :css="s => { s.height.pct(100); s.backgroundColor._bgMuted }"
+          :css="
+            s => {
+              s.height.pct(100)
+              s.backgroundColor._bgMuted
+            }
+          "
         >
           <ZText>Top Panel</ZText>
         </ZFlex>
       </template>
       <template #second>
-        <ZFlex
-          :justify="j => j.center"
-          :align="a => a.center"
-          :css="s => s.height.pct(100)"
-        >
+        <ZFlex :justify="j => j.center" :align="a => a.center" :css="s => s.height.pct(100)">
           <ZText>Bottom Panel</ZText>
         </ZFlex>
       </template>

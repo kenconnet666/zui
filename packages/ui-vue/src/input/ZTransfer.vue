@@ -91,12 +91,8 @@ const titlesRef = computed<[string, string]>(() => props.titles ?? ['源', '目�
 const leftChecked = ref<string[]>([])
 const rightChecked = ref<string[]>([])
 
-const leftItems = computed(() =>
-  props.dataSource.filter((it) => !props.targetKeys.includes(it.key)),
-)
-const rightItems = computed(() =>
-  props.dataSource.filter((it) => props.targetKeys.includes(it.key)),
-)
+const leftItems = computed(() => props.dataSource.filter(it => !props.targetKeys.includes(it.key)))
+const rightItems = computed(() => props.dataSource.filter(it => props.targetKeys.includes(it.key)))
 
 function moveRight(): void {
   const next = [...props.targetKeys, ...leftChecked.value]
@@ -106,7 +102,7 @@ function moveRight(): void {
 
 function moveLeft(): void {
   const checkedKeys = rightChecked.value
-  const next = props.targetKeys.filter((k) => !checkedKeys.includes(k))
+  const next = props.targetKeys.filter(k => !checkedKeys.includes(k))
   emit('update:targetKeys', next)
   rightChecked.value = []
 }
@@ -114,18 +110,18 @@ function moveLeft(): void {
 function toggleLeft(key: string, disabled: boolean): void {
   if (disabled) return
   leftChecked.value = leftChecked.value.includes(key)
-    ? leftChecked.value.filter((k) => k !== key)
+    ? leftChecked.value.filter(k => k !== key)
     : [...leftChecked.value, key]
 }
 function toggleRight(key: string, disabled: boolean): void {
   if (disabled) return
   rightChecked.value = rightChecked.value.includes(key)
-    ? rightChecked.value.filter((k) => k !== key)
+    ? rightChecked.value.filter(k => k !== key)
     : [...rightChecked.value, key]
 }
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.gap._middle
@@ -136,7 +132,7 @@ const rootClass = computed(() =>
 )
 
 const panelClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.width.iem(12.5)
@@ -150,7 +146,7 @@ const panelClass = computed(() =>
 )
 
 const panelHeadClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._small
     s.backgroundColor._bgMuted
     s.fontWeight._semibold
@@ -161,13 +157,13 @@ const panelHeadClass = computed(() =>
 )
 
 const listClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._tiny
   }),
 )
 
 const itemRowClass = (checked: boolean, disabled: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.gap._tiny
@@ -179,13 +175,13 @@ const itemRowClass = (checked: boolean, disabled: boolean): string =>
     if (checked) s.backgroundColor._primary.alpha(8)
     if (disabled) s.opacity._dim
     else
-      s._hover((h2) => {
+      s._hover(h2 => {
         if (!checked) h2.backgroundColor._textSecondary.alpha(8)
       })
   })
 
 const arrowsClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.gap._tiny
@@ -193,7 +189,7 @@ const arrowsClass = computed(() =>
 )
 
 const arrowBtnClass = (enabled: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -210,7 +206,7 @@ const arrowBtnClass = (enabled: boolean): string =>
   })
 
 const emptyClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._small
     s.textAlign.center
     s.color._textSecondary
@@ -225,9 +221,7 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
 <template>
   <div :class="rootClass">
     <div :class="panelClass">
-      <div :class="panelHeadClass">
-        {{ titlesRef[0] }} ({{ leftItems.length }})
-      </div>
+      <div :class="panelHeadClass">{{ titlesRef[0] }} ({{ leftItems.length }})</div>
       <div :class="listClass">
         <div v-if="leftItems.length === 0" :class="emptyClass">无数据</div>
         <ZVirtualList
@@ -277,9 +271,7 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
     </div>
 
     <div :class="panelClass">
-      <div :class="panelHeadClass">
-        {{ titlesRef[1] }} ({{ rightItems.length }})
-      </div>
+      <div :class="panelHeadClass">{{ titlesRef[1] }} ({{ rightItems.length }})</div>
       <div :class="listClass">
         <div v-if="rightItems.length === 0" :class="emptyClass">无数据</div>
         <ZVirtualList

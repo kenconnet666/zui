@@ -9,9 +9,9 @@ import { ZPopover } from '../src'
 let wrappers: VueWrapper[] = []
 
 function cleanPortals(): void {
-  wrappers.forEach((w) => w.unmount())
+  wrappers.forEach(w => w.unmount())
   wrappers = []
-  document.body.querySelectorAll('[role="dialog"]').forEach((el) => el.remove())
+  document.body.querySelectorAll('[role="dialog"]').forEach(el => el.remove())
 }
 
 beforeEach(cleanPortals)
@@ -22,10 +22,14 @@ describe('ZPopover', () => {
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZPopover, { title: 'T' }, {
-            default: () => h('button', 'click'),
-            content: () => 'content body',
-          })
+          h(
+            ZPopover,
+            { title: 'T' },
+            {
+              default: () => h('button', 'click'),
+              content: () => 'content body',
+            },
+          )
       },
     })
     wrappers.push(mount(Host, { attachTo: document.body }))
@@ -36,10 +40,14 @@ describe('ZPopover', () => {
     const Host = defineComponent({
       setup() {
         return () =>
-          h(ZPopover, { title: 'T' }, {
-            default: () => h('button', { id: 'trig' }, 'click'),
-            content: () => 'content body',
-          })
+          h(
+            ZPopover,
+            { title: 'T' },
+            {
+              default: () => h('button', { id: 'trig' }, 'click'),
+              content: () => 'content body',
+            },
+          )
       },
     })
     const w = mount(Host, { attachTo: document.body })

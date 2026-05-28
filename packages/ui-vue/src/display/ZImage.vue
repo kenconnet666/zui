@@ -74,7 +74,7 @@ const showFallback = computed(() => status.value === 'error' && props.fallback)
 const showError = computed(() => status.value === 'error' && !props.fallback)
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineBlock
     s.position.relative
     s.backgroundColor._bgMuted
@@ -87,7 +87,7 @@ const rootClass = computed(() =>
 )
 
 const imgClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     // objectFit 默认 'cover',用户传 factory 覆盖
     if (props.fit) s.objectFit(props.fit)
     else s.objectFit.cover
@@ -97,7 +97,7 @@ const imgClass = computed(() =>
 )
 
 const errorClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.center

@@ -107,7 +107,7 @@ const currentSegment = computed(() => {
 const filtered = computed(() => {
   const q = currentSegment.value.toLowerCase()
   if (!q) return props.options
-  return props.options.filter((o) => o.toLowerCase().includes(q))
+  return props.options.filter(o => o.toLowerCase().includes(q))
 })
 
 function findPrefix(text: string, caret: number): number {
@@ -144,7 +144,7 @@ function pickMention(name: string): void {
 }
 
 const wrapperClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.block
     s.position.relative
     s.width.pct(100)
@@ -153,7 +153,7 @@ const wrapperClass = computed(() =>
 )
 
 const taClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.width.pct(100)
     s.borderWidth._thin
     s.borderStyle.solid
@@ -173,7 +173,7 @@ const taClass = computed(() =>
 )
 
 const dropdownClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.top.pct(100)
     s.left.px(0)
@@ -198,7 +198,7 @@ const dropdownListHeight = computed<string>(() => {
 })
 
 const optionClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._tiny
     s.paddingLeft._small
     s.paddingRight._small
@@ -206,7 +206,7 @@ const optionClass = computed(() =>
     s.cursor.pointer
     s.fontSize._middle
     s.color._text
-    s._hover((h) => {
+    s._hover(h => {
       h.backgroundColor._primary.alpha(8)
     })
   }),

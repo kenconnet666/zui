@@ -59,13 +59,13 @@ function resolveCsstypeEntry() {
 function getJSDocText(sourceText, node) {
   const docs = ts.getJSDocCommentsAndTags(node).filter(ts.isJSDoc)
   if (docs.length === 0) return null
-  return docs.map((d) => sourceText.slice(d.pos, d.end).trim()).join('\n')
+  return docs.map(d => sourceText.slice(d.pos, d.end).trim()).join('\n')
 }
 
 function indentBlock(text, indent) {
   return text
     .split('\n')
-    .map((line) => `${indent}${line}`)
+    .map(line => `${indent}${line}`)
     .join('\n')
 }
 
@@ -148,7 +148,10 @@ function collectStringArrayConsts(sf) {
       const stringEls = init.elements.filter(ts.isStringLiteral)
       if (stringEls.length === init.elements.length) {
         // 纯字符串数组 —— 第一遍即可收
-        consts.set(decl.name.text, stringEls.map((s) => s.text))
+        consts.set(
+          decl.name.text,
+          stringEls.map(s => s.text),
+        )
       } else {
         // 含 spread / identifier，留到第二遍
         pendingArrays.push({ name: decl.name.text, init })
@@ -292,7 +295,7 @@ async function readExtraKeywords() {
           v = v.expression
         }
         if (!v || !ts.isArrayLiteralExpression(v)) continue
-        const arr = v.elements.filter(ts.isStringLiteral).map((s) => s.text)
+        const arr = v.elements.filter(ts.isStringLiteral).map(s => s.text)
         out.set(key, arr)
       }
       return out
@@ -374,12 +377,12 @@ function renderTypeExpr(propName, enhanced, extraKeywords) {
   } else if (Array.isArray(keywords) && keywords.length === 0) {
     keywordsType = 'GlobalKw'
   } else {
-    keywordsType = keywords.map((k) => `'${k}'`).join(' | ') + ' | GlobalKw'
+    keywordsType = keywords.map(k => `'${k}'`).join(' | ') + ' | GlobalKw'
   }
 
   // W6.2 D14 — extra-keywords slot
   const extraList = extraKeywords?.get(propName) ?? []
-  const extraType = extraList.length > 0 ? extraList.map((k) => `'${k}'`).join(' | ') : 'never'
+  const extraType = extraList.length > 0 ? extraList.map(k => `'${k}'`).join(' | ') : 'never'
 
   const carrier = tokenCat === 'color' ? 'ColorPropCarrier' : 'PropCarrier'
 
@@ -457,12 +460,12 @@ function renderFile(properties, enhanced, extraKeywords, docsZh, banner) {
     lines.push('/**')
     lines.push(' * 自动生成：所有 csstype 已知 CSS 属性在 Chain 上的方法签名。')
     lines.push(' *')
-    lines.push(' * - ENHANCED_PROPS 中的属性 → `PropCarrier` / `ColorPropCarrier`（四态，类型层 statement-only：返回 void）')
+    lines.push(
+      ' * - ENHANCED_PROPS 中的属性 → `PropCarrier` / `ColorPropCarrier`（四态，类型层 statement-only：返回 void）',
+    )
     lines.push(' * - 其余属性 → `PropFn`（函数态 + 全局关键字，类型层 statement-only：返回 void）')
     lines.push(' *')
-    lines.push(
-      ' * 通过 `interface Chain<T> extends IcxPropMethods<T> {}` 注入到 Chain 实例类型。',
-    )
+    lines.push(' * 通过 `interface Chain<T> extends IcxPropMethods<T> {}` 注入到 Chain 实例类型。')
     lines.push(' */')
   }
   lines.push('export interface IcxPropMethods<T extends ThemeSchema> {')
@@ -582,7 +585,7 @@ function renderGlobalKeywords(propName, initialValue, inherits) {
 /** 渲染 Syntax 表格 */
 function renderSyntaxTable(syntax) {
   const out = ['### 可用写法（Syntax）', '']
-  const has3 = syntax.some((r) => r[2] !== undefined && r[2] !== '')
+  const has3 = syntax.some(r => r[2] !== undefined && r[2] !== '')
   const headers = has3 ? ['形式', '示例', '备注'] : ['形式', '示例']
   out.push(`| ${headers.join(' | ')} |`)
   out.push(`| ${headers.map(() => '---').join(' | ')} |`)
@@ -736,14 +739,14 @@ function renderPropertyJsDocZh(propName, doc, csstypeJsDoc) {
 
   // 把 markdown 内容包装成 JSDoc 块
   const body = out.join('\n').trimEnd()
-  const lines = body.split('\n').map((l) => (l.length === 0 ? ' *' : ` * ${l}`))
+  const lines = body.split('\n').map(l => (l.length === 0 ? ' *' : ` * ${l}`))
   return ['/**', ...lines, ' */'].join('\n')
 }
 
 /** 把 banner 转成 JSDoc 块（接在 IcxPropMethods 前） */
 function renderBannerJsDoc(banner) {
   if (!banner) return ''
-  const lines = banner.split('\n').map((l) => (l.length === 0 ? ' *' : ` * ${l}`))
+  const lines = banner.split('\n').map(l => (l.length === 0 ? ' *' : ` * ${l}`))
   return ['/**', ...lines, ' */'].join('\n')
 }
 
@@ -791,7 +794,7 @@ function validateKeywordCoverage(enhanced, keywordToCss) {
   }
   if (missing.length > 0) {
     const lines = missing.map(
-      (m) => `  - "${m.keyword}" 在 ${m.prop} 的 keywords 里，但 KEYWORD_TO_CSS 没定义`,
+      m => `  - "${m.keyword}" 在 ${m.prop} 的 keywords 里，但 KEYWORD_TO_CSS 没定义`,
     )
     throw new Error(
       `[gen-properties] enhanced-props ↔ keywords.ts 不一致（${missing.length} 个 missing）：\n` +
@@ -848,7 +851,7 @@ async function main() {
   )
 }
 
-main().catch((err) => {
+main().catch(err => {
   console.error(err)
   process.exit(1)
 })

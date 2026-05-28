@@ -20,7 +20,7 @@ import { defaultLight } from './_fixture-theme'
 describe('function token: 求值顺序', () => {
   it('function token 引用同 category 字面量', () => {
     const r = resolveTheme({
-      color: { primary: '#2563eb', primaryHover: (ctx) => ctx.color!.primary as string },
+      color: { primary: '#2563eb', primaryHover: ctx => ctx.color!.primary as string },
     })
     expect(r.color!.primaryHover).toBe('#2563eb')
   })
@@ -28,7 +28,7 @@ describe('function token: 求值顺序', () => {
   it('function token 引用跨 category 字面量', () => {
     const r = resolveTheme({
       color: { brand: '#7c3aed' },
-      shadow: { brandGlow: (ctx) => `0 0 10px ${ctx.color!.brand}` },
+      shadow: { brandGlow: ctx => `0 0 10px ${ctx.color!.brand}` },
     })
     expect(r.shadow!.brandGlow).toBe('0 0 10px #7c3aed')
   })
@@ -38,7 +38,7 @@ describe('function token: 求值顺序', () => {
     // 这里只保证不抛错 + 结果可预测
     const r = resolveTheme({
       color: {
-        a: (ctx) => (ctx.color!.b as string | undefined) ?? '#000',
+        a: ctx => (ctx.color!.b as string | undefined) ?? '#000',
         b: '#fff',
       },
     })
@@ -110,7 +110,7 @@ describe('blur 6 档（0.6.0 重命名）', () => {
 describe('proxy bind receiver — _when / _apply 内 fn(this) 仍是 proxy', () => {
   it('_when 内回调可继续走 carrier', () => {
     const c = new Chain(defaultLight)
-    c._when(true, (s) => {
+    c._when(true, s => {
       s.color._primary // 必须能命中 token
       s.padding.px(8)
     })
@@ -120,9 +120,9 @@ describe('proxy bind receiver — _when / _apply 内 fn(this) 仍是 proxy', () 
 
   it('_apply 同上', () => {
     const c = new Chain(defaultLight)
-    c._apply((s) => {
+    c._apply(s => {
       s.fontWeight._bold
-      s._hover((h) => h.color.white)
+      s._hover(h => h.color.white)
     })
     expect(c._node.fontWeight).toBeDefined()
     expect((c._node['&:hover'] as Record<string, unknown>).color).toBe('white')
@@ -130,7 +130,7 @@ describe('proxy bind receiver — _when / _apply 内 fn(this) 仍是 proxy', () 
 
   it('_unless 否定路径不执行', () => {
     const c = new Chain(defaultLight)
-    c._unless(true, (s) => {
+    c._unless(true, s => {
       s.color('red')
     }) // 不应执行
     expect(c._node.color).toBeUndefined()
@@ -208,7 +208,7 @@ describe('保留属性名容错', () => {
 
 describe('icss 接受 Theme / ResolvedTheme 两种形式', () => {
   it('Theme 实例', () => {
-    const cls = icss(defaultLight, (s) => {
+    const cls = icss(defaultLight, s => {
       s.color._primary
     })
     expect(typeof cls).toBe('string')
@@ -217,16 +217,16 @@ describe('icss 接受 Theme / ResolvedTheme 两种形式', () => {
 
   it('裸 ResolvedTheme（无 Theme.getKeymap 缓存）', () => {
     const r = defaultLight.resolve()
-    const cls = icss(r, (s) => {
+    const cls = icss(r, s => {
       s.color._primary
     })
     expect(typeof cls).toBe('string')
   })
 
   it('factory 内嵌套 _hover', () => {
-    const cls = icss(defaultLight, (s) => {
+    const cls = icss(defaultLight, s => {
       s.color.white
-      s._hover((h) => {
+      s._hover(h => {
         h.color._primary
       })
     })
@@ -284,10 +284,10 @@ describe('_nest try/finally 还原 _node', () => {
 
   it('_nest 同名 selector 多次进入合并而非覆盖', () => {
     const c = new Chain(defaultLight)
-    c._hover((h) => {
+    c._hover(h => {
       h.color._primary
     })
-    c._hover((h) => {
+    c._hover(h => {
       h.padding.px(8)
     })
     const hov = c._node['&:hover'] as Record<string, unknown>

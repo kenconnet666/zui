@@ -5,14 +5,14 @@ import { ref } from 'vue'
 const targetKeys = ref<string[]>(['vue', 'react'])
 
 const dataSource = [
-  { key: 'vue',      label: 'Vue 3' },
-  { key: 'react',    label: 'React' },
-  { key: 'svelte',   label: 'Svelte' },
-  { key: 'solid',    label: 'Solid' },
-  { key: 'angular',  label: 'Angular', disabled: true },
-  { key: 'qwik',     label: 'Qwik' },
-  { key: 'astro',    label: 'Astro' },
-  { key: 'nuxt',     label: 'Nuxt' },
+  { key: 'vue', label: 'Vue 3' },
+  { key: 'react', label: 'React' },
+  { key: 'svelte', label: 'Svelte' },
+  { key: 'solid', label: 'Solid' },
+  { key: 'angular', label: 'Angular', disabled: true },
+  { key: 'qwik', label: 'Qwik' },
+  { key: 'astro', label: 'Astro' },
+  { key: 'nuxt', label: 'Nuxt' },
 ]
 </script>
 
@@ -23,7 +23,14 @@ const dataSource = [
       v-model:target-keys="targetKeys"
       :titles="['可选框架', '已选框架']"
     />
-    <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">
+    <ZText
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+    >
       已选：{{ targetKeys.join(', ') || '（无）' }}
     </ZText>
   </ZFlex>

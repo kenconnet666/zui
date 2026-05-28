@@ -2,8 +2,8 @@
 import { ZBreadcrumb, ZFlex } from '@kenconnet666/zui-vue'
 
 const items1 = [
-  { label: '首页',  href: '#' },
-  { label: '组件',  href: '#' },
+  { label: '首页', href: '#' },
+  { label: '组件', href: '#' },
   { label: 'ZBreadcrumb 面包屑' },
 ]
 

@@ -60,7 +60,7 @@ const emit = defineEmits<ZTimePickerEmits>()
 const theme = useZTheme()
 
 const inputClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border

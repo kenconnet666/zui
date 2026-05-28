@@ -18,7 +18,7 @@ const LS_SCHEME_KEY = 'zui-docs-color-scheme'
 const savedScheme = localStorage.getItem(LS_SCHEME_KEY)
 const colorScheme = ref<ColorScheme>(savedScheme === 'dark' ? 'dark' : 'light')
 
-watch(colorScheme, (v) => localStorage.setItem(LS_SCHEME_KEY, v))
+watch(colorScheme, v => localStorage.setItem(LS_SCHEME_KEY, v))
 
 const brandExt = {
   brandRoyal: '#1a3a8f',

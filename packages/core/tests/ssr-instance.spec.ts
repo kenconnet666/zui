@@ -7,7 +7,7 @@ describe('W5.1 — createIcssInstance', () => {
   it('icss 输出走自定义 instance 的 css', () => {
     const emotion = createEmotion({ key: 'zuit' })
     const { icss } = createIcssInstance(emotion)
-    const cls = icss(defaultLight, (s) => {
+    const cls = icss(defaultLight, s => {
       s.color._primary
     })
     // emotion key 'zuit' → className 前缀
@@ -25,7 +25,7 @@ describe('W5.1 — createIcssInstance', () => {
   it('ikeyframes 用 instance.keyframes', () => {
     const emotion = createEmotion({ key: 'kf' })
     const { ikeyframes } = createIcssInstance(emotion)
-    const name = ikeyframes((k) => {
+    const name = ikeyframes(k => {
       k.from({ opacity: 0 })
       k.to({ opacity: 1 })
     })

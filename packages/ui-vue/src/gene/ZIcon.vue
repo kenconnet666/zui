@@ -161,7 +161,7 @@ const theme = useZTheme()
 
 // ─── 一个 className:base + 维度 + css ───
 const className = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 1
     // base
     s.display.inlineFlex

@@ -7,12 +7,13 @@ import ApiTable from '../components/ApiTable.vue'
   <section>
     <ZTitle :level="1">SxObject 模型</ZTitle>
     <ZParagraph>
-      <ZCode code="SxObject" /> 是 zui-vue 专门为<strong>复合组件子节点</strong>设计的「单参数平铺配置」类型。
-      像 <ZCode code="ZCard" /> 的 head / body / foot 三个子节点、<ZCode code="ZModal" /> 的 mask / dialog
-      两个子节点——它们各自需要独立的 <ZCode code="css" /> / <ZCode code="class" /> / <ZCode code="style" /> /
-      <ZCode code="ref" /> / DOM attrs(<ZCode code="onClick" /> / <ZCode code="aria-*" /> /
-      <ZCode code="data-*" /> ……)。<ZCode code="SxObject" /> 用<strong>一个对象平铺这些字段</strong>,
-      避免「嵌套属性的属性」陷阱。
+      <ZCode code="SxObject" /> 是 zui-vue
+      专门为<strong>复合组件子节点</strong>设计的「单参数平铺配置」类型。 像
+      <ZCode code="ZCard" /> 的 head / body / foot 三个子节点、<ZCode code="ZModal" /> 的 mask /
+      dialog 两个子节点——它们各自需要独立的 <ZCode code="css" /> / <ZCode code="class" /> /
+      <ZCode code="style" /> / <ZCode code="ref" /> / DOM attrs(<ZCode code="onClick" /> /
+      <ZCode code="aria-*" /> / <ZCode code="data-*" /> ……)。<ZCode code="SxObject" />
+      用<strong>一个对象平铺这些字段</strong>, 避免「嵌套属性的属性」陷阱。
     </ZParagraph>
 
     <ZTitle :level="2">设计动机</ZTitle>
@@ -38,24 +39,22 @@ interface ZCardProps {
   foot?: { /* 同上 */ }
 }`"
     />
-    <ZParagraph>
-      用户视角看上去合理,但有几个问题:
-    </ZParagraph>
+    <ZParagraph> 用户视角看上去合理,但有几个问题: </ZParagraph>
     <ZParagraph>
       ① 三个子节点的「DOM attrs 类型」要各自重复一遍;<br />
       ② IDE 补全要先点开 head 对象再深入字段,层级深;<br />
       ③ 跟 Vue 标准 <ZCode code=":class" /> / <ZCode code=":style" /> 的扁平用法不一致。
     </ZParagraph>
     <ZParagraph>
-      <ZCode code="SxObject" /> 采用<strong>平铺对象</strong> + <strong>HTMLAttributes 类型 intersect</strong>,
-      使一个对象内同时容纳 zui 专属字段(<ZCode code="css" />)+ Vue 标准字段(<ZCode code="class" /> /
-      <ZCode code="style" /> / <ZCode code="ref" />)+ 任意 DOM attrs。
+      <ZCode code="SxObject" /> 采用<strong>平铺对象</strong> +
+      <strong>HTMLAttributes 类型 intersect</strong>, 使一个对象内同时容纳 zui 专属字段(<ZCode
+        code="css"
+      />)+ Vue 标准字段(<ZCode code="class" /> / <ZCode code="style" /> / <ZCode code="ref" />)+
+      任意 DOM attrs。
     </ZParagraph>
 
     <ZTitle :level="2">类型签名</ZTitle>
-    <ZParagraph>
-      来自 <ZCode code="packages/ui-vue/src/_internal/sx.ts" />:
-    </ZParagraph>
+    <ZParagraph> 来自 <ZCode code="packages/ui-vue/src/_internal/sx.ts" />: </ZParagraph>
     <ZCode
       :inline="false"
       lang="ts"
@@ -83,13 +82,21 @@ export type SxObject<S extends ThemeSchema = ZuiSchema> = {
     </ZParagraph>
     <ApiTable
       :columns="[
-        { key: 'name', label: '函数',      mono: true, width: '180px' },
-        { key: 'sig',  label: '签名',      mono: true, width: '380px' },
+        { key: 'name', label: '函数', mono: true, width: '180px' },
+        { key: 'sig', label: '签名', mono: true, width: '380px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'applySx',        sig: '(s: Chain<ZuiSchema>, sx?: SxObject) => void',  desc: '若 sx?.css 存在则调用 sx.css(s),把用户 chain factory 应用到当前 chain。' },
-        { name: 'extractSxAttrs', sig: '(sx?: SxObject) => { class, style, ref, attrs }', desc: '把 css 丢弃,把 class/style/ref 分离,剩余字段聚合到 attrs 供模板 v-bind 透传。' },
+        {
+          name: 'applySx',
+          sig: '(s: Chain<ZuiSchema>, sx?: SxObject) => void',
+          desc: '若 sx?.css 存在则调用 sx.css(s),把用户 chain factory 应用到当前 chain。',
+        },
+        {
+          name: 'extractSxAttrs',
+          sig: '(sx?: SxObject) => { class, style, ref, attrs }',
+          desc: '把 css 丢弃,把 class/style/ref 分离,剩余字段聚合到 attrs 供模板 v-bind 透传。',
+        },
       ]"
     />
 
@@ -197,8 +204,8 @@ const headAttrs = computed(() => extractSxAttrs(props.sxHead))
 
     <ZTitle :level="2">ZModal 使用样例</ZTitle>
     <ZParagraph>
-      <ZCode code="ZModal" /> 暴露 <ZCode code="sxMask" />(遮罩层)与 <ZCode code="sxDialog" />(弹窗本体)
-      两个 sx prop。
+      <ZCode code="ZModal" /> 暴露 <ZCode code="sxMask" />(遮罩层)与
+      <ZCode code="sxDialog" />(弹窗本体) 两个 sx prop。
     </ZParagraph>
     <ZCode
       :inline="false"
@@ -239,29 +246,39 @@ const headAttrs = computed(() => extractSxAttrs(props.sxHead))
 <ZModal v-model:open=&quot;visible&quot; size=&quot;large&quot; :sx-dialog=&quot;{ css: ... }&quot; />`"
     />
     <ZParagraph>
-      同样地,<ZCode code="sx" /> 内的 <ZCode code="css" /> factory<strong>仅影响该子节点的样式</strong>,
+      同样地,<ZCode code="sx" /> 内的
+      <ZCode code="css" /> factory<strong>仅影响该子节点的样式</strong>,
       不能用来切换组件状态。要联动状态走顶层 prop 或 emit。
     </ZParagraph>
 
     <ZTitle :level="2">命名约定</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'pattern', label: '模式',           mono: true, width: '220px' },
-        { key: 'apply',   label: '适用场景' },
+        { key: 'pattern', label: '模式', mono: true, width: '220px' },
+        { key: 'apply', label: '适用场景' },
       ]"
       :rows="[
-        { pattern: 'sx{NodeName}',  apply: '复合组件每个子节点一个 sx prop。NodeName 用 PascalCase,如 sxHead / sxBody / sxMask / sxDialog / sxPanel。' },
-        { pattern: 'css',           apply: '单根简单组件唯一逃生口 prop(不需要 sxRoot)。如 ZIcon / ZText / ZTag / ZBadge。' },
-        { pattern: 'sxRoot',        apply: '★ 不要这样写。L6 决策:单根组件直接用 css。' },
+        {
+          pattern: 'sx{NodeName}',
+          apply:
+            '复合组件每个子节点一个 sx prop。NodeName 用 PascalCase,如 sxHead / sxBody / sxMask / sxDialog / sxPanel。',
+        },
+        {
+          pattern: 'css',
+          apply: '单根简单组件唯一逃生口 prop(不需要 sxRoot)。如 ZIcon / ZText / ZTag / ZBadge。',
+        },
+        { pattern: 'sxRoot', apply: '★ 不要这样写。L6 决策:单根组件直接用 css。' },
       ]"
     />
 
     <ZTitle :level="2">类型补全</ZTitle>
     <ZParagraph>
-      <ZCode code="SxObject" /> intersect 了 <ZCode code="Omit&lt;HTMLAttributes, 'class' | 'style' | 'ref'&gt;" />
+      <ZCode code="SxObject" /> intersect 了
+      <ZCode code="Omit&lt;HTMLAttributes, 'class' | 'style' | 'ref'&gt;" />
       —— IDE 在 sx 对象字面量内会自动补全全部标准 HTML attribute(包括
-      <ZCode code="onClick" /> / <ZCode code="onKeyDown" /> / <ZCode code="aria-*" /> / <ZCode code="role" /> 等)。
-      末尾的 <ZCode code="Record&lt;string, unknown&gt;" /> 兜底让自定义 <ZCode code="data-*" />
+      <ZCode code="onClick" /> / <ZCode code="onKeyDown" /> / <ZCode code="aria-*" /> /
+      <ZCode code="role" /> 等)。 末尾的 <ZCode code="Record&lt;string, unknown&gt;" /> 兜底让自定义
+      <ZCode code="data-*" />
       属性也不报错。
     </ZParagraph>
 
@@ -272,13 +289,21 @@ const headAttrs = computed(() => extractSxAttrs(props.sxHead))
     </ZParagraph>
     <ApiTable
       :columns="[
-        { key: 'kind',  label: '组件类型',   mono: true, width: '160px' },
-        { key: 'prop',  label: '逃生口 prop', mono: true, width: '220px' },
-        { key: 'desc',  label: '说明' },
+        { key: 'kind', label: '组件类型', mono: true, width: '160px' },
+        { key: 'prop', label: '逃生口 prop', mono: true, width: '220px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { kind: '单根简单组件', prop: 'css: (s) => void',         desc: 'ZIcon / ZText / ZBadge / ZTag 等。一个 css 就够。' },
-        { kind: '复合组件',     prop: 'sx{Node}: SxObject',       desc: 'ZCard / ZModal / ZTabs。每子节点一个 sx prop,sx.css 等于「该子节点的 css」。' },
+        {
+          kind: '单根简单组件',
+          prop: 'css: (s) => void',
+          desc: 'ZIcon / ZText / ZBadge / ZTag 等。一个 css 就够。',
+        },
+        {
+          kind: '复合组件',
+          prop: 'sx{Node}: SxObject',
+          desc: 'ZCard / ZModal / ZTabs。每子节点一个 sx prop,sx.css 等于「该子节点的 css」。',
+        },
       ]"
     />
   </section>

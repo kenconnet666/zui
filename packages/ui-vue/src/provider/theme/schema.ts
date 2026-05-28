@@ -143,13 +143,7 @@ export type FontWeightKeys =
 /** 5 个 easing timing function。 */
 export type EasingKeys = 'default' | 'linear' | 'in' | 'out' | 'inOut'
 /** z-index 全键集合：5 阶 + auto + 4 UI 角色。 */
-export type ZIndexKeys =
-  | 'auto'
-  | Size6KeysWithNone
-  | 'modal'
-  | 'popover'
-  | 'tooltip'
-  | 'toast'
+export type ZIndexKeys = 'auto' | Size6KeysWithNone | 'modal' | 'popover' | 'tooltip' | 'toast'
 /** opacity 7 阶（none + 5 阶领域词 + full）。 */
 export type OpacityKeys = 'none' | 'faint' | 'dim' | 'half' | 'strong' | 'solid' | 'full'
 /** lineHeight 6 阶（none + 5 阶 tight..loose）。 */
@@ -168,13 +162,7 @@ export type FontsKeys = 'sans' | 'serif' | 'mono'
  * - 4 个语义化 key —— `container`(页面主区)/ `readable`(文本阅读宽度,`'65ch'`)/
  *   `full`(`'100%'`)/ `screen`(`'100vw'`)/ `screenH`(`'100vh'`)
  */
-export type SizesKeys =
-  | Size5Keys
-  | 'container'
-  | 'readable'
-  | 'full'
-  | 'screen'
-  | 'screenH'
+export type SizesKeys = Size5Keys | 'container' | 'readable' | 'full' | 'screen' | 'screenH'
 /**
  * 边框/outline 粗细 token —— 用于 `borderWidth / outlineWidth` 及各 sub(top/right/bottom/left)。
  *

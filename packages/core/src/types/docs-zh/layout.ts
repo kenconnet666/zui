@@ -20,13 +20,22 @@ const layout: DocsGroup = {
         headers: ['关键字', '行为'],
         rows: [
           ['`block`', '**块级**：独占一行，可设宽高；如 `<div>`/`<p>` 的默认表现'],
-          ['`inline`', '**行内**：与文字同行，宽高/marginY/paddingY 部分无效；如 `<span>`/`<a>` 的默认表现'],
+          [
+            '`inline`',
+            '**行内**：与文字同行，宽高/marginY/paddingY 部分无效；如 `<span>`/`<a>` 的默认表现',
+          ],
           [
             '`inlineBlock`',
             '**行内块**：与文字同行（不换行），但可设完整 width/height/margin/padding；按钮/标签常用',
           ],
-          ['`none`', '**完全不渲染**（不占任何空间）。注意：屏幕阅读器**仍会跳过**，可访问性需评估'],
-          ['`contents`', '元素自身消失但**子元素照常渲染**，子元素直接成为父的子；用于去掉无意义包装层'],
+          [
+            '`none`',
+            '**完全不渲染**（不占任何空间）。注意：屏幕阅读器**仍会跳过**，可访问性需评估',
+          ],
+          [
+            '`contents`',
+            '元素自身消失但**子元素照常渲染**，子元素直接成为父的子；用于去掉无意义包装层',
+          ],
         ],
       },
       {
@@ -43,7 +52,10 @@ const layout: DocsGroup = {
         label: '其他特殊容器',
         headers: ['关键字', '行为'],
         rows: [
-          ['`flowRoot`', '**触发 BFC**（块格式化上下文）—— 现代清浮动方案；元素内的浮动不会影响外部'],
+          [
+            '`flowRoot`',
+            '**触发 BFC**（块格式化上下文）—— 现代清浮动方案；元素内的浮动不会影响外部',
+          ],
           ['`listItem`', '生成列表标记符号（与 `list-style` 配合）；如 `<li>` 默认'],
           ['`ruby`', '日文/中文注音排版（基线对齐注音字符）；罕用'],
         ],
@@ -54,7 +66,10 @@ const layout: DocsGroup = {
         rows: [
           ['`table`', '块级表格容器（同 `<table>`）'],
           ['`inlineTable`', '行内表格容器'],
-          ['`tableCell`', '表格单元格（同 `<td>`/`<th>`）—— 经常用于精确垂直居中（配合 `vertical-align: middle`）'],
+          [
+            '`tableCell`',
+            '表格单元格（同 `<td>`/`<th>`）—— 经常用于精确垂直居中（配合 `vertical-align: middle`）',
+          ],
           ['`tableRow`', '表格行（同 `<tr>`）'],
           ['`tableColumn`', '表格列定义（同 `<col>`）'],
           ['`tableRowGroup`', '同 `<tbody>`'],
@@ -105,9 +120,17 @@ s.display.flowRoot               // 现代清浮动方案，替代经典 \`clear
       ['基础类型', '`block` `inline` `inlineBlock` `none` `contents`', '常用'],
       ['容器类型', '`flex` `inlineFlex` `grid` `inlineGrid` `flowRoot`', '现代布局'],
       ['list-item', '`listItem`', '生成列表标记'],
-      ['table 家族', '`table` `inlineTable` `tableCell` `tableRow` `tableColumn` `tableRowGroup` ...', '模拟 HTML 表格行为'],
+      [
+        'table 家族',
+        '`table` `inlineTable` `tableCell` `tableRow` `tableColumn` `tableRowGroup` ...',
+        '模拟 HTML 表格行为',
+      ],
       ['ruby', '`ruby`', 'CJK 注音排版（罕用）'],
-      ['两值语法', "`'block flow'` `'inline flex'`", 'CSS Display Module 3（新，外/内类型分开写，多数浏览器尚未实现）'],
+      [
+        '两值语法',
+        "`'block flow'` `'inline flex'`",
+        'CSS Display Module 3（新，外/内类型分开写，多数浏览器尚未实现）',
+      ],
     ],
     initialValue: 'inline',
     inherits: false,
@@ -127,7 +150,13 @@ s.display.flowRoot               // 现代清浮动方案，替代经典 \`clear
         label: '5 个定位关键字',
         headers: ['关键字', '占位', '偏移属性生效', '偏移基准', '用途'],
         rows: [
-          ['`static`', '✓ 占位', '✗ 无效', '—', '**默认值**。正常文档流，`top/left/...` 无效，`z-index` 也无效'],
+          [
+            '`static`',
+            '✓ 占位',
+            '✗ 无效',
+            '—',
+            '**默认值**。正常文档流，`top/left/...` 无效，`z-index` 也无效',
+          ],
           [
             '`relative`',
             '✓ 占位',
@@ -185,7 +214,11 @@ s.right.px(-8)
 \`\`\``,
 
     syntax: [
-      ['5 个定位关键字', '`static` ｜ `relative` ｜ `absolute` ｜ `fixed` ｜ `sticky`', '只接受关键字'],
+      [
+        '5 个定位关键字',
+        '`static` ｜ `relative` ｜ `absolute` ｜ `fixed` ｜ `sticky`',
+        '只接受关键字',
+      ],
     ],
     initialValue: 'static',
     inherits: false,
@@ -235,9 +268,7 @@ s.transition('opacity 0.3s, visibility 0.3s')
   .visibility.hidden.opacity(0)
 \`\`\``,
 
-    syntax: [
-      ['可见性关键字', '`visible` ｜ `hidden` ｜ `collapse`', '只接受关键字'],
-    ],
+    syntax: [['可见性关键字', '`visible` ｜ `hidden` ｜ `collapse`', '只接受关键字']],
     initialValue: 'visible',
     inherits: true,
     browserNote: '所有浏览器远古支持。',
@@ -255,16 +286,10 @@ s.transition('opacity 0.3s, visibility 0.3s')
         label: '5 个 keyword',
         headers: ['关键字', '行为'],
         rows: [
-          [
-            '`visible`',
-            '**默认值**。溢出内容可见（超出容器边界），不裁剪',
-          ],
+          ['`visible`', '**默认值**。溢出内容可见（超出容器边界），不裁剪'],
           ['`hidden`', '**裁剪**溢出，**不显示滚动条**；用户无法手动滚动，但 JS `scrollTo` 仍可'],
           ['`scroll`', '**强制**显示滚动条（即使没溢出也占滚动条空间）'],
-          [
-            '`auto`',
-            '内容**溢出时**才显示滚动条（最常用）',
-          ],
+          ['`auto`', '内容**溢出时**才显示滚动条（最常用）'],
           [
             '`clip`',
             '同 `hidden` 但**禁止程序滚动**（更严格）；不创建滚动容器（不会成为 `sticky` 的祖先滚动容器）',
@@ -312,14 +337,22 @@ s.overflow.auto                     // 内容溢出时出滚动条
     extends: 'overflow',
     firstLine: '控制元素**水平方向**内容溢出的处理。其他规则同 [`overflow`]，但只接受单值。',
     syntax: [
-      ['5 个 keyword', '`visible` ｜ `hidden` ｜ `scroll` ｜ `auto` ｜ `clip`', '单轴只接受 1 个值'],
+      [
+        '5 个 keyword',
+        '`visible` ｜ `hidden` ｜ `scroll` ｜ `auto` ｜ `clip`',
+        '单轴只接受 1 个值',
+      ],
     ],
   },
   overflowY: {
     extends: 'overflow',
     firstLine: '控制元素**垂直方向**内容溢出的处理。其他规则同 [`overflow`]，但只接受单值。',
     syntax: [
-      ['5 个 keyword', '`visible` ｜ `hidden` ｜ `scroll` ｜ `auto` ｜ `clip`', '单轴只接受 1 个值'],
+      [
+        '5 个 keyword',
+        '`visible` ｜ `hidden` ｜ `scroll` ｜ `auto` ｜ `clip`',
+        '单轴只接受 1 个值',
+      ],
     ],
   },
 
@@ -474,7 +507,11 @@ s.marginBottom.px(8)
 直接给父容器加 \`display: flow-root\` 即可触发 BFC 包含浮动子元素，无需 clear。`,
 
     syntax: [
-      ['清除方向', '`none` ｜ `left` ｜ `right` ｜ `both` ｜ `inlineStart` ｜ `inlineEnd`', '物理/逻辑方向'],
+      [
+        '清除方向',
+        '`none` ｜ `left` ｜ `right` ｜ `both` ｜ `inlineStart` ｜ `inlineEnd`',
+        '物理/逻辑方向',
+      ],
     ],
     initialValue: 'none',
     inherits: false,
@@ -492,7 +529,10 @@ s.marginBottom.px(8)
         label: '2 个 keyword',
         headers: ['关键字', '行为'],
         rows: [
-          ['`auto`', '**默认值**。不强制创建层叠上下文（但其他属性如 `opacity < 1` / `transform` 仍可能创建）'],
+          [
+            '`auto`',
+            '**默认值**。不强制创建层叠上下文（但其他属性如 `opacity < 1` / `transform` 仍可能创建）',
+          ],
           [
             '`isolate`',
             '**强制创建**新的层叠上下文 —— 内部的 `mix-blend-mode` 只与本上下文内的元素混合，不影响外部',

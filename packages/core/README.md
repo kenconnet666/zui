@@ -17,15 +17,15 @@ zui-core 走第三条路 —— **强类型 builder**:
 ```ts
 import { icss, paletteLight } from '@kenconnet666/zui-core'
 
-const cls = icss(paletteLight, (s) => {
-  s.color._primary          // ← IDE 知道 _primary 是合法 token
+const cls = icss(paletteLight, s => {
+  s.color._primary // ← IDE 知道 _primary 是合法 token
   s.fontSize._large
-  s.padding.iem(1)          // ← iem(N) 是 carrier 方法
+  s.padding.iem(1) // ← iem(N) 是 carrier 方法
   s.borderRadius._middle
-  s._hover((h) => {
-    h.backgroundColor._primary.alpha(8)  // ← modifier 链式
+  s._hover(h => {
+    h.backgroundColor._primary.alpha(8) // ← modifier 链式
   })
-  s._dark((d) => {
+  s._dark(d => {
     d.color._textSecondary
   })
 })
@@ -61,12 +61,12 @@ pnpm add @kenconnet666/zui-core @emotion/css
 ```ts
 import { icss, paletteLight } from '@kenconnet666/zui-core'
 
-const btn = icss(paletteLight, (s) => {
+const btn = icss(paletteLight, s => {
   s.color.white
-  s.backgroundColor._blue                  // tailwind palette 内建 token
+  s.backgroundColor._blue // tailwind palette 内建 token
   s.padding.px(12)
   s.borderRadius.px(8)
-  s._hover((h) => {
+  s._hover(h => {
     h.backgroundColor._blue.darken(10)
   })
 })
@@ -91,10 +91,10 @@ const myTheme = new Theme<BrandSchema>({
   spacing: { tiny: '4px', small: '8px', middle: '16px', large: '24px' },
 })
 
-const cls = icss(myTheme, (s) => {
-  s.color._brand                  // ✅ 自家 token,IDE 补全
-  s.padding._large                // ✅
-  s.padding._huge                 // ❌ 编译期报错:'_huge' 不在 spacing token 中
+const cls = icss(myTheme, s => {
+  s.color._brand // ✅ 自家 token,IDE 补全
+  s.padding._large // ✅
+  s.padding._huge // ❌ 编译期报错:'_huge' 不在 spacing token 中
 })
 ```
 
@@ -136,7 +136,12 @@ injectLayer('base', 'components', 'utilities')
 
 ```ts
 // 变体系统(cva / tv 风格)
-import { defineVariants, defineParts, extendVariants, extendParts } from '@kenconnet666/zui-core/variants'
+import {
+  defineVariants,
+  defineParts,
+  extendVariants,
+  extendParts,
+} from '@kenconnet666/zui-core/variants'
 
 // 预设资源(动画 keyframes)
 import { presetAnimations } from '@kenconnet666/zui-core/preset'
@@ -152,7 +157,9 @@ import { assertSchemaConsistency, makeCallsiteLabel } from '@kenconnet666/zui-co
 最常用入口。传 theme + factory,得到 className。
 
 ```ts
-const cls = icss(theme, (s) => { /* ... */ })
+const cls = icss(theme, s => {
+  /* ... */
+})
 ```
 
 ### `Theme<TSchema>`
@@ -174,22 +181,40 @@ const forked = Theme.fork(theme, { /* override */ })
 import { defineVariants } from '@kenconnet666/zui-core/variants'
 
 const button = defineVariants({
-  base: (s) => { s.fontWeight._medium; s.borderRadius._middle },
+  base: s => {
+    s.fontWeight._medium
+    s.borderRadius._middle
+  },
   variants: {
     size: {
-      small:  (s) => { s.fontSize._small; s.padding.iem(0.5) },
-      middle: (s) => { s.fontSize._middle; s.padding.iem(0.75) },
-      large:  (s) => { s.fontSize._large; s.padding.iem(1) },
+      small: s => {
+        s.fontSize._small
+        s.padding.iem(0.5)
+      },
+      middle: s => {
+        s.fontSize._middle
+        s.padding.iem(0.75)
+      },
+      large: s => {
+        s.fontSize._large
+        s.padding.iem(1)
+      },
     },
     color: {
-      primary: (s) => { s.backgroundColor._primary; s.color.white },
-      danger:  (s) => { s.backgroundColor._danger;  s.color.white },
+      primary: s => {
+        s.backgroundColor._primary
+        s.color.white
+      },
+      danger: s => {
+        s.backgroundColor._danger
+        s.color.white
+      },
     },
   },
   defaultVariants: { size: 'middle', color: 'primary' },
 })
 
-const cls = icss(theme, (s) => button(s, { size: 'large', color: 'danger' }))
+const cls = icss(theme, s => button(s, { size: 'large', color: 'danger' }))
 ```
 
 ### `createIcssInstance` —— SSR / 多实例
@@ -213,15 +238,15 @@ import { applyResponsive, type ResponsiveValue } from '@kenconnet666/zui-core'
 
 const size: ResponsiveValue<'small' | 'middle' | 'large'> = {
   base: 'small',
-  md:   'middle',
-  lg:   'large',
+  md: 'middle',
+  lg: 'large',
 }
 
-const cls = icss(theme, (s) => {
+const cls = icss(theme, s => {
   applyResponsive(s, theme, size, (s, v) => {
-    if (v === 'small')  s.fontSize._small
+    if (v === 'small') s.fontSize._small
     if (v === 'middle') s.fontSize._middle
-    if (v === 'large')  s.fontSize._large
+    if (v === 'large') s.fontSize._large
   })
 })
 ```
@@ -229,15 +254,29 @@ const cls = icss(theme, (s) => {
 ## 嵌套 / 状态选择器(89+ 内建)
 
 ```ts
-icss(theme, (s) => {
-  s._hover((h) => { h.color._primary })
-  s._focusVisible((f) => { f.outline('2px solid currentColor') })
-  s._dark((d) => { d.backgroundColor._bgDark })
-  s._media('(min-width: 768px)', (m) => { m.fontSize._large })
-  s._groupHover((g) => { g.opacity(1) })
-  s._lineClamp(2)                     // -webkit-line-clamp shortcut
-  s._ariaSelected((sel) => { sel.backgroundColor._primary.alpha(8) })
-  s._dataState('open', (op) => { op.borderColor._primary })
+icss(theme, s => {
+  s._hover(h => {
+    h.color._primary
+  })
+  s._focusVisible(f => {
+    f.outline('2px solid currentColor')
+  })
+  s._dark(d => {
+    d.backgroundColor._bgDark
+  })
+  s._media('(min-width: 768px)', m => {
+    m.fontSize._large
+  })
+  s._groupHover(g => {
+    g.opacity(1)
+  })
+  s._lineClamp(2) // -webkit-line-clamp shortcut
+  s._ariaSelected(sel => {
+    sel.backgroundColor._primary.alpha(8)
+  })
+  s._dataState('open', op => {
+    op.borderColor._primary
+  })
 })
 ```
 
@@ -251,10 +290,10 @@ icss(theme, (s) => {
 
 ## 与 zui-vue 的关系
 
-| 包 | 职责 | 依赖关系 |
-|---|---|---|
-| `zui-core` | 框架无关 chain DSL / 主题模型 / 变体抽象 | 仅依赖 `@emotion/css` `color2k` `csstype` |
-| `zui-vue`  | Vue 3 集成 `<ZBox>` provider + 80+ 组件 + `zuiLight/Dark` 主题 + i18n | 依赖 `zui-core` + Vue 3 全家桶 |
+| 包         | 职责                                                                  | 依赖关系                                  |
+| ---------- | --------------------------------------------------------------------- | ----------------------------------------- |
+| `zui-core` | 框架无关 chain DSL / 主题模型 / 变体抽象                              | 仅依赖 `@emotion/css` `color2k` `csstype` |
+| `zui-vue`  | Vue 3 集成 `<ZBox>` provider + 80+ 组件 + `zuiLight/Dark` 主题 + i18n | 依赖 `zui-core` + Vue 3 全家桶            |
 
 ## 开发
 

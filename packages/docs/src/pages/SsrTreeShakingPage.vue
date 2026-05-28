@@ -7,25 +7,47 @@ import ApiTable from '../components/ApiTable.vue'
   <section>
     <ZTitle :level="1">SSR &amp; tree-shake</ZTitle>
     <ZParagraph>
-      zui 基于 <ZCode code="@emotion/css" />,SSR 支持需要业务方在<strong>服务端创建独立 emotion 实例</strong>
-      并在响应结束时 flush critical CSS。tree-shake 由 zui 自身的 <strong>单入口 + rollup
-      preserveModules</strong> 打包策略保证——业务方无需特殊配置。本文给出当前的能力边界、
-      推荐打包配置与已知坑。
+      zui 基于 <ZCode code="@emotion/css" />,SSR 支持需要业务方在<strong
+        >服务端创建独立 emotion 实例</strong
+      >
+      并在响应结束时 flush critical CSS。tree-shake 由 zui 自身的
+      <strong>单入口 + rollup preserveModules</strong>
+      打包策略保证——业务方无需特殊配置。本文给出当前的能力边界、 推荐打包配置与已知坑。
     </ZParagraph>
 
     <ZTitle :level="2">当前 SSR 支持现状</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'topic',  label: '能力', mono: true, width: '260px' },
-        { key: 'status', label: '状态',  mono: true, width: '140px' },
-        { key: 'desc',   label: '说明' },
+        { key: 'topic', label: '能力', mono: true, width: '260px' },
+        { key: 'status', label: '状态', mono: true, width: '140px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { topic: 'createIcssInstance 多实例',     status: '已实现',     desc: 'zui-core 导出 createIcssInstance(emotion),给请求级 emotion cache 绑定独立 icss / cx / toClassName。' },
-        { topic: '内置 hooks SSR-friendly',       status: '已实现',     desc: 'usePortal 在 onMounted 后再访问 document;useZId 用 Vue 3.5 内置 useId,跨端一致。' },
-        { topic: 'docs 站点是否启用 SSR',          status: '未启用(SPA)', desc: 'packages/docs 是 hash 路由 SPA,纯 Vite build,无 SSR / SSG。zui-vue 自身的 SSR 集成范例待补充。' },
-        { topic: 'extractCritical 风格 critical CSS', status: '部分',     desc: '通过 cache.flush() 获取本请求注入的 className,业务方手动拼到 <head>(详见下方代码)。' },
-        { topic: 'Nuxt 一键集成',                 status: '未提供',     desc: '未来可能出 @kenconnet666/zui-nuxt module。当前需要业务方手写 server plugin。' },
+        {
+          topic: 'createIcssInstance 多实例',
+          status: '已实现',
+          desc: 'zui-core 导出 createIcssInstance(emotion),给请求级 emotion cache 绑定独立 icss / cx / toClassName。',
+        },
+        {
+          topic: '内置 hooks SSR-friendly',
+          status: '已实现',
+          desc: 'usePortal 在 onMounted 后再访问 document;useZId 用 Vue 3.5 内置 useId,跨端一致。',
+        },
+        {
+          topic: 'docs 站点是否启用 SSR',
+          status: '未启用(SPA)',
+          desc: 'packages/docs 是 hash 路由 SPA,纯 Vite build,无 SSR / SSG。zui-vue 自身的 SSR 集成范例待补充。',
+        },
+        {
+          topic: 'extractCritical 风格 critical CSS',
+          status: '部分',
+          desc: '通过 cache.flush() 获取本请求注入的 className,业务方手动拼到 <head>(详见下方代码)。',
+        },
+        {
+          topic: 'Nuxt 一键集成',
+          status: '未提供',
+          desc: '未来可能出 @kenconnet666/zui-nuxt module。当前需要业务方手写 server plugin。',
+        },
       ]"
     />
 
@@ -104,36 +126,72 @@ export default defineNitroPlugin((nitro) => {
     <ZTitle :level="2">SSR-friendly 设计要点</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'feature', label: '特性',  mono: true, width: '260px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'feature', label: '特性', mono: true, width: '260px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { feature: 'useZId(suffix?)',           desc: '基于 Vue 3.5+ 内置 useId(),服务端与客户端生成同 id,hydration 不报错。' },
-        { feature: 'usePortal',                 desc: 'target 解析延迟到 onMounted,服务端不访问 document,避免 ReferenceError。' },
-        { feature: '<ZPortal :disabled>',       desc: '在 SSR 阶段可以 disabled,渲染到原地;hydration 后开启 disabled=false,自动切到 body。' },
-        { feature: 'iem 走 CSS variable',       desc: '--zui-iem 写在 ZBox wrapper inline,服务端 + 客户端注入完全一致,无 hydration mismatch。' },
-        { feature: 'icss 同步返回 className',    desc: 'icss 是同步的(emotion 风格),不依赖客户端事件,适合 SSR string concat 渲染流程。' },
+        {
+          feature: 'useZId(suffix?)',
+          desc: '基于 Vue 3.5+ 内置 useId(),服务端与客户端生成同 id,hydration 不报错。',
+        },
+        {
+          feature: 'usePortal',
+          desc: 'target 解析延迟到 onMounted,服务端不访问 document,避免 ReferenceError。',
+        },
+        {
+          feature: '<ZPortal :disabled>',
+          desc: '在 SSR 阶段可以 disabled,渲染到原地;hydration 后开启 disabled=false,自动切到 body。',
+        },
+        {
+          feature: 'iem 走 CSS variable',
+          desc: '--zui-iem 写在 ZBox wrapper inline,服务端 + 客户端注入完全一致,无 hydration mismatch。',
+        },
+        {
+          feature: 'icss 同步返回 className',
+          desc: 'icss 是同步的(emotion 风格),不依赖客户端事件,适合 SSR string concat 渲染流程。',
+        },
       ]"
     />
 
     <ZTitle :level="2">单入口 + preserveModules tree-shake</ZTitle>
     <ZParagraph>
-      <ZCode code="@kenconnet666/zui-vue" /> v0.2(L12 决策,2026-05-23)<strong>取消了所有 subpath
-      exports</strong>(<ZCode code="/provider" /> / <ZCode code="/locale" /> / <ZCode code="/composables" />
+      <ZCode code="@kenconnet666/zui-vue" /> v0.2(L12 决策,2026-05-23)<strong
+        >取消了所有 subpath exports</strong
+      >(<ZCode code="/provider" /> / <ZCode code="/locale" /> / <ZCode code="/composables" />
       全部废弃),只暴露主入口。tree-shake 由 zui 的打包策略 + 业务方 bundler 共同保证:
     </ZParagraph>
     <ApiTable
       :columns="[
-        { key: 'side',  label: '层',         mono: true, width: '180px' },
-        { key: 'tech',  label: '技术',       mono: true, width: '260px' },
-        { key: 'desc',  label: '说明' },
+        { key: 'side', label: '层', mono: true, width: '180px' },
+        { key: 'tech', label: '技术', mono: true, width: '260px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { side: 'zui-vue 打包',  tech: 'rollup preserveModules', desc: '保留源文件结构 → bundler 能按文件粒度 tree-shake;每个组件独立 chunk。' },
-        { side: 'zui-vue 打包',  tech: '不 minify',              desc: '保留可读性 + pure marker,业务方 bundler 才能正确判定 side-effect-free。' },
-        { side: 'zui-vue 打包',  tech: 'dts rollupTypes: false', desc: '保留源类型结构,IDE go-to-def 看得到注释 + 注释里的 @example。' },
-        { side: 'package.json', tech: '\\&quot;sideEffects\\&quot;: false', desc: '所有 ESM import 标记为 side-effect-free,bundler 安全 drop 未用到的 export。' },
-        { side: '业务方 bundler', tech: 'Vite / Rollup / esbuild', desc: '配合 zui 的 sideEffects: false + ESM 入口,自动只打包真正用到的组件。' },
+        {
+          side: 'zui-vue 打包',
+          tech: 'rollup preserveModules',
+          desc: '保留源文件结构 → bundler 能按文件粒度 tree-shake;每个组件独立 chunk。',
+        },
+        {
+          side: 'zui-vue 打包',
+          tech: '不 minify',
+          desc: '保留可读性 + pure marker,业务方 bundler 才能正确判定 side-effect-free。',
+        },
+        {
+          side: 'zui-vue 打包',
+          tech: 'dts rollupTypes: false',
+          desc: '保留源类型结构,IDE go-to-def 看得到注释 + 注释里的 @example。',
+        },
+        {
+          side: 'package.json',
+          tech: '\\&quot;sideEffects\\&quot;: false',
+          desc: '所有 ESM import 标记为 side-effect-free,bundler 安全 drop 未用到的 export。',
+        },
+        {
+          side: '业务方 bundler',
+          tech: 'Vite / Rollup / esbuild',
+          desc: '配合 zui 的 sideEffects: false + ESM 入口,自动只打包真正用到的组件。',
+        },
       ]"
     />
 
@@ -160,23 +218,41 @@ import { ZButton } from '@kenconnet666/zui-vue/components/button'`"
     <ZTitle :level="2">已知坑</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'topic', label: '坑',                 mono: true, width: '300px' },
-        { key: 'desc',  label: '说明' },
+        { key: 'topic', label: '坑', mono: true, width: '300px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { topic: 'emotion 全局 cache 污染',         desc: '不要在 SSR 入口 import 默认 @emotion/css 的 css/cx——必须走 createEmotion + createIcssInstance,否则多请求共享 cache 导致 CSS 错乱。' },
-        { topic: 'theme 对象不能跨请求共享',         desc: 'Theme 内部缓存 keymap;高并发场景每请求新建 theme(或 freeze 后只读共享亦可,因为 keymap 是纯函数缓存)。' },
-        { topic: 'iem 必须由 ZBox 注入',            desc: 'SSR 渲染如果忘了套 ZBox,--zui-iem 没值,所有 iem 单位 fallback 到 16px(calc 的第二个参数)。视觉上没问题,但失去 Provider 切换能力。' },
-        { topic: 'createIcssInstance 的副作用',     desc: 'injectGlobal / injectPreflight / registerFont / registerCustomProperty 写到 document.head;服务端没有 document,要确保只在 onMounted 或客户端入口调用。' },
-        { topic: 'extractCritical 未直接暴露',       desc: 'zui 目前不封装 extractCritical helper,业务方手动 cache.flush() + 拼字符串。未来可能加 createIcssInstance(emotion).flush() 的 wrapper。' },
-        { topic: '@emotion/server 不是 peerDep',    desc: 'SSR critical CSS 抽取走 @emotion/css 自带 flush + cache.inserted,无需额外装 @emotion/server。如想用其 renderStylesToString,业务方自行安装。' },
+        {
+          topic: 'emotion 全局 cache 污染',
+          desc: '不要在 SSR 入口 import 默认 @emotion/css 的 css/cx——必须走 createEmotion + createIcssInstance,否则多请求共享 cache 导致 CSS 错乱。',
+        },
+        {
+          topic: 'theme 对象不能跨请求共享',
+          desc: 'Theme 内部缓存 keymap;高并发场景每请求新建 theme(或 freeze 后只读共享亦可,因为 keymap 是纯函数缓存)。',
+        },
+        {
+          topic: 'iem 必须由 ZBox 注入',
+          desc: 'SSR 渲染如果忘了套 ZBox,--zui-iem 没值,所有 iem 单位 fallback 到 16px(calc 的第二个参数)。视觉上没问题,但失去 Provider 切换能力。',
+        },
+        {
+          topic: 'createIcssInstance 的副作用',
+          desc: 'injectGlobal / injectPreflight / registerFont / registerCustomProperty 写到 document.head;服务端没有 document,要确保只在 onMounted 或客户端入口调用。',
+        },
+        {
+          topic: 'extractCritical 未直接暴露',
+          desc: 'zui 目前不封装 extractCritical helper,业务方手动 cache.flush() + 拼字符串。未来可能加 createIcssInstance(emotion).flush() 的 wrapper。',
+        },
+        {
+          topic: '@emotion/server 不是 peerDep',
+          desc: 'SSR critical CSS 抽取走 @emotion/css 自带 flush + cache.inserted,无需额外装 @emotion/server。如想用其 renderStylesToString,业务方自行安装。',
+        },
       ]"
     />
 
     <ZTitle :level="2">useId 跨端一致性</ZTitle>
     <ZParagraph>
-      Vue 3.5+ 内置 <ZCode code="useId()" /> 自动保证服务端与客户端生成同 id,
-      避免 hydration mismatch。<ZCode code="useZId" /> 透传这个保证,加上 <ZCode code="zui-" />
+      Vue 3.5+ 内置 <ZCode code="useId()" /> 自动保证服务端与客户端生成同 id, 避免 hydration
+      mismatch。<ZCode code="useZId" /> 透传这个保证,加上 <ZCode code="zui-" />
       前缀。早期(Vue &lt; 3.5)的项目升级 Vue 3.5+ 后即可使用 zui-vue,无需额外配置。
     </ZParagraph>
     <ZCode
@@ -226,25 +302,52 @@ export default defineConfig({
         { key: 'desc', label: '内容' },
       ]"
       :rows="[
-        { step: '1',  desc: '每个请求新建 @emotion/cache → createEmotion → createIcssInstance,绑定到请求上下文。' },
-        { step: '2',  desc: '组件用 useZTheme / useZLocale / useZId,不直接 import 默认 @emotion/css 实例。' },
-        { step: '3',  desc: '渲染入口套 ZBox,传 theme / locale / iem(SSR + client 同值,避免 hydration mismatch)。' },
-        { step: '4',  desc: '渲染完后 cache.flush() 取本请求注入的 className → 拼成 <style> 注入 HTML <head>。' },
-        { step: '5',  desc: 'Client hydration 阶段无需重复注入(emotion 会自动复用 server-rendered className)。' },
-        { step: '6',  desc: '业务方测试:同一请求多次访问,响应 HTML 包含的 <style> 不应包含上次请求的样式(隔离正确)。' },
+        {
+          step: '1',
+          desc: '每个请求新建 @emotion/cache → createEmotion → createIcssInstance,绑定到请求上下文。',
+        },
+        {
+          step: '2',
+          desc: '组件用 useZTheme / useZLocale / useZId,不直接 import 默认 @emotion/css 实例。',
+        },
+        {
+          step: '3',
+          desc: '渲染入口套 ZBox,传 theme / locale / iem(SSR + client 同值,避免 hydration mismatch)。',
+        },
+        {
+          step: '4',
+          desc: '渲染完后 cache.flush() 取本请求注入的 className → 拼成 <style> 注入 HTML <head>。',
+        },
+        {
+          step: '5',
+          desc: 'Client hydration 阶段无需重复注入(emotion 会自动复用 server-rendered className)。',
+        },
+        {
+          step: '6',
+          desc: '业务方测试:同一请求多次访问,响应 HTML 包含的 <style> 不应包含上次请求的样式(隔离正确)。',
+        },
       ]"
     />
 
     <ZTitle :level="2">未来计划</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'item',   label: '计划项',   mono: true, width: '260px' },
-        { key: 'desc',   label: '说明' },
+        { key: 'item', label: '计划项', mono: true, width: '260px' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { item: '@kenconnet666/zui-nuxt module',  desc: 'Nuxt 一键集成,自动注入 server plugin + cache flush + critical CSS。' },
-        { item: 'extractCritical helper',         desc: '封装 createIcssInstance(emotion).flush() → critical CSS string,免业务方手拼。' },
-        { item: 'SSR demo 项目',                  desc: '在 examples/ 加一个 Vue SSR / Nuxt SSR 示例,验证多请求隔离 + critical CSS 正确性。' },
+        {
+          item: '@kenconnet666/zui-nuxt module',
+          desc: 'Nuxt 一键集成,自动注入 server plugin + cache flush + critical CSS。',
+        },
+        {
+          item: 'extractCritical helper',
+          desc: '封装 createIcssInstance(emotion).flush() → critical CSS string,免业务方手拼。',
+        },
+        {
+          item: 'SSR demo 项目',
+          desc: '在 examples/ 加一个 Vue SSR / Nuxt SSR 示例,验证多请求隔离 + critical CSS 正确性。',
+        },
       ]"
     />
   </section>

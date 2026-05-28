@@ -20,7 +20,15 @@ async function submit() {
     <ZText>底部按钮带 loading 态,异步操作完成后自动关闭。</ZText>
     <template #foot>
       <ZFlex :justify="j => j.spaceBetween" :align="a => a.center">
-        <ZText :css="s => { s.color._textSecondary; s.fontSize._small }">需要管理员审核</ZText>
+        <ZText
+          :css="
+            s => {
+              s.color._textSecondary
+              s.fontSize._small
+            }
+          "
+          >需要管理员审核</ZText
+        >
         <ZFlex :gap="g => g._small">
           <ZButton :size="0.875" variant="ghost" @click="visible = false">取消</ZButton>
           <ZButton :size="0.875" :loading="loading" @click="submit">提交</ZButton>

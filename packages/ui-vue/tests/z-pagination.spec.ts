@@ -14,7 +14,7 @@ describe('ZPagination', () => {
   it('总页数 = ceil(total / pageSize)', () => {
     const w = mount(ZPagination, { props: { page: 1, total: 23, pageSize: 10 } })
     // 23/10 = 3 页:1, 2, 3
-    const btns = w.findAll('button').filter((b) => /^\d+$/.test(b.text()))
+    const btns = w.findAll('button').filter(b => /^\d+$/.test(b.text()))
     expect(btns.length).toBe(3)
   })
 
@@ -28,7 +28,7 @@ describe('ZPagination', () => {
   it('点页码 → update:page + change', async () => {
     const w = mount(ZPagination, { props: { page: 1, total: 30, pageSize: 10 } })
     const btns = w.findAll('button')
-    const p3 = btns.find((b) => b.text() === '3')!
+    const p3 = btns.find(b => b.text() === '3')!
     await p3.trigger('click')
     expect(w.emitted('update:page')![0]).toEqual([3])
     expect(w.emitted('change')![0]).toEqual([3])
@@ -55,6 +55,6 @@ describe('ZPagination', () => {
   it('disabled → 所有页码按钮 disabled', () => {
     const w = mount(ZPagination, { props: { page: 1, total: 30, pageSize: 10, disabled: true } })
     const btns = w.findAll('button')
-    expect(btns.every((b) => b.attributes('disabled') !== undefined)).toBe(true)
+    expect(btns.every(b => b.attributes('disabled') !== undefined)).toBe(true)
   })
 })

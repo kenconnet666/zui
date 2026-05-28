@@ -7,7 +7,7 @@ import { ZButton } from '../src'
 
 function getInjectedCss(): string {
   return Array.from(document.querySelectorAll('style'))
-    .map((el) => el.textContent ?? '')
+    .map(el => el.textContent ?? '')
     .join('\n')
 }
 
@@ -116,18 +116,32 @@ describe('ZButton — focus-visible + ripple', () => {
     await w.vm.$nextTick()
     const btn = w.element as HTMLElement
     btn.dispatchEvent(
-      new PointerEvent('pointerdown', { clientX: 5, clientY: 5, bubbles: true, pointerType: 'mouse' }),
+      new PointerEvent('pointerdown', {
+        clientX: 5,
+        clientY: 5,
+        bubbles: true,
+        pointerType: 'mouse',
+      }),
     )
     expect(btn.querySelector('.zui-ripple')).not.toBeNull()
     w.unmount()
   })
 
   it('ripple=false → 不注入 ripple', async () => {
-    const w = mount(ZButton, { props: { ripple: false }, slots: { default: () => 'x' }, attachTo: document.body })
+    const w = mount(ZButton, {
+      props: { ripple: false },
+      slots: { default: () => 'x' },
+      attachTo: document.body,
+    })
     await w.vm.$nextTick()
     const btn = w.element as HTMLElement
     btn.dispatchEvent(
-      new PointerEvent('pointerdown', { clientX: 5, clientY: 5, bubbles: true, pointerType: 'mouse' }),
+      new PointerEvent('pointerdown', {
+        clientX: 5,
+        clientY: 5,
+        bubbles: true,
+        pointerType: 'mouse',
+      }),
     )
     expect(btn.querySelector('.zui-ripple')).toBeNull()
     w.unmount()

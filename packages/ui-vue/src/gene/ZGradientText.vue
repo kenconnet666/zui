@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<ZGradientTextProps>(), {
 const theme = useZTheme()
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const primary = getThemeColor(theme.value, 'primary', '#1976d2')
     const info = getThemeColor(theme.value, 'info', '#0288d1')
     const defaultGradient = `linear-gradient(135deg, ${primary}, ${info})`

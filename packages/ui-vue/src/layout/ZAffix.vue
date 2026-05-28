@@ -57,7 +57,7 @@ onScopeDispose(() => {
 })
 
 const wrapperClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     if (fixed.value) {
       s.height.px(placeholderHeight.value)
     }
@@ -66,7 +66,7 @@ const wrapperClass = computed(() =>
 )
 
 const innerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     if (fixed.value) {
       s.position.fixed
       s.top.px(props.offsetTop)

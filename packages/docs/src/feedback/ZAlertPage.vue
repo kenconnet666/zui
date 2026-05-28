@@ -40,16 +40,15 @@ import SxAndSlotDemoSource from './ZAlert/SxAndSlotDemo.vue?raw'
     <ZTitle :level="2">可关闭</ZTitle>
     <DemoBlock title="closable + @close" :source="ClosableDemoSource">
       <template #desc>
-        <ZCode code="closable" /> 开启右侧关闭按钮,触发 <ZCode code="@close" /> 事件,通常配合 v-if / v-show 隐藏。
+        <ZCode code="closable" /> 开启右侧关闭按钮,触发 <ZCode code="@close" /> 事件,通常配合 v-if /
+        v-show 隐藏。
       </template>
       <ClosableDemo />
     </DemoBlock>
 
     <ZTitle :level="2">隐藏图标</ZTitle>
     <DemoBlock title="showIcon=false" :source="NoIconDemoSource">
-      <template #desc>
-        关闭左侧图标,显示更紧凑;也可只显示描述、只显示标题。
-      </template>
+      <template #desc> 关闭左侧图标,显示更紧凑;也可只显示描述、只显示标题。 </template>
       <NoIconDemo />
     </DemoBlock>
 
@@ -64,20 +63,35 @@ import SxAndSlotDemoSource from './ZAlert/SxAndSlotDemo.vue?raw'
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '180px' },
-        { key: 'type',    label: '类型',   mono: true, width: '260px' },
+        { key: 'name', label: '属性', mono: true, width: '180px' },
+        { key: 'type', label: '类型', mono: true, width: '260px' },
         { key: 'default', label: '默认值', mono: true, width: '120px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'color',       type: '(c: ColorCarrier) => void',  default: '_info',  desc: '颜色 factory，影响图标色和背景浅色。' },
-        { name: 'title',       type: 'string',                     default: '—',      desc: '标题文本（也可走 #title slot）。' },
-        { name: 'description', type: 'string',                     default: '—',      desc: '描述文本（也可走 #description slot）。' },
-        { name: 'size',        type: 'number',                     default: '0.875',  desc: 'iem 倍数，字号 / 内边距 / 间距等比缩放。' },
-        { name: 'showIcon',    type: 'boolean',                    default: 'true',   desc: '是否显示左侧图标。' },
-        { name: 'closable',    type: 'boolean',                    default: 'false',  desc: '是否显示右侧关闭按钮。' },
-        { name: 'tag',         type: 'string',                     default: `'div'`,  desc: '根元素 tag。' },
-        { name: 'css',         type: '(s: Chain) => void',         default: '—',      desc: '根元素 CSS 兜底。' },
+        {
+          name: 'color',
+          type: '(c: ColorCarrier) => void',
+          default: '_info',
+          desc: '颜色 factory，影响图标色和背景浅色。',
+        },
+        { name: 'title', type: 'string', default: '—', desc: '标题文本（也可走 #title slot）。' },
+        {
+          name: 'description',
+          type: 'string',
+          default: '—',
+          desc: '描述文本（也可走 #description slot）。',
+        },
+        {
+          name: 'size',
+          type: 'number',
+          default: '0.875',
+          desc: 'iem 倍数，字号 / 内边距 / 间距等比缩放。',
+        },
+        { name: 'showIcon', type: 'boolean', default: 'true', desc: '是否显示左侧图标。' },
+        { name: 'closable', type: 'boolean', default: 'false', desc: '是否显示右侧关闭按钮。' },
+        { name: 'tag', type: 'string', default: `'div'`, desc: '根元素 tag。' },
+        { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
       ]"
     />
 
@@ -89,21 +103,25 @@ import SxAndSlotDemoSource from './ZAlert/SxAndSlotDemo.vue?raw'
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'close', type: '(evt: MouseEvent) => void', desc: '点击关闭按钮时触发（需开启 closable）。' },
+        {
+          name: 'close',
+          type: '(evt: MouseEvent) => void',
+          desc: '点击关闭按钮时触发（需开启 closable）。',
+        },
       ]"
     />
 
     <ZTitle :level="2">Slots</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name', label: '插槽',  mono: true, width: '140px' },
+        { key: 'name', label: '插槽', mono: true, width: '140px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'icon',        desc: '自定义左侧图标（覆盖默认内置图标）。' },
-        { name: 'title',       desc: '自定义标题内容。' },
+        { name: 'icon', desc: '自定义左侧图标（覆盖默认内置图标）。' },
+        { name: 'title', desc: '自定义标题内容。' },
         { name: 'description', desc: '自定义描述内容。' },
-        { name: 'default',     desc: '默认插槽，追加在描述下方（适合操作按钮）。' },
+        { name: 'default', desc: '默认插槽，追加在描述下方（适合操作按钮）。' },
       ]"
     />
   </section>

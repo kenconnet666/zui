@@ -103,7 +103,7 @@ const open = ref(false)
 const filtered = computed(() => {
   const v = props.value ?? ''
   if (!v) return props.options
-  return props.options.filter((o) => props.filter(v, o))
+  return props.options.filter(o => props.filter(v, o))
 })
 
 const showDropdown = computed(() => open.value && !props.disabled && filtered.value.length > 0)
@@ -127,7 +127,7 @@ onClickOutside(inputRef, (e: Event) => {
 })
 
 const inputClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
@@ -146,7 +146,7 @@ const inputClass = computed(() =>
 )
 
 const dropdownClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.zIndex._popover
     s.backgroundColor._bg
@@ -168,7 +168,7 @@ const dropdownListHeight = computed<string>(() => {
 })
 
 const optionClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.padding._tiny
     s.paddingLeft._small
     s.paddingRight._small
@@ -176,7 +176,7 @@ const optionClass = computed(() =>
     s.cursor.pointer
     s.fontSize._middle
     s.color._text
-    s._hover((h) => {
+    s._hover(h => {
       h.backgroundColor._primary.alpha(8)
     })
   }),

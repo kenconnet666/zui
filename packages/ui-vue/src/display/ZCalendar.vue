@@ -140,7 +140,7 @@ function selectDay(key: string): void {
 }
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.color._text
@@ -156,7 +156,7 @@ const rootClass = computed(() =>
 )
 
 const headerClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.spaceBetween
@@ -167,7 +167,7 @@ const headerClass = computed(() =>
 )
 
 const navBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -177,14 +177,14 @@ const navBtnClass = computed(() =>
     s.padding._tiny
     s.color._text
     s.borderRadius._tiny
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.backgroundColor._bgMuted
     })
   }),
 )
 
 const gridClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.grid
     s.gridTemplateColumns('repeat(7, 32px)')
     s.gap._tiny
@@ -193,7 +193,7 @@ const gridClass = computed(() =>
 )
 
 const weekdayClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.fontSize._small
     s.textAlign.center
@@ -205,7 +205,7 @@ const weekdayClass = computed(() =>
 const dayClass = (d: { key: string; outOfMonth: boolean }): string => {
   const isSelected = props.value === d.key
   const isToday = todayKey === d.key
-  return icss(theme.value, (s) => {
+  return icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -227,7 +227,7 @@ const dayClass = (d: { key: string; outOfMonth: boolean }): string => {
       s.outlineColor.currentColor
       s.color._primary
     } else {
-      s._hover((h2) => {
+      s._hover(h2 => {
         h2.backgroundColor._bgMuted
       })
     }

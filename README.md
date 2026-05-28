@@ -10,11 +10,13 @@
 把 `@emotion/css` 包成 **强类型 chain DSL** + 拿来盖一个 80+ 组件的 Vue 3 库。
 
 ```ts
-icss(theme, (s) => {
+icss(theme, s => {
   s.color._primary
   s.fontSize._large
   s.padding.iem(1)
-  s._hover((h) => { h.color._primary.darken(15) })
+  s._hover(h => {
+    h.color._primary.darken(15)
+  })
 })
 ```
 
@@ -35,11 +37,11 @@ zui/
 └── scripts/
 ```
 
-| 包 | 状态 | 简介 |
-|---|---|---|
-| **[`@kenconnet666/zui-core`](./packages/core)** | ✅ 已发布(0.7.x) | 框架无关核心。`Theme<TSchema>` + `Chain<TSchema>`,87+ 嵌套选择器、11 个 color modifier、defineVariants/defineParts |
-| **[`@kenconnet666/zui-vue`](./packages/ui-vue)** | 🚧 开发中(0.1.x) | Vue 3 组件库:`<ZBox>` provider + 80+ 组件 + `zuiLight/Dark` 主题 + i18n |
-| **[`@kenconnet666/docs`](./packages/docs)** | 🌐 文档站点 | SPA(vite + vue-router),每个组件 demo + API 表 |
+| 包                                               | 状态             | 简介                                                                                                               |
+| ------------------------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **[`@kenconnet666/zui-core`](./packages/core)**  | ✅ 已发布(0.7.x) | 框架无关核心。`Theme<TSchema>` + `Chain<TSchema>`,87+ 嵌套选择器、11 个 color modifier、defineVariants/defineParts |
+| **[`@kenconnet666/zui-vue`](./packages/ui-vue)** | 🚧 开发中(0.1.x) | Vue 3 组件库:`<ZBox>` provider + 80+ 组件 + `zuiLight/Dark` 主题 + i18n                                            |
+| **[`@kenconnet666/docs`](./packages/docs)**      | 🌐 文档站点      | SPA(vite + vue-router),每个组件 demo + API 表                                                                      |
 
 ## 环境
 
@@ -80,7 +82,7 @@ pnpm add @kenconnet666/zui-core @emotion/css
 ```ts
 import { icss, paletteLight } from '@kenconnet666/zui-core'
 
-const cls = icss(paletteLight, (s) => {
+const cls = icss(paletteLight, s => {
   s.color.white
   s.backgroundColor._blue
   s.padding.px(12)
@@ -111,6 +113,7 @@ import { ZBox, zuiLight, ZButton, ZForm, ZFormItem, ZInput } from '@kenconnet666
 ## 路线图
 
 **已完成**:
+
 - ✅ zui-core 全套(556+ spec)
 - ✅ zui-vue Phase α(21 个 P0 组件)
 - ✅ zui-vue Phase β(高频补全 30+ 组件)
@@ -119,6 +122,7 @@ import { ZBox, zuiLight, ZButton, ZForm, ZFormItem, ZInput } from '@kenconnet666
 - ✅ Material 主题(M2 700 色 + M3 elevation / radius)
 
 **进行中 / 待办**:
+
 - 📚 docs 站点 demo 多样化
 - 🎯 Phase δ(VirtualList / 富文本 / 企业 DataGrid / Schema-driven Form)按需开
 

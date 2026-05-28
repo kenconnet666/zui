@@ -33,6 +33,15 @@ const log = ref('')
       </ZPopconfirm>
     </ZFlex>
 
-    <ZText v-if="log" :css="s => { s.color._textSecondary; s.fontSize._small }">操作结果：{{ log }}</ZText>
+    <ZText
+      v-if="log"
+      :css="
+        s => {
+          s.color._textSecondary
+          s.fontSize._small
+        }
+      "
+      >操作结果：{{ log }}</ZText
+    >
   </ZFlex>
 </template>

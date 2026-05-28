@@ -98,7 +98,7 @@ const theme = useZTheme()
 const hasDefaultSlot = computed<boolean>(() => !!slots.default)
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     if (hasDefaultSlot.value) {
       s.position.relative
       s.display.block
@@ -113,7 +113,7 @@ const rootClass = computed(() =>
 )
 
 const overlayClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.position.absolute
     s.inset.px(0)
     s.display.flex
@@ -130,7 +130,7 @@ const overlayClass = computed(() =>
 const sxOverlayAttrs = computed(() => extractSxAttrs(props.sxOverlay))
 
 const indicatorClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -141,7 +141,7 @@ const indicatorClass = computed(() =>
 const sxIndicatorAttrs = computed(() => extractSxAttrs(props.sxIndicator))
 
 const tipClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._small
     s.color._textSecondary
   }),
@@ -159,7 +159,7 @@ const defaultIndicator = computed(() =>
 )
 
 const wrapContentClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     if (props.spinning) {
       s.opacity._dim
       s.pointerEvents.none

@@ -49,7 +49,7 @@ const formattedValue = computed(() => {
 })
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.gap._tiny
@@ -58,14 +58,14 @@ const rootClass = computed(() =>
 )
 
 const titleClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._small
     s.color._textSecondary
   }),
 )
 
 const valueClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color(props.color)
     s.fontSize._huge
     s.fontWeight._semibold
@@ -77,7 +77,7 @@ const valueClass = computed(() =>
 )
 
 const fixClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.fontSize._middle
     s.color._textSecondary
     s.fontWeight._normal

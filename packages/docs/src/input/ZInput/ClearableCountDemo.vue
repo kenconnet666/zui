@@ -7,7 +7,7 @@ const v2 = ref('')
 </script>
 
 <template>
-  <ZSpace :direction="d => d.vertical" :size="g => g.iem(0.75)">
+  <ZSpace :direction="d => d.column" :size="g => g.iem(0.75)">
     <ZInput v-model:value="v1" :clearable="true" placeholder="可清空" />
     <ZInput v-model:value="v2" :show-count="true" :maxlength="20" placeholder="最多 20 字" />
   </ZSpace>

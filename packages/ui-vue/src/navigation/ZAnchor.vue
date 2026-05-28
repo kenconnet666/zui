@@ -120,7 +120,7 @@ onScopeDispose(() => {
 })
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.borderLeftWidth._thin
@@ -139,7 +139,7 @@ const activeColorFactory =
   })
 
 const linkClass = (item: ZAnchorItem, active: boolean): string =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const level = item.level ?? 1
     const extraIndent = Math.max(0, level - 1) * props.indentStep
     s.display.block
@@ -158,7 +158,7 @@ const linkClass = (item: ZAnchorItem, active: boolean): string =>
     } else {
       s.color._textSecondary
     }
-    s._hover((h) => {
+    s._hover(h => {
       h.color(activeColorFactory)
     })
   })

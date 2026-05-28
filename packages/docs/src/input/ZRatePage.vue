@@ -8,19 +8,27 @@ import HalfDemo from './ZRate/HalfDemo.vue'
 import HalfDemoSource from './ZRate/HalfDemo.vue?raw'
 
 const propsRows = [
-  { name: 'value',     type: 'number',                   default: '0',    desc: '评分值（v-model:value）。' },
-  { name: 'count',     type: 'number',                   default: '5',    desc: '总星数。' },
-  { name: 'allowHalf', type: 'boolean',                  default: 'false', desc: '允许半星。' },
-  { name: 'disabled',  type: 'boolean',                  default: 'false', desc: '禁用（不可点击）。' },
-  { name: 'readonly',  type: 'boolean',                  default: 'false', desc: '只读展示（不可点击）。' },
-  { name: 'color',     type: "(c: Chain['color']) => void", default: '_warning', desc: '星星颜色 carrier factory。' },
-  { name: 'size',      type: 'number',                   default: '1.5',  desc: '星星尺寸 iem 倍数（默认 24px @ 16px iem）。' },
-  { name: 'css',       type: '(s: Chain) => void',       default: '—',    desc: '根元素 CSS 兜底。' },
+  { name: 'value', type: 'number', default: '0', desc: '评分值（v-model:value）。' },
+  { name: 'count', type: 'number', default: '5', desc: '总星数。' },
+  { name: 'allowHalf', type: 'boolean', default: 'false', desc: '允许半星。' },
+  { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用（不可点击）。' },
+  { name: 'readonly', type: 'boolean', default: 'false', desc: '只读展示（不可点击）。' },
+  {
+    name: 'color',
+    type: "(c: Chain['color']) => void",
+    default: '_warning',
+    desc: '星星颜色 carrier factory。',
+  },
+  {
+    name: 'size',
+    type: 'number',
+    default: '1.5',
+    desc: '星星尺寸 iem 倍数（默认 24px @ 16px iem）。',
+  },
+  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 
-const emitsRows = [
-  { name: 'update:value', args: 'number', desc: '评分值变更。' },
-]
+const emitsRows = [{ name: 'update:value', args: 'number', desc: '评分值变更。' }]
 </script>
 
 <template>
@@ -48,10 +56,10 @@ const emitsRows = [
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '120px' },
-        { key: 'type',    label: '类型',   mono: true, width: '260px' },
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '260px' },
         { key: 'default', label: '默认值', mono: true, width: '80px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="propsRows"
     />
@@ -59,8 +67,8 @@ const emitsRows = [
     <ZTitle :level="2">Emits</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name', label: '事件',  mono: true, width: '160px' },
-        { key: 'args', label: '参数',  mono: true, width: '80px' },
+        { key: 'name', label: '事件', mono: true, width: '160px' },
+        { key: 'args', label: '参数', mono: true, width: '80px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"

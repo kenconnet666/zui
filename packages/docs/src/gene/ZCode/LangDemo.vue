@@ -3,7 +3,7 @@ import { ZCode, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :direction="(d) => d.column" :gap="(g) => g.iem(0.75)">
+  <ZFlex :direction="d => d.column" :gap="g => g.iem(0.75)">
     <!-- TypeScript -->
     <ZCode
       :inline="false"

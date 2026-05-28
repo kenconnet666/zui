@@ -248,7 +248,7 @@ function renderKeyframes(name: string, stops: Record<string, CSSObject>): string
   const blocks = Object.entries(stops)
     .map(([stop, styles]) => {
       const declarations = Object.entries(styles)
-        .map(([k, v]) => `  ${k.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase())}: ${v as string};`)
+        .map(([k, v]) => `  ${k.replace(/[A-Z]/g, m => '-' + m.toLowerCase())}: ${v as string};`)
         .join('\n')
       return `${stop} {\n${declarations}\n}`
     })

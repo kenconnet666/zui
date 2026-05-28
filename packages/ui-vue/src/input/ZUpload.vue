@@ -151,7 +151,10 @@ function onDragLeave(): void {
 }
 
 function removeFile(f: ZUploadedFile): void {
-  emit('update:fileList', internalList.value.filter((x) => x.uid !== f.uid))
+  emit(
+    'update:fileList',
+    internalList.value.filter(x => x.uid !== f.uid),
+  )
   emit('remove', f)
 }
 
@@ -162,7 +165,7 @@ function formatSize(bytes: number): string {
 }
 
 const dropZoneClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.alignItems.center
@@ -185,7 +188,7 @@ const dropZoneClass = computed(() =>
 )
 
 const pickerBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -200,14 +203,14 @@ const pickerBtnClass = computed(() =>
     s.color._text
     s.fontSize._middle
     s.cursor(props.disabled ? 'not-allowed' : 'pointer')
-    s._hover((h2) => {
+    s._hover(h2 => {
       if (!props.disabled) h2.borderColor._primary
     })
   }),
 )
 
 const listClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
     s.gap._tiny
@@ -216,7 +219,7 @@ const listClass = computed(() =>
 )
 
 const fileNameClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.flexGrow(1)
     s.overflow.hidden
     s.textOverflow.ellipsis
@@ -225,14 +228,14 @@ const fileNameClass = computed(() =>
 )
 
 const fileSizeClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.flexShrink(0)
   }),
 )
 
 const fileRowClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.gap._small
@@ -248,7 +251,7 @@ const fileRowClass = computed(() =>
 )
 
 const removeBtnClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -257,7 +260,7 @@ const removeBtnClass = computed(() =>
     s.borderStyle.none
     s.padding._tiny
     s.color._textSecondary
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.color._danger
     })
   }),

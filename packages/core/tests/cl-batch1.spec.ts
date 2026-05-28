@@ -52,8 +52,12 @@ describe('E5 — defineMixin 可重用样式片段', () => {
   })
 
   it('多个 mixin 组合', () => {
-    const m1 = defineMixin<TestSchema>(s => { s.padding.px(8) })
-    const m2 = defineMixin<TestSchema>(s => { s.borderRadius._middle })
+    const m1 = defineMixin<TestSchema>(s => {
+      s.padding.px(8)
+    })
+    const m2 = defineMixin<TestSchema>(s => {
+      s.borderRadius._middle
+    })
     const c = new Chain(defaultLight)
     m1(c)
     m2(c)
@@ -69,32 +73,59 @@ describe('E5 — defineMixin 可重用样式片段', () => {
 describe('E7 — Chain._state(props, mapping)', () => {
   it('truthy 状态对应 factory 应用', () => {
     const c = new Chain(defaultLight)
-    c._state({ loading: true, error: false }, {
-      loading: s => { s.opacity._strong },
-      error:   s => { s.borderColor._danger },
-    })
+    c._state(
+      { loading: true, error: false },
+      {
+        loading: s => {
+          s.opacity._strong
+        },
+        error: s => {
+          s.borderColor._danger
+        },
+      },
+    )
     expect(c._node.opacity).toBe(0.75)
     expect(c._node.borderColor).toBeUndefined()
   })
 
   it('所有 false 都不应用', () => {
     const c = new Chain(defaultLight)
-    c._state({ a: false, b: 0, c: '', d: null }, {
-      a: s => { s.color._danger },
-      b: s => { s.color._danger },
-      c: s => { s.color._danger },
-      d: s => { s.color._danger },
-    })
+    c._state(
+      { a: false, b: 0, c: '', d: null },
+      {
+        a: s => {
+          s.color._danger
+        },
+        b: s => {
+          s.color._danger
+        },
+        c: s => {
+          s.color._danger
+        },
+        d: s => {
+          s.color._danger
+        },
+      },
+    )
     expect(c._node.color).toBeUndefined()
   })
 
   it('truthy 但非 bool 值也应用', () => {
     const c = new Chain(defaultLight)
-    c._state({ x: 1, y: 'str', z: {} }, {
-      x: s => { s.padding.px(8) },
-      y: s => { s.margin.px(4) },
-      z: s => { s.borderRadius._middle },
-    })
+    c._state(
+      { x: 1, y: 'str', z: {} },
+      {
+        x: s => {
+          s.padding.px(8)
+        },
+        y: s => {
+          s.margin.px(4)
+        },
+        z: s => {
+          s.borderRadius._middle
+        },
+      },
+    )
     expect(c._node.padding).toBe('8px')
     expect(c._node.margin).toBe('4px')
     expect(c._node.borderRadius).toBeDefined()
@@ -102,10 +133,15 @@ describe('E7 — Chain._state(props, mapping)', () => {
 
   it('mapping 中没声明的 key 不应用（即使 props 有）', () => {
     const c = new Chain(defaultLight)
-    c._state({ loading: true, extra: true }, {
-      loading: s => { s.opacity._half },
-      // extra 没声明
-    })
+    c._state(
+      { loading: true, extra: true },
+      {
+        loading: s => {
+          s.opacity._half
+        },
+        // extra 没声明
+      },
+    )
     expect(c._node.opacity).toBe(0.5)
   })
 
@@ -118,9 +154,14 @@ describe('E7 — Chain._state(props, mapping)', () => {
   it('在 _hover 嵌套内可用', () => {
     const c = new Chain(defaultLight)
     c._hover(h => {
-      h._state({ active: true }, {
-        active: s => { s.backgroundColor._primary },
-      })
+      h._state(
+        { active: true },
+        {
+          active: s => {
+            s.backgroundColor._primary
+          },
+        },
+      )
     })
     const hov = c._node['&:hover'] as Record<string, unknown>
     expect(hov.backgroundColor).toBeDefined()
@@ -136,23 +177,37 @@ describe('E2 — composeVariants 变体复合', () => {
     variants: {
       state: {
         idle: () => {},
-        loading: s => { s.opacity._strong },
-        disabled: s => { s.opacity._half },
+        loading: s => {
+          s.opacity._strong
+        },
+        disabled: s => {
+          s.opacity._half
+        },
       },
     },
     defaultVariants: { state: 'idle' },
   })
 
   const buttonCore = defineVariants(defaultLight, {
-    base: s => { s.padding.px(12) },
+    base: s => {
+      s.padding.px(12)
+    },
     variants: {
       intent: {
-        primary: s => { s.backgroundColor._primary },
-        danger:  s => { s.backgroundColor._danger },
+        primary: s => {
+          s.backgroundColor._primary
+        },
+        danger: s => {
+          s.backgroundColor._danger
+        },
       },
       size: {
-        small: s => { s.padding.px(8) },
-        large: s => { s.padding.px(16) },
+        small: s => {
+          s.padding.px(8)
+        },
+        large: s => {
+          s.padding.px(16)
+        },
       },
     },
     defaultVariants: { intent: 'primary', size: 'small' },
@@ -181,7 +236,13 @@ describe('E2 — composeVariants 变体复合', () => {
 
   it('三个工厂复合', () => {
     const v3 = defineVariants(defaultLight, {
-      variants: { focus: { yes: s => { s.outlineColor._primary } } },
+      variants: {
+        focus: {
+          yes: s => {
+            s.outlineColor._primary
+          },
+        },
+      },
       defaultVariants: { focus: 'yes' },
     })
     const composed = composeVariants(interactive, buttonCore, v3)
@@ -191,11 +252,14 @@ describe('E2 — composeVariants 变体复合', () => {
 
   it('VariantPropsOf<typeof composed> 推断完整 props', () => {
     type Props = VariantPropsOf<typeof button>
-    expectTypeOf<Props>().toExtend<{
-      state?: 'idle' | 'loading' | 'disabled'
-      intent?: 'primary' | 'danger'
-      size?: 'small' | 'large'
-    } | undefined>()
+    expectTypeOf<Props>().toExtend<
+      | {
+          state?: 'idle' | 'loading' | 'disabled'
+          intent?: 'primary' | 'danger'
+          size?: 'small' | 'large'
+        }
+      | undefined
+    >()
   })
 })
 
@@ -212,10 +276,13 @@ describe('E3 — VariantPropsOf 类型推断', () => {
       },
     })
     type Props = VariantPropsOf<typeof button>
-    expectTypeOf<Props>().toExtend<{
-      intent?: 'primary' | 'danger'
-      size?: 'small' | 'middle' | 'large'
-    } | undefined>()
+    expectTypeOf<Props>().toExtend<
+      | {
+          intent?: 'primary' | 'danger'
+          size?: 'small' | 'middle' | 'large'
+        }
+      | undefined
+    >()
   })
 
   it('运行时使用：与组件 props 类型一致', () => {
@@ -238,16 +305,40 @@ describe('E1 — defineParts 多 slot', () => {
   const dialog = defineParts(defaultLight, {
     slots: ['root', 'overlay', 'content', 'title'] as const,
     base: {
-      root: s => { s.position.fixed; s.zIndex._modal },
-      overlay: s => { s.position.fixed; s.backgroundColor.black; s.opacity._half },
-      content: s => { s.position.fixed; s.borderRadius._large },
-      title: s => { s.fontWeight._bold },
+      root: s => {
+        s.position.fixed
+        s.zIndex._modal
+      },
+      overlay: s => {
+        s.position.fixed
+        s.backgroundColor.black
+        s.opacity._half
+      },
+      content: s => {
+        s.position.fixed
+        s.borderRadius._large
+      },
+      title: s => {
+        s.fontWeight._bold
+      },
     },
     variants: {
       size: {
-        small: { content: s => { s.padding.px(8) } },
-        middle: { content: s => { s.padding.px(16) } },
-        large: { content: s => { s.padding.px(24) } },
+        small: {
+          content: s => {
+            s.padding.px(8)
+          },
+        },
+        middle: {
+          content: s => {
+            s.padding.px(16)
+          },
+        },
+        large: {
+          content: s => {
+            s.padding.px(24)
+          },
+        },
       },
     },
     defaultVariants: { size: 'middle' },
@@ -300,7 +391,11 @@ describe('E1 — defineParts 多 slot', () => {
   it('compoundVariants 命中', () => {
     const compoundDialog = defineParts(defaultLight, {
       slots: ['root', 'content'] as const,
-      base: { root: s => { s.padding.px(8) } },
+      base: {
+        root: s => {
+          s.padding.px(8)
+        },
+      },
       variants: {
         size: { small: { content: () => {} }, large: { content: () => {} } },
         tone: { warm: { content: () => {} }, cool: { content: () => {} } },
@@ -309,7 +404,11 @@ describe('E1 — defineParts 多 slot', () => {
       compoundVariants: [
         {
           when: { size: 'large', tone: 'cool' },
-          apply: { content: s => { s.backgroundColor._info } },
+          apply: {
+            content: s => {
+              s.backgroundColor._info
+            },
+          },
         },
       ],
     })
@@ -345,11 +444,20 @@ describe('E1 — defineParts 多 slot', () => {
 
 describe('extendVariants 变体继承', () => {
   const button = defineVariants(defaultLight, {
-    base: s => { s.padding.px(12); s.borderRadius._middle },
+    base: s => {
+      s.padding.px(12)
+      s.borderRadius._middle
+    },
     variants: {
       intent: {
-        primary: s => { s.backgroundColor._primary; s.color.white },
-        danger: s => { s.backgroundColor._danger; s.color.white },
+        primary: s => {
+          s.backgroundColor._primary
+          s.color.white
+        },
+        danger: s => {
+          s.backgroundColor._danger
+          s.color.white
+        },
       },
     },
     defaultVariants: { intent: 'primary' },
@@ -357,7 +465,10 @@ describe('extendVariants 变体继承', () => {
 
   it('child base 追加在 parent 之上', () => {
     const outlineButton = extendVariants(defaultLight, button, {
-      base: s => { s.borderWidth.px(1); s.backgroundColor.transparent },
+      base: s => {
+        s.borderWidth.px(1)
+        s.backgroundColor.transparent
+      },
       variants: {} as never,
     })
     // 用 as 绕开类型：extendVariants 当前类型推断弱，运行时正确
@@ -369,7 +480,9 @@ describe('extendVariants 变体继承', () => {
 
   it('child 不传 variants 也能 work', () => {
     const noopChild = extendVariants(defaultLight, button, {
-      base: s => { s.fontFamily('Inter') },
+      base: s => {
+        s.fontFamily('Inter')
+      },
       variants: {} as never,
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

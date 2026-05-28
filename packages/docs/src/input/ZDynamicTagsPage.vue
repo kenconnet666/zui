@@ -8,17 +8,20 @@ import MaxDemo from './ZDynamicTags/MaxDemo.vue'
 import MaxDemoSource from './ZDynamicTags/MaxDemo.vue?raw'
 
 const propsRows = [
-  { name: 'value',       type: 'string[]',           default: '[]',        desc: '标签数组（v-model:value）。' },
-  { name: 'max',         type: 'number',             default: '—',         desc: '最大标签数量上限。' },
-  { name: 'placeholder', type: 'string',             default: "'新标签'",  desc: '输入框占位文字。' },
-  { name: 'disabled',    type: 'boolean',            default: 'false',     desc: '禁用（不可添加/删除）。' },
-  { name: 'addable',     type: 'boolean',            default: 'true',      desc: '是否可添加（false 时仅展示已有标签）。' },
-  { name: 'css',         type: '(s: Chain) => void', default: '—',         desc: '根元素 CSS 兜底。' },
+  { name: 'value', type: 'string[]', default: '[]', desc: '标签数组（v-model:value）。' },
+  { name: 'max', type: 'number', default: '—', desc: '最大标签数量上限。' },
+  { name: 'placeholder', type: 'string', default: "'新标签'", desc: '输入框占位文字。' },
+  { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用（不可添加/删除）。' },
+  {
+    name: 'addable',
+    type: 'boolean',
+    default: 'true',
+    desc: '是否可添加（false 时仅展示已有标签）。',
+  },
+  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 
-const emitsRows = [
-  { name: 'update:value', args: 'string[]', desc: '标签列表变更。' },
-]
+const emitsRows = [{ name: 'update:value', args: 'string[]', desc: '标签列表变更。' }]
 </script>
 
 <template>
@@ -45,10 +48,10 @@ const emitsRows = [
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '140px' },
-        { key: 'type',    label: '类型',   mono: true, width: '160px' },
+        { key: 'name', label: '属性', mono: true, width: '140px' },
+        { key: 'type', label: '类型', mono: true, width: '160px' },
         { key: 'default', label: '默认值', mono: true, width: '100px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="propsRows"
     />
@@ -56,8 +59,8 @@ const emitsRows = [
     <ZTitle :level="2">Emits</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name', label: '事件',  mono: true, width: '160px' },
-        { key: 'args', label: '参数',  mono: true, width: '100px' },
+        { key: 'name', label: '事件', mono: true, width: '160px' },
+        { key: 'args', label: '参数', mono: true, width: '100px' },
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"

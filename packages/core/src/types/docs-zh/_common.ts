@@ -98,7 +98,11 @@ export type PropertyDocZh = FullPropertyDoc | ExtendsPropertyDoc
  * - 继承属性：`inherit` 提示"默认就继承"；`unset` 说明等同 `inherit`
  * - 非继承属性：`inherit` 提示"非继承属性写 inherit 才显式继承"；`unset` 说明等同 `initial`
  */
-export function globalKeywordsTable(propName: string, initialValue: string, inherits: boolean): string {
+export function globalKeywordsTable(
+  propName: string,
+  initialValue: string,
+  inherits: boolean,
+): string {
   const inheritRow = inherits
     ? `| \`inherit\` | 强制继承父元素 \`${propName}\`。⚠️ \`${propName}\` **默认就是继承属性**，写 \`inherit\` 仅在被局部覆盖后用来还原 |`
     : `| \`inherit\` | 强制继承父元素 \`${propName}\`。⚠️ \`${propName}\` **非继承属性**，写 \`inherit\` 才显式继承 |`
@@ -187,23 +191,43 @@ export function namedColorsSection(): string {
 /** 颜色属性共用的 Syntax 行集（除全局关键字 / 命名色，其余颜色形式） */
 export const COLOR_SYNTAX_ROWS: readonly SyntaxRow[] = [
   ['`<named-color>`', "`'red'` `'coral'` `'royalblue'`", '146 个 CSS 命名色（见上）'],
-  ['`<hex-color>`', "`'#f80'` `'#f80c'` `'#ff8800'` `'#ff8800cc'`", '3/4/6/8 位；4/8 位末两位为 alpha'],
-  ['`rgb()` / `rgba()`', "`'rgb(255 128 0 / 0.8)'` `'rgba(255,128,0,0.8)'`", '现代空格语法（推荐）+ 旧逗号语法'],
+  [
+    '`<hex-color>`',
+    "`'#f80'` `'#f80c'` `'#ff8800'` `'#ff8800cc'`",
+    '3/4/6/8 位；4/8 位末两位为 alpha',
+  ],
+  [
+    '`rgb()` / `rgba()`',
+    "`'rgb(255 128 0 / 0.8)'` `'rgba(255,128,0,0.8)'`",
+    '现代空格语法（推荐）+ 旧逗号语法',
+  ],
   ['`hsl()` / `hsla()`', "`'hsl(30 100% 50% / 0.8)'`", 'H 色相 / S 饱和 / L 明度'],
   ['`hwb()`', "`'hwb(30 0% 0%)'`", '色相+白度+黑度（CSS Color 4）'],
   ['`lab()` / `lch()`', "`'lab(60% 40 30)'` `'lch(60% 50 30)'`", '感知均匀色彩（CSS Color 4）'],
   ['`oklab()` / `oklch()`', "`'oklch(0.7 0.15 30)'`", '**推荐**，渐变插值最稳（CSS Color 4）'],
   ['`color()`', "`'color(display-p3 1 0.5 0)'`", '宽色域 P3 / Rec2020（CSS Color 4）'],
   ['`color-mix()`', "`'color-mix(in oklch, #f80 60%, #fff)'`", '浏览器原生混色（CSS Color 5）'],
-  ['`<system-color>`', "`'canvas'` `'canvastext'` `'linktext'` `'buttonface'`", '系统色，跟随 OS 主题'],
+  [
+    '`<system-color>`',
+    "`'canvas'` `'canvastext'` `'linktext'` `'buttonface'`",
+    '系统色，跟随 OS 主题',
+  ],
   ['`currentColor`', '—', '引用当前 `color`'],
 ]
 
 /** 长度属性共用的 Syntax 行（length / percentage / 数学函数 / 全局） */
 export const LENGTH_SYNTAX_ROWS: readonly SyntaxRow[] = [
-  ['`<length>`', "`'200px'` `'12rem'` `'8em'` `'50vw'` `'50dvw'` `'50cqw'` `'16ch'`", '绝对/字体/视口/容器查询单位'],
+  [
+    '`<length>`',
+    "`'200px'` `'12rem'` `'8em'` `'50vw'` `'50dvw'` `'50cqw'` `'16ch'`",
+    '绝对/字体/视口/容器查询单位',
+  ],
   ['`<percentage>`', "`'50%'`", '参照基准见详细说明'],
-  ['数学函数', "`'calc(100% - 32px)'` `'min(...)'` `'max(...)'` `'clamp(...)'`", '加减乘除 / 取小 / 取大 / 区间'],
+  [
+    '数学函数',
+    "`'calc(100% - 32px)'` `'min(...)'` `'max(...)'` `'clamp(...)'`",
+    '加减乘除 / 取小 / 取大 / 区间',
+  ],
 ]
 
 /** 全局关键字的 Syntax 行（generator 自动追加；这里 export 供单独使用时调用） */

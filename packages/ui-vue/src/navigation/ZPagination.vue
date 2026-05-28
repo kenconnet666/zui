@@ -124,7 +124,7 @@ const pageList = computed<(number | 'dots')[]>(() => {
 })
 
 const rootClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.gap._tiny
@@ -135,7 +135,7 @@ const rootClass = computed(() =>
 )
 
 const itemClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -153,7 +153,7 @@ const itemClass = computed(() =>
     s.paddingRight._tiny
     s.transitionProperty._colors
     s.transitionDuration._small
-    s._hover((h2) => {
+    s._hover(h2 => {
       h2.borderColor._primary
       h2.color._primary
     })
@@ -163,7 +163,7 @@ const itemClass = computed(() =>
 const sxItemAttrs = computed(() => extractSxAttrs(props.sxItem))
 
 const currentItemClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -184,14 +184,14 @@ const currentItemClass = computed(() =>
 )
 
 const disabledClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.opacity._dim
     s.cursor.notAllowed
   }),
 )
 
 const dotsClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
@@ -202,7 +202,7 @@ const dotsClass = computed(() =>
 )
 
 const totalTextClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     s.color._textSecondary
     s.fontSize._small
     s.marginRight._small
@@ -277,7 +277,11 @@ const nextAriaLabel = computed(() => locale.value?.next ?? '下一页')
     <button
       type="button"
       :ref="sxItemAttrs.ref"
-      :class="[itemClass, sxItemAttrs.class, pageRef >= totalPages || disabled ? disabledClass : '']"
+      :class="[
+        itemClass,
+        sxItemAttrs.class,
+        pageRef >= totalPages || disabled ? disabledClass : '',
+      ]"
       :style="sxItemAttrs.style"
       :disabled="pageRef >= totalPages || disabled"
       :aria-label="nextAriaLabel"

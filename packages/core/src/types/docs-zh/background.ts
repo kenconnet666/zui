@@ -73,22 +73,15 @@ ${lengthUnitsSnippet('backgroundPosition')}`,
   // backgroundSize
   // ════════════════════════════════════════════════════════════════════
   backgroundSize: {
-    firstLine:
-      '设置 `background-image` 的**显示尺寸** —— 拉伸 / 包含 / 覆盖 / 平铺时的图片大小。',
+    firstLine: '设置 `background-image` 的**显示尺寸** —— 拉伸 / 包含 / 覆盖 / 平铺时的图片大小。',
     keywordGroups: [
       {
         label: '3 个 keyword',
         headers: ['关键字', '行为'],
         rows: [
           ['`auto`', '**默认值**。图片原始尺寸（一轴 auto 时按比例缩放另一轴）'],
-          [
-            '`cover`',
-            '**等比缩放铺满容器**（可能裁剪溢出部分）；适合 hero 图、卡片封面',
-          ],
-          [
-            '`contain`',
-            '**等比缩放完整显示**（不裁剪，可能留空白）；适合 logo、整图展示',
-          ],
+          ['`cover`', '**等比缩放铺满容器**（可能裁剪溢出部分）；适合 hero 图、卡片封面'],
+          ['`contain`', '**等比缩放完整显示**（不裁剪，可能留空白）；适合 logo、整图展示'],
         ],
       },
     ],
@@ -135,8 +128,7 @@ ${lengthUnitsSnippet('backgroundSize')}`,
   // backgroundRepeat
   // ════════════════════════════════════════════════════════════════════
   backgroundRepeat: {
-    firstLine:
-      '决定 `background-image` 在容器中**是否平铺**、如何平铺。',
+    firstLine: '决定 `background-image` 在容器中**是否平铺**、如何平铺。',
     keywordGroups: [
       {
         label: '6 个 keyword',
@@ -146,10 +138,7 @@ ${lengthUnitsSnippet('backgroundSize')}`,
           ['`noRepeat`', '**不平铺**，只显示一张'],
           ['`repeatX`', '仅水平方向平铺'],
           ['`repeatY`', '仅垂直方向平铺'],
-          [
-            '`round`',
-            '**整数次**平铺：缩放图片让边缘正好放下整数张（避免半张图）',
-          ],
+          ['`round`', '**整数次**平铺：缩放图片让边缘正好放下整数张（避免半张图）'],
           ['`space`', '**等距分布**：平铺整数次 + 在图之间留间距（不缩放图）'],
         ],
       },
@@ -170,7 +159,11 @@ s.backgroundRepeat('repeat no-repeat')      // 横向平铺，纵向不平铺
 - \`round\`：3 张图但**缩放到 33.33px 宽**（无裁切）
 - \`space\`：3 张 30px 图 + 之间分配剩余 10px 间距（不缩放）`,
     syntax: [
-      ['6 个 keyword', '`repeat` ｜ `noRepeat` ｜ `repeatX` ｜ `repeatY` ｜ `round` ｜ `space`', '只接受关键字'],
+      [
+        '6 个 keyword',
+        '`repeat` ｜ `noRepeat` ｜ `repeatX` ｜ `repeatY` ｜ `round` ｜ `space`',
+        '只接受关键字',
+      ],
       ['2 个 keyword', "`'repeat no-repeat'`", '第 1 个 X，第 2 个 Y'],
     ],
     initialValue: 'repeat',

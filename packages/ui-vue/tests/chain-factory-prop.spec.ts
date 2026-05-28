@@ -11,7 +11,7 @@ import { zuiLight, type ZuiSchema } from '../src'
 
 function getInjectedCss(): string {
   return Array.from(document.querySelectorAll('style'))
-    .map((el) => el.textContent ?? '')
+    .map(el => el.textContent ?? '')
     .join('\n')
 }
 
@@ -20,7 +20,7 @@ describe('chain PropFn — 接受 factory 重载', () => {
     const factory = (c: Chain<ZuiSchema>['color']) => {
       c._primary
     }
-    const cls = icss(zuiLight, (s) => {
+    const cls = icss(zuiLight, s => {
       s.color(factory)
     })
     const css = getInjectedCss()
@@ -29,8 +29,8 @@ describe('chain PropFn — 接受 factory 重载', () => {
   })
 
   it('s.flexDirection(factory) 接受 factory 写 row/column', () => {
-    icss(zuiLight, (s) => {
-      s.flexDirection((d) => {
+    icss(zuiLight, s => {
+      s.flexDirection(d => {
         d.column
       })
     })
@@ -38,8 +38,8 @@ describe('chain PropFn — 接受 factory 重载', () => {
   })
 
   it('s.justifyContent(factory) 接受 factory 写 space-between', () => {
-    icss(zuiLight, (s) => {
-      s.justifyContent((j) => {
+    icss(zuiLight, s => {
+      s.justifyContent(j => {
         j.spaceBetween
       })
     })
@@ -47,8 +47,8 @@ describe('chain PropFn — 接受 factory 重载', () => {
   })
 
   it('s.alignItems(factory) 接受 factory', () => {
-    icss(zuiLight, (s) => {
-      s.alignItems((a) => {
+    icss(zuiLight, s => {
+      s.alignItems(a => {
         a.center
       })
     })
@@ -59,7 +59,7 @@ describe('chain PropFn — 接受 factory 重载', () => {
     const sizeFactory = (w: Chain<ZuiSchema>['width']) => {
       w.iem(1.25)
     }
-    icss(zuiLight, (s) => {
+    icss(zuiLight, s => {
       s.width(sizeFactory)
       s.height(sizeFactory)
     })
@@ -69,8 +69,8 @@ describe('chain PropFn — 接受 factory 重载', () => {
   })
 
   it('factory 内可访问 schema token(_middle)', () => {
-    icss(zuiLight, (s) => {
-      s.gap((g) => {
+    icss(zuiLight, s => {
+      s.gap(g => {
         g._middle
       })
     })

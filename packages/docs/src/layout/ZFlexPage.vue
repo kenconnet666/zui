@@ -13,17 +13,17 @@ import AlignDemoSource from './ZFlex/AlignDemo.vue?raw'
   <section>
     <ZTitle :level="1">ZFlex 弹性布局</ZTitle>
     <ZParagraph>
-      Flexbox 布局容器。所有方向/对齐/间距 prop 均为 chain carrier factory，
-      与 <ZCode code="icss" /> 链式 API 完全一致，不引入额外字符串枚举。
-      默认行为对齐浏览器原生（row / nowrap / flex-start / stretch）。
+      Flexbox 布局容器。所有方向/对齐/间距 prop 均为 chain carrier factory， 与
+      <ZCode code="icss" /> 链式 API 完全一致，不引入额外字符串枚举。 默认行为对齐浏览器原生（row /
+      nowrap / flex-start / stretch）。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="row wrap / space-between / column / inline-flex" :source="BasicDemoSource">
       <template #desc>
         所有方向/对齐/间距 prop 接受 carrier factory，例：
-        <ZCode code=":justify='j => j.spaceBetween'" />。
-        <ZCode code="inline=true" /> 切换为 <ZCode code="display: inline-flex" />。
+        <ZCode code=":justify='j => j.spaceBetween'" />。 <ZCode code="inline=true" /> 切换为
+        <ZCode code="display: inline-flex" />。
       </template>
       <BasicDemo />
     </DemoBlock>
@@ -31,7 +31,8 @@ import AlignDemoSource from './ZFlex/AlignDemo.vue?raw'
     <ZTitle :level="2">交叉轴对齐</ZTitle>
     <DemoBlock title="align: flex-start / center / flex-end / stretch" :source="AlignDemoSource">
       <template #desc>
-        <ZCode code="align" /> 控制 <ZCode code="align-items" />，决定不同高度子元素在交叉轴的对齐方式。
+        <ZCode code="align" /> 控制
+        <ZCode code="align-items" />，决定不同高度子元素在交叉轴的对齐方式。
       </template>
       <AlignDemo />
     </DemoBlock>
@@ -39,20 +40,50 @@ import AlignDemoSource from './ZFlex/AlignDemo.vue?raw'
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
-        { key: 'name',    label: '属性',   mono: true, width: '140px' },
-        { key: 'type',    label: '类型',   mono: true, width: '320px' },
+        { key: 'name', label: '属性', mono: true, width: '140px' },
+        { key: 'type', label: '类型', mono: true, width: '320px' },
         { key: 'default', label: '默认值', mono: true, width: '100px' },
-        { key: 'desc',    label: '说明' },
+        { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'direction', type: '(c: flexDirection carrier) => void', default: '—',     desc: 'flex-direction carrier factory。不传 = 浏览器默认 row。' },
-        { name: 'wrap',      type: '(c: flexWrap carrier) => void',      default: '—',     desc: 'flex-wrap carrier factory。不传 = 浏览器默认 nowrap。' },
-        { name: 'justify',   type: '(c: justifyContent carrier) => void', default: '—',   desc: 'justify-content carrier factory。' },
-        { name: 'align',     type: '(c: alignItems carrier) => void',    default: '—',     desc: 'align-items carrier factory。' },
-        { name: 'gap',       type: '(g: gap carrier) => void',           default: '—',     desc: 'gap carrier factory。例：(g) => g._middle / (g) => g.iem(0.5)。' },
-        { name: 'inline',    type: 'boolean',                             default: 'false', desc: 'true → display: inline-flex。' },
-        { name: 'css',       type: '(s: Chain) => void',                 default: '—',     desc: '根元素 CSS 兜底。' },
-        { name: 'tag',       type: 'string',                              default: `'div'`, desc: '根元素 tag。' },
+        {
+          name: 'direction',
+          type: '(c: flexDirection carrier) => void',
+          default: '—',
+          desc: 'flex-direction carrier factory。不传 = 浏览器默认 row。',
+        },
+        {
+          name: 'wrap',
+          type: '(c: flexWrap carrier) => void',
+          default: '—',
+          desc: 'flex-wrap carrier factory。不传 = 浏览器默认 nowrap。',
+        },
+        {
+          name: 'justify',
+          type: '(c: justifyContent carrier) => void',
+          default: '—',
+          desc: 'justify-content carrier factory。',
+        },
+        {
+          name: 'align',
+          type: '(c: alignItems carrier) => void',
+          default: '—',
+          desc: 'align-items carrier factory。',
+        },
+        {
+          name: 'gap',
+          type: '(g: gap carrier) => void',
+          default: '—',
+          desc: 'gap carrier factory。例：(g) => g._middle / (g) => g.iem(0.5)。',
+        },
+        {
+          name: 'inline',
+          type: 'boolean',
+          default: 'false',
+          desc: 'true → display: inline-flex。',
+        },
+        { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
+        { name: 'tag', type: 'string', default: `'div'`, desc: '根元素 tag。' },
       ]"
     />
 
@@ -62,9 +93,7 @@ import AlignDemoSource from './ZFlex/AlignDemo.vue?raw'
         { key: 'name', label: '插槽', mono: true, width: '100px' },
         { key: 'desc', label: '说明' },
       ]"
-      :rows="[
-        { name: 'default', desc: 'flex 容器内的子元素。' },
-      ]"
+      :rows="[{ name: 'default', desc: 'flex 容器内的子元素。' }]"
     />
   </section>
 </template>

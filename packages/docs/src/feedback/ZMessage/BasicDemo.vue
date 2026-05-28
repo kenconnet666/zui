@@ -4,10 +4,18 @@ import { createMessageApi } from '@kenconnet666/zui-vue'
 
 const msg = createMessageApi()
 
-function showInfo()    { msg.info('这是一条普通消息') }
-function showSuccess() { msg.success('操作成功！数据已保存。') }
-function showWarning() { msg.warning('注意：当前操作不可撤销。') }
-function showError()   { msg.error('请求失败，请检查网络连接。') }
+function showInfo() {
+  msg.info('这是一条普通消息')
+}
+function showSuccess() {
+  msg.success('操作成功！数据已保存。')
+}
+function showWarning() {
+  msg.warning('注意：当前操作不可撤销。')
+}
+function showError() {
+  msg.error('请求失败，请检查网络连接。')
+}
 function showLoading() {
   const id = msg.loading('正在处理中...')
   setTimeout(() => {

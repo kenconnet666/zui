@@ -31,7 +31,7 @@ describe('B2 — proxy 自动扫描 prototype 内建方法', () => {
   it('内建方法 _hover / _media / label / _truncate 仍然走 Proxy 拦截', () => {
     const c = new Chain(defaultLight)
     c.label('test-label')
-    c._hover((h) => {
+    c._hover(h => {
       h.color.white
     })
     expect(c._node.label).toBe('test-label')

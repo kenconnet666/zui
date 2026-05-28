@@ -100,7 +100,7 @@ const shouldShow = computed(() => {
 })
 
 const wrapperClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     if (hasSlot.value) {
       s.position.relative
       s.display.inlineFlex
@@ -112,7 +112,7 @@ const wrapperClass = computed(() =>
 )
 
 const badgeClass = computed(() =>
-  icss(theme.value, (s) => {
+  icss(theme.value, s => {
     const size = props.size ?? 0.75
     s.display.inlineFlex
     s.alignItems.center

@@ -3,7 +3,7 @@ import { ZCode, ZParagraph, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="(g) => g.iem(0.75)">
+  <ZFlex :direction="d => d.column" :gap="g => g.iem(0.75)">
     <!-- inline（默认） -->
     <ZParagraph>
       行内代码：<ZCode code="icss(theme, factory)" /> 返回 emotion class；

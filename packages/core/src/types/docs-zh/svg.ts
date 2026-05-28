@@ -58,8 +58,7 @@ ${lengthUnitsSnippet('strokeWidth')}`,
   // strokeLinecap
   // ════════════════════════════════════════════════════════════════════
   strokeLinecap: {
-    firstLine:
-      'SVG 专属：决定**描边线段端点**的形状（直角 / 圆角 / 方块延伸）。',
+    firstLine: 'SVG 专属：决定**描边线段端点**的形状（直角 / 圆角 / 方块延伸）。',
     keywordGroups: [
       {
         label: '3 个 keyword',
@@ -70,10 +69,7 @@ ${lengthUnitsSnippet('strokeWidth')}`,
             '`round`',
             '**圆角**端点（端点处加一个半圆，半径 = strokeWidth/2）—— 让线条看起来更柔和',
           ],
-          [
-            '`square`',
-            '**方角**端点（端点处加一个矩形延伸出去，长度 = strokeWidth/2）',
-          ],
+          ['`square`', '**方角**端点（端点处加一个矩形延伸出去，长度 = strokeWidth/2）'],
         ],
       },
     ],
@@ -100,8 +96,7 @@ s.strokeLinecap.round
   // strokeLinejoin
   // ════════════════════════════════════════════════════════════════════
   strokeLinejoin: {
-    firstLine:
-      'SVG 专属：决定**描边拐角**的形状（尖角 / 圆角 / 斜切 / 弧形）。',
+    firstLine: 'SVG 专属：决定**描边拐角**的形状（尖角 / 圆角 / 斜切 / 弧形）。',
     keywordGroups: [
       {
         label: '5 个 keyword',
