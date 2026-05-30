@@ -20,9 +20,15 @@ const GENERATED_PATH = resolve(process.cwd(), 'src/types/properties.generated.ts
 const generatedSrc = readFileSync(GENERATED_PATH, 'utf8')
 
 function getPropTypeLine(propName: string): string | null {
-  const re = new RegExp(`^\\s{2}${propName}:\\s*(.+)$`, 'm')
+  // 生成文件经 prettier 格式化后，超长的 PropCarrier / 关键字 union 会跨多行展开。
+  // 捕获从 `  propName:` 起，直到下一个属性的 JSDoc(`  /**`)、下一个属性声明
+  // (`  word:`) 或接口闭合(`}`) 之前的完整声明块，再压平为单段文本以便 includes 判定。
+  const re = new RegExp(
+    `^  ${propName}:\\s*([\\s\\S]*?)(?=\\n  /\\*\\*|\\n  \\w+:|\\n\\})`,
+    'm',
+  )
   const m = generatedSrc.match(re)
-  return m ? m[1]! : null
+  return m ? m[1]!.trim() : null
 }
 
 describe('Parity — ENHANCED_PROPS ↔ properties.generated.ts', () => {

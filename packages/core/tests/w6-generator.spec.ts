@@ -30,10 +30,13 @@ describe('W6 — generator + PropCarrier extension slot', () => {
       'utf8',
     )
     // 抽样：padding 应该是 PropCarrier<CssValueOf<'padding'>, SpacingTokens<T>, keywords, LengthUnits, never>
+    // 注：生成文件经 prettier 格式化后声明跨多行展开，故用 \s* 容忍换行缩进。
     expect(generated).toMatch(
-      /padding: PropCarrier<[^,]+, SpacingTokens<T>, [^,]+, LengthUnits, never>/,
+      /padding: PropCarrier<\s*[^,]+,\s*SpacingTokens<T>,\s*[^,]+,\s*LengthUnits,\s*never\s*>/,
     )
     // color 应该是 ColorPropCarrier<CssValueOf<'color'>, ColorTokens<T>, keywords, never>
-    expect(generated).toMatch(/color: ColorPropCarrier<[^,]+, ColorTokens<T>, [^,]+, never>/)
+    expect(generated).toMatch(
+      /color: ColorPropCarrier<\s*[^,]+,\s*ColorTokens<T>,\s*[^,]+,\s*never\s*>/,
+    )
   })
 })
