@@ -19,6 +19,7 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
 import { createJiti } from 'jiti'
+import * as prettier from 'prettier'
 import ts from 'typescript'
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url))
@@ -836,7 +837,16 @@ async function main() {
     console.warn(`[gen-properties] 加载 docs-zh 失败，将退回到 csstype 原 JSDoc：\n${err}`)
   }
 
-  const out = renderFile(properties, enhanced, extraKeywords, docsZh, banner)
+  const rendered = renderFile(properties, enhanced, extraKeywords, docsZh, banner)
+
+  // 用仓库的 prettier 配置格式化产物，使生成器输出与 `pnpm format` 后的提交文件
+  // 字节级一致——否则 CI 的 "generate then git diff" 会因格式差异（多行展开等）误报漂移。
+  const prettierConfig = await prettier.resolveConfig(OUTPUT_FILE)
+  const out = await prettier.format(rendered, {
+    ...prettierConfig,
+    parser: 'typescript',
+    filepath: OUTPUT_FILE,
+  })
 
   const prev = await readFile(OUTPUT_FILE, 'utf8').catch(() => '')
   if (out === prev) {
