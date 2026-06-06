@@ -5,18 +5,13 @@ import { defineConfig } from 'vitest/config'
 import dts from 'vite-plugin-dts'
 
 /**
- * 0.7.0 改造：preserveModules + 关 minify + 多 subpath exports。
+ * preserveModules + 关 minify + 单一入口。
  *
- * 旧版（单 bundle minified 75kB）→ 新版（多目录、保留 JSDoc、subpath 友好）：
+ * 单 bundle minified → 多目录、保留 JSDoc：
  * - 用户 Ctrl+Click 跳转直接看到原结构 + 完整 JSDoc
- * - subpath import：`import { ... } from '@kenconnet666/zui-core/variants'`
- * - tree-shake 更精确（ESM 静态分析）
+ * - tree-shake 精确（ESM 静态分析 + preserveModules 文件级 chunk）
  *
- * 多入口：
- * - `src/index.ts`          → `dist/index.js`（主入口）
- * - `src/variants/index.ts` → `dist/variants/index.js`
- * - `src/preset/index.ts`   → `dist/preset/index.js`
- * - `src/dev/index.ts`      → `dist/dev/index.js`
+ * 单入口：`src/index.ts` → `dist/index.js`（variants / preset / dev 的 API 全部经主入口 re-export）。
  *
  * 配 `preserveModules` 让其它非入口文件按原结构平铺到 dist/ 下，
  * 让 IDE go-to-definition / 阅读源码体验完整。
@@ -26,9 +21,6 @@ export default defineConfig({
     lib: {
       entry: {
         index: 'src/index.ts',
-        'variants/index': 'src/variants/index.ts',
-        'preset/index': 'src/preset/index.ts',
-        'dev/index': 'src/dev/index.ts',
       },
       formats: ['es'],
     },

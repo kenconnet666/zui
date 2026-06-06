@@ -11,18 +11,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./variants": {
-      "types": "./dist/variants/index.d.ts",
-      "import": "./dist/variants/index.js"
-    },
-    "./preset": {
-      "types": "./dist/preset/index.d.ts",
-      "import": "./dist/preset/index.js"
-    },
-    "./dev": {
-      "types": "./dist/dev/index.d.ts",
-      "import": "./dist/dev/index.js"
-    },
     "./package.json": "./package.json"
   },
   "files": [

@@ -146,6 +146,6 @@ export type {
   VariantPropsOfParts,
 } from './variants/defineParts'
 
-// ─── Batch C — 预设资源（动画 keyframes 等） ───
-export { presetAnimations } from './preset'
-export type { PresetAnimationName } from './preset'
+// ─── Batch C — 预设资源（动画 keyframes / preflight reset 等） ───
+export { presetAnimations, PRESET_ANIMATION_DEFS, PREFLIGHT_STYLES } from './preset'
+export type { PresetAnimationName, KeyframeStops } from './preset'
