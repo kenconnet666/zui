@@ -55,17 +55,17 @@ zui/
 # 装依赖
 pnpm install
 
-# 跑所有包测试(core 566 + ui-vue 540+)
-pnpm test
+# 跑所有包测试(core + ui-vue)
+pnpm test:all
 
 # 类型检查
-pnpm type-check
+pnpm type-check:all
 
 # Lint
 pnpm lint
 
-# 构建 core + ui-vue
-pnpm build
+# 构建 core + ui-vue + docs
+pnpm build:all
 
 # 启动文档站点
 pnpm --filter @kenconnet666/docs dev

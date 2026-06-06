@@ -5,16 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --filter @kenconnet666/docs dev",
-    "build": "pnpm --filter @kenconnet666/zui-core build && pnpm --filter @kenconnet666/zui-vue build",
-    "build:core": "pnpm --filter @kenconnet666/zui-core build",
-    "build:vue": "pnpm --filter @kenconnet666/zui-vue build",
-    "build:docs": "pnpm --filter @kenconnet666/docs build",
-    "build:all": "pnpm run build && pnpm run build:docs",
-    "clean": "pnpm -r run clean --if-present",
-    "generate": "node scripts/generate-properties.mjs",
-    "test": "pnpm -r run test --if-present",
-    "test:coverage": "pnpm --filter @kenconnet666/zui-core run test:coverage && pnpm --filter @kenconnet666/zui-vue run test:coverage",
-    "type-check": "pnpm -r run type-check --if-present",
+    "build:all": "pnpm --filter @kenconnet666/zui-core build && pnpm --filter @kenconnet666/zui-vue build && pnpm --filter @kenconnet666/docs build",
+    "publish:all": "pnpm --filter @kenconnet666/zui-core run publish && pnpm --filter @kenconnet666/zui-vue run publish",
+    "clean:all": "pnpm --filter @kenconnet666/zui-core run clean && pnpm --filter @kenconnet666/zui-vue run clean && pnpm --filter @kenconnet666/docs run clean",
+    "test:all": "pnpm --filter @kenconnet666/zui-core test && pnpm --filter @kenconnet666/zui-vue test",
+    "coverage:all": "pnpm --filter @kenconnet666/zui-core run test:coverage && pnpm --filter @kenconnet666/zui-vue run test:coverage",
+    "type-check:all": "pnpm --filter @kenconnet666/zui-core run type-check && pnpm --filter @kenconnet666/zui-vue run type-check && pnpm --filter @kenconnet666/docs run type-check",
     "lint": "run-s lint:*",
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
@@ -22,7 +18,7 @@
     "format:check": "prettier --check --experimental-cli .",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "pnpm run type-check && pnpm run test && pnpm run build && changeset publish"
+    "release": "pnpm run type-check:all && pnpm run test:all && pnpm run build:all && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",

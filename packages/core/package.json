@@ -1,6 +1,6 @@
 {
   "name": "@kenconnet666/zui-core",
-  "version": "0.8.1",
+  "version": "0.8.3",
   "description": "Framework-agnostic CSS-in-JS toolkit. Class-generic theme system on top of @emotion/css with strongly-typed four-state property carriers (fn / token / keyword / unit).",
   "type": "module",
   "main": "./dist/index.js",
@@ -25,11 +25,13 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
+    "publish": "pnpm publish --registry=https://registry.npmjs.org/ --access public --no-git-checks",
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "bench": "vitest bench --run",
+    "generate": "node ../../scripts/generate-properties.mjs",
     "type-check": "tsc -p tsconfig.typecheck.json",
     "prepublishOnly": "pnpm run type-check && pnpm run test && pnpm run build"
   },
