@@ -1,10 +1,9 @@
 services:
   zui-docs:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: script/Dockerfile
     image: zui-docs
-    container_name: zui-docs
     ports:
       - '4173:80'
     environment:
@@ -22,6 +21,8 @@ networks:
   baota_net:
     external: true
 
-#  docker compose down
-#  docker compose up -d --build
-#  docker logs -f zui-docs
+# 部署流程（在仓库根目录先打包 dist，再用本文件构建/启动）：
+#  pnpm --filter @kenconnet666/docs run build
+#  docker compose -f packages/docs/script/docker-compose.yaml -p script up -d --build
+#  docker compose -f packages/docs/script/docker-compose.yaml -p script down
+#  docker compose -f packages/docs/script/docker-compose.yaml -p script logs -f
