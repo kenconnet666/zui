@@ -1,94 +1,11 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Chain, defineVariants, registerFont } from '../src'
+import { describe, expect, it, vi } from 'vitest'
+import { Chain, registerFont } from '../src'
 import { defaultLight } from './_fixture-theme'
 import { KEYWORD_TO_CSS } from '../src/chain/keywords'
 
 /**
  * Debt Batch 3 测试（L5 / L6 / M2 / M3）。
  */
-
-// ────────────────────────────────────────────────────────────────────────────
-// L5 — defineVariants LRU 缓存上限
-// ────────────────────────────────────────────────────────────────────────────
-
-describe('L5 — defineVariants LRU 缓存', () => {
-  it('cacheLimit 默认 256', () => {
-    const f = defineVariants(defaultLight, {
-      variants: { x: { a: () => {}, b: () => {} } },
-    })
-    // 用 256 + 1 = 257 个不同 key 测淘汰
-    const keys = Array.from({ length: 300 }, (_, i) => `v${i}`)
-    for (const k of keys) f({ x: (i => (i % 2 === 0 ? 'a' : 'b'))(parseInt(k.slice(1))) })
-    // 行为：仍能返回 className，不抛错
-    expect(typeof f({ x: 'a' })).toBe('string')
-  })
-
-  it('cacheLimit 配置 + LRU 淘汰', () => {
-    let computeCount = 0
-    const f = defineVariants(defaultLight, {
-      base: s => {
-        computeCount++
-        s.padding.px(8)
-      },
-      variants: {
-        size: { small: () => {}, middle: () => {}, large: () => {}, huge: () => {} },
-      },
-      cacheLimit: 2,
-    })
-    // 触发 3 个不同 size
-    const a = f({ size: 'small' }) // cache: [small]
-    const b = f({ size: 'middle' }) // cache: [small, middle]
-    const c = f({ size: 'large' }) // cache: [middle, large]（small 被淘汰）
-    expect(computeCount).toBe(3)
-    // 再访问 small：缓存已淘汰，需重算
-    f({ size: 'small' })
-    expect(computeCount).toBe(4)
-    // 再访问 large：仍在缓存中
-    const c2 = f({ size: 'large' })
-    expect(c2).toBe(c)
-    expect(computeCount).toBe(4)
-  })
-
-  it('LRU touch：访问已缓存项把它移到尾部，避免被淘汰', () => {
-    let computeCount = 0
-    const f = defineVariants(defaultLight, {
-      base: s => {
-        computeCount++
-        s.padding.px(8)
-      },
-      variants: {
-        v: { a: () => {}, b: () => {}, c: () => {} },
-      },
-      cacheLimit: 2,
-    })
-    f({ v: 'a' }) // [a]
-    f({ v: 'b' }) // [a, b]
-    f({ v: 'a' }) // [b, a]（touch a）
-    f({ v: 'c' }) // [a, c]（淘汰 b，不是 a，因为 a 刚被 touch）
-    expect(computeCount).toBe(3)
-    f({ v: 'a' }) // 仍命中
-    expect(computeCount).toBe(3)
-    f({ v: 'b' }) // 重算
-    expect(computeCount).toBe(4)
-  })
-
-  it('cacheLimit = Infinity 不淘汰', () => {
-    let computeCount = 0
-    const f = defineVariants(defaultLight, {
-      base: s => {
-        computeCount++
-        s.padding.px(8)
-      },
-      variants: { v: { a: () => {}, b: () => {} } },
-      cacheLimit: Infinity,
-    })
-    f({ v: 'a' })
-    f({ v: 'b' })
-    f({ v: 'a' }) // 命中缓存
-    f({ v: 'b' }) // 命中缓存
-    expect(computeCount).toBe(2)
-  })
-})
 
 // ────────────────────────────────────────────────────────────────────────────
 // L6 — registerFont URL escape + dev warn

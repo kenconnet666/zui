@@ -14,8 +14,8 @@ description: zui monorepo（@kenconnet666/zui-core + @kenconnet666/zui-vue）项
 
 **框架无关**的 CSS-in-JS 工具库 monorepo。
 
-- `@kenconnet666/zui-core`（已发 npm 0.5.0+）—— 框架无关核心：基于 `@emotion/css`，`class Chain<TSchema>` 用 declaration merging 把 ~857 个 CSS 属性挂到强类型 builder 上。
-- `@kenconnet666/zui-vue`（开发中）—— Vue 3 组件库 + `ZBox` 嵌套覆盖。
+- `@kenconnet666/zui-core`（已发 npm，当前 0.8.3）—— 框架无关核心：基于 `@emotion/css`，`class Chain<TSchema>` 用 declaration merging 把 ~857 个 CSS 属性挂到强类型 builder 上。**不含** variants 系统（0.9.0 移除）。
+- `@kenconnet666/zui-vue`（0.8.3，90+ 组件已落地）—— Vue 3 组件库：`ZBox` 嵌套 Provider + 7 大类组件（gene / layout / input / display / feedback / navigation / tool），单入口。
 
 **核心范式 — 四态访问**：
 
@@ -54,19 +54,24 @@ zui/
 │   │   │   ├── createIcssInstance.ts        # SSR / 多 emotion 实例
 │   │   │   ├── preflight.ts / layer.ts / registerFont.ts / registerCustomProperty.ts
 │   │   │   └── responsive.ts
-│   │   ├── tests/                           # 30 套 / 569 测试（截 2026-05）
+│   │   ├── tests/                           # 31 套 / 572 测试（删 variants 后）
 │   │   ├── bench/
 │   │   ├── examples/                        # vanilla-button / vue-button / react-button
 │   │   └── CHANGELOG.md
-│   ├── ui-vue/                              # @kenconnet666/zui-vue（开发中）
+│   ├── ui-vue/                              # @kenconnet666/zui-vue（0.8.3，90+ 组件）
 │   │   ├── src/
-│   │   │   ├── provider/                    # ZBox + 4 composables + keys
-│   │   │   ├── locale/                      # zh-CN / en-US / merge / types
-│   │   │   ├── composables/                 # useStyles / useVariants / useResponsive
-│   │   │   ├── components/
-│   │   │   │   └── icon/                    # ZIcon.vue / variants / tokens / types
-│   │   │   └── index.ts
-│   │   └── tests/                           # provider (10) + icon (23) = 33 tests
+│   │   │   ├── provider/                    # ZBox + useZTheme/useZLocale/useZDate + theme/ + locale/
+│   │   │   ├── gene/                        # 基础元件 ZButton/ZIcon/ZText/ZTag/ZAvatar/...
+│   │   │   ├── layout/                      # ZFlex/ZGrid/ZSpace/ZSplit/ZScrollbar/...
+│   │   │   ├── input/                       # ZInput/ZSelect/ZForm/ZDatePicker/...
+│   │   │   ├── display/                     # ZTable/ZDataTable/ZTree/ZCard/ZTooltip/...
+│   │   │   ├── feedback/                    # ZModal/ZDrawer/ZMessage/ZNotification/...
+│   │   │   ├── navigation/                  # ZTabs/ZMenu/ZPagination/ZDropdown/...
+│   │   │   ├── tool/                        # ZQRCode/ZWatermark/ZCountdown/...
+│   │   │   ├── _hooks/                      # useZId/usePortal/usePopper/useRipple/useEscapeStack/...
+│   │   │   ├── _internal/                   # sx/input-size/color-bridge/scrollbar*/...
+│   │   │   └── index.ts                     # 单入口 barrel（聚合 + core 全量透传）
+│   │   └── tests/
 │   └── docs/                                # @kenconnet666/docs（演示站，private，不发布）
 ├── scripts/
 │   └── generate-properties.mjs              # ★ ENHANCED_PROPS + csstype → properties.generated.ts
@@ -151,33 +156,13 @@ function createIcssInstance(emotion: EmotionLikeInstance): IcssInstance
 // Vue 3 / Nuxt SSR：用 cache.flush() 取 SSR critical CSS
 ```
 
-### 3.4 Variants 系统（组件库主力）
+### 3.4 Variants 系统 —— 已移除（0.9.0）
 
-```ts
-// 单 className 变体（cva 风）
-function defineVariants<S, V>(theme, config: DefineVariantsConfig<S, V>): (props?: VariantProps<V>) => string
-
-// 多 slot（Dialog / Tabs / Select）
-function defineParts<S, Slot, V>(theme, config: DefinePartsConfig<S, Slot, V>): PartsResult<Slot, V>
-
-// 复合：两个 / 三个 / 四个工厂并联，className 拼接
-function composeVariants(f1, f2): combined
-function composeVariants(f1, f2, f3): combined
-function composeVariants(f1, f2, f3, f4): combined
-
-// 继承：parent 工厂 + child 配置 → 合并工厂
-function extendVariants<S, V1, V2>(theme, parent, childConfig): (props?: VariantProps<V1 & V2>) => string
-
-// ★ 0.7.0+：Parts 继承（与 extendVariants 对偶）
-function extendParts<S, Slot, V1, V2>(theme, parent, childConfig): PartsResult<Slot, V1 & V2>
-
-// 可重用样式片段（focus-ring / elevation / surface）
-function defineMixin<S>(factory: (s: Chain<S>) => void): (s: Chain<S>) => void
-
-// 类型推断
-type VariantPropsOf<F>             // 从工厂推 props
-type VariantPropsOfParts<P>        // 从 parts 推 props
-```
+> **`defineVariants` / `defineParts` / `composeVariants` / `extendVariants` / `extendParts` / `defineMixin` 及全部相关类型已从 core 删除。**
+>
+> 原因：ui-vue 90+ 组件无一使用 —— 带条件分支 + 状态耦合的真实组件（如 ZButton 7 variant）用命令式 `icss + switch(props.variant)` 比声明式 variants 表更顺手；而该系统曾是 core 最重的类型体操来源（`VariantProps` / `composeVariants` 2-4 重载 / `DeepMergeSchema`）。
+>
+> 组件样式一律 `icss(theme, s => {...})` 直接表达；多 part 组件各 part 一个 `icss` className，部件覆盖走 `sx`（见 §13.8）。
 
 ### 3.5 StyleProps + 响应式
 
@@ -205,14 +190,13 @@ function isResponsiveValue<T>(value, breakpoints?: readonly string[]): value is 
 type TokenOf<Cat, T> = ColorTokens<T> | SpacingTokens<T> | ...
 ```
 
-### 3.7 子包入口（精确 tree-shake）
+### 3.7 单入口（core 不开 subpath）
 
 ```ts
-import { ... } from '@kenconnet666/zui-core'             // 主入口（re-export 全部）
-import { ... } from '@kenconnet666/zui-core/variants'    // defineVariants / defineParts / 等
-import { ... } from '@kenconnet666/zui-core/preset'      // presetAnimations
-import { ... } from '@kenconnet666/zui-core/dev'         // assertSchemaConsistency / stackTrace
+import { ... } from '@kenconnet666/zui-core'   // 唯一入口，re-export 全部 API
 ```
+
+`package.json` 的 `exports` 只暴露 `.`；`preset` / `dev` 等内部模块全部经主入口 re-export，tree-shake 由 bundler ESM 静态分析负责（与 ui-vue 单入口一致）。旧 `/variants`、`/preset`、`/dev` subpath 从未在 `exports` 映射，已统一删除声明。
 
 ---
 
@@ -521,7 +505,8 @@ export const Theme = _ThemeClass as unknown as { new<T>(schema: T): Theme<T>; ..
 ```ts
 type PropCarrier<TSelf, TValue, TTokens, TKeywords, TUnits, TExtraKeywords> = ((
   value: TValue,
-) => TSelf) & { readonly [K in TTokens]: TSelf } & { readonly [K in TKeywords]: TSelf } & { // ① fn // ② token // ③ keyword
+) => TSelf) & { readonly [K in TTokens]: TSelf } & { readonly [K in TKeywords]: TSelf } & {
+  // ① fn // ② token // ③ keyword
   readonly [K in TExtraKeywords]: TSelf
 } & TUnits // ③' W6 slot // ④ unit
 ```
@@ -562,7 +547,15 @@ partial 应基于已解析的字面量。dev 模式扫到 function 会 warn，�
 
 ## 十三、ui-vue 开发约定
 
-> **状态**：Provider 层 + composables + locale 已实施（0.0.4+，2026-05）。基础组件 Button/Input/Dialog/... 尚未实现，按 13.6 / 13.7 模板逐个加。
+> **★ v0.8 实况校准（2026-06，以代码为准；下文旧小节凡与本块冲突，一律以本块为准）**
+>
+> - **进展**：90+ 组件已落地（ZButton/ZInput/ZSelect/ZModal/ZDataTable/...），按 7 大类扁平分目录 `src/{gene,layout,input,display,feedback,navigation,tool}/`，每组件单 `.vue`。**不是**"基础组件尚未实现"。
+> - **目录**：无 `components/`、无 `composables/`。内部工具在 `_hooks/`（`useZId`/`usePortal`/`usePopper`/`useRipple`/`useEscapeStack`/`useZIem`/`useZVirtualScroll`/`useColorScheme`）与 `_internal/`（`sx`/`input-size`/`color-bridge`/`scrollbar*`/`body-scroll-lock`/`colorScheme`）。**`useStyles`/`useVariants`/`useParts`/`useResponsive` 不存在** —— 组件直接 `computed(() => icss(theme.value, s => {...}))`。
+> - **单入口**：删除全部 subpath（BREAKING v0.2，2026-05-23），所有 API 经 `@kenconnet666/zui-vue` 主入口；末尾 `export * from '@kenconnet666/zui-core'` 全量透传 core。
+> - **prop 范式（实战定型，4 套并存）**：① **数值尺寸** `size?: number` / `height?: number`（iem 倍数，组件内按比例算各维度，2026-05-24 起，**非** carrier factory）；② **外观维度** carrier factory `color?: (c) => void` 等；③ **变体** 字面量 union 且**导出** type alias（如 `export type ZButtonVariant = 'filled' | ...`，与旧禁忌相反）；④ **部件覆盖** `sx`（见下条）；⑤ **兜底** `css?: (s: Chain<ZuiSchema>) => void`。
+> - **`sx` 系统**（`_internal/sx.ts`，事实标准，取代旧文档设想的 `cssHeader`/`cssBody` chain-factory）：复合组件子节点用 `sxXxx?: SxObject` 暴露 `{ css 工厂 + class/style/ref + 任意 HTML attr 平铺 }`；组件内 `applySx(s, props.sxXxx)` 应用样式 + `extractSxAttrs(props.sxXxx)` 取出 class/style/ref/attrs 绑到模板。
+> - **variants 系统已从 core 删除（0.9.0）**：§3.4 及下文 §13.6/§13.7 的 `defineVariants`/`defineParts`/`useParts`/`createXxxVariants` 写法**全部作废**；复杂组件（ZButton 7 variant）用 `icss + switch(props.variant)` 命令式实现，多 part 组件各 part 一个 `icss` className。
+> - **参照实现**：极简组件看 `gene/ZIcon.vue`，复杂单根看 `gene/ZButton.vue`，多 part 看 `input/ZInput.vue`。
 
 ### 13.0 组件设计哲学（总纲）
 
@@ -886,7 +879,9 @@ useResponsive<T, S>(
 ): ComputedRef<{ base?: T; [bp: string]: T | undefined } | undefined>
 ```
 
-### 13.6 组件 variants 工厂导出为函数
+### 13.6 组件 variants 工厂导出为函数 —— ⚠️ 已废弃（variants 系统已删除）
+
+> 本节及 §13.7 的 `defineVariants` / `defineParts` / `createXxxVariants` / `useVariants` / `useParts` 写法**全部作废**，仅作历史保留。真实写法见 §十三 开头校准块：`computed(() => icss(theme.value, s => {...}))` + 复杂组件 `switch(props.variant)`。
 
 **不要**导出常量 `const button = defineVariants(theme, ...)`（绑定单一 theme，ConfigProvider 切主题时不会重算）。
 
@@ -946,7 +941,7 @@ declare module '@kenconnet666/zui-vue' {
 
 `mergeLocale(parent, partial)`：namespace 级浅合并；同 namespace 内字段级浅合并；数组（`weekdaysShort` / `monthsShort`）整体替换。
 
-### 13.10 ZIcon —— v3 chain factory props 首个参照实现(2026-05-22)
+### 13.10 ZIcon —— 参照实现（⚠️ `size` 现为 `number` 非 factory；以 `gene/ZIcon.vue` 为准）
 
 **§13.0 ① chain factory props 范式的首个落地** —— 每个外观维度都是 `(c) => void` 工厂,setup 内一行应用,无 switch / 无 const map / 无 cx 拼接。复杂组件(Button / Input / Dialog)照此结构但 className 拆 base / 状态 / variants 多层。
 

@@ -132,22 +132,12 @@ registerFont({
 injectLayer('base', 'components', 'utilities')
 ```
 
-## Subpath 入口
+## 单入口
+
+所有 API（含预设动画 `presetAnimations`、开发态工具 `assertSchemaConsistency` / `makeCallsiteLabel` 等）统一从主入口导入；core 不开 subpath，tree-shake 由 bundler 的 ESM 静态分析负责。
 
 ```ts
-// 变体系统(cva / tv 风格)
-import {
-  defineVariants,
-  defineParts,
-  extendVariants,
-  extendParts,
-} from '@kenconnet666/zui-core/variants'
-
-// 预设资源(动画 keyframes)
-import { presetAnimations } from '@kenconnet666/zui-core/preset'
-
-// 开发态工具
-import { assertSchemaConsistency, makeCallsiteLabel } from '@kenconnet666/zui-core/dev'
+import { icss, Theme, presetAnimations, assertSchemaConsistency } from '@kenconnet666/zui-core'
 ```
 
 ## 核心 API
@@ -174,48 +164,6 @@ const forked = Theme.fork(theme, { /* override */ })
 ### `Chain<TSchema>`
 
 不需要自己实例化 —— `icss` 传给 factory 的 `s` 就是 `Chain` 实例。
-
-### 变体抽象 `defineVariants` / `defineParts`
-
-```ts
-import { defineVariants } from '@kenconnet666/zui-core/variants'
-
-const button = defineVariants({
-  base: s => {
-    s.fontWeight._medium
-    s.borderRadius._middle
-  },
-  variants: {
-    size: {
-      small: s => {
-        s.fontSize._small
-        s.padding.iem(0.5)
-      },
-      middle: s => {
-        s.fontSize._middle
-        s.padding.iem(0.75)
-      },
-      large: s => {
-        s.fontSize._large
-        s.padding.iem(1)
-      },
-    },
-    color: {
-      primary: s => {
-        s.backgroundColor._primary
-        s.color.white
-      },
-      danger: s => {
-        s.backgroundColor._danger
-        s.color.white
-      },
-    },
-  },
-  defaultVariants: { size: 'middle', color: 'primary' },
-})
-
-const cls = icss(theme, s => button(s, { size: 'large', color: 'danger' }))
-```
 
 ### `createIcssInstance` —— SSR / 多实例
 

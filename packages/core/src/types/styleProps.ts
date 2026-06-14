@@ -116,7 +116,7 @@ const ALIAS_MAP: Record<string, string | string[]> = {
  * applyStyleProps(chain, { p: { base: 4, middle: 8, large: 16 } })
  *
  * **F1 等价 API**：`applyStyleProps(theme, props)` 返回 className 字符串（推荐用法，与
- * icss / defineVariants 参数顺序一致）。两个 overload 共存。
+ * icss 参数顺序一致 —— theme 在前）。两个 overload 共存。
  */
 export function applyStyleProps<T extends ThemeSchema>(
   chain: Chain<T>,

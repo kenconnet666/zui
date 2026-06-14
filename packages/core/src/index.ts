@@ -119,33 +119,6 @@ export type {
 // ─── Chain 构造可选项 ───
 export type { ChainOptions } from './chain/Chain'
 
-// ─── Batch A — defineVariants 变体抽象（cva / tv 风格 + zui 协调） ───
-export { defineVariants } from './variants/defineVariants'
-export type {
-  VariantOptions,
-  VariantMap,
-  VariantProps,
-  CompoundVariant,
-  DefineVariantsConfig,
-} from './variants/defineVariants'
-
-// ─── CL Batch 1 — 组件库核心：parts / compose / extends / mixin / VariantPropsOf ───
-export { defineMixin } from './variants/defineMixin'
-export { composeVariants, extendVariants } from './variants/composeVariants'
-export type { VariantPropsOf } from './variants/composeVariants'
-export { defineParts, extendParts } from './variants/defineParts'
-export type {
-  SlotFactory,
-  PartsBase,
-  PartsVariantValue,
-  PartsVariantMap,
-  PartsCompoundVariant,
-  DefinePartsConfig,
-  PartFactory,
-  PartsResult,
-  VariantPropsOfParts,
-} from './variants/defineParts'
-
 // ─── Batch C — 预设资源（动画 keyframes / preflight reset 等） ───
 export { presetAnimations, PRESET_ANIMATION_DEFS, PREFLIGHT_STYLES } from './preset'
 export type { PresetAnimationName, KeyframeStops } from './preset'

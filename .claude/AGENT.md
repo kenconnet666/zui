@@ -9,7 +9,7 @@
 1. **加载项目 skill**：调 `Skill(skill="zui")` 加载完整指南（API / 陷阱 / ui-vue 约定 / 验证流程 / 发版流程）。
 2. **跑基线**：
    ```powershell
-   pnpm --filter @kenconnet666/zui-core test            # 应 566/566 全绿
+   pnpm --filter @kenconnet666/zui-core test            # 应 572/572 全绿
    pnpm --filter @kenconnet666/zui-core run type-check
    ```
 3. **看近况**：`git log --oneline -10`。

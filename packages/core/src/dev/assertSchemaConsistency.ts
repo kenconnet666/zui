@@ -11,7 +11,7 @@ import type { ResolvedTheme, ThemeSchema, ThemeValue } from '../theme/types'
  *  4. palette 命名规范（`color-shade` kebab 形式或合法 ident）
  *
  * @example
- * import { assertSchemaConsistency } from '@kenconnet666/zui-core/dev'
+ * import { assertSchemaConsistency } from '@kenconnet666/zui-core'
  * const issues = assertSchemaConsistency(myTheme)
  * if (issues.length) console.warn('Schema issues:', issues)
  */

@@ -11,7 +11,7 @@ import dts from 'vite-plugin-dts'
  * - 用户 Ctrl+Click 跳转直接看到原结构 + 完整 JSDoc
  * - tree-shake 精确（ESM 静态分析 + preserveModules 文件级 chunk）
  *
- * 单入口：`src/index.ts` → `dist/index.js`（variants / preset / dev 的 API 全部经主入口 re-export）。
+ * 单入口：`src/index.ts` → `dist/index.js`（preset / dev 等 API 全部经主入口 re-export）。
  *
  * 配 `preserveModules` 让其它非入口文件按原结构平铺到 dist/ 下，
  * 让 IDE go-to-definition / 阅读源码体验完整。
