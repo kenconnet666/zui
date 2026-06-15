@@ -42,7 +42,7 @@ export interface ZDividerProps {
   /**
    * 线条粗细。
    * - `string`(如 `'2px'` / `'0.5em'`)→ 直接作为 CSS 长度值
-   * - `number` → iem 倍数,随 ZBox 字号等比缩放(如 `0.125` ≈ 2px @ 1080p)
+   * - `number` → px 倍数，1 单位 = 16px(如 `0.125` = 2px)
    *
    * 默认 `'1px'`。
    */
@@ -56,7 +56,7 @@ export interface ZDividerProps {
 
 <script lang="ts" setup>
 import { computed, useSlots } from 'vue'
-import { icss, iem } from '@kenconnet666/zui-core'
+import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 
@@ -77,9 +77,9 @@ const theme = useZTheme()
 
 const hasSlot = computed(() => !!slots.default)
 const lineStyle = computed(() => (props.dashed ? 'dashed' : 'solid'))
-/** number → iem CSS 字符串;string → 原样透传。 */
+/** number → px CSS 字符串;string → 原样透传。 */
 const thicknessValue = computed(() =>
-  typeof props.thickness === 'number' ? iem(props.thickness) : (props.thickness ?? '1px'),
+  typeof props.thickness === 'number' ? `${props.thickness * 16}px` : (props.thickness ?? '1px'),
 )
 
 /** 文字侧短边宽度(align=left/right 时短的那一段)。 */

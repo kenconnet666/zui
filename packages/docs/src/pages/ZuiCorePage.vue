@@ -29,7 +29,7 @@ import ApiTable from '../components/ApiTable.vue'
 const cls = icss(theme, (s) => {
   s.display.flex
   s.alignItems.center
-  s.padding.iem(0.5)         /* iem 响应式单位 */
+  s.padding.px(8)            /* px 单位 */
   s.color._primary           /* schema token */
   s.fontSize._middle         /* fontSize token */
   s._hover((h) => {
@@ -63,7 +63,7 @@ s.fontSize._middle
 /* 3. 单位 helper — 数值 + 单位 */
 s.width.px(200)
 s.height.pct(100)
-s.padding.iem(0.5)    /* iem 响应式 */
+s.padding.px(8)
 s.gap.vw(2)
 
 /* 4. 字面量 — 任意 CSS 值 */
@@ -98,27 +98,9 @@ s._media('_middle', (m) => { m.fontSize._large })
 s._dark((d) => { d.background._surface; d.color._text })
 
 /* 任意选择器 */
-s._selector('& + &', (r) => { r.marginLeft.iem(0.5) })`"
+s._selector('& + &', (r) => { r.marginLeft.px(8) })`"
     />
 
-    <ZTitle :level="2">iem 单位</ZTitle>
-    <ZParagraph>
-      <ZCode code="iem(n)" /> 生成 <ZCode code="calc(n * var(--zui-iem, 16px))" />， 基准由 ZBox
-      通过 CSS 变量注入，使所有尺寸随 Provider 统一缩放。
-    </ZParagraph>
-    <ZCode
-      :inline="false"
-      lang="ts"
-      :code="`import { iem } from '@kenconnet666/zui-core'
-
-/* 独立使用（不在 chain 里） */
-const width = iem(20)   /* => 'calc(20 * var(--zui-iem, 16px))' */
-
-/* chain 内联 */
-s.width.iem(20)
-s.padding.iem(0.5)
-s.borderRadius.iem(0.375)`"
-    />
 
     <ZTitle :level="2">主题系统</ZTitle>
 
@@ -188,8 +170,8 @@ const buttonVariants = defineVariants(theme, {
       text:     (s) => { s.background.transparent },
     },
     size: {
-      sm: (s) => { s.fontSize.iem(0.875); s.padding.iem(0.25) },
-      md: (s) => { s.fontSize.iem(1);     s.padding.iem(0.5) },
+      sm: (s) => { s.fontSize.px(14); s.padding.px(4) },
+      md: (s) => { s.fontSize.px(16); s.padding.px(8) },
     },
   },
   defaultVariants: { variant: 'filled', size: 'md' },
@@ -209,8 +191,8 @@ const cardParts = defineParts(theme, {
   parts: ['root', 'header', 'body', 'footer'] as const,
   base: {
     root:   (s) => { s.borderWidth._thin; s.borderStyle.solid; s.borderColor._border },
-    header: (s) => { s.padding.iem(0.75); s.borderBottom._thin },
-    body:   (s) => { s.padding.iem(1) },
+    header: (s) => { s.padding.px(12); s.borderBottom._thin },
+    body:   (s) => { s.padding.px(16) },
   },
   variants: {
     hoverable: {

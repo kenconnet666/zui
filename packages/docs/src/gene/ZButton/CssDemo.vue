@@ -3,13 +3,13 @@ import { ZButton, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :gap="g => g.iem(0.75)" :wrap="w => w.wrap" :align="a => a.center">
+  <ZFlex :gap="g => g.px(12)" :wrap="w => w.wrap" :align="a => a.center">
     <!-- 圆形按钮 -->
     <ZButton
       :css="
         s => {
-          s.width.iem(2.5)
-          s.height.iem(2.5)
+          s.width.px(40)
+          s.height.px(40)
           s.borderRadius.pct(50)
           s.paddingLeft.px(0)
           s.paddingRight.px(0)

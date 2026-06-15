@@ -26,7 +26,7 @@ const containerRef = ref<HTMLElement | null>(null)
           :gap="g => g._small"
           :css="
             s => {
-              s.padding.iem(0.5)
+              s.padding.px(8)
               s.backgroundColor._bg
               s.borderBottomWidth.px(1)
               s.borderBottomStyle.solid
@@ -39,7 +39,7 @@ const containerRef = ref<HTMLElement | null>(null)
         </ZFlex>
       </ZAffix>
 
-      <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.padding.iem(0.75)">
+      <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.padding.px(12)">
         <ZText v-for="n in 20" :key="n">内容行 {{ n }} —— 工具栏固定在容器顶部</ZText>
       </ZFlex>
     </div>

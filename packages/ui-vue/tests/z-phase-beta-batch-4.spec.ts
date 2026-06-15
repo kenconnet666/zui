@@ -74,9 +74,9 @@ describe('ZAnchor', () => {
     const css = Array.from(document.querySelectorAll('style'))
       .map(el => el.textContent ?? '')
       .join('\n')
-    // level=2 → padding-left 0.75iem;level=3 → 1.5iem
-    expect(css).toMatch(/padding-left:calc\(0\.75 \* var\(--zui-iem/)
-    expect(css).toMatch(/padding-left:calc\(1\.5 \* var\(--zui-iem/)
+    // level=2 → padding-left 12px(0.75*16);level=3 → 24px(1.5*16)
+    expect(css).toMatch(/padding-left:12px/)
+    expect(css).toMatch(/padding-left:24px/)
   })
 
   it('点击 link → emit click + preventDefault', async () => {

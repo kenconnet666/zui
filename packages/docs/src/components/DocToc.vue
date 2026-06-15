@@ -5,7 +5,7 @@
  * 自动扫描 scrollEl 内所有 h2/h3，用 scroll 事件追踪当前阅读位置，
  * 点击条目平滑滚动到对应标题。路由切换后自动重建。
  *
- * - h2 无缩进，h3 缩进 0.75iem
+ * - h2 无缩进，h3 缩进 20px
  * - 仅当页面含 h2/h3 时渲染（v-if）
  */
 export interface TocItem {
@@ -132,10 +132,10 @@ const rootClass = computed(() =>
 
 const innerClass = computed(() =>
   icss(theme.value, s => {
-    s.paddingTop.iem(1.75)
-    s.paddingLeft.iem(1)
-    s.paddingRight.iem(0.75)
-    s.paddingBottom.iem(2)
+    s.paddingTop.px(28)
+    s.paddingLeft.px(16)
+    s.paddingRight.px(12)
+    s.paddingBottom.px(32)
   }),
 )
 
@@ -146,7 +146,7 @@ const listClass = computed(() =>
     s.padding.px(0)
     s.display.flex
     s.flexDirection.column
-    s.gap.iem(0.125)
+    s.gap.px(2)
   }),
 )
 
@@ -161,10 +161,10 @@ function itemClass(item: TocItem): string {
     s.cursor.pointer
     s.fontSize._small
     s.lineHeight._relaxed
-    s.paddingTop.iem(0.25)
-    s.paddingBottom.iem(0.25)
-    s.paddingRight.iem(0.5)
-    s.paddingLeft.iem(item.level === 3 ? 1.25 : 0.5)
+    s.paddingTop.px(4)
+    s.paddingBottom.px(4)
+    s.paddingRight.px(8)
+    s.paddingLeft.px(item.level === 3 ? 20 : 8)
     s.transitionProperty._default
     s.transitionDuration._tiny
     s.backgroundColor.transparent

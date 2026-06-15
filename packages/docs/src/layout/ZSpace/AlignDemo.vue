@@ -9,7 +9,7 @@ import { ZSpace, ZText } from '@kenconnet666/zui-vue'
       <ZText
         :css="
           s => {
-            s.padding.iem(0.5)
+            s.padding.px(8)
             s.backgroundColor._bgMuted
             s.borderRadius._small
           }
@@ -19,7 +19,7 @@ import { ZSpace, ZText } from '@kenconnet666/zui-vue'
       <ZText
         :css="
           s => {
-            s.padding.iem(1.25)
+            s.padding.px(20)
             s.backgroundColor._bgMuted
             s.borderRadius._small
           }
@@ -29,7 +29,7 @@ import { ZSpace, ZText } from '@kenconnet666/zui-vue'
       <ZText
         :css="
           s => {
-            s.padding.iem(0.75)
+            s.padding.px(12)
             s.backgroundColor._bgMuted
             s.borderRadius._small
           }
@@ -43,7 +43,7 @@ import { ZSpace, ZText } from '@kenconnet666/zui-vue'
       <ZText
         :css="
           s => {
-            s.padding.iem(0.5)
+            s.padding.px(8)
             s.backgroundColor._bgMuted
             s.borderRadius._small
           }
@@ -53,7 +53,7 @@ import { ZSpace, ZText } from '@kenconnet666/zui-vue'
       <ZText
         :css="
           s => {
-            s.padding.iem(1.25)
+            s.padding.px(20)
             s.backgroundColor._bgMuted
             s.borderRadius._small
           }
@@ -63,7 +63,7 @@ import { ZSpace, ZText } from '@kenconnet666/zui-vue'
       <ZText
         :css="
           s => {
-            s.padding.iem(0.75)
+            s.padding.px(12)
             s.backgroundColor._bgMuted
             s.borderRadius._small
           }

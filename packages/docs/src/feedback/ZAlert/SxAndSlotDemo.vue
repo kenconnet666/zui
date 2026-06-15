@@ -10,7 +10,7 @@ import { ZAlert, ZFlex, ZButton } from '@kenconnet666/zui-vue'
       description="default slot 渲染在描述下方,适合放操作按钮。"
       :sxBody="{
         css: s => {
-          s.gap.iem(0.5)
+          s.gap.px(8)
           s.display.flex
           s.flexDirection.column
         },

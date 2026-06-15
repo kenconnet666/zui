@@ -33,8 +33,8 @@ const loading = ref(true)
           <ZFlex
             :css="
               s => {
-                s.width.iem(2.5)
-                s.height.iem(2.5)
+                s.width.px(40)
+                s.height.px(40)
                 s.borderRadius._full
                 s.backgroundColor._bgMuted
               }

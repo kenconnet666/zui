@@ -3,7 +3,7 @@ import { ZBadge, ZButton, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :gap="g => g.iem(2)" :wrap="w => w.wrap" :align="a => a.center">
+  <ZFlex :gap="g => g.px(32)" :wrap="w => w.wrap" :align="a => a.center">
     <!-- value &lt; max 直接显示 -->
     <ZBadge :value="8" :max="99">
       <ZButton variant="outlined">消息</ZButton>

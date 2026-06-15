@@ -14,20 +14,18 @@ import ApiTable from '../components/ApiTable.vue'
 
     <ZTitle :level="2">注册 Provider</ZTitle>
     <ZParagraph>
-      在应用根组件用 <ZCode code="ZBox" /> 包裹，注入主题和 iem 基准。
-      <ZCode code="ZBox" /> 是唯一必须的 Provider，它通过 CSS 变量向下传递
-      <ZCode code="--zui-iem" />
-      和 Emotion 全局 class 上下文。
+      在应用根组件用 <ZCode code="ZBox" /> 包裹，注入主题。
+      <ZCode code="ZBox" /> 是唯一必须的 Provider，它通过 CSS 变量和 Emotion 全局 class 向下传递主题上下文。
     </ZParagraph>
     <ZCode
       :inline="false"
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
-import { ZBox, ZIemPreset, zuiLight } from '@kenconnet666/zui-vue'
+import { ZBox, zuiLight } from '@kenconnet666/zui-vue'
 <\/script>
 
 <template>
-  <ZBox :theme=&quot;zuiLight&quot; :iem=&quot;ZIemPreset.default&quot;>
+  <ZBox :theme=&quot;zuiLight&quot;>
     <YourApp />
   </ZBox>
 </template>`"
@@ -57,14 +55,14 @@ import { ZButton, ZTitle } from '@kenconnet666/zui-vue'
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { computed, ref } from 'vue'
-import { ZBox, ZIemPreset, zuiLight, zuiDark } from '@kenconnet666/zui-vue'
+import { ZBox, zuiLight, zuiDark } from '@kenconnet666/zui-vue'
 
 const dark = ref(false)
 const theme = computed(() => dark.value ? zuiDark : zuiLight)
 <\/script>
 
 <template>
-  <ZBox :theme=&quot;theme&quot; :iem=&quot;ZIemPreset.default&quot;>
+  <ZBox :theme=&quot;theme&quot;>
     <YourApp />
   </ZBox>
 </template>`"
@@ -92,23 +90,5 @@ const myTheme = zuiLight.extend({
 })`"
     />
 
-    <ZTitle :level="2">ZIemPreset 预设</ZTitle>
-    <ApiTable
-      :columns="[
-        { key: 'name', label: '预设', mono: true, width: '180px' },
-        { key: 'value', label: '值', mono: true, width: '160px' },
-        { key: 'desc', label: '说明' },
-      ]"
-      :rows="[
-        {
-          name: 'ZIemPreset.default',
-          value: '0.8333vw',
-          desc: '随视口等比缩放。1920px 宽屏下 = 16px，推荐默认。',
-        },
-        { name: 'ZIemPreset.fixed', value: '16px', desc: '固定 16px，opt-out 响应式缩放。' },
-        { name: 'ZIemPreset.compact', value: '14px', desc: '紧凑模式，适合信息密度高的后台。' },
-        { name: 'ZIemPreset.large', value: '20px', desc: '大字模式，适合无障碍/展示场景。' },
-      ]"
-    />
   </section>
 </template>

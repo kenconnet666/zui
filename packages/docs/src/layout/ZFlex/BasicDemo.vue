@@ -15,7 +15,7 @@ import { ZFlex, ZTag, ZText } from '@kenconnet666/zui-vue'
       :align="a => a.center"
       :css="
         s => {
-          s.padding.iem(0.75)
+          s.padding.px(12)
           s.borderRadius._small
           s.backgroundColor._bgMuted
         }
@@ -34,7 +34,7 @@ import { ZFlex, ZTag, ZText } from '@kenconnet666/zui-vue'
       :gap="g => g._small"
       :css="
         s => {
-          s.padding.iem(0.75)
+          s.padding.px(12)
           s.borderRadius._small
           s.backgroundColor._bgMuted
         }

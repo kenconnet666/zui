@@ -8,7 +8,7 @@ import { ZCard, ZFlex, ZText, ZButton, ZTag } from '@kenconnet666/zui-vue'
       title="基础卡片"
       :css="
         s => {
-          s.width.iem(16)
+          s.width.px(256)
         }
       "
     >
@@ -19,7 +19,7 @@ import { ZCard, ZFlex, ZText, ZButton, ZTag } from '@kenconnet666/zui-vue'
       title="带操作的卡片"
       :css="
         s => {
-          s.width.iem(16)
+          s.width.px(256)
         }
       "
     >
@@ -33,7 +33,7 @@ import { ZCard, ZFlex, ZText, ZButton, ZTag } from '@kenconnet666/zui-vue'
       title="带底部"
       :css="
         s => {
-          s.width.iem(16)
+          s.width.px(256)
         }
       "
     >
@@ -52,7 +52,7 @@ import { ZCard, ZFlex, ZText, ZButton, ZTag } from '@kenconnet666/zui-vue'
       :hoverable="true"
       :css="
         s => {
-          s.width.iem(16)
+          s.width.px(256)
         }
       "
     >

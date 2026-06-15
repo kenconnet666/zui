@@ -7,7 +7,7 @@ import { ZCard, ZSpace, ZButton, ZTag, ZText } from '@kenconnet666/zui-vue'
     title="文章标题"
     :css="
       s => {
-        s.width.iem(24)
+        s.width.px(384)
       }
     "
   >

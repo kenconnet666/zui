@@ -20,7 +20,7 @@ import { ZMarquee, ZSpace, ZText } from '@kenconnet666/zui-vue'
         s => {
           s.borderRadius._small
           s.backgroundColor._bgMuted
-          s.padding.iem(0.5)
+          s.padding.px(8)
         }
       "
     >
@@ -43,7 +43,7 @@ import { ZMarquee, ZSpace, ZText } from '@kenconnet666/zui-vue'
         s => {
           s.borderRadius._small
           s.backgroundColor._bgMuted
-          s.padding.iem(0.5)
+          s.padding.px(8)
         }
       "
     >

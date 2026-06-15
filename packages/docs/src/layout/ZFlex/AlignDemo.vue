@@ -18,8 +18,8 @@ const aligns = [
       :gap="g => g._small"
       :css="
         s => {
-          s.height.iem(5)
-          s.padding.iem(0.5)
+          s.height.px(80)
+          s.padding.px(8)
           s.borderRadius._small
           s.backgroundColor._bgMuted
         }
@@ -28,7 +28,7 @@ const aligns = [
       <ZText
         :css="
           s => {
-            s.width.iem(6)
+            s.width.px(96)
             s.color._textSecondary
             s.fontSize._small
           }
@@ -38,7 +38,7 @@ const aligns = [
       <ZText
         :css="
           s => {
-            s.padding.iem(0.5)
+            s.padding.px(8)
             s.backgroundColor._bg
             s.borderRadius._small
           }
@@ -48,7 +48,7 @@ const aligns = [
       <ZText
         :css="
           s => {
-            s.padding.iem(1.25)
+            s.padding.px(20)
             s.backgroundColor._bg
             s.borderRadius._small
           }

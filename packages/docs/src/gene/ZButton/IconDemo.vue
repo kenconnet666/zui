@@ -9,7 +9,7 @@ import {
 </script>
 
 <template>
-  <ZFlex :gap="g => g.iem(0.75)" :wrap="w => w.wrap" :align="a => a.center">
+  <ZFlex :gap="g => g.px(12)" :wrap="w => w.wrap" :align="a => a.center">
     <ZButton>
       <template #prefixIcon><ZIcon :component="Download" /></template>
       下载

@@ -7,7 +7,7 @@ const b = ref<number | null>(50)
 </script>
 
 <template>
-  <ZSpace :direction="d => d.column" :size="g => g.iem(0.75)">
+  <ZSpace :direction="d => d.column" :size="g => g.px(12)">
     <ZInputNumber v-model:value="a" :step="5" placeholder="步长 5" />
     <ZInputNumber v-model:value="b" :min="0" :max="100" :step="10" placeholder="0~100,步长 10" />
   </ZSpace>

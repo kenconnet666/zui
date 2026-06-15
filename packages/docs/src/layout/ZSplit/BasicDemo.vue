@@ -15,7 +15,7 @@ const vRatio = ref(0.35)
       direction="horizontal"
       :css="
         s => {
-          s.height.iem(12)
+          s.height.px(192)
           s.borderRadius._small
           s.overflow.hidden
           s.borderWidth.px(1)
@@ -52,7 +52,7 @@ const vRatio = ref(0.35)
       direction="vertical"
       :css="
         s => {
-          s.height.iem(14)
+          s.height.px(224)
           s.borderRadius._small
           s.overflow.hidden
           s.borderWidth.px(1)

@@ -9,16 +9,16 @@ function remove(i: number) {
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="g => g.iem(0.75)">
+  <ZFlex :direction="d => d.column" :gap="g => g.px(12)">
     <!-- variant -->
-    <ZFlex :gap="g => g.iem(0.5)" :wrap="w => w.wrap">
+    <ZFlex :gap="g => g.px(8)" :wrap="w => w.wrap">
       <ZTag variant="soft">soft（默认）</ZTag>
       <ZTag variant="outlined">outlined</ZTag>
       <ZTag variant="filled">filled</ZTag>
     </ZFlex>
 
     <!-- color + variant -->
-    <ZFlex :gap="g => g.iem(0.5)" :wrap="w => w.wrap">
+    <ZFlex :gap="g => g.px(8)" :wrap="w => w.wrap">
       <ZTag :color="c => c._primary">primary soft</ZTag>
       <ZTag :color="c => c._success" variant="outlined">success outlined</ZTag>
       <ZTag :color="c => c._danger" variant="filled">danger filled</ZTag>
@@ -26,7 +26,7 @@ function remove(i: number) {
     </ZFlex>
 
     <!-- size + round -->
-    <ZFlex :gap="g => g.iem(0.5)" :align="a => a.center" :wrap="w => w.wrap">
+    <ZFlex :gap="g => g.px(8)" :align="a => a.center" :wrap="w => w.wrap">
       <ZTag :size="0.75">size=0.75 小号</ZTag>
       <ZTag :size="0.875">size=0.875（默认）</ZTag>
       <ZTag :size="1">size=1 标准</ZTag>
@@ -34,7 +34,7 @@ function remove(i: number) {
     </ZFlex>
 
     <!-- closable -->
-    <ZFlex :gap="g => g.iem(0.5)" :wrap="w => w.wrap">
+    <ZFlex :gap="g => g.px(8)" :wrap="w => w.wrap">
       <ZTag
         v-for="(tag, i) in tags"
         :key="tag"

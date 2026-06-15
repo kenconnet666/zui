@@ -14,7 +14,7 @@ const scrollRef = ref<HTMLElement | null>(null)
       :gap="g => g._small"
       :css="
         s => {
-          s.height.iem(12)
+          s.height.px(192)
           s.overflowY.auto
           s.borderWidth._thin
           s.borderStyle.solid
@@ -39,8 +39,8 @@ const scrollRef = ref<HTMLElement | null>(null)
     <ZBackTop
       :visibility-height="100"
       :target="() => scrollRef as HTMLElement"
-      :bottom="b => b.iem(1)"
-      :right="r => r.iem(1)"
+      :bottom="b => b.px(16)"
+      :right="r => r.px(16)"
       :css="
         s => {
           s.position.absolute

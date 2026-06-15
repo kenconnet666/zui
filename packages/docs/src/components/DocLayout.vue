@@ -83,10 +83,10 @@ const sidebarClass = computed(() =>
 const brandClass = computed(() =>
   icss(theme.value, s => {
     s.flexShrink(0)
-    s.paddingTop.iem(1.25)
-    s.paddingBottom.iem(1.25)
-    s.paddingLeft.iem(1.5)
-    s.paddingRight.iem(1.5)
+    s.paddingTop.px(20)
+    s.paddingBottom.px(20)
+    s.paddingLeft.px(24)
+    s.paddingRight.px(24)
     s.borderBottomWidth._thin
     s.borderBottomStyle.solid
     s.borderBottomColor._border
@@ -136,8 +136,8 @@ function makeThemeBtnClass(scheme: ColorScheme) {
   return computed(() =>
     icss(theme.value, s => {
       s.flex(1)
-      s.paddingTop.iem(0.75)
-      s.paddingBottom.iem(0.75)
+      s.paddingTop.px(12)
+      s.paddingBottom.px(12)
       s.borderWidth.px(0)
       s.borderRadius.px(0)
       s.cursor.pointer
@@ -183,10 +183,10 @@ const contentClass = computed(() =>
 
 const contentInnerClass = computed(() =>
   icss(theme.value, s => {
-    s.paddingTop.iem(2)
-    s.paddingBottom.iem(2)
-    s.paddingLeft.iem(2)
-    s.paddingRight.iem(2)
+    s.paddingTop.px(32)
+    s.paddingBottom.px(32)
+    s.paddingLeft.px(32)
+    s.paddingRight.px(32)
   }),
 )
 </script>

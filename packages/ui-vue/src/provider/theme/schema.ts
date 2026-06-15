@@ -20,6 +20,8 @@
  */
 import type { BaseSchema } from '@kenconnet666/zui-core'
 
+/* eslint-disable @typescript-eslint/no-empty-object-type -- 下方 UserXxxExt 是 declaration merging 锚点,必须用 interface（type 无法被 module augmentation 合并） */
+
 // ════════════════════════════════════════════════════════════════════════
 // 用户扩展锚点 —— 每个 category 一个空 interface，用户通过 module augmentation
 // 增加自己的 token 字段，自动 intersect 到对应的 ZuiSchema category 上。
@@ -44,43 +46,24 @@ import type { BaseSchema } from '@kenconnet666/zui-core'
 // 配合 `zuiLight.extend({ color: { brandRoyal: '#1a3a8f' } })` 在运行时喂入值。
 // ════════════════════════════════════════════════════════════════════════
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserColorExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserSpacingExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserRadiusExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserFontSizeExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserFontWeightExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserShadowExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserBlurExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserDurationExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserEasingExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserBreakpointExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserZIndexExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserOpacityExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserLineHeightExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserLetterSpacingExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserAspectRatioExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserFontsExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserSizesExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserBordersExt {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UserTransitionPropertyExt {}
 
 /**

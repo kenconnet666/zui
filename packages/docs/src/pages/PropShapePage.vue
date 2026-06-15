@@ -64,8 +64,8 @@ const historyRows = [
   },
   {
     date: '2026-05-24',
-    stage: '数值尺寸用 number(iem 倍数)',
-    desc: '复杂交互组件(ZButton/ZInput)的 size prop 退化成 number,组件内全 iem 联动。简单组件仍走 factory。',
+    stage: '数值尺寸用 number(px 倍数)',
+    desc: '复杂交互组件(ZButton/ZInput)的 size prop 退化成 number,组件内全 px 比例联动。简单组件仍走 factory。',
   },
 ]
 
@@ -168,7 +168,7 @@ icss(theme.value, (s) => {
 
 <!-- ZFlex.gap 也是 Type A -->
 <ZFlex :gap=&quot;(g) => g._middle&quot;>...</ZFlex>
-<ZFlex :gap=&quot;(g) => g.iem(0.5)&quot;>...</ZFlex>`"
+<ZFlex :gap=&quot;(g) => g.px(8)&quot;>...</ZFlex>`"
     />
 
     <ZTitle :level="2">Type B —— 复合 wire factory</ZTitle>
@@ -224,8 +224,8 @@ if (s._node.width !== undefined) s._node.height = s._node.width`"
     <ZCode
       :inline="false"
       lang="vue"
-      :code="`<!-- 1iem × 1iem -->
-<ZIcon :component=&quot;Heart&quot; :size=&quot;(w) => w.iem(1)&quot; />
+      :code="`<!-- 16px × 16px -->
+<ZIcon :component=&quot;Heart&quot; :size=&quot;(w) => w.px(16)&quot; />
 
 <!-- 走 schema sizes token -->
 <ZIcon :component=&quot;Heart&quot; :size=&quot;(w) => w._middle&quot; />
@@ -237,16 +237,16 @@ if (s._node.width !== undefined) s._node.height = s._node.width`"
     <ZTitle :level="2">Size5 字符串 + factory 二选一</ZTitle>
     <ZParagraph>
       <strong>复杂交互组件</strong>(ZButton / ZInput / ZSpin)的 size prop 退化成
-      <ZCode code="number" />(iem 倍数,2026-05-24 决策),不接 factory。这是为了让组件内部能用一个数字
-      <strong>全 iem 联动</strong> padding / border-radius / font-size 等多个维度。
+      <ZCode code="number" />(比例系数,2026-05-24 决策),不接 factory。这是为了让组件内部能用一个数字
+      <strong>全维度 px 比例联动</strong> padding / border-radius / font-size 等多个维度。
     </ZParagraph>
     <ZCode
       :inline="false"
       lang="ts"
       :code="`interface ZInputProps {
   /**
-   * 尺寸(iem 倍数,默认 1iem=16px)。
-   * size=1 → height=2iem, padding-y=0.25iem, font-size=1iem
+   * 尺寸比例系数(基准 1 = 16px)。
+   * size=1 → height=32px, padding-y=4px, font-size=16px
    * size=1.25 → 整体放大 25%
    */
   size?: number
@@ -255,12 +255,12 @@ if (s._node.width !== undefined) s._node.height = s._node.width`"
 // 实现:数字驱动所有维度
 const cls = computed(() => icss(theme.value, (s) => {
   const k = props.size ?? 1
-  s.height.iem(2 * k)
-  s.paddingTop.iem(0.25 * k)
-  s.paddingBottom.iem(0.25 * k)
-  s.paddingLeft.iem(0.75 * k)
-  s.paddingRight.iem(0.75 * k)
-  s.fontSize.iem(1 * k)
+  s.height.px(32 * k)
+  s.paddingTop.px(4 * k)
+  s.paddingBottom.px(4 * k)
+  s.paddingLeft.px(12 * k)
+  s.paddingRight.px(12 * k)
+  s.fontSize.px(16 * k)
 }))`"
     />
     <ZCode
@@ -381,7 +381,7 @@ const buttonVariants = defineVariants(theme, {
 <ZBox :css=&quot;(s) => {
   s._prop('scrollbarWidth', 'none')
   s._prop('msOverflowStyle', 'none')
-  s._nest('& > * + *', (c) => c.marginTop.iem(1))
+  s._nest('& > * + *', (c) => c.marginTop.px(16))
 }&quot;>...</ZBox>`"
     />
 

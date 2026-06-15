@@ -24,7 +24,7 @@ const containerRef = ref<HTMLElement | null>(null)
           :gap="g => g._small"
           :css="
             s => {
-              s.padding.iem(0.5)
+              s.padding.px(8)
               s.backgroundColor._primary.alpha(12)
               s.borderRadius._small
             }
@@ -33,7 +33,7 @@ const containerRef = ref<HTMLElement | null>(null)
           <ZTag>带间距吸顶</ZTag>
         </ZFlex>
       </ZAffix>
-      <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.padding.iem(0.75)">
+      <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.padding.px(12)">
         <ZText v-for="n in 18" :key="n">内容行 {{ n }}</ZText>
       </ZFlex>
     </div>

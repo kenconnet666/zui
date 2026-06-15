@@ -8,8 +8,8 @@ import { ZDivider, ZParagraph } from '@kenconnet666/zui-vue'
     <ZDivider
       :css="
         s => {
-          s.marginTop.iem(0.75)
-          s.marginBottom.iem(0.75)
+          s.marginTop.px(12)
+          s.marginBottom.px(12)
         }
       "
     />
@@ -18,8 +18,8 @@ import { ZDivider, ZParagraph } from '@kenconnet666/zui-vue'
       :dashed="true"
       :css="
         s => {
-          s.marginTop.iem(0.75)
-          s.marginBottom.iem(0.75)
+          s.marginTop.px(12)
+          s.marginBottom.px(12)
         }
       "
     />
@@ -29,8 +29,8 @@ import { ZDivider, ZParagraph } from '@kenconnet666/zui-vue'
       thickness="2px"
       :css="
         s => {
-          s.marginTop.iem(0.75)
-          s.marginBottom.iem(0.75)
+          s.marginTop.px(12)
+          s.marginBottom.px(12)
         }
       "
     />

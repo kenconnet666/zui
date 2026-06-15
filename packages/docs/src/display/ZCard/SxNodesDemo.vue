@@ -7,7 +7,7 @@ import { ZCard, ZText } from '@kenconnet666/zui-vue'
     title="多节点 sx 配置"
     :css="
       s => {
-        s.width.iem(28)
+        s.width.px(448)
       }
     "
     :sx-head="{

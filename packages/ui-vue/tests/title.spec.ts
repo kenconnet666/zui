@@ -43,23 +43,19 @@ describe('ZTitle — 渲染', () => {
 
 describe('ZTitle — level 默认尺寸/字重映射', () => {
   const cases: Array<[ZTitleLevel, number, number]> = [
-    [1, 2, 700],
-    [2, 1.75, 700],
-    [3, 1.5, 600],
-    [4, 1.25, 600],
-    [5, 1.125, 600],
-    [6, 1, 600],
+    [1, 32, 700],
+    [2, 28, 700],
+    [3, 24, 600],
+    [4, 20, 600],
+    [5, 18, 600],
+    [6, 16, 600],
   ]
 
-  for (const [level, fontIem, weight] of cases) {
-    it(`level=${level} → font-size:calc(${fontIem} * iem) + font-weight:${weight}`, () => {
+  for (const [level, fontPx, weight] of cases) {
+    it(`level=${level} → font-size:${fontPx}px + font-weight:${weight}`, () => {
       mount(ZTitle, { props: { level }, slots: { default: () => 'T' } })
       const css = getInjectedCss()
-      // 用字符串模板构建正则匹配 calc(N * var(--zui-iem, ...))
-      const fontRe = new RegExp(
-        `font-size:calc\\(${fontIem.toString().replace('.', '\\.')} \\* var\\(--zui-iem`,
-      )
-      expect(css).toMatch(fontRe)
+      expect(css).toMatch(new RegExp(`font-size:${fontPx}px`))
       expect(css).toMatch(new RegExp(`font-weight:${weight}`))
     })
   }
@@ -76,7 +72,7 @@ describe('ZTitle — level 默认尺寸/字重映射', () => {
 })
 
 describe('ZTitle — props 覆盖默认', () => {
-  it('size=3 覆盖 level 默认 fontSize(等价 48px @ 16px iem)', () => {
+  it('size=3 覆盖 level 默认 fontSize(等价 48px)', () => {
     mount(ZTitle, {
       props: {
         level: 1,
@@ -84,7 +80,7 @@ describe('ZTitle — props 覆盖默认', () => {
       },
       slots: { default: () => 'T' },
     })
-    expect(getInjectedCss()).toMatch(/font-size:calc\(3 \* var\(--zui-iem/)
+    expect(getInjectedCss()).toMatch(/font-size:48px/)
   })
 
   it('weight factory 覆盖 level 默认 fontWeight', () => {

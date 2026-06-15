@@ -45,7 +45,6 @@ export const docNav: DocNavItem[] = [
     children: [
       { key: 'getting-started', label: '快速开始', disabled: true },
       { key: 'theme', label: '主题与 ZBox', disabled: true },
-      { key: 'iem', label: 'iem 单位', disabled: true },
     ],
   },
 

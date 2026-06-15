@@ -74,7 +74,7 @@ import AlignDemoSource from './ZFlex/AlignDemo.vue?raw'
           name: 'gap',
           type: '(g: gap carrier) => void',
           default: '—',
-          desc: 'gap carrier factory。例：(g) => g._middle / (g) => g.iem(0.5)。',
+          desc: 'gap carrier factory。例：(g) => g._middle / (g) => g.px(8)。',
         },
         {
           name: 'inline',

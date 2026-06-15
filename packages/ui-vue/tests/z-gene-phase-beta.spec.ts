@@ -32,11 +32,11 @@ describe('ZAvatar', () => {
     const css = Array.from(document.querySelectorAll('style'))
       .map(el => el.textContent ?? '')
       .join('\n')
-    expect(css).toMatch(/border-radius:calc/)
+    expect(css).toMatch(/border-radius:\d/)
   })
 
-  it('size=3 → 自定义尺寸(等价 48px @ 16px iem)', () => {
-    // R10:size 是 number(iem 倍数),3 等价 48px @ default 16px iem
+  it('size=3 → 自定义尺寸(48px)', () => {
+    // R10:size 是 number(iem 倍数),3 等价 48px
     mount(ZAvatar, {
       props: {
         size: 3,
@@ -46,7 +46,7 @@ describe('ZAvatar', () => {
     const css = Array.from(document.querySelectorAll('style'))
       .map(el => el.textContent ?? '')
       .join('\n')
-    expect(css).toMatch(/width:calc\(3 \* var\(--zui-iem/)
+    expect(css).toMatch(/width:48px/)
   })
 })
 
@@ -147,12 +147,12 @@ describe('ZBlockquote', () => {
     expect(w.text()).toContain('quote')
   })
 
-  it('左侧 border-left 0.25iem(默认 size=1 → size * 0.25)', () => {
+  it('左侧 border-left 4px(默认 size=1 → size * 0.25 * 16 = 4px)', () => {
     mount(ZBlockquote, { slots: { default: () => 'q' } })
     const css = Array.from(document.querySelectorAll('style'))
       .map(el => el.textContent ?? '')
       .join('\n')
-    expect(css).toMatch(/border-left-width:calc\(0\.25 \* var\(--zui-iem/)
+    expect(css).toMatch(/border-left-width:4px/)
   })
 })
 

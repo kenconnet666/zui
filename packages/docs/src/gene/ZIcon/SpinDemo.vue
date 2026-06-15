@@ -4,7 +4,7 @@ import { RefreshOutlined as Reload } from '@vicons/material'
 </script>
 
 <template>
-  <ZFlex :gap="g => g.iem(1.5)" :wrap="w => w.wrap" :align="a => a.center">
+  <ZFlex :gap="g => g.px(24)" :wrap="w => w.wrap" :align="a => a.center">
     <ZFlex
       v-for="item in [
         { label: 'd.s(0.3) 最快', spin: (d: any) => d.s(0.3) },
@@ -15,7 +15,7 @@ import { RefreshOutlined as Reload } from '@vicons/material'
       ]"
       :key="item.label"
       :direction="d => d.column"
-      :gap="g => g.iem(0.5)"
+      :gap="g => g.px(8)"
       :align="a => a.center"
     >
       <ZIcon :component="Reload" :spin="item.spin" :size="1.5" />

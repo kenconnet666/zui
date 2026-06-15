@@ -61,7 +61,7 @@ const descClass = computed(() =>
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="g => g.iem(0.5)">
+  <ZFlex :direction="d => d.column" :gap="g => g.px(8)">
     <p v-if="$slots.desc" :class="descClass">
       <slot name="desc" />
     </p>

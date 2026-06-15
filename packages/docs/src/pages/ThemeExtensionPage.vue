@@ -147,7 +147,6 @@ export {}`"
       lang="ts"
       :code="`// src/theme.ts
 import { zuiLight } from '@kenconnet666/zui-vue'
-import { iem } from '@kenconnet666/zui-core'
 
 export const myTheme = zuiLight.extend({
   color: {
@@ -158,11 +157,11 @@ export const myTheme = zuiLight.extend({
     primary: '#1a3a8f',
   },
   spacing: {
-    section: iem(4),     // 默认 64px,跟随 iem
+    section: '64px',
   },
   fontSize: {
-    hero:  iem(3),       // 48px
-    micro: iem(0.625),   // 10px
+    hero:  '48px',
+    micro: '10px',
   },
   shadow: {
     glow: '0 0 24px rgba(26, 58, 143, 0.4)',
@@ -175,12 +174,12 @@ export const myTheme = zuiLight.extend({
       :inline="false"
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
-import { ZBox, ZIemPreset } from '@kenconnet666/zui-vue'
+import { ZBox } from '@kenconnet666/zui-vue'
 import { myTheme } from './theme'
 <\/script>
 
 <template>
-  <ZBox :theme=&quot;myTheme&quot; :iem=&quot;ZIemPreset.default&quot;>
+  <ZBox :theme=&quot;myTheme&quot;>
     <App />
   </ZBox>
 </template>`"
@@ -222,7 +221,7 @@ import { myTheme } from './theme'
     <ZCode
       :inline="false"
       lang="ts"
-      :code="`import { Theme, FLAT_PALETTE, iem } from '@kenconnet666/zui-core'
+      :code="`import { Theme, FLAT_PALETTE } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '@kenconnet666/zui-vue'
 
 export const myCustomTheme = new Theme<ZuiSchema>({
@@ -242,11 +241,11 @@ export const myCustomTheme = new Theme<ZuiSchema>({
     overlayBg: '#000000',
   },
   spacing: {
-    tiny:   iem(0.25),
-    small:  iem(0.5),
-    middle: iem(1),
-    large:  iem(1.5),
-    huge:   iem(2),
+    tiny:   '4px',
+    small:  '8px',
+    middle: '16px',
+    large:  '24px',
+    huge:   '32px',
   },
   // ... 其它 16 个 category(完整字段参考 zui-light.ts)
 })`"
@@ -262,7 +261,7 @@ export const myCustomTheme = new Theme<ZuiSchema>({
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { computed, ref } from 'vue'
-import { ZBox, ZIemPreset, zuiLight, zuiDark } from '@kenconnet666/zui-vue'
+import { ZBox, zuiLight, zuiDark } from '@kenconnet666/zui-vue'
 import { myTheme } from './theme'
 
 type Mode = 'light' | 'dark' | 'brand'
@@ -278,7 +277,7 @@ const theme = computed(() => {
 <\/script>
 
 <template>
-  <ZBox :theme=&quot;theme&quot; :iem=&quot;ZIemPreset.default&quot;>
+  <ZBox :theme=&quot;theme&quot;>
     <button @click=&quot;mode = 'light'&quot;>浅色</button>
     <button @click=&quot;mode = 'dark'&quot;>暗色</button>
     <button @click=&quot;mode = 'brand'&quot;>品牌</button>

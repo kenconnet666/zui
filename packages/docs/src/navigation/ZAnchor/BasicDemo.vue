@@ -18,7 +18,7 @@ const anchors = [
       :css="
         s => {
           s.flex(1)
-          s.height.iem(15)
+          s.height.px(240)
           s.overflowY.auto
           s.padding._middle
         }

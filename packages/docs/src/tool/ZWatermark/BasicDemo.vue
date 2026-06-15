@@ -10,7 +10,7 @@ import { ZWatermark, ZFlex, ZText } from '@kenconnet666/zui-vue'
         content="ZUI 内部文档"
         :css="
           s => {
-            s.height.iem(10)
+            s.height.px(160)
             s.borderWidth.px(1)
             s.borderStyle.solid
             s.borderColor._border
@@ -21,7 +21,7 @@ import { ZWatermark, ZFlex, ZText } from '@kenconnet666/zui-vue'
         <ZFlex
           :css="
             s => {
-              s.padding.iem(1)
+              s.padding.px(16)
               s.height.pct(100)
             }
           "
@@ -41,7 +41,7 @@ import { ZWatermark, ZFlex, ZText } from '@kenconnet666/zui-vue'
         :gap="80"
         :css="
           s => {
-            s.height.iem(10)
+            s.height.px(160)
             s.borderWidth.px(1)
             s.borderStyle.solid
             s.borderColor._border
@@ -52,7 +52,7 @@ import { ZWatermark, ZFlex, ZText } from '@kenconnet666/zui-vue'
         <ZFlex
           :css="
             s => {
-              s.padding.iem(1)
+              s.padding.px(16)
               s.height.pct(100)
             }
           "

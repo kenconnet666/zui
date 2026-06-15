@@ -127,7 +127,7 @@ import StateDemoSource from './ZText/StateDemo.vue?raw'
 <ZText tag=&quot;strong&quot; :weight=&quot;(w) => w._bold&quot;>加重文本</ZText>
 <ZText tag=&quot;code&quot; :mono=&quot;true&quot;>行内代码</ZText>
 <ZText tag=&quot;del&quot; :strikethrough=&quot;true&quot;>已删除内容</ZText>
-<ZText tag=&quot;mark&quot; :css=&quot;(s) => s.backgroundColor.iem(0.125)&quot;>高亮文字</ZText>`"
+<ZText tag=&quot;mark&quot; :css=&quot;(s) => s.backgroundColor.px(2)&quot;>高亮文字</ZText>`"
     />
   </section>
 </template>

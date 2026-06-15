@@ -16,7 +16,7 @@ const lockedRatio = ref(0.5)
       :max="0.7"
       :css="
         s => {
-          s.height.iem(10)
+          s.height.px(160)
           s.borderRadius._small
           s.overflow.hidden
           s.borderWidth.px(1)
@@ -53,7 +53,7 @@ const lockedRatio = ref(0.5)
       :disabled="true"
       :css="
         s => {
-          s.height.iem(7)
+          s.height.px(112)
           s.borderRadius._small
           s.overflow.hidden
           s.borderWidth.px(1)

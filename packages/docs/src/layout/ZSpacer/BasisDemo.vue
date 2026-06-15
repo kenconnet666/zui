@@ -9,7 +9,7 @@ import { ZFlex, ZSpacer, ZText } from '@kenconnet666/zui-vue'
       <ZText
         :css="
           s => {
-            s.padding.iem(0.5)
+            s.padding.px(8)
             s.backgroundColor._bgMuted
             s.borderRadius._small
           }
@@ -18,12 +18,12 @@ import { ZFlex, ZSpacer, ZText } from '@kenconnet666/zui-vue'
       >
       <ZSpacer
         :grow="0"
-        :basis="b => b.iem(8)"
+        :basis="b => b.px(128)"
         :css="
           s => {
             s.backgroundColor._primary.alpha(12)
             s.borderRadius._small
-            s.padding.iem(0.5)
+            s.padding.px(8)
             s.textAlign.center
           }
         "
@@ -31,7 +31,7 @@ import { ZFlex, ZSpacer, ZText } from '@kenconnet666/zui-vue'
       <ZText
         :css="
           s => {
-            s.padding.iem(0.5)
+            s.padding.px(8)
             s.backgroundColor._bgMuted
             s.borderRadius._small
           }

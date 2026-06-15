@@ -23,7 +23,7 @@ const items: Item[] = Array.from({ length: 1000 }, (_, i) => ({
             s => {
               s.paddingLeft._small
               s.paddingRight._small
-              s.height.iem(3)
+              s.height.px(48)
               s.borderBottomWidth.px(1)
               s.borderBottomStyle.solid
               s.borderBottomColor._border

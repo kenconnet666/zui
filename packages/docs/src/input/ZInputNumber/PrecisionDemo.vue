@@ -8,7 +8,7 @@ const v4 = ref<number | null>(1.23456789)
 </script>
 
 <template>
-  <ZSpace :direction="d => d.column" :size="g => g.iem(0.75)">
+  <ZSpace :direction="d => d.column" :size="g => g.px(12)">
     <ZInputNumber v-model:value="v0" :precision="0" :step="1" placeholder="precision=0(整数)" />
     <ZInputNumber
       v-model:value="v2"

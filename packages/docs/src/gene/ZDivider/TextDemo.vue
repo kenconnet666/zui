@@ -3,7 +3,7 @@ import { ZDivider, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="g => g.iem(0.75)">
+  <ZFlex :direction="d => d.column" :gap="g => g.px(12)">
     <ZDivider>居中文字</ZDivider>
     <ZDivider align="left">左对齐文字</ZDivider>
     <ZDivider align="right">右对齐文字</ZDivider>

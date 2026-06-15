@@ -57,15 +57,15 @@ describe('chain PropFn — 接受 factory 重载', () => {
 
   it('Type C:同一 factory 复用于 width + height', () => {
     const sizeFactory = (w: Chain<ZuiSchema>['width']) => {
-      w.iem(1.25)
+      w.px(20)
     }
     icss(zuiLight, s => {
       s.width(sizeFactory)
       s.height(sizeFactory)
     })
     const css = getInjectedCss()
-    expect(css).toMatch(/width:[^;]*calc\(1\.25 \* var\(--zui-iem/)
-    expect(css).toMatch(/height:[^;]*calc\(1\.25 \* var\(--zui-iem/)
+    expect(css).toMatch(/width:[^;]*20px/)
+    expect(css).toMatch(/height:[^;]*20px/)
   })
 
   it('factory 内可访问 schema token(_middle)', () => {

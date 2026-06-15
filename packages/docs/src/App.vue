@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 /**
- * docs 站点根 —— 顶层 `ZBox`(注入 theme + iem)+ `DocLayout`(双栏布局)。
+ * docs 站点根 —— 顶层 `ZBox`(注入 theme)+ `DocLayout`(双栏布局)。
  *
  * **主题状态**:
  * - `colorScheme: 'light' | 'dark'` —— 这里持有,通过 `v-model:colorScheme` 与 `DocLayout`
@@ -10,7 +10,7 @@
  * **类型层 brand 扩展**:见 `src/zui.d.ts`(`UserColorExt` augmentation)。
  */
 import { computed, ref, watch } from 'vue'
-import { ZBox, ZIemPreset, zuiDark, zuiLight } from '@kenconnet666/zui-vue'
+import { ZBox, zuiDark, zuiLight } from '@kenconnet666/zui-vue'
 import DocLayout, { type ColorScheme } from './components/DocLayout.vue'
 
 const LS_SCHEME_KEY = 'zui-docs-color-scheme'
@@ -33,7 +33,7 @@ const currentTheme = computed(() => {
 </script>
 
 <template>
-  <ZBox :theme="currentTheme" :iem="ZIemPreset.default">
+  <ZBox :theme="currentTheme">
     <DocLayout v-model:colorScheme="colorScheme">
       <RouterView />
     </DocLayout>

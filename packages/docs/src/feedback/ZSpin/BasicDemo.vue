@@ -38,7 +38,7 @@ const loading = ref(true)
           :gap="g => g._small"
           :css="
             s => {
-              s.padding.iem(1)
+              s.padding.px(16)
               s.borderWidth.px(1)
               s.borderStyle.solid
               s.borderColor._border

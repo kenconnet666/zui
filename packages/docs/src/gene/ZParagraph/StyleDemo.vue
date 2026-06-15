@@ -6,7 +6,7 @@ const text =
 </script>
 
 <template>
-  <ZSpace :direction="d => d.column" :size="g => g._middle" :css="s => s.width.iem(26)">
+  <ZSpace :direction="d => d.column" :size="g => g._middle" :css="s => s.width.px(416)">
     <ZText
       :css="
         s => {

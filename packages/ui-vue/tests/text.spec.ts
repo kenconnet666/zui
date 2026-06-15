@@ -36,25 +36,25 @@ describe('ZText — 渲染', () => {
 })
 
 describe('ZText — 6 维度 carrier factory', () => {
-  it('size=1.25 → fontSize calc', () => {
+  it('size=1.25 → fontSize 20px', () => {
     mount(ZText, {
       props: {
         size: 1.25,
       },
       slots: { default: () => 'x' },
     })
-    expect(getInjectedCss()).toMatch(/font-size:calc\(1\.25 \* var\(--zui-iem/)
+    expect(getInjectedCss()).toMatch(/font-size:20px/)
   })
 
-  it('size=1.125 (等价 schema _large)', () => {
+  it('size=1.125 (等价 schema _large → 18px)', () => {
     mount(ZText, {
       props: {
         size: 1.125,
       },
       slots: { default: () => 'x' },
     })
-    // _large = iem(1.125)
-    expect(getInjectedCss()).toMatch(/font-size:calc\(1\.125 \* var\(--zui-iem/)
+    // _large = 18px
+    expect(getInjectedCss()).toMatch(/font-size:18px/)
   })
 
   it('weight factory → fontWeight 数值', () => {

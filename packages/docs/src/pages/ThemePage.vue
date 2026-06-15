@@ -54,12 +54,6 @@ import ApiTable from '../components/ApiTable.vue'
           desc: '注入主题对象。必传（或由父级 ZBox 继承）。',
         },
         {
-          name: 'iem',
-          type: 'string',
-          default: '—',
-          desc: 'CSS 变量 --zui-iem 的值，如 ZIemPreset.default 或 16px。',
-        },
-        {
           name: 'tag',
           type: 'string',
           default: `'div'`,
@@ -71,19 +65,19 @@ import ApiTable from '../components/ApiTable.vue'
 
     <ZTitle :level="2">嵌套隔离</ZTitle>
     <ZParagraph>
-      多个 <ZCode code="ZBox" /> 可嵌套使用，子树独立设定 iem 或 theme， 通过浏览器 CSS cascade
+      多个 <ZCode code="ZBox" /> 可嵌套使用，子树独立设定 theme，通过浏览器 CSS cascade
       自动隔离，零运行时合并开销。
     </ZParagraph>
     <ZCode
       :inline="false"
       lang="vue"
-      :code="`<!-- 外层：默认主题 + 响应式 iem -->
-<ZBox :theme=&quot;zuiLight&quot; :iem=&quot;ZIemPreset.default&quot;>
+      :code="`<!-- 外层：默认主题 -->
+<ZBox :theme=&quot;zuiLight&quot;>
   <MainContent />
 
-  <!-- 内层：紧凑密度子树，独立于外层 -->
-  <ZBox :iem=&quot;ZIemPreset.compact&quot;>
-    <DenseTable />
+  <!-- 内层：局部切换为暗色主题 -->
+  <ZBox :theme=&quot;zuiDark&quot;>
+    <DarkSection />
   </ZBox>
 </ZBox>`"
     />

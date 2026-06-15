@@ -4,7 +4,7 @@ import { FavoriteBorderOutlined as HeartOutline } from '@vicons/material'
 </script>
 
 <template>
-  <ZFlex :gap="g => g.iem(1)" :wrap="w => w.wrap" :align="a => a.center">
+  <ZFlex :gap="g => g.px(16)" :wrap="w => w.wrap" :align="a => a.center">
     <ZFlex
       v-for="item in [
         { label: 'currentColor', color: (c: any) => c.currentColor },
@@ -18,7 +18,7 @@ import { FavoriteBorderOutlined as HeartOutline } from '@vicons/material'
       ]"
       :key="item.label"
       :direction="d => d.column"
-      :gap="g => g.iem(0.375)"
+      :gap="g => g.px(6)"
       :align="a => a.center"
     >
       <ZIcon :component="HeartOutline" :color="item.color" :size="1.5" />

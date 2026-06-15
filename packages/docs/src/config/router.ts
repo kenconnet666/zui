@@ -4,7 +4,6 @@ import type { RouteRecordRaw } from 'vue-router'
 const guideRoutes: RouteRecordRaw[] = [
   { path: '/guide/quick-start', component: () => import('../pages/QuickStartPage.vue') },
   { path: '/guide/theme', component: () => import('../pages/ThemePage.vue') },
-  { path: '/guide/iem', component: () => import('../pages/IemPage.vue') },
   { path: '/guide/core', component: () => import('../pages/ZuiCorePage.vue') },
   { path: '/guide/prop-shape', component: () => import('../pages/PropShapePage.vue') },
   { path: '/guide/sx-object', component: () => import('../pages/SxObjectPage.vue') },

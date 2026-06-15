@@ -47,10 +47,10 @@ describe('ZParagraph — 组件默认', () => {
     expect(getInjectedCss()).toMatch(/margin:0/)
   })
 
-  it('margin-bottom 走 schema spacing._middle(默认 1iem = 16px)', () => {
+  it('margin-bottom 走 schema spacing._middle(16px)', () => {
     mount(ZParagraph, { slots: { default: () => 'x' } })
-    // spacing.middle = iem(1) = calc(1 * var(--zui-iem, 16px))
-    expect(getInjectedCss()).toMatch(/margin-bottom:calc\(1 \* var\(--zui-iem,/)
+    // spacing.middle = 16px
+    expect(getInjectedCss()).toMatch(/margin-bottom:16px/)
   })
 
   it('默认 line-height:1.5(_normal)', () => {
@@ -72,14 +72,14 @@ describe('ZParagraph — props 覆盖', () => {
     expect(getInjectedCss()).toMatch(/line-height:1\.8/)
   })
 
-  it('size=0.9375 透传(等价 15px @ 16px iem)', () => {
+  it('size=0.9375 透传(等价 15px)', () => {
     mount(ZParagraph, {
       props: {
         size: 0.9375,
       },
       slots: { default: () => 'x' },
     })
-    expect(getInjectedCss()).toMatch(/font-size:calc\(0\.9375 \* var\(--zui-iem/)
+    expect(getInjectedCss()).toMatch(/font-size:15px/)
   })
 
   it('css 可覆盖默认 margin-bottom', () => {

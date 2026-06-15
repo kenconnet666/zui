@@ -17,7 +17,7 @@ import { ZScrollbar, ZFlex, ZText } from '@kenconnet666/zui-vue'
         }
       "
     >
-      <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.padding.iem(0.75)">
+      <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.padding.px(12)">
         <ZText v-for="n in 20" :key="n">第 {{ n }} 行内容 —— 超出容器后可滚动查看</ZText>
       </ZFlex>
     </ZScrollbar>
@@ -27,7 +27,7 @@ import { ZScrollbar, ZFlex, ZText } from '@kenconnet666/zui-vue'
     <ZScrollbar
       :css="
         s => {
-          s.height.iem(8)
+          s.height.px(128)
           s.borderRadius._small
           s.borderWidth.px(1)
           s.borderStyle.solid
@@ -35,7 +35,7 @@ import { ZScrollbar, ZFlex, ZText } from '@kenconnet666/zui-vue'
         }
       "
     >
-      <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.padding.iem(0.75)">
+      <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.padding.px(12)">
         <ZText v-for="n in 15" :key="n">条目 {{ n }}</ZText>
       </ZFlex>
     </ZScrollbar>

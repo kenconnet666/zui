@@ -148,7 +148,7 @@ const props = defineProps<ZCardProps>()
 const theme = useZTheme()
 
 const headClass = computed(() => icss(theme.value, (s) => {
-  s.padding.iem(1)
+  s.padding.px(16)
   s.borderBottomWidth._thin
   s.borderBottomStyle.solid
   s.borderBottomColor._border
@@ -187,7 +187,7 @@ const headAttrs = computed(() => extractSxAttrs(props.sxHead))
     'aria-label': '卡片标题区',
   }&quot;
   :sx-body=&quot;{
-    css: (s) => { s.padding.iem(2) },
+    css: (s) => { s.padding.px(32) },
     ref: bodyRef,                  // 拿到 body DOM
   }&quot;
   :sx-foot=&quot;{
@@ -218,7 +218,7 @@ const headAttrs = computed(() => extractSxAttrs(props.sxHead))
   }&quot;
   :sx-dialog=&quot;{
     css: (s) => {
-      s.width.iem(40)
+      s.width.px(640)
       s.maxHeight._screenH
       s.boxShadow._huge
     },

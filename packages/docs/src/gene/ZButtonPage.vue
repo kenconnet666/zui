@@ -208,7 +208,7 @@ import CssDemoSource from './ZButton/CssDemo.vue?raw'
     <ZParagraph>
       <code>size</code> 是 <strong>iem 倍数</strong>，1iem 的物理像素由
       <code>&lt;ZBox :iem&gt;</code> 决定。 默认使用
-      <code>ZIemPreset.default = '0.8333vw'</code>，在 1920px 宽屏下等于
+      <code>.default = '0.8333vw'</code>，在 1920px 宽屏下等于
       16px，随视口宽度自适应缩放。 下表以 <strong>iem = 16px</strong>（固定基准）为例换算各档位的 px
       值：
     </ZParagraph>

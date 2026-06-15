@@ -3,11 +3,11 @@ import { ZGradientText, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="g => g.iem(0.75)">
-    <ZGradientText :css="s => s.fontSize.iem(2)"> 默认渐变（primary → info，135°） </ZGradientText>
+  <ZFlex :direction="d => d.column" :gap="g => g.px(12)">
+    <ZGradientText :css="s => s.fontSize.px(32)"> 默认渐变（primary → info，135°） </ZGradientText>
     <ZGradientText
       gradient="linear-gradient(90deg, #f97316, #ec4899)"
-      :css="s => s.fontSize.iem(2)"
+      :css="s => s.fontSize.px(32)"
     >
       自定义渐变 orange → pink
     </ZGradientText>
@@ -15,7 +15,7 @@ import { ZGradientText, ZFlex } from '@kenconnet666/zui-vue'
       gradient="linear-gradient(135deg, #10b981, #3b82f6, #8b5cf6)"
       :css="
         s => {
-          s.fontSize.iem(2)
+          s.fontSize.px(32)
           s.fontWeight._bold
         }
       "
@@ -24,7 +24,7 @@ import { ZGradientText, ZFlex } from '@kenconnet666/zui-vue'
     </ZGradientText>
     <ZGradientText
       gradient="linear-gradient(90deg, #f59e0b, #ef4444)"
-      :css="s => s.fontSize.iem(1.5)"
+      :css="s => s.fontSize.px(24)"
       tag="h2"
     >
       tag=h2 语义标题 + 渐变

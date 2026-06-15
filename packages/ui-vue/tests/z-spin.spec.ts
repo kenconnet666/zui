@@ -61,14 +61,14 @@ describe('ZSpin — 包裹模式(有 slot)', () => {
 })
 
 describe('ZSpin — size + sx', () => {
-  it('size=2 → indicator 走 calc(2 * var(--zui-iem))', () => {
+  it('size=2 → indicator 走 32px(2 * 16)', () => {
     // R10:size 是 number(iem 倍数),直接透传给 ZIcon
     mount(ZSpin, {
       props: {
         size: 2,
       },
     })
-    expect(getInjectedCss()).toMatch(/width:calc\(2 \* var\(--zui-iem,/)
+    expect(getInjectedCss()).toMatch(/width:32px/)
   })
 
   it('sxIndicator.css 写入 indicator class', () => {

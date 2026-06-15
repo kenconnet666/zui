@@ -3,7 +3,7 @@ import { ZBlockquote, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="g => g.iem(1)">
+  <ZFlex :direction="d => d.column" :gap="g => g.px(16)">
     <ZBlockquote :color="c => c._primary"> primary 主色边条 —— 适合普通引用。 </ZBlockquote>
     <ZBlockquote :color="c => c._success">
       success 边条 —— 适合操作成功提示或正面引用。

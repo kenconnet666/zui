@@ -143,8 +143,8 @@ export default defineNitroPlugin((nitro) => {
           desc: '在 SSR 阶段可以 disabled,渲染到原地;hydration 后开启 disabled=false,自动切到 body。',
         },
         {
-          feature: 'iem 走 CSS variable',
-          desc: '--zui-iem 写在 ZBox wrapper inline,服务端 + 客户端注入完全一致,无 hydration mismatch。',
+          feature: 'icss 无状态副作用',
+          desc: 'icss 是同步的纯函数调用,生成的 className 与渲染顺序无关,服务端与客户端结果一致。',
         },
         {
           feature: 'icss 同步返回 className',
@@ -204,7 +204,7 @@ export default defineNitroPlugin((nitro) => {
       lang="ts"
       :code="`// ✅ 推荐
 import {
-  ZBox, ZIemPreset, zuiLight,
+  ZBox, zuiLight,
   ZButton, ZText, ZTitle,
   useZTheme, useZLocale,
   icss,
@@ -231,8 +231,8 @@ import { ZButton } from '@kenconnet666/zui-vue/components/button'`"
           desc: 'Theme 内部缓存 keymap;高并发场景每请求新建 theme(或 freeze 后只读共享亦可,因为 keymap 是纯函数缓存)。',
         },
         {
-          topic: 'iem 必须由 ZBox 注入',
-          desc: 'SSR 渲染如果忘了套 ZBox,--zui-iem 没值,所有 iem 单位 fallback 到 16px(calc 的第二个参数)。视觉上没问题,但失去 Provider 切换能力。',
+          topic: 'theme 必须由 ZBox 注入',
+          desc: 'SSR 渲染如果忘了套 ZBox,CSS 变量 token 没值,组件样式无法正常渲染。',
         },
         {
           topic: 'createIcssInstance 的副作用',
@@ -312,7 +312,7 @@ export default defineConfig({
         },
         {
           step: '3',
-          desc: '渲染入口套 ZBox,传 theme / locale / iem(SSR + client 同值,避免 hydration mismatch)。',
+          desc: '渲染入口套 ZBox,传 theme / locale(SSR + client 同值,避免 hydration mismatch)。',
         },
         {
           step: '4',

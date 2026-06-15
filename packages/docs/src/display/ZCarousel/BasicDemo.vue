@@ -18,7 +18,7 @@ const current = ref(0)
       :items="slides"
       :css="
         s => {
-          s.height.iem(12)
+          s.height.px(192)
         }
       "
     >
@@ -48,7 +48,7 @@ const current = ref(0)
       :show-arrows="false"
       :css="
         s => {
-          s.height.iem(8)
+          s.height.px(128)
         }
       "
     >

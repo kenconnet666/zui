@@ -27,7 +27,7 @@ function reroll() {
       :duration="1200"
       :css="
         s => {
-          s.fontSize.iem(2)
+          s.fontSize.px(32)
           s.fontWeight._bold
           s.color._primary
         }

@@ -10,7 +10,7 @@ import { ZFlex, ZSpacer, ZTag, ZText } from '@kenconnet666/zui-vue'
       :align="a => a.center"
       :css="
         s => {
-          s.padding.iem(0.75)
+          s.padding.px(12)
           s.borderRadius._small
           s.backgroundColor._bgMuted
           s.width.pct(100)
@@ -34,7 +34,7 @@ import { ZFlex, ZSpacer, ZTag, ZText } from '@kenconnet666/zui-vue'
           s => {
             s.backgroundColor._bgMuted
             s.borderRadius._small
-            s.padding.iem(0.5)
+            s.padding.px(8)
             s.textAlign.center
           }
         "
@@ -45,7 +45,7 @@ import { ZFlex, ZSpacer, ZTag, ZText } from '@kenconnet666/zui-vue'
           s => {
             s.backgroundColor._bgMuted
             s.borderRadius._small
-            s.padding.iem(0.5)
+            s.padding.px(8)
             s.textAlign.center
           }
         "

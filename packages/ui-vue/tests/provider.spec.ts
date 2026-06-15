@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { defineComponent, h, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { zuiLight } from '../src'
@@ -236,23 +236,6 @@ describe('ZBox — 底层 box 能力(css + tag)', () => {
     expect(css).toContain('#abc123')
   })
 
-  it('css + iem 双 prop 共存(iemStyle 走 inline style,css 走 class)', () => {
-    const w = mount(ZBox, {
-      props: {
-        iem: '20px',
-        css: (s: Chain<ZuiSchema>) => {
-          s.padding.iem(1) // 用合并 theme 的 iem,这里走 css var
-        },
-      },
-      slots: { default: () => 'x' },
-    })
-    // inline style 写 --zui-iem
-    expect(w.attributes('style')).toContain('--zui-iem: 20px')
-    // class 写 padding
-    const css = getInjectedCss()
-    expect(css).toMatch(/padding:calc\(1 \* var\(--zui-iem,/)
-  })
-
   it('css 不传 → 不挂 className(干净 wrapper)', () => {
     const w = mount(ZBox, { slots: { default: () => 'x' } })
     const cls = w.classes()
@@ -301,25 +284,23 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
       .join('\n')
   }
 
-  it('s.width._container → schema.sizes.container(iem(75) = 1200px @16)', () => {
+  it('s.width._container → schema.sizes.container(1200px)', () => {
     mount(ZBox, {
       props: {
         theme: zuiLight,
-        iem: '16px',
         css: (s: Chain<ZuiSchema>) => {
           s.width._container
         },
       },
       slots: { default: () => 'x' },
     })
-    expect(getInjectedCss()).toMatch(/width:calc\(75 \* var\(--zui-iem,/)
+    expect(getInjectedCss()).toMatch(/width:1200px/)
   })
 
   it('s.maxWidth._readable → schema.sizes.readable("65ch")', () => {
     mount(ZBox, {
       props: {
         theme: zuiLight,
-        iem: '16px',
         css: (s: Chain<ZuiSchema>) => {
           s.maxWidth._readable
         },
@@ -333,7 +314,6 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
     mount(ZBox, {
       props: {
         theme: zuiLight,
-        iem: '16px',
         css: (s: Chain<ZuiSchema>) => {
           s.height._screenH
         },
@@ -347,7 +327,6 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
     mount(ZBox, {
       props: {
         theme: zuiLight,
-        iem: '16px',
         css: (s: Chain<ZuiSchema>) => {
           s.borderWidth._thin
         },
@@ -361,7 +340,6 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
     mount(ZBox, {
       props: {
         theme: zuiLight,
-        iem: '16px',
         css: (s: Chain<ZuiSchema>) => {
           s.outlineWidth._middle
         },
@@ -375,7 +353,6 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
     mount(ZBox, {
       props: {
         theme: zuiLight,
-        iem: '16px',
         css: (s: Chain<ZuiSchema>) => {
           s.transitionProperty._colors
         },
@@ -393,7 +370,6 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
     mount(ZBox, {
       props: {
         theme: zuiLight,
-        iem: '16px',
         themePatch: { sizes: { container: '900px' } },
         css: (s: Chain<ZuiSchema>) => {
           s.width._container
@@ -405,94 +381,3 @@ describe('ZBox — 新增 schema token(sizes / borders / transitionProperty)', (
   })
 })
 
-describe('ZBox — iem 透传语义(无默认值,子不传则继承父 cascade)', () => {
-  it('子 ZBox 不传 :iem → 不写 inline --zui-iem(让 cascade 自然透传)', () => {
-    const w = mount({
-      components: { ZBox },
-      template: `
-        <ZBox :theme="theme" :iem="'16px'" class="root">
-          <ZBox class="inner"><span>x</span></ZBox>
-        </ZBox>
-      `,
-      data: () => ({ theme: zuiLight }),
-    })
-    const inner = w.find('.inner')
-    expect(inner.exists()).toBe(true)
-    expect(inner.attributes('style') ?? '').not.toContain('--zui-iem')
-  })
-
-  it('显式传 :iem → 写 inline --zui-iem(子树覆盖父基准)', () => {
-    const w = mount({
-      components: { ZBox },
-      template: `
-        <ZBox :theme="theme" :iem="'16px'">
-          <ZBox class="inner" :iem="'20px'"><span>x</span></ZBox>
-        </ZBox>
-      `,
-      data: () => ({ theme: zuiLight }),
-    })
-    expect(w.find('.inner').attributes('style')).toContain('--zui-iem: 20px')
-  })
-
-  it('兄弟 ZBox 不传 iem → 各自不写 inline,独立继承父 cascade', () => {
-    const w = mount({
-      components: { ZBox },
-      template: `
-        <ZBox :theme="theme" :iem="'16px'">
-          <ZBox class="sibling-a"><span>A</span></ZBox>
-          <ZBox class="sibling-b"><span>B</span></ZBox>
-        </ZBox>
-      `,
-      data: () => ({ theme: zuiLight }),
-    })
-    expect(w.find('.sibling-a').attributes('style') ?? '').not.toContain('--zui-iem')
-    expect(w.find('.sibling-b').attributes('style') ?? '').not.toContain('--zui-iem')
-  })
-
-  it('根 ZBox 不传 :iem → dev warn 触发', () => {
-    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-    try {
-      mount(ZBox, {
-        props: { theme: zuiLight }, // 有 theme 但没 iem
-        slots: { default: () => 'x' },
-      })
-      const calls = warnSpy.mock.calls.map(args => String(args[0]))
-      expect(calls.some(m => m.includes('根 ZBox 未传 `:iem`'))).toBe(true)
-    } finally {
-      warnSpy.mockRestore()
-    }
-  })
-
-  it('根 ZBox 传了 :iem → 不触发 iem warn', () => {
-    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-    try {
-      mount(ZBox, {
-        props: { theme: zuiLight, iem: '16px' },
-        slots: { default: () => 'x' },
-      })
-      const calls = warnSpy.mock.calls.map(args => String(args[0]))
-      expect(calls.some(m => m.includes('根 ZBox 未传 `:iem`'))).toBe(false)
-    } finally {
-      warnSpy.mockRestore()
-    }
-  })
-
-  it('子 ZBox 不传 :iem → 不触发 iem warn(只有根才 warn)', () => {
-    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-    try {
-      mount({
-        components: { ZBox },
-        template: `
-          <ZBox :theme="theme" :iem="'16px'">
-            <ZBox><span>inner</span></ZBox>
-          </ZBox>
-        `,
-        data: () => ({ theme: zuiLight }),
-      })
-      const calls = warnSpy.mock.calls.map(args => String(args[0]))
-      expect(calls.some(m => m.includes('根 ZBox 未传 `:iem`'))).toBe(false)
-    } finally {
-      warnSpy.mockRestore()
-    }
-  })
-})

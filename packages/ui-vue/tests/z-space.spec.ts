@@ -18,8 +18,8 @@ describe('ZSpace — 默认', () => {
     const css = getInjectedCss()
     expect(css).toMatch(/display:flex/)
     expect(css).toMatch(/align-items:center/)
-    // _small = iem(0.5) → calc(0.5 * var(--zui-iem, 16px))
-    expect(css).toMatch(/gap:calc\(0\.5 \* var\(--zui-iem,/)
+    // _small = 8px(0.5 * 16)
+    expect(css).toMatch(/gap:8px/)
     // 默认不写 flex-direction —— 仅验证本组件 class 规则
     const cls = w.classes().find(c => c.startsWith('css-'))
     expect(cls).toBeTruthy()

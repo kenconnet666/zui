@@ -33,7 +33,7 @@ const horizontalItems = [
       :gap="g => g._small"
       :css="
         s => {
-          s.width.iem(12)
+          s.width.px(192)
         }
       "
     >

@@ -3,7 +3,7 @@ import { ZCopyButton, ZFlex, ZCode } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :gap="g => g.iem(1)" :wrap="w => w.wrap" :align="a => a.center">
+  <ZFlex :gap="g => g.px(16)" :wrap="w => w.wrap" :align="a => a.center">
     <!-- 纯图标（默认） -->
     <ZCopyButton text="pnpm add @kenconnet666/zui-vue" />
 
@@ -21,7 +21,7 @@ import { ZCopyButton, ZFlex, ZCode } from '@kenconnet666/zui-vue'
     <ZCopyButton text="no toast" label="不弹 toast" :toast="false" />
 
     <!-- 与 ZCode 配合 -->
-    <ZFlex :align="a => a.center" :gap="g => g.iem(0.5)">
+    <ZFlex :align="a => a.center" :gap="g => g.px(8)">
       <ZCode code="pnpm add shiki" />
       <ZCopyButton text="pnpm add shiki" />
     </ZFlex>

@@ -18,7 +18,7 @@ const propsRows = [
     name: 'width',
     type: '(w: Chain[width]) => void',
     default: '—',
-    desc: '宽度 factory，如 w => w.px(160) / w.iem(8) / w.pct(100)。',
+    desc: '宽度 factory，如 w => w.px(160) / w.px(128) / w.pct(100)。',
   },
   { name: 'height', type: '(h: Chain[height]) => void', default: '—', desc: '高度 factory。' },
   {
@@ -46,7 +46,7 @@ const slotsRows = [
     <ZParagraph>
       增强 <ZCode code="img" /> 标签，默认开启懒加载，支持 fallback 备用图和
       <ZCode code="#error" /> slot 自定义错误状态。 宽高通过 <ZCode code="width" /> /
-      <ZCode code="height" /> factory 传入，可使用 <ZCode code=".iem()" /> /
+      <ZCode code="height" /> factory 传入，可使用 
       <ZCode code=".px()" /> / <ZCode code=".pct()" /> 等任意 carrier 方法。
     </ZParagraph>
 

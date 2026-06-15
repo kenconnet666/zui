@@ -8,7 +8,7 @@ const v3 = ref(60)
 </script>
 
 <template>
-  <ZSpace :direction="d => d.column" :size="g => g._large" :css="s => s.width.iem(20)">
+  <ZSpace :direction="d => d.column" :size="g => g._large" :css="s => s.width.px(320)">
     <ZText
       :css="
         s => {

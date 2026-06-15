@@ -3,7 +3,7 @@ import { ZAvatar, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :gap="g => g.iem(1)" :wrap="w => w.wrap" :align="a => a.center">
+  <ZFlex :gap="g => g.px(16)" :wrap="w => w.wrap" :align="a => a.center">
     <!-- 图片 -->
     <ZAvatar src="https://api.dicebear.com/9.x/thumbs/svg?seed=zui" alt="user" />
 

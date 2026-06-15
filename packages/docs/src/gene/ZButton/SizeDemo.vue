@@ -3,7 +3,7 @@ import { ZButton, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :gap="g => g.iem(0.75)" :wrap="w => w.wrap" :align="a => a.center">
+  <ZFlex :gap="g => g.px(12)" :wrap="w => w.wrap" :align="a => a.center">
     <ZButton :size="0.75">极小 0.75</ZButton>
     <ZButton :size="0.875">小 0.875</ZButton>
     <ZButton>默认 1</ZButton>

@@ -11,12 +11,12 @@ import { ZWatermark, ZText } from '@kenconnet666/zui-vue'
     :rotate="-30"
     :css="
       s => {
-        s.height.iem(14)
+        s.height.px(224)
         s.borderRadius._small
         s.borderWidth.px(1)
         s.borderStyle.solid
         s.borderColor._border
-        s.padding.iem(1)
+        s.padding.px(16)
       }
     "
   >
@@ -25,7 +25,7 @@ import { ZWatermark, ZText } from '@kenconnet666/zui-vue'
       :css="
         s => {
           s.color._textSecondary
-          s.marginTop.iem(0.5)
+          s.marginTop.px(8)
         }
       "
     >

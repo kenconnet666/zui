@@ -48,7 +48,7 @@ const tableClass = computed(() =>
     s.borderCollapse.collapse
     s.fontSize._small
     s.lineHeight._relaxed
-    s.marginBottom.iem(2)
+    s.marginBottom.px(32)
   }),
 )
 
@@ -61,10 +61,10 @@ const theadClass = computed(() =>
 const thClass = computed(() =>
   icss(theme.value, s => {
     s.textAlign.left
-    s.paddingTop.iem(0.5)
-    s.paddingBottom.iem(0.5)
-    s.paddingLeft.iem(0.75)
-    s.paddingRight.iem(0.75)
+    s.paddingTop.px(8)
+    s.paddingBottom.px(8)
+    s.paddingLeft.px(12)
+    s.paddingRight.px(12)
     s.fontWeight._semibold
     s.color._textSecondary
     s.whiteSpace.nowrap
@@ -77,10 +77,10 @@ const thClass = computed(() =>
 const tdClass = (mono: boolean) =>
   computed(() =>
     icss(theme.value, s => {
-      s.paddingTop.iem(0.5)
-      s.paddingBottom.iem(0.5)
-      s.paddingLeft.iem(0.75)
-      s.paddingRight.iem(0.75)
+      s.paddingTop.px(8)
+      s.paddingBottom.px(8)
+      s.paddingLeft.px(12)
+      s.paddingRight.px(12)
       s.borderBottomWidth._thin
       s.borderBottomStyle.solid
       s.borderBottomColor._border
@@ -88,7 +88,7 @@ const tdClass = (mono: boolean) =>
       s.verticalAlign('top')
       if (mono) {
         s.fontFamily('ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace')
-        s.fontSize.iem(0.8125)
+        s.fontSize.px(13)
         s.color._primary
       }
     }),

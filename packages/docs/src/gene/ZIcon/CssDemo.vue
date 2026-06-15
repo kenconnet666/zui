@@ -4,15 +4,15 @@ import { StarBorderOutlined as StarOutline } from '@vicons/material'
 </script>
 
 <template>
-  <ZFlex :gap="g => g.iem(1.5)" :wrap="w => w.wrap" :align="a => a.center">
+  <ZFlex :gap="g => g.px(24)" :wrap="w => w.wrap" :align="a => a.center">
     <!-- 圆形边框 -->
-    <ZFlex :direction="d => d.column" :gap="g => g.iem(0.5)" :align="a => a.center">
+    <ZFlex :direction="d => d.column" :gap="g => g.px(8)" :align="a => a.center">
       <ZIcon
         :component="StarOutline"
         :size="1.5"
         :css="
           s => {
-            s.padding.iem(0.25)
+            s.padding.px(4)
             s.border('2px solid currentColor')
             s.borderRadius.pct(50)
             s.color._primary
@@ -22,7 +22,7 @@ import { StarBorderOutlined as StarOutline } from '@vicons/material'
       <code style="font-size: 11px">圆形边框</code>
     </ZFlex>
     <!-- hover 高亮 -->
-    <ZFlex :direction="d => d.column" :gap="g => g.iem(0.5)" :align="a => a.center">
+    <ZFlex :direction="d => d.column" :gap="g => g.px(8)" :align="a => a.center">
       <ZIcon
         :component="StarOutline"
         :size="1.5"
@@ -38,7 +38,7 @@ import { StarBorderOutlined as StarOutline } from '@vicons/material'
       <code style="font-size: 11px">hover 高亮</code>
     </ZFlex>
     <!-- 非正方形 -->
-    <ZFlex :direction="d => d.column" :gap="g => g.iem(0.5)" :align="a => a.center">
+    <ZFlex :direction="d => d.column" :gap="g => g.px(8)" :align="a => a.center">
       <ZIcon
         :component="StarOutline"
         :css="

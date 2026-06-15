@@ -9,7 +9,7 @@ import { ZCard, ZFlex, ZText } from '@kenconnet666/zui-vue'
       :hoverable="true"
       :css="
         s => {
-          s.width.iem(16)
+          s.width.px(256)
         }
       "
     >
@@ -22,7 +22,7 @@ import { ZCard, ZFlex, ZText } from '@kenconnet666/zui-vue'
       :hoverable="true"
       :css="
         s => {
-          s.width.iem(16)
+          s.width.px(256)
         }
       "
     >

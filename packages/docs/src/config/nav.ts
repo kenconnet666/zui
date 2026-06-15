@@ -33,7 +33,6 @@ export const docNav: DocNavItem[] = [
     children: [
       { key: 'getting-started', label: '快速开始', route: '/guide/quick-start' },
       { key: 'theme', label: '主题与 ZBox', route: '/guide/theme' },
-      { key: 'iem', label: 'iem 单位', route: '/guide/iem' },
       { key: 'core', label: 'zui-core 模块', route: '/guide/core' },
       { key: 'prop-shape', label: 'props 范式', route: '/guide/prop-shape' },
       { key: 'sx-object', label: 'SxObject 模型', route: '/guide/sx-object' },

@@ -3,7 +3,7 @@ import { ZText, ZFlex } from '@kenconnet666/zui-vue'
 </script>
 
 <template>
-  <ZFlex :direction="d => d.column" :gap="g => g.iem(0.5)">
+  <ZFlex :direction="d => d.column" :gap="g => g.px(8)">
     <ZText italic>斜体文本 italic</ZText>
     <ZText :underline="true">始终下划线 underline</ZText>
     <ZText :underlineOnHover="true">悬停下划线 underlineOnHover（试试 hover）</ZText>

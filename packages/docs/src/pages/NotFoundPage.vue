@@ -8,18 +8,18 @@ const router = useRouter()
 
 const wrapClass = computed(() =>
   icss(theme.value, s => {
-    s.paddingTop.iem(6)
+    s.paddingTop.px(96)
     s.textAlign.center
   }),
 )
 
 const codeClass = computed(() =>
   icss(theme.value, s => {
-    s.fontSize.iem(6)
+    s.fontSize.px(96)
     s.fontWeight._bold
     s.color._primary.alpha(20)
     s.lineHeight(1)
-    s.marginBottom.iem(1)
+    s.marginBottom.px(16)
   }),
 )
 </script>
@@ -31,7 +31,7 @@ const codeClass = computed(() =>
     <ZParagraph :css="s => s.color._textSecondary">
       你访问的页面不存在，可能已被移动或删除。
     </ZParagraph>
-    <ZFlex :gap="g => g.iem(0.75)" :justify="j => j.center">
+    <ZFlex :gap="g => g.px(12)" :justify="j => j.center">
       <ZButton @click="router.push('/')">返回首页</ZButton>
       <ZButton variant="outlined" @click="router.back()">返回上页</ZButton>
     </ZFlex>

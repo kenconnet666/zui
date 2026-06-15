@@ -12,7 +12,7 @@ import { ZMarquee, ZFlex, ZTag, ZText } from '@kenconnet666/zui-vue'
           s.borderStyle.solid
           s.borderColor._border
           s.borderRadius._small
-          s.padding.iem(0.5)
+          s.padding.px(8)
         }
       "
     >
@@ -43,7 +43,7 @@ import { ZMarquee, ZFlex, ZTag, ZText } from '@kenconnet666/zui-vue'
           s.borderStyle.solid
           s.borderColor._border
           s.borderRadius._small
-          s.padding.iem(0.5)
+          s.padding.px(8)
         }
       "
     >
@@ -66,7 +66,7 @@ import { ZMarquee, ZFlex, ZTag, ZText } from '@kenconnet666/zui-vue'
           s.borderStyle.solid
           s.borderColor._border
           s.borderRadius._small
-          s.padding.iem(0.5)
+          s.padding.px(8)
         }
       "
     >
