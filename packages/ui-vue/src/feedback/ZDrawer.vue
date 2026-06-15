@@ -63,6 +63,7 @@ import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 import { useScrollbarOverlay } from '../_internal/useScrollbarOverlay'
 import { BuiltinIcons, ZIcon } from '../gene'
 import { sizePx } from '../_internal/sizing'
+import { applyUserRef } from '../_internal/merge-ref'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -294,11 +295,7 @@ const rootRef = ref<HTMLElement | null>(null)
 function bindMask(el: unknown): void {
   const node = (el as HTMLElement | null) ?? null
   rootRef.value = node
-  const userRef = sxMaskAttrs.value.ref
-  if (typeof userRef === 'function') userRef(node, {})
-  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
-    ;(userRef as { value: unknown }).value = node
-  }
+  applyUserRef(sxMaskAttrs.value.ref, node)
 }
 defineExpose({ rootRef })
 </script>

@@ -55,6 +55,7 @@ import { computed, h, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applyUserRef } from '../_internal/merge-ref'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 const props = withDefaults(defineProps<ZTabsProps>(), {
@@ -235,11 +236,7 @@ const rootRef = ref<HTMLDivElement | null>(null)
 function bindList(el: unknown): void {
   const node = (el as HTMLDivElement | null) ?? null
   rootRef.value = node
-  const userRef = sxListAttrs.value.ref
-  if (typeof userRef === 'function') userRef(node, {})
-  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
-    ;(userRef as { value: unknown }).value = node
-  }
+  applyUserRef(sxListAttrs.value.ref, node)
 }
 defineExpose({ rootRef })
 </script>

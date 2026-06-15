@@ -52,6 +52,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyInputSizeNoHeight } from '../_internal/input-size'
+import { applyUserRef } from '../_internal/merge-ref'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -204,11 +205,7 @@ const rootRef = ref<HTMLDivElement | null>(null)
 function bindTextarea(el: unknown): void {
   const node = (el as HTMLTextAreaElement | null) ?? null
   textareaRef.value = node
-  const userRef = sxTextareaAttrs.value.ref
-  if (typeof userRef === 'function') userRef(node, {})
-  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
-    ;(userRef as { value: unknown }).value = node
-  }
+  applyUserRef(sxTextareaAttrs.value.ref, node)
 }
 defineExpose({ rootRef })
 </script>

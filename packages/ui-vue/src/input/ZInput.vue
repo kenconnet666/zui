@@ -68,6 +68,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyInputSize } from '../_internal/input-size'
+import { applyUserRef } from '../_internal/merge-ref'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
@@ -241,11 +242,7 @@ const rootRef = ref<HTMLDivElement | null>(null)
 function bindInput(el: unknown): void {
   const node = (el as HTMLInputElement | null) ?? null
   inputRef.value = node
-  const userRef = sxInputAttrs.value.ref
-  if (typeof userRef === 'function') userRef(node, {})
-  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
-    ;(userRef as { value: unknown }).value = node
-  }
+  applyUserRef(sxInputAttrs.value.ref, node)
 }
 defineExpose({ rootRef })
 </script>

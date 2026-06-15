@@ -48,6 +48,7 @@ import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { usePopper, useEscapeStack } from '../_hooks'
 import { sizePx } from '../_internal/sizing'
+import { applyUserRef } from '../_internal/merge-ref'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -202,11 +203,7 @@ const sxTitleAttrs = computed(() => extractSxAttrs(props.sxTitle))
 function bindTrigger(el: unknown): void {
   const node = (el as HTMLElement | null) ?? null
   triggerRef.value = node
-  const userRef = sxTriggerAttrs.value.ref
-  if (typeof userRef === 'function') userRef(node, {})
-  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
-    ;(userRef as { value: unknown }).value = node
-  }
+  applyUserRef(sxTriggerAttrs.value.ref, node)
 }
 
 /**
@@ -216,11 +213,7 @@ function bindTrigger(el: unknown): void {
 function bindFloating(el: unknown): void {
   const node = (el as HTMLElement | null) ?? null
   floatingRef.value = node
-  const userRef = sxContentAttrs.value.ref
-  if (typeof userRef === 'function') userRef(node, {})
-  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
-    ;(userRef as { value: unknown }).value = node
-  }
+  applyUserRef(sxContentAttrs.value.ref, node)
 }
 </script>
 

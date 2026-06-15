@@ -49,6 +49,7 @@ import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 import { usePopper, useEscapeStack } from '../_hooks'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applyUserRef } from '../_internal/merge-ref'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -155,11 +156,7 @@ function selectItem(item: ZDropdownItem): void {
 function bindMenu(el: unknown): void {
   const node = (el as HTMLElement | null) ?? null
   menuRef.value = node
-  const userRef = sxMenuAttrs.value.ref
-  if (typeof userRef === 'function') userRef(node, {})
-  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
-    ;(userRef as { value: unknown }).value = node
-  }
+  applyUserRef(sxMenuAttrs.value.ref, node)
 }
 
 const triggerWrapClass = computed(() =>

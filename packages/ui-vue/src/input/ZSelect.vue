@@ -83,6 +83,7 @@ import { sizePx } from '../_internal/sizing'
 import { onClickOutside } from '@vueuse/core'
 import ZVirtualList from '../display/ZVirtualList.vue'
 import { themeColorScheme } from '../_internal/colorScheme'
+import { applyUserRef } from '../_internal/merge-ref'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -385,11 +386,7 @@ function bindRoot(el: unknown): void {
   const node = (el as HTMLDivElement | null) ?? null
   rootRef.value = node
   triggerRef.value = node
-  const userRef = sxTriggerAttrs.value.ref
-  if (typeof userRef === 'function') userRef(node, {})
-  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
-    ;(userRef as { value: unknown }).value = node
-  }
+  applyUserRef(sxTriggerAttrs.value.ref, node)
 }
 /**
  * dropdown 元素 ref 合并器 —— 同时写入内部 `dropdownRef`(usePopper / onClickOutside)
@@ -398,11 +395,7 @@ function bindRoot(el: unknown): void {
 function bindDropdown(el: unknown): void {
   const node = (el as HTMLElement | null) ?? null
   dropdownRef.value = node
-  const userRef = sxDropdownAttrs.value.ref
-  if (typeof userRef === 'function') userRef(node, {})
-  else if (userRef && typeof userRef === 'object' && 'value' in userRef) {
-    ;(userRef as { value: unknown }).value = node
-  }
+  applyUserRef(sxDropdownAttrs.value.ref, node)
 }
 defineExpose({ rootRef })
 </script>
