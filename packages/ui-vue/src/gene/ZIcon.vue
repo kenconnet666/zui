@@ -136,6 +136,7 @@ export interface ZIconProps {
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -171,8 +172,8 @@ const className = computed(() =>
     s.lineHeight(1)
 
     // size(number):iem 倍数,width + height 镜像保证正方形
-    s.width.iem(size)
-    s.height.iem(size)
+    s.width.px(sizePx(size))
+    s.height.px(sizePx(size))
 
     // color:单 carrier factory(s.color 的 factory 重载吃 props.color)
     s.color(props.color)

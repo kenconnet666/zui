@@ -31,6 +31,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import type { ZuiSchema } from '../provider/theme'
 import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
+import { sizePx } from '../_internal/sizing'
 
 export interface ZCodeProps {
   /** 代码文本。高亮模式必传(default slot 内容无法可靠提取)。 */
@@ -244,10 +245,10 @@ export default defineComponent({
 
           if (props.inline) {
             s.display.inlineBlock
-            s.paddingLeft.iem(0.375)
-            s.paddingRight.iem(0.375)
-            s.paddingTop.iem(0.0625)
-            s.paddingBottom.iem(0.0625)
+            s.paddingLeft.px(sizePx(0.375))
+            s.paddingRight.px(sizePx(0.375))
+            s.paddingTop.px(sizePx(0.0625))
+            s.paddingBottom.px(sizePx(0.0625))
             s.fontSize._small
           } else {
             s.display.block

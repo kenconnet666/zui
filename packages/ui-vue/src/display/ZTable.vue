@@ -84,6 +84,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -233,7 +234,7 @@ const tableClass = computed(() =>
   icss(theme.value, s => {
     s.width.pct(100)
     s.borderCollapse.collapse
-    s.fontSize.iem(props.size ?? 1)
+    s.fontSize.px(sizePx(props.size ?? 1))
     s.color._text
     s.backgroundColor._bg
     if (props.bordered) {
@@ -279,8 +280,8 @@ const sxRowAttrs = computed(() => extractSxAttrs(props.sxRow))
 const cellClass = (col: ZTableColumn<T>): string =>
   icss(theme.value, s => {
     const size = props.size ?? 1
-    s.paddingTop.iem(size * 0.625)
-    s.paddingBottom.iem(size * 0.625)
+    s.paddingTop.px(sizePx(size * 0.625))
+    s.paddingBottom.px(sizePx(size * 0.625))
     s.paddingLeft._middle
     s.paddingRight._middle
     s.textAlign(col.align ?? 'left')
@@ -296,12 +297,12 @@ const sxCellAttrs = computed(() => extractSxAttrs(props.sxCell))
 const selectCellClass = computed(() =>
   icss(theme.value, s => {
     const size = props.size ?? 1
-    s.paddingTop.iem(size * 0.625)
-    s.paddingBottom.iem(size * 0.625)
+    s.paddingTop.px(sizePx(size * 0.625))
+    s.paddingBottom.px(sizePx(size * 0.625))
     s.paddingLeft._small
     s.paddingRight._small
     s.textAlign.center
-    s.width.iem(2)
+    s.width.px(sizePx(2))
   }),
 )
 

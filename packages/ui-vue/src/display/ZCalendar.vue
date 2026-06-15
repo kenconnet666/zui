@@ -26,6 +26,7 @@ import { computed, h, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -209,7 +210,7 @@ const dayClass = (d: { key: string; outOfMonth: boolean }): string => {
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.height.iem(2)
+    s.height.px(sizePx(2))
     s.borderRadius._tiny
     s.fontSize._small
     s.cursor.pointer

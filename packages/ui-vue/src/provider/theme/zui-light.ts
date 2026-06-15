@@ -1,4 +1,4 @@
-import { Theme, FLAT_PALETTE, iem } from '@kenconnet666/zui-core'
+import { Theme, FLAT_PALETTE } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from './schema'
 
 /**
@@ -6,25 +6,14 @@ import type { ZuiSchema } from './schema'
  * 完整 5 阶 size scale + 9 阶 fontWeight + 5 个 easing + 5 阶 breakpoint + UI 角色 z-index +
  * Tailwind 衍生 lineHeight/letterSpacing/opacity/aspectRatio。
  *
- * **尺寸类 token（spacing / radius / fontSize / blur）走 zui 逻辑单位 `iem`**:
- * 每个值 emit `calc(N * var(--zui-iem, 16px))`,**默认 1iem = 16px**(等同 1rem);
- * `<ZBox :iem="ZIemPreset.large">` 整站放大 25%(1iem=20px)、
- * `:iem="ZIemPreset.rem"` 跟随浏览器根字号(a11y),
- * **嵌套 Provider 通过 css cascade 自然覆盖,兄弟 Provider 各自独立**。详见 skill §13.0 ②。
+ * **尺寸类 token（spacing / radius / fontSize / blur / sizes）= px 字面量**(0.9.x 移除 iem 逻辑单位):
+ * - `spacing` 4/8/16/24/32px,`radius` 4/8/12/16/28px,`fontSize` 12/14/16/18/20px
+ * - `blur` 4/8/16/24/40px,`sizes` 64/128/256/512/768/1200px
  *
- * iem = "我自己使用的 em",跟 CSS `rem`(root em)对称 —— rem 由浏览器掌控,iem 由 Provider 掌控。
+ * 需要整站等比缩放走原生 `rem`（改根字号）/ `vw`,不再由 Provider 注入逻辑单位。
  *
- * **token 数字语义**:N 表示"几个基准字号"。
- * - `spacing.middle = iem(1)` → 默认 16px,Provider 20px 模式下 = 20px
- * - `fontSize.large = iem(1.125)` → 默认 18px(16×1.125),Provider 20px 模式下 = 22.5px
- *
- * **不走 iem 的几类**(设计哲学):
- * - `breakpoint` —— 媒体查询基准,跟"屏幕宽度"绑定,不该跟 iem 缩放
- * - `shadow` —— 装饰性效果,保留 px 字面量与设计稿绑定
- * - `radius.full = '9999px'` —— "无穷大圆角"语义
- * - `blur.none = '0'` —— 0 长度无需 calc
- * - `letterSpacing` —— em 单位,跟字体本身缩放(iem 体系无关)
- * - `duration` / `easing` / `zIndex` / `opacity` / `lineHeight` / `aspectRatio` / `fontWeight` —— 非长度
+ * **特殊值**:`radius.full = '9999px'`（"无穷大圆角"）、各类 `none = '0'`、
+ * `letterSpacing` 用 em（跟字体缩放）、`duration/easing/zIndex/opacity/lineHeight/aspectRatio/fontWeight` 非长度。
  *
  * 业务侧顶层主题入口;用户工程通过 `<ZBox :theme="zuiLight">` 注入。
  */
@@ -52,32 +41,32 @@ export const zuiLight = new Theme<ZuiSchema>({
     focusRing: '#1976d2', // 同 primary;实际使用走 .alpha(40)
     overlayBg: '#000000', // 实际使用走 .alpha(50) → rgba(0,0,0,0.5)
   },
-  // 5 阶 spacing:默认 4/8/16/24/32px(0.25/0.5/1/1.5/2 个基准字号)
+  // 5 阶 spacing:4/8/16/24/32px
   spacing: {
-    tiny: iem(0.25),
-    small: iem(0.5),
-    middle: iem(1),
-    large: iem(1.5),
-    huge: iem(2),
+    tiny: '4px',
+    small: '8px',
+    middle: '16px',
+    large: '24px',
+    huge: '32px',
   },
-  // radius:默认 4/8/12/16/28px(0.25/0.5/0.75/1/1.75 个基准字号);full 是语义"无穷"
-  // huge=28px 对齐 M3 FAB / Dialog 推荐圆角(Stage 4,2026-05-23 从 24px 改 28px)
+  // radius:4/8/12/16/28px;full 是语义"无穷"
+  // huge=28px 对齐 M3 FAB / Dialog 推荐圆角
   radius: {
     none: '0',
-    tiny: iem(0.25),
-    small: iem(0.5),
-    middle: iem(0.75),
-    large: iem(1),
-    huge: iem(1.75),
+    tiny: '4px',
+    small: '8px',
+    middle: '12px',
+    large: '16px',
+    huge: '28px',
     full: '9999px',
   },
-  // fontSize:默认 12/14/16/18/20px(0.75/0.875/1/1.125/1.25 个基准字号)
+  // fontSize:12/14/16/18/20px
   fontSize: {
-    tiny: iem(0.75),
-    small: iem(0.875),
-    middle: iem(1),
-    large: iem(1.125),
-    huge: iem(1.25),
+    tiny: '12px',
+    small: '14px',
+    middle: '16px',
+    large: '18px',
+    huge: '20px',
   },
   fontWeight: {
     thin: 100,
@@ -104,14 +93,14 @@ export const zuiLight = new Theme<ZuiSchema>({
     large: '0px 6px 10px 4px rgba(0,0,0,0.15), 0px 2px 3px rgba(0,0,0,0.30)', // level 4
     huge: '0px 8px 12px 6px rgba(0,0,0,0.15), 0px 4px 4px rgba(0,0,0,0.30)', // level 5
   },
-  // blur:默认 4/8/16/24/40px(0.25/0.5/1/1.5/2.5 个基准字号)
+  // blur:4/8/16/24/40px
   blur: {
     none: '0',
-    tiny: iem(0.25),
-    small: iem(0.5),
-    middle: iem(1),
-    large: iem(1.5),
-    huge: iem(2.5),
+    tiny: '4px',
+    small: '8px',
+    middle: '16px',
+    large: '24px',
+    huge: '40px',
   },
   duration: {
     none: '0ms',
@@ -203,12 +192,12 @@ export const zuiLight = new Theme<ZuiSchema>({
    * - full / screen / screenH:百分比 / 视口
    */
   sizes: {
-    tiny: iem(4),
-    small: iem(8),
-    middle: iem(16),
-    large: iem(32),
-    huge: iem(48),
-    container: iem(75),
+    tiny: '64px',
+    small: '128px',
+    middle: '256px',
+    large: '512px',
+    huge: '768px',
+    container: '1200px',
     readable: '65ch',
     full: '100%',
     screen: '100vw',

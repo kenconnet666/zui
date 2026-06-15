@@ -30,6 +30,7 @@ export interface ZSkeletonProps {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -88,8 +89,8 @@ const rootClass = computed(() =>
 
 const avatarClass = computed(() =>
   icss(theme.value, s => {
-    s.width.iem(2.5)
-    s.height.iem(2.5)
+    s.width.px(sizePx(2.5))
+    s.height.px(sizePx(2.5))
     s.borderRadius._full
     s.backgroundColor._bgMuted
     s.flexShrink(0)
@@ -108,7 +109,7 @@ const linesContainerClass = computed(() =>
 
 const titleBarClass = computed(() =>
   icss(theme.value, s => {
-    s.height.iem(1.25)
+    s.height.px(sizePx(1.25))
     s.width.pct(40)
     s.borderRadius._tiny
     s.backgroundColor._bgMuted
@@ -119,7 +120,7 @@ const titleBarClass = computed(() =>
 
 const rowClass = (isLast: boolean): string =>
   icss(theme.value, s => {
-    s.height.iem(0.875)
+    s.height.px(sizePx(0.875))
     s.width.pct(isLast ? 60 : 100)
     s.borderRadius._tiny
     s.backgroundColor._bgMuted

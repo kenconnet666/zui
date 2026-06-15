@@ -58,6 +58,7 @@ export interface ZDividerProps {
 import { computed, useSlots } from 'vue'
 import { icss, iem } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 const props = withDefaults(defineProps<ZDividerProps>(), {
   vertical: false,
@@ -102,7 +103,7 @@ const className = computed(() =>
       s.display.flex
       s.alignItems.center
       s.width.pct(100)
-      s.gap.iem(0.5) // 文字与线之间间隙
+      s.gap.px(sizePx(0.5)) // 文字与线之间间隙
 
       const beforeFlex = props.align === 'left' ? `0 0 ${EDGE_RATIO}` : '1'
       const afterFlex = props.align === 'right' ? `0 0 ${EDGE_RATIO}` : '1'

@@ -42,6 +42,7 @@ export interface ZSegmentedEmits {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -98,15 +99,15 @@ const itemClass = (opt: ZSegmentedOption): string => {
     s.justifyContent.center
     s.borderStyle.none
     s.cursor(isDisabled ? 'not-allowed' : 'pointer')
-    s.borderRadius.iem(size * 0.375)
-    s.fontSize.iem(size)
+    s.borderRadius.px(sizePx(size * 0.375))
+    s.fontSize.px(sizePx(size))
     s.fontWeight._medium
-    s.height.iem(height)
-    s.paddingTop.iem(size * 0.5)
-    s.paddingBottom.iem(size * 0.5)
-    s.paddingLeft.iem(size * 1)
-    s.paddingRight.iem(size * 1)
-    s.gap.iem(size * 0.5)
+    s.height.px(sizePx(height))
+    s.paddingTop.px(sizePx(size * 0.5))
+    s.paddingBottom.px(sizePx(size * 0.5))
+    s.paddingLeft.px(sizePx(size * 1))
+    s.paddingRight.px(sizePx(size * 1))
+    s.gap.px(sizePx(size * 0.5))
     s.transitionProperty._colors
     s.transitionDuration._small
     if (props.block) s.flexGrow(1)

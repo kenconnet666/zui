@@ -137,6 +137,7 @@ import ZCopyButton from './ZCopyButton.vue'
 import { BuiltinIcons } from './icons'
 import ZSelect from '../input/ZSelect.vue'
 import type { ZSelectValue } from '../input/ZSelect.vue'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -252,7 +253,7 @@ const actionsClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
-    s.gap.iem(0.25)
+    s.gap.px(sizePx(0.25))
     s.flexShrink(0)
   }),
 )
@@ -261,11 +262,11 @@ const buttonClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
-    s.gap.iem(0.25)
-    s.paddingTop.iem(0.25)
-    s.paddingBottom.iem(0.25)
-    s.paddingLeft.iem(0.5)
-    s.paddingRight.iem(0.5)
+    s.gap.px(sizePx(0.25))
+    s.paddingTop.px(sizePx(0.25))
+    s.paddingBottom.px(sizePx(0.25))
+    s.paddingLeft.px(sizePx(0.5))
+    s.paddingRight.px(sizePx(0.5))
     s.borderWidth.px(0)
     s.borderRadius._tiny
     s.backgroundColor.transparent

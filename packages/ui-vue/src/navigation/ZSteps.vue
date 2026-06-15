@@ -41,6 +41,7 @@ export interface ZStepsProps {
 import { computed, h } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 import { BuiltinIcons, ZIcon } from '../gene'
 import { applyAsBg } from '../_internal/color-bridge'
 
@@ -117,8 +118,8 @@ const indicatorClass = (state: StepState): string =>
     s.alignItems.center
     s.justifyContent.center
     s.flexShrink(0)
-    s.width.iem(size)
-    s.height.iem(size)
+    s.width.px(sizePx(size))
+    s.height.px(sizePx(size))
     s.borderRadius._full
     s.fontWeight._semibold
     s.fontSize._small

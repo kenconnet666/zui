@@ -43,6 +43,7 @@ export interface ZBadgeProps {
 import { computed, useSlots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -122,18 +123,18 @@ const badgeClass = computed(() =>
     s.backgroundColor(props.color)
 
     if (props.dot) {
-      s.width.iem(size * 0.667)
-      s.height.iem(size * 0.667)
+      s.width.px(sizePx(size * 0.667))
+      s.height.px(sizePx(size * 0.667))
       s.borderRadius._full
     } else {
-      s.paddingTop.iem(size * 0.25)
-      s.paddingBottom.iem(size * 0.25)
-      s.paddingLeft.iem(size * 0.5)
-      s.paddingRight.iem(size * 0.5)
-      s.minWidth.iem(size * 1.5)
-      s.height.iem(size * 1.5)
+      s.paddingTop.px(sizePx(size * 0.25))
+      s.paddingBottom.px(sizePx(size * 0.25))
+      s.paddingLeft.px(sizePx(size * 0.5))
+      s.paddingRight.px(sizePx(size * 0.5))
+      s.minWidth.px(sizePx(size * 1.5))
+      s.height.px(sizePx(size * 1.5))
       s.borderRadius._full
-      s.fontSize.iem(size)
+      s.fontSize.px(sizePx(size))
       s.fontWeight._semibold
       s.lineHeight._tight
     }

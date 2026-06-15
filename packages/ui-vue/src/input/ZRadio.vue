@@ -28,6 +28,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { Z_RADIO_GROUP_KEY, type RadioGroupCtx } from './_radio-group'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -101,8 +102,8 @@ const dotClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.width.iem(size)
-    s.height.iem(size)
+    s.width.px(sizePx(size))
+    s.height.px(sizePx(size))
     s.borderRadius._full
     s.borderWidth._thin
     s.borderStyle.solid
@@ -126,8 +127,8 @@ const sxDotAttrs = computed(() => extractSxAttrs(props.sxDot))
 const innerDotClass = computed(() =>
   icss(theme.value, s => {
     const size = props.size ?? 1
-    s.width.iem(size * 0.5)
-    s.height.iem(size * 0.5)
+    s.width.px(sizePx(size * 0.5))
+    s.height.px(sizePx(size * 0.5))
     s.borderRadius._full
     s.backgroundColor._primary
     s.transform(isChecked.value ? 'scale(1)' : 'scale(0)')

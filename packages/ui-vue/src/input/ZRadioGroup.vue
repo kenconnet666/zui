@@ -39,6 +39,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import ZRadio from './ZRadio.vue'
 import { Z_RADIO_GROUP_KEY, type RadioGroupCtx } from './_radio-group'
+import { sizePx } from '../_internal/sizing'
 
 const props = withDefaults(defineProps<ZRadioGroupProps>(), {
   value: null,
@@ -69,11 +70,11 @@ const rootClass = computed(() =>
     s.display.inlineFlex
     if (props.direction) s.flexDirection(props.direction)
     if (props.buttonStyle) s.gap.px(0)
-    else s.gap.iem(0.5)
+    else s.gap.px(sizePx(0.5))
     s.flexWrap.wrap
     if (props.buttonStyle) {
       // button 模式下子按钮间不留 gap,但首尾圆角处理通过 css 自定义,这里仅基础
-      s.borderRadius.iem(0.5)
+      s.borderRadius.px(sizePx(0.5))
       s.overflow.hidden
     }
     props.css?.(s)

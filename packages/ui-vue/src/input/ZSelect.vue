@@ -78,7 +78,8 @@ import { useZLocale } from '../provider/locale/useZLocale'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyInputSize } from '../_internal/input-size'
 import { BuiltinIcons, ZIcon } from '../gene'
-import { usePopper, useEscapeStack, useZIem } from '../_hooks'
+import { usePopper, useEscapeStack } from '../_hooks'
+import { sizePx } from '../_internal/sizing'
 import { onClickOutside } from '@vueuse/core'
 import ZVirtualList from '../display/ZVirtualList.vue'
 import { themeColorScheme } from '../_internal/colorScheme'
@@ -200,7 +201,7 @@ const triggerClass = computed(() =>
     s.color._text
     applyInputSize(s, props.size, props.height)
     s.cursor.pointer
-    s.minWidth.iem(8)
+    s.minWidth.px(sizePx(8))
     s.transitionProperty._colors
     s.transitionDuration._small
     if (open.value) s.borderColor._primary
@@ -246,7 +247,7 @@ const dropdownClass = computed(() =>
     s.boxShadow._middle
     s.padding._tiny
     s.zIndex._popover
-    s.minWidth.iem(10)
+    s.minWidth.px(sizePx(10))
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
@@ -256,11 +257,10 @@ const dropdownClass = computed(() =>
   }),
 )
 
-const iemPx = useZIem()
 /** 浮层虚拟列表实际高度:options 不足时按 totalSize,超过则封顶 dropdownMaxHeight。 */
 const dropdownListHeight = computed<string>(() => {
-  const totalPx = filteredOptions.value.length * props.optionSize * iemPx.value
-  const maxPx = props.dropdownMaxHeight * iemPx.value
+  const totalPx = filteredOptions.value.length * sizePx(props.optionSize)
+  const maxPx = sizePx(props.dropdownMaxHeight)
   return `${Math.min(totalPx, maxPx)}px`
 })
 const sxDropdownAttrs = computed(() => extractSxAttrs(props.sxDropdown))

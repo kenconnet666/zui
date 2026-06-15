@@ -51,6 +51,7 @@ export interface ZPaginationEmits {
 import { computed, h } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme, useZLocale } from '../provider'
+import { sizePx } from '../_internal/sizing'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
@@ -129,7 +130,7 @@ const rootClass = computed(() =>
     s.alignItems.center
     s.gap._tiny
     s.color._text
-    s.fontSize.iem(props.size ?? 1)
+    s.fontSize.px(sizePx(props.size ?? 1))
     props.css?.(s)
   }),
 )
@@ -146,8 +147,8 @@ const itemClass = computed(() =>
     s.backgroundColor._bg
     s.color._text
     s.borderRadius._small
-    s.minWidth.iem(itemIem.value)
-    s.height.iem(itemIem.value)
+    s.minWidth.px(sizePx(itemIem.value))
+    s.height.px(sizePx(itemIem.value))
     s.padding.px(0)
     s.paddingLeft._tiny
     s.paddingRight._tiny
@@ -173,8 +174,8 @@ const currentItemClass = computed(() =>
     s.backgroundColor._primary
     s.color._bg
     s.borderRadius._small
-    s.minWidth.iem(itemIem.value)
-    s.height.iem(itemIem.value)
+    s.minWidth.px(sizePx(itemIem.value))
+    s.height.px(sizePx(itemIem.value))
     s.padding.px(0)
     s.paddingLeft._tiny
     s.paddingRight._tiny
@@ -195,8 +196,8 @@ const dotsClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.minWidth.iem(itemIem.value)
-    s.height.iem(itemIem.value)
+    s.minWidth.px(sizePx(itemIem.value))
+    s.height.px(sizePx(itemIem.value))
     s.color._textSecondary
   }),
 )

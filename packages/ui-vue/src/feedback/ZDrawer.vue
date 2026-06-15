@@ -62,6 +62,7 @@ import { lockBodyScroll } from '../_internal/body-scroll-lock'
 import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 import { useScrollbarOverlay } from '../_internal/useScrollbarOverlay'
 import { BuiltinIcons, ZIcon } from '../gene'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -149,25 +150,25 @@ const drawerClass = computed(() =>
         s.top.px(0)
         s.left.px(0)
         s.bottom.px(0)
-        s.width.iem(size)
+        s.width.px(sizePx(size))
         break
       case 'right':
         s.top.px(0)
         s.right.px(0)
         s.bottom.px(0)
-        s.width.iem(size)
+        s.width.px(sizePx(size))
         break
       case 'top':
         s.top.px(0)
         s.left.px(0)
         s.right.px(0)
-        s.height.iem(size)
+        s.height.px(sizePx(size))
         break
       case 'bottom':
         s.bottom.px(0)
         s.left.px(0)
         s.right.px(0)
-        s.height.iem(size)
+        s.height.px(sizePx(size))
         break
     }
     props.css?.(s)

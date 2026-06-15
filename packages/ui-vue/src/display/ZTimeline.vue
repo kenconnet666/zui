@@ -27,6 +27,7 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyAsBg } from '../_internal/color-bridge'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -72,7 +73,7 @@ const itemClass = computed(() =>
     s.position.relative
     s.paddingLeft._huge
     s.paddingBottom._middle
-    s.minHeight.iem(2)
+    s.minHeight.px(sizePx(2))
   }),
 )
 
@@ -80,9 +81,9 @@ const dotClass = (color?: ZTimelineItem['color']): string =>
   icss(theme.value, s => {
     s.position.absolute
     s.left.px(0)
-    s.top.iem(0.25)
-    s.width.iem(0.625)
-    s.height.iem(0.625)
+    s.top.px(sizePx(0.25))
+    s.width.px(sizePx(0.625))
+    s.height.px(sizePx(0.625))
     s.borderRadius._full
     if (!applyAsBg(s, color)) {
       s.backgroundColor._textSecondary
@@ -92,10 +93,10 @@ const dotClass = (color?: ZTimelineItem['color']): string =>
 const lineClass = computed(() =>
   icss(theme.value, s => {
     s.position.absolute
-    s.left.iem(0.25)
-    s.top.iem(0.75)
+    s.left.px(sizePx(0.25))
+    s.top.px(sizePx(0.75))
     s.bottom.px(0)
-    s.width.iem(0.125)
+    s.width.px(sizePx(0.125))
     s.backgroundColor._border
   }),
 )

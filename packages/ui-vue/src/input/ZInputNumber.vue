@@ -52,6 +52,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyInputSize } from '../_internal/input-size'
+import { sizePx } from '../_internal/sizing'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
@@ -187,8 +188,8 @@ const btnClass = computed(() =>
     s.backgroundColor.transparent
     s.color._textSecondary
     s.cursor.pointer
-    s.width.iem(1)
-    s.height.iem(0.625)
+    s.width.px(sizePx(1))
+    s.height.px(sizePx(0.625))
     s.padding.px(0)
     s.fontSize._small
     s.borderRadius._tiny

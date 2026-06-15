@@ -47,6 +47,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { usePopper, useEscapeStack } from '../_hooks'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -175,8 +176,8 @@ const popperClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._middle
-    s.minWidth.iem(props.minWidth ?? 8)
-    s.maxWidth.iem(props.maxWidth ?? 30)
+    s.minWidth.px(sizePx(props.minWidth ?? 8))
+    s.maxWidth.px(sizePx(props.maxWidth ?? 30))
     applySx(s, props.sxContent)
     props.css?.(s)
   }),

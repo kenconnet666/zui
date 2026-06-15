@@ -85,6 +85,7 @@ import { applyAsBg } from '../_internal/color-bridge'
 import { useRipple } from '../_hooks'
 import { BuiltinIcons } from './icons'
 import ZIcon from './ZIcon.vue'
+import { sizePx } from '../_internal/sizing'
 
 const props = withDefaults(defineProps<ZButtonProps>(), {
   variant: 'filled',
@@ -119,25 +120,25 @@ const buttonClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.gap.iem(size * 0.5)
+    s.gap.px(sizePx(size * 0.5))
     s.fontWeight._medium
     s.lineHeight._tight
-    s.fontSize.iem(size)
-    s.height.iem(height)
-    s.paddingTop.iem(size * 0.5)
-    s.paddingBottom.iem(size * 0.5)
+    s.fontSize.px(sizePx(size))
+    s.height.px(sizePx(height))
+    s.paddingTop.px(sizePx(size * 0.5))
+    s.paddingBottom.px(sizePx(size * 0.5))
     if (isCompact) {
       s.paddingLeft.px(0)
       s.paddingRight.px(0)
-      s.width.iem(height)
+      s.width.px(sizePx(height))
     } else {
-      s.paddingLeft.iem(size * 1)
-      s.paddingRight.iem(size * 1)
+      s.paddingLeft.px(sizePx(size * 1))
+      s.paddingRight.px(sizePx(size * 1))
     }
     // border-radius
     switch (props.shape) {
       case 'round':
-        s.borderRadius.iem(height * 0.5)
+        s.borderRadius.px(sizePx(height * 0.5))
         break
       case 'circle':
         s.borderRadius.pct(50)
@@ -146,7 +147,7 @@ const buttonClass = computed(() =>
         s.borderRadius.px(0)
         break
       default:
-        s.borderRadius.iem(size * 0.375)
+        s.borderRadius.px(sizePx(size * 0.375))
     }
     s.borderWidth._thin
     s.borderStyle.solid

@@ -123,7 +123,7 @@ export interface ZDataTableExpose {
 import { computed, h, ref, useSlots, type Slots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { useZIem } from '../_hooks/useZIem'
+import { sizePx } from '../_internal/sizing'
 import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
 
 /**
@@ -180,7 +180,6 @@ const emit = defineEmits<ZDataTableEmits<T>>()
 const slots: Slots = useSlots()
 
 const theme = useZTheme()
-const iemPx = useZIem()
 
 // ─── 选中集合 ───
 const selectedSet = computed(() => new Set(props.selected))
@@ -268,12 +267,12 @@ const sortedRows = computed<readonly T[]>(() => {
 // ─── 列宽计算 ───
 /** 选择列宽 px(只有 multiple 模式才有)。 */
 const SELECT_COL_IEM = 2.5
-const selectColPx = computed(() => SELECT_COL_IEM * iemPx.value)
+const selectColPx = computed(() => sizePx(SELECT_COL_IEM))
 
 function resolveColumnWidth(col: ZDataTableColumn<T>): string {
   if (col.width === undefined) return '' // flex 填充
   if (typeof col.width === 'string') return col.width
-  return `${col.width * iemPx.value}px`
+  return `${sizePx(col.width)}px`
 }
 
 function columnStyle(col: ZDataTableColumn<T>): Record<string, string> {
@@ -281,8 +280,8 @@ function columnStyle(col: ZDataTableColumn<T>): Record<string, string> {
   const style: Record<string, string> = {
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: `${(props.size ?? 1) * 0.75 * iemPx.value}px`,
-    paddingRight: `${(props.size ?? 1) * 0.75 * iemPx.value}px`,
+    paddingLeft: `${sizePx((props.size ?? 1) * 0.75)}px`,
+    paddingRight: `${sizePx((props.size ?? 1) * 0.75)}px`,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
@@ -292,7 +291,7 @@ function columnStyle(col: ZDataTableColumn<T>): Record<string, string> {
     style.flexShrink = '0'
   } else {
     style.flex = '1'
-    style.minWidth = `${(col.minWidth ?? 5) * iemPx.value}px`
+    style.minWidth = `${sizePx(col.minWidth ?? 5)}px`
   }
   if (col.align === 'center') style.justifyContent = 'center'
   if (col.align === 'right') style.justifyContent = 'flex-end'
@@ -314,7 +313,7 @@ const rootClass = computed(() =>
     s.display.flex
     s.flexDirection.column
     s.color._text
-    s.fontSize.iem(props.size ?? 1)
+    s.fontSize.px(sizePx(props.size ?? 1))
     s.overflow.hidden
     if (props.bordered) {
       s.borderWidth._thin
@@ -335,7 +334,7 @@ const headerClass = computed(() =>
     s.borderBottomWidth._thin
     s.borderBottomStyle.solid
     s.borderBottomColor._border
-    s.height.iem(props.rowSize ?? 3)
+    s.height.px(sizePx(props.rowSize ?? 3))
     s.fontWeight._semibold
     s.color._text
     s.position.sticky
@@ -357,7 +356,7 @@ const headerCellClass = (col: ZDataTableColumn<T>) =>
 
 const sortIconClass = computed(() =>
   icss(theme.value, s => {
-    s.marginLeft.iem(0.25)
+    s.marginLeft.px(sizePx(0.25))
     s.opacity._dim
     s.fontSize._small
   }),
@@ -442,11 +441,11 @@ function renderHeaderContent(col: ZDataTableColumn<T>): VNode | string {
 }
 
 // ─── 计算虚拟列表高度(总高度 - header)───
-const headerSizePx = computed(() => (props.rowSize ?? 3) * iemPx.value)
+const headerSizePx = computed(() => sizePx(props.rowSize ?? 3))
 const vlHeight = computed<string>(() => {
   const totalIsStr = typeof props.height === 'string'
   if (totalIsStr) return `calc(${props.height} - ${headerSizePx.value}px)`
-  const totalPx = (props.height as number) * iemPx.value
+  const totalPx = sizePx(props.height as number)
   return `${Math.max(0, totalPx - headerSizePx.value)}px`
 })
 

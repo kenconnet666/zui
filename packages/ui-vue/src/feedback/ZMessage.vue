@@ -50,6 +50,7 @@ import { computed, h, onMounted, onUnmounted, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -82,7 +83,7 @@ const theme = useZTheme()
 const containerClass = computed(() =>
   icss(theme.value, s => {
     s.position.fixed
-    s.top.iem(1.5)
+    s.top.px(sizePx(1.5))
     s.left.pct(50)
     s.transform('translateX(-50%)')
     s.display.flex

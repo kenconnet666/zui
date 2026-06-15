@@ -58,6 +58,7 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyTypographyBase } from './_typography-base'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -118,7 +119,7 @@ const effectiveTag = computed(() => props.tag ?? `h${props.level}`)
 const className = computed(() =>
   icss(theme.value, s => {
     // 组件级默认(放最前,后续 applyTypographyBase 若 props 传了同名维度会覆盖)
-    s.fontSize.iem(LEVEL_FONT_SIZE[props.level])
+    s.fontSize.px(sizePx(LEVEL_FONT_SIZE[props.level]))
     s.fontWeight(LEVEL_FONT_WEIGHT[props.level])
     s.lineHeight(LEVEL_LINE_HEIGHT)
     s.margin.px(0) // 重置浏览器默认 h{N} margin,块级布局由父容器掌控

@@ -71,6 +71,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -117,12 +118,12 @@ const rootClass = computed(() =>
     const size = props.size ?? 0.875
     s.display.flex
     s.alignItems.flexStart
-    s.padding.iem(size * 0.625)
+    s.padding.px(sizePx(size * 0.625))
     s.borderRadius._small
     s.borderWidth._thin
     s.borderStyle.solid
-    s.gap.iem(size * 0.5)
-    s.fontSize.iem(size)
+    s.gap.px(sizePx(size * 0.5))
+    s.fontSize.px(sizePx(size))
     s.position.relative
     s.overflow.hidden
     // color factory 决定文字 + 边框色(默认 `_info`,从 withDefaults 提供)

@@ -74,6 +74,7 @@ import { computed, ref, useSlots, type Slots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -116,7 +117,7 @@ const rootClass = computed(() =>
   icss(theme.value, s => {
     s.display.block
     s.color._text
-    s.fontSize.iem(props.size ?? 1)
+    s.fontSize.px(sizePx(props.size ?? 1))
     if (props.bordered) {
       s.borderWidth._thin
       s.borderStyle.solid
@@ -130,7 +131,7 @@ const rootClass = computed(() =>
 
 const headerClass = computed(() =>
   icss(theme.value, s => {
-    s.padding.iem((props.size ?? 1) * 0.625)
+    s.padding.px(sizePx((props.size ?? 1) * 0.625))
     s.fontWeight._semibold
     s.borderBottomWidth._thin
     s.borderBottomStyle.solid
@@ -140,7 +141,7 @@ const headerClass = computed(() =>
 
 const footerClass = computed(() =>
   icss(theme.value, s => {
-    s.padding.iem((props.size ?? 1) * 0.625)
+    s.padding.px(sizePx((props.size ?? 1) * 0.625))
     s.color._textSecondary
     s.fontSize._small
     s.borderTopWidth._thin

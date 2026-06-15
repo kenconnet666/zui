@@ -43,6 +43,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { Z_FORM_KEY } from './_form-ctx'
+import { sizePx } from '../_internal/sizing'
 
 const props = withDefaults(defineProps<ZFormItemProps>(), {
   required: false,
@@ -147,7 +148,7 @@ const labelClass = computed(() =>
         s.width(w)
         s.textAlign.right
       }
-      s.paddingTop.iem(0.375)
+      s.paddingTop.px(sizePx(0.375))
     }
     applySx(s, props.sxLabel)
   }),

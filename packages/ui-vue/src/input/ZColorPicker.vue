@@ -25,6 +25,7 @@ export interface ZColorPickerEmits {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 const props = withDefaults(defineProps<ZColorPickerProps>(), {
   value: '#000000',
@@ -72,8 +73,8 @@ const wrapperClass = computed(() =>
 const swatchClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineBlock
-    s.width.iem(1.25)
-    s.height.iem(1.25)
+    s.width.px(sizePx(1.25))
+    s.height.px(sizePx(1.25))
     s.borderRadius._tiny
     s.borderWidth._thin
     s.borderStyle.solid

@@ -30,6 +30,7 @@ import { computed, h, nextTick, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import { sizePx } from '../_internal/sizing'
 
 const props = withDefaults(defineProps<ZDynamicTagsProps>(), {
   value: () => [],
@@ -110,8 +111,8 @@ const tagClass = computed(() =>
     s.gap._tiny
     s.paddingLeft._small
     s.paddingRight._tiny
-    s.paddingTop.iem(0.125)
-    s.paddingBottom.iem(0.125)
+    s.paddingTop.px(sizePx(0.125))
+    s.paddingBottom.px(sizePx(0.125))
     s.fontSize._small
     s.borderRadius._tiny
     s.backgroundColor._textSecondary.alpha(12)
@@ -143,8 +144,8 @@ const addBtnClass = computed(() =>
     s.gap._tiny
     s.paddingLeft._small
     s.paddingRight._small
-    s.paddingTop.iem(0.125)
-    s.paddingBottom.iem(0.125)
+    s.paddingTop.px(sizePx(0.125))
+    s.paddingBottom.px(sizePx(0.125))
     s.fontSize._small
     s.borderRadius._tiny
     s.borderWidth._thin
@@ -177,8 +178,8 @@ const inputClass = computed(() =>
     s.color._text
     s.paddingLeft._tiny
     s.paddingRight._tiny
-    s.paddingTop.iem(0.125)
-    s.paddingBottom.iem(0.125)
+    s.paddingTop.px(sizePx(0.125))
+    s.paddingBottom.px(sizePx(0.125))
     s.outline('none')
   }),
 )

@@ -43,6 +43,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZVirtualList from '../display/ZVirtualList.vue'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -135,7 +136,7 @@ const panelClass = computed(() =>
   icss(theme.value, s => {
     s.display.flex
     s.flexDirection.column
-    s.width.iem(12.5)
+    s.width.px(sizePx(12.5))
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
@@ -193,8 +194,8 @@ const arrowBtnClass = (enabled: boolean): string =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.width.iem(2)
-    s.height.iem(2)
+    s.width.px(sizePx(2))
+    s.height.px(sizePx(2))
     s.borderRadius._tiny
     s.borderWidth._thin
     s.borderStyle.solid

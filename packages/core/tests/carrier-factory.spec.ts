@@ -99,14 +99,6 @@ describe('Carrier factory — PropCarrier (非 color)', () => {
     expect(c._node.padding).toBe('8px')
   })
 
-  it('factory 内 iem unit c => c.iem(1) (默认 1iem = 16px)', () => {
-    const c = new Chain(defaultLight)
-    c.width(w => {
-      w.iem(1)
-    })
-    expect(c._node.width).toBe('calc(1 * var(--zui-iem, 16px))')
-  })
-
   it('factory 内 keyword c => c.auto', () => {
     const c = new Chain(defaultLight)
     c.margin(m => {
@@ -179,9 +171,9 @@ describe('Carrier factory — 组件 prop 范式集成', () => {
     const c = new Chain(defaultLight)
     c.color(cc => cc._primary)
     c.padding(p => p.px(12))
-    c.width(w => w.iem(0.5))
+    c.width(w => w.px(8))
     expect(c._node.color).toBeDefined()
     expect(c._node.padding).toBe('12px')
-    expect(c._node.width).toBe('calc(0.5 * var(--zui-iem, 16px))')
+    expect(c._node.width).toBe('8px')
   })
 })

@@ -48,6 +48,7 @@ import { computed, ref, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useEscapeStack } from '../_hooks'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -210,8 +211,8 @@ const cardClass = computed(() =>
     s.borderColor._border
     s.boxShadow._huge
     s.padding._middle
-    s.minWidth.iem(props.minWidth ?? 15)
-    s.maxWidth.iem(props.maxWidth ?? 22.5)
+    s.minWidth.px(sizePx(props.minWidth ?? 15))
+    s.maxWidth.px(sizePx(props.maxWidth ?? 22.5))
     props.css?.(s)
   }),
 )
@@ -262,8 +263,8 @@ const btnClass = (primary: boolean): string =>
     s.fontWeight._medium
     s.paddingLeft._small
     s.paddingRight._small
-    s.paddingTop.iem(0.25)
-    s.paddingBottom.iem(0.25)
+    s.paddingTop.px(sizePx(0.25))
+    s.paddingBottom.px(sizePx(0.25))
     s.borderWidth._thin
     s.borderStyle.solid
     if (primary) {

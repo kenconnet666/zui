@@ -16,6 +16,7 @@
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * Typography 组件共享 props —— 5 维度 carrier factory + size number + 5 状态布尔/枚举。
@@ -67,7 +68,7 @@ export interface ZTypographyBaseProps {
  */
 export function applyTypographyBase(s: Chain<ZuiSchema>, props: ZTypographyBaseProps): void {
   // ─── size: number(2026-05-24 B7 决策)。undefined = 继承父字号 ───
-  if (props.size !== undefined) s.fontSize.iem(props.size)
+  if (props.size !== undefined) s.fontSize.px(sizePx(props.size))
   if (props.weight) s.fontWeight(props.weight)
   if (props.color) s.color(props.color)
   if (props.depth) s.opacity(props.depth)

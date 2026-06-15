@@ -23,6 +23,7 @@ export interface ZLoadingBarProps {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 const props = withDefaults(defineProps<ZLoadingBarProps>(), {
   value: null,
@@ -45,7 +46,7 @@ const wrapClass = computed(() =>
     s.top.px(0)
     s.left.px(0)
     s.right.px(0)
-    s.height.iem(0.125)
+    s.height.px(sizePx(0.125))
     s.zIndex._toast
     s.pointerEvents.none
     props.css?.(s)

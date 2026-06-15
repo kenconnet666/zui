@@ -51,6 +51,7 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -95,8 +96,8 @@ const railClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.position.relative
-    s.width.iem(railWidthIem.value)
-    s.height.iem(railHeightIem.value)
+    s.width.px(sizePx(railWidthIem.value))
+    s.height.px(sizePx(railHeightIem.value))
     s.borderRadius._full
     s.transitionProperty._colors
     s.transitionDuration._small
@@ -122,10 +123,10 @@ const thumbClass = computed(() =>
     const w = railWidthIem.value
     const thumb = h * 0.8
     s.position.absolute
-    s.top.iem((h - thumb) / 2)
-    s.left.iem(props.value ? w - thumb - (h - thumb) / 2 : (h - thumb) / 2)
-    s.width.iem(thumb)
-    s.height.iem(thumb)
+    s.top.px(sizePx((h - thumb) / 2))
+    s.left.px(sizePx(props.value ? w - thumb - (h - thumb) / 2 : (h - thumb) / 2))
+    s.width.px(sizePx(thumb))
+    s.height.px(sizePx(thumb))
     s.borderRadius._full
     s.backgroundColor._bg
     s.boxShadow._small
@@ -140,8 +141,8 @@ const labelClass = computed(() =>
   icss(theme.value, s => {
     s.position.absolute
     const offset = railHeightIem.value * 0.25
-    if (props.value) s.left.iem(offset)
-    else s.right.iem(offset)
+    if (props.value) s.left.px(sizePx(offset))
+    else s.right.px(sizePx(offset))
     s.color._bg
     s.fontSize._tiny
     s.pointerEvents.none

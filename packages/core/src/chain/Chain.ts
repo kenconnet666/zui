@@ -767,10 +767,72 @@ export class Chain<T extends ThemeSchema = BaseSchema> {
     return this
   }
 
+  // ─── 「子绝父相」定位原语（父锚点 + 子绝对定位） ───
+
+  /**
+   * 成为绝对定位子元素的锚点：`position: relative` + `isolation: isolate`
+   * （隔离层叠上下文，子元素 z-index 不外泄影响兄弟节点）。「子绝父相」的父侧一行。
+   */
+  _anchor(): this {
+    this._node.position = 'relative'
+    this._node.isolation = 'isolate'
+    return this
+  }
+
+  /**
+   * 绝对定位 + `inset` 一次性指定四边偏移（「子绝父相」的子侧通用形态）。
+   *
+   * @param inset CSS `inset` 简写：`'0'` 铺满 / `'8px'` 四边各 8px / `'0 auto auto 0'` 贴左上 …
+   * @example
+   * s._pin('0')                  // 铺满父锚点（等价 _fillParent）
+   * s._pin('8px 8px auto auto')  // 贴右上，距上/右各 8px
+   */
+  _pin(inset: string): this {
+    this._node.position = 'absolute'
+    this._node.inset = inset
+    return this
+  }
+
+  /**
+   * 绝对定位到父锚点的某个角，自身中心对齐角点（角标 / 关闭按钮 / 状态点常用）。
+   *
+   * @param corner 角落，默认 `'top-right'`
+   * @param offset `[dx, dy]` px 微调，正值向「外」推（远离父中心）
+   * @example
+   * s._pinCorner('top-right')          // 右上角，自身中心压在角点
+   * s._pinCorner('top-right', [2, 2])  // 再向外移 2px
+   */
+  _pinCorner(
+    corner: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' = 'top-right',
+    offset: readonly [number, number] = [0, 0],
+  ): this {
+    const [dx, dy] = offset
+    const top = corner.startsWith('top')
+    const left = corner.endsWith('left')
+    this._node.position = 'absolute'
+    this._node[top ? 'top' : 'bottom'] = `${-dy}px`
+    this._node[left ? 'left' : 'right'] = `${-dx}px`
+    this._node.translate = `${left ? '-50%' : '50%'} ${top ? '-50%' : '50%'}`
+    return this
+  }
+
   // ─── W1.3 Transform longhand helpers（CSS Working Group / Tailwind v4 风） ───
   //
   // 设计：用 CSS 标准的 `translate` / `rotate` / `scale` longhand 独立属性，不拼 `transform` shorthand。
   // 数值类参数支持 `number`（自动加 px / deg）或 `string`（直接用）。
+
+  /** 解析空格分隔的 3 轴值（translate / scale），返回 `[x, y, z]`，缺省补 identity。 */
+  private _readAxis3(current: unknown, identity: string): [string, string, string] {
+    const p = typeof current === 'string' ? current.trim().split(/\s+/) : []
+    return [p[0] ?? identity, p[1] ?? identity, p[2] ?? identity]
+  }
+
+  /** 重组 3 轴值，去掉尾部等于 identity 的冗余分量。 */
+  private _joinAxis3(a: readonly [string, string, string], identity: string): string {
+    if (a[2] !== identity) return `${a[0]} ${a[1]} ${a[2]}`
+    if (a[1] !== identity) return `${a[0]} ${a[1]}`
+    return a[0]
+  }
 
   /** `translate: <x> [<y>]`。number → px。 */
   _translate(x: number | string, y?: number | string): this {
@@ -780,17 +842,21 @@ export class Chain<T extends ThemeSchema = BaseSchema> {
     return this
   }
   _translateX(v: number | string): this {
-    this._node.translate = typeof v === 'number' ? `${v}px` : v
+    const a = this._readAxis3(this._node.translate, '0')
+    a[0] = typeof v === 'number' ? `${v}px` : v
+    this._node.translate = this._joinAxis3(a, '0')
     return this
   }
   _translateY(v: number | string): this {
-    const yv = typeof v === 'number' ? `${v}px` : v
-    this._node.translate = `0 ${yv}`
+    const a = this._readAxis3(this._node.translate, '0')
+    a[1] = typeof v === 'number' ? `${v}px` : v
+    this._node.translate = this._joinAxis3(a, '0')
     return this
   }
   _translateZ(v: number | string): this {
-    const zv = typeof v === 'number' ? `${v}px` : v
-    this._node.translate = `0 0 ${zv}`
+    const a = this._readAxis3(this._node.translate, '0')
+    a[2] = typeof v === 'number' ? `${v}px` : v
+    this._node.translate = this._joinAxis3(a, '0')
     return this
   }
 
@@ -821,15 +887,21 @@ export class Chain<T extends ThemeSchema = BaseSchema> {
     return this
   }
   _scaleX(n: number): this {
-    this._node.scale = `${n} 1`
+    const a = this._readAxis3(this._node.scale, '1')
+    a[0] = `${n}`
+    this._node.scale = this._joinAxis3(a, '1')
     return this
   }
   _scaleY(n: number): this {
-    this._node.scale = `1 ${n}`
+    const a = this._readAxis3(this._node.scale, '1')
+    a[1] = `${n}`
+    this._node.scale = this._joinAxis3(a, '1')
     return this
   }
   _scaleZ(n: number): this {
-    this._node.scale = `1 1 ${n}`
+    const a = this._readAxis3(this._node.scale, '1')
+    a[2] = `${n}`
+    this._node.scale = this._joinAxis3(a, '1')
     return this
   }
 

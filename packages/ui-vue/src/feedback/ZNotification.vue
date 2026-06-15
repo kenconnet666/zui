@@ -47,6 +47,7 @@ import { computed, h, onMounted, onUnmounted, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -85,16 +86,16 @@ const containerClass = computed(() =>
   icss(theme.value, s => {
     s.position.fixed
     const [vert, horiz] = props.placement.split('-') as ['top' | 'bottom', 'left' | 'right']
-    if (vert === 'top') s.top.iem(1.5)
-    else s.bottom.iem(1.5)
-    if (horiz === 'left') s.left.iem(1.5)
-    else s.right.iem(1.5)
+    if (vert === 'top') s.top.px(sizePx(1.5))
+    else s.bottom.px(sizePx(1.5))
+    if (horiz === 'left') s.left.px(sizePx(1.5))
+    else s.right.px(sizePx(1.5))
     s.display.flex
     s.flexDirection.column
     s.gap._small
     s.zIndex._toast
     s.pointerEvents.none
-    s.maxWidth.iem(props.maxWidth ?? 22.5)
+    s.maxWidth.px(sizePx(props.maxWidth ?? 22.5))
     props.css?.(s)
   }),
 )

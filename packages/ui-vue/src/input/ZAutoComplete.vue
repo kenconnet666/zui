@@ -50,7 +50,8 @@ import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyInputSize } from '../_internal/input-size'
-import { usePopper, useEscapeStack, useZIem } from '../_hooks'
+import { usePopper, useEscapeStack } from '../_hooks'
+import { sizePx } from '../_internal/sizing'
 import ZVirtualList from '../display/ZVirtualList.vue'
 
 /**
@@ -156,14 +157,13 @@ const dropdownClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._tiny
-    s.minWidth.iem(8)
+    s.minWidth.px(sizePx(8))
   }),
 )
 
-const iemPx = useZIem()
 const dropdownListHeight = computed<string>(() => {
-  const totalPx = filtered.value.length * props.optionSize * iemPx.value
-  const maxPx = props.dropdownMaxHeight * iemPx.value
+  const totalPx = filtered.value.length * sizePx(props.optionSize)
+  const maxPx = sizePx(props.dropdownMaxHeight)
   return `${Math.min(totalPx, maxPx)}px`
 })
 

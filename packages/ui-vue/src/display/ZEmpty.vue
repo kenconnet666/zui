@@ -24,6 +24,7 @@ export interface ZEmptyProps {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 const props = withDefaults(defineProps<ZEmptyProps>(), {
   description: '暂无数据',
@@ -50,8 +51,8 @@ const imgClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineFlex
     s.color._border
-    s.width.iem(props.size)
-    s.height.iem(props.size)
+    s.width.px(sizePx(props.size))
+    s.height.px(sizePx(props.size))
   }),
 )
 

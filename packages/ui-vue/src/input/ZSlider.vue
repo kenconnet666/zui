@@ -32,6 +32,7 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { getThemeColor } from '../_internal/color-bridge'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -92,12 +93,12 @@ const inputClass = computed(() =>
     s.flexGrow(1)
     s.appearance.none
     s.width.pct(100)
-    s.height.iem(0.25)
+    s.height.px(sizePx(0.25))
     s.borderRadius._full
     s.outlineStyle.none
     s.cursor.pointer
-    s.marginTop.iem(0.5)
-    s.marginBottom.iem(0.5)
+    s.marginTop.px(sizePx(0.5))
+    s.marginBottom.px(sizePx(0.5))
     s.background(
       'linear-gradient(to right, var(--zui-slider-fill) 0%, var(--zui-slider-fill) var(--zui-slider-percent), var(--zui-slider-track) var(--zui-slider-percent), var(--zui-slider-track) 100%)',
     )
@@ -107,8 +108,8 @@ const inputClass = computed(() =>
     })
     s._selector('&::-webkit-slider-thumb', t => {
       t.appearance.none
-      t.width.iem(1)
-      t.height.iem(1)
+      t.width.px(sizePx(1))
+      t.height.px(sizePx(1))
       t.borderRadius._full
       t.cursor('grab')
       t.borderWidth.px(2)
@@ -118,8 +119,8 @@ const inputClass = computed(() =>
       t.boxShadow('0 1px 3px rgba(0,0,0,0.2)')
     })
     s._selector('&::-moz-range-thumb', t => {
-      t.width.iem(1)
-      t.height.iem(1)
+      t.width.px(sizePx(1))
+      t.height.px(sizePx(1))
       t.borderRadius._full
       t.cursor('grab')
       t.borderWidth.px(2)

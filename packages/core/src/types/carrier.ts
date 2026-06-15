@@ -11,9 +11,8 @@ export type GlobalKw = 'inherit' | 'unset' | 'initial' | 'revert' | 'revertLayer
  * - 容器查询（CSS Containment 3）：cqw / cqh / cqi / cqb / cqmin / cqmax
  * - 栅格：fr
  * - 百分比：pct → `'%'`
- * - zui 逻辑单位：iem → `calc(N * var(--zui-iem, 16px))`（ZBox 全站切换基准,默认 1iem = 16px）
  *
- * 合计 35 个。
+ * 合计 34 个。
  *
  * **Statement-only**：所有 unit 方法**返回 `void`**，调用后即终结（运行时仍返回 chain 以支持
  * Proxy 内部状态切换，类型层不暴露，参见 2026-05-22 决策文档）。
@@ -62,8 +61,6 @@ export interface LengthUnits {
   fr(n: number): void
   // ─── 百分比（特殊 ident → '%'） ───
   pct(n: number): void
-  // ─── zui 逻辑单位 iem（"我自己使用的 em",跟 rem 对称,默认 1iem = 16px,Provider :iem 全站切换） ───
-  iem(n: number): void
 }
 
 export interface TimeUnits {

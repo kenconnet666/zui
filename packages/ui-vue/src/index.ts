@@ -14,10 +14,8 @@ export {
   useZTheme,
   useZLocale,
   useZDate,
-  ZIemPreset,
   type ZDateConfig,
   type UseZDateReturn,
-  type ZIem,
 } from './provider'
 
 // ─── 主题(zui 设计系统)───

@@ -83,7 +83,7 @@ export interface ZVirtualListExpose {
 import { computed, ref, shallowRef, toRef, useSlots, watch, type Ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { useZIem } from '../_hooks/useZIem'
+import { sizePx } from '../_internal/sizing'
 import { useZVirtualScroll } from '../_hooks/useZVirtualScroll'
 import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 import { themeColorScheme } from '../_internal/colorScheme'
@@ -120,8 +120,7 @@ import {
  *   │   (空 + `#empty` slot → 替换 wrapper)                       │
  *   └──────────────────────────────────────────────────────────────┘
  *
- * iem→px 换算通过 `useZIem`(响应式),vw 模式下 resize → iemPx 变 → 内部 hook
- * watch 触发 rebuildCache → 自动重布局,全自动响应式。
+ * itemSize 是"尺寸倍数"(1 单位 = 16px),内部通过 `sizePx` 换算成像素喂给虚拟滚动 hook。
  */
 const props = withDefaults(defineProps<ZVirtualListProps<T>>(), {
   direction: 'vertical',
@@ -134,17 +133,15 @@ const emit = defineEmits<ZVirtualListEmits>()
 const slots = useSlots()
 
 const theme = useZTheme()
-const iemPx = useZIem()
 
-// ─── iem 倍数 → px 数值(给 hook) ───
+// ─── 尺寸倍数 → px 数值(给 hook;1 单位 = 16px 基准) ───
 const itemSizePx = computed<ItemSizeArg<T>>(() => {
   const v = props.itemSize
-  const base = iemPx.value
-  if (typeof v === 'function') return (i, item) => v(i, item) * base
-  return v * base
+  if (typeof v === 'function') return (i, item) => sizePx(v(i, item))
+  return sizePx(v)
 })
 
-const scrollEndThresholdPx = computed(() => props.scrollEndThreshold * iemPx.value)
+const scrollEndThresholdPx = computed(() => sizePx(props.scrollEndThreshold))
 
 const vs = useZVirtualScroll<T>({
   items: computed(() => props.items) as Ref<readonly T[]>,
@@ -200,7 +197,7 @@ const trackClass = computed(() =>
     s._prop('width', '6px')
     s._prop('zIndex', '10')
     s.pointerEvents.none
-    s.borderRadius.iem(0.1875)
+    s.borderRadius.px(sizePx(0.1875))
   }),
 )
 
@@ -209,7 +206,7 @@ const sbThumbClass = computed(() =>
     s.position.absolute
     s._prop('left', '0')
     s._prop('right', '0')
-    s.borderRadius.iem(0.1875)
+    s.borderRadius.px(sizePx(0.1875))
     s._prop('background', thumbColors.value.normal)
     s._prop('transition', 'background 120ms')
     s._selector('&:hover', h => {
@@ -240,11 +237,11 @@ function getKey(item: T, index: number): string | number {
   return index
 }
 
-/** iem 倍数 / CSS 字面字符串 → CSS 长度字符串。 */
+/** 尺寸倍数(1 单位 = 16px) / CSS 字面字符串 → CSS 长度字符串。 */
 function resolveSize(v: number | string | undefined, fallback: string): string {
   if (v === undefined) return fallback
   if (typeof v === 'string') return v
-  return `${v * iemPx.value}px`
+  return `${sizePx(v)}px`
 }
 
 /** 外层包裹：持有尺寸 + position:relative，作为 overlay track 的定位容器。overflow:hidden 防止异常内容撑破。 */

@@ -47,6 +47,7 @@ export interface ZRateEmits {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -97,7 +98,7 @@ function setValue(v: number): void {
 const rootClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineFlex
-    s.gap.iem(0.125)
+    s.gap.px(sizePx(0.125))
     s.color(props.color)
     if (!isInteractive.value) s.opacity._strong
     props.css?.(s)
@@ -112,8 +113,8 @@ const starClass = computed(() =>
     s.justifyContent.center
     s.position.relative
     // size(number):iem 倍数,width + height 镜像保证星星方形
-    s.width.iem(size)
-    s.height.iem(size)
+    s.width.px(sizePx(size))
+    s.height.px(sizePx(size))
     s.cursor(isInteractive.value ? 'pointer' : 'default')
     s.color._border
   }),

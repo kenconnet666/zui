@@ -54,6 +54,7 @@ import { usePopper, useEscapeStack } from '../_hooks'
 import { useZLocale } from '../provider/locale/useZLocale'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZTree from '../display/ZTree.vue'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -185,7 +186,7 @@ const triggerClass = computed(() =>
     applyInputSize(s, props.size, props.height)
     s.cursor(props.disabled ? 'not-allowed' : 'pointer')
     // 触发器 minWidth: 10iem(略宽于 ZSelect 8iem,树标签通常更长)
-    s.minWidth.iem(10)
+    s.minWidth.px(sizePx(10))
     if (props.disabled) {
       s.opacity._dim
       s.backgroundColor._bgMuted
@@ -212,7 +213,7 @@ const dropdownClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._tiny
-    s.minWidth.iem(12)
+    s.minWidth.px(sizePx(12))
   }),
 )
 

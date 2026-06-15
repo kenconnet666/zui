@@ -44,6 +44,7 @@ export interface ZAvatarProps {
 import { computed, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -88,12 +89,12 @@ const rootClass = computed(() =>
     s.justifyContent.center
     s.flexShrink(0)
     // size(number):iem 倍数,width + height 镜像保证正方形
-    s.width.iem(size)
-    s.height.iem(size)
+    s.width.px(sizePx(size))
+    s.height.px(sizePx(size))
     s.overflow.hidden
     s.verticalAlign('middle')
     s.userSelect.none
-    if (props.square) s.borderRadius.iem(size * 0.15)
+    if (props.square) s.borderRadius.px(sizePx(size * 0.15))
     else s.borderRadius._full
     if (!showImage.value) {
       // color factory(默认 `_textSecondary`,从 withDefaults 提供)桥接到 backgroundColor carrier
@@ -101,7 +102,7 @@ const rootClass = computed(() =>
       s.color._bg
       s.fontWeight._semibold
       // 文字字号按头像尺寸缩放(原先 0.875iem 是为 2.5iem 头像设计,比例 0.35)
-      s.fontSize.iem(size * 0.35)
+      s.fontSize.px(sizePx(size * 0.35))
     }
     props.css?.(s)
   }),

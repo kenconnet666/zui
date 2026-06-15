@@ -95,7 +95,7 @@ export function useScrollbarOverlay(theme: Ref<ResolvedTheme<ZuiSchema>>) {
       s._prop('width', '6px')
       s._prop('zIndex', '10')
       s.pointerEvents.none
-      s.borderRadius.iem(0.1875)
+      s.borderRadius.px(3)
     }),
   )
 
@@ -105,7 +105,7 @@ export function useScrollbarOverlay(theme: Ref<ResolvedTheme<ZuiSchema>>) {
       s.position.absolute
       s._prop('left', '0')
       s._prop('right', '0')
-      s.borderRadius.iem(0.1875)
+      s.borderRadius.px(3)
       s._prop('background', colors.normal)
       s._prop('transition', 'background 120ms')
       s._selector('&:hover', h => {

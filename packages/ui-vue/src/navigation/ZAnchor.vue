@@ -52,6 +52,7 @@ export interface ZAnchorEmits {
 import { computed, onMounted, onScopeDispose, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -146,7 +147,7 @@ const linkClass = (item: ZAnchorItem, active: boolean): string =>
     s.padding._tiny
     s.fontSize._small
     s.textDecorationLine.none
-    s.paddingLeft.iem(extraIndent)
+    s.paddingLeft.px(sizePx(extraIndent))
     if (active) {
       s.color(activeColorFactory)
       s.fontWeight._medium
@@ -154,7 +155,7 @@ const linkClass = (item: ZAnchorItem, active: boolean): string =>
       s.borderLeftWidth.px(2)
       s.borderLeftStyle.solid
       s.borderLeftColor.currentColor
-      s.paddingLeft.iem(extraIndent + 0.5)
+      s.paddingLeft.px(sizePx(extraIndent + 0.5))
     } else {
       s.color._textSecondary
     }

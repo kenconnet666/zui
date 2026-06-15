@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
-import { Chain, iem, iemWith, resolveStringValue } from '../src'
+import { Chain, resolveStringValue } from '../src'
 import { buildKeymap } from '../src/theme/keymap'
 import { defaultLight } from './_fixture-theme'
 
@@ -102,15 +102,6 @@ describe('resolveStringValue — unit 解析', () => {
     expect(resolveStringValue('_rem(1)', undefined, theme, keymap)).toBe('1rem')
     expect(resolveStringValue('_ch(8)', undefined, theme, keymap)).toBe('8ch')
     expect(resolveStringValue('_ex(2)', undefined, theme, keymap)).toBe('2ex')
-  })
-
-  it('_iem(N) → calc(N * var(--zui-iem, 16px))（默认 1iem = 16px）', () => {
-    expect(resolveStringValue('_iem(1)', undefined, theme, keymap)).toBe(
-      'calc(1 * var(--zui-iem, 16px))',
-    )
-    expect(resolveStringValue('_iem(0.5)', undefined, theme, keymap)).toBe(
-      'calc(0.5 * var(--zui-iem, 16px))',
-    )
   })
 
   it('视口单位 _vw / _vh / _svw / _dvh', () => {
@@ -320,15 +311,6 @@ describe('Chain setter — 字符串与 shortcut 等价', () => {
     expect(c._node.padding).toBe(theme.spacing!.middle)
   })
 
-  it("s.width('_iem(1)') === s.width.iem(1)", () => {
-    const a = new Chain(defaultLight)
-    a.width('_iem(1)')
-    const b = new Chain(defaultLight)
-    b.width.iem(1)
-    expect(a._node.width).toBe(b._node.width)
-    expect(a._node.width).toBe('calc(1 * var(--zui-iem, 16px))')
-  })
-
   it("s.width('_px(20)') === s.width.px(20)", () => {
     const a = new Chain(defaultLight)
     a.width('_px(20)')
@@ -380,59 +362,9 @@ describe('Chain setter — 字符串与 shortcut 等价', () => {
 // 3. iemWith() —— 纯 TS 基准工厂
 // ════════════════════════════════════════════════════════════════════════
 
-describe('iemWith() — 纯 TS 基准工厂', () => {
-  it('number 基准 → "Npx"', () => {
-    const iemPx = iemWith(20)
-    expect(iemPx(1)).toBe('20px')
-    expect(iemPx(0.5)).toBe('10px')
-    expect(iemPx(2)).toBe('40px')
-  })
-
-  it("'<num><unit>' 基准 → 数字×N + 单位", () => {
-    const iemRem = iemWith('1rem')
-    expect(iemRem(1)).toBe('1rem')
-    expect(iemRem(0.5)).toBe('0.5rem')
-
-    const iemPx16 = iemWith('16px')
-    expect(iemPx16(1)).toBe('16px')
-
-    const iemVw = iemWith('1vw')
-    expect(iemVw(1)).toBe('1vw')
-  })
-
-  it('百分比单位也支持', () => {
-    const iemPct = iemWith('5%')
-    expect(iemPct(2)).toBe('10%')
-  })
-
-  it('复杂 css 表达式 → calc(N * <base>) 退化', () => {
-    const iemFluid = iemWith('clamp(14px, 1vw, 20px)')
-    expect(iemFluid(1)).toBe('calc(1 * clamp(14px, 1vw, 20px))')
-
-    const iemVar = iemWith('var(--gap)')
-    expect(iemVar(4)).toBe('calc(4 * var(--gap))')
-  })
-
-  it('浮点污染 round 防御', () => {
-    // 1.0625 * 16 = 17.000000000000004 → 应该 round 到 17
-    const iem1_0625 = iemWith('1.0625px')
-    expect(iem1_0625(16)).toBe('17px')
-
-    // 0.1 + 0.2 类型的污染
-    const iem0_3 = iemWith('0.3px')
-    expect(iem0_3(10)).toBe('3px')
-  })
-
-  it('与默认 iem(n) 互不影响', () => {
-    const customIem = iemWith('20px')
-    expect(customIem(1)).toBe('20px')
-    // 默认 iem(n) 仍走 css var,fallback 16px
-    expect(iem(1)).toBe('calc(1 * var(--zui-iem, 16px))')
-  })
-
-  it('负数支持', () => {
-    const iemPx = iemWith(20)
-    expect(iemPx(-1)).toBe('-20px')
+describe.skip('iemWith() — 已移除（iem 单位重构删除）', () => {
+  it('placeholder', () => {
+    expect(true).toBe(true)
   })
 })
 

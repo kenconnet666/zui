@@ -16,7 +16,6 @@ export { usePortal, ZPortal } from './usePortal'
 export { useEscapeStack } from './useEscapeStack'
 export { usePopper, type UsePopperOptions } from './usePopper'
 export { useRipple, type UseRippleOptions } from './useRipple'
-export { useZIem } from './useZIem'
 export {
   useZVirtualScroll,
   type ItemSizeArg,

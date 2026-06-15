@@ -45,6 +45,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { usePopper, useZId } from '../_hooks'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -181,15 +182,15 @@ const tooltipClass = computed(() =>
     s.color._bg
     s.fontSize._small
     s.lineHeight._tight
-    s.paddingTop.iem(0.25)
-    s.paddingBottom.iem(0.25)
+    s.paddingTop.px(sizePx(0.25))
+    s.paddingBottom.px(sizePx(0.25))
     s.paddingLeft._small
     s.paddingRight._small
     s.borderRadius._tiny
     s.boxShadow._small
     if (props.trigger === 'hover') s.pointerEvents.auto
     else s.pointerEvents.none
-    s.maxWidth.iem(props.maxWidth ?? 20)
+    s.maxWidth.px(sizePx(props.maxWidth ?? 20))
     s.wordBreak.breakWord
     applySx(s, props.sxContent)
     props.css?.(s)

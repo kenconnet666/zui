@@ -28,6 +28,7 @@ export interface ZScrollbarProps {
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 import { themeColorScheme } from '../_internal/colorScheme'
 import {
   SCROLL_TRACK_MARGIN,
@@ -133,7 +134,7 @@ const scrollerClass = computed(() =>
     //   (放 root 用 max-height 时,scroller 的 height:100% 因 parent 无确定 height 而失效)
     // - 外部模式:依赖 root 经 :css 设定的明确高度,scroller height:100% 撑满
     if (props.maxHeight !== undefined) {
-      s.maxHeight.iem(props.maxHeight)
+      s.maxHeight.px(sizePx(props.maxHeight))
     } else {
       s.height.pct(100)
     }
@@ -156,7 +157,7 @@ const trackClass = computed(() =>
     s._prop('width', '6px')
     s._prop('zIndex', '10')
     s.pointerEvents.none
-    s.borderRadius.iem(0.1875)
+    s.borderRadius.px(sizePx(0.1875))
   }),
 )
 
@@ -165,7 +166,7 @@ const thumbClass = computed(() =>
     s.position.absolute
     s._prop('left', '0')
     s._prop('right', '0')
-    s.borderRadius.iem(0.1875)
+    s.borderRadius.px(sizePx(0.1875))
     s._prop('background', thumbColors.value.normal)
     s._prop('transition', 'background 120ms')
     s._selector('&:hover', h => {

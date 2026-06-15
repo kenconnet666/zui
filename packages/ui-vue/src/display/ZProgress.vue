@@ -43,6 +43,7 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyAsBg, getThemeColor, resolveColor } from '../_internal/color-bridge'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -109,7 +110,7 @@ const railClass = computed(() =>
     s.backgroundColor._bgMuted
     s.borderRadius._full
     s.overflow.hidden
-    s.height.iem(props.size ?? DEFAULT_LINE_HEIGHT_IEM)
+    s.height.px(sizePx(props.size ?? DEFAULT_LINE_HEIGHT_IEM))
   }),
 )
 
@@ -146,8 +147,8 @@ const circleRootClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.width.iem(props.size ?? DEFAULT_CIRCLE_DIAMETER_IEM)
-    s.height.iem(props.size ?? DEFAULT_CIRCLE_DIAMETER_IEM)
+    s.width.px(sizePx(props.size ?? DEFAULT_CIRCLE_DIAMETER_IEM))
+    s.height.px(sizePx(props.size ?? DEFAULT_CIRCLE_DIAMETER_IEM))
     props.css?.(s)
   }),
 )

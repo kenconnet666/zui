@@ -40,6 +40,7 @@ export interface ZDescriptionsProps {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -78,7 +79,7 @@ const rootClass = computed(() =>
     s.display.flex
     s.flexDirection.column
     s.color._text
-    s.fontSize.iem(props.size ?? 1)
+    s.fontSize.px(sizePx(props.size ?? 1))
     if (props.bordered) {
       s.borderWidth._thin
       s.borderStyle.solid
@@ -124,7 +125,7 @@ const labelClass = computed(() =>
   icss(theme.value, s => {
     s.color._textSecondary
     s.fontWeight._medium
-    s.padding.iem((props.size ?? 1) * 0.5)
+    s.padding.px(sizePx((props.size ?? 1) * 0.5))
     if (props.bordered) {
       s.backgroundColor._bgMuted
       s.borderRightWidth._thin
@@ -137,7 +138,7 @@ const labelClass = computed(() =>
 const valueClass = computed(() =>
   icss(theme.value, s => {
     s.color._text
-    s.padding.iem((props.size ?? 1) * 0.5)
+    s.padding.px(sizePx((props.size ?? 1) * 0.5))
     if (props.bordered) {
       s.borderRightWidth._thin
       s.borderRightStyle.solid

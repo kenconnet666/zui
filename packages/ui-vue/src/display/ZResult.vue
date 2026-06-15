@@ -31,6 +31,7 @@ import { computed, h } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -82,7 +83,7 @@ const iconWrapClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineFlex
     s.color(props.color)
-    s.fontSize.iem(4)
+    s.fontSize.px(sizePx(4))
   }),
 )
 
@@ -100,7 +101,7 @@ const descClass = computed(() =>
     s.fontSize._middle
     s.color._textSecondary
     s.textAlign.center
-    s.maxWidth.iem(30)
+    s.maxWidth.px(sizePx(30))
   }),
 )
 

@@ -70,6 +70,7 @@ import { lockBodyScroll } from '../_internal/body-scroll-lock'
 import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 import { useScrollbarOverlay } from '../_internal/useScrollbarOverlay'
 import { BuiltinIcons, ZIcon } from '../gene'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -156,7 +157,7 @@ const dialogClass = computed(() =>
     s.display.flex
     s.flexDirection.column
     s.maxHeight('calc(100vh - calc(2 * var(--zui-iem, 16px)))')
-    if (props.width !== undefined) s.width.iem(props.width)
+    if (props.width !== undefined) s.width.px(sizePx(props.width))
     s.maxWidth('calc(100vw - calc(2 * var(--zui-iem, 16px)))')
     if (!props.centered) s.marginTop._huge
     if (props.zIndex !== undefined) s.zIndex(props.zIndex + 1)

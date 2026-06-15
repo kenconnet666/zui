@@ -54,7 +54,8 @@ import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyInputSize } from '../_internal/input-size'
-import { usePopper, useEscapeStack, useZIem } from '../_hooks'
+import { usePopper, useEscapeStack } from '../_hooks'
+import { sizePx } from '../_internal/sizing'
 import { useZLocale } from '../provider/locale/useZLocale'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZVirtualList from '../display/ZVirtualList.vue'
@@ -207,7 +208,7 @@ const triggerClass = computed(() =>
     s.cursor(props.disabled ? 'not-allowed' : 'pointer')
     // 触发器 minWidth: 12iem(级联路径文本一般较长)
     // paddingTop/Bottom: 0.375iem × 2 = 0.75iem 总垂直内边距
-    s.minWidth.iem(12)
+    s.minWidth.px(sizePx(12))
     if (props.disabled) {
       s.opacity._dim
       s.backgroundColor._bgMuted
@@ -239,7 +240,7 @@ const popperClass = computed(() =>
 
 const columnClass = computed(() =>
   icss(theme.value, s => {
-    s.minWidth.iem(8)
+    s.minWidth.px(sizePx(8))
     s.borderRightWidth._thin
     s.borderRightStyle.solid
     s.borderRightColor._border
@@ -250,11 +251,10 @@ const columnClass = computed(() =>
   }),
 )
 
-const iemPx = useZIem()
 /** 每列虚拟列表实际高度。 */
 function columnHeight(col: ZCascaderOption[]): string {
-  const totalPx = col.length * props.optionSize * iemPx.value
-  const maxPx = props.columnMaxHeight * iemPx.value
+  const totalPx = col.length * sizePx(props.optionSize)
+  const maxPx = sizePx(props.columnMaxHeight)
   return `${Math.min(totalPx, maxPx)}px`
 }
 

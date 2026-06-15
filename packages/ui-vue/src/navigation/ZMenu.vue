@@ -56,6 +56,7 @@ export interface ZMenuEmits {
 import { computed, h, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
@@ -129,7 +130,7 @@ const itemClass = (item: ZMenuItem, isActive: boolean, depth: number): string =>
     s.color._text
     s.fontSize._middle
     s.padding._small
-    s.paddingLeft.iem(0.75 + depth * 0.75)
+    s.paddingLeft.px(sizePx(0.75 + depth * 0.75))
     s.paddingRight._small
     s.borderRadius._small
     s.transitionProperty._colors

@@ -43,7 +43,7 @@ import { computed, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyInputSizeNoHeight } from '../_internal/input-size'
-import { useZIem } from '../_hooks'
+import { sizePx } from '../_internal/sizing'
 import ZVirtualList from '../display/ZVirtualList.vue'
 
 /**
@@ -190,10 +190,9 @@ const dropdownClass = computed(() =>
   }),
 )
 
-const iemPx = useZIem()
 const dropdownListHeight = computed<string>(() => {
-  const totalPx = filtered.value.length * props.optionSize * iemPx.value
-  const maxPx = props.dropdownMaxHeight * iemPx.value
+  const totalPx = filtered.value.length * sizePx(props.optionSize)
+  const maxPx = sizePx(props.dropdownMaxHeight)
   return `${Math.min(totalPx, maxPx)}px`
 })
 

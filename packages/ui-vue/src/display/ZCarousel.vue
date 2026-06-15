@@ -36,6 +36,7 @@ import { computed, h, onMounted, onScopeDispose } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -144,14 +145,14 @@ const arrowClass = (side: 'left' | 'right'): string =>
   icss(theme.value, s => {
     s.position.absolute
     s.top.pct(50)
-    if (side === 'left') s.left.iem(0.5)
-    else s.right.iem(0.5)
+    if (side === 'left') s.left.px(sizePx(0.5))
+    else s.right.px(sizePx(0.5))
     s.transform('translateY(-50%)')
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.width.iem(2)
-    s.height.iem(2)
+    s.width.px(sizePx(2))
+    s.height.px(sizePx(2))
     s.borderRadius._full
     s.backgroundColor._bg
     s.color._text
@@ -167,7 +168,7 @@ const arrowClass = (side: 'left' | 'right'): string =>
 const dotsClass = computed(() =>
   icss(theme.value, s => {
     s.position.absolute
-    s.bottom.iem(0.75)
+    s.bottom.px(sizePx(0.75))
     s.left.pct(50)
     s.transform('translateX(-50%)')
     s.display.flex
@@ -178,8 +179,8 @@ const dotsClass = computed(() =>
 
 const dotClass = (active: boolean): string =>
   icss(theme.value, s => {
-    s.width.iem(0.5)
-    s.height.iem(0.5)
+    s.width.px(sizePx(0.5))
+    s.height.px(sizePx(0.5))
     s.borderRadius._full
     s.borderStyle.none
     s.cursor.pointer
@@ -188,7 +189,7 @@ const dotClass = (active: boolean): string =>
     s.transitionDuration._small
     if (active) {
       s.backgroundColor._bg
-      s.width.iem(1.25)
+      s.width.px(sizePx(1.25))
     } else {
       s.backgroundColor._bg.alpha(50)
     }

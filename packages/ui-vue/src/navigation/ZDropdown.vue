@@ -46,6 +46,7 @@ import { computed, ref, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 import { usePopper, useEscapeStack } from '../_hooks'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 
@@ -179,7 +180,7 @@ const menuClass = computed(() =>
     s.borderColor._border
     s.boxShadow._middle
     s.padding._tiny
-    s.minWidth.iem(8)
+    s.minWidth.px(sizePx(8))
     s.display.flex
     s.flexDirection.column
     applySx(s, props.sxMenu)

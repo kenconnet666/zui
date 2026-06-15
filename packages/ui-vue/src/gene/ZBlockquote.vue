@@ -36,6 +36,7 @@ export interface ZBlockquoteProps {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -74,12 +75,12 @@ const rootClass = computed(() =>
     s.borderRadius._tiny
     s.fontStyle('italic')
     s.lineHeight._relaxed
-    s.fontSize.iem(size)
-    s.paddingTop.iem(size * 0.5)
-    s.paddingBottom.iem(size * 0.5)
-    s.paddingLeft.iem(size * 0.75)
-    s.paddingRight.iem(size * 0.75)
-    s.borderLeftWidth.iem(size * 0.25)
+    s.fontSize.px(sizePx(size))
+    s.paddingTop.px(sizePx(size * 0.5))
+    s.paddingBottom.px(sizePx(size * 0.5))
+    s.paddingLeft.px(sizePx(size * 0.75))
+    s.paddingRight.px(sizePx(size * 0.75))
+    s.borderLeftWidth.px(sizePx(size * 0.25))
     s.borderLeftStyle.solid
     // border-left 用 user color factory(默认 `_primary`,从 withDefaults 提供),桥接到 borderLeftColor;不影响文字
     s.borderLeftColor(props.color)

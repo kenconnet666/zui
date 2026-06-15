@@ -50,6 +50,7 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyAsBg } from '../_internal/color-bridge'
 import { BuiltinIcons } from './icons'
 import ZIcon from './ZIcon.vue'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
@@ -90,13 +91,13 @@ const rootClass = computed(() =>
     s.alignItems.center
     s.gap._tiny
     s.lineHeight._tight
-    s.fontSize.iem(size)
-    s.paddingTop.iem(size * 0.125)
-    s.paddingBottom.iem(size * 0.125)
-    s.paddingLeft.iem(size * 0.5)
-    s.paddingRight.iem(size * 0.5)
+    s.fontSize.px(sizePx(size))
+    s.paddingTop.px(sizePx(size * 0.125))
+    s.paddingBottom.px(sizePx(size * 0.125))
+    s.paddingLeft.px(sizePx(size * 0.5))
+    s.paddingRight.px(sizePx(size * 0.5))
     if (props.round) s.borderRadius._full
-    else s.borderRadius.iem(size * 0.25)
+    else s.borderRadius.px(sizePx(size * 0.25))
     s.borderWidth._thin
     s.borderStyle.solid
     s.whiteSpace.nowrap

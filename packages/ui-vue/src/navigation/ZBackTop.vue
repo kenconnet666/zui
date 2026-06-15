@@ -41,6 +41,7 @@ export interface ZBackTopProps {
 import { computed, h, onMounted, onScopeDispose, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
@@ -68,10 +69,10 @@ const props = withDefaults(defineProps<ZBackTopProps>(), {
   visibilityHeight: 400,
   size: 2.5,
   right: (r: Chain<ZuiSchema>['right']) => {
-    r.iem(1.5)
+    r.px(sizePx(1.5))
   },
   bottom: (b: Chain<ZuiSchema>['bottom']) => {
-    b.iem(3)
+    b.px(sizePx(3))
   },
 })
 
@@ -116,8 +117,8 @@ const btnClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.width.iem(size)
-    s.height.iem(size)
+    s.width.px(sizePx(size))
+    s.height.px(sizePx(size))
     s.borderRadius._full
     s.backgroundColor._bg
     s.color._primary

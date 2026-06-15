@@ -52,6 +52,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZVirtualList from './ZVirtualList.vue'
+import { sizePx } from '../_internal/sizing'
 
 /**
  * 盒子模型(iem,Provider 控制基准):
@@ -122,7 +123,7 @@ const nodeRowClass = (node: ZTreeNode, depth: number): string => {
     s.cursor(node.disabled ? 'not-allowed' : 'pointer')
     s.paddingTop._tiny
     s.paddingBottom._tiny
-    s.paddingLeft.iem(0.5 + depth * 1)
+    s.paddingLeft.px(sizePx(0.5 + depth * 1))
     s.paddingRight._small
     s.borderRadius._tiny
     if (isSelected) {
@@ -145,8 +146,8 @@ const arrowClass = (expanded: boolean): string =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.width.iem(1)
-    s.height.iem(1)
+    s.width.px(sizePx(1))
+    s.height.px(sizePx(1))
     s.flexShrink(0)
     s.color._textSecondary
     s.transitionProperty._transform
@@ -157,7 +158,7 @@ const arrowClass = (expanded: boolean): string =>
 const arrowSpacerClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineBlock
-    s.width.iem(1)
+    s.width.px(sizePx(1))
     s.flexShrink(0)
   }),
 )
