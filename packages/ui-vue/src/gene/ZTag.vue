@@ -4,7 +4,7 @@
  *
  * - `color` carrier factory —— 主色(默认 `_textSecondary`)
  * - `variant: 'filled' | 'outlined' | 'soft'`(默认 `'soft'`)
- * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 `TAG_SIZE_MAP.middle`)
+ * - `size?: number` —— 字号尺寸(px 倍数,1 单位 = 16px),默认 0.875(= 14px)
  * - `closable: boolean` —— 关闭按钮 + emit close
  * - `round: boolean` —— 圆角胶囊形
  */
@@ -12,9 +12,11 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
+export type ZTagVariant = 'filled' | 'outlined' | 'soft'
+
 export interface ZTagProps {
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
-  variant?: 'filled' | 'outlined' | 'soft'
+  variant?: ZTagVariant
   /**
    * 尺寸 —— `number`(px 倍数,默认 0.875 = 14px,1 单位 = 16px)。
    *

@@ -8,7 +8,7 @@
  * - `min?: number` / `max?: number` —— 边界
  * - `precision?: number` —— 小数位数(`undefined` 不限制)
  * - `disabled` / `readonly`
- * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 `INPUT_SIZE_MAP.middle`)
+ * - `size?: number` —— 字号尺寸(px 倍数,1 单位 = 16px),默认 1(= 16px)
  *
  * **emit**:`update:value` / `change` / `focus` / `blur`
  */

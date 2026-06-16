@@ -39,7 +39,7 @@ export { default as ZSelect } from './ZSelect.vue'
 export type { ZSelectProps, ZSelectEmits, ZSelectValue, ZSelectOption } from './ZSelect.vue'
 
 export { default as ZForm } from './ZForm.vue'
-export type { ZFormProps, ZFormExpose } from './ZForm.vue'
+export type { ZFormProps, ZFormExpose, ZFormLabelPlacement, ZFormValidateTrigger } from './ZForm.vue'
 
 export { default as ZFormItem } from './ZFormItem.vue'
 export type { ZFormItemProps } from './ZFormItem.vue'
@@ -79,7 +79,7 @@ export { default as ZMention } from './ZMention.vue'
 export type { ZMentionProps, ZMentionEmits } from './ZMention.vue'
 
 export { default as ZCascader } from './ZCascader.vue'
-export type { ZCascaderProps, ZCascaderEmits, ZCascaderOption } from './ZCascader.vue'
+export type { ZCascaderProps, ZCascaderEmits, ZCascaderOption, ZCascaderExpandTrigger } from './ZCascader.vue'
 
 export { default as ZTreeSelect } from './ZTreeSelect.vue'
 export type { ZTreeSelectProps, ZTreeSelectEmits } from './ZTreeSelect.vue'

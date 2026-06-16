@@ -29,9 +29,11 @@ export interface ZNotificationItem {
   loading?: boolean
 }
 
+export type ZNotificationPlacement = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'
+
 export interface ZNotificationProps {
   items: ZNotificationItem[]
-  placement?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'
+  placement?: ZNotificationPlacement
   /** 通知容器最大宽度 —— `number`(px 倍数(1 单位 = 16px),默认 22.5 = 360px)。2026-05-24 B7。 */
   maxWidth?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined

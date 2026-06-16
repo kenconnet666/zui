@@ -6,7 +6,7 @@
  * - `v-model:value`(单选,Phase β 支持多选)
  * - `options: Array<{ value, label, disabled? }>` —— 必填
  * - `placeholder?: string` —— 未选时占位
- * - `disabled` / `clearable` / `size`(SizePropMulti factory)
+ * - `disabled` / `clearable` / `size?: number` —— 字号尺寸(px 倍数,1 单位 = 16px),默认 1(= 16px)
  * - `filterable: boolean` —— 启用搜索过滤(默认 `false`)
  * - sx:sxTrigger / sxDropdown / sxOption
  *

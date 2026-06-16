@@ -16,10 +16,10 @@ export type {
 
 // ─── Phase β 浮层(usePopper)───
 export { default as ZTooltip } from './ZTooltip.vue'
-export type { ZTooltipProps, ZTooltipEmits } from './ZTooltip.vue'
+export type { ZTooltipProps, ZTooltipEmits, ZTooltipTrigger } from './ZTooltip.vue'
 
 export { default as ZPopover } from './ZPopover.vue'
-export type { ZPopoverProps, ZPopoverEmits } from './ZPopover.vue'
+export type { ZPopoverProps, ZPopoverEmits, ZPopoverTrigger } from './ZPopover.vue'
 
 // ─── Phase β 第二批 ───
 export { default as ZEmpty } from './ZEmpty.vue'
@@ -35,7 +35,7 @@ export { default as ZList } from './ZList.vue'
 export type { ZListProps, ZListEmits, ZListExpose } from './ZList.vue'
 
 export { default as ZProgress } from './ZProgress.vue'
-export type { ZProgressProps } from './ZProgress.vue'
+export type { ZProgressProps, ZProgressType } from './ZProgress.vue'
 
 export { default as ZCollapse } from './ZCollapse.vue'
 export type { ZCollapseProps, ZCollapseEmits, ZCollapseItem } from './ZCollapse.vue'
@@ -48,7 +48,7 @@ export { default as ZStatistic } from './ZStatistic.vue'
 export type { ZStatisticProps } from './ZStatistic.vue'
 
 export { default as ZImage } from './ZImage.vue'
-export type { ZImageProps } from './ZImage.vue'
+export type { ZImageProps, ZImageEmits } from './ZImage.vue'
 
 export { default as ZTree } from './ZTree.vue'
 export type { ZTreeProps, ZTreeEmits, ZTreeNode } from './ZTree.vue'
@@ -73,4 +73,5 @@ export type {
   ZDataTableExpose,
   ZDataTableColumn,
   ZDataTableSort,
+  ZDataTableSelection,
 } from './ZDataTable.vue'

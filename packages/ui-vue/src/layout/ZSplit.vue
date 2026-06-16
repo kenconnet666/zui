@@ -13,8 +13,10 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
+export type ZSplitDirection = 'horizontal' | 'vertical'
+
 export interface ZSplitProps {
-  direction?: 'horizontal' | 'vertical'
+  direction?: ZSplitDirection
   /**
    * 第一栏占容器的比例(0~1)。默认 `0.5`。**故意不叫 `size`** —— zui 全栈 `size`
    * 是 px 倍数(物理长度),`ZSplit` 这里是比例(无单位),命名拆分避免歧义。

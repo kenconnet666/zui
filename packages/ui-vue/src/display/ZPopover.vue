@@ -19,10 +19,13 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
+/** 触发方式:'click' 点击 / 'hover' 悬停 / 'manual' 手动控制。 */
+export type ZPopoverTrigger = 'click' | 'hover' | 'manual'
+
 export interface ZPopoverProps {
   title?: string
   placement?: Placement
-  trigger?: 'click' | 'hover' | 'manual'
+  trigger?: ZPopoverTrigger
   visible?: boolean
   disabled?: boolean
   /** popper 最小宽度 —— `number`(px 倍数,1 单位 = 16px,默认 8 = 128px)。2026-05-24 B7。 */

@@ -21,13 +21,15 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
+export type ZDividerAlign = 'left' | 'center' | 'right'
+
 export interface ZDividerProps {
   /** 纵向分隔(`inline-block` 竖线),需父容器有高度。默认 `false`(横向)。 */
   vertical?: boolean
   /** 虚线。 */
   dashed?: boolean
   /** 中间文字位置(仅横向 + 有 slot 时生效)。默认 `'center'`。 */
-  align?: 'left' | 'center' | 'right'
+  align?: ZDividerAlign
   /**
    * 颜色 factory —— 接 `color` carrier。**默认**:`(c) => c._border`。
    *

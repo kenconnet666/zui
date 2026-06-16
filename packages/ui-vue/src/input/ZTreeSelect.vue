@@ -7,7 +7,7 @@
  * - `data: ZTreeNode[]` —— 树数据
  * - `defaultExpandedKeys?: string[]`
  * - `placeholder?: string` / `disabled?: boolean` / `clearable?: boolean`
- * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 `INPUT_SIZE_MAP.middle`)
+ * - `size?: number` —— 字号尺寸(px 倍数,1 单位 = 16px),默认 1(= 16px)
  */
 import type { Placement } from '@floating-ui/vue'
 import type { Chain } from '@kenconnet666/zui-core'

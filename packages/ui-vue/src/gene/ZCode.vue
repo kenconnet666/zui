@@ -33,6 +33,8 @@ import type { ZuiSchema } from '../provider/theme'
 import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
 import { sizePx } from '../_internal/sizing'
 
+export type ZCodeColorScheme = 'auto' | 'light' | 'dark'
+
 export interface ZCodeProps {
   /** 代码文本。高亮模式必传(default slot 内容无法可靠提取)。 */
   code?: string
@@ -41,7 +43,7 @@ export interface ZCodeProps {
   /** shiki 双主题对,默认 `light-plus` / `tokyo-night`。 */
   themes?: { light: string; dark: string }
   /** 颜色模式:`'auto'`(跟随 OS prefers-color-scheme,默认)/ `'light'` / `'dark'`。 */
-  colorScheme?: 'auto' | 'light' | 'dark'
+  colorScheme?: ZCodeColorScheme
   /** 行内 `<code>` 还是块级 `<pre><code>`。默认 `true`(行内,不高亮)。 */
   inline?: boolean
   /** 文字色 carrier(fallback / 未高亮模式生效;高亮模式由 shiki 控制色)。 */
@@ -134,7 +136,7 @@ export default defineComponent({
       default: () => ({ ...DEFAULT_THEMES }),
     },
     colorScheme: {
-      type: String as PropType<'auto' | 'light' | 'dark'>,
+      type: String as PropType<ZCodeColorScheme>,
       default: 'auto',
     },
     inline: { type: Boolean, default: true },

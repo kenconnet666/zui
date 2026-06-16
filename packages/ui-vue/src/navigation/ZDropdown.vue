@@ -24,10 +24,12 @@ export interface ZDropdownItem {
   danger?: boolean
 }
 
+export type ZDropdownTrigger = 'click' | 'hover' | 'manual'
+
 export interface ZDropdownProps {
   items: ZDropdownItem[]
   placement?: Placement
-  trigger?: 'click' | 'hover' | 'manual'
+  trigger?: ZDropdownTrigger
   visible?: boolean
   disabled?: boolean
   sxMenu?: SxObject

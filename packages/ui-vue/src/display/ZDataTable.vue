@@ -64,6 +64,9 @@ export interface ZDataTableColumn<T = unknown> {
   sortable?: boolean | ((a: T, b: T) => number)
 }
 
+/** 行选中模式:'none' 不可选 / 'single' 单选 / 'multiple' 多选(含 checkbox 列)。 */
+export type ZDataTableSelection = 'none' | 'single' | 'multiple'
+
 export interface ZDataTableProps<T = unknown> {
   /** 数据数组(必传)。 */
   rows: readonly T[]
@@ -74,7 +77,7 @@ export interface ZDataTableProps<T = unknown> {
   /** 容器高度(必传,虚拟要求 viewport 固定)。px 倍数(1 单位 = 16px)或 CSS 字面字符串。 */
   height: number | string
   /** 选中模式。默认 `'none'`。 */
-  selection?: 'none' | 'single' | 'multiple'
+  selection?: ZDataTableSelection
   /** 选中行 key 数组(`v-model:selected`,即使 single 也用数组,统一 API)。 */
   selected?: (string | number)[]
   /** 取行 key 字段名。默认 `'id'`。 */

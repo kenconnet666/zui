@@ -7,7 +7,7 @@
  * - `title?: string` —— 顶部标题
  * - `column?: number` —— 列数,默认 3
  * - `bordered?: boolean` —— 边框
- * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 `DESC_SIZE_MAP.middle`)
+ * - `size?: number` —— 字号尺寸(px 倍数,1 单位 = 16px),默认 1(= 16px)
  *
  * slot:`title` / 每个 item 的 `value` 走 `#item-{label}`(本 v1 简化:仅配置式)
  */

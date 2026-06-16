@@ -18,12 +18,14 @@ export interface ZCascaderOption {
   children?: ZCascaderOption[]
 }
 
+export type ZCascaderExpandTrigger = 'click' | 'hover'
+
 export interface ZCascaderProps {
   value?: string[]
   options: ZCascaderOption[]
   placeholder?: string
   disabled?: boolean
-  expandTrigger?: 'click' | 'hover'
+  expandTrigger?: ZCascaderExpandTrigger
   placement?: Placement
   separator?: string
   /** 字号尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1)。同 ZInput。2026-05-24 B7。 */

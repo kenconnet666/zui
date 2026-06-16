@@ -5,13 +5,13 @@
  * **API**:
  * - `value: number` —— 0~100(超出自动 clamp)
  * - `type?: 'line' | 'circle'` —— 默认 `'line'`
- * - `size?: SizePropMulti` —— 尺寸 factory;line 模式覆盖 rail 高度,circle 模式覆盖外层 width/height。默认等价 middle(line=8px / circle=100px)。
+ * - `size?: number` —— 尺寸(px 倍数,1 单位 = 16px);line 模式覆盖 rail 高度,默认 0.5(= 8px);circle 模式覆盖外层 width/height,默认 7.5(= 120px)。
  * - `color?: factory` —— 进度色 carrier factory(默认 `_primary`)。
  *   - B6:删除原 `status?: 'normal'|'success'|'warning'|'danger'`,合并到 `color` factory,
  *     用户直接 `color={(c) => c._success}` 即可。
  * - `showText?: boolean` —— 显示百分比文字(line 在右,circle 在中)
  *
- * **size factory 限制**:仅覆盖 CSS 端高度/直径,内部 SVG viewBox 始终 100x100(circle 模式)。
+ * **size 限制**:仅覆盖 CSS 端高度/直径,内部 SVG viewBox 始终 100x100(circle 模式)。
  * 想缩放 SVG 直径,用 factory 同时改 width + height(SVG 自动 scale 跟随容器)。
  *
  * **a11y**:`role="progressbar"` + `aria-valuenow / aria-valuemin / aria-valuemax`。
@@ -19,9 +19,12 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
+/** 进度条类型:'line' 线性 / 'circle' 环形。 */
+export type ZProgressType = 'line' | 'circle'
+
 export interface ZProgressProps {
   value: number
-  type?: 'line' | 'circle'
+  type?: ZProgressType
   /**
    * 尺寸 —— `number`(px 倍数,1 单位 = 16px)。
    *

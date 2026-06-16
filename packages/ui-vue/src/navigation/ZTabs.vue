@@ -29,10 +29,12 @@ export interface ZTabItem {
   closable?: boolean
 }
 
+export type ZTabsType = 'line' | 'card' | 'segment'
+
 export interface ZTabsProps {
   value?: string
   tabs: ZTabItem[]
-  type?: 'line' | 'card' | 'segment'
+  type?: ZTabsType
   closable?: boolean
   addable?: boolean
   disabled?: boolean

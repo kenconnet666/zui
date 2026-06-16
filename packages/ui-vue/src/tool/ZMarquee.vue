@@ -9,9 +9,11 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
+export type ZMarqueeDirection = 'left' | 'right'
+
 export interface ZMarqueeProps {
   duration?: number
-  direction?: 'left' | 'right'
+  direction?: ZMarqueeDirection
   pauseOnHover?: boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }

@@ -5,7 +5,7 @@
  * **API**(跟 ZModal 类似):
  * - `v-model:visible`
  * - `placement?: 'left' | 'right' | 'top' | 'bottom'` —— 默认 `'right'`
- * - `size?: SizePropMulti` —— 尺寸 factory,用户自己写 `s.width.px(sizePx(...))` 或 `s.height.px(sizePx(...))`(placement 决定哪条轴)。默认等价 384px(left/right=width,top/bottom=height)。
+ * - `size?: number` —— 尺寸(px 倍数,1 单位 = 16px),默认 24(= 384px);left/right placement 控制 width,top/bottom 控制 height。
  * - `title?: string`
  * - `closable?: boolean`
  * - `maskClosable?: boolean`
@@ -17,9 +17,11 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
+export type ZDrawerPlacement = 'left' | 'right' | 'top' | 'bottom'
+
 export interface ZDrawerProps {
   visible?: boolean
-  placement?: 'left' | 'right' | 'top' | 'bottom'
+  placement?: ZDrawerPlacement
   /**
    * 抽屉宽度(left/right placement)或高度(top/bottom placement)—— `number`(px 倍数(1 单位 = 16px),默认 24 = 384px,对齐 antd Drawer 378px)。
    *

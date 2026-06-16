@@ -5,7 +5,7 @@
  * **API**:
  * - `v-model`(`value` + `update:value`)—— 双向绑定
  * - `type?: string` —— HTML input type,默认 `'text'`
- * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 `INPUT_SIZE_MAP.middle`)
+ * - `size?: number` —— 字号尺寸(px 倍数,1 单位 = 16px),默认 1(= 16px)
  * - `disabled` / `readonly` —— 标准 HTML 状态
  * - `placeholder` —— 占位文字
  * - `clearable` —— 显示清空按钮(有值时)

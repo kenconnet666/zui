@@ -27,4 +27,4 @@ export type { ZScrollbarProps } from './ZScrollbar.vue'
 
 // ─── Phase γ ───
 export { default as ZSplit } from './ZSplit.vue'
-export type { ZSplitProps, ZSplitEmits } from './ZSplit.vue'
+export type { ZSplitProps, ZSplitEmits, ZSplitDirection } from './ZSplit.vue'

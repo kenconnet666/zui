@@ -20,10 +20,13 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
+/** 触发方式:'hover' 悬停 / 'click' 点击 / 'focus' 聚焦 / 'manual' 手动控制。 */
+export type ZTooltipTrigger = 'hover' | 'click' | 'focus' | 'manual'
+
 export interface ZTooltipProps {
   content?: string
   placement?: Placement
-  trigger?: 'hover' | 'click' | 'focus' | 'manual'
+  trigger?: ZTooltipTrigger
   visible?: boolean
   delay?: number
   disabled?: boolean

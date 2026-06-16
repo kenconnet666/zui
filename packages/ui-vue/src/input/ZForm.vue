@@ -19,11 +19,14 @@ import type { Rules } from 'async-validator'
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
+export type ZFormLabelPlacement = 'top' | 'left'
+export type ZFormValidateTrigger = 'change' | 'blur' | 'submit'
+
 export interface ZFormProps {
   model: Record<string, unknown>
   rules?: Rules
-  labelPlacement?: 'top' | 'left'
-  validateTrigger?: 'change' | 'blur' | 'submit'
+  labelPlacement?: ZFormLabelPlacement
+  validateTrigger?: ZFormValidateTrigger
   disabled?: boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }

@@ -8,7 +8,7 @@
  * - `rowKey: string | ((row: T) => string | number)` —— 行 key,默认 `'id'`
  * - `bordered?: boolean` —— 边框,默认 `false`
  * - `striped?: boolean` —— 斑马纹,默认 `false`
- * - `size?: SizePropMulti` —— 内边距 factory(默认等价 `TABLE_SIZE_MAP.middle`)
+ * - `size?: number` —— 尺寸(px 倍数,1 单位 = 16px),默认 1(= 16px),控制单元格内边距
  * - `emptyText?: string` —— 空数据文案,默认 "暂无数据"
  *
  * **Phase β 升级**:

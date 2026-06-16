@@ -9,10 +9,10 @@
  * - `siblings?: number` —— 当前页两侧显示多少页码(默认 `1`)
  * - `showTotal?: boolean` —— 显示总数文本
  * - `disabled?: boolean`
- * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 middle:fontSize._middle)
+ * - `size?: number` —— 字号尺寸(px 倍数,1 单位 = 16px),默认 1(= 16px)
  *
- * **size 策略**:factory 应用到 root,主要改 `fontSize`;item 尺寸用 `sizePx(1.75)`(28px) 跟 fontSize 联动自动 scale,
- * 用户改 fontSize 即可整体缩放。
+ * **size 策略**:应用到 root `fontSize`;item 尺寸默认 `size * 2`(32px) 跟字号联动自动 scale,
+ * 用户改 size 数字即可整体缩放。
  *
  * **算法**:Always 显示首/末页 + 当前 ±siblings + 省略号。
  *

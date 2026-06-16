@@ -11,10 +11,12 @@
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
+export type ZCountdownPrecision = 'second' | 'ms'
+
 export interface ZCountdownProps {
   value: number | Date
   format?: string
-  precision?: 'second' | 'ms'
+  precision?: ZCountdownPrecision
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 

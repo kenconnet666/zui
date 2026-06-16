@@ -18,13 +18,14 @@ import type { RuleItem } from 'async-validator'
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
+import type { ZFormValidateTrigger } from './ZForm.vue'
 
 export interface ZFormItemProps {
   prop: string
   label?: string
   rule?: RuleItem | RuleItem[]
   required?: boolean
-  validateTrigger?: 'change' | 'blur' | 'submit'
+  validateTrigger?: ZFormValidateTrigger
   labelWidth?: string | number
   /** label 节点 sx 配置(class/style/attrs/css)。 */
   sxLabel?: SxObject

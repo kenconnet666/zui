@@ -22,26 +22,26 @@ export { default as ZLink } from './ZLink.vue'
 export type { ZLinkProps } from './ZLink.vue'
 
 export { default as ZDivider } from './ZDivider.vue'
-export type { ZDividerProps } from './ZDivider.vue'
+export type { ZDividerProps, ZDividerAlign } from './ZDivider.vue'
 
 export { default as ZButton } from './ZButton.vue'
-export type { ZButtonProps, ZButtonEmits } from './ZButton.vue'
+export type { ZButtonProps, ZButtonEmits, ZButtonVariant, ZButtonShape } from './ZButton.vue'
 
 // ─── Phase β gene 补全 ───
 export { default as ZAvatar } from './ZAvatar.vue'
 export type { ZAvatarProps } from './ZAvatar.vue'
 
 export { default as ZTag } from './ZTag.vue'
-export type { ZTagProps, ZTagEmits } from './ZTag.vue'
+export type { ZTagProps, ZTagEmits, ZTagVariant } from './ZTag.vue'
 
 export { default as ZBadge } from './ZBadge.vue'
 export type { ZBadgeProps } from './ZBadge.vue'
 
 export { default as ZCode } from './ZCode.vue'
-export type { ZCodeProps } from './ZCode.vue'
+export type { ZCodeProps, ZCodeColorScheme } from './ZCode.vue'
 
 export { default as ZCodeCard, stripImports } from './ZCodeCard.vue'
-export type { ZCodeCardProps, ZCodeCardEmits } from './ZCodeCard.vue'
+export type { ZCodeCardProps, ZCodeCardEmits, CodeThemeItem } from './ZCodeCard.vue'
 
 export { default as ZCopyButton } from './ZCopyButton.vue'
 export type { ZCopyButtonProps, ZCopyButtonEmits } from './ZCopyButton.vue'
