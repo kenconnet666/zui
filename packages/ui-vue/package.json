@@ -56,8 +56,9 @@
     "node": ">=20.0.0"
   },
   "peerDependencies": {
+    "@emotion/css": "^11.13.5",
     "qrcode": "^1.5.4",
-    "shiki": "^3.13.0",
+    "shiki": "^3.23.0",
     "vue": "^3.5.0"
   },
   "peerDependenciesMeta": {
@@ -69,7 +70,6 @@
     }
   },
   "dependencies": {
-    "@emotion/css": "^11.13.5",
     "@emotion/unitless": "^0.10.0",
     "@floating-ui/vue": "^1.1.11",
     "@kenconnet666/zui-core": "workspace:*",
@@ -82,12 +82,13 @@
     "date-fns-tz": "^3.2.0"
   },
   "devDependencies": {
+    "@emotion/css": "^11.13.5",
     "@types/qrcode": "^1.5.6",
     "@vitest/coverage-v8": "^4.1.4",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^20.9.0",
     "qrcode": "^1.5.4",
-    "shiki": "^3.13.0",
+    "shiki": "^3.23.0",
     "vue": "^3.5.32"
   },
   "publishConfig": {

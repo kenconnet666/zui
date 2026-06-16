@@ -10,7 +10,7 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
@@ -41,6 +41,20 @@ jobs:
 
       - name: Build core
         run: pnpm --filter @kenconnet666/zui-core build
+
+      # ──────── ui-vue 守护(type-check + test + build)────────
+      - name: Type check ui-vue
+        run: pnpm --filter @kenconnet666/zui-vue run type-check
+
+      - name: Test ui-vue
+        run: pnpm --filter @kenconnet666/zui-vue test
+
+      - name: Build ui-vue
+        run: pnpm --filter @kenconnet666/zui-vue build
+
+      # ──────── docs 站点构建守护 ────────
+      - name: Build docs
+        run: pnpm --filter @kenconnet666/docs build
 
       - name: Build examples
         run: |
