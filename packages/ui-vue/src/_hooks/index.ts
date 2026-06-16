@@ -29,3 +29,4 @@ export {
   type UseColorSchemeOptions,
   type UseColorSchemeReturn,
 } from './useColorScheme'
+export { useOverlay, type UseOverlayOptions, type UseOverlayReturn } from './useOverlay'

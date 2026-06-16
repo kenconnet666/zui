@@ -1,38 +1,19 @@
 /**
  * `createNotificationApi` —— 通知工厂(类 createMessageApi)。
+ *
+ * 内部通过 `createToastApiBase` 管理 reactive 队列 + 挂载生命周期；
+ * 本文件只负责 notification 特定的 `push` 签名包装（title / description / placement）
+ * 与公开 API 封装。
  */
-import { createApp, reactive, type App, type Component } from 'vue'
-import type { Chain } from '@kenconnet666/zui-core'
+import { createApp } from 'vue'
 import ZNotification from './ZNotification.vue'
 import type { ZNotificationItem } from './ZNotification.vue'
-import type { ZuiSchema } from '../provider/theme'
-import { BuiltinIcons } from '../gene/icons'
-
-type SemanticType = 'info' | 'success' | 'warning' | 'danger' | 'loading'
-const SEMANTIC_COLOR: Record<SemanticType, (c: Chain<ZuiSchema>['color']) => void> = {
-  info: c => {
-    c._info
-  },
-  success: c => {
-    c._success
-  },
-  warning: c => {
-    c._warning
-  },
-  danger: c => {
-    c._danger
-  },
-  loading: c => {
-    c._info
-  },
-}
-const SEMANTIC_ICON: Record<SemanticType, Component> = {
-  info: BuiltinIcons.info,
-  success: BuiltinIcons.success,
-  warning: BuiltinIcons.warning,
-  danger: BuiltinIcons.error,
-  loading: BuiltinIcons.refresh,
-}
+import {
+  createToastApiBase,
+  TOAST_SEMANTIC_COLOR,
+  TOAST_SEMANTIC_ICON,
+  type ToastSemanticType,
+} from '../_internal/createToastApi'
 
 export interface ZNotificationApi {
   info: (title: string, description?: string, duration?: number) => ZNotificationItem['id']
@@ -49,62 +30,36 @@ export interface CreateNotificationApiOptions {
   appendTo?: HTMLElement
 }
 
-let nextId = 0
-
 export function createNotificationApi(opts: CreateNotificationApiOptions = {}): ZNotificationApi {
-  const items = reactive<ZNotificationItem[]>([])
-  let app: App<Element> | null = null
-  let host: HTMLDivElement | null = null
-
-  function ensureMounted(): void {
-    if (app || typeof document === 'undefined') return
-    host = document.createElement('div')
-    host.setAttribute('data-zui-notification-host', '')
-    ;(opts.appendTo ?? document.body).appendChild(host)
-    app = createApp(ZNotification, {
-      items,
-      placement: opts.placement ?? 'top-right',
-      onClose: (id: ZNotificationItem['id']) => close(id),
-    })
-    app.mount(host)
-  }
+  const base = createToastApiBase<ZNotificationItem>({
+    hostAttr: 'data-zui-notification-host',
+    createVueApp: (items, onClose) =>
+      createApp(ZNotification, {
+        items,
+        placement: opts.placement ?? 'top-right',
+        onClose,
+      }),
+    appendTo: opts.appendTo,
+  })
 
   function push(
-    type: SemanticType,
+    type: ToastSemanticType,
     title: string,
     description?: string,
     duration?: number,
   ): ZNotificationItem['id'] {
-    ensureMounted()
-    const id = ++nextId
-    const item: ZNotificationItem = {
-      id,
-      title,
-      color: SEMANTIC_COLOR[type],
-      icon: SEMANTIC_ICON[type],
-      loading: type === 'loading',
-    }
-    if (description !== undefined) item.description = description
-    if (duration !== undefined) item.duration = duration
-    items.push(item)
-    return id
-  }
-
-  function close(id: ZNotificationItem['id']): void {
-    const idx = items.findIndex(m => m.id === id)
-    if (idx >= 0) items.splice(idx, 1)
-  }
-
-  function destroyAll(): void {
-    items.splice(0, items.length)
-    if (app) {
-      app.unmount()
-      app = null
-    }
-    if (host && host.parentNode) {
-      host.parentNode.removeChild(host)
-      host = null
-    }
+    return base.push(id => {
+      const item: ZNotificationItem = {
+        id,
+        title,
+        color: TOAST_SEMANTIC_COLOR[type],
+        icon: TOAST_SEMANTIC_ICON[type],
+        loading: type === 'loading',
+      }
+      if (description !== undefined) item.description = description
+      if (duration !== undefined) item.duration = duration
+      return item
+    })
   }
 
   return {
@@ -113,7 +68,7 @@ export function createNotificationApi(opts: CreateNotificationApiOptions = {}): 
     warning: (t, d, dur) => push('warning', t, d, dur),
     error: (t, d, dur) => push('danger', t, d, dur),
     loading: (t, d, dur) => push('loading', t, d, dur ?? 0),
-    close,
-    destroyAll,
+    close: base.close,
+    destroyAll: base.destroyAll,
   }
 }

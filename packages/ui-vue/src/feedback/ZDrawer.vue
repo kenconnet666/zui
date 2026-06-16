@@ -55,17 +55,12 @@ export interface ZDrawerEmits {
 </script>
 
 <script lang="ts" setup>
-import { computed, h, onScopeDispose, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { useEscapeStack } from '../_hooks'
+import { useOverlay } from '../_hooks/useOverlay'
 import { applySx, extractSxAttrs } from '../_internal/sx'
-import { lockBodyScroll } from '../_internal/body-scroll-lock'
-import { applyScrollbarStyles } from '../_internal/scrollbarStyles'
-import { useScrollbarOverlay } from '../_internal/useScrollbarOverlay'
-import { BuiltinIcons, ZIcon } from '../gene'
 import { sizePx } from '../_internal/sizing'
-import { applyUserRef } from '../_internal/merge-ref'
 
 /**
  * 盒子模型(number 是 px 倍数(1 单位 = 16px),默认 1 单位 = 16px @ 1080p):
@@ -114,18 +109,40 @@ const emit = defineEmits<ZDrawerEmits>()
 
 const theme = useZTheme()
 
-const visibleRef = computed(() => props.visible)
+const sxMaskAttrs = computed(() => extractSxAttrs(props.sxMask))
+const sxDrawerAttrs = computed(() => extractSxAttrs(props.sxDrawer))
+const sxHeadAttrs = computed(() => extractSxAttrs(props.sxHead))
+const sxBodyAttrs = computed(() => extractSxAttrs(props.sxBody))
+const sxFootAttrs = computed(() => extractSxAttrs(props.sxFoot))
 
-useEscapeStack(
-  () => {
-    if (props.visible) {
-      emit('update:visible', false)
-      emit('close')
-    }
+// ─── 共享 overlay 逻辑 ──────────────────────────────────────────────────────
+const {
+  bodyClass,
+  bodyScrollerClass,
+  footClass,
+  closeBtnClass,
+  bodyOverlay: drawerBodyOverlay,
+  closeIconNode,
+  rootRef,
+  bindMask,
+  onCloseClick,
+  handleMaskClick: onMaskClick,
+} = useOverlay(theme, {
+  visible: () => props.visible,
+  maskClosable: () => props.maskClosable,
+  onClose: () => {
+    emit('update:visible', false)
+    emit('close')
   },
-  { enabled: visibleRef },
-)
+  onMaskClick: () => {
+    emit('mask-click')
+  },
+  sxBody: () => props.sxBody,
+  sxFoot: () => props.sxFoot,
+  sxMaskRef: () => sxMaskAttrs.value.ref,
+})
 
+// ─── Drawer 专属：maskClass（纯遮罩，无布局属性）────────────────────────────
 const maskClass = computed(() =>
   icss(theme.value, s => {
     s.position.fixed
@@ -135,8 +152,8 @@ const maskClass = computed(() =>
     applySx(s, props.sxMask)
   }),
 )
-const sxMaskAttrs = computed(() => extractSxAttrs(props.sxMask))
 
+// ─── Drawer 专属：drawerClass（四方向定位）──────────────────────────────────
 const drawerClass = computed(() =>
   icss(theme.value, s => {
     s.position.fixed
@@ -178,8 +195,8 @@ const drawerClass = computed(() =>
     applySx(s, props.sxDrawer)
   }),
 )
-const sxDrawerAttrs = computed(() => extractSxAttrs(props.sxDrawer))
 
+// ─── Drawer 专属：headClass（无 gap._small，与 Modal headClass 不同）─────────
 const headClass = computed(() =>
   icss(theme.value, s => {
     s.display.flex
@@ -194,111 +211,7 @@ const headClass = computed(() =>
     applySx(s, props.sxHead)
   }),
 )
-const sxHeadAttrs = computed(() => extractSxAttrs(props.sxHead))
 
-// ─── body overlay scrollbar ──────────────────────────────────────────────────
-const drawerBodyOverlay = useScrollbarOverlay(theme)
-
-/** 外层 wrapper：承接 sxBody attrs、position:relative 定位 overlay track。 */
-const bodyClass = computed(() =>
-  icss(theme.value, s => {
-    s.position.relative
-    s.flexGrow(1)
-    s.minHeight.px(0)
-    s.overflow.hidden
-    applySx(s, props.sxBody)
-  }),
-)
-
-/** 内层真正滚动的 div：height:100% + overflow-y:auto + native scrollbar 隐藏。 */
-const bodyScrollerClass = computed(() =>
-  icss(theme.value, s => {
-    s.height.pct(100)
-    s.overflowY.auto
-    s.padding._middle
-    applyScrollbarStyles(s, theme.value)
-  }),
-)
-
-const sxBodyAttrs = computed(() => extractSxAttrs(props.sxBody))
-
-const footClass = computed(() =>
-  icss(theme.value, s => {
-    s.display.flex
-    s.justifyContent.flexEnd
-    s.gap._small
-    s.padding._middle
-    s.borderTopWidth._thin
-    s.borderTopStyle.solid
-    s.borderTopColor._border
-    applySx(s, props.sxFoot)
-  }),
-)
-const sxFootAttrs = computed(() => extractSxAttrs(props.sxFoot))
-
-const closeBtnClass = computed(() =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.justifyContent.center
-    s.cursor.pointer
-    s.backgroundColor.transparent
-    s.borderStyle.none
-    s.padding._tiny
-    s.fontSize._middle
-    s.color._textSecondary
-    s.borderRadius._tiny
-    s._hover(h2 => {
-      h2.backgroundColor._textSecondary.alpha(8)
-    })
-  }),
-)
-
-function onMaskClick(): void {
-  emit('mask-click')
-  if (props.maskClosable) {
-    emit('update:visible', false)
-    emit('close')
-  }
-}
-function onCloseClick(): void {
-  emit('update:visible', false)
-  emit('close')
-}
-
-// body scroll lock —— 多实例共享(2026-05-23 技术债务修复)
-let releaseLock: (() => void) | null = null
-watch(
-  () => props.visible,
-  v => {
-    if (v && !releaseLock) {
-      releaseLock = lockBodyScroll()
-    } else if (!v && releaseLock) {
-      releaseLock()
-      releaseLock = null
-    }
-  },
-  { immediate: true },
-)
-onScopeDispose(() => {
-  if (releaseLock) {
-    releaseLock()
-    releaseLock = null
-  }
-})
-
-const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
-
-const rootRef = ref<HTMLElement | null>(null)
-/**
- * mask 元素 ref 合并器 —— 同时写入内部 `rootRef`(defineExpose 暴露)与
- * 用户传入的 `sxMask.ref`(string / function / Ref 对象,VNodeRef 形式)。
- */
-function bindMask(el: unknown): void {
-  const node = (el as HTMLElement | null) ?? null
-  rootRef.value = node
-  applyUserRef(sxMaskAttrs.value.ref, node)
-}
 defineExpose({ rootRef })
 </script>
 

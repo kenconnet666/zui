@@ -4,46 +4,22 @@
  * 业务方一般在 app 入口调一次,拿到 `messageApi`,在任意位置调
  * `messageApi.success('保存成功')` / `.error('出错了')` 弹消息。
  *
- * 内部:`createApp` 临时实例渲染 `<ZMessage :messages>` + 维护 reactive `messages` 数组。
+ * 内部通过 `createToastApiBase` 管理 reactive 队列 + 挂载生命周期；
+ * 本文件只负责 message 特定的 `push` 签名包装与公开 API 封装。
  *
  * **生命周期**:
- * - 第一次调 `createMessageApi()` 即挂载到 `<body>`
- * - 不传 `appendTo`,默认 `document.body`
+ * - 第一次调用任意方法时懒挂载到 `appendTo`（默认 `document.body`）
  * - 主题:目前用 `zuiLight` 兜底(脱离 `<ZBox>` 注入树。后续 phase 接 `themeRef` 参数)
  */
-import { createApp, reactive, type App, type Component } from 'vue'
-import type { Chain } from '@kenconnet666/zui-core'
+import { createApp } from 'vue'
 import ZMessage from './ZMessage.vue'
 import type { ZMessageItem } from './ZMessage.vue'
-import type { ZuiSchema } from '../provider/theme'
-import { BuiltinIcons } from '../gene/icons'
-
-/** 语义类型 → color factory + icon component(messageApi 内部 wrap)。 */
-type SemanticType = 'info' | 'success' | 'warning' | 'danger' | 'loading'
-const SEMANTIC_COLOR: Record<SemanticType, (c: Chain<ZuiSchema>['color']) => void> = {
-  info: c => {
-    c._info
-  },
-  success: c => {
-    c._success
-  },
-  warning: c => {
-    c._warning
-  },
-  danger: c => {
-    c._danger
-  },
-  loading: c => {
-    c._info
-  },
-}
-const SEMANTIC_ICON: Record<SemanticType, Component> = {
-  info: BuiltinIcons.info,
-  success: BuiltinIcons.success,
-  warning: BuiltinIcons.warning,
-  danger: BuiltinIcons.error,
-  loading: BuiltinIcons.refresh,
-}
+import {
+  createToastApiBase,
+  TOAST_SEMANTIC_COLOR,
+  TOAST_SEMANTIC_ICON,
+  type ToastSemanticType,
+} from '../_internal/createToastApi'
 
 /** message 工厂返回的 API 对象。 */
 export interface ZMessageApi {
@@ -63,59 +39,32 @@ export interface CreateMessageApiOptions {
   appendTo?: HTMLElement
 }
 
-let nextId = 0
-
 /**
  * 创建 message API。多次调用会创建多个独立实例(容器隔离),通常 app 内只调一次。
  */
 export function createMessageApi(opts: CreateMessageApiOptions = {}): ZMessageApi {
-  const messages = reactive<ZMessageItem[]>([])
-  let app: App<Element> | null = null
-  let host: HTMLDivElement | null = null
+  const base = createToastApiBase<ZMessageItem>({
+    hostAttr: 'data-zui-message-host',
+    createVueApp: (items, onClose) =>
+      createApp(ZMessage, {
+        messages: items,
+        onClose,
+      }),
+    appendTo: opts.appendTo,
+  })
 
-  function ensureMounted(): void {
-    if (app) return
-    if (typeof document === 'undefined') return
-    host = document.createElement('div')
-    host.setAttribute('data-zui-message-host', '')
-    ;(opts.appendTo ?? document.body).appendChild(host)
-    app = createApp(ZMessage, {
-      messages,
-      onClose: (id: ZMessageItem['id']) => close(id),
+  function push(type: ToastSemanticType, content: string, duration?: number): ZMessageItem['id'] {
+    return base.push(id => {
+      const item: ZMessageItem = {
+        id,
+        content,
+        color: TOAST_SEMANTIC_COLOR[type],
+        icon: TOAST_SEMANTIC_ICON[type],
+        loading: type === 'loading',
+      }
+      if (duration !== undefined) item.duration = duration
+      return item
     })
-    app.mount(host)
-  }
-
-  function push(type: SemanticType, content: string, duration?: number): ZMessageItem['id'] {
-    ensureMounted()
-    const id = ++nextId
-    const item: ZMessageItem = {
-      id,
-      content,
-      color: SEMANTIC_COLOR[type],
-      icon: SEMANTIC_ICON[type],
-      loading: type === 'loading',
-    }
-    if (duration !== undefined) item.duration = duration
-    messages.push(item)
-    return id
-  }
-
-  function close(id: ZMessageItem['id']): void {
-    const idx = messages.findIndex(m => m.id === id)
-    if (idx >= 0) messages.splice(idx, 1)
-  }
-
-  function destroyAll(): void {
-    messages.splice(0, messages.length)
-    if (app) {
-      app.unmount()
-      app = null
-    }
-    if (host && host.parentNode) {
-      host.parentNode.removeChild(host)
-      host = null
-    }
   }
 
   return {
@@ -124,7 +73,7 @@ export function createMessageApi(opts: CreateMessageApiOptions = {}): ZMessageAp
     warning: (content, duration) => push('warning', content, duration),
     error: (content, duration) => push('danger', content, duration),
     loading: (content, duration) => push('loading', content, duration ?? 0),
-    close,
-    destroyAll,
+    close: base.close,
+    destroyAll: base.destroyAll,
   }
 }
