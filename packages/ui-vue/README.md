@@ -81,9 +81,9 @@ const model = ref({ name: '', email: '' })
 
 `ZFlex` `ZGrid` `ZSpace` `ZSpacer` `ZSplit` `ZScrollbar` `ZAffix`
 
-### input 输入(20+)
+### input 输入(25)
 
-`ZInput` `ZTextarea` `ZInputNumber` `ZSelect` `ZCheckbox` `ZCheckboxGroup` `ZRadio` `ZRadioGroup` `ZSwitch` `ZSlider` `ZRate` `ZDatePicker` `ZTimePicker` `ZUpload` `ZForm` `ZFormItem` `ZAutoComplete` `ZMention` `ZCascader` `ZTreeSelect` `ZTransfer` `ZDynamicTags` `ZColorPicker`
+`ZInput` `ZTextarea` `ZInputNumber` `ZSelect` `ZCheckbox` `ZCheckboxGroup` `ZRadio` `ZRadioGroup` `ZSwitch` `ZSlider` `ZRate` `ZDatePicker` `ZTimePicker` `ZUpload` `ZForm` `ZFormItem` `ZAutoComplete` `ZMention` `ZCascader` `ZTreeSelect` `ZTransfer` `ZDynamicTags` `ZColorPicker` `ZInputOTP` `ZDateRangePicker`
 
 ### display 展示(19)
 

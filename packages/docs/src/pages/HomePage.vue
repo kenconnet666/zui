@@ -152,7 +152,7 @@ function go(path: string): void {
       </ZFlex>
     </ZTitle>
     <ZParagraph>
-      已实现 ~85 个组件源文件；文档站持续覆盖中。当前可访问的演示页详见左侧菜单（灰色项尚未实现）。
+      已实现 90+ 个组件，文档站演示页全覆盖 —— 左侧菜单每一项均可点击访问。
     </ZParagraph>
   </div>
 </template>
