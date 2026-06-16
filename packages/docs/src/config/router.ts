@@ -101,6 +101,7 @@ const inputRoutes: RouteRecordRaw[] = [
   { path: '/input/input', component: () => import('../input/ZInputPage.vue') },
   { path: '/input/textarea', component: () => import('../input/ZTextareaPage.vue') },
   { path: '/input/input-number', component: () => import('../input/ZInputNumberPage.vue') },
+  { path: '/input/input-otp', component: () => import('../input/ZInputOTPPage.vue') },
   { path: '/input/select', component: () => import('../input/ZSelectPage.vue') },
   { path: '/input/checkbox', component: () => import('../input/ZCheckboxPage.vue') },
   { path: '/input/radio', component: () => import('../input/ZRadioPage.vue') },
@@ -108,6 +109,10 @@ const inputRoutes: RouteRecordRaw[] = [
   { path: '/input/slider', component: () => import('../input/ZSliderPage.vue') },
   { path: '/input/rate', component: () => import('../input/ZRatePage.vue') },
   { path: '/input/date-picker', component: () => import('../input/ZDatePickerPage.vue') },
+  {
+    path: '/input/date-range-picker',
+    component: () => import('../input/ZDateRangePickerPage.vue'),
+  },
   { path: '/input/time-picker', component: () => import('../input/ZTimePickerPage.vue') },
   { path: '/input/upload', component: () => import('../input/ZUploadPage.vue') },
   { path: '/input/form', component: () => import('../input/ZFormPage.vue') },

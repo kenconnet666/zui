@@ -83,3 +83,10 @@ export type { ZCascaderProps, ZCascaderEmits, ZCascaderOption, ZCascaderExpandTr
 
 export { default as ZTreeSelect } from './ZTreeSelect.vue'
 export type { ZTreeSelectProps, ZTreeSelectEmits } from './ZTreeSelect.vue'
+
+// ─── Phase δ input 补全(2026-06)───
+export { default as ZInputOTP } from './ZInputOTP.vue'
+export type { ZInputOTPProps, ZInputOTPEmits, ZInputOTPType } from './ZInputOTP.vue'
+
+export { default as ZDateRangePicker } from './ZDateRangePicker.vue'
+export type { ZDateRangePickerProps, ZDateRangePickerEmits } from './ZDateRangePicker.vue'
