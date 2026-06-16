@@ -10,8 +10,8 @@
  * - `width?: factory` / `height?: factory` —— 尺寸 carrier factory(2026-05-24 B7:数字尺寸 → factory)
  * - `fit?: factory` —— objectFit carrier factory(2026-05-24 B7:enum → factory)
  *
- * **iem 单位默认**:走 chain `s.width(...)` / `s.height(...)`,用户可用 `.iem(N)` / `.px(N)` /
- * `.pct(N)` 等任意 carrier 方法,Provider 字号联动。
+ * 尺寸用 chain carrier 方法:走 `s.width(...)` / `s.height(...)`,用户可用 `.px(N)` /
+ * `.pct(N)` 等任意 carrier 方法。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -26,7 +26,7 @@ export interface ZImageProps {
    *
    * @example
    * <ZImage :width="(w) => w.px(120)" />
-   * <ZImage :width="(w) => w.iem(8)" />
+   * <ZImage :width="(w) => w.px(128)" />
    * <ZImage :width="(w) => w.pct(100)" />
    */
   width?: ((c: Chain<ZuiSchema>['width']) => void) | undefined

@@ -20,7 +20,7 @@ export interface ZAvatarProps {
   alt?: string
   text?: string
   /**
-   * 头像尺寸 —— `number`(iem 倍数,默认 2.5 = 40px @ 16px iem)。
+   * 头像尺寸 —— `number`(px 倍数,默认 2.5 = 40px,1 单位 = 16px)。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    *
@@ -29,8 +29,8 @@ export interface ZAvatarProps {
    * height 自动镜像 width(头像始终正方形)。
    *
    * @example
-   * <ZAvatar :size="3" />        <!-- 3iem 大头像 -->
-   * <ZAvatar :size="1.5" />      <!-- 1.5iem 小 -->
+   * <ZAvatar :size="3" />        <!-- 3 × 16 = 48px 大头像 -->
+   * <ZAvatar :size="1.5" />      <!-- 1.5 × 16 = 24px 小 -->
    */
   size?: number
   /** 方形头像,默认 `false`(圆形)。 */
@@ -47,22 +47,22 @@ import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数,1 单位 = 16px,sizePx(n) = n × 16):
  *
  *   ┌──────────────────┐
  *   │ ZAvatar          │   inline-flex
- *   │   width: `size`  │   默认 size=2.5(40px @ 1080p)
+ *   │   width: `size`  │   默认 size=2.5(40px)
  *   │   height: `size` │   镜像 width,正方形
  *   │   border-radius:                          round 模式: _full(圆形,默认)
- *   │     square=true → size*0.15 iem          ≈ 0.375iem(6px)@ size=2.5
- *   │   font-size: size*0.35 iem(text 模式)   ≈ 0.875iem(14px)
+ *   │     square=true → sizePx(size*0.15)      ≈ 6px @ size=2.5
+ *   │   font-size: sizePx(size*0.35)(text 模式)≈ 14px
  *   │   bg: _textSecondary(text/icon 模式)
  *   │   overflow: hidden
  *   └──────────────────┘
  *
  * 用户改 size 数字 → width / height / 文字字号 / 方形圆角等比缩(整体比例不变)。
  * 内容优先级:default slot > img(src) > text(首字母缩写) > 占位。
- * 非 iem 单位走 `:css` 兜底。
+ * 非 px 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZAvatarProps>(), {
   alt: '',
@@ -88,7 +88,7 @@ const rootClass = computed(() =>
     s.alignItems.center
     s.justifyContent.center
     s.flexShrink(0)
-    // size(number):iem 倍数,width + height 镜像保证正方形
+    // size(number):px 倍数(1 单位 = 16px),width + height 镜像保证正方形
     s.width.px(sizePx(size))
     s.height.px(sizePx(size))
     s.overflow.hidden
@@ -101,7 +101,7 @@ const rootClass = computed(() =>
       s.backgroundColor(props.color)
       s.color._bg
       s.fontWeight._semibold
-      // 文字字号按头像尺寸缩放(原先 0.875iem 是为 2.5iem 头像设计,比例 0.35)
+      // 文字字号按头像尺寸缩放(原先 14px 是为 2.5 × 16 = 40px 头像设计,比例 0.35)
       s.fontSize.px(sizePx(size * 0.35))
     }
     props.css?.(s)

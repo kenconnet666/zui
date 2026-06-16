@@ -29,7 +29,7 @@ export interface ZSpaceProps {
    *
    * @example
    * <ZSpace :size="(g) => g._middle" />
-   * <ZSpace :size="(g) => g.iem(2)" />
+   * <ZSpace :size="(g) => g.px(32)" />
    */
   size?: ((g: Chain<ZuiSchema>['gap']) => void) | undefined
   /** 交叉轴对齐 carrier factory(`alignItems`),默认 `center`。 */

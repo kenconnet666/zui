@@ -31,7 +31,7 @@ export interface ZStepsProps {
   currentColor?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   /** 当前步为错误态,默认 false;true 时走 `_danger` + close 图标。 */
   errored?: boolean
-  /** indicator 圆边长 —— `number`(iem 倍数,默认 2 = 32px @ 16px iem)。2026-05-24 B7。 */
+  /** indicator 圆边长 —— `number`(px 倍数(1 单位 = 16px),默认 2 = 32px)。2026-05-24 B7。 */
   size?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -46,7 +46,7 @@ import { BuiltinIcons, ZIcon } from '../gene'
 import { applyAsBg } from '../_internal/color-bridge'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(纯 px,1 单位 = 16px;number 是 px 倍数(1 单位 = 16px)):
  *
  *   ┌──────────────────────────────────────────────────────┐
  *   │ ZSteps root  flex(row 或 column)  gap _middle      │   color: _text / fontSize _small
@@ -54,8 +54,8 @@ import { applyAsBg } from '../_internal/color-bridge'
  *   │  step(每项 flex-grow 1 在 horizontal):              │
  *   │  ┌──────────────────────────────────────────────┐    │
  *   │  │ ● indicator     title (semibold _text)       │    │   indicator:
- *   │  │   width: `size` iem                          │    │     默认 size=2(32px @ 1080p)
- *   │  │   height: `size` iem(镜像,正圆)           │    │     传 size=2.5 → 2.5iem(40px)
+ *   │  │   width: `size` × 16px                       │    │     默认 size=2(32px)
+ *   │  │   height: `size` × 16px(镜像,正圆)        │    │     传 size=2.5 → 40px
  *   │  │   border-radius: _full / border _thin solid  │    │
  *   │  │   finish: bg _success / 前景 _bg + ✓ check  │    │
  *   │  │   process: bg currentColor(默认 _primary)+ 序号│   gap _small
@@ -67,7 +67,7 @@ import { applyAsBg } from '../_internal/color-bridge'
  *   └──────────────────────────────────────────────────────┘
  *
  * 用户改 size 数字 → 每个 indicator width / height 等比缩(始终正圆)。
- * stepState 由 idx vs current + errored 决定 4 态。非 iem 单位走 `:css` 兜底。
+ * stepState 由 idx vs current + errored 决定 4 态。自定义样式走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZStepsProps>(), {
   current: 0,

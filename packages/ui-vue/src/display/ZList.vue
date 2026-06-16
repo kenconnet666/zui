@@ -6,8 +6,8 @@
  * 虚拟滚动。短列表(< 数十项)建议直接 `v-for + <div>`,本组件价值在「带头尾
  * + 边框 + 空态 + 虚拟」的标准列表场景。
  *
- * 尺寸 prop 统一走 **iem 倍数**:`itemSize=3` = 3iem = 48px @ 16px iem,
- * `height=20` = 20iem = 320px @ 16px iem。
+ * 尺寸 prop 统一走 **px 倍数(1 单位 = 16px)**:`itemSize=3` = 3 × 16px = 48px,
+ * `height=20` = 20 × 16px = 320px。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -17,15 +17,15 @@ export interface ZListProps<T = unknown> {
   /** 数据数组(必传)。 */
   items: readonly T[]
   /**
-   * 每项高度 —— **iem 倍数** 或返回 iem 倍数的函数。
+   * 每项高度 —— **px 倍数(1 单位 = 16px)** 或返回倍数的函数。
    *
    * @example
-   * itemSize: 3                          // 3iem(48px @ 16px iem)
+   * itemSize: 3                          // 3 × 16px = 48px
    * itemSize: (i) => i % 2 ? 4 : 3       // 函数式
    */
   itemSize: ItemSizeArg<T>
   /**
-   * 容器高度 —— iem 倍数(`number`)或 CSS 字面字符串(`'100%'` / `'50vh'`)。
+   * 容器高度 —— px 倍数(1 单位 = 16px)(`number`)或 CSS 字面字符串(`'100%'` / `'50vh'`)。
    * 虚拟滚动要求 viewport 固定,必传。
    */
   height: number | string
@@ -43,7 +43,7 @@ export interface ZListProps<T = unknown> {
   overscan?: number
   /** ResizeObserver 自动测真实尺寸。默认 `true`。 */
   autoMeasure?: boolean
-  /** 字号 —— iem 倍数。默认 `1`(1iem)。 */
+  /** 字号 —— px 倍数(1 单位 = 16px)。默认 `1`(= 16px)。 */
   size?: number
   /** 根容器 css 覆盖。 */
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -77,25 +77,25 @@ import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────────────────┐
- *   │ root `<div role="list">`                                     │   font-size: `size` iem
+ *   │ root `<div role="list">`                                     │   font-size: sizePx(`size`)
  *   │   bordered=true → border _thin _border + radius _small +     │   bordered:
  *   │                   overflow hidden                            │     border _thin _border +
  *   │                                                              │     radius _small + overflow hidden
  *   │   ┌────────────────────────────────────────────────────────┐ │
- *   │   │ #header(可选):pad `size*0.625` iem                   │ │   头部:_semibold +
+ *   │   │ #header(可选):pad `size*0.625` × 16px                │ │   头部:_semibold +
  *   │   │   font-weight _semibold  border-bottom _thin _border   │ │   border-bottom _thin
  *   │   └────────────────────────────────────────────────────────┘ │
  *   │                                                              │
  *   │   ┌────────────────────────────────────────────────────────┐ │
- *   │   │ <ZVirtualList>(渲染 items,height=`height` iem)        │ │   每项 height=`itemSize` iem
+ *   │   │ <ZVirtualList>(渲染 items,height=sizePx(`height`))    │ │   每项 height=sizePx(`itemSize`) px
  *   │   │   default slot 给每项 scope { item, index, size }       │ │   empty slot 包 emptyText
  *   │   └────────────────────────────────────────────────────────┘ │
  *   │                                                              │
  *   │   ┌────────────────────────────────────────────────────────┐ │
- *   │   │ #footer(可选):pad `size*0.625` iem                   │ │   尾部:textSecondary +
+ *   │   │ #footer(可选):pad `size*0.625` × 16px                │ │   尾部:textSecondary +
  *   │   │   color _textSecondary  border-top _thin _border       │ │   _small + border-top
  *   │   └────────────────────────────────────────────────────────┘ │
  *   └──────────────────────────────────────────────────────────────┘

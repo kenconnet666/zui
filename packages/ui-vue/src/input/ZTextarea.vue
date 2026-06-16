@@ -28,7 +28,7 @@ export interface ZTextareaProps {
   showCount?: boolean
   autofocus?: boolean
   /**
-   * 字号尺寸 —— `number`(iem 倍数,默认 1)。
+   * 字号尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1)。
    * **不接 `height`**(textarea 高度由 rows 决定)。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`。
@@ -55,14 +55,14 @@ import { applyInputSizeNoHeight } from '../_internal/input-size'
 import { applyUserRef } from '../_internal/merge-ref'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(px,1 单位 = 16px;number 是 px 倍数,默认 1 单位=16px):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ wrapper  inline-flex column / gap _tiny          │
- *   │   font-size: `size` iem                          │   默认 size=1(16px @ 1080p)
- *   │   padding-y: size*0.375 iem                      │   = 0.375iem(6px)
- *   │   padding-x: size*0.75 iem                       │   = 0.75iem(12px)
- *   │   border-radius: size*0.25 iem                   │   = 0.25iem(4px)
+ *   │   font-size: sizePx(size)                        │   默认 size=1(16px)
+ *   │   padding-y: sizePx(size*0.375)                  │   = 6px
+ *   │   padding-x: sizePx(size*0.75)                   │   = 12px
+ *   │   border-radius: sizePx(size*0.25)               │   = 4px
  *   │   (无 height —— 由 rows 决定 textarea 高度)     │
  *   │   border _thin solid _border / bg _bg / color _text │ lineHeight _normal / width 100%
  *   │   focused: borderColor _primary                  │
@@ -81,7 +81,7 @@ import { applyUserRef } from '../_internal/merge-ref'
  *   └──────────────────────────────────────────────────┘
  *
  * 用户改 size 数字 → padding / fontSize / border-radius 等比缩(整体比例不变,无 height)。
- * 高度由 rows 决定。非 iem 单位走 `:css` 兜底。
+ * 高度由 rows 决定。非标准单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZTextareaProps>(), {
   rows: 3,

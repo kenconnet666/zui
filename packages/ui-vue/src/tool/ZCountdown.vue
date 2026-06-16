@@ -29,7 +29,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(px,固定 token 间距):
  *
  *   ┌──────────────────────────┐
  *   │ <span> root  inline      │   fontFamily: _mono(等宽)

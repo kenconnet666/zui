@@ -14,7 +14,7 @@ export interface ZRadioProps {
   value: ZRadioValue
   label?: string
   disabled?: boolean
-  /** 单选外圈尺寸 —— `number`(iem 倍数,默认 1 = 16px @ 16px iem)。2026-05-24 B7。 */
+  /** 单选外圈尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1 = 16px)。2026-05-24 B7。 */
   size?: number
   sxDot?: SxObject
   sxLabel?: SxObject
@@ -31,7 +31,7 @@ import { Z_RADIO_GROUP_KEY, type RadioGroupCtx } from './_radio-group'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(px,1 单位 = 16px;number 是 px 倍数,默认 1 单位=16px):
  *
  *   dot 模式(默认):
  *   ┌──────────────────────────────────────────┐
@@ -40,13 +40,13 @@ import { sizePx } from '../_internal/sizing'
  *   │   fontSize _middle                        │   disabled → opacity _dim
  *   │                                           │
  *   │  ┌──────┐  ┌────────────────────┐        │   dot 外圈:
- *   │  │  ●   │  │ label / slot       │        │     width: `size` iem
- *   │  │ size │  │  文字标签          │        │     height: `size` iem
- *   │  │ iem  │  │                    │        │       默认 size=1(16px @ 1080p)
+ *   │  │  ●   │  │ label / slot       │        │     width: sizePx(size)
+ *   │  │ size │  │  文字标签          │        │     height: sizePx(size)
+ *   │  │ 16px │  │                    │        │       默认 size=1(16px)
  *   │  └──────┘  └────────────────────┘        │     border-radius: _full(正圆)
  *   │                                           │     border _thin solid _border
  *   │   内圆点:                                │     checked → borderColor _primary
- *   │     width/height: size*0.5 iem            │       = 0.5iem(8px)
+ *   │     width/height: sizePx(size*0.5)        │       = 8px
  *   │     bg: _primary  borderRadius _full      │
  *   │     checked → scale(1) / 否则 scale(0)   │
  *   └──────────────────────────────────────────┘
@@ -60,7 +60,7 @@ import { sizePx } from '../_internal/sizing'
  *   └────────────────────────┘
  *
  * 用户改 size 数字 → dot 外圈 width / height + 内圆点等比缩。button 模式 size 不生效。
- * 非 iem 单位走 `:css` 兜底。
+ * 非标准单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZRadioProps>(), {
   disabled: false,
@@ -92,8 +92,8 @@ const dotRootClass = computed(() =>
 )
 
 /**
- * 单选外圈盒子模型(iem):
- * - width/height: 1iem,正圆(borderRadius._full)
+ * 单选外圈盒子模型(px,1 单位 = 16px):
+ * - width/height: 16px(默认 size=1),正圆(borderRadius._full)
  * - border: _thin
  */
 const dotClass = computed(() =>
@@ -120,8 +120,8 @@ const dotClass = computed(() =>
 const sxDotAttrs = computed(() => extractSxAttrs(props.sxDot))
 
 /**
- * 单选内圆点盒子模型(iem):
- * - width/height: 0.5iem(外圈一半),正圆
+ * 单选内圆点盒子模型(px,1 单位 = 16px):
+ * - width/height: 8px(= sizePx(0.5),外圈一半),正圆
  * - 选中时 scale(1),否则 scale(0)折叠
  */
 const innerDotClass = computed(() =>

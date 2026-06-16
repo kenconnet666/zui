@@ -13,24 +13,24 @@ export interface ZBackTopProps {
   visibilityHeight?: number
   target?: () => Element | Window
   /**
-   * 按钮边长 —— `number`(iem 倍数,默认 2.5 = 40px @ 16px iem)。width + height 镜像。
+   * 按钮边长 —— `number`(px 倍数(1 单位 = 16px),默认 2.5 = 40px)。width + height 镜像。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    */
   size?: number
   /**
-   * 右边距 factory —— 接 `right` carrier。默认 `(r) => r.iem(1.5)`。
+   * 右边距 factory —— 接 `right` carrier。默认 `(r) => r.px(24)`(= 1.5 × 16px)。
    *
    * @example
-   * <ZBackTop :right="(r) => r.iem(2)" />
+   * <ZBackTop :right="(r) => r.px(32)" />
    * <ZBackTop :right="(r) => r.px(40)" />
    */
   right?: ((c: Chain<ZuiSchema>['right']) => void) | undefined
   /**
-   * 下边距 factory —— 接 `bottom` carrier。默认 `(b) => b.iem(3)`。
+   * 下边距 factory —— 接 `bottom` carrier。默认 `(b) => b.px(48)`(= 3 × 16px)。
    *
    * @example
-   * <ZBackTop :bottom="(b) => b.iem(4)" />
+   * <ZBackTop :bottom="(b) => b.px(64)" />
    */
   bottom?: ((c: Chain<ZuiSchema>['bottom']) => void) | undefined
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -45,25 +45,25 @@ import { sizePx } from '../_internal/sizing'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(纯 px,1 单位 = 16px;number 是 px 倍数(1 单位 = 16px)):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ (页面 / target 容器)                           │
  *   │                                                  │
  *   │                          ┌──────┐                │   按钮:
  *   │                          │  ▲  │                │     inline-flex / fixed
- *   │                          │      │                │     width: `size` iem
- *   │                          │ size │                │     height: `size` iem
- *   │                          │ iem  │                │     默认 size=2.5(40px @ 1080p)
+ *   │                          │      │                │     width: `size` × 16px
+ *   │                          │ size │                │     height: `size` × 16px
+ *   │                          │ ×16  │                │     默认 size=2.5(40px)
  *   │                          └──────┘                │     border-radius: _full(正圆)
  *   │                            ↑                     │     bg _bg / color _primary
- *   │                            right 1.5iem(默认)  │     boxShadow _middle
- *   │                            bottom 3iem(默认)   │     hover → boxShadow _large
+ *   │                            right 24px(默认)    │     boxShadow _middle
+ *   │                            bottom 48px(默认)   │     hover → boxShadow _large
  *   └──────────────────────────────────────────────────┘
  *
  * 用户改 size 数字 → width / height 等比缩(始终正方形)。
  * right / bottom 走 factory 单独覆盖。scrollY >= visibilityHeight 时显示(默认 400px),
- * Teleport to body。非 iem 单位走 `:css` 兜底。
+ * Teleport to body。自定义样式走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZBackTopProps>(), {
   visibilityHeight: 400,

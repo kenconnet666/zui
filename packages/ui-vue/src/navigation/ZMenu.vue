@@ -61,7 +61,7 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ <ul> root  flex column(vertical=true) 或 row    │   gap _tiny
@@ -69,8 +69,8 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │                                                  │
  *   │  ┌────────────────────────────────────────────┐  │   menu item:
  *   │  │ menuitem  flex / center / gap _small        │  │     pad _small
- *   │  │   pad _small                                │  │     pad-left: 0.75 + depth*0.75 iem
- *   │  │   pad-left: 0.75 + depth*0.75 iem(层级缩进)│  │     pad-right _small
+ *   │  │   pad _small                                │  │     pad-left: (0.75 + depth*0.75) × 16px
+ *   │  │   pad-left: (0.75 + depth*0.75) × 16px(层级缩进)│  │     pad-right _small
  *   │  │   pad-right _small  border-radius _small    │  │     active: bg _primary.alpha(8)
  *   │  │   active: bg _primary.alpha(8) + _primary  │  │            color _primary _medium
  *   │  │   hover: bg _textSecondary.alpha(8)        │  │

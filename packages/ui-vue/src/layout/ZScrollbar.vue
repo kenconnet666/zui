@@ -12,7 +12,7 @@
  * （`height: 100%` / `flex-grow: 1; min-height: 0` 等），否则内容区为 0 高。
  *
  * **API**：
- * - `maxHeight?: number` —— 容器最大高度（iem 倍数），优先于外部 height
+ * - `maxHeight?: number` —— 容器最大高度（px 倍数(1 单位 = 16px)），优先于外部 height
  * - `css?: factory` —— 根元素覆盖（在 height/overflow 之后应用）
  */
 import type { Chain } from '@kenconnet666/zui-core'
@@ -37,13 +37,13 @@ import {
 } from '../_internal/scrollbarThumb'
 
 /**
- * 盒子模型（iem，Provider 控制基准）：
+ * 盒子模型（纯 px，1 单位 = 16px）：
  *
  *   ┌── root div ──────────────────────────────────────────────┐
  *   │   position: relative                                      │
  *   │   [user height via :css or maxHeight]                     │
  *   │                                                           │
- *   │  ┌── scroller div ───────────────────────────────────┐   │   height: 100% (或 max-height: N iem)
+ *   │  ┌── scroller div ───────────────────────────────────┐   │   height: 100% (或 max-height: N × 16px)
  *   │  │  height: 100%   overflow-y: auto                  │   │   scrollbar-width: none（原生滚动条隐藏）
  *   │  │  scrollbar-width: none / ::-webkit-scrollbar:none │   │
  *   │  │    slot 内容（自然撑高，超出则滚动）               │   │

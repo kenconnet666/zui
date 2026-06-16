@@ -30,23 +30,23 @@ import { applyAsBg } from '../_internal/color-bridge'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ ZTimeline root  flex column  fontSize _small     │
  *   │                                                  │
  *   │  ┌────────────────────────────────────────────┐  │
  *   │  │ item  position: relative                   │  │   每项:
- *   │  │   padding-left: _huge                      │  │     min-height: 2iem
+ *   │  │   padding-left: _huge                      │  │     min-height: 32px(= 2 × 16px)
  *   │  │   padding-bottom: _middle                  │  │     padding-left: _huge
- *   │  │   min-height: 2iem                         │  │
+ *   │  │   min-height: 32px(= 2 × 16px)             │  │
  *   │  │                                            │  │
- *   │  │  ● dot 圆点                                │  │   dot: 0.625iem 正圆
- *   │  │    width/height: 0.625iem,_full           │  │     left:0,top:0.25iem
+ *   │  │  ● dot 圆点                                │  │   dot: 10px(= 0.625 × 16px) 正圆
+ *   │  │    width/height: 10px,_full               │  │     left:0,top:4px(= 0.25 × 16px)
  *   │  │    bg: item.color factory 或 _textSecondary│  │
  *   │  │                                            │  │
- *   │  │  │ line 连接线(非最后一项)               │  │   line: 0.125iem 宽
- *   │  │    width: 0.125iem,bg _border              │  │     left:0.25iem,top:0.75iem→bottom
+ *   │  │  │ line 连接线(非最后一项)               │  │   line: 2px(= 0.125 × 16px) 宽
+ *   │  │    width: 2px,bg _border                   │  │     left:4px,top:12px→bottom
  *   │  │                                            │  │
  *   │  │  title    fontWeight: _semibold,color _text│  │
  *   │  │  desc     color _textSecondary  _small     │  │

@@ -35,7 +35,7 @@ import { getThemeColor } from '../_internal/color-bridge'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ wrapper  flex / center / gap _small              │   width: 100%
@@ -87,7 +87,7 @@ const wrapperClass = computed(() =>
 
 // inputClass 不依赖 percent —— 用 CSS var 在 :style 注入,
 // 拖动时只更新 inline style,className 稳定不重新生成(性能优化)
-// 2026-05-24 B7:内部 track 0.25iem(4px)thumb 1iem(16px)写死,跟 Provider 字号联动
+// 2026-05-24 B7:内部 track 4px(= sizePx(0.25))thumb 16px(= sizePx(1))写死,固定 px
 const inputClass = computed(() =>
   icss(theme.value, s => {
     s.flexGrow(1)

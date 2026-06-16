@@ -23,12 +23,12 @@ export interface ZProgressProps {
   value: number
   type?: 'line' | 'circle'
   /**
-   * 尺寸 —— `number`(iem 倍数)。
+   * 尺寸 —— `number`(px 倍数,1 单位 = 16px)。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    *
-   * - line 模式:rail 高度,默认 0.5(8px @ 16px iem)
-   * - circle 模式:容器 width + height,默认 7.5(120px,对齐 antd circle default 120px)
+   * - line 模式:rail 高度,默认 0.5(= 8px)
+   * - circle 模式:容器 width + height,默认 7.5(= 120px,对齐 antd circle default 120px)
    */
   size?: number
   /** 进度色 carrier factory,默认 `_primary`。 */
@@ -46,15 +46,15 @@ import { applyAsBg, getThemeColor, resolveColor } from '../_internal/color-bridg
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(纯 px,number 是 px 倍数,1 单位 = 16px):
  *
  *   line 模式:
  *   ┌──────────────────────────────────────────────────┐
  *   │ track  flex / center / gap _small / width 100%   │
  *   │  ┌────────────────────────────────────┐ ┌──────┐ │
  *   │  │ rail                               │ │ text │ │   rail:
- *   │  │   height: `size` iem               │ │ N%   │ │     默认 size=0.5(8px @ 1080p)
- *   │  │   bg _bgMuted  border-radius _full │ │_small│ │     传 size=1 → 1iem(16px)粗
+ *   │  │   height: sizePx(`size`)           │ │ N%   │ │     默认 size=0.5(= 8px)
+ *   │  │   bg _bgMuted  border-radius _full │ │_small│ │     传 size=1 → 16px 粗
  *   │  │  ┌──────────────────┐              │ └──────┘ │   fill:
  *   │  │  │ fill  width: N%  │              │          │     bg color factory 或 _primary
  *   │  │  │ bg: _primary 或 color factory   │          │     height 100% / 跟 rail 等高
@@ -65,9 +65,9 @@ import { sizePx } from '../_internal/sizing'
  *   circle 模式:
  *   ┌──────────────────────┐
  *   │ circle root          │
- *   │  inline-flex center  │   width/height: `size` iem
- *   │   ╭─────────────╮    │     默认 size=7.5(120px @ 1080p)
- *   │   │   SVG ring  │    │     传 size=10 → 10iem(160px)
+ *   │  inline-flex center  │   width/height: sizePx(`size`)
+ *   │   ╭─────────────╮    │     默认 size=7.5(= 120px)
+ *   │   │   SVG ring  │    │     传 size=10 → 160px
  *   │   │  ┌───────┐  │    │   SVG viewBox 100x100(逻辑,跟 size 解耦)
  *   │   │  │  N%   │  │    │   track stroke: _bgMuted 8px
  *   │   │  └───────┘  │    │   fill stroke: _primary 8px round
@@ -76,7 +76,7 @@ import { sizePx } from '../_internal/sizing'
  *
  * 用户改 size 数字 → line 模式 rail 高度 / circle 模式直径等比缩。
  * SVG viewBox 固定 100x100(stroke 宽度不缩),想缩 stroke 走 `:css` 覆盖。
- * 非 iem 单位走 `:css` 兜底。
+ * 非整数倍数走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZProgressProps>(), {
   type: 'line',
@@ -87,10 +87,10 @@ const theme = useZTheme()
 
 const clampedValue = computed(() => Math.max(0, Math.min(100, props.value)))
 
-/** line 默认 rail 高度 iem(0.5 = 8px @ 16px iem)。 */
-const DEFAULT_LINE_HEIGHT_IEM = 0.5
-/** circle 默认直径 iem(7.5 = 120px @ 16px iem,对齐 antd circle default)。SVG viewBox 始终 100x100。 */
-const DEFAULT_CIRCLE_DIAMETER_IEM = 7.5
+/** line 默认 rail 高度 px 倍数(0.5 × 16px = 8px)。 */
+const DEFAULT_LINE_HEIGHT_UNITS = 0.5
+/** circle 默认直径 px 倍数(7.5 × 16px = 120px,对齐 antd circle default)。SVG viewBox 始终 100x100。 */
+const DEFAULT_CIRCLE_DIAMETER_UNITS = 7.5
 /** SVG viewBox 像素基准(用于 stroke-dasharray / 几何计算,逻辑值,跟 CSS 尺寸解耦)。 */
 const SVG_VIEWBOX_BASE = 100
 
@@ -110,7 +110,7 @@ const railClass = computed(() =>
     s.backgroundColor._bgMuted
     s.borderRadius._full
     s.overflow.hidden
-    s.height.px(sizePx(props.size ?? DEFAULT_LINE_HEIGHT_IEM))
+    s.height.px(sizePx(props.size ?? DEFAULT_LINE_HEIGHT_UNITS))
   }),
 )
 
@@ -136,7 +136,7 @@ const textClass = computed(() =>
   }),
 )
 
-// circle 模式 —— SVG viewBox 100x100(逻辑值,跟 CSS 尺寸解耦),容器 iem 由 size 决定
+// circle 模式 —— SVG viewBox 100x100(逻辑值,跟 CSS 尺寸解耦),容器 px 由 sizePx(size) 决定
 const circleRadius = SVG_VIEWBOX_BASE / 2 - 6
 const circumference = 2 * Math.PI * circleRadius
 const dashOffset = computed(() => circumference * (1 - clampedValue.value / 100))
@@ -147,8 +147,8 @@ const circleRootClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.width.px(sizePx(props.size ?? DEFAULT_CIRCLE_DIAMETER_IEM))
-    s.height.px(sizePx(props.size ?? DEFAULT_CIRCLE_DIAMETER_IEM))
+    s.width.px(sizePx(props.size ?? DEFAULT_CIRCLE_DIAMETER_UNITS))
+    s.height.px(sizePx(props.size ?? DEFAULT_CIRCLE_DIAMETER_UNITS))
     props.css?.(s)
   }),
 )

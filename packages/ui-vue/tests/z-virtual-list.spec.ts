@@ -1,7 +1,7 @@
 /**
  * `ZVirtualList` 综合 spec(Sprint 1)。
  *
- * 在 ZBox `:iem='16px'` 子树内挂载,iemPx=16 → itemSize=3 等价 48px,便于断言。
+ * 纯 px 模式(1 单位 = 16px):itemSize=3 等价 48px,便于断言。
  * happy-dom 不算盒模型,通过 fakeScrollEl 注入 clientHeight + dispatch scroll。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -50,14 +50,14 @@ function fakeScrollEl(el: HTMLElement, clientHeight: number): void {
   Object.defineProperty(el, 'scrollLeft', { configurable: true, value: 0, writable: true })
 }
 
-/** 在 ZBox iem=16px 内挂 ZVirtualList,返回 wrapper 和虚拟列表根 el。 */
+/** 在 ZBox 主题上下文内挂 ZVirtualList,返回 wrapper 和虚拟列表根 el。 */
 function mountVL(props: Record<string, unknown>, slots: Record<string, unknown> = {}) {
   const Host = defineComponent({
     setup() {
       return () =>
         h(
           ZBox,
-          { iem: '16px' },
+          {},
           {
             default: () => h(ZVirtualList, props, slots),
           },
@@ -200,7 +200,7 @@ describe('ZVirtualList — emit', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(
@@ -239,7 +239,7 @@ describe('ZVirtualList — emit', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(
@@ -287,7 +287,7 @@ describe('ZVirtualList — expose API', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(
@@ -354,7 +354,7 @@ describe('ZVirtualList — 数据动态变化', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(

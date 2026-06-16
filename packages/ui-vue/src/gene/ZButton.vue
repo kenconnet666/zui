@@ -17,7 +17,7 @@
  *
  * **API**:
  * - `color` carrier factory —— 主色(默认 `_primary`,可走 `_danger` 等)
- * - `size`(iem 倍数,默认 `1`)
+ * - `size`(px 倍数,1 单位 = 16px,默认 `1`)
  * - `loading` / `disabled` / `block`(满宽)
  * - `prefixIcon` / `suffixIcon` slot
  * - `ripple`(boolean,默认 `true`)—— 启用 Material 波纹
@@ -45,18 +45,18 @@ export interface ZButtonProps {
   /** 主色 factory(默认 `_primary`)。可写 `(c) => c._danger` 等。 */
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   /**
-   * 字号尺寸 —— `number`(iem 倍数,默认 1)。
+   * 字号尺寸 —— `number`(px 倍数,默认 1,1 单位 = 16px)。
    *
-   * 内部公式:
-   * - `font-size` = `size` iem
-   * - `height` = `height ?? size * 2` iem
-   * - `padding-y` = `size * 0.5` iem
-   * - `padding-x` = `size * 1` iem (circle/square 时改 0)
+   * 内部公式(每个 size 单位 = 16px):
+   * - `font-size` = `sizePx(size)` → 默认 16px
+   * - `height` = `sizePx(height ?? size * 2)` → 默认 32px
+   * - `padding-y` = `sizePx(size * 0.5)` → 默认 8px
+   * - `padding-x` = `sizePx(size * 1)` → 默认 16px(circle/square 时改 0)
    * - `border-radius` = shape 决定
-   * - `gap` = `size * 0.5` iem
+   * - `gap` = `sizePx(size * 0.5)` → 默认 8px
    */
   size?: number
-  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  /** 高度 —— `number`(px 倍数,可选,默认 `size * 2`,即默认 32px)。 */
   height?: number
   loading?: boolean
   disabled?: boolean

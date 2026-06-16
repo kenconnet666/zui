@@ -23,11 +23,11 @@ export interface ZTransferProps {
   targetKeys?: string[]
   titles?: [string, string]
   /**
-   * 单个 item 行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 单个 item 行高 —— px 倍数(1 单位 = 16px)。默认 `2`(= 32px)。
    * 左右两列 list 由 `ZVirtualList` 渲染(2026-05-24 v2)。
    */
   itemSize?: number
-  /** list 容器高度 —— iem 倍数。默认 `15`(15iem = 240px @ 16px iem)。 */
+  /** list 容器高度 —— px 倍数(1 单位 = 16px)。默认 `15`(= 240px)。 */
   listHeight?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -46,25 +46,25 @@ import ZVirtualList from '../display/ZVirtualList.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────────────┐
  *   │ ZTransfer root  flex / center / gap _middle              │   color: _text / fontSize _small
  *   │                                                          │
  *   │  ┌──────────────┐    ┌────┐    ┌──────────────┐         │
  *   │  │ left panel   │    │ →  │    │ right panel  │         │   panel:
- *   │  │  width 12.5iem│    │ ←  │    │  width 12.5iem│         │     width: 12.5iem
- *   │  │  border _thin│    │_2iem    │  border _thin│         │     border _thin _border
+ *   │  │  width 200px  │    │ ←  │    │  width 200px  │         │     width: 200px(= sizePx(12.5))
+ *   │  │  border _thin│    │ 32px    │  border _thin│         │     border _thin _border
  *   │  │  border-radius│    │ 圆角│    │  border-radius│         │     border-radius _small
  *   │  │   _small     │    │_tiny│    │   _small     │         │     flex column
  *   │  │  bg _bg      │    │ btn │    │  bg _bg      │         │
  *   │  │              │    └────┘    │              │         │   panel head:
  *   │  │ ┌──────────┐ │   arrow btn: │ ┌──────────┐ │         │     pad _small
- *   │  │ │ head     │ │   width/h 2iem│ │ head     │ │         │     bg _bgMuted
+ *   │  │ │ head     │ │  width/h 32px │ │ head     │ │         │     bg _bgMuted
  *   │  │ │ pad _small│ │   ←→ icons   │ │ pad _small│ │         │     fontWeight _semibold
  *   │  │ │ bg _bgMutd│ │              │ │ bg _bgMutd│ │         │
  *   │  │ │ _semibold │ │              │ │ _semibold │ │         │   list:
- *   │  │ │ border-b _thin              │ │ border-b _thin│         │     max-height 15iem
+ *   │  │ │ border-b _thin              │ │ border-b _thin│         │     max-height 240px
  *   │  │ └──────────┘ │              │ └──────────┘ │         │     overflow-y auto
  *   │  │ ┌──────────┐ │              │ ┌──────────┐ │         │     pad _tiny
  *   │  │ │ list     │ │              │ │ list     │ │         │

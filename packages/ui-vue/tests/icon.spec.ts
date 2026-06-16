@@ -3,7 +3,7 @@
  *
  * 覆盖:
  * 1. 双模式渲染(slot / component prop)
- * 2. size factory(width carrier):默认 1iem(16px)/ em 倍率 / iem / px;height 自动镜像 width
+ * 2. size factory(width carrier):默认 1 单位(16px)/ em 倍率 / px 倍数;height 自动镜像 width
  * 3. color factory(color carrier):默认 currentColor / schema token / modifier 链 / 字面量
  * 4. depth factory(opacity carrier):不传 / 字面量 / schema token
  * 5. spin factory(animationDuration carrier):不传 / 字面量 / token;自动加 name+iteration+timing
@@ -144,7 +144,7 @@ describe('ZIcon — size factory(width carrier,height 自动镜像)', () => {
     expect(css).toMatch(/height:24px/)
   })
 
-  it('css 兜底 → w.em(1.25) 跟父字号(em 而非 iem)', () => {
+  it('css 兜底 → w.em(1.25) 跟父字号(原生 em 单位)', () => {
     mount(ZIcon, {
       props: {
         component: DummyIcon,

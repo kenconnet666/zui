@@ -26,15 +26,16 @@ export interface ZInputProps {
   value?: string | number
   type?: string
   /**
-   * 字号尺寸 —— `number`(iem 倍数,默认 1)。
+   * 字号尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1)。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`,组件按比例算 height/padding/border-radius。
    *
-   * 内部公式:font-size = size iem,height 默认 size*2 iem,padding-y = size*0.375 iem,
-   * padding-x = size*0.75 iem,border-radius = size*0.25 iem。
+   * 内部公式:font-size = sizePx(size),height 默认 sizePx(size*2) = 32px,
+   * padding-y = sizePx(size*0.375) = 6px,padding-x = sizePx(size*0.75) = 12px,
+   * border-radius = sizePx(size*0.25) = 4px。
    */
   size?: number
-  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  /** 高度 —— `number`(px 倍数,1 单位 = 16px,可选,默认 `size * 2`)。 */
   height?: number
   disabled?: boolean
   readonly?: boolean
@@ -72,15 +73,15 @@ import { applyUserRef } from '../_internal/merge-ref'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(px,1 单位 = 16px;number 是 px 倍数,默认 1 单位=16px):
  *
  *   ┌─────────────────────────────────────────────────────┐
  *   │ wrapper  inline-flex / center / gap _tiny           │
- *   │   font-size: `size` iem                             │   默认 size=1(16px @ 1080p)
- *   │   height: `height` iem                              │   默认 height=size*2=2iem(32px)
- *   │   padding-y: size*0.375 iem                         │   = 0.375iem(6px)
- *   │   padding-x: size*0.75 iem                          │   = 0.75iem(12px)
- *   │   border-radius: size*0.25 iem                      │   = 0.25iem(4px)
+ *   │   font-size: sizePx(size)                           │   默认 size=1(16px)
+ *   │   height: sizePx(height)                            │   默认 height=size*2=32px
+ *   │   padding-y: sizePx(size*0.375)                     │   = 6px
+ *   │   padding-x: sizePx(size*0.75)                      │   = 12px
+ *   │   border-radius: sizePx(size*0.25)                  │   = 4px
  *   │   border _thin solid _border / bg _bg / color _text │   width 100% / lineHeight _normal
  *   │   focused: borderColor _primary + boxShadow _tiny   │
  *   │   disabled: opacity _dim / bg _bgMuted              │
@@ -93,9 +94,9 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │         └───────────────┘                           │
  *   └─────────────────────────────────────────────────────┘
  *
- * 用户改 size 数字 → 所有 iem 维度等比缩放(整体比例不变)。height 可独立覆盖。
+ * 用户改 size 数字 → 所有 px 维度等比缩放(整体比例不变)。height 可独立覆盖。
  * 各小元素: prefix/suffix slot (inline-flex / _textSecondary),clear btn(条件 clearable + 有值),
- * counter(条件 showCount)。非 iem 单位走 `:css` 兜底。
+ * counter(条件 showCount)。非标准单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZInputProps>(), {
   type: 'text',

@@ -11,8 +11,8 @@
  * - 不读取组件维度的 default(如 ZLink `_primary` / ZTitle level 映射)—— 这些由各组件在
  *   调用此 helper 之前/之后自行处理
  *
- * **size 是 `number`(2026-05-24 B7 决策)** —— iem 倍数,在 ZText / ZParagraph / ZLink 这种
- * 文字组件里 `size === undefined` 表示继承父字号,有值则 `fontSize.iem(size)`。
+ * **size 是 `number`(2026-05-24 B7 决策)** —— px 倍数(1 单位 = 16px),在 ZText / ZParagraph / ZLink 这种
+ * 文字组件里 `size === undefined` 表示继承父字号,有值则 `fontSize.px(sizePx(size))`。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -21,18 +21,18 @@ import { sizePx } from '../_internal/sizing'
 /**
  * Typography 组件共享 props —— 5 维度 carrier factory + size number + 5 状态布尔/枚举。
  *
- * **size 是 `number`(2026-05-24 B7)**:iem 倍数,默认 undefined = 继承父字号。
+ * **size 是 `number`(2026-05-24 B7)**:px 倍数(1 单位 = 16px),默认 undefined = 继承父字号。
  *
  * 各 SFC 在 `export interface Z<Component>Props` 中**重复展开这些字段**(而不是 extends),
  * 这样 IDE 悬停看 props 类型时一眼看到全集,符合 ZIcon 范式。
  */
 export interface ZTypographyBaseProps {
   /**
-   * 字号 —— `number`(iem 倍数,默认 undefined = 继承父字号)。
+   * 字号 —— `number`(px 倍数,默认 undefined = 继承父字号,1 单位 = 16px)。
    *
    * @example
-   * <ZText :size="1" />        <!-- 1iem (默认 16px) -->
-   * <ZText :size="1.25" />     <!-- 1.25iem -->
+   * <ZText :size="1" />        <!-- 1 × 16 = 16px -->
+   * <ZText :size="1.25" />     <!-- 1.25 × 16 = 20px -->
    */
   size?: number | undefined
   weight?: ((w: Chain<ZuiSchema>['fontWeight']) => void) | undefined

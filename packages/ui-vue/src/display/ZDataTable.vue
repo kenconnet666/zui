@@ -8,15 +8,14 @@
  *
  * **设计要点**:
  * - 内部用 `ZVirtualList` 渲染行,sticky header 在 ZVirtualList 容器外
- * - 列宽:总和 < 容器宽时 flex 填充剩余空间;固定列宽用 `width: <iem>` / CSS 字面
+ * - 列宽:总和 < 容器宽时 flex 填充剩余空间;固定列宽用 `width: <number>` / CSS 字面
  * - 选中:`v-model:selected` 双向绑定 keys 数组
  * - 排序:`v-model:sort` 单列排序状态,业务方可在 watch 内换数据/请求
  * - 行点击 emit:不内置触发 selection,业务方按需在 handler 内 emit `update:selected`
  *
  * **典型用法**:
  * ```vue
- * <ZBox :iem="ZIemPreset.default">
- *   <ZDataTable
+ * <ZDataTable
  *     :rows
  *     :columns
  *     :row-size="3"
@@ -27,7 +26,6 @@
  *     stripe
  *     @row-click="onRowClick"
  *   />
- * </ZBox>
  * ```
  */
 import type { Chain } from '@kenconnet666/zui-core'
@@ -47,11 +45,11 @@ export interface ZDataTableColumn<T = unknown> {
   /** 表头文字(可用 `#header-${key}` slot 覆盖)。 */
   title: string
   /**
-   * 列宽 —— iem 倍数(`number`)或 CSS 字面字符串(`'12vw'` / `'100px'` / `'10%'`)。
+   * 列宽 —— px 倍数(1 单位 = 16px)(`number`)或 CSS 字面字符串(`'12vw'` / `'100px'` / `'10%'`)。
    * 不传则 flex 均分剩余空间(`flex: 1`)。
    */
   width?: number | string
-  /** 最小列宽 iem(flex 均分时的下限)。默认 `5`(80px @ 16px iem)。 */
+  /** 最小列宽(flex 均分时的下限,1 单位 = 16px)。默认 `5`(= 80px)。 */
   minWidth?: number
   /** 对齐。默认 `'left'`。 */
   align?: 'left' | 'center' | 'right'
@@ -71,9 +69,9 @@ export interface ZDataTableProps<T = unknown> {
   rows: readonly T[]
   /** 列定义(必传)。 */
   columns: ZDataTableColumn<T>[]
-  /** 行高 —— iem 倍数。默认 `3`(48px @ 16px iem)。 */
+  /** 行高 —— px 倍数(1 单位 = 16px)。默认 `3`(= 48px)。 */
   rowSize?: number
-  /** 容器高度(必传,虚拟要求 viewport 固定)。iem 倍数或 CSS 字面字符串。 */
+  /** 容器高度(必传,虚拟要求 viewport 固定)。px 倍数(1 单位 = 16px)或 CSS 字面字符串。 */
   height: number | string
   /** 选中模式。默认 `'none'`。 */
   selection?: 'none' | 'single' | 'multiple'
@@ -89,7 +87,7 @@ export interface ZDataTableProps<T = unknown> {
   bordered?: boolean
   /** 斑马纹(偶数行背景)。默认 `false`。 */
   stripe?: boolean
-  /** 字号 —— iem 倍数。默认 `1`。 */
+  /** 字号 —— px 倍数(1 单位 = 16px)。默认 `1`(= 16px)。 */
   size?: number
   /** 预渲染缓冲行数。默认 `5`。 */
   overscan?: number
@@ -127,24 +125,24 @@ import { sizePx } from '../_internal/sizing'
 import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────────────────┐
- *   │ root `<div role="table">`                                    │   font-size: `size` iem
+ *   │ root `<div role="table">`                                    │   font-size: sizePx(`size`)
  *   │   bordered → border _thin _border + radius _small +          │   overflow hidden
  *   │              overflow hidden                                 │
  *   │                                                              │
  *   │   ┌────────────────────────────────────────────────────────┐ │
- *   │   │ header `<div role="rowgroup">`(sticky)                │ │   height: `rowSize` iem
+ *   │   │ header `<div role="rowgroup">`(sticky)                │ │   height: sizePx(`rowSize`)
  *   │   │   bg _bgMuted  border-bottom _thin _border             │ │   sticky:top 0  z-index 1
  *   │   │   ┌────────────────────────────────────────────────┐  │ │   单元格:
- *   │   │   │ [⇕ Col1] [Col2] [⇕ Col3] ...                   │  │ │     pad-x size*0.75 iem
+ *   │   │   │ [⇕ Col1] [Col2] [⇕ Col3] ...                   │  │ │     pad-x size*0.75 × 16px
  *   │   │   │ sortable: 加 ⇕ 图标 + cursor pointer            │  │ │     ellipsis,fontWeight _semibold
  *   │   │   └────────────────────────────────────────────────┘  │ │
  *   │   └────────────────────────────────────────────────────────┘ │
  *   │                                                              │
  *   │   ┌────────────────────────────────────────────────────────┐ │
- *   │   │ <ZVirtualList>(rows,height=`height`-headerSize)        │ │   每行 rowSize iem
+ *   │   │ <ZVirtualList>(rows,height=`height`-headerSize)        │ │   每行 sizePx(`rowSize`) px
  *   │   │   每行:`<div role="row">`                              │ │   stripe:偶行 bg _bgMuted.alpha(40)
  *   │   │     border-bottom _thin _border                        │ │   selected:bg _primary.alpha(8)
  *   │   │     stripe / selected 状态背景                          │ │   hover:bg _textSecondary.alpha(4)
@@ -157,7 +155,7 @@ import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
  *   │   └────────────────────────────────────────────────────────┘ │
  *   └──────────────────────────────────────────────────────────────┘
  *
- * selection='multiple' 时第一列前自动插入 checkbox 列(width = 2.5iem);'single'
+ * selection='multiple' 时第一列前自动插入 checkbox 列(width = 40px);'single'
  * 走点击行选中(无 checkbox);'none' 完全不显示选中态。
  */
 const props = withDefaults(defineProps<ZDataTableProps<T>>(), {
@@ -266,8 +264,8 @@ const sortedRows = computed<readonly T[]>(() => {
 
 // ─── 列宽计算 ───
 /** 选择列宽 px(只有 multiple 模式才有)。 */
-const SELECT_COL_IEM = 2.5
-const selectColPx = computed(() => sizePx(SELECT_COL_IEM))
+const SELECT_COL_UNITS = 2.5
+const selectColPx = computed(() => sizePx(SELECT_COL_UNITS))
 
 function resolveColumnWidth(col: ZDataTableColumn<T>): string {
   if (col.width === undefined) return '' // flex 填充

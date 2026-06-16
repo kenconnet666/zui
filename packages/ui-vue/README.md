@@ -109,7 +109,7 @@ const model = ref({ name: '', email: '' })
 2. **统一 `css` 兜底口**:任何组件支持 `:css="(s) => ..."` 写 emotion 风格的运行时样式
 3. **复合组件 sx 平铺**:`ZCard` 的 head/body/foot 用 `sxHead` / `sxBody` / `sxFoot` 配置,**props/class/style/事件全平铺**到一个对象
 4. **carrier factory 范式**:`size` / `color` / `spacing` 类 props 接 `(c: Chain['color']) => void` 函数,把主题 token 调度交给用户
-5. **响应式 vw**:`ZIemPreset.default` 是 `0.8333vw`(=16px @ 1920),整站随宽度等比缩放;`useZIem()` 拿到当前 px 值供 JS 算法层用
+5. **纯 px 尺寸**:`size` 类 props 是 px 倍数(1 单位 = 16px),内部用 `sizePx(n) = n * 16` 统一换算,布局/定位/JS 计算都是确定像素(对齐 Element Plus / Naive UI;0.9.x 已移除自创 iem 逻辑单位)
 6. **a11y 内建**:ARIA role / focus trap / ESC stack / `:focus-visible`
 
 详细 props 范式见 [docs guide / props 范式](/guide/prop-shape)。

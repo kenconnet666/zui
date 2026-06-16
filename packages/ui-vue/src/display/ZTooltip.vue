@@ -27,7 +27,7 @@ export interface ZTooltipProps {
   visible?: boolean
   delay?: number
   disabled?: boolean
-  /** tooltip 最大宽度 —— `number`(iem 倍数,默认 16 = 256px,对齐 antd 250px)。2026-05-24 B7。 */
+  /** tooltip 最大宽度 —— `number`(px 倍数,1 单位 = 16px,默认 16 = 256px,对齐 antd 250px)。2026-05-24 B7。 */
   maxWidth?: number
   sxTrigger?: SxObject
   sxContent?: SxObject
@@ -49,7 +49,7 @@ import { sizePx } from '../_internal/sizing'
 import { applyUserRef } from '../_internal/merge-ref'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(纯 px,number 是 px 倍数,1 单位 = 16px):
  *
  *   ┌─────────────────┐
  *   │ trigger wrap    │   inline-flex(包裹 default slot)
@@ -59,8 +59,8 @@ import { applyUserRef } from '../_internal/merge-ref'
  *           ▼
  *   ┌────────────────────────────────────────┐
  *   │ tooltip(Teleport to body)            │   bg: _text(反色)
- *   │   max-width: `maxWidth` iem            │     默认 maxWidth=16(256px @ 1080p)
- *   │   pad-y: 0.25iem × 2 = 0.5iem 总高度  │   color: _bg(反色)
+ *   │   max-width: sizePx(`maxWidth`)        │     默认 maxWidth=16(= 256px)
+ *   │   pad-y: 4px × 2 = 8px 总高度         │   color: _bg(反色)
  *   │   pad-x: _small(token)               │   fontSize: _small
  *   │   border-radius: _tiny                 │   line-height: _tight
  *   │   word-break: break-word               │   boxShadow: _small / z-index: _tooltip
@@ -72,7 +72,7 @@ import { applyUserRef } from '../_internal/merge-ref'
  *
  * 用户改 maxWidth 数字 → tooltip 最大宽度等比缩(其它走固定 spacing token)。
  * trigger: hover / click / focus / manual。hover/focus 模式有 enter/leave delay(默认 100ms)。
- * 非 iem 单位走 `:css` 兜底。
+ * 非整数倍数走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZTooltipProps>(), {
   placement: 'top',

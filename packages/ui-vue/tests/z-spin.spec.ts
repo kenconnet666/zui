@@ -62,7 +62,7 @@ describe('ZSpin — 包裹模式(有 slot)', () => {
 
 describe('ZSpin — size + sx', () => {
   it('size=2 → indicator 走 32px(2 * 16)', () => {
-    // R10:size 是 number(iem 倍数),直接透传给 ZIcon
+    // R10:size 是 number(px 倍数,1 单位 = 16px),直接透传给 ZIcon
     mount(ZSpin, {
       props: {
         size: 2,

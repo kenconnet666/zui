@@ -5,9 +5,9 @@
  *
  * **设计要点**:
  * - 仅渲染可见区(+ overscan 缓冲)的项,数据量线性时 DOM 数量恒定
- * - 尺寸 prop 统一 **iem 倍数**(`number`)或 **CSS 字面字符串**(`string`,
- *   `'100%'` / `'50vh'` / `'10vw'`),跟 zui 全栈 iem 单位规则一致
- * - 内部通过 `useZIem` 拿到当前 iem 实际像素值(响应式),把 iem 倍数转 px 喂给
+ * - 尺寸 prop 统一 **px 倍数(1 单位 = 16px)**(`number`)或 **CSS 字面字符串**(`string`,
+ *   `'100%'` / `'50vh'` / `'10vw'`)
+ * - 内部通过 `sizePx(n)` 把倍数转换为实际像素值,喂给
  *   底层 `useZVirtualScroll`(算法层只认 px)
  * - DOM 布局:`position: absolute; top:<offset>px`(每项)+ `position: relative;
  *   height: totalSize`(wrapper)+ `contain: strict` + `overflow-anchor: none`(容器)
@@ -16,11 +16,9 @@
  *
  * **典型用法**:
  * ```vue
- * <ZBox :iem="ZIemPreset.default">
- *   <ZVirtualList :items :item-size="3" :height="20" v-slot="{ item, index }">
- *     <div>{{ index }} - {{ item.name }}</div>
- *   </ZVirtualList>
- * </ZBox>
+ * <ZVirtualList :items :item-size="3" :height="20" v-slot="{ item, index }">
+ *   <div>{{ index }} - {{ item.name }}</div>
+ * </ZVirtualList>
  * ```
  */
 import type { Chain } from '@kenconnet666/zui-core'
@@ -31,10 +29,10 @@ export interface ZVirtualListProps<T = unknown> {
   /** 数据数组(必传)。 */
   items: readonly T[]
   /**
-   * 每项尺寸 —— **iem 倍数**(`number`)或返回 iem 倍数的函数。
+   * 每项尺寸 —— **px 倍数(1 单位 = 16px)**(`number`)或返回倍数的函数。
    *
    * @example
-   * itemSize: 3           // 3iem,默认 48px @ 16px iem
+   * itemSize: 3           // 3 × 16px = 48px
    * itemSize: (i, item) => item.tall ? 4 : 2
    */
   itemSize: ItemSizeArg<T>
@@ -47,13 +45,13 @@ export interface ZVirtualListProps<T = unknown> {
   /** 取项 key 的字段名(取不到回退 index)。默认 `'id'`。 */
   keyField?: string | undefined
   /**
-   * 容器尺寸(垂直 → 高度 / 水平 → 宽度)。**iem 倍数**(`number`)或 CSS 字面
+   * 容器尺寸(垂直 → 高度 / 水平 → 宽度)。**px 倍数(1 单位 = 16px)**(`number`)或 CSS 字面
    * 字符串(`'100%'` / `'50vh'` 等)。
    */
   height?: number | string | undefined
   /** 同 `height`,水平方向用。 */
   width?: number | string | undefined
-  /** 触发 `scroll-end` 的距底阈值(iem 倍数)。默认 `0`。 */
+  /** 触发 `scroll-end` 的距底阈值(px 倍数,1 单位 = 16px)。默认 `0`。 */
   scrollEndThreshold?: number | undefined
   /** 根容器 css 覆盖(`overflow: auto` / `position: relative` 已内置)。 */
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -94,10 +92,10 @@ import {
 } from '../_internal/scrollbarThumb'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────────────────┐
- *   │ root container `<div>`                                       │   height: `height` iem (default 100%)
+ *   │ root container `<div>`                                       │   height: sizePx(`height`) (default 100%)
  *   │   position: relative  overflow: auto                         │   或 CSS 字面字符串
  *   │   contain: strict  overflow-anchor: none                     │
  *   │                                                              │

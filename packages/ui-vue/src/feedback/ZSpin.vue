@@ -8,7 +8,7 @@
  *
  * **API**:
  * - `spinning: boolean` —— 是否处于加载态(默认 `true`)
- * - `size: 'small' | 'middle' | 'large'` —— indicator 尺寸(默认 `'middle'`,对应 iem 1/1.5/2)
+ * - `size: 'small' | 'middle' | 'large'` —— indicator 尺寸(默认 `'middle'`,对应 16px/24px/32px)
  * - `tip?: string` —— 加载文字(浮层模式下显示在 indicator 下方)
  * - `sxOverlay` —— 覆盖层(包裹模式)
  * - `sxIndicator` —— indicator 容器
@@ -26,13 +26,13 @@ export interface ZSpinProps {
   /** 是否加载中,默认 `true`(因为通常 v-if/外控,组件内不需 false 时仍渲染)。 */
   spinning?: boolean
   /**
-   * indicator 尺寸 —— `number`(iem 倍数,默认 1.5 = 24px @ 16px iem)。
+   * indicator 尺寸 —— `number`(px 倍数(1 单位 = 16px),默认 1.5 = 24px)。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`。直接透传给内部 ZIcon 的 size。
    *
    * @example
-   * <ZSpin :size="2" />        <!-- 2iem 大 spinner -->
-   * <ZSpin :size="0.875" />    <!-- 0.875iem 小 -->
+   * <ZSpin :size="2" />        <!-- 2 × 16 = 32px 大 spinner -->
+   * <ZSpin :size="0.875" />    <!-- 0.875 × 16 = 14px 小 -->
    */
   size?: number
   /** 加载文字(包裹模式下显示在 indicator 下方)。 */
@@ -56,7 +56,7 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数(1 单位 = 16px),默认 1 单位 = 16px @ 1080p):
  *
  *   包裹模式(有 default slot):
  *   ┌────────────────────────────────────┐
@@ -67,7 +67,7 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │  ┌──────────────────────────────┐  │     position absolute / inset 0
  *   │  │ overlay flex column center   │  │     bg _bg.alpha(60) / color _primary
  *   │  │   ┌────────┐                 │  │   indicator:
- *   │  │   │indicat │   ZIcon refresh │  │     ZIcon size=`size` iem
+ *   │  │   │indicat │   ZIcon refresh │  │     ZIcon size=sizePx(`size`)
  *   │  │   │ size×  │   spin 1s       │  │       默认 size=1.5(24px @ 1080p)
  *   │  │   └────────┘                 │  │   tip:
  *   │  │     tip 文字                  │  │     fontSize _small / color _textSecondary
@@ -77,14 +77,14 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   纯 indicator 模式(无 slot):
  *   ┌──────────┐
  *   │ inline-  │   只渲染 indicator 本身
- *   │  flex    │   ZIcon size=`size` iem
+ *   │  flex    │   ZIcon size=sizePx(`size`)
  *   │ ┌──────┐ │
  *   │ │ ZIcon│ │
  *   │ └──────┘ │
  *   └──────────┘
  *
  * 用户改 size 数字 → indicator 直接透传给 ZIcon size,等比缩。
- * 非 iem 单位走 `:css` 兜底(或自定义 #indicator slot)。
+ * 非标准尺寸走 `:css` 兜底(或自定义 #indicator slot)。
  */
 const props = withDefaults(defineProps<ZSpinProps>(), {
   spinning: true,
@@ -153,7 +153,7 @@ const defaultIndicator = computed(() =>
     spin: (d: Chain<ZuiSchema>['animationDuration']) => {
       d.s(1)
     },
-    // size 现在是 number(iem 倍数),直接透传给 ZIcon
+    // size 现在是 number(px 倍数,1 单位 = 16px),直接透传给 ZIcon
     size: props.size ?? 1.5,
   }),
 )

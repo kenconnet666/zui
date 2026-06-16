@@ -39,7 +39,7 @@ import { BuiltinIcons, ZIcon } from '../gene'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────────┐
  *   │ ZCarousel root                                       │   position: relative
@@ -53,11 +53,11 @@ import { sizePx } from '../_internal/sizing'
  *   │  │  └────────┘ └────────┘ └────────┘             │  │
  *   │  └────────────────────────────────────────────────┘  │
  *   │                                                      │
- *   │  ◀ arrow left   width/height: 2iem  圆形 _full      │   left:0.5iem,top:50%
- *   │  ▶ arrow right  bg: _bg  boxShadow: _small          │   right:0.5iem
+ *   │  ◀ arrow left   width/height: 32px  圆形 _full      │   left:8px,top:50%
+ *   │  ▶ arrow right  bg: _bg  boxShadow: _small          │   right:8px
  *   │                                                      │
- *   │  ●●○○ dots  bottom:0.75iem,flex gap _tiny          │   dot: 0.5iem 圆形
- *   │                                                      │   active: width 1.25iem 胶囊
+ *   │  ●●○○ dots  bottom:12px,flex gap _tiny             │   dot: 8px 圆形
+ *   │                                                      │   active: width 20px 胶囊
  *   └──────────────────────────────────────────────────────┘
  */
 const props = withDefaults(defineProps<ZCarouselProps<T>>(), {

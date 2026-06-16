@@ -26,12 +26,12 @@ export interface ZTreeProps {
   selectedKey?: string | null
   selectable?: boolean
   /**
-   * 单节点行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 单节点行高 —— px 倍数(1 单位 = 16px)。默认 `2`(= 32px)。
    * 扁平化展开后用 `ZVirtualList` 渲染(2026-05-24 v2)。
    */
   itemSize?: number
   /**
-   * 容器高度 —— iem 倍数或 CSS 字面字符串(`'60vh'` / `'400px'`)。**必传**。
+   * 容器高度 —— px 倍数(1 单位 = 16px)或 CSS 字面字符串(`'60vh'` / `'400px'`)。**必传**。
    */
   height: number | string
   /** 预渲染缓冲项数。默认 `5`。 */
@@ -55,23 +55,23 @@ import ZVirtualList from './ZVirtualList.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌────────────────────────────────────────────────────┐
  *   │ ZTree root  flex column / _text / fontSize _middle │
  *   │                                                    │
  *   │  ┌─────────────────────────────────────────────┐   │
  *   │  │ node row(每个 visibleNode)                │   │   pad-y: _tiny
- *   │  │   pad-l: 0.5iem + depth * 1iem(层级缩进) │   │   pad-r: _small
+ *   │  │   pad-l: 8px + depth × 16px(层级缩进)    │   │   pad-r: _small
  *   │  │   pad-r: _small,border-radius _tiny        │   │   selected:
  *   │  │   flex / center / gap _tiny                 │   │     bg _primary.alpha(8)
  *   │  │                                             │   │     color _primary
  *   │  │  ┌────┐ ┌─────────┐                         │   │   hover(非 disabled):
  *   │  │  │ ▶  │ │ label   │                         │   │     bg _textSecondary.alpha(8)
- *   │  │  │1iem│ │ #text   │                         │   │
- *   │  │  └────┘ └─────────┘                         │   │   arrow: 1iem 正方形
+ *   │  │  │16px│ │ #text   │                         │   │
+ *   │  │  └────┘ └─────────┘                         │   │   arrow: 16px 正方形
  *   │  │   ↑                                         │   │     transform rotate 0/90
- *   │  │   有子节点 chevron(旋转) / 无 spacer 占位 │   │     无子: spacer 1iem 宽
+ *   │  │   有子节点 chevron(旋转) / 无 spacer 占位 │   │     无子: spacer 16px 宽
  *   │  └─────────────────────────────────────────────┘   │
  *   │  (扁平化展开后逐行渲染,disabled → opacity _dim)  │
  *   └────────────────────────────────────────────────────┘

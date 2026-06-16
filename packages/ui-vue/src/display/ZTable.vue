@@ -54,7 +54,7 @@ export interface ZTableProps<T = Record<string, unknown>> {
   bordered?: boolean
   striped?: boolean
   /**
-   * 字号尺寸 —— `number`(iem 倍数,默认 1)。2026-05-24 B7。
+   * 字号尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1)。2026-05-24 B7。
    *
    * 内部按比例算 cell padding-y(`size * 0.625`)。
    */
@@ -87,7 +87,7 @@ import { BuiltinIcons, ZIcon } from '../gene'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────────────┐
  *   │ <table>                                                  │   width: 100%
@@ -98,11 +98,11 @@ import { sizePx } from '../_internal/sizing'
  *   │  │ <thead>  bg: _bgMuted  fontWeight: _semibold       │  │
  *   │  │  ┌──────────────────────────────────────────────┐  │  │
  *   │  │  │ <th> cell                                    │  │  │
- *   │  │  │   pad-y: 0.375 / 0.625 / 0.875iem(size 档) │  │  │
+ *   │  │  │   pad-y: 6px / 10px / 14px(size 档 × 16px)  │  │  │
  *   │  │  │   pad-x: _middle                             │  │  │
  *   │  │  │   sortable → cursor pointer + 排序图标       │  │  │
  *   │  │  └──────────────────────────────────────────────┘  │  │
- *   │  │  selectable 首列 <th>: width 2iem,pad-x _small    │  │
+ *   │  │  selectable 首列 <th>: width 32px(= 2 × 16px),pad-x _small   │  │
  *   │  └────────────────────────────────────────────────────┘  │
  *   │  ┌────────────────────────────────────────────────────┐  │
  *   │  │ <tbody>                                            │  │

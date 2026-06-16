@@ -41,20 +41,20 @@ export interface ZSelectProps {
   /** 多选模式;value 期望是 `ZSelectValue[]`(2026-05-23 Phase β 升级)。 */
   multiple?: boolean
   /**
-   * 字号尺寸 —— `number`(iem 倍数,默认 1)。同 ZInput。
+   * 字号尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1)。同 ZInput。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    */
   size?: number
-  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  /** 高度 —— `number`(px 倍数,1 单位 = 16px,可选,默认 `size * 2`)。 */
   height?: number
   /**
-   * 单个 option 行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 单个 option 行高 —— px 倍数(1 单位 = 16px)。默认 `2`(= 32px)。
    * 浮层 options 由 `ZVirtualList` 渲染(2026-05-24 v2),需要明确行高。
    */
   optionSize?: number
   /**
-   * 浮层最大高度 —— iem 倍数。默认 `15`(15iem = 240px @ 16px iem)。
+   * 浮层最大高度 —— px 倍数(1 单位 = 16px)。默认 `15`(= 240px)。
    * options 不足时容器自适应,超过则封顶。
    */
   dropdownMaxHeight?: number
@@ -86,15 +86,15 @@ import { themeColorScheme } from '../_internal/colorScheme'
 import { applyUserRef } from '../_internal/merge-ref'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(px,1 单位 = 16px;number 是 px 倍数,默认 1 单位=16px):
  *
  *   ┌──────────────────────────────────────────────────┐
- *   │ trigger  inline-flex / center / gap _tiny        │   min-width: 8iem
- *   │   font-size: `size` iem                          │   默认 size=1(16px @ 1080p)
- *   │   height: `height` iem                           │   默认 height=size*2=2iem(32px)
- *   │   padding-y: size*0.375 iem                      │   = 0.375iem(6px)
- *   │   padding-x: size*0.75 iem                       │   = 0.75iem(12px)
- *   │   border-radius: size*0.25 iem                   │   = 0.25iem(4px)
+ *   │ trigger  inline-flex / center / gap _tiny        │   min-width: 128px(= 8 × 16px)
+ *   │   font-size: sizePx(size)                        │   默认 size=1(16px)
+ *   │   height: sizePx(height)                         │   默认 height=size*2=32px
+ *   │   padding-y: sizePx(size*0.375)                  │   = 6px
+ *   │   padding-x: sizePx(size*0.75)                   │   = 12px
+ *   │   border-radius: sizePx(size*0.25)               │   = 4px
  *   │   border _thin solid _border / bg _bg / color _text │ open: borderColor _primary
  *   │   disabled: opacity _dim / bg _bgMuted           │
  *   │                                                   │
@@ -107,8 +107,8 @@ import { applyUserRef } from '../_internal/merge-ref'
  *           │ floating-ui 定位(offset 4)
  *           ▼
  *   ┌──────────────────────────────────────────────────┐
- *   │ dropdown(Teleport body)                        │   min-width: 8iem
- *   │   min-width: 8iem  max-height: 15iem            │   max-height: 15iem
+ *   │ dropdown(Teleport body)                        │   min-width: 128px
+ *   │   min-width: 128px  max-height: 240px           │   max-height: 240px
  *   │   pad _tiny  border _thin _border  boxShadow _middle│ overflow-y auto
  *   │   border-radius _small                          │
  *   │  ┌──────────────────────────────────────────┐   │   option:
@@ -120,9 +120,9 @@ import { applyUserRef } from '../_internal/merge-ref'
  *   │  (循环 filteredOptions,空 → 显"无匹配项")      │
  *   └──────────────────────────────────────────────────┘
  *
- * 用户改 size 数字 → trigger 所有 iem 维度等比缩(dropdown 走固定 spacing token,不缩)。
+ * 用户改 size 数字 → trigger 所有 px 维度等比缩(dropdown 走固定 spacing token,不缩)。
  * filterable=true 触发器位置渲染 input,实时过滤;multiple=true 选项前 checkbox。
- * 非 iem 单位走 `:css` 兜底。
+ * 非标准单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZSelectProps>(), {
   disabled: false,

@@ -34,20 +34,20 @@ import { BuiltinIcons, ZIcon } from '../gene'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ ZResult root  flex column / center / center      │   gap: _small
  *   │   padding: _huge  fontSize: _middle              │   color: _text
  *   │                                                  │
  *   │  ┌─────────┐                                     │   icon wrap:
- *   │  │  icon   │   fontSize 4iem(撑起 icon 字体)  │     inline-flex
- *   │  │  4iem   │   color: _info(默认),可被覆盖   │     fontSize 4iem
+ *   │  │  icon   │   fontSize 64px(= 4 × 16px)      │     inline-flex
+ *   │  │  64px   │   color: _info(默认),可被覆盖   │     fontSize 64px
  *   │  └─────────┘                                     │
  *   │                                                  │
  *   │  title       fontSize _huge / _semibold / centered│
  *   │                                                  │
- *   │  description max-width: 30iem(限段落宽度)      │   fontSize _middle
+ *   │  description max-width: 480px(= 30 × 16px)     │   fontSize _middle
  *   │              color _textSecondary / centered     │
  *   │                                                  │
  *   │  ┌──────────────────────────────┐                │   actions(default slot):

@@ -6,7 +6,7 @@ import type { ZuiSchema } from './schema'
  * 完整 5 阶 size scale + 9 阶 fontWeight + 5 个 easing + 5 阶 breakpoint + UI 角色 z-index +
  * Tailwind 衍生 lineHeight/letterSpacing/opacity/aspectRatio。
  *
- * **尺寸类 token（spacing / radius / fontSize / blur / sizes）= px 字面量**(0.9.x 移除 iem 逻辑单位):
+ * **尺寸类 token（spacing / radius / fontSize / blur / sizes）= px 字面量**(0.9.x 已移除自创 iem 逻辑单位,现统一纯 px):
  * - `spacing` 4/8/16/24/32px,`radius` 4/8/12/16/28px,`fontSize` 12/14/16/18/20px
  * - `blur` 4/8/16/24/40px,`sizes` 64/128/256/512/768/1200px
  *
@@ -179,7 +179,7 @@ export const zuiLight = new Theme<ZuiSchema>({
   /**
    * 通用尺寸 token —— 用于 `width / height / minW / minH / maxW / maxH / flexBasis`。
    *
-   * 5 阶 `tiny..huge` 走 iem(跟 Provider 字号联动),物理默认值:
+   * 5 阶 `tiny..huge` 为固定 px 字面量(不再随 Provider 字号联动),物理默认值:
    * - tiny:64px(小图标按钮 / 短输入框)
    * - small:128px(chip / 紧凑卡片)
    * - middle:256px(sidebar 经典宽度 / 弹窗小)
@@ -204,7 +204,7 @@ export const zuiLight = new Theme<ZuiSchema>({
     screenH: '100vh',
   },
   /**
-   * 边框 / outline 粗细 token —— **px 字面量,不走 iem**(跟 shadow 同策略)。
+   * 边框 / outline 粗细 token —— **px 字面量**(与 shadow 同策略,1px/2px 视觉细节不走逻辑单位)。
    *
    * - none:0(去边框)
    * - thin:1px(默认 / 卡片 / 输入框)

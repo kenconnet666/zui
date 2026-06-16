@@ -11,7 +11,7 @@
  * - `disabled?: boolean`
  * - `size?: SizePropMulti` —— 尺寸 factory(默认等价 middle:fontSize._middle)
  *
- * **size 策略**:factory 应用到 root,主要改 `fontSize`;item 尺寸用 `iem(1.75)` 跟 fontSize 联动自动 scale,
+ * **size 策略**:factory 应用到 root,主要改 `fontSize`;item 尺寸用 `sizePx(1.75)`(28px) 跟 fontSize 联动自动 scale,
  * 用户改 fontSize 即可整体缩放。
  *
  * **算法**:Always 显示首/末页 + 当前 ±siblings + 省略号。
@@ -30,12 +30,12 @@ export interface ZPaginationProps {
   showTotal?: boolean
   disabled?: boolean
   /**
-   * 字号 —— `number`(iem 倍数,默认 1)。2026-05-24 B7。
+   * 字号 —— `number`(px 倍数(1 单位 = 16px),默认 1 = 16px)。2026-05-24 B7。
    *
    * 影响 root 字号;item 默认通过 `itemSize` 派生 `size * 2`。
    */
   size?: number
-  /** item 尺寸(min-width + height)—— `number`(iem 倍数,可选,默认 `size * 2` = 32px,对齐 antd Pagination 32×32)。 */
+  /** item 尺寸(min-width + height)—— `number`(px 倍数(1 单位 = 16px),可选,默认 `size * 2` = 32px,对齐 antd Pagination 32×32)。 */
   itemSize?: number
   sxItem?: SxObject
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -56,11 +56,11 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(纯 px,1 单位 = 16px;number 是 px 倍数(1 单位 = 16px)):
  *
  *   ┌──────────────────────────────────────────────────────┐
  *   │ <nav> root  inline-flex / center / gap _tiny         │
- *   │   font-size: `size` iem                              │   默认 size=1(16px @ 1080p)
+ *   │   font-size: `size` × 16px                           │   默认 size=1(16px)
  *   │   color: _text                                       │
  *   │                                                      │
  *   │  ┌───────────┐ ┌────┐ ┌────┐ ┌────┐ ┌───┐ ┌────┐ ┌────┐ ┌───────────┐│
@@ -71,8 +71,8 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *   │  └───────────┘ └────┘ └────┘ └────┘ └───┘ └────┘ └────┘ └───────────┘│
  *   │                                                      │
  *   │  item:                                               │
- *   │    min-width: `itemSize` iem                         │   默认 itemSize=size*2=2iem(32px)
- *   │    height: `itemSize` iem                            │   传 itemSize=3 → 3iem(48px)
+ *   │    min-width: `itemSize` × 16px                      │   默认 itemSize=size*2=32px
+ *   │    height: `itemSize` × 16px                         │   传 itemSize=3 → 48px
  *   │    padding-x: _tiny / border-radius: _small          │   border _thin _border / bg _bg
  *   │    hover: borderColor _primary,color _primary       │
  *   │  current: bg _primary,color _bg,_semibold,border _primary
@@ -82,7 +82,7 @@ import { BuiltinIcons, ZIcon } from '../gene'
  *
  * 用户改 size 数字 → root fontSize 等比缩(item 默认跟 size*2 联动)。
  * 想独立控制 item 尺寸 → 传 itemSize 数字。算法:首尾恒显示 + 当前页 ±siblings + 省略号。
- * 非 iem 单位走 `:css` 兜底。
+ * 自定义样式走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZPaginationProps>(), {
   page: 1,
@@ -93,8 +93,8 @@ const props = withDefaults(defineProps<ZPaginationProps>(), {
   size: 1,
 })
 
-/** 计算每个 item 的 iem 尺寸(默认 `size * 2` = 32px @ size=1,对齐 antd Pagination 32×32,跟字号联动)。 */
-const itemIem = computed(() => props.itemSize ?? (props.size ?? 1) * 2)
+/** 计算每个 item 的尺寸倍数(默认 `size * 2` = 32px @ size=1,对齐 antd Pagination 32×32,跟字号联动)。 */
+const itemUnits = computed(() => props.itemSize ?? (props.size ?? 1) * 2)
 
 const emit = defineEmits<ZPaginationEmits>()
 
@@ -147,8 +147,8 @@ const itemClass = computed(() =>
     s.backgroundColor._bg
     s.color._text
     s.borderRadius._small
-    s.minWidth.px(sizePx(itemIem.value))
-    s.height.px(sizePx(itemIem.value))
+    s.minWidth.px(sizePx(itemUnits.value))
+    s.height.px(sizePx(itemUnits.value))
     s.padding.px(0)
     s.paddingLeft._tiny
     s.paddingRight._tiny
@@ -174,8 +174,8 @@ const currentItemClass = computed(() =>
     s.backgroundColor._primary
     s.color._bg
     s.borderRadius._small
-    s.minWidth.px(sizePx(itemIem.value))
-    s.height.px(sizePx(itemIem.value))
+    s.minWidth.px(sizePx(itemUnits.value))
+    s.height.px(sizePx(itemUnits.value))
     s.padding.px(0)
     s.paddingLeft._tiny
     s.paddingRight._tiny
@@ -196,8 +196,8 @@ const dotsClass = computed(() =>
     s.display.inlineFlex
     s.alignItems.center
     s.justifyContent.center
-    s.minWidth.px(sizePx(itemIem.value))
-    s.height.px(sizePx(itemIem.value))
+    s.minWidth.px(sizePx(itemUnits.value))
+    s.height.px(sizePx(itemUnits.value))
     s.color._textSecondary
   }),
 )

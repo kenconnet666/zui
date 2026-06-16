@@ -1,7 +1,7 @@
 /**
  * `ZDataTable` 综合 spec(Sprint 3)。
  *
- * 在 ZBox iem=16px 子树内挂载,iemPx=16 → rowSize=3 等价 48px。
+ * 纯 px 模式(1 单位 = 16px):rowSize=3 等价 48px。
  * 列宽计算 / 排序 / 选中 / 行点击 / 空态 / loading。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -51,14 +51,14 @@ function fakeScrollEl(el: HTMLElement, clientHeight: number): void {
   })
 }
 
-/** 在 ZBox iem=16px 内挂 ZDataTable。 */
+/** 在 ZBox 主题上下文内挂 ZDataTable。 */
 function mountDT(props: Record<string, unknown>) {
   const Host = defineComponent({
     setup() {
       return () =>
         h(
           ZBox,
-          { iem: '16px' },
+          {},
           {
             default: () => h(ZDataTable, props),
           },
@@ -119,7 +119,7 @@ describe('ZDataTable — 排序', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(ZDataTable, {
@@ -147,7 +147,7 @@ describe('ZDataTable — 排序', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(ZDataTable, {
@@ -176,7 +176,7 @@ describe('ZDataTable — 排序', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(ZDataTable, {
@@ -205,7 +205,7 @@ describe('ZDataTable — 排序', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(ZDataTable, {
@@ -262,7 +262,7 @@ describe('ZDataTable — 选中', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(ZDataTable, {
@@ -301,7 +301,7 @@ describe('ZDataTable — 选中', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(ZDataTable, {
@@ -339,7 +339,7 @@ describe('ZDataTable — 选中', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(ZDataTable, {
@@ -373,7 +373,7 @@ describe('ZDataTable — 行点击 emit', () => {
         return () =>
           h(
             ZBox,
-            { iem: '16px' },
+            {},
             {
               default: () =>
                 h(ZDataTable, {

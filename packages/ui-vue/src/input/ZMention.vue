@@ -18,15 +18,15 @@ export interface ZMentionProps {
   placeholder?: string
   disabled?: boolean
   rows?: number
-  /** 字号尺寸 —— `number`(iem 倍数,默认 1)。**不接 height**(rows 决定高度)。2026-05-24 B7。 */
+  /** 字号尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1)。**不接 height**(rows 决定高度)。2026-05-24 B7。 */
   size?: number
   /**
-   * 单个候选行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 单个候选行高 —— px 倍数(1 单位 = 16px)。默认 `2`(= 32px)。
    * 浮层 suggestions 由 `ZVirtualList` 渲染(2026-05-24 v2)。
    */
   optionSize?: number
   /**
-   * 浮层最大高度 —— iem 倍数。默认 `15`(15iem = 240px @ 16px iem)。
+   * 浮层最大高度 —— px 倍数(1 单位 = 16px)。默认 `15`(= 240px)。
    */
   dropdownMaxHeight?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -47,17 +47,17 @@ import { sizePx } from '../_internal/sizing'
 import ZVirtualList from '../display/ZVirtualList.vue'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(px,1 单位 = 16px;number 是 px 倍数,默认 1 单位=16px):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ wrapper  position: relative  width: 100%         │
  *   │                                                  │
  *   │  ┌────────────────────────────────────────────┐  │
  *   │  │ <textarea>                                 │  │
- *   │  │   font-size: `size` iem                    │  │   默认 size=1(16px @ 1080p)
- *   │  │   padding-y: size*0.375 iem                │  │   = 0.375iem(6px)
- *   │  │   padding-x: size*0.75 iem                 │  │   = 0.75iem(12px)
- *   │  │   border-radius: size*0.25 iem             │  │   = 0.25iem(4px)
+ *   │  │   font-size: sizePx(size)                  │  │   默认 size=1(16px)
+ *   │  │   padding-y: sizePx(size*0.375)            │  │   = 6px
+ *   │  │   padding-x: sizePx(size*0.75)             │  │   = 12px
+ *   │  │   border-radius: sizePx(size*0.25)         │  │   = 4px
  *   │  │   (无 height —— rows 决定 textarea 高度)   │  │   rows 默认 3
  *   │  │   border _thin solid _border / bg _bg      │  │   resize vertical / width 100%
  *   │  └────────────────────────────────────────────┘  │
@@ -65,8 +65,8 @@ import ZVirtualList from '../display/ZVirtualList.vue'
  *   │  ┌────────────────────────────────────────────┐  │   dropdown(@xxx 触发,绝对定位):
  *   │  │ dropdown(条件渲染,贴在 textarea 下方)   │  │     top 100% / left 0 right 0
  *   │  │  top 100%  left 0  right 0                │  │     marginTop _tiny
- *   │  │  marginTop _tiny  border _thin _border    │  │     pad _tiny / max-height 15iem
- *   │  │  pad _tiny  max-height 15iem               │  │     overflow-y auto
+ *   │  │  marginTop _tiny  border _thin _border    │  │     pad _tiny / max-height 240px
+ *   │  │  pad _tiny  max-height 240px               │  │     overflow-y auto
  *   │  │  boxShadow _middle  border-radius _small  │  │     boxShadow _middle
  *   │  │  ┌──────────────────────────────────────┐  │  │
  *   │  │  │ @option string                       │  │  │   option:
@@ -77,7 +77,7 @@ import ZVirtualList from '../display/ZVirtualList.vue'
  *   └──────────────────────────────────────────────────┘
  *
  * 用户改 size 数字 → textarea padding / fontSize / border-radius 等比缩(无 height,rows 决定)。
- * 输入 `@`(前置空白或起首)开启候选,按 currentSegment 过滤。非 iem 单位走 `:css` 兜底。
+ * 输入 `@`(前置空白或起首)开启候选,按 currentSegment 过滤。非标准单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZMentionProps>(), {
   prefix: '@',

@@ -52,7 +52,7 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyUserRef } from '../_internal/merge-ref'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌─────────────────┐
  *   │ trigger wrap    │   inline-flex(包裹 default slot)
@@ -61,8 +61,8 @@ import { applyUserRef } from '../_internal/merge-ref'
  *           │ floating-ui(offset 4)
  *           ▼
  *   ┌──────────────────────────────────────────────────┐
- *   │ menu(Teleport body)                            │   min-width: 8iem
- *   │   min-width: 8iem                               │   bg _bg / color _text
+ *   │ menu(Teleport body)                            │   min-width: 128px(= 8 × 16px)
+ *   │   min-width: 128px                              │   bg _bg / color _text
  *   │   border _thin solid _border                    │   border _thin _border
  *   │   border-radius _small  boxShadow _middle       │   border-radius _small
  *   │   pad _tiny  flex column                        │   boxShadow _middle

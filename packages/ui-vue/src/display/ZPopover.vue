@@ -25,9 +25,9 @@ export interface ZPopoverProps {
   trigger?: 'click' | 'hover' | 'manual'
   visible?: boolean
   disabled?: boolean
-  /** popper 最小宽度 —— `number`(iem 倍数,默认 8 = 128px)。2026-05-24 B7。 */
+  /** popper 最小宽度 —— `number`(px 倍数,1 单位 = 16px,默认 8 = 128px)。2026-05-24 B7。 */
   minWidth?: number
-  /** popper 最大宽度 —— `number`(iem 倍数,默认 30 = 480px)。 */
+  /** popper 最大宽度 —— `number`(px 倍数,1 单位 = 16px,默认 30 = 480px)。 */
   maxWidth?: number
   sxTrigger?: SxObject
   sxContent?: SxObject
@@ -51,7 +51,7 @@ import { sizePx } from '../_internal/sizing'
 import { applyUserRef } from '../_internal/merge-ref'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(纯 px,number 是 px 倍数,1 单位 = 16px):
  *
  *   ┌─────────────────┐
  *   │ trigger wrap    │   inline-flex(包裹 default slot)
@@ -61,8 +61,8 @@ import { applyUserRef } from '../_internal/merge-ref'
  *           ▼
  *   ┌─────────────────────────────────────────┐
  *   │ popper(Teleport to body)              │   bg: _bg
- *   │   min-width: `minWidth` iem             │     默认 minWidth=8(128px @ 1080p)
- *   │   max-width: `maxWidth` iem             │     默认 maxWidth=30(480px @ 1080p)
+ *   │   min-width: sizePx(`minWidth`)         │     默认 minWidth=8(= 128px)
+ *   │   max-width: sizePx(`maxWidth`)         │     默认 maxWidth=30(= 480px)
  *   │   padding: _middle                      │   color: _text
  *   │   border: _thin solid _border           │   border-radius: _small
  *   │   boxShadow: _middle                    │   z-index: _popover
@@ -77,7 +77,7 @@ import { applyUserRef } from '../_internal/merge-ref'
  *
  * 用户改 minWidth / maxWidth 数字 → popper 宽度上下限等比缩(其它走固定 spacing token)。
  * trigger: click / hover / manual;click 模式接 onClickOutside;visible 时 ESC 关。
- * 非 iem 单位(vw / pct)走 `:css` 兜底。
+ * 非整数倍数(vw / pct)走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZPopoverProps>(), {
   placement: 'bottom',

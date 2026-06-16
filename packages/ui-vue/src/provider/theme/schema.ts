@@ -141,7 +141,7 @@ export type FontsKeys = 'sans' | 'serif' | 'mono'
  * 通用 size token —— 用于 `width / height / minWidth / minHeight / maxWidth / maxHeight /
  * flexBasis` 这类「元素自身尺寸」carrier。**和 `spacing` 不同**(后者是 padding/margin/gap)。
  *
- * - 5 阶 `tiny/small/middle/large/huge` —— iem 化的递进尺寸(组件 / 卡片 / 弹窗框)
+ * - 5 阶 `tiny/small/middle/large/huge` —— px 固定递进尺寸(组件 / 卡片 / 弹窗框,1 单位 = 16px)
  * - 4 个语义化 key —— `container`(页面主区)/ `readable`(文本阅读宽度,`'65ch'`)/
  *   `full`(`'100%'`)/ `screen`(`'100vw'`)/ `screenH`(`'100vh'`)
  */
@@ -149,8 +149,8 @@ export type SizesKeys = Size5Keys | 'container' | 'readable' | 'full' | 'screen'
 /**
  * 边框/outline 粗细 token —— 用于 `borderWidth / outlineWidth` 及各 sub(top/right/bottom/left)。
  *
- * **保留 px 字面量,不走 iem**(同 shadow):
- * - 边框粗细跟字号无关,1px / 2px 这种"视觉细节"用 iem 反而失真(0.0625iem 用户不会想)
+ * **保留 px 字面量**(同 shadow):
+ * - 边框粗细跟字号无关,1px / 2px 这种"视觉细节"用逻辑单位反而失真
  * - 跟设计稿 1:1 对齐
  */
 export type BordersKeys = 'none' | 'thin' | 'middle' | 'thick' | 'heavy'
@@ -225,7 +225,7 @@ export interface ZuiSchema extends BaseSchema {
    * **跟 `spacing` 区别**:spacing 是「内距/外距/gap」(padding/margin/gap),sizes 是
    * 「元素自身的宽高」。两者数字范围差别大,不复用。
    *
-   * 5 阶 `tiny..huge` 走 iem(跟 Provider 联动),语义化 4 个 key 走字面量。
+   * 5 阶 `tiny..huge` 为固定 px 字面量(1 单位 = 16px),语义化 4 个 key 走字面量。
    */
   sizes: Record<SizesKeys, string> & Partial<UserSizesExt>
   /**
@@ -233,7 +233,7 @@ export interface ZuiSchema extends BaseSchema {
    * borderTopWidth / borderRightWidth / borderBottomWidth / borderLeftWidth` 的
    * `tokenCat: 'borders'`**。写 `s.borderWidth._thin` / `s.outlineWidth._middle`。
    *
-   * **保留 px 字面量,不走 iem**:1px/2px 这种"视觉细节"跟字号无关,跟设计稿对齐更稳。
+   * **保留 px 字面量**:1px/2px 这种"视觉细节"跟字号无关,跟设计稿对齐更稳。
    */
   borders: Record<BordersKeys, string> & Partial<UserBordersExt>
   /**

@@ -18,7 +18,7 @@ import type { ZuiSchema } from '../provider/theme'
 export interface ZBlockquoteProps {
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   /**
-   * 尺寸 —— `number`(iem 倍数,默认 1 = 16px @ 16px iem)。
+   * 尺寸 —— `number`(px 倍数,默认 1 = 16px,1 单位 = 16px)。
    *
    * 内部按比例:
    * - `padding-y` = `size * 0.5`
@@ -39,21 +39,21 @@ import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数,1 单位 = 16px,sizePx(n) = n × 16):
  *
  *   ┌────────────────────────────────────────┐
  *   │ ZBlockquote (block,<blockquote>)       │
- *   │   font-size: `size` iem                │   默认 size=1(16px @ 1080p)
- *   │   padding-y: size*0.5 iem              │   = 0.5iem(8px)
- *   │   padding-x: size*0.75 iem             │   = 0.75iem(12px)
- *   │   border-left-width: size*0.25 iem     │   = 0.25iem(4px)左侧强调边条
+ *   │   font-size: sizePx(size)              │   默认 size=1(16px)
+ *   │   padding-y: sizePx(size*0.5)          │   = 8px
+ *   │   padding-x: sizePx(size*0.75)         │   = 12px
+ *   │   border-left-width: sizePx(size*0.25) │   = 4px 左侧强调边条
  *   │   border-radius: _tiny                 │
  *   │   bg: _bgMuted   color: _text          │   borderLeftColor: 用户 color 或 _primary
  *   │   font-style: italic                   │
  *   └────────────────────────────────────────┘
  *
  * 用户改 size 数字 → padding / border-left-width / fontSize 等比缩(整体比例不变)。
- * 非 iem 单位走 `:css` 兜底。
+ * 非 px 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZBlockquoteProps>(), {
   size: 1,

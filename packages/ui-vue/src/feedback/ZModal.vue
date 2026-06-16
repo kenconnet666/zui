@@ -5,7 +5,7 @@
  * **API**:
  * - `v-model:visible` —— 双向绑定开关
  * - `title?: string` —— 头部标题(`#head` slot 优先)
- * - `width?: factory` —— 宽度 carrier factory,默认 `(w) => w.iem(30)`(2026-05-24 B7:数字尺寸 → factory,等价 30iem = 480px)
+ * - `width?: number` —— 宽度(px 倍数,1 单位 = 16px),默认 30(= 480px)
  * - `centered?: boolean` —— 垂直居中,默认 `true`
  * - `closable?: boolean` —— 头部关闭按钮,默认 `true`
  * - `maskClosable?: boolean` —— 点击 mask 关闭,默认 `true`
@@ -26,12 +26,12 @@ export interface ZModalProps {
   visible?: boolean
   title?: string
   /**
-   * 对话框宽度 —— `number`(iem 倍数,默认 30 = 480px @ 16px iem)。
+   * 对话框宽度 —— `number`(px 倍数(1 单位 = 16px),默认 30 = 480px)。
    *
-   * 2026-05-24 B7:数值尺寸 prop 改 `number`。非 iem 单位走 `css` 兜底。
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`。非标准尺寸走 `css` 兜底。
    *
    * @example
-   * <ZModal :width="40" />     <!-- 40iem -->
+   * <ZModal :width="40" />     <!-- 40 × 16 = 640px -->
    * <ZModal :width="20" />     <!-- 320px 小窗 -->
    * <ZModal :css="(s) => s.width.pct(80)" />   <!-- 80% 视口走 css -->
    */
@@ -74,16 +74,16 @@ import { sizePx } from '../_internal/sizing'
 import { applyUserRef } from '../_internal/merge-ref'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数(1 单位 = 16px),默认 1 单位 = 16px @ 1080p):
  *
  *   ┌─────────────────────────────────────────────────────┐
  *   │ mask  position fixed inset 0  z-index _modal        │   bg _overlayBg.alpha(50)
- *   │   flex / center(centered=true) 或 flex-start       │
+ *   │   flex / center(centered=true) 或 flex-start        │
  *   │                                                     │
  *   │   ┌───────────────────────────────────────────┐     │
- *   │   │ dialog                                    │     │   width: `width` iem
- *   │   │   max-w: 100vw - 2iem(留白)             │     │     默认 width=30(480px @ 1080p)
- *   │   │   max-h: 100vh - 2iem                     │     │     传 width=40 → 40iem(640px)
+ *   │   │ dialog                                    │     │   宽度 480px(= 30 × 16px)
+ *   │   │   max-w: 100vw - 32px 留白               │     │     默认 width=30(480px @ 1080p)
+ *   │   │   max-h: 100vh - 32px                    │     │     传 width=40 → 640px
  *   │   │   border-radius: _large                   │     │   bg: _bg / boxShadow: _huge
  *   │   │   flex column                             │     │   z-index: _modal (+1)
  *   │   │                                           │     │
@@ -107,7 +107,7 @@ import { applyUserRef } from '../_internal/merge-ref'
  *
  * 用户改 width 数字 → dialog 宽度等比缩(其它布局走固定 spacing token,不缩)。
  * ESC 关 / mask 点击关(maskClosable) / body scroll lock(多实例共享)。
- * 非 iem 单位(vh / pct)走 `:css` 兜底:`s.width.pct(80)`。
+ * 非标准尺寸(vh / pct)走 `:css` 兜底:`s.width.pct(80)`。
  */
 const props = withDefaults(defineProps<ZModalProps>(), {
   visible: false,
@@ -157,9 +157,9 @@ const dialogClass = computed(() =>
     s.boxShadow._huge
     s.display.flex
     s.flexDirection.column
-    s.maxHeight('calc(100vh - calc(2 * var(--zui-iem, 16px)))')
+    s.maxHeight(`calc(100vh - ${sizePx(2)}px)`)
     if (props.width !== undefined) s.width.px(sizePx(props.width))
-    s.maxWidth('calc(100vw - calc(2 * var(--zui-iem, 16px)))')
+    s.maxWidth(`calc(100vw - ${sizePx(2)}px)`)
     if (!props.centered) s.marginTop._huge
     if (props.zIndex !== undefined) s.zIndex(props.zIndex + 1)
     else s.zIndex._modal

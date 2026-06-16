@@ -24,7 +24,7 @@ export interface ZBadgeProps {
   max?: number
   showZero?: boolean
   /**
-   * 尺寸 —— `number`(iem 倍数,默认 0.75 = 12px @ 16px iem)。
+   * 尺寸 —— `number`(px 倍数,默认 0.75 = 12px,1 单位 = 16px)。
    *
    * 内部按比例:
    * - `padding-y` = `size * 0.25`
@@ -46,7 +46,7 @@ import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数,1 单位 = 16px,sizePx(n) = n × 16):
  *
  *   ┌──────────────────────────────────────────────┐
  *   │ ZBadge wrapper                               │   有 slot → inline-flex,position: relative
@@ -56,17 +56,17 @@ import { sizePx } from '../_internal/sizing'
  *   │  └────────────┘                              │
  *   │                       ┌──────┐               │
  *   │                       │ N+/  │  徽标:        │
- *   │                       │  •   │    font-size: `size` iem     默认 size=0.75(12px @ 1080p)
- *   │                       └──────┘    padding-y: size*0.25 iem  ≈ 0.188iem(3px)
- *   │                                   padding-x: size*0.5 iem   ≈ 0.375iem(6px)
- *   │                                   min-width: size*1.5 iem   ≈ 1.125iem(18px)
- *   │                                   height: size*1.5 iem      ≈ 1.125iem(18px)
- *   │                       dot=true → width/height: size*0.667 iem(0.5iem,8px),圆点
+ *   │                       │  •   │    font-size: sizePx(size)         默认 size=0.75(12px)
+ *   │                       └──────┘    padding-y: sizePx(size*0.25)    ≈ 3px
+ *   │                                   padding-x: sizePx(size*0.5)     ≈ 6px
+ *   │                                   min-width: sizePx(size*1.5)     ≈ 18px
+ *   │                                   height: sizePx(size*1.5)        ≈ 18px
+ *   │                       dot=true → width/height: sizePx(size*0.667) ≈ 8px,圆点
  *   │                       border-radius: _full
  *   └──────────────────────────────────────────────┘
  *
  * 用户改 size 数字 → 徽标 padding / min-width / height / fontSize 等比缩(整体比例不变)。
- * 非 iem 单位走 `:css` 兜底。
+ * 非 px 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZBadgeProps>(), {
   dot: false,

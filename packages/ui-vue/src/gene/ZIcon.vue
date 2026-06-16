@@ -18,8 +18,8 @@
  * - 用户写法极简 `(w) => w.em(1.25)` 一行表达,不需嵌入多行多属性
  * - 任何不在该 carrier 表达力内的需求(非正方形 / 自定义 easing / 反向旋转)走 css 兜底
  *
- * **iem 单位默认**(§13.0 ②):图标默认 1iem(默认 16px,Provider 控制基准),跟 Provider 字号
- * 联动,整站统一图标尺寸。**只设 width(height 镜像)、不设 fontSize**(无 em 复合问题)。
+ * **纯 px 默认**:图标默认 1 × 16px = 16px,通过 `sizePx(n)` 计算。
+ * **只设 width(height 镜像)、不设 fontSize**(无 em 复合问题)。
  * 想"跟父字号"的局部场景走 css 显式写 `s.width.em(N)`。
  *
  * **设计档位由 theme schema 承担** —— 用户走 `(d) => d._middle` / `(o) => o._half` 用 schema token,
@@ -41,7 +41,7 @@ import type { ZuiSchema } from '../provider/theme'
  */
 export interface ZIconProps {
   /**
-   * 图标尺寸 —— `number`(iem 倍数,默认 1)。**height 自动镜像 width**(图标始终正方形)。
+   * 图标尺寸 —— `number`(px 倍数,默认 1 = 16px,1 单位 = 16px)。**height 自动镜像 width**(图标始终正方形)。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`,Provider 字号联动。
    *
@@ -52,8 +52,8 @@ export interface ZIconProps {
    * 想 em / px / vh 等其它单位 → 走 `css` 兜底。
    *
    * @example
-   * <ZIcon :size="1.25" />     <!-- 1.25iem -->
-   * <ZIcon :size="2" />        <!-- 2iem 超大 -->
+   * <ZIcon :size="1.25" />     <!-- 1.25 × 16 = 20px -->
+   * <ZIcon :size="2" />        <!-- 2 × 16 = 32px 超大 -->
    * <ZIcon :css="(s) => { s.width.px(20); s.height.px(20) }" />
    */
   size?: number
@@ -139,16 +139,16 @@ import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数,1 单位 = 16px,sizePx(n) = n × 16):
  *
  *   ┌────────────┐
- *   │ ZIcon      │   width: `size` iem            默认 size=1(16px @ 1080p)
- *   │ inline-flex│   height: `size` iem(镜像)   正方形
+ *   │ ZIcon      │   width: sizePx(size)          默认 size=1(16px)
+ *   │ inline-flex│   height: sizePx(size)(镜像)   正方形
  *   │            │   line-height: 1
  *   └────────────┘
  *
  * 用户改 size 数字 → width/height 等比缩(整体比例不变,始终正方形)。
- * 非 iem 单位(em / px / vh)走 `:css` 兜底单独设 width / height。
+ * 非整数 px 单位(em / vh)走 `:css` 兜底单独设 width / height。
  */
 const props = withDefaults(defineProps<ZIconProps>(), {
   size: 1,
@@ -171,7 +171,7 @@ const className = computed(() =>
     s.flexShrink(0)
     s.lineHeight(1)
 
-    // size(number):iem 倍数,width + height 镜像保证正方形
+    // size(number):px 倍数(1 单位 = 16px),width + height 镜像保证正方形
     s.width.px(sizePx(size))
     s.height.px(sizePx(size))
 

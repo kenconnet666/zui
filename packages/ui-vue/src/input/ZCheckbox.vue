@@ -25,7 +25,7 @@ export interface ZCheckboxProps {
   label?: string
   disabled?: boolean
   indeterminate?: boolean
-  /** 复选框方框尺寸 —— `number`(iem 倍数,默认 1 = 16px @ 16px iem)。2026-05-24 B7。 */
+  /** 复选框方框尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1 = 16px)。2026-05-24 B7。 */
   size?: number
   sxBox?: SxObject
   sxLabel?: SxObject
@@ -47,7 +47,7 @@ import { Z_CHECKBOX_GROUP_KEY, type CheckboxGroupCtx } from './_checkbox-group'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(px,1 单位 = 16px;number 是 px 倍数,默认 1 单位=16px):
  *
  *   ┌──────────────────────────────────────────┐
  *   │ root <label>  inline-flex / center        │
@@ -55,17 +55,17 @@ import { sizePx } from '../_internal/sizing'
  *   │   fontSize _middle                        │   disabled → opacity _dim
  *   │                                           │
  *   │  ┌──────┐  ┌────────────────────┐        │   box(方框):
- *   │  │  ✓   │  │ label / slot       │        │     width: `size` iem
- *   │  │ size │  │  文字标签          │        │     height: `size` iem
- *   │  │ iem  │  │                    │        │       默认 size=1(16px @ 1080p)
- *   │  └──────┘  └────────────────────┘        │     border-radius: size*0.125 iem
- *   │                                           │       = 0.125iem(2px)
+ *   │  │  ✓   │  │ label / slot       │        │     width: sizePx(size)
+ *   │  │ size │  │  文字标签          │        │     height: sizePx(size)
+ *   │  │ 16px │  │                    │        │       默认 size=1(16px)
+ *   │  └──────┘  └────────────────────┘        │     border-radius: sizePx(size*0.125)
+ *   │                                           │       = 2px
  *   │                                           │     border _thin solid _border / bg _bg
  *   │                                           │     checked → border + bg _primary / color _bg
  *   └──────────────────────────────────────────┘     内部 ✓ SVG = 0.75em(跟字号联动)
  *
  * 用户改 size 数字 → 方框 width / height / border-radius 等比缩(始终正方形)。
- * 内部 ✓ / – 图标用 em 单位跟字号联动。非 iem 单位走 `:css` 兜底。
+ * 内部 ✓ / – 图标用 em 单位跟字号联动。非标准单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZCheckboxProps>(), {
   checked: false,
@@ -103,8 +103,8 @@ const rootClass = computed(() =>
 )
 
 /**
- * 复选框方框盒子模型(iem):
- * - width/height: 1iem,正方形
+ * 复选框方框盒子模型(px,1 单位 = 16px):
+ * - width/height: 16px(默认 size=1),正方形
  * - border: _thin,内部图标 0.75em 跟随字号缩放
  */
 const boxClass = computed(() =>

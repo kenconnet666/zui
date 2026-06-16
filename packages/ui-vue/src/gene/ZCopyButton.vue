@@ -13,7 +13,7 @@
  *
  * **API**:
  * - `text: string` —— 要复制的文本(必传)
- * - `size?: number` —— 整体尺寸 iem 倍数(默认 `1`)。所有维度等比缩放。
+ * - `size?: number` —— 整体尺寸 px 倍数(默认 `1`,1 单位 = 16px)。所有维度等比缩放。
  * - `label?: string` —— 按钮文字(可选;仅传 icon 即可做成纯图标按钮)
  * - `copiedLabel?: string` —— 复制成功后临时显示的文字。默认 `'已复制'`
  * - `duration?: number` —— 按钮文字"已复制"持续 ms。默认 `1500`
@@ -21,7 +21,7 @@
  * - `toastMessage?: string` —— toast 内容。默认 `'已复制'`
  * - `toastDuration?: number` —— toast 持续 ms。默认 `1500`
  * - `icon?: Component` —— 自定义图标。默认 `ContentCopyOutlined`
- * - `iconSize?: number` —— 图标尺寸 iem 倍数。默认 `size * 0.875`(随 size 缩放)
+ * - `iconSize?: number` —— 图标尺寸 px 倍数。默认 `size * 0.875`(随 size 缩放)
  * - `color?: factory` —— 文字色 carrier
  * - `css?: factory` —— 根元素覆盖
  *
@@ -35,15 +35,15 @@ export interface ZCopyButtonProps {
   /** 要复制的文本(必传)。 */
   text: string
   /**
-   * 整体尺寸 iem 倍数(默认 `1`)。
+   * 整体尺寸 px 倍数(默认 `1`,1 单位 = 16px)。
    *
-   * 内部公式:
-   * - `font-size` = `size` iem
-   * - `gap` = `size * 0.25` iem
-   * - `padding-y` = `size * 0.25` iem
-   * - `padding-x` = `size * 0.5` iem
-   * - `border-radius` = `size * 0.25` iem
-   * - `icon-size` = `size * 0.875` iem (未显式传 iconSize 时)
+   * 内部公式(每个 size 单位 = 16px):
+   * - `font-size` = `sizePx(size)` → 默认 16px
+   * - `gap` = `sizePx(size * 0.25)` → 默认 4px
+   * - `padding-y` = `sizePx(size * 0.25)` → 默认 4px
+   * - `padding-x` = `sizePx(size * 0.5)` → 默认 8px
+   * - `border-radius` = `sizePx(size * 0.25)` → 默认 4px
+   * - `icon-size` = `sizePx(size * 0.875)` → 默认 14px(未显式传 iconSize 时)
    */
   size?: number
   /** 按钮显示文字(可选;不传则纯图标)。 */
@@ -60,7 +60,7 @@ export interface ZCopyButtonProps {
   toastDuration?: number
   /** 自定义图标组件。默认 `ContentCopyOutlined`。 */
   icon?: Component
-  /** 图标尺寸 iem 倍数。不传时默认 `size * 0.875`(随 size 缩放)。 */
+  /** 图标尺寸 px 倍数。不传时默认 `size * 0.875`(即 14px @ size=1,随 size 缩放)。 */
   iconSize?: number
   /** 文字色 carrier。默认 `_textSecondary`,hover `_text`。 */
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
@@ -84,22 +84,24 @@ import { createMessageApi, type ZMessageApi } from '../feedback/messageApi'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数,1 单位 = 16px,sizePx(n) = n × 16):
  *
  *   ┌──────────────────────────┐
  *   │ button (type=button)     │   inline-flex / center
- *   │   [icon] [label?]        │   gap size*0.25 iem
- *   │                          │   pad-y size*0.25 iem  pad-x size*0.5 iem
- *   │                          │   border 0  radius size*0.25 iem
+ *   │   [icon] [label?]        │   gap sizePx(size*0.25)    默认 4px
+ *   │                          │   pad-y sizePx(size*0.25)  默认 4px
+ *   │                          │   pad-x sizePx(size*0.5)   默认 8px
+ *   │                          │   border 0  radius sizePx(size*0.25) 默认 4px
  *   │                          │   bg transparent  color _textSecondary
- *   │                          │   font-size size*1 iem  lineHeight _tight
+ *   │                          │   font-size sizePx(size)   默认 16px
+ *   │                          │   lineHeight _tight
  *   │                          │   transition all _tiny
  *   │                          │   :hover → bg color.alpha(8) + color _text
  *   │                          │   :focus-visible → outline 2px _primary
  *   └──────────────────────────┘
  *
- * 默认 size=1 @ 1080p: gap=4px / pad-y=4px / pad-x=8px / fontSize=16px / radius=4px
- * icon 尺寸 = iconSize prop(优先) 或 size*0.875 iem。
+ * 默认 size=1: gap=4px / pad-y=4px / pad-x=8px / fontSize=16px / radius=4px
+ * icon 尺寸 = iconSize prop(优先) 或 sizePx(size*0.875) = 14px。
  *
  * 跨实例共享:首次调用 `handleCopy` 触发 lazy `messageApi` 单例创建。
  * 测试场景 navigator.clipboard 可能缺失,做了 typeof guard;失败时 emit

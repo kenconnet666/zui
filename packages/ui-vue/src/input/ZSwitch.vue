@@ -17,18 +17,18 @@ import type { SxObject } from '../_internal/sx'
 export interface ZSwitchProps {
   value?: boolean
   /**
-   * 尺寸 —— `number`(iem 倍数,默认 2.5 = rail width)。
+   * 尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 2.5 = rail width)。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    *
    * 内部按比例:
-   * - `width` = `size`(iem)
-   * - `height` = `size * 0.6`(rail 宽高比 1.67:1)
+   * - `width` = sizePx(size) = 40px
+   * - `height` = sizePx(size * 0.6) = 24px(rail 宽高比 1.67:1)
    * - thumb / label 位置自动按 height 计算
    *
    * @example
-   * <ZSwitch :size="3" />        <!-- 3iem 宽 -->
-   * <ZSwitch :size="2" />        <!-- 2iem 宽小开关 -->
+   * <ZSwitch :size="3" />        <!-- 48px 宽 -->
+   * <ZSwitch :size="2" />        <!-- 32px 宽小开关 -->
    */
   size?: number
   disabled?: boolean
@@ -54,18 +54,18 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(px,1 单位 = 16px;number 是 px 倍数,默认 1 单位=16px):
  *
  *   ┌──────────────────────────────────────┐
  *   │ rail  inline-flex / center / relative│
- *   │   width: `size` iem                  │   默认 size=2.5(40px @ 1080p)
- *   │   height: size*0.6 iem               │   = 1.5iem(24px),宽高比 1.67:1
+ *   │   width: sizePx(size)                │   默认 size=2.5(40px)
+ *   │   height: sizePx(size*0.6)           │   = 24px,宽高比 1.67:1
  *   │   border-radius: _full(胶囊)       │   value=true → bg _primary
  *   │   bg: _primary(开) / _border(关)  │   value=false → bg _border
  *   │                                      │
  *   │  ┌────────┐ ┌──────┐                 │   thumb(value 切换位置):
- *   │  │label   │ │thumb │                 │     width/height: height*0.8 iem
- *   │  │( inset)│ │圆形  │                 │       = size*0.48 iem(1.2iem,19.2px)
+ *   │  │label   │ │thumb │                 │     width/height: sizePx(size*0.48)
+ *   │  │( inset)│ │圆形  │                 │       = 19.2px(≈ 宽 * 0.48)
  *   │  │ _tiny  │ │_full │                 │     border-radius: _full / bg _bg
  *   │  └────────┘ │_small│                 │     top: (height-thumb)/2
  *   │             └──────┘                 │     left: 切换时滑动
@@ -74,7 +74,7 @@ import { sizePx } from '../_internal/sizing'
  *   └──────────────────────────────────────┘
  *
  * 用户改 size 数字 → rail 宽度 + height(0.6 倍) + thumb 位置等比缩(整体比例不变)。
- * disabled / loading 时 opacity _dim,cursor not-allowed。非 iem 单位走 `:css` 兜底。
+ * disabled / loading 时 opacity _dim,cursor not-allowed。非标准单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZSwitchProps>(), {
   value: false,
@@ -87,17 +87,17 @@ const emit = defineEmits<ZSwitchEmits>()
 
 const theme = useZTheme()
 
-/** rail 高度 iem 数字(= size * 0.6,宽高比 1.67:1 接近旧 middle 1.25 / 2.5)。 */
-const railHeightIem = computed<number>(() => (props.size ?? 2.5) * 0.6)
-const railWidthIem = computed<number>(() => props.size ?? 2.5)
+/** rail 高度 px 倍数(= size * 0.6,宽高比 1.67:1;实际 px = sizePx(size*0.6))。 */
+const railHeightUnits = computed<number>(() => (props.size ?? 2.5) * 0.6)
+const railWidthUnits = computed<number>(() => props.size ?? 2.5)
 
 const railClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
     s.position.relative
-    s.width.px(sizePx(railWidthIem.value))
-    s.height.px(sizePx(railHeightIem.value))
+    s.width.px(sizePx(railWidthUnits.value))
+    s.height.px(sizePx(railHeightUnits.value))
     s.borderRadius._full
     s.transitionProperty._colors
     s.transitionDuration._small
@@ -119,8 +119,8 @@ const sxRailAttrs = computed(() => extractSxAttrs(props.sxRail))
 
 const thumbClass = computed(() =>
   icss(theme.value, s => {
-    const h = railHeightIem.value
-    const w = railWidthIem.value
+    const h = railHeightUnits.value
+    const w = railWidthUnits.value
     const thumb = h * 0.8
     s.position.absolute
     s.top.px(sizePx((h - thumb) / 2))
@@ -140,7 +140,7 @@ const sxThumbAttrs = computed(() => extractSxAttrs(props.sxThumb))
 const labelClass = computed(() =>
   icss(theme.value, s => {
     s.position.absolute
-    const offset = railHeightIem.value * 0.25
+    const offset = railHeightUnits.value * 0.25
     if (props.value) s.left.px(sizePx(offset))
     else s.right.px(sizePx(offset))
     s.color._bg

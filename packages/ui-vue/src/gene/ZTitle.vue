@@ -5,21 +5,21 @@
  *
  * **level → 默认尺寸 / 字重映射(用户传 `size` / `weight` factory 直接覆盖)**:
  *
- * | level | fontSize    | fontWeight | 物理(默认 iem=16px) |
+ * | level | fontSize        | fontWeight | 物理(1 单位 = 16px) |
  * |:---:|---|---|:---:|
- * | 1     | `iem(2)`    | 700(bold)     | 32px |
- * | 2     | `iem(1.75)` | 700(bold)     | 28px |
- * | 3     | `iem(1.5)`  | 600(semibold) | 24px |
- * | 4     | `iem(1.25)` | 600(semibold) | 20px |
- * | 5     | `iem(1.125)`| 600(semibold) | 18px |
- * | 6     | `iem(1)`    | 600(semibold) | 16px |
+ * | 1     | `sizePx(2)`     | 700(bold)     | 32px |
+ * | 2     | `sizePx(1.75)`  | 700(bold)     | 28px |
+ * | 3     | `sizePx(1.5)`   | 600(semibold) | 24px |
+ * | 4     | `sizePx(1.25)`  | 600(semibold) | 20px |
+ * | 5     | `sizePx(1.125)` | 600(semibold) | 18px |
+ * | 6     | `sizePx(1)`     | 600(semibold) | 16px |
  *
  * **默认 `tag` = `h{level}`**,语义化标题。用户可显式传 `tag` 改成 `div` 等中性元素
  * (例:页内"假标题"不参与 outline)。
  *
- * **iem 单位 + Provider 联动**:级别尺寸自动跟 ZBox 字号缩放。
+ * **纯 px 尺寸**:级别字号通过 `sizePx(N)` 直接换算为 px。
  * **schema fontSize 5 阶 token**(`_tiny/_small/_middle/_large/_huge`)主要服务 ZText 正文,
- * 标题 6 级走纯 `iem(N)` 不污染 token 表。
+ * 标题 6 级走纯 `sizePx(N)` 不污染 token 表。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -32,7 +32,7 @@ export interface ZTitleProps {
   /** 标题级别(决定默认 tag = `h{level}` + 默认 fontSize/fontWeight)。默认 `1`。 */
   level?: ZTitleLevel
 
-  /** 字号 —— `number`(iem 倍数,默认 undefined = 跟 level 默认)。**传了会覆盖 level 默认 fontSize**。 */
+  /** 字号 —— `number`(px 倍数,默认 undefined = 跟 level 默认,1 单位 = 16px)。**传了会覆盖 level 默认 fontSize**。 */
   size?: number
   weight?: ((w: Chain<ZuiSchema>['fontWeight']) => void) | undefined
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
@@ -61,23 +61,23 @@ import { applyTypographyBase } from './_typography-base'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数,1 单位 = 16px,sizePx(n) = n × 16):
  *
  *   ┌──────────────────────────────────────┐
  *   │ ZTitle (块级,默认 <h{level}>)       │
- *   │   font-size: `size` iem              │   默认 size=undefined → 走 level 映射:
- *   │     level=1 → 2iem(32px @ 1080p)    │
- *   │     level=2 → 1.75iem(28px)         │
- *   │     level=3 → 1.5iem(24px)          │
- *   │     level=4 → 1.25iem(20px)         │
- *   │     level=5 → 1.125iem(18px)        │
- *   │     level=6 → 1iem(16px)            │
+ *   │   font-size: sizePx(size)            │   默认 size=undefined → 走 level 映射:
+ *   │     level=1 → sizePx(2)   = 32px    │
+ *   │     level=2 → sizePx(1.75)= 28px    │
+ *   │     level=3 → sizePx(1.5) = 24px    │
+ *   │     level=4 → sizePx(1.25)= 20px    │
+ *   │     level=5 → sizePx(1.125)= 18px   │
+ *   │     level=6 → sizePx(1)   = 16px    │
  *   │   line-height: 1.25(标题偏紧)       │   font-weight: 700/600 跟 level
  *   │   margin: 0(重置浏览器默认)         │
  *   └──────────────────────────────────────┘
  *
- * 用户传 size 数字 → 覆盖 level 默认 fontSize,等比缩(无其它 iem 维度)。
- * 非 iem 单位走 `:css` 兜底:`(s) => s.fontSize.px(40)`。
+ * 用户传 size 数字 → 覆盖 level 默认 fontSize,等比缩(无其它 px 维度)。
+ * 非 px 单位走 `:css` 兜底:`(s) => s.fontSize.px(40)`。
  */
 const props = withDefaults(defineProps<ZTitleProps>(), {
   level: 1,
@@ -91,7 +91,7 @@ const props = withDefaults(defineProps<ZTitleProps>(), {
 
 const theme = useZTheme()
 
-/** level → 默认 fontSize 倍率(iem 单位,1 = 16px 基准)。 */
+/** level → 默认 fontSize 倍率(px 倍数,1 = 16px 基准,通过 sizePx 换算)。 */
 const LEVEL_FONT_SIZE: Record<ZTitleLevel, number> = {
   1: 2,
   2: 1.75,

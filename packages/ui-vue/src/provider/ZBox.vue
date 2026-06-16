@@ -18,7 +18,7 @@
  * 用一个组件解决两件常见事:**「我需要包一层 div 来切换主题」** 和
  * **「我需要在某段子树加几行 css(背景/边距/弹性)」**。
  *
- * **尺寸基准 = px**(0.9.x 起移除自创 iem 逻辑单位,对齐 Element Plus / Naive UI 纯 px 模式)。
+ * **尺寸基准 = px**(0.9.x 起已移除自创 iem 逻辑单位,对齐 Element Plus / Naive UI 纯 px 模式)。
  * 需要整站等比缩放走原生 `rem`(改根字号)或 `vw`,不再由 ZBox 注入逻辑单位。
  *
  * **根 Provider** 没传 `theme` 时回落 `zuiLight.resolve()` 并 dev warn。

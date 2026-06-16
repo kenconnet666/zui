@@ -50,14 +50,14 @@ export interface ZCodeProps {
 }
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(px 倍数,1 单位 = 16px,通过 sizePx 转换):
  *
  *   行内模式(inline=true):
  *   ┌──────────────┐
  *   │ <code>       │   font-family: _mono
- *   │  paddingX: 0.375iem  paddingY: 0.0625iem    │
+ *   │  paddingX: 6px(≈ 0.375 × 16)  paddingY: 1px(≈ 0.0625 × 16)    │
  *   │  bg: _bgMuted / border _thin _border / radius _tiny
- *   │  fontSize: 0.875iem(相对父字号小一号)     │
+ *   │  fontSize: 14px(≈ 0.875 × 16,相对父字号小一号)     │
  *   └──────────────┘
  *
  *   块级 fallback(inline=false, 未高亮):
@@ -82,7 +82,7 @@ export interface ZCodeProps {
  *
  * shiki 用 `defaultColor: false` —— 输出 spans 仅含 `--shiki-light` + `--shiki-dark` CSS var,
  * 由 wrapper 的 emotion class 通过 `_dark()` 媒体查询切换 var 生效色。
- * 未传 lang / shiki 未装 / 高亮失败 → 自动 fallback 纯文本。非 iem 单位走 `:css` 兜底。
+ * 未传 lang / shiki 未装 / 高亮失败 → 自动 fallback 纯文本。非 px 单位走 `:css` 兜底。
  */
 
 // ─── shiki 动态加载(optional peer);模块级缓存 ───

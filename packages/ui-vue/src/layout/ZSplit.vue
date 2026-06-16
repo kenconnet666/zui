@@ -4,7 +4,7 @@
  *
  * - `direction?: 'horizontal' | 'vertical'` —— 默认 horizontal(左右分)
  * - `v-model:ratio` —— 第一栏占比(0~1,默认 0.5)。**不叫 `size`** 是因为 zui 全栈
- *   `size` 语义是 iem 倍率;`ZSplit` 用比例(没有"尺寸"单位),改名 `ratio` 避免歧义。
+ *   `size` 语义是 px 倍数(1 单位 = 16px);`ZSplit` 用比例(没有"尺寸"单位),改名 `ratio` 避免歧义。
  * - `min?: number` / `max?: number` —— 第一栏占比限制(0~1)
  * - `disabled?: boolean`
  *
@@ -17,7 +17,7 @@ export interface ZSplitProps {
   direction?: 'horizontal' | 'vertical'
   /**
    * 第一栏占容器的比例(0~1)。默认 `0.5`。**故意不叫 `size`** —— zui 全栈 `size`
-   * 是 iem 倍率(物理长度),`ZSplit` 这里是比例(无单位),命名拆分避免歧义。
+   * 是 px 倍数(物理长度),`ZSplit` 这里是比例(无单位),命名拆分避免歧义。
    */
   ratio?: number
   /** 第一栏占比下限(0~1)。默认 `0.1`。 */

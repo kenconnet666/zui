@@ -5,7 +5,7 @@
  * **API**(跟 ZModal 类似):
  * - `v-model:visible`
  * - `placement?: 'left' | 'right' | 'top' | 'bottom'` —— 默认 `'right'`
- * - `size?: SizePropMulti` —— 尺寸 factory,用户自己写 `s.width.iem(...)` 或 `s.height.iem(...)`(placement 决定哪条轴)。默认等价 20iem(left/right=width,top/bottom=height)。
+ * - `size?: SizePropMulti` —— 尺寸 factory,用户自己写 `s.width.px(sizePx(...))` 或 `s.height.px(sizePx(...))`(placement 决定哪条轴)。默认等价 384px(left/right=width,top/bottom=height)。
  * - `title?: string`
  * - `closable?: boolean`
  * - `maskClosable?: boolean`
@@ -21,16 +21,16 @@ export interface ZDrawerProps {
   visible?: boolean
   placement?: 'left' | 'right' | 'top' | 'bottom'
   /**
-   * 抽屉宽度(left/right placement)或高度(top/bottom placement)—— `number`(iem 倍数,默认 24 = 384px,对齐 antd Drawer 378px)。
+   * 抽屉宽度(left/right placement)或高度(top/bottom placement)—— `number`(px 倍数(1 单位 = 16px),默认 24 = 384px,对齐 antd Drawer 378px)。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    *
    * `placement` 决定 size 应用到哪条轴:left/right → width;top/bottom → height。
-   * 非 iem 单位(如 vh / pct)走 `css` 兜底。
+   * 非标准尺寸(如 vh / pct)走 `css` 兜底。
    *
    * @example
-   * <ZDrawer :size="25" />                 <!-- 25iem 宽抽屉 -->
-   * <ZDrawer placement="top" :size="20" /> <!-- 20iem 高顶部抽屉 -->
+   * <ZDrawer :size="25" />                 <!-- 25 × 16 = 400px 宽抽屉 -->
+   * <ZDrawer placement="top" :size="20" /> <!-- 20 × 16 = 320px 高顶部抽屉 -->
    * <ZDrawer placement="top" :css="(s) => s.height.vh(50)" />  <!-- vh 走 css -->
    */
   size?: number
@@ -66,17 +66,17 @@ import { sizePx } from '../_internal/sizing'
 import { applyUserRef } from '../_internal/merge-ref'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数(1 单位 = 16px),默认 1 单位 = 16px @ 1080p):
  *
  *   ┌─────────────────────────────────────────────────────┐
  *   │ mask  position fixed inset 0  z-index _modal        │   bg _overlayBg.alpha(50)
  *   │                                                     │
  *   │   ┌──────────────────────────────────────┐ (right) │   drawer:
  *   │   │ drawer                               │         │     position fixed
- *   │   │   left/right → width: `size` iem    │         │     bg _bg / color _text
- *   │   │   top/bottom → height: `size` iem   │         │     boxShadow _huge
- *   │   │     默认 size=24(384px @ 1080p)    │         │     flex column
- *   │   │     传 size=20 → 20iem(320px)      │         │
+ *   │   │   left/right → width: sizePx(`size`) │         │     bg _bg / color _text
+ *   │   │   top/bottom → height: sizePx(`size`)│         │     boxShadow _huge
+ *   │   │     默认 size=24(384px @ 1080p)      │         │     flex column
+ *   │   │     传 size=20 → 320px               │         │
  *   │   │                                      │         │
  *   │   │  ┌────────────────────────────────┐  │         │   head(条件):
  *   │   │  │ head: title + close            │  │         │     pad _middle
@@ -98,7 +98,7 @@ import { applyUserRef } from '../_internal/merge-ref'
  *
  * 用户改 size 数字 → drawer 宽/高等比缩(其它布局走固定 spacing token,不缩)。
  * placement 决定 size 作用轴:left/right → width;top/bottom → height。
- * 非 iem 单位(vh / pct)走 `:css` 兜底:`s.height.vh(50)`。
+ * 非标准尺寸(vh / pct)走 `:css` 兜底:`s.height.vh(50)`。
  */
 const props = withDefaults(defineProps<ZDrawerProps>(), {
   visible: false,

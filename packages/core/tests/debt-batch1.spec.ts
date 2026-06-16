@@ -127,7 +127,7 @@ describe('R1 — carrier unit 方法覆盖 LENGTH_UNITS 全部 30 个', () => {
     expect(c3._node.width).toBe('100vw')
   })
 
-  it('LENGTH_UNITS 总数 = 34（移除 iem 后的纯 CSS 单位）', () => {
+  it('LENGTH_UNITS 总数 = 34（纯 CSS 单位，不含已移除的 iem）', () => {
     expect(LENGTH_UNITS.length).toBe(34)
     expect(LENGTH_UNITS).not.toContain('iem')
   })

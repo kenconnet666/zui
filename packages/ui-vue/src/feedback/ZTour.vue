@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 /**
  * `ZTour` —— 新手引导(steps 配置 + 高亮目标 + popper 引导卡片)。
  *
@@ -26,9 +26,9 @@ export interface ZTourProps {
   current?: number
   steps: ZTourStep[]
   open: boolean
-  /** tour 卡片最小宽度 —— `number`(iem 倍数,默认 20 = 320px,对齐 antd Tour panelWidth)。2026-05-24 B7。 */
+  /** tour 卡片最小宽度 —— `number`(px 倍数(1 单位 = 16px),默认 20 = 320px,对齐 antd Tour panelWidth)。2026-05-24 B7。 */
   minWidth?: number
-  /** tour 卡片最大宽度 —— `number`(iem 倍数,默认 32 = 512px,对齐 antd Tour 520px)。 */
+  /** tour 卡片最大宽度 —— `number`(px 倍数(1 单位 = 16px),默认 32 = 512px,对齐 antd Tour 520px)。 */
   maxWidth?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
@@ -51,7 +51,7 @@ import { useEscapeStack } from '../_hooks'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数(1 单位 = 16px),默认 1 单位 = 16px @ 1080p):
  *
  *   ┌──────────────────────────────────────────────────────┐
  *   │ mask(4 块矩形挖洞 target 周围)position fixed     │   bg _overlayBg.alpha(50)
@@ -65,8 +65,8 @@ import { sizePx } from '../_internal/sizing'
  *   │           ▼                                         │
  *   │   ┌──────────────────────────────────────┐          │   tour card:
  *   │   │ tour card  position fixed            │          │
- *   │   │   min-width: `minWidth` iem          │          │     默认 minWidth=20(320px @ 1080p)
- *   │   │   max-width: `maxWidth` iem          │          │     默认 maxWidth=32(512px @ 1080p)
+ *   │   │   min-width: sizePx(`minWidth`)      │          │     默认 minWidth=20(320px @ 1080p)
+ *   │   │   max-width: sizePx(`maxWidth`)      │          │     默认 maxWidth=32(512px @ 1080p)
  *   │   │   pad: _middle  border-radius _small │          │     bg _bg / color _text
  *   │   │   border _thin solid _border         │          │     boxShadow _huge
  *   │   │                                      │          │     z-index _modal
@@ -74,13 +74,13 @@ import { sizePx } from '../_internal/sizing'
  *   │   │  desc     _textSecondary _small      │          │
  *   │   │  ┌────────────────────────────────┐  │          │   footer:
  *   │   │  │ N/M    [prev] [next/finish]    │  │          │     flex spaceBetween
- *   │   │  │  _textSecondary _small           │          │     btn: pad-y 0.25iem
+ *   │   │  │  _textSecondary _small           │          │     btn: pad-y 4px
  *   │   │  └────────────────────────────────┘  │          │     primary bg _primary
  *   │   └──────────────────────────────────────┘          │
  *   └──────────────────────────────────────────────────────┘
  *
  * 用户改 minWidth / maxWidth 数字 → tour card 宽度上下限等比缩(其它走固定 spacing token)。
- * ESC 关。非 iem 单位走 `:css` 兜底。
+ * ESC 关。非标准尺寸走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZTourProps>(), {
   current: 0,

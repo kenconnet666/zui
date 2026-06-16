@@ -20,12 +20,12 @@ export interface ZSegmentedProps {
   value?: string | number
   options: ZSegmentedOption[]
   /**
-   * 字号尺寸 —— `number`(iem 倍数,默认 1)。
+   * 字号尺寸 —— `number`(px 倍数,默认 1 = 16px,1 单位 = 16px)。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`,组件按比例算所有维度(同 ZButton)。
    */
   size?: number
-  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  /** 高度 —— `number`(px 倍数,可选,默认 `size * 2`,即 32px @ size=1)。 */
   height?: number
   block?: boolean
   disabled?: boolean
@@ -45,25 +45,25 @@ import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数,1 单位 = 16px,sizePx(n) = n × 16):
  *
  *   ┌─────────────────────────────────────────────────────┐
  *   │ root  inline-flex / pad _tiny / gap _tiny           │   bg _bgMuted / border-radius _small
  *   │   block=true → width: 100%                          │   disabled → opacity _dim
  *   │                                                     │
  *   │  ┌──────────┐ ┌──────────┐ ┌──────────┐             │   每个 item(button):
- *   │  │ option 1 │ │ option 2 │ │ option 3 │             │     font-size: `size` iem
- *   │  │  active  │ │          │ │          │             │       默认 size=1(16px @ 1080p)
- *   │  │  bg _bg  │ │ inactive │ │ disabled │             │     height: `height` iem
- *   │  │  shadow  │ │ _2nd     │ │ opacity  │             │       默认 height=size*2=2iem(32px)
- *   │  │  _tiny   │ │ hover    │ │   _dim   │             │     padding-y: size*0.5 iem    = 0.5iem(8px)
- *   │  └──────────┘ └──────────┘ └──────────┘             │     padding-x: size*1 iem      = 1iem(16px)
- *   │                                                     │     gap: size*0.5 iem          = 0.5iem(8px)
- *   │                                                     │     border-radius: size*0.375  = 0.375iem(6px)
+ *   │  │ option 1 │ │ option 2 │ │ option 3 │             │     font-size: sizePx(size)
+ *   │  │  active  │ │          │ │          │             │       默认 size=1(16px)
+ *   │  │  bg _bg  │ │ inactive │ │ disabled │             │     height: sizePx(height)
+ *   │  │  shadow  │ │ _2nd     │ │ opacity  │             │       默认 height=size*2 → 32px
+ *   │  │  _tiny   │ │ hover    │ │   _dim   │             │     padding-y: sizePx(size*0.5) = 8px
+ *   │  └──────────┘ └──────────┘ └──────────┘             │     padding-x: sizePx(size*1)   = 16px
+ *   │                                                     │     gap: sizePx(size*0.5)       = 8px
+ *   │                                                     │     border-radius: sizePx(size*0.375) = 6px
  *   └─────────────────────────────────────────────────────┘     active → bg _bg + boxShadow _tiny
  *
- * 用户改 size 数字 → 每个 item 所有 iem 维度等比缩(整体比例不变)。height 可独立覆盖。
- * 非 iem 单位走 `:css` 兜底。
+ * 用户改 size 数字 → 每个 item 所有 px 维度等比缩(整体比例不变)。height 可独立覆盖。
+ * 非 px 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZSegmentedProps>(), {
   size: 1,

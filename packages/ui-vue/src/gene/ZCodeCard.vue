@@ -140,7 +140,7 @@ import type { ZSelectValue } from '../input/ZSelect.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px;尺寸通过 sizePx 计算,1 单位 = 16px):
  *
  *   ┌────────────────────────────────────────────────────────┐
  *   │ root div (border _border _thin / radius _small /       │

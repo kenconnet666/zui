@@ -29,7 +29,7 @@ import { BuiltinIcons, ZIcon } from '../gene'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌───────────────────────────────────────────────────────┐
  *   │ ZCalendar root                                        │   flex column
@@ -46,7 +46,7 @@ import { sizePx } from '../_internal/sizing'
  *   │  │  weekday label 行(7 个 _textSecondary _small) │  │
  *   │  │  ┌──┐┌──┐┌──┐┌──┐┌──┐┌──┐┌──┐                  │  │
  *   │  │  │..││..││..││..││..││..││..│ × 6 周           │  │   day cell:
- *   │  │  └──┘└──┘└──┘└──┘└──┘└──┘└──┘                  │  │     height 2iem
+ *   │  │  └──┘└──┘└──┘└──┘└──┘└──┘└──┘                  │  │     height 32px(= 2 × 16px)
  *   │  │  selected → bg _primary,color _bg              │  │     border-radius _tiny
  *   │  │  today → outline currentColor,color _primary   │  │     fontSize _small
  *   │  │  outOfMonth → color _textSecondary             │  │

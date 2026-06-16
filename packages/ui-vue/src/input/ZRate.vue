@@ -23,15 +23,15 @@ export interface ZRateProps {
   readonly?: boolean
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   /**
-   * 星星尺寸 —— `number`(iem 倍数,默认 1.5 = 24px @ 16px iem)。
+   * 星星尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1.5 = 24px)。
    *
    * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    *
    * height 自动镜像 width(星星始终方形)。
    *
    * @example
-   * <ZRate :size="2" />        <!-- 2iem 大星 -->
-   * <ZRate :size="1" />        <!-- 1iem 小 -->
+   * <ZRate :size="2" />        <!-- 32px 大星 -->
+   * <ZRate :size="1" />        <!-- 16px 小 -->
    */
   size?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -50,17 +50,17 @@ import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(px,1 单位 = 16px;number 是 px 倍数,默认 1 单位=16px):
  *
  *   ┌──────────────────────────────────────────────────┐
- *   │ ZRate root  inline-flex / gap 0.125iem           │   color: 用户 color factory 或 _warning
+ *   │ ZRate root  inline-flex / gap 2px(= sizePx(0.125))│  color: 用户 color factory 或 _warning
  *   │                                                  │   非交互态 opacity _strong
  *   │                                                  │
  *   │  ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐             │   star button(count 个,默认 5):
- *   │  │ ★  │ │ ★  │ │ ☆  │ │ ☆  │ │ ☆  │             │     width: `size` iem
- *   │  │ size│ │size│ │size│ │size│ │size│             │     height: `size` iem(镜像)
- *   │  │ iem │ │iem │ │iem │ │iem │ │iem │             │       默认 size=1.5(24px @ 1080p)
- *   │  └────┘ └────┘ └────┘ └────┘ └────┘             │       传 size=2 → 2iem(32px)大星
+ *   │  │ ★  │ │ ★  │ │ ☆  │ │ ☆  │ │ ☆  │             │     width: sizePx(size)
+ *   │  │ size│ │size│ │size│ │size│ │size│             │     height: sizePx(size)(镜像)
+ *   │  │ px  │ │ px │ │ px │ │ px │ │ px │             │       默认 size=1.5(24px)
+ *   │  └────┘ └────┘ └────┘ └────┘ └────┘             │       传 size=2 → 32px 大星
  *   │     ↑                                            │     color: _border(空星底色)
  *   │     value 决定每颗 fill 比率(0 / 0.5 / 1)     │   filled star(覆盖层):
  *   │                                                  │     position absolute / inset 0
@@ -69,7 +69,7 @@ import { sizePx } from '../_internal/sizing'
  *   └──────────────────────────────────────────────────┘
  *
  * 用户改 size 数字 → 每颗 star width / height 等比缩(始终正方形)。
- * allowHalf=true 时点击星左半 → 0.5 颗,右半 → 1 颗。非 iem 单位走 `:css` 兜底。
+ * allowHalf=true 时点击星左半 → 0.5 颗,右半 → 1 颗。非标准单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZRateProps>(), {
   value: 0,
@@ -112,7 +112,7 @@ const starClass = computed(() =>
     s.alignItems.center
     s.justifyContent.center
     s.position.relative
-    // size(number):iem 倍数,width + height 镜像保证星星方形
+    // size(number):px 倍数(1 单位 = 16px),width + height 镜像保证星星方形
     s.width.px(sizePx(size))
     s.height.px(sizePx(size))
     s.cursor(isInteractive.value ? 'pointer' : 'default')

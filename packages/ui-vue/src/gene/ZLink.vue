@@ -29,7 +29,7 @@ export interface ZLinkProps {
   /** 禁用态:屏蔽点击 + 灰化 + a11y。 */
   disabled?: boolean
 
-  /** 字号 —— `number`(iem 倍数,默认 undefined = 继承父字号)。 */
+  /** 字号 —— `number`(px 倍数,默认 undefined = 继承父字号,1 单位 = 16px)。 */
   size?: number
   weight?: ((w: Chain<ZuiSchema>['fontWeight']) => void) | undefined
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
@@ -59,20 +59,20 @@ import { useZTheme } from '../provider'
 import { applyTypographyBase } from './_typography-base'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数,1 单位 = 16px,sizePx(n) = n × 16):
  *
  *   ┌──────────────────────────────┐
  *   │ ZLink (inline,默认 <a>)      │
- *   │   font-size: `size` iem      │   默认 size=undefined(继承父字号)
- *   │                              │   传 size=1 → 1iem(16px @ 1080p)
+ *   │   font-size: sizePx(size)    │   默认 size=undefined(继承父字号)
+ *   │                              │   传 size=1 → 16px
  *   │   color: _primary (默认)     │   用户传 color factory 覆盖
  *   │   underlineOnHover: true     │   hover 时显示下划线(链接惯例)
  *   │   cursor: pointer            │
  *   │   disabled=true → opacity _dim + pointer-events: none + cursor: not-allowed
  *   └──────────────────────────────┘
  *
- * 用户改 size 数字 → fontSize 等比缩(无其它 iem 维度)。
- * 非 iem 单位走 `:css` 兜底:`(s) => s.fontSize.px(14)`。
+ * 用户改 size 数字 → fontSize 等比缩(无其它 px 维度)。
+ * 非整数 px 单位走 `:css` 兜底:`(s) => s.fontSize.px(14)`。
  */
 const props = withDefaults(defineProps<ZLinkProps>(), {
   disabled: false,

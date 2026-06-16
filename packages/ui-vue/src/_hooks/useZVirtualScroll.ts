@@ -2,8 +2,8 @@
  * `useZVirtualScroll` —— 通用虚拟滚动算法层。
  *
  * **职责**:可见区间计算、前缀和、scroll 节流、scrollToIndex / scrollToOffset、
- * ResizeObserver 自动测量。**仅算 px**,不感知 iem;调用方负责把 iem 倍数 × `useZIem`
- * 转换为 px 后传进来。
+ * ResizeObserver 自动测量。**仅算 px**;调用方负责把 size 倍数 × 16 转换为 px 后传进来
+ * (例:size=3 → 3 × 16 = 48px,即 `sizePx(3)`)。
  *
  * **算法要点**:
  * - 固定行高走除法快路径(`floor(scrollTop / itemSize)`)

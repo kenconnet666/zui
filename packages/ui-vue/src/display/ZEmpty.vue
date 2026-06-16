@@ -4,7 +4,7 @@
  *
  * - `description?: string` —— 默认 "暂无数据"
  * - `image?: Component` —— 自定义图标(默认走 inline 占位 SVG)
- * - `size?: number` —— 图标尺寸 iem 倍数,默认 4(= 64px @ 16px base)
+ * - `size?: number` —— 图标尺寸 px 倍数(1 单位 = 16px),默认 4(= 64px)
  * - slot:`#image`(自定义图)/ `#description`(自定义文)/ default(操作按钮)
  */
 import type { Component } from 'vue'
@@ -14,7 +14,7 @@ import type { ZuiSchema } from '../provider/theme'
 export interface ZEmptyProps {
   description?: string
   image?: Component
-  /** 图标尺寸 iem 倍数，默认 4（= 64px @ default iem）。 */
+  /** 图标尺寸 px 倍数(1 单位 = 16px),默认 4(= 64px)。 */
   size?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }

@@ -8,7 +8,7 @@
  * **API**:
  * - `items: ZAnchorItem[]` —— 锚点列表(`href: '#id' + title` 必填,`level` 可选)
  * - `offsetTop?: number` —— 滚动留白(默认 `0`;固定 header 时设其高度)
- * - `indentStep?: number` —— 每 level 缩进 iem 步长(默认 `0.75`)
+ * - `indentStep?: number` —— 每 level 缩进步长，单位 px(默认 `0.75`，即 12px = 0.75 × 16px)
  * - `color?: factory` —— active 高亮色(默认 `_primary`)
  * - `css?: factory` —— 根元素覆盖
  *
@@ -55,13 +55,13 @@ import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌───────────────────────────────┐
  *   │ <nav> (flex column)           │   border-left _thin _border
  *   │   padding-left _small         │   (左侧轨道)
  *   │                               │
- *   │   ▎ Section A (level 1)       │   padding-left: small + (level-1)*indentStep iem
+ *   │   ▎ Section A (level 1)       │   padding-left: small + (level-1)*indentStep × 16px
  *   │   ▎   Subsection A.1 (lv 2)   │   active: margin-left -border / color _primary
  *   │   ▎ Section B (lv 1)          │     border-left 2px primary / fontWeight medium
  *   │   ▎   Subsection B.1 (lv 2)   │   hover: color _primary

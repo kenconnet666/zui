@@ -27,7 +27,7 @@ export interface ZDescriptionsProps {
   column?: number
   bordered?: boolean
   /**
-   * 字号尺寸 —— `number`(iem 倍数,默认 1)。2026-05-24 B7。
+   * 字号尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1)。2026-05-24 B7。
    *
    * label/value padding = `size * 0.5`(偏紧表格风)。
    */
@@ -43,7 +43,7 @@ import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌────────────────────────────────────────────────────┐
  *   │ ZDescriptions root  flex column                    │   bordered=true:

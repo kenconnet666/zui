@@ -36,7 +36,7 @@ describe('ZAvatar', () => {
   })
 
   it('size=3 → 自定义尺寸(48px)', () => {
-    // R10:size 是 number(iem 倍数),3 等价 48px
+    // R10:size 是 number(px 倍数,1 单位 = 16px),3 等价 48px
     mount(ZAvatar, {
       props: {
         size: 3,

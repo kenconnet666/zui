@@ -21,7 +21,7 @@
  *   <Actions />
  * </ZFlex>
  *
- * <ZFlex :direction="(d) => d.column" :gap="(g) => g.iem(1.5)">
+ * <ZFlex :direction="(d) => d.column" :gap="(g) => g.px(24)">
  *   <Item />
  * </ZFlex>
  * ```
@@ -38,7 +38,7 @@ export interface ZFlexProps {
   justify?: ((c: Chain<ZuiSchema>['justifyContent']) => void) | undefined
   /** `align-items` carrier factory。 */
   align?: ((c: Chain<ZuiSchema>['alignItems']) => void) | undefined
-  /** `gap` carrier factory。例:`(g) => g._middle` / `(g) => g.iem(0.5)` / `(g) => g.px(8)`。 */
+  /** `gap` carrier factory。例:`(g) => g._middle` / `(g) => g.px(8)` / `(g) => g.px(24)`。 */
   gap?: ((g: Chain<ZuiSchema>['gap']) => void) | undefined
   /** `display: inline-flex`(默认 `flex`)。 */
   inline?: boolean

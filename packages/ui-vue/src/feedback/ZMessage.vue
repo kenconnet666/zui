@@ -53,12 +53,12 @@ import { BuiltinIcons, ZIcon } from '../gene'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(px,固定间距):
  *
  *   顶部居中容器:
  *   ┌─────────────────────────────────────────────────────┐
- *   │ container(Teleport body,position fixed)          │   top: 1.5iem
- *   │   top: 1.5iem  left: 50%  translateX(-50%)         │   z-index: _toast
+ *   │ container(Teleport body,position fixed)          │   top: 24px
+ *   │   top: 24px  left: 50%  translateX(-50%)            │   z-index: _toast
  *   │   flex column / alignItems center / gap _small     │   pointer-events: none
  *   │                                                     │
  *   │      ┌──────────────────────────────────────┐      │   message item:

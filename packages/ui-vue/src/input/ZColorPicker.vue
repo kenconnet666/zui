@@ -66,8 +66,8 @@ const wrapperClass = computed(() =>
 )
 
 /**
- * 色块预览盒子模型(iem):
- * - width/height: 1.25iem,正方形(略大于复选框)
+ * 色块预览盒子模型(px,1 单位 = 16px):
+ * - width/height: 20px(= sizePx(1.25)),正方形(略大于复选框)
  * - border: _thin,圆角 _tiny
  */
 const swatchClass = computed(() =>

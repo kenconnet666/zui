@@ -9,15 +9,15 @@
  * - 默认 `lineHeight: _normal`(1.5)—— 段落舒适行高,正文阅读体验
  * - `tag` 默认 `'p'` —— 语义化段落元素
  *
- * **schema 联动**:`margin-bottom` 用 `spacing._middle`,用户 `<ZBox :iem="large">`
- * 时段间距同步放大;想自定义间距走 css:`(s) => s.marginBottom._large`。
+ * **schema 联动**:`margin-bottom` 用 `spacing._middle`,与 schema spacing 联动;
+ * 想自定义间距走 css:`(s) => s.marginBottom._large`。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
 /** ZParagraph 完整 props。**继承 ZText 全部维度**(同 props 接口,默认值不同)。 */
 export interface ZParagraphProps {
-  /** 字号 —— `number`(iem 倍数,默认 undefined = 继承父字号)。 */
+  /** 字号 —— `number`(px 倍数,默认 undefined = 继承父字号,1 单位 = 16px)。 */
   size?: number
   weight?: ((w: Chain<ZuiSchema>['fontWeight']) => void) | undefined
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
@@ -45,19 +45,19 @@ import { useZTheme } from '../provider'
 import { applyTypographyBase } from './_typography-base'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数,1 单位 = 16px,sizePx(n) = n × 16):
  *
  *   ┌──────────────────────────────┐
  *   │ ZParagraph (块级,默认 <p>)   │
- *   │   font-size: `size` iem      │   默认 size=undefined(继承父字号)
- *   │                              │   传 size=1 → 1iem(16px @ 1080p)
+ *   │   font-size: sizePx(size)    │   默认 size=undefined(继承父字号)
+ *   │                              │   传 size=1 → 16px
  *   │   margin: 0(重置)            │
- *   │   margin-bottom: _middle     │   schema spacing token(16px 默认,Provider 联动)
+ *   │   margin-bottom: _middle     │   schema spacing token(16px 默认)
  *   │   line-height: _normal (1.5) │   段落舒适行高(若用户未传 leading)
  *   └──────────────────────────────┘
  *
- * 用户改 size 数字 → fontSize 等比缩(margin-bottom 走 schema spacing,跟 ZBox :iem 联动)。
- * 非 iem 单位走 `:css` 兜底:`(s) => s.marginBottom.px(24)`。
+ * 用户改 size 数字 → fontSize 等比缩(margin-bottom 走 schema spacing token)。
+ * 非 px 单位走 `:css` 兜底:`(s) => s.marginBottom.px(24)`。
  */
 const props = withDefaults(defineProps<ZParagraphProps>(), {
   italic: false,

@@ -36,7 +36,7 @@ export interface ZAlertProps {
   /** 描述(详细信息)。 */
   description?: string
   /**
-   * 尺寸 —— `number`(iem 倍数,默认 0.875,等价旧 middle 档位 14px)。
+   * 尺寸 —— `number`(px 倍数(1 单位 = 16px),默认 0.875,等价旧 middle 档位 14px)。
    *
    * 内部按比例:
    * - `padding` = `size * 0.625`
@@ -74,13 +74,13 @@ import { BuiltinIcons, ZIcon } from '../gene'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数(1 单位 = 16px),默认 1 单位 = 16px @ 1080p):
  *
  *   ┌─────────────────────────────────────────────────────┐
  *   │ ZAlert root                                         │   flex / alignFlexStart
- *   │   font-size: `size` iem                             │   默认 size=0.875(14px @ 1080p)
- *   │   padding: size*0.625 iem                           │   ≈ 0.547iem(8.75px)
- *   │   gap: size*0.5 iem                                 │   ≈ 0.438iem(7px)
+ *   │   font-size: sizePx(`size`)                         │   默认 size=0.875(14px @ 1080p)
+ *   │   padding: sizePx(size*0.625)                       │   ≈ 8.75px
+ *   │   gap: sizePx(size*0.5)                             │   ≈ 7px
  *   │   border-radius: _small  border-width: _thin        │
  *   │   color: 用户 color factory 或 _info                │   ::before: bg currentColor 0.08
  *   │                                                     │     (8% 主色叠层背景,不影响文字)
@@ -96,7 +96,7 @@ import { sizePx } from '../_internal/sizing'
  *   └─────────────────────────────────────────────────────┘     hover bg _textSecondary.alpha(8)
  *
  * 用户改 size 数字 → padding / gap / fontSize 等比缩(整体比例不变)。
- * 非 iem 单位走 `:css` 兜底。
+ * 非标准尺寸走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZAlertProps>(), {
   showIcon: true,

@@ -26,17 +26,17 @@ export interface ZCascaderProps {
   expandTrigger?: 'click' | 'hover'
   placement?: Placement
   separator?: string
-  /** 字号尺寸 —— `number`(iem 倍数,默认 1)。同 ZInput。2026-05-24 B7。 */
+  /** 字号尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1)。同 ZInput。2026-05-24 B7。 */
   size?: number
-  /** 高度 —— `number`(iem 倍数,可选,默认 `size * 2`)。 */
+  /** 高度 —— `number`(px 倍数,1 单位 = 16px,可选,默认 `size * 2`)。 */
   height?: number
   /**
-   * 单个 option 行高 —— iem 倍数。默认 `2`(2iem = 32px @ 16px iem)。
+   * 单个 option 行高 —— px 倍数(1 单位 = 16px)。默认 `2`(= 32px)。
    * 每级 panel 由 `ZVirtualList` 渲染(2026-05-24 v2)。
    */
   optionSize?: number
   /**
-   * 每级 panel 最大高度 —— iem 倍数。默认 `17.5`(17.5iem = 280px @ 16px iem)。
+   * 每级 panel 最大高度 —— px 倍数(1 单位 = 16px)。默认 `17.5`(= 280px)。
    */
   columnMaxHeight?: number
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -61,15 +61,15 @@ import { BuiltinIcons, ZIcon } from '../gene'
 import ZVirtualList from '../display/ZVirtualList.vue'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(px,1 单位 = 16px;number 是 px 倍数,默认 1 单位=16px):
  *
  *   ┌──────────────────────────────────────────────────┐
- *   │ trigger  inline-flex / center / gap _tiny        │   min-width: 12iem(路径文本通常较长)
- *   │   font-size: `size` iem                          │   默认 size=1(16px @ 1080p)
- *   │   height: `height` iem                           │   默认 height=size*2=2iem(32px)
- *   │   padding-y: size*0.375 iem                      │   = 0.375iem(6px)
- *   │   padding-x: size*0.75 iem                       │   = 0.75iem(12px)
- *   │   border-radius: size*0.25 iem                   │   = 0.25iem(4px)
+ *   │ trigger  inline-flex / center / gap _tiny        │   min-width: 192px(= 12 × 16px)
+ *   │   font-size: sizePx(size)                        │   默认 size=1(16px)
+ *   │   height: sizePx(height)                         │   默认 height=size*2=32px
+ *   │   padding-y: sizePx(size*0.375)                  │   = 6px
+ *   │   padding-x: sizePx(size*0.75)                   │   = 12px
+ *   │   border-radius: sizePx(size*0.25)               │   = 4px
  *   │   border _thin solid (_primary open / _border) / bg _bg / color _text
  *   │  ┌──────────────────────────┐ ┌────────┐         │
  *   │  │ 文本(路径 separator)   │ │ arrow ▼│         │   text: 无值 _textSecondary
@@ -82,9 +82,9 @@ import ZVirtualList from '../display/ZVirtualList.vue'
  *   │ popper(Teleport body)flex 横向多列                │   bg _bg / border _thin _border
  *   │   ┌─────────┐ ┌─────────┐ ┌─────────┐               │   boxShadow _middle
  *   │   │ col 0   │ │ col 1   │ │ col 2 …  │              │   border-radius _small
- *   │   │ min 8iem│ │ min 8iem│ │ min 8iem │              │   每列:
- *   │   │ max 17.5│ │ max 17.5│ │ max 17.5 │              │     min-width 8iem
- *   │   │ pad _tiny│ │border-r │ │ 最后无 br│              │     max-height 17.5iem
+ *   │   │min 128px│ │min 128px│ │min 128px │              │   每列:
+ *   │   │max 280px│ │max 280px│ │max 280px │              │     min-width 128px(= 8 × 16px)
+ *   │   │ pad _tiny│ │border-r │ │ 最后无 br│              │     max-height 280px(= sizePx(17.5))
  *   │   │ border-r │ │ _thin   │ │           │              │     overflow-y auto
  *   │   │  ┌────┐ │ │  ┌────┐  │ │           │              │     border-r _thin _border
  *   │   │  │opt │ │ │  │opt │  │ │           │              │
@@ -93,8 +93,8 @@ import ZVirtualList from '../display/ZVirtualList.vue'
  *   │   └─────────┘ └─────────┘ └─────────┘               │     非叶子右侧 chevronRight
  *   └──────────────────────────────────────────────────────┘
  *
- * 用户改 size 数字 → trigger 所有 iem 维度等比缩(popper 走固定 spacing token,不缩)。
- * height 可独立覆盖。非 iem 单位走 `:css` 兜底。
+ * 用户改 size 数字 → trigger 所有 px 维度等比缩(popper 走固定 spacing token,不缩)。
+ * height 可独立覆盖。非标准单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZCascaderProps>(), {
   disabled: false,
@@ -206,8 +206,8 @@ const triggerClass = computed(() =>
     s.color._text
     applyInputSize(s, props.size, props.height)
     s.cursor(props.disabled ? 'not-allowed' : 'pointer')
-    // 触发器 minWidth: 12iem(级联路径文本一般较长)
-    // paddingTop/Bottom: 0.375iem × 2 = 0.75iem 总垂直内边距
+    // 触发器 minWidth: 192px(= sizePx(12),级联路径文本一般较长)
+    // paddingTop/Bottom: sizePx(0.375) × 2 = 12px 总垂直内边距
     s.minWidth.px(sizePx(12))
     if (props.disabled) {
       s.opacity._dim

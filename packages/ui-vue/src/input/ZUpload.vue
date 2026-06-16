@@ -54,7 +54,7 @@ import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ <input type="file" hidden>(隐藏触发器)         │

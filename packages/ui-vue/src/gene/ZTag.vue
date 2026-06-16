@@ -16,7 +16,7 @@ export interface ZTagProps {
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   variant?: 'filled' | 'outlined' | 'soft'
   /**
-   * 尺寸 —— `number`(iem 倍数,默认 0.875,等价旧 middle 档位 14px)。
+   * 尺寸 —— `number`(px 倍数,默认 0.875 = 14px,1 单位 = 16px)。
    *
    * 内部按比例算其它维度:
    * - `padding-y` = `size * 0.125`
@@ -27,7 +27,7 @@ export interface ZTagProps {
    *
    * @example
    * <ZTag :size="0.875" />        <!-- 默认 -->
-   * <ZTag :size="1" />            <!-- 1iem -->
+   * <ZTag :size="1" />            <!-- 1 × 16 = 16px -->
    * <ZTag :size="1.25" />         <!-- 大号 -->
    */
   size?: number
@@ -53,14 +53,14 @@ import ZIcon from './ZIcon.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准;number 是 iem 倍数,默认 1iem=16px @ 1080p):
+ * 盒子模型(number 是 px 倍数,1 单位 = 16px,sizePx(n) = n × 16):
  *
  *   ┌──────────────────────────────────────────┐
  *   │ ZTag                                     │   inline-flex,gap: _tiny
- *   │   font-size: `size` iem                  │   默认 size=0.875(14px @ 1080p)
- *   │   padding-y: size*0.125 iem              │   ≈ 0.109iem(1.75px)
- *   │   padding-x: size*0.5 iem                │   ≈ 0.438iem(7px)
- *   │   border-radius: size*0.25 iem           │   ≈ 0.219iem(3.5px)
+ *   │   font-size: sizePx(size)                │   默认 size=0.875(14px)
+ *   │   padding-y: sizePx(size*0.125)          │   ≈ 1.75px
+ *   │   padding-x: sizePx(size*0.5)            │   ≈ 7px
+ *   │   border-radius: sizePx(size*0.25)       │   ≈ 3.5px
  *   │     round=true → _full                   │   border-width: _thin
  *   │                                          │
  *   │  ┌─────────┐ ┌────────────┐             │
@@ -69,9 +69,9 @@ import { sizePx } from '../_internal/sizing'
  *   │  └─────────┘ └────────────┘             │
  *   └──────────────────────────────────────────┘
  *
- * 用户改 size 数字 → 所有 iem 维度等比缩放(整体比例不变)。
+ * 用户改 size 数字 → 所有 px 维度等比缩放(整体比例不变)。
  * 3 个 variant: filled(bg color + 反色文字) / outlined(透明 bg + 主色边框文字) /
- * soft(主色 alpha(12) 浅 bg + 主色文字)。非 iem 单位走 `:css` 兜底。
+ * soft(主色 alpha(12) 浅 bg + 主色文字)。非 px 单位走 `:css` 兜底。
  */
 const props = withDefaults(defineProps<ZTagProps>(), {
   variant: 'soft',

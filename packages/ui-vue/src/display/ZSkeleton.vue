@@ -33,19 +33,19 @@ import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 
 /**
- * 盒子模型(iem,Provider 控制基准):
+ * 盒子模型(纯 px,1 单位 = 16px):
  *
  *   ┌──────────────────────────────────────────────────┐
  *   │ ZSkeleton root                                   │   flex / gap _middle / alignFlexStart
  *   │                                                  │
  *   │  ┌────────┐  ┌──────────────────────────────┐    │
  *   │  │ avatar │  │ lines container              │    │   avatar(条件渲染):
- *   │  │ 2.5iem │  │  ┌────────────────────────┐  │    │     width/height 2.5iem
+ *   │  │  40px  │  │  ┌────────────────────────┐  │    │     width/height 40px(= 2.5 × 16px)
  *   │  │ 正圆   │  │  │ title bar(条件)      │  │    │     border-radius _full
- *   │  └────────┘  │  │  height 1.25iem        │  │    │     bg _bgMuted
+ *   │  └────────┘  │  │  height 20px(= 1.25 × 16px)│  │    bg _bgMuted
  *   │              │  │  width 40%             │  │    │
  *   │              │  └────────────────────────┘  │    │   text rows:
- *   │              │  ┌────────────────────────┐  │    │     height 0.875iem
+ *   │              │  ┌────────────────────────┐  │    │     height 14px(= 0.875 × 16px)
  *   │              │  │ row 1...n              │  │    │     最后一行 width 60%
  *   │              │  │  (最后行 width 60%)    │  │    │     其它 width 100%
  *   │              │  └────────────────────────┘  │    │
