@@ -8,7 +8,7 @@ import BasicDemoSource from './ZAnchor/BasicDemo.vue?raw'
 const propsRows = [
   { name: 'items', type: 'ZAnchorItem[]', default: '—（必传）', desc: '锚点项数组。' },
   { name: 'offsetTop', type: 'number', default: '0', desc: '滚动激活偏移量（px）。' },
-  { name: 'indentStep', type: 'number', default: '0.75', desc: '层级缩进步长（iem 倍数）。' },
+  { name: 'indentStep', type: 'number', default: '0.75', desc: '层级缩进步长（px 倍数，1 单位 = 16px）。' },
   { name: 'color', type: '(c: Chain) => void', default: '_primary', desc: '激活项颜色 factory。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
@@ -34,8 +34,7 @@ const emitsRows = [
     <ZTitle :level="1">ZAnchor 锚点</ZTitle>
     <ZParagraph>
       锚点导航，通过滚动侦测自动高亮当前可见区域对应的锚点链接。 常用于文章目录或文档右侧导航。
-      <ZCode code="level" /> 字段控制缩进层级，<ZCode code="indentStep" /> 设置每级缩进量（iem
-      倍数）。
+      <ZCode code="level" /> 字段控制缩进层级，<ZCode code="indentStep" /> 设置每级缩进量（px 倍数，1 单位 = 16px）。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>

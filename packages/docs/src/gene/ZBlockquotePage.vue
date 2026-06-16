@@ -16,7 +16,7 @@ import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
     <ZParagraph>
       块引用组件，视觉效果：左侧强调色边条 + 中性背景 + 斜体文字。
       <ZCode code="color" /> factory 仅作用于左侧 border 颜色，文字始终使用
-      <ZCode code="_text" /> token， 不随 color 变化。<ZCode code="size" /> 是 iem 倍数，padding /
+      <ZCode code="_text" /> token， 不随 color 变化。<ZCode code="size" /> 是 px 倍数（1 单位 = 16px），padding /
       border-left-width / fontSize 等比缩放。
     </ZParagraph>
 
@@ -57,7 +57,7 @@ import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '1',
-          desc: 'iem 倍数。padding-y = size*0.5，padding-x = size*0.75，border-left-width = size*0.25。',
+          desc: 'px 倍数（1 单位 = 16px）。padding-y = size*8px，padding-x = size*12px，border-left-width = size*4px。',
         },
         { name: 'css', type: '(s: Chain) => void', default: '—', desc: '兜底 CSS factory。' },
       ]"
@@ -77,10 +77,10 @@ import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
       :inline="false"
       lang="text"
       :code="`ZBlockquote (block, <blockquote>)
-  font-size:        size * 1 iem       /* size=1 → 1iem = 16px */
-  padding-top/bot:  size * 0.5 iem     /* size=1 → 8px */
-  padding-left/rt:  size * 0.75 iem    /* size=1 → 12px */
-  border-left:      size * 0.25 iem    /* size=1 → 4px 强调边条 */
+  font-size:        size * 16px        /* size=1 → 16px */
+  padding-top/bot:  size * 8px         /* size=1 → 8px */
+  padding-left/rt:  size * 12px        /* size=1 → 12px */
+  border-left:      size * 4px         /* size=1 → 4px 强调边条 */
   background:       _bgMuted
   color:            _text（固定，不随 color factory 变化）
   font-style:       italic

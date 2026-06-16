@@ -35,7 +35,7 @@ import { ZDivider, ZParagraph } from '@kenconnet666/zui-vue'
       "
     />
     <ZParagraph :css="s => s.marginBottom.px(0)"
-      >primary 色 thickness=0.125iem（≈2px）实线</ZParagraph
+      >primary 色 thickness=2px 实线</ZParagraph
     >
   </div>
 </template>

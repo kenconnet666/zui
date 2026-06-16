@@ -17,7 +17,7 @@ const propsRows = [
     name: 'size',
     type: 'number',
     default: '24',
-    desc: 'left/right 时为宽度，top/bottom 时为高度，单位 iem 倍数。',
+    desc: 'left/right 时为宽度，top/bottom 时为高度，px 倍数（1 单位 = 16px）。',
   },
   { name: 'title', type: 'string', default: '—', desc: '头部标题（#head slot 优先级更高）。' },
   { name: 'closable', type: 'boolean', default: 'true', desc: '显示关闭按钮。' },
@@ -47,7 +47,7 @@ const exposeRows = [
     <ZTitle :level="1">ZDrawer 抽屉</ZTitle>
     <ZParagraph>
       从四个方向滑入的抽屉面板，API 与 ZModal 类似。<ZCode code="placement" /> 控制方向，
-      <ZCode code="size" /> 控制宽度（左/右）或高度（上/下），单位为 iem 倍数。
+      <ZCode code="size" /> 控制宽度（左/右）或高度（上/下），px 倍数（1 单位 = 16px）。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>

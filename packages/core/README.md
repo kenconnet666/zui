@@ -20,7 +20,7 @@ import { icss, paletteLight } from '@kenconnet666/zui-core'
 const cls = icss(paletteLight, s => {
   s.color._primary // ← IDE 知道 _primary 是合法 token
   s.fontSize._large
-  s.padding.iem(1) // ← iem(N) 是 carrier 方法
+  s.padding.px(16) // ← 纯 px；1 单位 = 16px；iem() 已移除（0.9.x）
   s.borderRadius._middle
   s._hover(h => {
     h.backgroundColor._primary.alpha(8) // ← modifier 链式
@@ -39,7 +39,7 @@ const cls = icss(paletteLight, s => {
 - **类型层 statement-only**:每个 setter 表达式返回 `void`,禁止跨属性 fluent 链式(IDE 补全干净)
 - **colors token modifier**:`s.color._primary.alpha(50)` —— 11 个 modifier:`alpha` / `darken` / `lighten` / `mix` / `shade` / `tint` / `saturate` / `desaturate` / `complement` / `rotateHue` / `invert`(基于 color2k)
 - **89+ 内建嵌套方法**:`_hover` / `_focusVisible` / `_active` / `_disabled` / `_dark` / `_media` / `_groupHover` / `_lineClamp` / `_ariaSelected` / `_dataState` / 等
-- **iem 响应式单位**:`s.padding.iem(1)` 等价 `calc(1 * var(--zui-iem, 16px))`,整站等比缩放
+- **纯 px 尺寸**：`s.padding.px(16)` 字面量；1 单位 = 16px，JS 计算用 `sizePx(n) = n * 16`（~~`iem()`~~ 已移除（0.9.x））
 - **类型完整**:每个属性都有 csstype value type
 - **零依赖**:除 `@emotion/css`(peer)和 `color2k` / `csstype` 外无他
 - **完全框架无关**:不依赖 Vue / React / Svelte / Solid;`icss(theme, factory)` 一行生成 className
@@ -257,7 +257,7 @@ pnpm --filter @kenconnet666/zui-core run bench     # 性能基准
 ## 相关链接
 
 - [zui-vue Vue 3 集成层](../ui-vue/README.md)
-- [docs 站点](../docs/) —— `<ZBox>` / 主题 / iem / 80+ 组件 demo
+- [docs 站点](../docs/) —— `<ZBox>` / 主题 / 80+ 组件 demo
 - [完整 API 与设计文档](../../.claude/skills/zui.md)
 - [CHANGELOG](./CHANGELOG.md)
 

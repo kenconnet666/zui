@@ -22,7 +22,7 @@ import { ZMarquee, ZFlex, ZTag, ZText } from '@kenconnet666/zui-vue'
             'Vue 3',
             'TypeScript',
             'CSS-in-JS',
-            'iem 单位',
+            'CSS-in-JS 样式',
             'Chain API',
             'ZBox Provider',
             'Material 风格',

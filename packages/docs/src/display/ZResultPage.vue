@@ -56,7 +56,7 @@ const slotsRows = [
     <ZTitle :level="2">自定义图标</ZTitle>
     <DemoBlock title="icon prop 传 Vue 组件" :source="CustomIconDemoSource">
       <template #desc>
-        <code>icon</code> prop 传任意 Vue 组件覆盖默认图标,字体大小已经在 ZResult 内部锁为 4iem。
+        <code>icon</code> prop 传任意 Vue 组件覆盖默认图标，字体大小已经在 ZResult 内部锁为 64px。
       </template>
       <CustomIconDemo />
     </DemoBlock>

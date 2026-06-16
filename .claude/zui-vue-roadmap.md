@@ -13,7 +13,7 @@
 ## 0. 项目定位速览(给新 session 的 onboarding)
 
 - `@kenconnet666/zui-vue` 是 `@kenconnet666/zui-core` 的 Vue 3 集成层(框架无关 CSS-in-JS + chain DSL 之上构建组件库)
-- 主入口 `<ZBox>`(主题/iem/locale/date 注入器 + 底层带 `css` 的 box 容器)
+- 主入口 `<ZBox>`（主题/locale/date 注入器 + 底层带 `css` 的 box 容器；~~iem~~ 已移除（0.9.x））
 - 已交付组件(`src/gene/`):ZIcon、ZText、ZTitle、ZParagraph、ZLink、ZDivider
 - 已配 peerDeps:`@floating-ui/vue` / `@vueuse/core` / `@vueuse/integrations` / `async-validator` / `color2k` / `date-fns(-tz)` / `@vicons/ionicons5`(将改 `@vicons/material`)
 - **完整文档**:见 `.claude/skills/zui.md`(API + 范式 + 验证铁律)
@@ -33,7 +33,7 @@
 | L7  | **图标系统**                                                                                     | peerDep 改为 **`@vicons/material`**(替换 `@vicons/ionicons5`,跟 M3 主题更搭),组件内置图标通过 `BuiltinIcons` 语义 map + `<ZIcon :component>` 调用                                                                                                                             |
 | L8  | **主题美学采用方案 C2(M3 美化)**                                                                 | M2 经典色 + M3 motion/elevation/shape;具体值见 §4                                                                                                                                                                                                                             |
 | L9  | **shadow 替换为 M3 elevation(双层阴影)**                                                         | 见 §4.3                                                                                                                                                                                                                                                                       |
-| L10 | **radius.huge 从 `iem(1.5)`(24px)改 `iem(1.75)`(28px)**                                          | 对齐 M3 FAB / Dialog                                                                                                                                                                                                                                                          |
+| L10 | **radius.huge 从 24px 改 28px**（~~原 `iem(1.5)` 改 `iem(1.75)`~~；现为纯 px，~~iem~~ 已移除（0.9.x）） | 对齐 M3 FAB / Dialog                                                                                                                                                                                                                                                     |
 | L11 | **加状态色 token `focusRing` + `overlayBg`**                                                     | 见 §4.5                                                                                                                                                                                                                                                                       |
 | L12 | **取消所有 subpath exports**,只暴露主入口 `@kenconnet666/zui-vue`                                | `package.json/exports` 与 `vite.config.ts/entry` 单入口化                                                                                                                                                                                                                     |
 | L13 | **工具 hooks 优先 VueUse,不够包装,最后自写**                                                     | 自写仅限 `useRipple`(其它包装 floating-ui/Teleport/onKeyStroke 等)。放 `src/_hooks/`                                                                                                                                                                                          |
@@ -315,13 +315,14 @@ zuiDark 同步用更深的 rgba(已在前轮 zuiDark 改为 0.3~0.7 不透明度
 ### 4.4 radius
 
 ```ts
+// iem() 已移除（0.9.x）；改纯 px，1 单位 = 16px
 radius: {
   none: '0',
-  tiny: iem(0.25),    // 4px
-  small: iem(0.5),    // 8px
-  middle: iem(0.75),  // 12px
-  large: iem(1),      // 16px
-  huge: iem(1.75),    // 28px  ← 从 1.5(24px) 改 1.75(28px),对齐 M3
+  tiny: '4px',    // = 0.25 × 16px
+  small: '8px',   // = 0.5 × 16px
+  middle: '12px', // = 0.75 × 16px
+  large: '16px',  // = 1 × 16px
+  huge: '28px',   // = 1.75 × 16px，对齐 M3（从 24px 改）
   full: '9999px',
 }
 ```

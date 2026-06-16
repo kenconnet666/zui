@@ -14,8 +14,8 @@ const propsRows = [
     desc: '右侧已选 key 数组（v-model:targetKeys）。',
   },
   { name: 'titles', type: '[string, string]', default: "['源','目标']", desc: '左右面板标题。' },
-  { name: 'itemSize', type: 'number', default: '2', desc: '每项行高 iem 倍数。' },
-  { name: 'listHeight', type: 'number', default: '15', desc: '列表容器高度 iem 倍数。' },
+  { name: 'itemSize', type: 'number', default: '2', desc: '每项行高 px 倍数（1 单位 = 16px）。' },
+  { name: 'listHeight', type: 'number', default: '15', desc: '列表容器高度 px 倍数（1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

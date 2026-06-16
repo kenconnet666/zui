@@ -10,7 +10,7 @@ const propsRows = [
   { name: 'title', type: 'string', default: '—', desc: '顶部标题。' },
   { name: 'column', type: 'number', default: '3', desc: '每行显示列数。' },
   { name: 'bordered', type: 'boolean', default: 'false', desc: '边框模式。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 iem 倍数，影响内边距。' },
+  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px），影响内边距。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

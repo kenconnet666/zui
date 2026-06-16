@@ -19,8 +19,7 @@ import ShapeDemoSource from './ZAvatar/ShapeDemo.vue?raw'
     <ZParagraph>
       头像组件，内容优先级：<strong
         >default slot &gt; src（图片）&gt; text（缩写）&gt; 默认占位</strong
-      >。 图片加载失败自动 fallback 到 text。 <ZCode code="size" /> 是 iem 倍数（默认 2.5 =
-      40px），<ZCode code="square" /> 切换方圆。
+      >。 图片加载失败自动 fallback 到 text。 <ZCode code="size" /> 是 px 倍数（1 单位 = 16px，默认 2.5 = 40px），<ZCode code="square" /> 切换方圆。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>
@@ -33,7 +32,7 @@ import ShapeDemoSource from './ZAvatar/ShapeDemo.vue?raw'
     </DemoBlock>
 
     <ZTitle :level="2">尺寸档位 (size)</ZTitle>
-    <DemoBlock title="iem 倍数，width / height / fontSize 等比缩放" :source="SizeDemoSource">
+    <DemoBlock title="px 倍数（1 单位 = 16px），width / height / fontSize 等比缩放" :source="SizeDemoSource">
       <template #desc>
         参考档位：<ZCode code="1.5" />(24px) / <ZCode code="2" />(32px) / <ZCode code="2.5" />(默认
         40px) / <ZCode code="3" />(48px) / <ZCode code="4" />(64px)。
@@ -45,7 +44,7 @@ import ShapeDemoSource from './ZAvatar/ShapeDemo.vue?raw'
     <DemoBlock title="square=false 圆形 / square=true 方形" :source="ShapeDemoSource">
       <template #desc>
         默认 <ZCode code="square=false" /> 走 <ZCode code="borderRadius._full" /> 圆形；
-        <ZCode code="square=true" /> 改为 <ZCode code="size*0.15 iem" /> 轻圆角方形。
+        <ZCode code="square=true" /> 改为 <ZCode code="size*0.15" /> 倍数轻圆角方形。
       </template>
       <ShapeDemo />
     </DemoBlock>
@@ -76,13 +75,13 @@ import ShapeDemoSource from './ZAvatar/ShapeDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '2.5',
-          desc: 'iem 倍数（默认 2.5 = 40px @ 16px）。width / height / fontSize 等比缩。参考档位：1.5 / 2 / 2.5 / 3 / 4。',
+          desc: 'px 倍数（1 单位 = 16px，默认 2.5 = 40px）。width / height / fontSize 等比缩。参考档位：1.5 / 2 / 2.5 / 3 / 4。',
         },
         {
           name: 'square',
           type: 'boolean',
           default: 'false',
-          desc: '方形（borderRadius = size*0.15 iem），默认圆形（_full）。',
+          desc: '方形（borderRadius = size*0.15 倍数），默认圆形（_full）。',
         },
         {
           name: 'color',

@@ -35,8 +35,8 @@ pnpm add shiki        # 可选：启用 ZCode 语法高亮`"
       :inline="false"
       lang="css"
       :code="`.btn {
-  color: var(--zui-color-primary);
-  padding: calc(0.5 * var(--zui-iem));
+  color: #1976d2;
+  padding: 8px 16px;
 }`"
     />
   </ZFlex>

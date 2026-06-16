@@ -5,7 +5,7 @@ import { ZScrollbar, ZFlex, ZText } from '@kenconnet666/zui-vue'
 <template>
   <ZFlex :direction="d => d.column" :gap="g => g._small">
     <!-- maxHeight 模式 -->
-    <ZText>maxHeight = 10（iem 倍数，超出滚动，悬停显示自定义滚动条）</ZText>
+    <ZText>maxHeight = 10（px 倍数，1 单位 = 16px，即 160px，超出滚动，悬停显示自定义滚动条）</ZText>
     <ZScrollbar
       :maxHeight="10"
       :css="
@@ -23,7 +23,7 @@ import { ZScrollbar, ZFlex, ZText } from '@kenconnet666/zui-vue'
     </ZScrollbar>
 
     <!-- 外部高度模式 -->
-    <ZText>外部 :css 设定高度（height: 8iem）</ZText>
+    <ZText>外部 :css 设定高度（height: 128px）</ZText>
     <ZScrollbar
       :css="
         s => {

@@ -14,8 +14,7 @@ import StyleDemoSource from './ZParagraph/StyleDemo.vue?raw'
     <ZTitle :level="1">ZParagraph 段落</ZTitle>
     <ZParagraph>
       块级段落元素，在 ZText 基础上增加：
-      <strong>段间距</strong>（<ZCode code="margin-bottom: spacing._middle" />，Provider iem
-      联动）、 <strong>舒适行高</strong>（<ZCode code="lineHeight._normal = 1.5" />）和
+      <strong>段间距</strong>（<ZCode code="margin-bottom: spacing._middle" />，随主题联动）、 <strong>舒适行高</strong>（<ZCode code="lineHeight._normal = 1.5" />）和
       <strong>块级显示</strong>。默认 tag = <ZCode code="p" />，支持 ZText 全部 6 维度 + 5 状态。
     </ZParagraph>
 

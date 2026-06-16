@@ -18,7 +18,7 @@ import InlineDemoSource from './ZSpin/InlineDemo.vue?raw'
     <ZParagraph>
       加载指示器，支持两种使用模式： 纯 indicator 模式（无 default slot）直接渲染旋转图标；
       包裹模式（有 default slot）将内容遮罩并居中显示 indicator。
-      <ZCode code="size" /> 为 iem 倍数，控制图标大小。
+      <ZCode code="size" /> 为 px 倍数（1 单位 = 16px），控制图标大小。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>
@@ -30,9 +30,9 @@ import InlineDemoSource from './ZSpin/InlineDemo.vue?raw'
     </DemoBlock>
 
     <ZTitle :level="2">尺寸</ZTitle>
-    <DemoBlock title="size = iem 倍数" :source="SizeDemoSource">
+    <DemoBlock title="size = px 倍数（1 单位 = 16px）" :source="SizeDemoSource">
       <template #desc>
-        <ZCode code="size" /> 透传给内部 ZIcon 的 size,默认 1.5 (24px @ 16px iem)。
+        <ZCode code="size" /> 透传给内部 ZIcon 的 size，默认 1.5（= 24px）。
       </template>
       <SizeDemo />
     </DemoBlock>
@@ -73,7 +73,7 @@ import InlineDemoSource from './ZSpin/InlineDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '1.5',
-          desc: 'iem 倍数，控制 indicator 图标大小。',
+          desc: 'px 倍数（1 单位 = 16px），控制 indicator 图标大小。',
         },
         {
           name: 'tip',

@@ -23,7 +23,7 @@ const visible2 = ref(false)
   </ZModal>
 
   <ZModal v-model:visible="visible2" title="自定义宽度" :width="40">
-    <ZText>这个对话框宽度为 40iem（约 640px）。</ZText>
+    <ZText>这个对话框宽度为 40 单位（640px）。</ZText>
     <template #foot>
       <ZFlex :justify="j => j.flexEnd" :gap="g => g._small">
         <ZButton :size="0.875" :color="c => c._danger" @click="visible2 = false">删除</ZButton>

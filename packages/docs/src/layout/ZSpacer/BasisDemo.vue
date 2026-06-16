@@ -4,7 +4,7 @@ import { ZFlex, ZSpacer, ZText } from '@kenconnet666/zui-vue'
 
 <template>
   <ZFlex :direction="d => d.column" :gap="g => g._small" :css="s => s.width.pct(100)">
-    <ZText>basis 固定起始宽度:中间占位固定 8iem,两侧自适应</ZText>
+    <ZText>basis 固定起始宽度：中间占位固定 128px，两侧自适应</ZText>
     <ZFlex :gap="g => g._small" :align="a => a.center" :css="s => s.width.pct(100)">
       <ZText
         :css="

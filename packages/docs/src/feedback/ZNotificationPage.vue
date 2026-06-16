@@ -52,7 +52,7 @@ const propsRows = [
     name: 'maxWidth',
     type: 'number',
     default: '22.5',
-    desc: '通知容器最大宽度（iem 倍数，22.5 ≈ 360px）。',
+    desc: '通知容器最大宽度（px 倍数，1 单位 = 16px，22.5 = 360px）。',
   },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '容器 CSS 兜底。' },
 ]

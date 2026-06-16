@@ -14,7 +14,7 @@ const propsRows = [
     name: 'size',
     type: 'number',
     default: '1',
-    desc: 'iem 倍数，所有维度（font/padding/gap/radius）等比缩放。',
+    desc: 'px 倍数（1 单位 = 16px），所有维度（font/padding/gap/radius）等比缩放。',
   },
   { name: 'label', type: 'string', default: '—', desc: '按钮文字，不传则纯图标模式。' },
   {
@@ -32,7 +32,7 @@ const propsRows = [
     name: 'iconSize',
     type: 'number',
     default: 'size * 0.875',
-    desc: '图标尺寸 iem 倍数，不传随 size 自动缩放。',
+    desc: '图标尺寸 px 倍数（1 单位 = 16px），不传随 size 自动缩放。',
   },
   {
     name: 'color',
@@ -50,7 +50,7 @@ const propsRows = [
     <ZParagraph>
       通用"一键复制"按钮，调用 <ZCode code="navigator.clipboard.writeText" />。
       点击后按钮文字临时切换为 <ZCode code="copiedLabel" />（默认"已复制"）， 同时可弹顶部 toast
-      反馈（默认开启）。 <ZCode code="size" /> 是 iem 倍数，内部所有维度等比缩放。
+      反馈（默认开启）。 <ZCode code="size" /> 是 px 倍数（1 单位 = 16px），内部所有维度等比缩放。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>

@@ -14,7 +14,7 @@ import CustomDemoSource from './ZTitle/CustomDemo.vue?raw'
   <section>
     <ZTitle :level="1">ZTitle 标题</ZTitle>
     <ZParagraph>
-      语义化标题元素（h1–h6），内置 6 级 iem 比例字号 + 字重映射， 继承 ZText 的 6 维度 carrier
+      语义化标题元素（h1–h6），内置 6 级 px 倍数字号 + 字重映射， 继承 ZText 的 6 维度 carrier
       factory + 5 状态布尔。 默认 tag = <ZCode code="h{level}" />，传
       <ZCode code="tag" /> 可改为中性元素。
     </ZParagraph>
@@ -45,15 +45,15 @@ import CustomDemoSource from './ZTitle/CustomDemo.vue?raw'
         { key: 'tag', label: '默认 tag', mono: true, width: '100px' },
         { key: 'fs', label: 'fontSize', mono: true, width: '120px' },
         { key: 'fw', label: 'fontWeight', mono: true, width: '120px' },
-        { key: 'px', label: '@ 16px iem', mono: true, width: '100px' },
+        { key: 'px', label: '换算 px（× 16）', mono: true, width: '100px' },
       ]"
       :rows="[
-        { level: '1', tag: 'h1', fs: 'iem(2)', fw: '700', px: '32px' },
-        { level: '2', tag: 'h2', fs: 'iem(1.75)', fw: '700', px: '28px' },
-        { level: '3', tag: 'h3', fs: 'iem(1.5)', fw: '600', px: '24px' },
-        { level: '4', tag: 'h4', fs: 'iem(1.25)', fw: '600', px: '20px' },
-        { level: '5', tag: 'h5', fs: 'iem(1.125)', fw: '600', px: '18px' },
-        { level: '6', tag: 'h6', fs: 'iem(1)', fw: '600', px: '16px' },
+        { level: '1', tag: 'h1', fs: '2（32px）', fw: '700', px: '32px' },
+        { level: '2', tag: 'h2', fs: '1.75（28px）', fw: '700', px: '28px' },
+        { level: '3', tag: 'h3', fs: '1.5（24px）', fw: '600', px: '24px' },
+        { level: '4', tag: 'h4', fs: '1.25（20px）', fw: '600', px: '20px' },
+        { level: '5', tag: 'h5', fs: '1.125（18px）', fw: '600', px: '18px' },
+        { level: '6', tag: 'h6', fs: '1（16px）', fw: '600', px: '16px' },
       ]"
     />
 
@@ -76,7 +76,7 @@ import CustomDemoSource from './ZTitle/CustomDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '—',
-          desc: 'iem 倍数，传了覆盖 level 默认 fontSize。',
+          desc: 'px 倍数（1 单位 = 16px），传了覆盖 level 默认 fontSize。',
         },
         {
           name: 'tag',

@@ -15,7 +15,7 @@ import BlockDemoSource from './ZSegmented/BlockDemo.vue?raw'
     <ZParagraph>
       类 iOS Segmented Control 的分段选择器，支持 <ZCode code="v-model:value" /> 双向绑定。
       <ZCode code="options" /> 数组声明选项（支持单项 disabled），
-      <ZCode code="block" /> 满宽展开，<ZCode code="size" /> iem 倍数整体缩放。
+      <ZCode code="block" /> 满宽展开，<ZCode code="size" /> px 倍数（1 单位 = 16px）整体缩放。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>
@@ -30,7 +30,7 @@ import BlockDemoSource from './ZSegmented/BlockDemo.vue?raw'
     <ZTitle :level="2">block / 尺寸 / 禁用</ZTitle>
     <DemoBlock title="block 撑满 / size / disabled" :source="BlockDemoSource">
       <template #desc>
-        <ZCode code="block" /> 让控件撑满父宽;<ZCode code="size" /> 是 iem 倍率;<ZCode
+        <ZCode code="block" /> 让控件撑满父宽；<ZCode code="size" /> 是 px 倍数（1 单位 = 16px）；<ZCode
           code="disabled"
         />
         整体禁用。
@@ -63,13 +63,13 @@ import BlockDemoSource from './ZSegmented/BlockDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '1',
-          desc: 'iem 倍数，fontSize / padding / height 等比缩放。',
+          desc: 'px 倍数（1 单位 = 16px），fontSize / padding / height 等比缩放。',
         },
         {
           name: 'height',
           type: 'number',
           default: 'size*2',
-          desc: 'item 高度 iem 倍数，可独立覆盖。',
+          desc: 'item 高度 px 倍数（1 单位 = 16px），可独立覆盖。',
         },
         { name: 'block', type: 'boolean', default: 'false', desc: '满宽（width: 100%）。' },
         {

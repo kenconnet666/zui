@@ -26,10 +26,10 @@ const propsRows = [
   { name: 'clearable', type: 'boolean', default: 'false', desc: '显示清空按钮。' },
   { name: 'filterable', type: 'boolean', default: 'false', desc: '启用搜索过滤。' },
   { name: 'multiple', type: 'boolean', default: 'false', desc: '多选模式。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 iem 倍数。' },
-  { name: 'height', type: 'number', default: 'size*2', desc: '触发器高度 iem 倍数。' },
-  { name: 'optionSize', type: 'number', default: '2', desc: '下拉项行高 iem 倍数。' },
-  { name: 'dropdownMaxHeight', type: 'number', default: '15', desc: '下拉框最大高度 iem 倍数。' },
+  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px）。' },
+  { name: 'height', type: 'number', default: 'size*2', desc: '触发器高度 px 倍数（1 单位 = 16px）。' },
+  { name: 'optionSize', type: 'number', default: '2', desc: '下拉项行高 px 倍数（1 单位 = 16px）。' },
+  { name: 'dropdownMaxHeight', type: 'number', default: '15', desc: '下拉框最大高度 px 倍数（1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

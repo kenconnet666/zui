@@ -18,7 +18,7 @@ const propsRows = [
     name: 'width',
     type: 'number',
     default: '30',
-    desc: '对话框宽度 iem 倍数（默认 480px @ 16px iem）。',
+    desc: '对话框宽度 px 倍数（1 单位 = 16px，默认 30 = 480px）。',
   },
   { name: 'centered', type: 'boolean', default: 'true', desc: '垂直居中。' },
   { name: 'closable', type: 'boolean', default: 'true', desc: '头部显示关闭按钮。' },

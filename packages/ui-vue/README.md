@@ -6,10 +6,10 @@
 
 `@kenconnet666/zui-vue` 在框架无关的 CSS-in-JS DSL 之上,提供:
 
-- **`<ZBox>` 注入器** —— 主题 / iem / locale / timezone 嵌套注入
-- **80+ 组件**(gene / layout / input / display / feedback / navigation / tool)
-- **2 套内建主题** —— `zuiLight`(Material 700)/ `zuiDark`(Material 200/300)
-- **响应式 vw 单位** —— `ZIemPreset.default = '0.8333vw'`(16px @ 1920),16:9 全屏等比缩放
+- **`<ZBox>` 注入器** —— 主题 / locale / timezone 嵌套注入（~~iem~~ 已移除（0.9.x））
+- **80+ 组件**（gene / layout / input / display / feedback / navigation / tool）
+- **2 套内建主题** —— `zuiLight`（Material 700）/ `zuiDark`（Material 200/300）
+- **纯 px 尺寸** —— 1 单位 = 16px，JS 计算用 `sizePx(n) = n * 16`（`_internal/sizing.ts`）；~~`ZIemPreset`~~ 已移除（0.9.x）
 - **5 个内置 hooks** —— `usePopper` / `usePortal` / `useEscapeStack` / `useZId` / `useRipple`
 - **i18n + timezone** —— `zhCN` / `enUS` + date-fns-tz 时区支持
 - **完整 a11y** —— ARIA role / aria-\* / 焦点管理 / ESC 栈
@@ -57,7 +57,7 @@ const model = ref({ name: '', email: '' })
 </script>
 
 <template>
-  <ZBox :theme="zuiLight" :locale="zhCN" :iem="'0.8333vw'">
+  <ZBox :theme="zuiLight" :locale="zhCN"><!-- :iem 已移除（0.9.x）；尺寸改用纯 px -->
     <ZForm :model="model" label-placement="top">
       <ZFormItem prop="name" label="名称" required>
         <ZInput v-model:value="model.name" placeholder="请输入" />

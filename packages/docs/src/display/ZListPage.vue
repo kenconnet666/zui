@@ -11,13 +11,13 @@ const propsRows = [
     name: 'itemSize',
     type: 'number | (i) => number',
     default: '—',
-    desc: '每项高度 iem 倍数（必传）。',
+    desc: '每项高度（px 倍数，1 单位 = 16px，必传）。',
   },
   {
     name: 'height',
     type: 'number | string',
     default: '—',
-    desc: '容器高度，iem 倍数或 CSS 字面字符串，虚拟滚动必传。',
+    desc: '容器高度，px 倍数（1 单位 = 16px）或 CSS 字面字符串，虚拟滚动必传。',
   },
   { name: 'keyField', type: 'string', default: "'id'", desc: '取 key 的字段名，缺失回退 index。' },
   { name: 'bordered', type: 'boolean', default: 'false', desc: '外框 border + 圆角。' },
@@ -31,7 +31,7 @@ const propsRows = [
     default: 'true',
     desc: 'ResizeObserver 自动测真实尺寸。',
   },
-  { name: 'size', type: 'number', default: '1', desc: '字号 iem 倍数。' },
+  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根容器 CSS 兜底。' },
 ]
 
@@ -61,7 +61,7 @@ const exposeRows = [
     <ZTitle :level="1">ZList 数据列表</ZTitle>
     <ZParagraph>
       基于虚拟滚动的数据列表，支持头尾区域、边框、空态、动态行高。 通过
-      <ZCode code="itemSize" /> 设置每项高度（iem 倍数），<ZCode code="height" />
+      <ZCode code="itemSize" /> 设置每项高度（px 倍数，1 单位 = 16px），<ZCode code="height" />
       设置容器高度（必传）。
     </ZParagraph>
 

@@ -13,7 +13,7 @@
 icss(theme, s => {
   s.color._primary
   s.fontSize._large
-  s.padding.iem(1)
+  s.padding.px(16)  // 纯 px；1 单位 = 16px，JS 计算用 sizePx(1)
   s._hover(h => {
     h.color._primary.darken(15)
   })

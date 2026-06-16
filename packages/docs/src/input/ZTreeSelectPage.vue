@@ -17,10 +17,10 @@ const propsRows = [
   { name: 'placeholder', type: 'string', default: '—', desc: '占位文字。' },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },
   { name: 'clearable', type: 'boolean', default: 'false', desc: '显示清空按钮。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 iem 倍数。' },
-  { name: 'height', type: 'number', default: 'size*2', desc: '触发器高度 iem 倍数。' },
-  { name: 'treeItemSize', type: 'number', default: '2', desc: '树节点行高 iem 倍数。' },
-  { name: 'treeHeight', type: 'number', default: '18', desc: '浮层树区域高度 iem 倍数。' },
+  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px）。' },
+  { name: 'height', type: 'number', default: 'size*2', desc: '触发器高度 px 倍数（1 单位 = 16px）。' },
+  { name: 'treeItemSize', type: 'number', default: '2', desc: '树节点行高 px 倍数（1 单位 = 16px）。' },
+  { name: 'treeHeight', type: 'number', default: '18', desc: '浮层树区域高度 px 倍数（1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

@@ -15,7 +15,7 @@ const propsRows = [
     default: 'false',
     desc: '错误状态，当前步骤显示为 _danger + 关闭图标。',
   },
-  { name: 'size', type: 'number', default: '2', desc: '步骤指示器大小（iem 倍数，2 = 32px）。' },
+  { name: 'size', type: 'number', default: '2', desc: '步骤指示器大小（px 倍数，1 单位 = 16px，默认 2 = 32px）。' },
   {
     name: 'currentColor',
     type: '(c: Chain) => void',

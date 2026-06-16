@@ -13,13 +13,13 @@ const propsRows = [
     name: 'minWidth',
     type: 'number',
     default: '20',
-    desc: '引导卡片最小宽度（iem 倍数，默认 320px）。',
+    desc: '引导卡片最小宽度（px 倍数，1 单位 = 16px，默认 320px）。',
   },
   {
     name: 'maxWidth',
     type: 'number',
     default: '32',
-    desc: '引导卡片最大宽度（iem 倍数，默认 512px）。',
+    desc: '引导卡片最大宽度（px 倍数，1 单位 = 16px，默认 512px）。',
   },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]

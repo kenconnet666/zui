@@ -27,7 +27,7 @@ const propsRows = [
     <ZTitle :level="1">ZQRCode 二维码</ZTitle>
     <ZParagraph>
       基于 <ZCode code="@vueuse/integrations/useQRCode" /> 生成二维码图片。 使用
-      <ZCode code="pixelSize" />（像素单位）而非 iem 倍数，保证二维码栅格清晰度，
+      <ZCode code="pixelSize" />（像素单位）而非 px 倍数，保证二维码栅格清晰度，
       支持前景色、背景色和边距自定义。
     </ZParagraph>
 

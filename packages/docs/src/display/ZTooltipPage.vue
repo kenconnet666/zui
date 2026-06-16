@@ -27,7 +27,7 @@ const propsRows = [
   },
   { name: 'delay', type: 'number', default: '100', desc: 'hover 模式 enter/leave 延迟 ms。' },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用 tooltip。' },
-  { name: 'maxWidth', type: 'number', default: '16', desc: 'tooltip 最大宽度（iem 倍数）。' },
+  { name: 'maxWidth', type: 'number', default: '16', desc: 'tooltip 最大宽度（px 倍数，1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

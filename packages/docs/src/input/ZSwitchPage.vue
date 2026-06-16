@@ -11,7 +11,7 @@ const propsRows = [
     name: 'size',
     type: 'number',
     default: '2.5',
-    desc: 'rail 宽度 iem 倍数（高度自动按 0.6 比例计算）。',
+    desc: 'rail 宽度 px 倍数（1 单位 = 16px，高度自动按 0.6 比例计算）。',
   },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },
   { name: 'loading', type: 'boolean', default: 'false', desc: 'loading 状态（异步切换时使用）。' },
@@ -28,7 +28,7 @@ const emitsRows = [{ name: 'update:value', args: 'boolean', desc: '开关状态�
     <ZTitle :level="1">ZSwitch 开关</ZTitle>
     <ZParagraph>
       布尔值开关，支持内嵌文字（<ZCode code="checkedLabel" /> / <ZCode code="uncheckedLabel" />）、
-      异步切换（<ZCode code="loading" />）和多种尺寸（<ZCode code="size" /> iem 倍数）。
+      异步切换（<ZCode code="loading" />）和多种尺寸（<ZCode code="size" /> px 倍数，1 单位 = 16px）。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>

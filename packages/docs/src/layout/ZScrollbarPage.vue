@@ -45,7 +45,7 @@ import BasicDemoSource from './ZScrollbar/BasicDemo.vue?raw'
           name: 'maxHeight',
           type: 'number',
           default: '—',
-          desc: '容器最大高度（iem 倍数）。设置后容器超出时滚动；不设则由外部 css 控制高度。',
+          desc: '容器最大高度（px 倍数，1 单位 = 16px）。设置后容器超出时滚动；不设则由外部 css 控制高度。',
         },
         {
           name: 'css',

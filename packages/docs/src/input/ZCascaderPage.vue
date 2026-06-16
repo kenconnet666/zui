@@ -22,10 +22,10 @@ const propsRows = [
     desc: '子级展开触发方式。',
   },
   { name: 'separator', type: 'string', default: "' / '", desc: '路径分隔符（触发器展示用）。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 iem 倍数。' },
-  { name: 'height', type: 'number', default: 'size*2', desc: '高度 iem 倍数。' },
-  { name: 'optionSize', type: 'number', default: '2', desc: '每级选项行高 iem 倍数。' },
-  { name: 'columnMaxHeight', type: 'number', default: '17.5', desc: '每级面板最大高度 iem 倍数。' },
+  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px）。' },
+  { name: 'height', type: 'number', default: 'size*2', desc: '高度 px 倍数（1 单位 = 16px）。' },
+  { name: 'optionSize', type: 'number', default: '2', desc: '每级选项行高 px 倍数（1 单位 = 16px）。' },
+  { name: 'columnMaxHeight', type: 'number', default: '17.5', desc: '每级面板最大高度 px 倍数（1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

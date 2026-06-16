@@ -68,7 +68,7 @@ const items: Item[] = Array.from({ length: 1000 }, (_, i) => ({
                 s.fontSize._small
               }
             "
-            >{{ item.label }}（高度 {{ index % 3 === 0 ? '4iem' : '2.5iem' }}）</ZText
+            >{{ item.label }}（高度 {{ index % 3 === 0 ? '64px' : '40px' }}）</ZText
           >
         </ZFlex>
       </template>

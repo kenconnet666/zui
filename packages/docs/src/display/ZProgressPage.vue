@@ -18,7 +18,7 @@ const propsRows = [
     name: 'size',
     type: 'number',
     default: '线: 0.5 / 圆: 7.5',
-    desc: 'iem 倍数。line 为 rail 高度（0.5 = 8px）；circle 为容器直径（7.5 = 120px）。',
+    desc: 'px 倍数（1 单位 = 16px）。line 为 rail 高度（0.5 = 8px）；circle 为容器直径（7.5 = 120px）。',
   },
   { name: 'color', type: '(c: Chain) => void', default: '_primary', desc: '进度颜色 factory。' },
   {
@@ -37,7 +37,7 @@ const propsRows = [
     <ZParagraph>
       进度条组件，支持线性（<ZCode code="type='line'" />）和环形（<ZCode
         code="type='circle'"
-      />）两种形态。 <ZCode code="size" /> 为 iem 倍数，line 模式控制轨道高度，circle
+      />）两种形态。 <ZCode code="size" /> 为 px 倍数（1 单位 = 16px），line 模式控制轨道高度，circle
       模式控制外层容器直径。 颜色通过 <ZCode code="color" /> factory 传入。
     </ZParagraph>
 
@@ -49,7 +49,7 @@ const propsRows = [
     <ZTitle :level="2">线性进度条 size 阶梯</ZTitle>
     <DemoBlock title="size 0.5 / 1 / 1.5" :source="LineDemoSource">
       <template #desc>
-        line 模式 <code>size</code> 控制 rail 高度(iem 倍数,默认 0.5 = 8px)。
+        line 模式 <code>size</code> 控制 rail 高度（px 倍数，默认 0.5 = 8px）。
       </template>
       <LineDemo />
     </DemoBlock>
@@ -57,7 +57,7 @@ const propsRows = [
     <ZTitle :level="2">环形进度条</ZTitle>
     <DemoBlock title="circle / 不同 size" :source="CircleDemoSource">
       <template #desc>
-        circle 模式 <code>size</code> 控制容器直径(iem 倍数,默认 7.5 = 120px),SVG viewBox 始终
+        circle 模式 <code>size</code> 控制容器直径（px 倍数，默认 7.5 = 120px），SVG viewBox 始终
         100×100。
       </template>
       <CircleDemo />

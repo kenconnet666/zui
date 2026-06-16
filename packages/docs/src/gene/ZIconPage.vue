@@ -43,9 +43,9 @@ import CssDemoSource from './ZIcon/CssDemo.vue?raw'
     </DemoBlock>
 
     <ZTitle :level="2">尺寸 (size)</ZTitle>
-    <DemoBlock title="number 类型，iem 倍数（默认 1）" :source="SizeDemoSource">
+    <DemoBlock title="number 类型，px 倍数（1 单位 = 16px，默认 1）" :source="SizeDemoSource">
       <template #desc>
-        <code>size</code> 接受 <strong>number（iem 倍数）</strong>，height 自动镜像 width。
+        <code>size</code> 接受 <strong>number（px 倍数，1 单位 = 16px）</strong>，height 自动镜像 width。
         非正方形场景走 <code>:css</code>。
       </template>
       <SizeDemo />
@@ -99,7 +99,7 @@ import CssDemoSource from './ZIcon/CssDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '1',
-          desc: 'iem 倍数，width = height = size * iem。',
+          desc: 'px 倍数（1 单位 = 16px），width = height = size × 16px。',
         },
         {
           name: 'color',

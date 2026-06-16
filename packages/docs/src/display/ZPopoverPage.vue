@@ -11,8 +11,8 @@ const propsRows = [
   { name: 'trigger', type: "'click'|'hover'|'manual'", default: "'click'", desc: '触发方式。' },
   { name: 'visible', type: 'boolean', default: '—', desc: '受控显示（v-model:visible）。' },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },
-  { name: 'minWidth', type: 'number', default: '8', desc: 'popper 最小宽度（iem 倍数）。' },
-  { name: 'maxWidth', type: 'number', default: '30', desc: 'popper 最大宽度（iem 倍数）。' },
+  { name: 'minWidth', type: 'number', default: '8', desc: 'popper 最小宽度（px 倍数，1 单位 = 16px）。' },
+  { name: 'maxWidth', type: 'number', default: '30', desc: 'popper 最大宽度（px 倍数，1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

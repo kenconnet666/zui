@@ -14,7 +14,7 @@
  *   { key: 'desc', label: '说明' },
  * ]
  * const rows = [
- *   { name: 'size', type: 'number', default: '1', desc: 'iem 倍数，整体等比缩放' },
+ *   { name: 'size', type: 'number', default: '1', desc: 'px 倍数（1 单位 = 16px），整体等比缩放' },
  * ]
  * ```
  * ```vue

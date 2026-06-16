@@ -22,7 +22,7 @@ import MinMaxDemoSource from './ZSplit/MinMaxDemo.vue?raw'
     <DemoBlock title="水平分割 / 垂直分割（v-model:ratio）" :source="BasicDemoSource">
       <template #desc>
         拖动分割线即可调整比例；<ZCode code="ratio" /> 故意不叫 <ZCode code="size" /> ——在 zui 中
-        <ZCode code="size" /> 语义是 iem 倍率，<ZCode code="ratio" /> 是比例（无单位）。
+        <ZCode code="size" /> 语义是 px 倍数（1 单位 = 16px），<ZCode code="ratio" /> 是比例（无单位）。
       </template>
       <BasicDemo />
     </DemoBlock>

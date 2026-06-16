@@ -23,7 +23,7 @@ const propsRows = [
     name: 'size',
     type: 'number',
     default: '1.5',
-    desc: '星星尺寸 iem 倍数（默认 24px @ 16px iem）。',
+    desc: '星星尺寸 px 倍数（1 单位 = 16px，默认 1.5 = 24px）。',
   },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]

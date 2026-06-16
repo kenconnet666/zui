@@ -16,7 +16,7 @@ const radioPropsRows = [
   },
   { name: 'label', type: 'string', default: '—', desc: '文字标签。' },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },
-  { name: 'size', type: 'number', default: '1', desc: '外圈尺寸 iem 倍数。' },
+  { name: 'size', type: 'number', default: '1', desc: '外圈尺寸 px 倍数（1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

@@ -12,7 +12,7 @@ const propsRows = [
   { name: 'siblings', type: 'number', default: '1', desc: '当前页两侧显示的页码数。' },
   { name: 'showTotal', type: 'boolean', default: 'false', desc: '是否显示总条数文字。' },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '整体禁用。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 iem 倍数。' },
+  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

@@ -11,7 +11,7 @@ const propsRows = [
     name: 'height',
     type: 'number | string',
     default: '—',
-    desc: '容器高度 iem 倍数或 CSS 字面字符串（必传）。',
+    desc: '容器高度 px 倍数（1 单位 = 16px）或 CSS 字面字符串（必传）。',
   },
   {
     name: 'expandedKeys',
@@ -26,7 +26,7 @@ const propsRows = [
     desc: '当前选中 key（v-model:selectedKey）。',
   },
   { name: 'selectable', type: 'boolean', default: 'true', desc: '是否允许选中节点。' },
-  { name: 'itemSize', type: 'number', default: '2', desc: '单节点行高 iem 倍数。' },
+  { name: 'itemSize', type: 'number', default: '2', desc: '单节点行高 px 倍数（1 单位 = 16px）。' },
   { name: 'overscan', type: 'number', default: '5', desc: '预渲染缓冲项数。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]

@@ -7,7 +7,7 @@ import { ZCode, ZParagraph, ZFlex } from '@kenconnet666/zui-vue'
     <!-- inline（默认） -->
     <ZParagraph>
       行内代码：<ZCode code="icss(theme, factory)" /> 返回 emotion class；
-      <ZCode code="calc(1 * var(--zui-iem, 16px))" /> 是 1iem 展开值。
+      <ZCode code="calc(1 * var(--zui-base-size, 16px))" /> 是 1 单位（16px）展开值。
     </ZParagraph>
 
     <!-- block fallback（无 shiki） -->

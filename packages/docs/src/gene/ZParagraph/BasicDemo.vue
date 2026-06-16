@@ -5,8 +5,7 @@ import { ZParagraph, ZText } from '@kenconnet666/zui-vue'
 <template>
   <div>
     <ZParagraph>
-      第一段落：默认行高 1.5，段间距由 <ZText mono>spacing._middle</ZText> token 控制， 随 ZBox iem
-      基准同步缩放。段落文字可以很长，行高让阅读更舒适。
+      第一段落：默认行高 1.5，段间距由 <ZText mono>spacing._middle</ZText> token 控制，随主题同步缩放。段落文字可以很长，行高让阅读更舒适。
     </ZParagraph>
     <ZParagraph>
       第二段落：段间距自动插入，无需手动写 margin。 使用

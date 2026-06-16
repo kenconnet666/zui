@@ -20,7 +20,7 @@ const propsRows = [
   { name: 'maxlength', type: 'number', default: '—', desc: 'HTML maxlength。' },
   { name: 'showCount', type: 'boolean', default: 'false', desc: '显示字数统计。' },
   { name: 'autofocus', type: 'boolean', default: 'false', desc: '自动聚焦。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 iem 倍数。' },
+  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

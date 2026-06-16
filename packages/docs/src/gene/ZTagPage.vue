@@ -16,9 +16,9 @@ import ClosableDemoSource from './ZTag/ClosableDemo.vue?raw'
     <ZTitle :level="1">ZTag 标签</ZTitle>
     <ZParagraph>
       通用标签组件，提供 <strong>3 种 variant</strong>（soft / outlined / filled）、
-      <ZCode code="color" /> carrier factory、<ZCode code="size" /> iem 倍数、
+      <ZCode code="color" /> carrier factory、<ZCode code="size" /> px 倍数（1 单位 = 16px）、
       <ZCode code="round" />（圆角胶囊）和 <ZCode code="closable" />（关闭按钮）。 默认尺寸
-      0.875iem（≈14px）。
+      14px（0.875 单位）。
     </ZParagraph>
 
     <ZTitle :level="2">Variant / Color / Size / Closable</ZTitle>
@@ -73,7 +73,7 @@ import ClosableDemoSource from './ZTag/ClosableDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '0.875',
-          desc: 'iem 倍数。padding / borderRadius / fontSize 等比缩放。',
+          desc: 'px 倍数（1 单位 = 16px）。padding / borderRadius / fontSize 等比缩放。',
         },
         {
           name: 'closable',

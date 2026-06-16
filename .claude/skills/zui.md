@@ -190,6 +190,39 @@ function isResponsiveValue<T>(value, breakpoints?: readonly string[]): value is 
 type TokenOf<Cat, T> = ColorTokens<T> | SpacingTokens<T> | ...
 ```
 
+### 3.6 定位原语（新增，core）
+
+```ts
+// _internal/sizing.ts
+function sizePx(n: number): string  // n * 16 → '${n*16}px'，替代已移除的 iem(N)
+
+// chain 定位 helper（_anchor / _pin / _pinCorner）
+// _anchor：设置 position: relative，作为定位容器
+s._anchor()                     // position: relative（父容器标记）
+
+// _pin：绝对定位到父容器的某条边/某侧
+s._pin('top')                   // position: absolute; top: 0; left: 0; right: 0
+s._pin('bottom')                // position: absolute; bottom: 0; left: 0; right: 0
+s._pin('left')                  // position: absolute; left: 0; top: 0; bottom: 0
+s._pin('right')                 // position: absolute; right: 0; top: 0; bottom: 0
+s._pin('fill')                  // position: absolute; inset: 0（填满父容器）
+
+// _pinCorner：绝对定位到父容器的四个角
+s._pinCorner('top-left')        // position: absolute; top: 0; left: 0
+s._pinCorner('top-right')       // position: absolute; top: 0; right: 0
+s._pinCorner('bottom-left')     // position: absolute; bottom: 0; left: 0
+s._pinCorner('bottom-right')    // position: absolute; bottom: 0; right: 0
+```
+
+用法示例：
+
+```ts
+// 父容器设 _anchor，子元素用 _pin / _pinCorner
+icss(theme, s => { s._anchor() })        // 父容器 position: relative
+icss(theme, s => { s._pinCorner('top-right') })  // 徽标固定到右上角
+icss(theme, s => { s._pin('fill') })     // overlay 填满父容器
+```
+
 ### 3.7 单入口（core 不开 subpath）
 
 ```ts
@@ -426,11 +459,11 @@ CI 步骤"Generator drift check"会跑 generator 再 `git diff --exit-code`。**
 
 | Category     | Keys                                                                            | 默认值 / 备注                                                                                          |
 | ------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `spacing`    | tiny/small/middle/large/huge                                                    | **`iem(0.25/0.5/1/1.5/2)`** —— 走 iem(默认 4/8/16/24/32px),`ZBox :iem` 全站切换基准                    |
-| `fontSize`   | tiny/small/middle/large/huge                                                    | **`iem(0.75/0.875/1/1.125/1.25)`** —— 默认 12/14/16/18/20px;`:iem="ZIemPreset.rem"` 达到 a11y 大字模式 |
-| `radius`     | none/tiny/small/middle/large/huge/**full**                                      | none=`'0'` / 5 阶`iem(0.25/0.5/0.75/1/1.5)`(默认 4/8/12/16/24px)/ **full=`'9999px'`**(语义性 ∞,不缩放) |
-| `shadow`     | tiny/small/middle/large/huge                                                    | 保留 px 字面量（装饰性效果，与设计稿绑定，**不**跟 unit 缩放）                                         |
-| `blur`       | **none**/tiny/small/middle/large/huge                                           | none=`'0'` / 5 阶 `iem(0.25/0.5/1/1.5/2.5)`(默认 4/8/16/24/40px)                                       |
+| `spacing`    | tiny/small/middle/large/huge                                                    | **4/8/16/24/32px**（纯 px，1 单位 = 16px；JS 计算用 `sizePx(n)=n*16`）                                   |
+| `fontSize`   | tiny/small/middle/large/huge                                                    | **12/14/16/18/20px**（纯 px；~~`ZIemPreset`~~ 已移除（0.9.x））                                           |
+| `radius`     | none/tiny/small/middle/large/huge/**full**                                      | none=`'0'` / 5 阶 **4/8/12/16/28px** / **full=`'9999px'`**（语义性 ∞，不缩放）                            |
+| `shadow`     | tiny/small/middle/large/huge                                                    | 保留 px 字面量（装饰性效果，与设计稿绑定，**不**跟 unit 缩放）                                             |
+| `blur`       | **none**/tiny/small/middle/large/huge                                           | none=`'0'` / 5 阶 **4/8/16/24/40px**（纯 px）                                                             |
 | `breakpoint` | tiny/small/middle/large/huge                                                    | **保留 px**（媒体查询基准，与"屏幕宽度"硬绑定，**不**跟 unit 缩放）                                    |
 | `duration`   | **none**/tiny/small/middle/large/huge                                           | 6 阶；0ms/75ms/150ms/300ms/500ms/700ms（时间，非长度）                                                 |
 | `zIndex`     | **none**/tiny/small/middle/large/huge + 角色 modal/popover/tooltip/toast + auto | 0/10/20/30/40/50（无单位）                                                                             |
@@ -552,7 +585,7 @@ partial 应基于已解析的字面量。dev 模式扫到 function 会 warn，�
 > - **进展**：90+ 组件已落地（ZButton/ZInput/ZSelect/ZModal/ZDataTable/...），按 7 大类扁平分目录 `src/{gene,layout,input,display,feedback,navigation,tool}/`，每组件单 `.vue`。**不是**"基础组件尚未实现"。
 > - **目录**：无 `components/`、无 `composables/`。内部工具在 `_hooks/`（`useZId`/`usePortal`/`usePopper`/`useRipple`/`useEscapeStack`/`useZIem`/`useZVirtualScroll`/`useColorScheme`）与 `_internal/`（`sx`/`input-size`/`color-bridge`/`scrollbar*`/`body-scroll-lock`/`colorScheme`）。**`useStyles`/`useVariants`/`useParts`/`useResponsive` 不存在** —— 组件直接 `computed(() => icss(theme.value, s => {...}))`。
 > - **单入口**：删除全部 subpath（BREAKING v0.2，2026-05-23），所有 API 经 `@kenconnet666/zui-vue` 主入口；末尾 `export * from '@kenconnet666/zui-core'` 全量透传 core。
-> - **prop 范式（实战定型，4 套并存）**：① **数值尺寸** `size?: number` / `height?: number`（iem 倍数，组件内按比例算各维度，2026-05-24 起，**非** carrier factory）；② **外观维度** carrier factory `color?: (c) => void` 等；③ **变体** 字面量 union 且**导出** type alias（如 `export type ZButtonVariant = 'filled' | ...`，与旧禁忌相反）；④ **部件覆盖** `sx`（见下条）；⑤ **兜底** `css?: (s: Chain<ZuiSchema>) => void`。
+> - **prop 范式（实战定型，4 套并存）**：① **数值尺寸** `size?: number` / `height?: number`（px 倍数，1 单位 = 16px，组件内用 `sizePx(n)` 计算各维度，2026-05-24 起，**非** carrier factory）；② **外观维度** carrier factory `color?: (c) => void` 等；③ **变体** 字面量 union 且**导出** type alias（如 `export type ZButtonVariant = 'filled' | ...`，与旧禁忌相反）；④ **部件覆盖** `sx`（见下条）；⑤ **兜底** `css?: (s: Chain<ZuiSchema>) => void`。
 > - **`sx` 系统**（`_internal/sx.ts`，事实标准，取代旧文档设想的 `cssHeader`/`cssBody` chain-factory）：复合组件子节点用 `sxXxx?: SxObject` 暴露 `{ css 工厂 + class/style/ref + 任意 HTML attr 平铺 }`；组件内 `applySx(s, props.sxXxx)` 应用样式 + `extractSxAttrs(props.sxXxx)` 取出 class/style/ref/attrs 绑到模板。
 > - **variants 系统已从 core 删除（0.9.0）**：§3.4 及下文 §13.6/§13.7 的 `defineVariants`/`defineParts`/`useParts`/`createXxxVariants` 写法**全部作废**；复杂组件（ZButton 7 variant）用 `icss + switch(props.variant)` 命令式实现，多 part 组件各 part 一个 `icss` className。
 > - **参照实现**：极简组件看 `gene/ZIcon.vue`，复杂单根看 `gene/ZButton.vue`，多 part 看 `input/ZInput.vue`。
@@ -561,9 +594,9 @@ partial 应基于已解析的字面量。dev 模式扫到 function 会 warn，�
 
 **所有 ui-vue 组件必须遵守的四条原则**。Button / Input / Dialog / Tabs / Select / ... 一概按此画。`ZIcon` 是首个参照实现（§13.10）。
 
-**① ★ props 形态:数值尺寸 `number`(iem 倍数)+ 其他 chain factory(2026-05-24 修订)**
+**① ★ props 形态:数值尺寸 `number`(px 倍数，1 单位 = 16px)+ 其他 chain factory(2026-05-24 修订)**
 
-**数值尺寸 prop**(size / height / width / maxHeight 等)用 `number`(iem 倍数,默认 1iem=16px by Provider)。组件内部按数字计算所有相关维度(padding / border-radius / 等),**全 iem 联动**。
+**数值尺寸 prop**(size / height / width / maxHeight 等)用 `number`（px 倍数，1 单位 = 16px，组件内部用 `sizePx(n) = n * 16` 计算各维度）。~~iem 单位已移除（0.9.x）~~。
 
 **其他外观 prop**(color / direction / justify / css 等)保持 chain factory(B5 决策保留)。
 
@@ -613,8 +646,8 @@ export interface ZxxxProps {
 <!-- 1 秒一圈;name/iteration/timing 自动 -->
 
 <!-- Type C 一对多 -->
-<ZIcon :size="w => w.iem(1.25)" />
-<!-- 显式 iem,width+height 同步 -->
+<ZIcon :size="w => w.px(20)" />
+<!-- 已移除 iem；改用 .px(N) 字面量（20 = 1.25 × 16） -->
 <ZIcon :size="w => w._middle" />
 <!-- 走 schema sizes token -->
 
@@ -643,14 +676,14 @@ export interface ZxxxProps {
 | `export type ZXxxVariant = ...` 单独 type alias                   | 内联到 props interface (Type V)                     |
 | 组件内 `XXX_MAP: Record<keyword, css-value>` 翻译表               | 直接走 factory + chain token access                 |
 
-**iem 盒子模型 JSDoc 规范**:任何使用 iem 单位的尺寸 prop / 内部默认值,JSDoc **必须**标注 iem 盒子模型(**只写 iem,不写 px**,iem 物理意义由 ZBox Provider 控制):
+**JSDoc 规范（纯 px）**：尺寸 prop / 内部默认值的 JSDoc 写 px 字面量（1 单位 = 16px，`sizePx(n)` 计算），~~iem~~ 已移除（0.9.x）：
 
 ```ts
 /**
- * 高度 2iem(默认)
- * - padding-y: 0.25iem × 2
- * - border: 0.0625iem × 2
- * - 内容区:1.5iem
+ * 高度 32px（默认，= 2 × 16px）
+ * - padding-y: 4px × 2（= 0.25 × 16px）
+ * - border: 1px × 2
+ * - 内容区: 24px（= 1.5 × 16px）
  */
 ```
 
@@ -658,7 +691,7 @@ export interface ZxxxProps {
 
 ```ts
 /**
- * 默认尺寸:width/height = 1iem,正方形。
+ * 默认尺寸: width/height = 16px（= 1 × sizePx(1)），正方形。
  */
 ```
 
@@ -673,20 +706,26 @@ export interface ZxxxProps {
 - `2026-05-22-prop-shape-union.md` —— Size5 union(已被 2026-05-23 撤销)
 - `2026-05-23-prop-shape-pure-factory.md` —— 当前规范(全 factory)
 
-**② iem 单位优先 · `<ZBox :iem>` 全站切换基准 · 罕见局部用 em**
+**② 纯 px 尺寸 · 1 单位 = 16px · `_internal/sizing.ts` 的 `sizePx` helper**
 
-`iem` = **"我自己使用的 em"**,跟 CSS `rem`(root em)对称:
+~~`iem` 单位（`ZBox :iem` / `ZIemPreset` / `--zui-iem` CSS 变量）已全部移除（0.9.x）~~。
 
-- `rem` = 浏览器根元素 font-size 倍率(浏览器掌控,默认 16px)
-- `iem` = ZBox 注入的基准倍率(应用层掌控,**默认 1iem = 16px**,等同 1rem)
+现行规则：
 
-- **大部分尺寸维度**(spacing / radius / fontSize / blur / gap / width / height / padding / 等):组件内走 `s.padding.iem(1)` / `s.width.iem(1.5)` 等;theme token 表用 `iem(N)` helper(emit `calc(N * var(--zui-iem, 16px))`)。**N 是"几个基准字号"**,跟 rem 用法一致(`iem(1)` = 1iem,`iem(1.5)` = 1.5iem)。
-- **`<ZBox :iem>` 单点切换 1iem 物理意义**:默认 `ZIemPreset.default`(`'16px'`)/ `ZIemPreset.large`(`'20px'`,大字模式)/ `ZIemPreset.compact`(`'14px'`,紧凑)/ `ZIemPreset.em`(`'1em'`,跟父字号)/ `ZIemPreset.rem`(`'1rem'`,a11y 跟浏览器根字号)。**嵌套 Provider 通过 css cascade 自然覆盖,兄弟 Provider 各自独立 —— 零运行时合并开销**。
-- **ZIcon 等图标默认也走 iem**(`(w) => w.iem(1)` 默认),跟 Provider 字号联动,整站统一图标尺寸。想"跟随父容器字号"的罕见局部场景显式 `(w) => w.em(N)`。注意 em 单位只在一个属性上设(如 ZIcon 只设 `width/height: N em`,**不**设 `font-size: N em`),避免 em 复合(fontSize.em(N) + width.em(N) 会让 width 算到 N²×父字号)。
-- **不走 iem 的几类**(语义不同):
-  - `breakpoint` —— 媒体查询基准,跟"屏幕宽度"硬绑定
-  - `shadow` —— 装饰性效果,保留 px 字面量与设计稿绑定(**可选 iem 化**,看产品需求)
-  - `radius.full = '9999px'` —— "无穷大圆角"语义
+- **所有尺寸维度**（spacing / radius / fontSize / blur / gap / width / height / padding / 等）一律写 px 字面量；组件内部按比例计算时用 `sizePx(n) = n * 16`（来自 `_internal/sizing.ts`）。
+- **`sizePx` 对照表**（1 单位 = 16px）：
+
+  | 倍数 | px  | 倍数 | px  |
+  | ---- | --- | ---- | --- |
+  | 0.25 | 4   | 1    | 16  |
+  | 0.5  | 8   | 1.5  | 24  |
+  | 0.75 | 12  | 2    | 32  |
+
+- **ZIcon 等图标**：默认 `w.px(16)`（= 1 单位），罕见场景可 `(w) => w.em(N)` 跟父字号。避免 em 复合（只在 width/height 设，不设 fontSize）。
+- **不影响的几类**（语义不同，保留原规则）：
+  - `breakpoint` —— 媒体查询基准，硬绑定屏幕宽度
+  - `shadow` —— 装饰性效果，px 字面量绑定设计稿
+  - `radius.full = '9999px'` —— 无穷大圆角语义
   - `letterSpacing` —— em 单位（跟字体本身缩放）
   - `duration / easing / zIndex / opacity / lineHeight / aspectRatio / fontWeight` —— 非长度
 
@@ -816,19 +855,19 @@ interface Props<S extends ThemeSchema = ThemeSchema> {
   localePatch?: ZLocalePartial // namespace 级 + 字段级浅合并
   timezone?: string // IANA 时区，未传继承父；根未传 → 'UTC'
   dateLocale?: DateFnsLocale // date-fns Locale，未传继承父
-  iem?: string | number // 逻辑单位 iem 的物理映射,写到 wrapper inline --zui-iem(默认 16px)
+  // iem?: string | number  ← 已移除（0.9.x）；尺寸改用纯 px，1 单位 = 16px
 }
 ```
 
 合并策略一栏：
 
-| context    | 顶层 fallback                        | 嵌套合并方式                                                                              |
-| ---------- | ------------------------------------ | ----------------------------------------------------------------------------------------- |
-| theme      | `defaultLight.resolve()`（dev warn） | `mergeTheme` 深合并                                                                       |
-| locale     | `zhCN`                               | `mergeLocale` namespace+字段两级浅合并；数组整体替换                                      |
-| timezone   | `'UTC'`                              | 子覆盖父                                                                                  |
-| dateLocale | `undefined`                          | 子覆盖父                                                                                  |
-| iem        | `'16px'`(`ZIemPreset.default`)       | wrapper inline `--zui-iem`,子层 css cascade 自然覆盖(无运行时合并;兄弟 Provider 互不影响) |
+| context    | 顶层 fallback                        | 嵌套合并方式                             |
+| ---------- | ------------------------------------ | ---------------------------------------- |
+| theme      | `defaultLight.resolve()`（dev warn） | `mergeTheme` 深合并                      |
+| locale     | `zhCN`                               | `mergeLocale` namespace+字段两级浅合并；数组整体替换 |
+| timezone   | `'UTC'`                              | 子覆盖父                                 |
+| dateLocale | `undefined`                          | 子覆盖父                                 |
+| ~~iem~~    | ~~已移除（0.9.x）~~                  | ~~`--zui-iem` CSS 变量已删除~~           |
 
 Inject keys（symbol）：`Z_THEME_KEY` / `Z_LOCALE_KEY` / `Z_DATE_KEY`，全部 `InjectionKey<Ref<...>>`。`Z_THEME_KEY` 退化到 `ResolvedTheme<any>`（Vue InjectionKey 不支持泛型），子组件 `useZTheme<S>()` cast 回。
 
@@ -945,7 +984,7 @@ declare module '@kenconnet666/zui-vue' {
 
 **§13.0 ① chain factory props 范式的首个落地** —— 每个外观维度都是 `(c) => void` 工厂,setup 内一行应用,无 switch / 无 const map / 无 cx 拼接。复杂组件(Button / Input / Dialog)照此结构但 className 拆 base / 状态 / variants 多层。
 
-**ZIcon size 默认 iem**(2026-05-22 改 iem 范式后):默认 `(w) => w.iem(1)`(1iem,默认 16px),跟 ZBox 字号联动 —— 整站统一图标尺寸。**只设 width(height 自动镜像)、不设 fontSize**,避免 em 复合(若同时 `s.fontSize.em(N)` + `s.width.em(N)`,width 会算到 N²×父字号)。想"跟随父字号"的罕见场景显式 `(w) => w.em(N)`。
+**ZIcon size 默认 px**（~~iem 已移除（0.9.x）~~）：默认 `w.px(16)`（= 1 单位 = 16px），整站统一图标尺寸。**只设 width（height 自动镜像）、不设 fontSize**，避免 em 复合（若同时 `s.fontSize.em(N)` + `s.width.em(N)`，width 会算到 N²×父字号）。想跟父字号的罕见场景显式 `(w) => w.em(N)`。
 
 **文件结构**(2 个文件,~150 行核心实现 + 2 行 barrel):
 
@@ -992,9 +1031,9 @@ export interface ZIconProps {
 ```vue
 <!-- size: w.em(N) 一行,height 自动镜像 -->
 <ZIcon :component="HeartIcon" :size="w => w.em(1.25)" />
-<!-- 1.25em × 1.25em -->
-<ZIcon :component="HeartIcon" :size="w => w.iem(1)" />
-<!-- 1iem,跟随 :iem -->
+<!-- 1.25em × 1.25em（跟父字号，罕见） -->
+<ZIcon :component="HeartIcon" :size="w => w.px(16)" />
+<!-- 16px 默认（= 1 单位；~~iem~~ 已移除（0.9.x）） -->
 <ZIcon :component="HeartIcon" :size="w => w.px(20)" />
 <!-- 字面量 -->
 
@@ -1233,10 +1272,10 @@ Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>
    ApiTable
    ZTitle level="3"   Slots（若组件有 slot）
    ApiTable
-   ZTitle level="3"   尺寸参考（iem = 16px）（若组件有 size prop）
-   ZParagraph         iem / vw 说明
+   ZTitle level="3"   尺寸参考（1 单位 = 16px）（若组件有 size prop）
+   ZParagraph         px 换算说明（~~iem~~ 已移除（0.9.x））
    ApiTable           size → px 换算表
-   ZParagraph         说明 ZIemPreset.fixed 用法
+   ZParagraph         说明 sizePx(n) = n × 16 用法
 ```
 
 ### 17.2 ApiTable 组件
@@ -1268,24 +1307,24 @@ import ApiTable from '../../shared/ApiTable.vue'
 
 **表头固定列**：`size | font-size | height | padding-y | padding-x | border-radius | gap`（按实际有意义的列写，无意义的省略）。
 
-**档位固定写法**（iem = 16px 换算）：
+**档位固定写法**（1 单位 = 16px，~~iem~~ 已移除（0.9.x））：
 
-- `size = n` → 各维度 = `n × 比例系数 × 16` px；
-- 公式从组件源码的 iem 公式直接读取；
+- `size = n` → 各维度 = `sizePx(n × 比例系数)` px；
+- 公式从组件源码的 `sizePx` 调用直接读取；
 - 默认档标注 `（默认）`，如 `1（默认）`。
 
-### 17.4 iem / vw 说明段（size prop 尺寸参考表前后各一段）
+### 17.4 px 尺寸说明段（size prop 尺寸参考表前后各一段）
+
+> ~~`iem` / `ZIemPreset` / `<ZBox :iem>` 已全部移除（0.9.x）~~
 
 **前置段**（说明换算基准）：
 
-> `size` 是 **iem 倍数**，1iem 的物理像素由 `<ZBox :iem>` 决定。
-> 默认使用 `ZIemPreset.default = '0.8333vw'`，在 1920px 宽屏下等于 16px，随视口宽度自适应缩放。
-> 下表以 **iem = 16px**（固定基准）为例换算各档位的 px 值：
+> `size` 是 **px 倍数**，1 单位 = 16px（`_internal/sizing.ts` 的 `sizePx(n) = n * 16`）。
+> 下表以 **1 单位 = 16px** 为基准列出各档位的 px 值：
 
-**后置段**（说明如何固定像素）：
+**后置段**（说明如何调整尺寸）：
 
-> 默认 `ZIemPreset.default` 下整体随视口等比缩放，无需媒体查询。
-> 需要固定像素尺寸时改用 `ZIemPreset.fixed`（= `'16px'`）或在外层 `<ZBox :iem="'16px'">` 。
+> 需要非标准尺寸时，直接传小数倍数（如 `size="1.5"` = 24px）或用 `:css` 逃生口覆盖任意属性。
 
 ### 17.5 类型描述字符串约定
 

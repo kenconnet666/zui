@@ -2,7 +2,7 @@
 import { ZTag, ZFlex } from '@kenconnet666/zui-vue'
 import { ref } from 'vue'
 
-const tags = ref(['Vue 3', 'TypeScript', 'CSS-in-JS', 'iem 单位'])
+const tags = ref(['Vue 3', 'TypeScript', 'CSS-in-JS', 'px 倍数尺寸'])
 function remove(i: number) {
   tags.value.splice(i, 1)
 }

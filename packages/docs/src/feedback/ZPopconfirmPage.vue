@@ -12,8 +12,8 @@ const propsRows = [
   { name: 'cancelText', type: 'string', default: "'取消'", desc: '取消按钮文字。' },
   { name: 'placement', type: 'Placement', default: "'top'", desc: 'floating-ui placement。' },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用（不弹出）。' },
-  { name: 'minWidth', type: 'number', default: '12', desc: 'popper 最小宽度（iem 倍数）。' },
-  { name: 'maxWidth', type: 'number', default: '20', desc: 'popper 最大宽度（iem 倍数）。' },
+  { name: 'minWidth', type: 'number', default: '12', desc: 'popper 最小宽度（px 倍数，1 单位 = 16px）。' },
+  { name: 'maxWidth', type: 'number', default: '20', desc: 'popper 最大宽度（px 倍数，1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

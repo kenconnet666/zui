@@ -10,16 +10,16 @@ const propsRows = [
   { name: 'options', type: 'string[]', default: '—', desc: '建议选项数组（必传）。' },
   { name: 'placeholder', type: 'string', default: '—', desc: '占位文字。' },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 iem 倍数。' },
-  { name: 'height', type: 'number', default: 'size*2', desc: '高度 iem 倍数。' },
+  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px）。' },
+  { name: 'height', type: 'number', default: 'size*2', desc: '高度 px 倍数（1 单位 = 16px）。' },
   {
     name: 'filter',
     type: '(input, opt) => boolean',
     default: '—',
     desc: '自定义过滤函数（默认 includes）。',
   },
-  { name: 'optionSize', type: 'number', default: '2', desc: '建议项行高 iem 倍数。' },
-  { name: 'dropdownMaxHeight', type: 'number', default: '15', desc: '下拉最大高度 iem 倍数。' },
+  { name: 'optionSize', type: 'number', default: '2', desc: '建议项行高 px 倍数（1 单位 = 16px）。' },
+  { name: 'dropdownMaxHeight', type: 'number', default: '15', desc: '下拉最大高度 px 倍数（1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

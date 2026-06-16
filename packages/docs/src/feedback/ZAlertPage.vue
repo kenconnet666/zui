@@ -20,7 +20,7 @@ import SxAndSlotDemoSource from './ZAlert/SxAndSlotDemo.vue?raw'
     <ZParagraph>
       警示横幅，适合展示需要用户注意的页面级提示信息。
       <ZCode code="color" /> 接受 chain factory，可使用全部 schema color token；
-      <ZCode code="size" /> 为 iem 倍数，控制字号与内边距等比缩放；
+      <ZCode code="size" /> 为 px 倍数（1 单位 = 16px），控制字号与内边距等比缩放；
       <ZCode code="closable" /> 开启右侧关闭按钮，触发 <ZCode code="@close" /> 事件。
     </ZParagraph>
 
@@ -55,7 +55,7 @@ import SxAndSlotDemoSource from './ZAlert/SxAndSlotDemo.vue?raw'
     <ZTitle :level="2">子节点与 sx</ZTitle>
     <DemoBlock title="default slot + sxBody + size 缩放" :source="SxAndSlotDemoSource">
       <template #desc>
-        默认插槽追加在描述下方,适合放操作按钮;<ZCode code="size" /> iem 倍数等比缩放内边距与字号。
+        默认插槽追加在描述下方，适合放操作按钮；<ZCode code="size" /> px 倍数（1 单位 = 16px）等比缩放内边距与字号。
       </template>
       <SxAndSlotDemo />
     </DemoBlock>
@@ -86,7 +86,7 @@ import SxAndSlotDemoSource from './ZAlert/SxAndSlotDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '0.875',
-          desc: 'iem 倍数，字号 / 内边距 / 间距等比缩放。',
+          desc: 'px 倍数（1 单位 = 16px），字号 / 内边距 / 间距等比缩放。',
         },
         { name: 'showIcon', type: 'boolean', default: 'true', desc: '是否显示左侧图标。' },
         { name: 'closable', type: 'boolean', default: 'false', desc: '是否显示右侧关闭按钮。' },

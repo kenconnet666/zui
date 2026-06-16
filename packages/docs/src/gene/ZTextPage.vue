@@ -23,7 +23,7 @@ import StateDemoSource from './ZText/StateDemo.vue?raw'
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="尺寸 / 颜色 / 字重" :source="BasicDemoSource">
       <template #desc>
-        <ZCode code="size" /> 是 iem 倍数（<ZCode code="number" />）； <ZCode code="color" /> /
+        <ZCode code="size" /> 是 px 倍数（<ZCode code="number" />，1 单位 = 16px）； <ZCode code="color" /> /
         <ZCode code="weight" /> 接 chain carrier factory， 支持全部 schema token + modifier 链。
       </template>
       <BasicDemo />
@@ -50,7 +50,7 @@ import StateDemoSource from './ZText/StateDemo.vue?raw'
         { key: 'desc', label: '说明' },
       ]"
       :rows="[
-        { name: 'size', type: 'number', default: '—', desc: 'iem 倍数字号。不传则继承父字号。' },
+        { name: 'size', type: 'number', default: '—', desc: 'px 倍数字号（1 单位 = 16px）。不传则继承父字号。' },
         {
           name: 'weight',
           type: '(w: FontWeightCarrier) => void',

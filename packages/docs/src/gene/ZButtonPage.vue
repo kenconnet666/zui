@@ -30,7 +30,7 @@ import CssDemoSource from './ZButton/CssDemo.vue?raw'
     <ZTitle :level="1">ZButton 按钮</ZTitle>
     <ZParagraph>
       Material 风按钮,<strong>5 种 variant</strong> + <strong>chain factory color</strong> +
-      <strong>iem 等比缩放 size</strong>。启用 ripple 波纹效果, hover / active / focus-visible
+      <strong>px 倍数等比缩放 size</strong>。启用 ripple 波纹效果, hover / active / focus-visible
       三态自动接入 Material state layer。
     </ZParagraph>
 
@@ -57,10 +57,10 @@ import CssDemoSource from './ZButton/CssDemo.vue?raw'
     </DemoBlock>
 
     <ZTitle :level="2">尺寸 (size)</ZTitle>
-    <DemoBlock title="number 类型,iem 倍数(默认 1)" :source="SizeDemoSource">
+    <DemoBlock title="number 类型，px 倍数（1 单位 = 16px，默认 1）" :source="SizeDemoSource">
       <template #desc>
-        <code>size</code> 是 <strong>iem 倍数</strong>,组件内部按比例算 fontSize / height / padding
-        / borderRadius / gap —— 整体比例不变,只是物理像素随 ZBox 字号缩放。
+        <code>size</code> 是 <strong>px 倍数（1 单位 = 16px）</strong>，组件内部按比例算 fontSize / height / padding
+        / borderRadius / gap —— 整体比例不变，只是物理像素按倍数换算。
       </template>
       <SizeDemo />
     </DemoBlock>
@@ -118,13 +118,13 @@ import CssDemoSource from './ZButton/CssDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '1',
-          desc: 'iem 倍数。所有尺寸维度（fontSize / height / padding / borderRadius / gap）同比缩放。',
+          desc: 'px 倍数（1 单位 = 16px）。所有尺寸维度（fontSize / height / padding / borderRadius / gap）同比缩放。',
         },
         {
           name: 'height',
           type: 'number',
           default: 'size × 2',
-          desc: '按钮高度（iem 倍数）。可单独覆盖，不影响其他维度。',
+          desc: '按钮高度（px 倍数，1 单位 = 16px）。可单独覆盖，不影响其他维度。',
         },
         {
           name: 'loading',
@@ -204,13 +204,9 @@ import CssDemoSource from './ZButton/CssDemo.vue?raw'
       ]"
     />
 
-    <ZTitle :level="2">尺寸参考（iem = 16px）</ZTitle>
+    <ZTitle :level="2">尺寸参考（size × 16 = px）</ZTitle>
     <ZParagraph>
-      <code>size</code> 是 <strong>iem 倍数</strong>，1iem 的物理像素由
-      <code>&lt;ZBox :iem&gt;</code> 决定。 默认使用
-      <code>.default = '0.8333vw'</code>，在 1920px 宽屏下等于
-      16px，随视口宽度自适应缩放。 下表以 <strong>iem = 16px</strong>（固定基准）为例换算各档位的 px
-      值：
+      <code>size</code> 是 <strong>px 倍数（1 单位 = 16px）</strong>。 下表以 16px 基准换算各档位的 px 值：
     </ZParagraph>
     <ApiTable
       :columns="[

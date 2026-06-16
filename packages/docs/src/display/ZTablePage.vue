@@ -11,7 +11,7 @@ const propsRows = [
   { name: 'rowKey', type: 'string | (row) => key', default: "'id'", desc: '行 key。' },
   { name: 'bordered', type: 'boolean', default: 'false', desc: '边框。' },
   { name: 'striped', type: 'boolean', default: 'false', desc: '斑马纹。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 iem 倍数，影响 cell 内边距。' },
+  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px），影响 cell 内边距。' },
   { name: 'emptyText', type: 'string', default: "'暂无数据'", desc: '空数据文案。' },
   { name: 'selectable', type: 'boolean', default: 'false', desc: '行选择（首列 checkbox）。' },
   {

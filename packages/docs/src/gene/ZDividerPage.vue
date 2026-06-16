@@ -18,7 +18,7 @@ import VerticalDemoSource from './ZDivider/VerticalDemo.vue?raw'
     <ZTitle :level="1">ZDivider 分割线</ZTitle>
     <ZParagraph>
       分割线组件，支持<strong>水平 / 垂直</strong>两种方向，水平模式可在中间插入文字。 支持
-      <ZCode code="dashed" />（虚线）、<ZCode code="thickness" />（粗细，支持 string 或 iem 倍数
+      <ZCode code="dashed" />（虚线）、<ZCode code="thickness" />（粗细，支持 string 或 px 倍数
       number）、 <ZCode code="color" /> carrier factory 自定义颜色。
     </ZParagraph>
 
@@ -26,7 +26,7 @@ import VerticalDemoSource from './ZDivider/VerticalDemo.vue?raw'
     <DemoBlock title="默认 / 虚线 / 自定义颜色与粗细" :source="BasicDemoSource">
       <template #desc>
         <ZCode code="thickness" /> 支持 <ZCode code="string" />（如 <ZCode code="'2px'" />）或
-        <ZCode code="number" />（iem 倍数，随 ZBox 基准缩放）。
+        <ZCode code="number" />（px 倍数，1 单位 = 16px）。
       </template>
       <BasicDemo />
     </DemoBlock>
@@ -81,7 +81,7 @@ import VerticalDemoSource from './ZDivider/VerticalDemo.vue?raw'
           name: 'thickness',
           type: 'string | number',
           default: `'1px'`,
-          desc: `string → CSS 长度（如 '2px'）；number → iem 倍数（如 0.125 ≈ 2px @ 16px 基准，随 ZBox 缩放）。`,
+          desc: `string → CSS 长度（如 '2px'）；number → px 倍数（如 0.125 = 2px）。`,
         },
         { name: 'tag', type: 'string', default: `'div'`, desc: '根元素 tag。' },
         { name: 'css', type: '(s: Chain) => void', default: '—', desc: '兜底 CSS factory。' },

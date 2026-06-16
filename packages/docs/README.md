@@ -25,7 +25,7 @@ pnpm --filter @kenconnet666/docs preview  # 本地 preview 产物
 
 ```
 src/
-├── pages/                     ← 顶层指南页(快速开始 / 主题 / iem / zui-core 等)
+├── pages/                     ← 顶层指南页(快速开始 / 主题 / zui-core 等)
 ├── gene/                      ← 通用组件 demo
 │   ├── ZButton/                  ← 单组件多 demo 子目录
 │   │   ├── VariantsDemo.vue

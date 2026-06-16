@@ -19,7 +19,7 @@ const propsRows = [
     name: 'size',
     type: 'number',
     default: '4',
-    desc: '图标尺寸（iem 倍数，4 = 64px @ 默认 iem）。',
+    desc: '图标尺寸（px 倍数，1 单位 = 16px，默认 4 = 64px）。',
   },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
@@ -36,7 +36,7 @@ const slotsRows = [
     <ZTitle :level="1">ZEmpty 空状态</ZTitle>
     <ZParagraph>
       空状态占位组件，用于列表为空、搜索无结果等场景。
-      <ZCode code="size" /> 为 iem 倍数控制图标大小，slot <ZCode code="#default" /> 可放置操作按钮。
+      <ZCode code="size" /> 为 px 倍数（1 单位 = 16px）控制图标大小，slot <ZCode code="#default" /> 可放置操作按钮。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>

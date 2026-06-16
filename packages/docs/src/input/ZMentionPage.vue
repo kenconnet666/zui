@@ -12,9 +12,9 @@ const propsRows = [
   { name: 'placeholder', type: 'string', default: '—', desc: '占位文字。' },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },
   { name: 'rows', type: 'number', default: '—', desc: 'textarea 行数。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 iem 倍数。' },
-  { name: 'optionSize', type: 'number', default: '2', desc: '候选项行高 iem 倍数。' },
-  { name: 'dropdownMaxHeight', type: 'number', default: '15', desc: '下拉最大高度 iem 倍数。' },
+  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px）。' },
+  { name: 'optionSize', type: 'number', default: '2', desc: '候选项行高 px 倍数（1 单位 = 16px）。' },
+  { name: 'dropdownMaxHeight', type: 'number', default: '15', desc: '下拉最大高度 px 倍数（1 单位 = 16px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 
