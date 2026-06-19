@@ -45,7 +45,7 @@ const cards: EntryCard[] = [
   {
     key: 'icon',
     title: 'ZIcon 图标',
-    desc: '4 维度 chain factory + px 联动 + Provider 切换基准',
+    desc: 'size 数值尺寸(1=16px) + color/depth/spin factory + css 兜底',
     icon: HeartOutline,
     route: '/gene/icon',
   },
@@ -77,8 +77,8 @@ function go(path: string): void {
     <ZTitle :level="1">zui</ZTitle>
     <ZParagraph>
       <strong>框架无关</strong>的 CSS-in-JS 工具库 monorepo。<br />
-      核心 <code>@kenconnet666/zui-core</code> 提供 Chain + Theme + Variants 抽象，
-      <code>@kenconnet666/zui-vue</code> 提供 ZBox 与 Vue 3 组件。
+      核心 <code>@kenconnet666/zui-core</code> 提供 Chain + Theme + icss 抽象，
+      <code>@kenconnet666/zui-vue</code> 提供 ZBox 与 90+ Vue 3 组件。
     </ZParagraph>
 
     <ZFlex :gap="g => g.px(8)" :wrap="w => w.wrap">

@@ -28,6 +28,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+.temp
 
 *.tsbuildinfo
 
@@ -46,3 +47,6 @@ __screenshots__/
 # pnpm
 .pnpm-store/
 .playwright-mcp
+
+# 截图工件(playwright-mcp 会落到 CWD 根)
+/*.png
