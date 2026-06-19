@@ -16,9 +16,9 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
 export interface ZAvatarProps {
-  src?: string
-  alt?: string
-  text?: string
+  src?: string | undefined
+  alt?: string | undefined
+  text?: string | undefined
   /**
    * 头像尺寸 —— `number`(px 倍数,默认 2.5 = 40px,1 单位 = 16px)。
    *

@@ -48,6 +48,7 @@ export const docNav: DocNavItem[] = [
     label: '通用 (gene)',
     children: [
       { key: 'button', label: 'ZButton 按钮', route: '/gene/button' },
+      { key: 'button-group', label: 'ZButtonGroup 按钮组', route: '/gene/button-group' },
       { key: 'icon', label: 'ZIcon 图标', route: '/gene/icon' },
       { key: 'text', label: 'ZText 文本', route: '/gene/text' },
       { key: 'title', label: 'ZTitle 标题', route: '/gene/title' },
@@ -56,6 +57,7 @@ export const docNav: DocNavItem[] = [
       { key: 'tag', label: 'ZTag 标签', route: '/gene/tag' },
       { key: 'badge', label: 'ZBadge 徽标', route: '/gene/badge' },
       { key: 'avatar', label: 'ZAvatar 头像', route: '/gene/avatar' },
+      { key: 'avatar-group', label: 'ZAvatarGroup 头像组', route: '/gene/avatar-group' },
       { key: 'divider', label: 'ZDivider 分割线', route: '/gene/divider' },
       { key: 'code', label: 'ZCode 代码', route: '/gene/code' },
       { key: 'code-card', label: 'ZCodeCard 代码卡片', route: '/gene/code-card' },

@@ -15,6 +15,7 @@ const guideRoutes: RouteRecordRaw[] = [
 
 const geneRoutes: RouteRecordRaw[] = [
   { path: '/gene/button', component: () => import('../gene/ZButtonPage.vue') },
+  { path: '/gene/button-group', component: () => import('../gene/ZButtonGroupPage.vue') },
   { path: '/gene/icon', component: () => import('../gene/ZIconPage.vue') },
   { path: '/gene/text', component: () => import('../gene/ZTextPage.vue') },
   { path: '/gene/title', component: () => import('../gene/ZTitlePage.vue') },
@@ -23,6 +24,7 @@ const geneRoutes: RouteRecordRaw[] = [
   { path: '/gene/tag', component: () => import('../gene/ZTagPage.vue') },
   { path: '/gene/badge', component: () => import('../gene/ZBadgePage.vue') },
   { path: '/gene/avatar', component: () => import('../gene/ZAvatarPage.vue') },
+  { path: '/gene/avatar-group', component: () => import('../gene/ZAvatarGroupPage.vue') },
   { path: '/gene/divider', component: () => import('../gene/ZDividerPage.vue') },
   { path: '/gene/code', component: () => import('../gene/ZCodePage.vue') },
   { path: '/gene/code-card', component: () => import('../gene/ZCodeCardPage.vue') },
