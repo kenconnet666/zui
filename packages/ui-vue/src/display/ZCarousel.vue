@@ -32,7 +32,7 @@ export interface ZCarouselEmits {
 </script>
 
 <script lang="ts" setup generic="T">
-import { computed, h, onMounted, onScopeDispose } from 'vue'
+import { computed, h, onMounted, onScopeDispose, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
@@ -110,6 +110,11 @@ function stopTimer(): void {
 }
 
 onMounted(() => startTimer())
+// autoplay / interval 运行时切换需重建定时器
+watch(
+  () => [props.autoplay, props.interval],
+  () => startTimer(),
+)
 onScopeDispose(() => stopTimer())
 
 const rootClass = computed(() =>
@@ -127,7 +132,7 @@ const trackClass = computed(() =>
   icss(theme.value, s => {
     s.display.flex
     s.width.pct(total.value * 100)
-    s.transform(`translateX(-${(props.current / total.value) * 100}%)`)
+    s.transform(`translateX(-${(props.current / (total.value || 1)) * 100}%)`)
     s.transitionProperty._transform
     s.transitionDuration._middle
     s.transitionTimingFunction('cubic-bezier(0.4, 0, 0.2, 1)')
@@ -136,7 +141,7 @@ const trackClass = computed(() =>
 
 const slideClass = computed(() =>
   icss(theme.value, s => {
-    s.width.pct(100 / total.value)
+    s.width.pct(100 / (total.value || 1))
     s.flexShrink(0)
   }),
 )

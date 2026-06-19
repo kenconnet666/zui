@@ -84,6 +84,11 @@ watch(
   () => props.value,
   () => {
     finished = false
+    // 若上一轮已归零 clear 了 timer,目标改为未来时间时需重启 interval
+    if (!timer) {
+      const interval = props.precision === 'ms' ? 50 : 1000
+      timer = setInterval(tick, interval)
+    }
     tick()
   },
 )

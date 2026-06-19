@@ -108,15 +108,15 @@ function clamp(v: number): number {
 
 function inc(): void {
   if (props.disabled || props.readonly) return
-  const cur = props.value ?? 0
-  emit('update:value', clamp(cur + props.step))
-  emit('change', clamp(cur + props.step))
+  const next = clamp((props.value ?? 0) + props.step)
+  emit('update:value', next)
+  emit('change', next)
 }
 function dec(): void {
   if (props.disabled || props.readonly) return
-  const cur = props.value ?? 0
-  emit('update:value', clamp(cur - props.step))
-  emit('change', clamp(cur - props.step))
+  const next = clamp((props.value ?? 0) - props.step)
+  emit('update:value', next)
+  emit('change', next)
 }
 
 function onInput(e: Event): void {

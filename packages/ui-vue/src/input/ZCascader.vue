@@ -51,7 +51,7 @@ export interface ZCascaderEmits {
 </script>
 
 <script lang="ts" setup>
-import { computed, h, ref } from 'vue'
+import { computed, h, ref, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
@@ -119,6 +119,13 @@ const popperRef = ref<HTMLElement | null>(null)
 const open = ref(false)
 // 活跃路径:每个 column 选中的 value
 const activePath = ref<string[]>(props.value ?? [])
+// 外部 value 变化(如表单 reset / 受控更新)时同步活跃路径
+watch(
+  () => props.value,
+  v => {
+    activePath.value = v ?? []
+  },
+)
 
 const { floatingStyles } = usePopper(triggerRef, popperRef, {
   placement: computed(() => props.placement),

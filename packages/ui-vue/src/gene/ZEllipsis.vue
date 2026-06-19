@@ -32,7 +32,7 @@ const theme = useZTheme()
 
 const rootClass = computed(() =>
   icss(theme.value, s => {
-    if (props.lines === 1) {
+    if (props.lines <= 1) {
       s.display.inlineBlock
       s.overflow.hidden
       s.textOverflow.ellipsis
