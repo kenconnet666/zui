@@ -175,7 +175,7 @@ const rootClass = computed(() =>
     s.paddingBottom.px(sizePx(size * 0.25))
     s.paddingLeft.px(sizePx(size * 0.5))
     s.paddingRight.px(sizePx(size * 0.5))
-    s.borderWidth.px(0)
+    s.borderWidth._none
     s.borderRadius.px(sizePx(size * 0.25))
     s.backgroundColor.transparent
     s.fontSize.px(sizePx(size))
@@ -190,10 +190,10 @@ const rootClass = computed(() =>
       if (!props.color) h.color._text
     })
     s._selector('&:focus-visible', f => {
-      f.outlineWidth.px(2)
+      f.outlineWidth._middle
       f.outlineStyle.solid
-      f.outlineColor._primary
-      f.outlineOffset.px(1)
+      f.outlineColor._focusRing.alpha(40)
+      f.outlineOffset.px(2)
     })
     s._selector('&:disabled', d => {
       d.opacity._half

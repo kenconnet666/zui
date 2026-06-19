@@ -106,6 +106,7 @@ const rootClass = computed(() =>
     if (props.hoverable) {
       s.transitionProperty._shadow
       s.transitionDuration._small
+      s.transitionTimingFunction._default
       s._hover(h => {
         h.boxShadow._middle
       })

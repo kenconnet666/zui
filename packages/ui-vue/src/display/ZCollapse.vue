@@ -110,6 +110,12 @@ const headerClass = (item: ZCollapseItem, idx: number): string =>
     s._hover(h2 => {
       if (!item.disabled) h2.backgroundColor._bgMuted
     })
+    s._focusVisible(f => {
+      f.outlineWidth._middle
+      f.outlineStyle.solid
+      f.outlineColor._focusRing.alpha(40)
+      f.outlineOffset.px(-2)
+    })
     if (item.disabled) {
       s.opacity._dim
       s.cursor.notAllowed

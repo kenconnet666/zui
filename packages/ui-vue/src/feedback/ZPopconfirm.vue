@@ -195,19 +195,40 @@ const btnClass = (primary: boolean): string =>
     s.fontWeight._medium
     s.paddingLeft._small
     s.paddingRight._small
-    s.paddingTop.px(sizePx(0.25))
-    s.paddingBottom.px(sizePx(0.25))
+    s.paddingTop._tiny
+    s.paddingBottom._tiny
     s.borderWidth._thin
     s.borderStyle.solid
+    s.transitionProperty._colors
+    s.transitionDuration._small
     if (primary) {
       s.backgroundColor._primary
       s.color._bg
       s.borderColor.transparent
+      s._hover(h => {
+        h.backgroundColor._primary.darken(8)
+      })
+      s._active(a => {
+        a.backgroundColor._primary.darken(12)
+      })
     } else {
       s.backgroundColor.transparent
       s.color._text
       s.borderColor._border
+      s._hover(h => {
+        h.backgroundColor._textSecondary.alpha(8)
+        h.borderColor._primary
+      })
+      s._active(a => {
+        a.backgroundColor._textSecondary.alpha(12)
+      })
     }
+    s._focusVisible(f => {
+      f.outlineWidth._middle
+      f.outlineStyle.solid
+      f.outlineColor._focusRing.alpha(40)
+      f.outlineOffset.px(2)
+    })
   })
 
 const warningIcon = computed(() => h(ZIcon, { component: BuiltinIcons.warning }))

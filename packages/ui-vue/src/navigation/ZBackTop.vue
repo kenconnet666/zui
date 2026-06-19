@@ -143,7 +143,7 @@ const fadeActiveClass = computed(() =>
   icss(theme.value, s => {
     s.transitionProperty._opacity
     s.transitionDuration._small
-    s.transitionTimingFunction.ease
+    s.transitionTimingFunction._out
   }),
 )
 const fadeBoundaryClass = computed(() => icss(theme.value, s => s.opacity._none))

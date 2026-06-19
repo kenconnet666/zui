@@ -157,7 +157,7 @@ const trackClass = computed(() =>
     s._prop('width', '6px')
     s._prop('zIndex', '10')
     s.pointerEvents.none
-    s.borderRadius.px(sizePx(0.1875))
+    s.borderRadius._full
   }),
 )
 
@@ -166,9 +166,10 @@ const thumbClass = computed(() =>
     s.position.absolute
     s._prop('left', '0')
     s._prop('right', '0')
-    s.borderRadius.px(sizePx(0.1875))
+    s.borderRadius._full
     s._prop('background', thumbColors.value.normal)
-    s._prop('transition', 'background 120ms')
+    s.transitionProperty._colors
+    s.transitionDuration._small
     s._selector('&:hover', h => {
       h._prop('background', thumbColors.value.hover)
     })
@@ -178,7 +179,8 @@ const thumbClass = computed(() =>
 // ─── 淡入淡出过渡 class(icss 生成,替代原 SFC style 块)───
 const fadeActiveClass = computed(() =>
   icss(theme.value, s => {
-    s.transition('opacity 150ms')
+    s.transitionProperty._opacity
+    s.transitionDuration._small
   }),
 )
 const fadeFromClass = computed(() =>

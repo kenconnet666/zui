@@ -137,10 +137,19 @@ const inputClass = computed(() =>
     applyInputSize(s, props.size, props.height)
     s.width.pct(100)
     s.outline('none')
+    s.transitionProperty._colors
+    s.transitionDuration._small
     if (props.disabled) {
       s.opacity._dim
       s.cursor.notAllowed
       s.backgroundColor._bgMuted
+    } else {
+      s._hover(h => {
+        h.borderColor._primary
+      })
+      s._focus(f => {
+        f.borderColor._primary
+      })
     }
     props.css?.(s)
   }),
@@ -177,7 +186,7 @@ const optionClass = computed(() =>
     s.fontSize._middle
     s.color._text
     s._hover(h => {
-      h.backgroundColor._primary.alpha(8)
+      h.backgroundColor._textSecondary.alpha(8)
     })
   }),
 )

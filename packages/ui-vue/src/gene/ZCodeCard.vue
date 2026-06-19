@@ -253,7 +253,7 @@ const actionsClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
-    s.gap.px(sizePx(0.25))
+    s.gap._tiny
     s.flexShrink(0)
   }),
 )
@@ -262,12 +262,12 @@ const buttonClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
-    s.gap.px(sizePx(0.25))
-    s.paddingTop.px(sizePx(0.25))
-    s.paddingBottom.px(sizePx(0.25))
-    s.paddingLeft.px(sizePx(0.5))
-    s.paddingRight.px(sizePx(0.5))
-    s.borderWidth.px(0)
+    s.gap._tiny
+    s.paddingTop._tiny
+    s.paddingBottom._tiny
+    s.paddingLeft._small
+    s.paddingRight._small
+    s.borderWidth._none
     s.borderRadius._tiny
     s.backgroundColor.transparent
     s.color._textSecondary
@@ -281,10 +281,10 @@ const buttonClass = computed(() =>
       h.color._text
     })
     s._selector('&:focus-visible', h => {
-      h.outlineWidth.px(2)
+      h.outlineWidth._middle
       h.outlineStyle.solid
-      h.outlineColor._primary
-      h.outlineOffset.px(1)
+      h.outlineColor._focusRing.alpha(40)
+      h.outlineOffset.px(2)
     })
   }),
 )

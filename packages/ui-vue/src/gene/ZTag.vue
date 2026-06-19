@@ -151,6 +151,12 @@ const closeBtnClass = computed(() =>
     s._hover(h2 => {
       h2.opacity._full
     })
+    s._focusVisible(f => {
+      f.outlineWidth._middle
+      f.outlineStyle.solid
+      f.outlineColor._focusRing.alpha(40)
+      f.outlineOffset.px(1)
+    })
     applySx(s, props.sxClose)
   }),
 )

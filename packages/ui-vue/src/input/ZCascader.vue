@@ -213,6 +213,8 @@ const triggerClass = computed(() =>
     s.borderColor(open.value ? '_primary' : '_border')
     s.backgroundColor._bg
     s.color._text
+    s.transitionProperty._colors
+    s.transitionDuration._small
     applyInputSize(s, props.size, props.height)
     s.cursor(props.disabled ? 'not-allowed' : 'pointer')
     // 触发器 minWidth: 192px(= sizePx(12),级联路径文本一般较长)

@@ -217,7 +217,9 @@ const buttonClass = computed(() =>
           b.opacity(0.12)
           b.borderRadius.inherit
           b.pointerEvents.none
-          b._prop('transition', 'opacity 150ms cubic-bezier(0.4, 0, 0.2, 1)')
+          b.transitionProperty._opacity
+          b.transitionDuration._small
+          b.transitionTimingFunction._default
         })
         s._hover(h2 => {
           h2._before(b => {
@@ -255,7 +257,9 @@ const buttonClass = computed(() =>
           b.opacity(0)
           b.borderRadius.inherit
           b.pointerEvents.none
-          b._prop('transition', 'opacity 150ms cubic-bezier(0.4, 0, 0.2, 1)')
+          b.transitionProperty._opacity
+          b.transitionDuration._small
+          b.transitionTimingFunction._default
         })
         s._hover(h2 => {
           h2._before(b => {

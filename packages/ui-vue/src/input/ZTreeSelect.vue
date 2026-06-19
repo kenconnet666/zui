@@ -183,6 +183,8 @@ const triggerClass = computed(() =>
     else s.borderColor._border
     s.backgroundColor._bg
     s.color._text
+    s.transitionProperty._colors
+    s.transitionDuration._small
     applyInputSize(s, props.size, props.height)
     s.cursor(props.disabled ? 'not-allowed' : 'pointer')
     // 触发器 minWidth: 160px(= sizePx(10),略宽于 ZSelect 128px,树标签通常更长)
@@ -234,7 +236,7 @@ const clearBtnClass = computed(() =>
     s.cursor.pointer
     s.backgroundColor.transparent
     s.borderStyle.none
-    s.padding('0')
+    s.padding.px(0)
     s.color._textSecondary
     s._hover(h2 => {
       h2.color._text

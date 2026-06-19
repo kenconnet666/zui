@@ -152,7 +152,7 @@ const linkClass = (item: ZAnchorItem, active: boolean): string =>
       s.color(activeColorFactory)
       s.fontWeight._medium
       s.marginLeft.px(-9)
-      s.borderLeftWidth.px(2)
+      s.borderLeftWidth._middle
       s.borderLeftStyle.solid
       s.borderLeftColor.currentColor
       s.paddingLeft.px(sizePx(extraIndent + 0.5))

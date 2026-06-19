@@ -63,7 +63,7 @@ const rootClass = computed(() =>
           n.marginTop.px(-1)
         })
         s._nest('& > *:not(:first-child):not(:last-child)', n => {
-          n.borderRadius.px(0)
+          n.borderRadius._none
         })
         s._nest('& > *:first-child', n => {
           n.borderBottomLeftRadius('0')
@@ -78,7 +78,7 @@ const rootClass = computed(() =>
           n.marginLeft.px(-1)
         })
         s._nest('& > *:not(:first-child):not(:last-child)', n => {
-          n.borderRadius.px(0)
+          n.borderRadius._none
         })
         s._nest('& > *:first-child', n => {
           n.borderTopRightRadius('0')

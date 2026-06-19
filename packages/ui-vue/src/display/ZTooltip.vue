@@ -186,8 +186,8 @@ const tooltipClass = computed(() =>
     s.color._bg
     s.fontSize._small
     s.lineHeight._tight
-    s.paddingTop.px(sizePx(0.25))
-    s.paddingBottom.px(sizePx(0.25))
+    s.paddingTop._tiny
+    s.paddingBottom._tiny
     s.paddingLeft._small
     s.paddingRight._small
     s.borderRadius._tiny

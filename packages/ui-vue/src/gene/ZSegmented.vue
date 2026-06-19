@@ -123,6 +123,12 @@ const itemClass = (opt: ZSegmentedOption): string => {
         if (!isDisabled) h.color._text
       })
     }
+    s._focusVisible(f => {
+      f.outlineWidth._middle
+      f.outlineStyle.solid
+      f.outlineColor._focusRing.alpha(40)
+      f.outlineOffset.px(-2)
+    })
     if (isDisabled) s.opacity._dim
   })
 }

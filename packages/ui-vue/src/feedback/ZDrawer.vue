@@ -196,12 +196,13 @@ const drawerClass = computed(() =>
   }),
 )
 
-// ─── Drawer 专属：headClass（无 gap._small，与 Modal headClass 不同）─────────
+// ─── Drawer headClass（与 Modal headClass 对齐：gap._small 防止长标题挤压关闭按钮）─────────
 const headClass = computed(() =>
   icss(theme.value, s => {
     s.display.flex
     s.alignItems.center
     s.justifyContent.spaceBetween
+    s.gap._small
     s.padding._middle
     s.borderBottomWidth._thin
     s.borderBottomStyle.solid

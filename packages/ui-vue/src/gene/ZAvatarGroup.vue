@@ -70,7 +70,7 @@ const rootClass = computed(() =>
 /** 每个头像:`_bg` 圆环 + 非首个负 margin 形成重叠。 */
 function avatarCss(index: number): (s: Chain<ZuiSchema>) => void {
   return s => {
-    s.borderWidth.px(2)
+    s.borderWidth._middle
     s.borderStyle.solid
     s.borderColor._bg
     if (index > 0) s.marginLeft.px(-overlapPx.value)
