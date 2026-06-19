@@ -3,7 +3,7 @@
  * `ZSwitch` —— 开关组件。
  *
  * - `v-model:value`(boolean)
- * - `size?: 'small' | 'middle' | 'large'`
+ * - `size?: number` —— rail 尺寸 px 倍数（1 = 16px，默认 2.5）
  * - `disabled` / `loading`
  * - `checkedLabel?: string` / `uncheckedLabel?: string` —— 内嵌文字
  * - sx:sxRail / sxThumb

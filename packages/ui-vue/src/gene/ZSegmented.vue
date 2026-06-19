@@ -4,7 +4,8 @@
  *
  * - `v-model:value` —— 选中的 key
  * - `options: Array<{ value, label, disabled? }>`
- * - `size?: 'small' | 'middle' | 'large'`
+ * - `size?: number` —— 字号尺寸 px 倍数（1 = 16px，默认 1）
+ * - `height?: number` —— 高度 px 倍数（默认 `size * 2`）
  * - `block?: boolean` —— 满宽
  */
 import type { Chain } from '@kenconnet666/zui-core'

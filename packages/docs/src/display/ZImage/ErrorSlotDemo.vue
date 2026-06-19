@@ -7,8 +7,8 @@ import { ZImage, ZFlex, ZText } from '@kenconnet666/zui-vue'
     <ZFlex :direction="d => d.column" :gap="g => g._tiny" :align="a => a.center">
       <ZImage
         src="/intentionally-broken-image.png"
-        :width="w => w.px(160)"
-        :height="h => h.px(120)"
+        :width="10"
+        :height="7.5"
       >
         <template #error>
           <ZText
@@ -29,8 +29,8 @@ import { ZImage, ZFlex, ZText } from '@kenconnet666/zui-vue'
     <ZFlex :direction="d => d.column" :gap="g => g._tiny" :align="a => a.center">
       <ZImage
         src="https://picsum.photos/seed/zui-eager/160/120"
-        :width="w => w.px(160)"
-        :height="h => h.px(120)"
+        :width="10"
+        :height="7.5"
         :lazy="false"
       />
       <ZText>lazy=false (eager 立即加载)</ZText>

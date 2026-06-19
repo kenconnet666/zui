@@ -8,7 +8,7 @@
  * - `allowHalf?: boolean` —— 允许半星(默认 false)
  * - `disabled?: boolean` / `readonly?: boolean`
  * - `color` carrier factory —— 默认 `_warning`(M2 orange,适合星)
- * - `size?: 'small' | 'middle' | 'large'`
+ * - `size?: number` —— 星星尺寸 px 倍数（1 = 16px，默认 1.5 = 24px）
  *
  * **a11y**:`role="radiogroup"`,每颗 `role="radio"` + `aria-checked`。
  */

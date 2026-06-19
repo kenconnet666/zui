@@ -61,7 +61,7 @@
     "node": ">=20.0.0"
   },
   "peerDependencies": {
-    "@emotion/css": "^11.13.0"
+    "@emotion/css": "^11.13.5"
   },
   "dependencies": {
     "color2k": "^2.0.3",

@@ -16,11 +16,16 @@ const propsRows = [
   { name: 'fallback', type: 'string', default: '—', desc: '加载失败时的备用图片地址。' },
   {
     name: 'width',
-    type: '(w: Chain[width]) => void',
+    type: 'number | string',
     default: '—',
-    desc: '宽度 factory，如 w => w.px(160) / w.px(128) / w.pct(100)。',
+    desc: '宽度。number 为 px 倍数（1 = 16px，如 10 = 160px）；string 原样 CSS（如 100%）。',
   },
-  { name: 'height', type: '(h: Chain[height]) => void', default: '—', desc: '高度 factory。' },
+  {
+    name: 'height',
+    type: 'number | string',
+    default: '—',
+    desc: '高度。number 为 px 倍数（1 = 16px）；string 原样 CSS。',
+  },
   {
     name: 'fit',
     type: '(f: Chain[objectFit]) => void',
@@ -45,9 +50,9 @@ const slotsRows = [
     <ZTitle :level="1">ZImage 图片</ZTitle>
     <ZParagraph>
       增强 <ZCode code="img" /> 标签，默认开启懒加载，支持 fallback 备用图和
-      <ZCode code="#error" /> slot 自定义错误状态。 宽高通过 <ZCode code="width" /> /
-      <ZCode code="height" /> factory 传入，可使用 
-      <ZCode code=".px()" /> / <ZCode code=".pct()" /> 等任意 carrier 方法。
+      <ZCode code="#error" /> slot 自定义错误状态。宽高通过 <ZCode code="width" /> /
+      <ZCode code="height" /> 传入：number 为 px 倍数（1 单位 = 16px），string 为原样 CSS（如
+      <ZCode code="100%" />）。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>

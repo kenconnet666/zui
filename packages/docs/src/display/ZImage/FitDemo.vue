@@ -16,8 +16,8 @@ const fits = ['fill', 'contain', 'cover', 'none', 'scaleDown'] as const
       <ZImage
         src="https://picsum.photos/seed/zui-fit/200/100"
         :alt="fit"
-        :width="w => w.px(120)"
-        :height="h => h.px(120)"
+        :width="7.5"
+        :height="7.5"
         :fit="f => f[fit]"
       />
       <ZText>{{ fit }}</ZText>

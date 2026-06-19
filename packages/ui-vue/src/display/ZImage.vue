@@ -7,11 +7,11 @@
  * - `alt?: string`
  * - `lazy?: boolean` —— 默认 true(走 `loading="lazy"`)
  * - `fallback?: string` —— 加载失败时显示的图(也可走 `#error` slot)
- * - `width?: factory` / `height?: factory` —— 尺寸 carrier factory(2026-05-24 B7:数字尺寸 → factory)
- * - `fit?: factory` —— objectFit carrier factory(2026-05-24 B7:enum → factory)
+ * - `width?: number | string` / `height?: number | string` —— 尺寸：number 为 px 倍数
+ *   (1 单位 = 16px，走 `sizePx`)，string 为原样 CSS（'100%' / '50vh'）
+ * - `fit?: factory` —— objectFit carrier factory
  *
- * 尺寸用 chain carrier 方法:走 `s.width(...)` / `s.height(...)`,用户可用 `.px(N)` /
- * `.pct(N)` 等任意 carrier 方法。
+ * 数值尺寸 1 单位 = 16px（`_internal/sizing.ts` 的 `sizePx`）；百分比 / 视口等非 px 用字符串。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -22,21 +22,20 @@ export interface ZImageProps {
   lazy?: boolean
   fallback?: string
   /**
-   * 宽度 factory —— 接 `width` carrier。
+   * 宽度 —— `number` 为 px 倍数（1 单位 = 16px，如 `8` = 128px），`string` 为原样 CSS。
    *
    * @example
-   * <ZImage :width="(w) => w.px(120)" />
-   * <ZImage :width="(w) => w.px(128)" />
-   * <ZImage :width="(w) => w.pct(100)" />
+   * <ZImage :width="8" />            <!-- 128px -->
+   * <ZImage width="100%" />          <!-- 百分比 -->
    */
-  width?: ((c: Chain<ZuiSchema>['width']) => void) | undefined
+  width?: number | string | undefined
   /**
-   * 高度 factory —— 接 `height` carrier。
+   * 高度 —— `number` 为 px 倍数（1 单位 = 16px），`string` 为原样 CSS。
    *
    * @example
-   * <ZImage :height="(h) => h.px(80)" />
+   * <ZImage :height="5" />           <!-- 80px -->
    */
-  height?: ((c: Chain<ZuiSchema>['height']) => void) | undefined
+  height?: number | string | undefined
   /**
    * objectFit factory —— 接 `objectFit` carrier。
    *
@@ -59,6 +58,12 @@ export interface ZImageEmits {
 import { computed, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { sizePx } from '../_internal/sizing'
+
+/** 数值 → px 倍数（1 单位 = 16px）；字符串原样透传给 CSS。 */
+function dim(v: number | string): string {
+  return typeof v === 'number' ? `${sizePx(v)}px` : v
+}
 
 const props = withDefaults(defineProps<ZImageProps>(), {
   alt: '',
@@ -80,8 +85,8 @@ const rootClass = computed(() =>
     s.backgroundColor._bgMuted
     s.overflow.hidden
     s.borderRadius._tiny
-    if (props.width) s.width(props.width)
-    if (props.height) s.height(props.height)
+    if (props.width !== undefined) s.width(dim(props.width))
+    if (props.height !== undefined) s.height(dim(props.height))
     props.css?.(s)
   }),
 )
@@ -91,8 +96,8 @@ const imgClass = computed(() =>
     // objectFit 默认 'cover',用户传 factory 覆盖
     if (props.fit) s.objectFit(props.fit)
     else s.objectFit.cover
-    if (props.width) s.width(props.width)
-    if (props.height) s.height(props.height)
+    if (props.width !== undefined) s.width(dim(props.width))
+    if (props.height !== undefined) s.height(dim(props.height))
   }),
 )
 
