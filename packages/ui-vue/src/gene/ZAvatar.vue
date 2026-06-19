@@ -34,7 +34,7 @@ export interface ZAvatarProps {
    */
   size?: number
   /** 方形头像,默认 `false`(圆形)。 */
-  square?: boolean
+  square?: boolean | undefined
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }

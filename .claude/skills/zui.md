@@ -1008,7 +1008,7 @@ import { ZIcon } from '@kenconnet666/zui-vue/components/icon'
 
 ```ts
 export interface ZIconProps {
-  size?: ((w: Chain<ZuiSchema>['width']) => void) | undefined // width carrier;height 自动镜像
+  size?: number // px 倍数(1 单位 = 16px),height 自动镜像 → 正方形
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined // color carrier
   depth?: ((o: Chain<ZuiSchema>['opacity']) => void) | undefined // opacity carrier
   spin?: ((d: Chain<ZuiSchema>['animationDuration']) => void) | undefined // animationDuration carrier(name/iteration/timing 自动加)

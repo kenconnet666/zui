@@ -6,20 +6,19 @@
  * - `<script>`(本块): 模块级出口 —— props 接口
  * - `<script setup>`: 组件运行时 —— 一个 `icss` chain factory 内联全部维度
  *
- * **API 极致一致 = 4 维度全部接单 carrier factory**(2026-05-22 v3):
- * - `size`  → `width` carrier(height 自动镜像 width,保证图标永远正方形)
+ * **API 维度**(size 数值 + 其余单 carrier factory):
+ * - `size`  → `number`(px 倍数,1 单位 = 16px,height 自动镜像,图标永远正方形)
  * - `color` → `color` carrier
  * - `depth` → `opacity` carrier
  * - `spin`  → `animationDuration` carrier(name / iteration / timing 启用时自动加)
  *
- * **单 carrier factory 的优势**:
- * - IDE 补全聚焦该维度的完整 carrier 能力(token / keyword / 字面量 / modifier / unit method)
- * - 输入 `_p` 模糊筛选 schema token —— 设计完主题直接挂组件库上
- * - 用户写法极简 `(w) => w.em(1.25)` 一行表达,不需嵌入多行多属性
- * - 任何不在该 carrier 表达力内的需求(非正方形 / 自定义 easing / 反向旋转)走 css 兜底
+ * **设计取舍**:
+ * - size 用数值 px 倍数(`:size="1.25"` = 20px),心算直观、与其它组件统一
+ * - color/depth/spin 单 carrier factory:IDE 补全聚焦该维度完整能力(token / keyword / 字面量 / modifier / unit)
+ * - 任何不在维度内的需求(非正方形 / 自定义 easing / 反向旋转)走 css 兜底
  *
  * **纯 px 默认**:图标默认 1 × 16px = 16px,通过 `sizePx(n)` 计算。
- * **只设 width(height 镜像)、不设 fontSize**(无 em 复合问题)。
+ * **width = height = `sizePx(size)`(正方形)、不设 fontSize**(无 em 复合问题)。
  * 想"跟父字号"的局部场景走 css 显式写 `s.width.em(N)`。
  *
  * **设计档位由 theme schema 承担** —— 用户走 `(d) => d._middle` / `(o) => o._half` 用 schema token,
@@ -43,7 +42,7 @@ export interface ZIconProps {
   /**
    * 图标尺寸 —— `number`(px 倍数,默认 1 = 16px,1 单位 = 16px)。**height 自动镜像 width**(图标始终正方形)。
    *
-   * 2026-05-24 B7:数值尺寸 prop 改 `number`,Provider 字号联动。
+   * 2026-05-24 B7:数值尺寸 prop 改 `number`(纯 px,1 单位 = 16px;iem / Provider 联动已移除)。
    *
    * **常用尺寸参考**:
    * - 0.75(小图标)/ 1(默认)/ 1.25(强调)/ 1.5(大图标)/ 2(超大)
