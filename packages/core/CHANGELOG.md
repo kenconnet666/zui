@@ -1,6 +1,6 @@
 # @kenconnet666/zui-core
 
-## Unreleased
+## 0.9.0 (2026-06-20)
 
 ### BREAKING — 移除 ComponentTokenRegistry 体系
 
@@ -39,6 +39,46 @@ declare module '@kenconnet666/zui-vue' {
 }
 // ③ 数值常量直接 inline，不开放运行时改
 const SIZE_MAP = { tiny: 0.75, ..., huge: 1.5 } as const
+```
+
+### BREAKING — 移除 `iem` 逻辑单位，回归纯 px
+
+去除自创 `iem`（响应式逻辑单位）系统，对齐 Element Plus / Naive UI 纯 px 模式。
+
+**移除的 API**：
+
+- `iem` / `iemWith` Chain helper 方法
+- `LENGTH_UNITS` 中的 `'iem'` 单位
+- `LengthUnits.iem` carrier 接口字段
+
+**新增**：
+
+- `Chain._anchor(opts)` / `_pin(opts)` / `_pinCorner(opts)` — 子绝父相定位原语
+- `_translateX` / `_translateY` / `_translateZ`、`_scaleX` / `_scaleY` / `_scaleZ` 分量 setter 修复（可组合，不再互相覆盖）
+
+**迁移**：
+
+```ts
+// 旧（iem 随 Provider 动态变化）
+s.padding.iem(1)   // = calc(1 * var(--zui-iem, 16px))
+
+// 新（固定 px，基准 16px）
+s.padding.px(16)   // 等价于 sizePx(1) = 1 × 16
+```
+
+### 新增 — `resolveCarrier` introspect API
+
+新增 `resolveCarrier(theme, prop, factory)` 全局 helper，从 carrier factory 中取出最终字符串值，用于 SVG 属性、canvas 绘制、ARIA 等需要裸字符串的场景。
+
+```ts
+import { resolveCarrier } from '@kenconnet666/zui-core'
+
+// SVG stroke 属性
+const color = resolveCarrier(theme, 'color', props.color) ?? '#1976d2'
+
+// 支持 token / modifier / 字面量 / undefined 安全
+resolveCarrier(theme, 'color', (c) => c._primary.alpha(50))  // → 'rgba(...)'
+resolveCarrier(theme, 'color', undefined)                     // → null
 ```
 
 ## 0.7.0
