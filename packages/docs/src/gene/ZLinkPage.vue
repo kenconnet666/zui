@@ -2,6 +2,7 @@
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
+import CodeBlock from '../components/CodeBlock.vue'
 
 import BasicDemo from './ZLink/BasicDemo.vue'
 import BasicDemoSource from './ZLink/BasicDemo.vue?raw'
@@ -104,8 +105,7 @@ import StateDemoSource from './ZLink/StateDemo.vue?raw'
     />
 
     <ZTitle :level="2">SPA 路由链接</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<ZLink :tag=&quot;RouterLink&quot; to=&quot;/about&quot;>关于我们</ZLink>`"
     />

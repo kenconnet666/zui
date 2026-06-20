@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import ApiTable from '../components/ApiTable.vue'
+import CodeBlock from '../components/CodeBlock.vue'
 </script>
 
 <template>
@@ -58,8 +59,7 @@ import ApiTable from '../components/ApiTable.vue'
       <ZCode code="createIcssInstance(emotion)" /> 把所有 zui 操作绑到给定 emotion 实例,
       每次请求新建 cache,响应结束 flush + 注入到 HTML <ZCode code="&lt;head&gt;" />。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import { createIcssInstance } from '@kenconnet666/zui-core'
 import createCache from '@emotion/cache'
@@ -92,8 +92,7 @@ const html = \`<style data-emotion=&quot;zui\${criticalIds.join(' ')}&quot;>\${c
       Nuxt 用 <ZCode code="useState" /> 或 server plugin 注入 emotion cache,render hook 里 flush。
       下面是一个简化模板(具体实现可根据 Nuxt 版本调整):
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// server/plugins/zui.ts(Nuxt 3+)
 import createCache from '@emotion/cache'
@@ -199,8 +198,7 @@ export default defineNitroPlugin((nitro) => {
     <ZParagraph>
       推荐:<strong>统一从主入口 named import</strong>。bundler 会按真实使用情况裁剪:
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// ✅ 推荐
 import {
@@ -255,8 +253,7 @@ import { ZButton } from '@kenconnet666/zui-vue/components/button'`"
       mismatch。<ZCode code="useZId" /> 透传这个保证,加上 <ZCode code="zui-" />
       前缀。早期(Vue &lt; 3.5)的项目升级 Vue 3.5+ 后即可使用 zui-vue,无需额外配置。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// 服务端渲染:
 const id = useZId()   // 'zui-v-0-1'
@@ -266,8 +263,7 @@ const id = useZId()   // 'zui-v-0-1'(同一个 id,无 mismatch)`"
     />
 
     <ZTitle :level="2">推荐打包配置(业务方)</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// vite.config.ts
 import vue from '@vitejs/plugin-vue'

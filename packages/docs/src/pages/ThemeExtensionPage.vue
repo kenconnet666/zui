@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import ApiTable from '../components/ApiTable.vue'
+import CodeBlock from '../components/CodeBlock.vue'
 </script>
 
 <template>
@@ -73,8 +74,7 @@ import ApiTable from '../components/ApiTable.vue'
       在用户工程的 <ZCode code="zui.d.ts" />(或任意 <ZCode code=".d.ts" /> / <ZCode code=".ts" />)
       里写一段 <ZCode code="declare module" />:
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// src/types/zui.d.ts
 declare module '@kenconnet666/zui-vue' {
@@ -116,8 +116,7 @@ export {}  // 让该文件成为 module(否则全局污染)`"
     <ZTitle :level="2">完整样例</ZTitle>
 
     <ZTitle :level="3">① 扩展类型层</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// src/types/zui.d.ts
 declare module '@kenconnet666/zui-vue' {
@@ -142,8 +141,7 @@ export {}`"
     />
 
     <ZTitle :level="3">② 注入运行时值</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// src/theme.ts
 import { zuiLight } from '@kenconnet666/zui-vue'
@@ -170,8 +168,7 @@ export const myTheme = zuiLight.extend({
     />
 
     <ZTitle :level="3">③ ZBox 注入</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { ZBox } from '@kenconnet666/zui-vue'
@@ -186,8 +183,7 @@ import { myTheme } from './theme'
     />
 
     <ZTitle :level="3">④ 组件内使用</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<template>
   <!-- chain carrier 自动补全自定义 token -->
@@ -218,8 +214,7 @@ import { myTheme } from './theme'
       token,只覆盖差异。如果需要彻底替换(比如做完全独立的设计系统),用
       <ZCode code="Theme" /> 类从零构造,参考 <ZCode code="zui-light.ts" /> 的写法:
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import { Theme, FLAT_PALETTE } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '@kenconnet666/zui-vue'
@@ -256,8 +251,7 @@ export const myCustomTheme = new Theme<ZuiSchema>({
       运行时切主题最常见模式:把 <ZCode code="theme" /> 绑成 ref / computed,在按钮点击时换值。
       <ZCode code="ZBox" /> 监听 <ZCode code="theme" /> prop 变化,所有 chain factory 自动重算。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { computed, ref } from 'vue'
@@ -291,8 +285,7 @@ const theme = computed(() => {
       子树用 <ZCode code=":theme-patch" /> 增量 patch 父主题,不需要重新构造完整 theme。 合并走
       <ZCode code="mergeTheme" /> 深合并。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<template>
   <!-- 外层用品牌主题 -->
@@ -312,8 +305,7 @@ const theme = computed(() => {
       所有 chain factory(prop callback / <ZCode code="css" /> / <ZCode code="useStyles" /> /
       <ZCode code="icss" />) 都自动可用:
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// ① 组件 prop callback
 <ZIcon :color=&quot;(c) => c._brandRoyal&quot; />
@@ -334,8 +326,7 @@ const primaryHex = theme.value.color.brandRoyal   // '#1a3a8f'`"
     />
 
     <ZTitle :level="2">三层继承关系</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="text"
       :code="`@kenconnet666/zui-core    BaseSchema    /* Tailwind 242 色 palette + 基本 category */
                     ▲ extends

@@ -77,6 +77,7 @@
 - **`ZVirtualList.rootRef` / `ZList.rootRef` / `ZDataTable.rootRef`** expose —— 虚拟列表家族新增根 DOM ref 暴露
 - **`ZTour` 跳过功能**：新增 `skip` emit，区分于关闭事件；引导卡片增加跳过按钮
 - **17 组件 variant / enum type alias 补全导出**：`ZTagVariant` / `ZDividerAlign` / `ZCodeColorScheme` / `ZFormLabelPlacement` / `ZFormValidateTrigger` / `ZCascaderExpandTrigger` / `ZDataTableSelection` / `ZTooltipTrigger` / `ZPopoverTrigger` / `ZProgressType` / `ZDrawerPlacement` / `ZNotificationPlacement` / `ZCountdownPrecision` / `ZMarqueeDirection` / `ZTabsType` / `ZDropdownTrigger` / `ZSplitDirection`
+- **导出代码主题共享状态**：`CODE_THEMES` / `globalCodeTheme` / `setCodeTheme`（原 `ZCodeCard` 内部模块级单例）提升为包级公开导出，供站点级独立代码块复用同一份全站联动的 shiki 主题状态
 
 ### 优化
 

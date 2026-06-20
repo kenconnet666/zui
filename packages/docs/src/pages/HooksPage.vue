@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import ApiTable from '../components/ApiTable.vue'
+import CodeBlock from '../components/CodeBlock.vue'
 </script>
 
 <template>
@@ -55,9 +56,8 @@ import ApiTable from '../components/ApiTable.vue'
       包装 Vue 3.5+ 内置 <ZCode code="useId()" />,加 <ZCode code="zui-" /> 前缀避免与宿主页面 id
       冲突。 可选语义后缀,用于复合组件区分多个子节点 id。SSR 安全(Vue 内置 useId 跨端一致)。
     </ZParagraph>
-    <ZCode :inline="false" lang="ts" :code="`function useZId(suffix?: string): string`" />
-    <ZCode
-      :inline="false"
+    <CodeBlock lang="ts" :code="`function useZId(suffix?: string): string`" />
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { useZId } from '@kenconnet666/zui-vue'
@@ -93,8 +93,7 @@ const descId  = useZId('desc')        // 'zui-v-1-desc'
       Modal / Drawer / Tooltip / Popover 等浮层用 <ZCode code="&lt;Teleport&gt;" /> 渲染到
       <ZCode code="&lt;body&gt;" />(或自定义 target)的统一工具。两种形式:
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// composable 形式(setup 内拿到 target ref)
 function usePortal(target?: string | HTMLElement | null): Ref<HTMLElement | null>
@@ -103,8 +102,7 @@ function usePortal(target?: string | HTMLElement | null): Ref<HTMLElement | null
 const ZPortal: { props: { to: string | HTMLElement; disabled: boolean } }`"
     />
     <ZParagraph>使用 ZPortal 组件版:</ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { ZPortal } from '@kenconnet666/zui-vue'
@@ -128,8 +126,7 @@ import { ZPortal } from '@kenconnet666/zui-vue'
 </template>`"
     />
     <ZParagraph>使用 composable 版:</ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { usePortal } from '@kenconnet666/zui-vue'
@@ -172,16 +169,14 @@ const root = usePortal(document.getElementById('app'))
       <ZCode code="useEscapeStack" /> 维护一个全局 LIFO 栈,按下 Escape
       <strong>只 dispatch 给最顶层 enabled 的 handler</strong>。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`function useEscapeStack(
   onEscape: () => void,
   opts?: { enabled?: Ref<boolean> },
 ): void`"
     />
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { ref } from 'vue'
@@ -221,8 +216,7 @@ useEscapeStack(() => (open.value = false), { enabled: open })
       <ZCode code="shift({ padding: 8 })" /> 三件套,加 <ZCode code="autoUpdate" />。降低使用心智,让
       Tooltip / Popover / Dropdown / Select 列表层定位的样板代码大幅缩减。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`interface UsePopperOptions {
   /** 推荐 placement,默认 'bottom'(flip 会自动避开 viewport 边界) */
@@ -245,8 +239,7 @@ function usePopper(
     />
 
     <ZTitle :level="3">基础用法</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { ref } from 'vue'
@@ -265,8 +258,7 @@ const { floatingStyles, placement } = usePopper(reference, floating)
     />
 
     <ZTitle :level="3">placement / offset</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`const { floatingStyles } = usePopper(reference, floating, {
   placement: 'bottom-start',
@@ -281,8 +273,7 @@ const { floatingStyles } = usePopper(reference, floating, {
     />
 
     <ZTitle :level="3">追加 middleware</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import { arrow, size } from '@floating-ui/vue'
 
@@ -308,8 +299,7 @@ const { floatingStyles, middlewareData } = usePopper(reference, floating, {
       DOM。 第一次使用时往 <ZCode code="&lt;head&gt;" /> 注入 keyframes(全局一次),包装 ripple
       容器需要 <ZCode code="position: relative" /> + <ZCode code="overflow: hidden" />(组件自己加)。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`interface UseRippleOptions {
   /** ripple 颜色,默认 'rgba(255,255,255,0.35)' */
@@ -331,8 +321,7 @@ function useRipple(
       <ZCode code="ZButton" /> 默认在 setup 内调用 <ZCode code="useRipple(rootRef)" />, 传入的
       <ZCode code="disabled" /> 是组件 prop 派生的响应式 ref——禁用按钮自动不出波纹。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { ref, toRef } from 'vue'
@@ -352,8 +341,7 @@ useRipple(root, { disabled: toRef(props, 'disabled') })
     />
 
     <ZTitle :level="3">自定义颜色 / 时长</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// 暗色按钮用浅色波纹
 useRipple(root, {
@@ -373,8 +361,7 @@ useRipple(root, {
     />
 
     <ZTitle :level="3">关闭波纹</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// 静态关闭:不调用即可
 // 动态关闭:传 disabled
@@ -392,8 +379,7 @@ useRipple(root, {
     <ZParagraph>
       所有 hook 都通过<strong>主入口</strong>导出(2026-05-23,L12 决策:取消所有 subpath exports):
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import {
   useZId,

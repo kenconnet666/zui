@@ -46,7 +46,13 @@ export type { ZBadgeProps } from './ZBadge.vue'
 export { default as ZCode } from './ZCode.vue'
 export type { ZCodeProps, ZCodeColorScheme } from './ZCode.vue'
 
-export { default as ZCodeCard, stripImports } from './ZCodeCard.vue'
+export {
+  default as ZCodeCard,
+  stripImports,
+  CODE_THEMES,
+  globalCodeTheme,
+  setCodeTheme,
+} from './ZCodeCard.vue'
 export type { ZCodeCardProps, ZCodeCardEmits, CodeThemeItem } from './ZCodeCard.vue'
 
 export { default as ZCopyButton } from './ZCopyButton.vue'

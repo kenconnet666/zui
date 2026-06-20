@@ -2,6 +2,7 @@
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
+import CodeBlock from '../components/CodeBlock.vue'
 
 import BasicDemo from './ZBlockquote/BasicDemo.vue'
 import BasicDemoSource from './ZBlockquote/BasicDemo.vue?raw'
@@ -79,8 +80,7 @@ import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
     />
 
     <ZTitle :level="2">盒子模型</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="text"
       :code="`ZBlockquote (block, <blockquote>)
   font-size:        size * 16px        /* size=1 → 16px */

@@ -2,6 +2,7 @@
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
+import CodeBlock from '../components/CodeBlock.vue'
 
 import BasicDemo from './ZText/BasicDemo.vue'
 import BasicDemoSource from './ZText/BasicDemo.vue?raw'
@@ -132,8 +133,7 @@ import DimensionDemoSource from './ZText/DimensionDemo.vue?raw'
     <ZParagraph>
       通过 <ZCode code="tag" /> 切换 HTML 语义元素，同时保留 chain factory 全量能力：
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<ZText tag=&quot;em&quot; :color=&quot;(c) => c._primary&quot;>强调文本</ZText>
 <ZText tag=&quot;strong&quot; :weight=&quot;(w) => w._bold&quot;>加重文本</ZText>

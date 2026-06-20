@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import ApiTable from '../components/ApiTable.vue'
+import CodeBlock from '../components/CodeBlock.vue'
 </script>
 
 <template>
@@ -22,8 +23,7 @@ import ApiTable from '../components/ApiTable.vue'
       一个 <ZCode code="css" /> 作为兜底逃生口就够用。但复合组件(ZCard / ZModal / ZTabs / ZSelect)的
       <strong>每个子节点</strong>都需要逃生口。如果按"嵌套属性"方式设计:
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// ❌ 反例:嵌套属性的属性
 interface ZCardProps {
@@ -55,8 +55,7 @@ interface ZCardProps {
 
     <ZTitle :level="2">类型签名</ZTitle>
     <ZParagraph> 来自 <ZCode code="packages/ui-vue/src/_internal/sx.ts" />: </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import type { Chain, ThemeSchema } from '@kenconnet666/zui-core'
 import type { HTMLAttributes, VNodeRef } from 'vue'
@@ -101,8 +100,7 @@ export type SxObject<S extends ThemeSchema = ZuiSchema> = {
     />
 
     <ZTitle :level="3">applySx 实现</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`export function applySx(s: Chain<ZuiSchema>, sx?: SxObject): void {
   if (sx?.css) sx.css(s)
@@ -110,8 +108,7 @@ export type SxObject<S extends ThemeSchema = ZuiSchema> = {
     />
 
     <ZTitle :level="3">extractSxAttrs 实现</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`export function extractSxAttrs(sx?: SxObject): {
   class: SxObject['class'] | undefined
@@ -130,8 +127,7 @@ export type SxObject<S extends ThemeSchema = ZuiSchema> = {
       复合组件按「子节点」拆 prop,每个 sx prop 在 setup 里都成对调用 <ZCode code="applySx" /> 与
       <ZCode code="extractSxAttrs" />。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { computed } from 'vue'
@@ -177,8 +173,7 @@ const headAttrs = computed(() => extractSxAttrs(props.sxHead))
       <ZCode code="ZCard" /> 提供 <ZCode code="sxHead" /> / <ZCode code="sxBody" /> /
       <ZCode code="sxFoot" /> 三个 prop——用户对三个子节点的能力完全对称。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<ZCard
   :sx-head=&quot;{
@@ -207,8 +202,7 @@ const headAttrs = computed(() => extractSxAttrs(props.sxHead))
       <ZCode code="ZModal" /> 暴露 <ZCode code="sxMask" />(遮罩层)与
       <ZCode code="sxDialog" />(弹窗本体) 两个 sx prop。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<ZModal
   v-model:open=&quot;visible&quot;
@@ -236,8 +230,7 @@ const headAttrs = computed(() => extractSxAttrs(props.sxHead))
       <strong>DOM 表现</strong>相关字段。<strong>不要</strong>把组件级 props(open / size / variant /
       data 等业务字段)塞进 sx——这些字段属于宿主组件本身,应当走顶层 prop。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<!-- ❌ 错误:open 是组件级状态,不该塞进 sxDialog -->
 <ZModal :sx-dialog=&quot;{ open: true, size: 'large' }&quot; />

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import ApiTable from '../components/ApiTable.vue'
+import CodeBlock from '../components/CodeBlock.vue'
 </script>
 
 <template>
@@ -12,8 +13,7 @@ import ApiTable from '../components/ApiTable.vue'
     </ZParagraph>
 
     <ZTitle :level="2">三层 Schema 架构</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="text"
       :code="`@kenconnet666/zui-core   BaseSchema   // Tailwind 242 色 palette
                    ▲ extends
@@ -68,8 +68,7 @@ import ApiTable from '../components/ApiTable.vue'
       多个 <ZCode code="ZBox" /> 可嵌套使用，子树独立设定 theme，通过浏览器 CSS cascade
       自动隔离，零运行时合并开销。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<!-- 外层：默认主题 -->
 <ZBox :theme=&quot;zuiLight&quot;>
@@ -87,8 +86,7 @@ import ApiTable from '../components/ApiTable.vue'
       在任意子组件中通过 <ZCode code="useZTheme()" /> 获取当前 theme， 配合
       <ZCode code="icss(theme.value, factory)" /> 生成 Emotion CSS class。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import { computed } from 'vue'
 import { icss, useZTheme } from '@kenconnet666/zui-vue'

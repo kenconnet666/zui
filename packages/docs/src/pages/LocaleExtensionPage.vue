@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import ApiTable from '../components/ApiTable.vue'
+import CodeBlock from '../components/CodeBlock.vue'
 </script>
 
 <template>
@@ -107,8 +108,7 @@ import ApiTable from '../components/ApiTable.vue'
       <ZCode code="zhCN" />(默认)和 <ZCode code="enUS" /> 开箱即用,均为
       <ZCode code="ZLocale" /> 类型(含 <ZCode code="name" /> 字段用于调试 / 缓存 key)。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import { zhCN, enUS, type ZLocale } from '@kenconnet666/zui-vue'
 
@@ -127,8 +127,7 @@ enUS.datePicker.weekdaysShort  // ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sa
       跟 theme 同款 API:<ZCode code=":locale" /> 完整替换 / <ZCode code=":localePatch" /> 局部
       patch。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { ZBox, enUS, zhCN } from '@kenconnet666/zui-vue'
@@ -151,8 +150,7 @@ const locale = computed(() => lang.value === 'en' ? enUS : zhCN)
     <ZParagraph>
       子组件通过 <ZCode code="useZLocale()" /> 取当前字典。两种调用形态:全量 / 单 namespace。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// 全量(取整个 ZLocale)
 function useZLocale(): Ref<ZLocale>
@@ -162,8 +160,7 @@ function useZLocale<NS extends keyof ZLocaleRegistry>(
   ns: NS,
 ): ComputedRef<ZLocaleRegistry[NS]>`"
     />
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { useZLocale } from '@kenconnet666/zui-vue'
@@ -193,8 +190,7 @@ all.value.name                   // 'zh-CN'
       字段两级浅合并,缺失字段继承父;数组(<ZCode code="weekdaysShort" /> /
       <ZCode code="monthsShort" />)整体替换。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<template>
   <ZBox :locale=&quot;zhCN&quot;>
@@ -213,8 +209,7 @@ all.value.name                   // 'zh-CN'
     <ZParagraph>
       <ZCode code="mergeLocale" /> 也可作为 helper 直接调用,用于构造 ZLocale 字面量:
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import { mergeLocale, zhCN } from '@kenconnet666/zui-vue'
 
@@ -237,8 +232,7 @@ const polite = mergeLocale(zhCN, {
     </ZParagraph>
 
     <ZTitle :level="3">① 扩 Registry 类型</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// src/types/zui-locale.d.ts
 declare module '@kenconnet666/zui-vue' {
@@ -259,8 +253,7 @@ export {}`"
     />
 
     <ZTitle :level="3">② 提供运行时翻译</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// src/locales/zh.ts
 import { zhCN, mergeLocale } from '@kenconnet666/zui-vue'
@@ -294,8 +287,7 @@ export const myEn = mergeLocale(enUS, {
     />
 
     <ZTitle :level="3">③ 自定义组件内消费</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { useZLocale } from '@kenconnet666/zui-vue'
@@ -311,8 +303,7 @@ const t = useZLocale('myCard')
     />
 
     <ZTitle :level="3">④ 切语言</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<script setup lang=&quot;ts&quot;>
 import { computed, ref } from 'vue'
@@ -360,8 +351,7 @@ const locale = computed(() => lang.value === 'en' ? myEn : myZh)
     />
 
     <ZTitle :level="2">类型签名</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`/**
  * 完整 locale 对象。
@@ -389,8 +379,7 @@ export type ZLocalePartial = DeepPartialLocale<ZLocale>`"
       如果业务方已经用了 vue-i18n(支持 ICU / 插值 / 多复数等),可以在 ZBox 上层
       <strong>把 i18n 的当前 locale 转译成 ZLocale 字面量</strong>喂进来:
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// 把 vue-i18n 的翻译拍平成 ZLocale 形态
 import { useI18n } from 'vue-i18n'

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import ApiTable from '../components/ApiTable.vue'
+import CodeBlock from '../components/CodeBlock.vue'
 </script>
 
 <template>
@@ -14,15 +15,14 @@ import ApiTable from '../components/ApiTable.vue'
     </ZParagraph>
 
     <ZTitle :level="2">安装</ZTitle>
-    <ZCode :inline="false" lang="bash" code="pnpm add @kenconnet666/zui-core @emotion/css" />
+    <CodeBlock lang="bash" code="pnpm add @kenconnet666/zui-core @emotion/css" />
 
     <ZTitle :level="2">icss — 类名生成入口</ZTitle>
     <ZParagraph>
       <ZCode code="icss(theme, factory)" /> 是最常用的入口，接收 resolved theme 和一个 Chain
       factory，返回 Emotion CSS class 字符串。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import { icss } from '@kenconnet666/zui-core'
 
@@ -48,8 +48,7 @@ const cls = icss(theme, (s) => {
     </ZParagraph>
 
     <ZTitle :level="3">属性写法</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`/* 1. keyword — CSS 枚举值 */
 s.display.flex
@@ -77,8 +76,7 @@ s._prop('colorScheme', 'dark')`"
     />
 
     <ZTitle :level="3">嵌套：伪类 / 媒体查询 / 暗色</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`/* 伪类 */
 s._hover((h) => { h.color._primary; h.cursor.pointer })
@@ -105,8 +103,7 @@ s._selector('& + &', (r) => { r.marginLeft.px(8) })`"
     <ZTitle :level="2">主题系统</ZTitle>
 
     <ZTitle :level="3">三层 Schema</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="text"
       :code="`@kenconnet666/zui-core   BaseSchema    /* Tailwind 242 色 palette */
                    ▲ extends
@@ -122,8 +119,7 @@ s._selector('& + &', (r) => { r.marginLeft.px(8) })`"
       />
       … <ZCode code="zinc950" /> 等），以及 <ZCode code="black" /> / <ZCode code="white" />。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import { paletteLight, paletteDark } from '@kenconnet666/zui-core'
 
@@ -132,8 +128,7 @@ s._selector('& + &', (r) => { r.marginLeft.px(8) })`"
     />
 
     <ZTitle :level="3">ResolvedTheme</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import type { ResolvedTheme } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '@kenconnet666/zui-vue'
@@ -152,8 +147,7 @@ const extended = zuiLight.extend({
 
     <ZTitle :level="3">defineVariants</ZTitle>
     <ZParagraph> cva / tv 风格的变体抽象，把组件多态映射到 CSS class。 </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import { defineVariants } from '@kenconnet666/zui-core'
 
@@ -182,8 +176,7 @@ const cls = buttonVariants({ variant: 'outlined', size: 'sm' })`"
     />
 
     <ZTitle :level="3">defineParts（slots 多 part 组件）</ZTitle>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`import { defineParts } from '@kenconnet666/zui-core'
 

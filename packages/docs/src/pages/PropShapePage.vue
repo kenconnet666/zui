@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
 import ApiTable from '../components/ApiTable.vue'
+import CodeBlock from '../components/CodeBlock.vue'
 
 const shapeColumns = [
   { key: 'type', label: '类型', mono: true, width: '110px' },
@@ -161,8 +162,7 @@ const vmodelRows = [
       最常见。prop 名直接对应 chain 上的一个 carrier,实现时 <ZCode code="props.color(s.color)" />
       一行应用。用户在 callback 内拥有该 carrier 的完整补全:token / keyword / unit / modifier。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// ZText.color
 interface ZTextProps {
@@ -175,8 +175,7 @@ icss(theme.value, (s) => {
 })`"
     />
     <ZParagraph>用户写法:</ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<!-- token -->
 <ZText :color=&quot;(c) => c._primary&quot;>主色文字</ZText>
@@ -201,8 +200,7 @@ icss(theme.value, (s) => {
       经典案例:<ZCode code="ZIcon.spin" />,启用时 setup 自动加上 animationName / iteration /
       timingFunction,用户只传速度。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`interface ZIconProps {
   spin?: ((d: Chain<ZuiSchema>['animationDuration']) => void) | undefined
@@ -216,8 +214,7 @@ if (props.spin) {
   s.animationDuration(props.spin)
 }`"
     />
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<!-- 1 秒一圈 -->
 <ZIcon :component=&quot;Reload&quot; :spin=&quot;(d) => d.s(1)&quot; />
@@ -234,8 +231,7 @@ if (props.spin) {
       用户写一次,作用到多个 CSS 属性。<ZCode code="ZIcon.size" /> 同步 width + height 保正方形;
       <ZCode code="ZFlex.gap" /> 一次设 row-gap + column-gap。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`interface ZIconProps {
   size?: ((w: Chain<ZuiSchema>['width']) => void) | undefined
@@ -245,8 +241,7 @@ if (props.spin) {
 props.size(s.width)
 if (s._node.width !== undefined) s._node.height = s._node.width`"
     />
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<!-- 16px × 16px -->
 <ZIcon :component=&quot;Heart&quot; :size=&quot;(w) => w.px(16)&quot; />
@@ -264,8 +259,7 @@ if (s._node.width !== undefined) s._node.height = s._node.width`"
       <ZCode code="number" />(比例系数,2026-05-24 决策),不接 factory。这是为了让组件内部能用一个数字
       <strong>全维度 px 比例联动</strong> padding / border-radius / font-size 等多个维度。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`interface ZInputProps {
   /**
@@ -287,8 +281,7 @@ const cls = computed(() => icss(theme.value, (s) => {
   s.fontSize.px(16 * k)
 }))`"
     />
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<!-- 标准尺寸 -->
 <ZInput :size=&quot;1&quot; />
@@ -310,8 +303,7 @@ const cls = computed(() => icss(theme.value, (s) => {
       props 接口,不导出独立
       <ZCode code="type ZButtonVariant = ..." /> 别名(避免给用户额外的导入心智)。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`interface ZButtonProps {
   /**
@@ -362,8 +354,7 @@ const buttonVariants = defineVariants(theme, {
         ><ZCode code="_" /> 前缀</strong
       >表示「这是一个 schema token,不是 CSS keyword」。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<!-- 语义色 token -->
 :color=&quot;(c) => c._primary&quot;       <!-- schema.color.primary -->
@@ -393,8 +384,7 @@ const buttonVariants = defineVariants(theme, {
       直接走 <ZCode code="css" /> chain factory。它是组件的「最后一道逃生口」,在所有维度 prop
       应用完之后执行,可以覆盖任意属性 + 加伪类 / 媒体查询 / 嵌套选择器。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="vue"
       :code="`<!-- 加 hover 状态 -->
 <ZIcon
@@ -430,8 +420,7 @@ const buttonVariants = defineVariants(theme, {
       严格选项 <ZCode code="exactOptionalPropertyTypes: true" /> 兼容(用户工程开了严格模式时可以传
       <ZCode code="undefined" /> 等同于不传)。
     </ZParagraph>
-    <ZCode
-      :inline="false"
+    <CodeBlock
       lang="ts"
       :code="`// ❌ exactOptionalPropertyTypes: true 下会报错
 interface Bad {
