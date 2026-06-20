@@ -49,6 +49,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useEscapeStack, useZId } from '../_hooks'
 import { sizePx } from '../_internal/sizing'
+import ZButton from '../gene/ZButton.vue'
 
 /**
  * 盒子模型(number 是 px 倍数(1 单位 = 16px),默认 1 单位 = 16px @ 1080p):
@@ -255,31 +256,6 @@ const btnGroupClass = computed(() =>
     s.gap._tiny
   }),
 )
-const btnClass = (primary: boolean): string =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.justifyContent.center
-    s.cursor.pointer
-    s.borderRadius._tiny
-    s.fontSize._small
-    s.fontWeight._medium
-    s.paddingLeft._small
-    s.paddingRight._small
-    s.paddingTop.px(sizePx(0.25))
-    s.paddingBottom.px(sizePx(0.25))
-    s.borderWidth._thin
-    s.borderStyle.solid
-    if (primary) {
-      s.backgroundColor._primary
-      s.color._bg
-      s.borderColor.transparent
-    } else {
-      s.backgroundColor.transparent
-      s.color._text
-      s.borderColor._border
-    }
-  })
 </script>
 
 <template>
@@ -304,15 +280,15 @@ const btnClass = (primary: boolean): string =>
         <div :class="footerClass">
           <span :class="stepIndicatorClass"> {{ currentRef + 1 }} / {{ steps.length }} </span>
           <div :class="btnGroupClass">
-            <button v-if="currentRef > 0" type="button" :class="btnClass(false)" @click="prev">
+            <ZButton v-if="currentRef > 0" variant="outlined" :size="0.875" @click="prev">
               上一步
-            </button>
-            <button v-if="!isLast" type="button" :class="btnClass(false)" @click="skip">
+            </ZButton>
+            <ZButton v-if="!isLast" variant="text" :size="0.875" @click="skip">
               跳过
-            </button>
-            <button type="button" :class="btnClass(true)" @click="next">
+            </ZButton>
+            <ZButton variant="filled" :size="0.875" @click="next">
               {{ isLast ? '完成' : '下一步' }}
-            </button>
+            </ZButton>
           </div>
         </div>
       </div>

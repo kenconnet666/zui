@@ -52,6 +52,7 @@ import { computed, h, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import ZButton from '../gene/ZButton.vue'
 
 /**
  * 盒子模型(px,1 单位 = 16px):
@@ -187,27 +188,6 @@ const dropZoneClass = computed(() =>
   }),
 )
 
-const pickerBtnClass = computed(() =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.gap._tiny
-    s.padding._small
-    s.paddingLeft._middle
-    s.paddingRight._middle
-    s.borderRadius._small
-    s.borderWidth._thin
-    s.borderStyle.solid
-    s.borderColor._border
-    s.backgroundColor._bg
-    s.color._text
-    s.fontSize._middle
-    s.cursor(props.disabled ? 'not-allowed' : 'pointer')
-    s._hover(h2 => {
-      if (!props.disabled) h2.borderColor._primary
-    })
-  }),
-)
 
 const listClass = computed(() =>
   icss(theme.value, s => {
@@ -302,10 +282,12 @@ const uploadIcon = computed(() => h(ZIcon, { component: BuiltinIcons.add }))
       </div>
     </template>
     <template v-else>
-      <button type="button" :class="pickerBtnClass" :disabled="disabled" @click="openPicker">
-        <component :is="uploadIcon" />
-        <span>选择文件</span>
-      </button>
+      <ZButton variant="outlined" :disabled="disabled" @click="openPicker">
+        <template #prefixIcon>
+          <component :is="uploadIcon" />
+        </template>
+        选择文件
+      </ZButton>
     </template>
 
     <div v-if="showFileList && internalList.length > 0" :class="listClass">

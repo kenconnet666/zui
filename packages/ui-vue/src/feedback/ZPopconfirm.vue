@@ -40,6 +40,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { usePopper, useEscapeStack, useZId } from '../_hooks'
 import { BuiltinIcons, ZIcon } from '../gene'
+import ZButton from '../gene/ZButton.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
@@ -187,53 +188,6 @@ const actionsClass = computed(() =>
   }),
 )
 
-const btnClass = (primary: boolean): string =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.justifyContent.center
-    s.cursor.pointer
-    s.borderRadius._tiny
-    s.fontSize._small
-    s.fontWeight._medium
-    s.paddingLeft._small
-    s.paddingRight._small
-    s.paddingTop._tiny
-    s.paddingBottom._tiny
-    s.borderWidth._thin
-    s.borderStyle.solid
-    s.transitionProperty._colors
-    s.transitionDuration._small
-    if (primary) {
-      s.backgroundColor._primary
-      s.color._bg
-      s.borderColor.transparent
-      s._hover(h => {
-        h.backgroundColor._primary.darken(8)
-      })
-      s._active(a => {
-        a.backgroundColor._primary.darken(12)
-      })
-    } else {
-      s.backgroundColor.transparent
-      s.color._text
-      s.borderColor._border
-      s._hover(h => {
-        h.backgroundColor._textSecondary.alpha(8)
-        h.borderColor._primary
-      })
-      s._active(a => {
-        a.backgroundColor._textSecondary.alpha(12)
-      })
-    }
-    s._focusVisible(f => {
-      f.outlineWidth._middle
-      f.outlineStyle.solid
-      f.outlineColor._focusRing.alpha(40)
-      f.outlineOffset.px(2)
-    })
-  })
-
 const warningIcon = computed(() => h(ZIcon, { component: BuiltinIcons.warning }))
 </script>
 
@@ -261,8 +215,8 @@ const warningIcon = computed(() => h(ZIcon, { component: BuiltinIcons.warning })
         </div>
       </div>
       <div :class="actionsClass">
-        <button type="button" :class="btnClass(false)" @click="onCancel">{{ cancelText }}</button>
-        <button type="button" :class="btnClass(true)" @click="onConfirm">{{ okText }}</button>
+        <ZButton variant="outlined" :size="0.875" @click="onCancel">{{ cancelText }}</ZButton>
+        <ZButton variant="filled" :size="0.875" @click="onConfirm">{{ okText }}</ZButton>
       </div>
     </div>
   </Teleport>

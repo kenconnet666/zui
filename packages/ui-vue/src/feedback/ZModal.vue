@@ -68,6 +68,7 @@ import { useOverlay } from '../_hooks/useOverlay'
 import { useZId } from '../_hooks'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { sizePx } from '../_internal/sizing'
+import ZButton from '../gene/ZButton.vue'
 
 /**
  * 盒子模型(number 是 px 倍数(1 单位 = 16px),默认 1 单位 = 16px @ 1080p):
@@ -132,7 +133,6 @@ const {
   bodyClass,
   bodyScrollerClass,
   footClass,
-  closeBtnClass,
   bodyOverlay,
   closeIconNode,
   rootRef,
@@ -261,17 +261,19 @@ defineExpose({ rootRef })
             <div :id="title || $slots.head ? titleId : undefined">
               <slot name="head">{{ title }}</slot>
             </div>
-            <button
+            <ZButton
               v-if="closable"
-              type="button"
-              :class="closeBtnClass"
+              variant="ghost"
+              shape="circle"
+              :size="0.875"
+              :ripple="false"
               aria-label="关闭"
               @click="onCloseClick"
             >
               <slot name="closeIcon">
                 <component :is="closeIconNode" />
               </slot>
-            </button>
+            </ZButton>
           </div>
 
           <div

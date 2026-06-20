@@ -129,6 +129,18 @@
 
 canvas 字体字符串改读 `zuiLight.fonts.sans`（theme token），与 `fonts` schema 联动，用户可在 `:theme-patch` 中覆盖。
 
+#### 组件复用收口:复杂组件复用基础组件
+
+消除大型复杂组件里手写的重复元件，统一复用基础组件（视觉 / a11y / i18n 一致 + 去重）：
+
+- **复选框 → `ZCheckbox`**：`ZDataTable` / `ZTable` / `ZSelect`（multiple）/ `ZTransfer` 原先各自用裸 `<input type=checkbox>`（浏览器默认样式），改为复用 `ZCheckbox`（主题色方框 + 半选 SVG）；顺带消除 `ZTable` / `ZDataTable` 表头 `:indeterminate` 未用 `.prop` 导致的半选不渲染 bug。为此 `ZCheckbox` 新增 `decorative`（装饰态：根 `aria-hidden` + input 不可聚焦，供 ZSelect 选项的纯视觉勾选）与 `ariaLabel`（透传隐藏 input，供表格行"全选 / 选择第 N 行"）两个 prop。
+- **空态 → `ZEmpty`**：`ZDataTable` / `ZList` / `ZTransfer` / `ZSelect` / `ZTable` 手写空态 `<div>` 改为复用 `ZEmpty`，删除各自的 `emptyClass`；`ZTransfer` 硬编码 `'无数据'` 一并归口。`ZEmpty` 新增 `compact` prop（隐藏占位图标 + 收紧 padding，适配下拉浮层 / 穿梭框面板等小容器）。
+- **加载 → `ZSpin`**：`ZDataTable` loading 遮罩从手写 `'加载中...'` 纯文字改为 `ZSpin`（真旋转 indicator + `role="status"`），遮罩定位 / 半透明样式保留。
+- **标签 → `ZTag`**：`ZSelect`（multiple）已选项从逗号拼接文本升级为可删除 `ZTag` chips（`flex-wrap` + `min-height`）；`ZDynamicTags` 手写 `<span>+<button>` 标签改为 `ZTag`（`closable`，净减约 40 行）。
+- **按钮 → `ZButton`**：`ZPopconfirm` 确定/取消、`ZTour` 上一步/跳过/下一步、`ZUpload` 选择文件、`ZModal` / `ZDrawer` 关闭按钮原先各自手写 `<button>` + 样式 class，改为复用 `ZButton`（`filled` / `outlined` / `text` / `ghost`+`circle` 等 variant）；删除各自的 `btnClass` 与 `useOverlay` 里共享的 `closeBtnClass` 生成逻辑，顺带补齐 ZTour 按钮原先缺失的 hover / active 动效。专用交互件（ZTabs / ZPagination / ZSegmented / ZCarousel / ZSwitch / ZRate 等带 `role` 语义者）保持手写。
+
+> 经核实，表格 `selection='single'` 本就以行点击 + 背景高亮表达选中、无手写 radio，故不引入 `ZRadio`（避免无谓的新 UI）。
+
 ### 修复
 
 - **ZInputNumber** inc/dec：clamp 只算一次，`update:value` 与 `change` 派发同一值（原先各算一次有数值发散风险）

@@ -4,7 +4,7 @@
  * 萃取自 ZModal 与 ZDrawer 中完全相同的 ~75 行逻辑：
  * - body-scroll-lock 生命周期（watch visible → lock/unlock + onScopeDispose 释放）
  * - useEscapeStack 注册（visible 时生效，调 onClose）
- * - 共享 class helpers：bodyClass / bodyScrollerClass / footClass / closeBtnClass
+ * - 共享 class helpers：bodyClass / bodyScrollerClass / footClass
  * - useScrollbarOverlay（内层滚动 overlay thumb）
  * - closeIconNode computed
  * - onCloseClick / handleMaskClick 事件回调
@@ -57,8 +57,6 @@ export interface UseOverlayReturn {
   bodyScrollerClass: Ref<string>
   /** foot class（flex-end + gap + padding + border-top + sxFoot）。 */
   footClass: Ref<string>
-  /** 关闭按钮 class（inline-flex 居中 + hover 背景）。 */
-  closeBtnClass: Ref<string>
   /** scrollbar overlay 实例（scrollEl / isHovered / isFocused / onScroll / trackClass …）。 */
   bodyOverlay: ReturnType<typeof useScrollbarOverlay>
   /** `<ZIcon component="close">` 节点（computed）。 */
@@ -153,24 +151,6 @@ export function useOverlay(
     }),
   )
 
-  const closeBtnClass = computed(() =>
-    icss(theme.value, s => {
-      s.display.inlineFlex
-      s.alignItems.center
-      s.justifyContent.center
-      s.cursor.pointer
-      s.backgroundColor.transparent
-      s.borderStyle.none
-      s.padding._tiny
-      s.fontSize._middle
-      s.color._textSecondary
-      s.borderRadius._tiny
-      s._hover(h2 => {
-        h2.backgroundColor._textSecondary.alpha(8)
-      })
-    }),
-  )
-
   // ─── scrollbar overlay ───────────────────────────────────────────────────────
   const bodyOverlay = useScrollbarOverlay(theme)
 
@@ -246,7 +226,6 @@ export function useOverlay(
     bodyClass,
     bodyScrollerClass,
     footClass,
-    closeBtnClass,
     bodyOverlay,
     closeIconNode,
     rootRef,
