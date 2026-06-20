@@ -263,10 +263,13 @@ describe('ZTransfer', () => {
     })
     const w = mount(Host)
     await activateVirtual(w)
-    // 勾左侧第一个 (A,key=1)
+    // 勾左侧第一个 (A,key=1);ZCheckbox 由 input change 事件驱动
     const checkboxes = w.findAll('input[type="checkbox"]')
     expect(checkboxes.length).toBeGreaterThan(0)
-    await checkboxes[0]!.trigger('click')
+    // jsdom 不自动同步 checked,手动设置再 trigger change
+    const inputEl = checkboxes[0]!.element as HTMLInputElement
+    inputEl.checked = true
+    await checkboxes[0]!.trigger('change')
     const rightBtn = w.find('button[aria-label="移到右侧"]')
     await rightBtn.trigger('click')
     expect(target.value).toContain('1')

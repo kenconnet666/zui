@@ -126,6 +126,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 import { BuiltinIcons, ZIcon } from '../gene'
+import ZCheckbox from '../input/ZCheckbox.vue'
 import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
 
 /**
@@ -487,11 +488,11 @@ const isEmpty = computed(() => sortedRows.value.length === 0)
         role="columnheader"
         aria-label="select all"
       >
-        <input
-          type="checkbox"
+        <ZCheckbox
           :checked="isAllSelected"
-          :indeterminate.prop="isIndeterminate"
-          @change="toggleAll"
+          :indeterminate="isIndeterminate"
+          aria-label="全选"
+          @update:checked="toggleAll"
         />
       </div>
       <div
@@ -548,10 +549,10 @@ const isEmpty = computed(() => sortedRows.value.length === 0)
           @click="e => onRowClick(row, index, e)"
         >
           <div v-if="selection === 'multiple'" :style="selectColStyle" role="cell" @click.stop>
-            <input
-              type="checkbox"
+            <ZCheckbox
               :checked="isSelected(row, index)"
-              @change="toggleSelection(row, index)"
+              :aria-label="`选择第 ${index + 1} 行`"
+              @update:checked="toggleSelection(row, index)"
             />
           </div>
           <div

@@ -25,6 +25,17 @@ export interface ZCheckboxProps {
   label?: string
   disabled?: boolean
   indeterminate?: boolean
+  /**
+   * 装饰模式:复选框仅作**视觉指示**,不参与无障碍语义(根元素 `aria-hidden="true"`)、
+   * 隐藏 input 不可聚焦(`tabindex="-1"`)。用于 ZSelect 等"选中语义由外层
+   * `role="option"` + `aria-selected` 承载、checkbox 纯装饰"的场景。默认 `false`。
+   */
+  decorative?: boolean
+  /**
+   * 透传到隐藏 `<input>` 的无障碍标签。无可见 `label` 时(如表格行复选)用它给屏幕阅读器
+   * 提供语义,如 `'全选'` / `'选择第 3 行'`。
+   */
+  ariaLabel?: string
   /** 复选框方框尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1 = 16px)。2026-05-24 B7。 */
   size?: number
   sxBox?: SxObject
@@ -71,6 +82,7 @@ const props = withDefaults(defineProps<ZCheckboxProps>(), {
   checked: false,
   disabled: false,
   indeterminate: false,
+  decorative: false,
   size: 1,
 })
 
@@ -160,7 +172,7 @@ const innerSvg = computed(() => {
 </script>
 
 <template>
-  <label :class="rootClass">
+  <label :class="rootClass" :aria-hidden="decorative ? 'true' : undefined">
     <span
       :ref="sxBoxAttrs.ref"
       :class="[boxClass, sxBoxAttrs.class]"
@@ -172,6 +184,8 @@ const innerSvg = computed(() => {
       type="checkbox"
       :checked="isChecked"
       :disabled="isDisabled"
+      :tabindex="decorative ? -1 : undefined"
+      :aria-label="ariaLabel"
       :aria-checked="indeterminate ? 'mixed' : isChecked"
       style="position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0"
       @change="onChange"

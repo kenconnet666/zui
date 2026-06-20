@@ -45,6 +45,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZVirtualList from '../display/ZVirtualList.vue'
+import ZCheckbox from './ZCheckbox.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
@@ -237,17 +238,14 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
           key-field="key"
         >
           <template #default="{ item }">
-            <div
-              :class="itemRowClass(leftChecked.includes(item.key), !!item.disabled)"
-              @click="toggleLeft(item.key, !!item.disabled)"
-            >
-              <input
-                type="checkbox"
+            <div :class="itemRowClass(leftChecked.includes(item.key), !!item.disabled)">
+              <ZCheckbox
                 :checked="leftChecked.includes(item.key)"
                 :disabled="item.disabled"
-                @click.stop="toggleLeft(item.key, !!item.disabled)"
+                :label="item.label"
+                @update:checked="(v: boolean) => { if (v !== leftChecked.includes(item.key)) toggleLeft(item.key, !!item.disabled) }"
+                @click.stop
               />
-              <span>{{ item.label }}</span>
             </div>
           </template>
         </ZVirtualList>
@@ -287,17 +285,14 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
           key-field="key"
         >
           <template #default="{ item }">
-            <div
-              :class="itemRowClass(rightChecked.includes(item.key), !!item.disabled)"
-              @click="toggleRight(item.key, !!item.disabled)"
-            >
-              <input
-                type="checkbox"
+            <div :class="itemRowClass(rightChecked.includes(item.key), !!item.disabled)">
+              <ZCheckbox
                 :checked="rightChecked.includes(item.key)"
                 :disabled="item.disabled"
-                @click.stop="toggleRight(item.key, !!item.disabled)"
+                :label="item.label"
+                @update:checked="(v: boolean) => { if (v !== rightChecked.includes(item.key)) toggleRight(item.key, !!item.disabled) }"
+                @click.stop
               />
-              <span>{{ item.label }}</span>
             </div>
           </template>
         </ZVirtualList>

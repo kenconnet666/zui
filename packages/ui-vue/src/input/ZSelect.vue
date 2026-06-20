@@ -87,6 +87,7 @@ import { usePopper, useEscapeStack, useZId } from '../_hooks'
 import { sizePx } from '../_internal/sizing'
 import { onClickOutside } from '@vueuse/core'
 import ZVirtualList from '../display/ZVirtualList.vue'
+import ZCheckbox from './ZCheckbox.vue'
 import { themeColorScheme } from '../_internal/colorScheme'
 import { applyUserRef } from '../_internal/merge-ref'
 
@@ -481,14 +482,11 @@ defineExpose({ rootRef })
             v-bind="sxOptionAttrs.attrs"
             @click="selectOption(opt)"
           >
-            <input
+            <ZCheckbox
               v-if="multiple"
-              type="checkbox"
               :checked="isOptionSelected(opt)"
-              :disabled="opt.disabled"
-              aria-hidden="true"
-              tabindex="-1"
-              @click.stop="selectOption(opt)"
+              decorative
+              :size="0.875"
             />
             <span>{{ opt.label }}</span>
           </div>

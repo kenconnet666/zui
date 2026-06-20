@@ -85,6 +85,7 @@ import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 import { sizePx } from '../_internal/sizing'
+import ZCheckbox from '../input/ZCheckbox.vue'
 
 /**
  * 盒子模型(纯 px,1 单位 = 16px):
@@ -368,12 +369,11 @@ const totalColspan = computed(() => props.columns.length + (props.selectable ? 1
     >
       <tr>
         <th v-if="selectable" :class="selectCellClass" scope="col">
-          <input
-            type="checkbox"
+          <ZCheckbox
             :checked="isAllSelected"
             :indeterminate="isIndeterminate"
             :aria-label="isAllSelected ? '取消全选' : '全选'"
-            @change="toggleAll(($event.target as HTMLInputElement).checked)"
+            @update:checked="toggleAll"
           />
         </th>
         <th
@@ -411,12 +411,11 @@ const totalColspan = computed(() => props.columns.length + (props.selectable ? 1
         :style="sxRowAttrs.style"
         v-bind="sxRowAttrs.attrs"
       >
-        <td v-if="selectable" :class="selectCellClass">
-          <input
-            type="checkbox"
+        <td v-if="selectable" :class="selectCellClass" @click.stop>
+          <ZCheckbox
             :checked="isRowSelected(getRowKey(row, idx))"
             :aria-label="`选择第 ${idx + 1} 行`"
-            @change="toggleRow(getRowKey(row, idx))"
+            @update:checked="toggleRow(getRowKey(row, idx))"
           />
         </td>
         <td
