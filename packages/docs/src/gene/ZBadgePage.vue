@@ -77,7 +77,7 @@ import MaxDemoSource from './ZBadge/MaxDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '0.75',
-          desc: 'px 倍数（1 单位 = 16px，默认 0.75 = 12px）。padding / min-width / height / fontSize 等比缩放。',
+          desc: 'px 倍数（1 单位 = 16px）。默认 0.75 = 12px，字号（font-size = size×16px；dot 模式时为圆点直径基准）。padding / min-width / height 等比缩放。',
         },
         {
           name: 'color',

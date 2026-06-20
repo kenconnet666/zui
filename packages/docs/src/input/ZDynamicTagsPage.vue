@@ -21,7 +21,10 @@ const propsRows = [
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 
-const emitsRows = [{ name: 'update:value', args: 'string[]', desc: '标签列表变更。' }]
+const emitsRows = [
+  { name: 'update:value', args: 'string[]', desc: '标签列表变更（v-model）。' },
+  { name: 'change', args: 'string[]', desc: '标签列表提交变化（添加或删除），payload 同 update:value。' },
+]
 </script>
 
 <template>

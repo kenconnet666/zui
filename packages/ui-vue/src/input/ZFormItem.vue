@@ -12,7 +12,8 @@
  *
  * **slots**:`default` —— 表单控件;`label`(自定义 label)/ `error`(自定义错误信息)
  *
- * **a11y**:`<label>` + 关联控件 + `role="alert"` 错误。
+ * **a11y**:`<label for>` 自动关联 control slot 内首个可聚焦控件(input/select/textarea/combobox/spinbutton),
+ * 点 label 聚焦控件、屏读器朗读 label 作控件名;错误信息 `role="alert"`。
  */
 import type { RuleItem } from 'async-validator'
 import type { Chain } from '@kenconnet666/zui-core'
@@ -38,11 +39,12 @@ export interface ZFormItemProps {
 </script>
 
 <script lang="ts" setup>
-import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, inject, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import Schema from 'async-validator'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { useZId } from '../_hooks'
 import { Z_FORM_KEY } from './_form-ctx'
 import { sizePx } from '../_internal/sizing'
 
@@ -114,6 +116,7 @@ onMounted(() => {
   if (form) {
     form.registerItem({ prop: props.prop, label: props.label ?? '', validate, reset })
   }
+  void nextTick(linkLabel)
 })
 onUnmounted(() => {
   if (form) {
@@ -185,6 +188,25 @@ const errorClass = computed(() =>
 const sxErrorAttrs = computed(() => extractSxAttrs(props.sxError))
 
 const rootRef = ref<HTMLDivElement | null>(null)
+
+// a11y:把 <label for> 关联到 control slot 内首个可聚焦控件(input/select/textarea/combobox/spinbutton)。
+// 点 label 聚焦控件 + 屏读器朗读 label 作控件名。控件无 id 时注入生成 id;有则复用。
+const controlId = useZId('zui-form-item-control')
+const labelFor = ref<string | undefined>(undefined)
+function linkLabel(): void {
+  const root = rootRef.value
+  if (!root) return
+  const el = root.querySelector<HTMLElement>(
+    'input, select, textarea, [role="combobox"], [role="spinbutton"]',
+  )
+  if (!el) {
+    labelFor.value = undefined
+    return
+  }
+  if (!el.id) el.id = controlId
+  labelFor.value = el.id
+}
+
 defineExpose({ validate, reset, rootRef })
 </script>
 
@@ -193,6 +215,7 @@ defineExpose({ validate, reset, rootRef })
     <label
       v-if="label || $slots.label || required"
       :ref="sxLabelAttrs.ref"
+      :for="labelFor"
       :class="[labelClass, sxLabelAttrs.class]"
       :style="sxLabelAttrs.style"
       v-bind="sxLabelAttrs.attrs"

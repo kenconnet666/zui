@@ -38,8 +38,10 @@ export interface ZRateProps {
 }
 
 export interface ZRateEmits {
-  /** 评分变化(支持 `v-model:value`)。v0.2 删除等价的 `change`。 */
+  /** 评分变化(支持 `v-model:value`)。 */
   (e: 'update:value', value: number): void
+  /** 值提交：与 `update:value` 同步触发，payload 类型相同。 */
+  (e: 'change', value: number): void
 }
 </script>
 
@@ -93,6 +95,7 @@ const isInteractive = computed(() => !props.disabled && !props.readonly)
 function setValue(v: number): void {
   if (!isInteractive.value) return
   emit('update:value', v)
+  emit('change', v)
 }
 
 const rootClass = computed(() =>

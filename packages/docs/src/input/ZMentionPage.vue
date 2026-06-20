@@ -19,7 +19,10 @@ const propsRows = [
 ]
 
 const emitsRows = [
-  { name: 'update:value', args: 'string', desc: '值变更。' },
+  { name: 'update:value', args: 'string', desc: '值变更（v-model）。' },
+  { name: 'change', args: 'string', desc: '文本内容变化，payload 同 update:value。' },
+  { name: 'focus', args: 'FocusEvent', desc: 'textarea 获得焦点。' },
+  { name: 'blur', args: 'FocusEvent', desc: 'textarea 失去焦点。' },
   { name: 'select', args: 'string', desc: '选中候选成员（包含 @ prefix）。' },
 ]
 

@@ -4,14 +4,14 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZSelect/BasicDemo.vue'
 import BasicDemoSource from './ZSelect/BasicDemo.vue?raw'
-import MultipleDemo from './ZSelect/MultipleDemo.vue'
-import MultipleDemoSource from './ZSelect/MultipleDemo.vue?raw'
 import FilterableDemo from './ZSelect/FilterableDemo.vue'
 import FilterableDemoSource from './ZSelect/FilterableDemo.vue?raw'
-import RemoteDemo from './ZSelect/RemoteDemo.vue'
-import RemoteDemoSource from './ZSelect/RemoteDemo.vue?raw'
+import MultipleDemo from './ZSelect/MultipleDemo.vue'
+import MultipleDemoSource from './ZSelect/MultipleDemo.vue?raw'
 import DisabledOptionDemo from './ZSelect/DisabledOptionDemo.vue'
 import DisabledOptionDemoSource from './ZSelect/DisabledOptionDemo.vue?raw'
+import RemoteDemo from './ZSelect/RemoteDemo.vue'
+import RemoteDemoSource from './ZSelect/RemoteDemo.vue?raw'
 
 const propsRows = [
   {
@@ -26,7 +26,7 @@ const propsRows = [
   { name: 'clearable', type: 'boolean', default: 'false', desc: '显示清空按钮。' },
   { name: 'filterable', type: 'boolean', default: 'false', desc: '启用搜索过滤。' },
   { name: 'multiple', type: 'boolean', default: 'false', desc: '多选模式。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px）。' },
+  { name: 'size', type: 'number', default: '1', desc: 'px 倍数（1 单位 = 16px）。默认 1 = 16px 字号，padding/height 等比缩放（默认高度 32px，内边距 6px/12px）。' },
   { name: 'height', type: 'number', default: 'size*2', desc: '触发器高度 px 倍数（1 单位 = 16px）。' },
   { name: 'optionSize', type: 'number', default: '2', desc: '下拉项行高 px 倍数（1 单位 = 16px）。' },
   { name: 'dropdownMaxHeight', type: 'number', default: '15', desc: '下拉框最大高度 px 倍数（1 单位 = 16px）。' },
@@ -40,7 +40,12 @@ const optionRows = [
 ]
 
 const emitsRows = [
-  { name: 'update:value', args: 'ZSelectValue | ZSelectValue[] | null', desc: '选中值变更。' },
+  { name: 'update:value', args: 'ZSelectValue | ZSelectValue[] | null', desc: '选中值变更（v-model:value）。' },
+  {
+    name: 'change',
+    args: 'ZSelectValue | ZSelectValue[] | null',
+    desc: '值提交：单选与 update:value 同步触发；多选每次 toggle 选项后触发，payload 为当前已选数组；clearable 清空时 payload 为 null（单选）或 []（多选）。',
+  },
 ]
 
 const exposeRows = [
@@ -61,6 +66,30 @@ const exposeRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="单选 / 可搜索 / 多选 / 禁用" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">可搜索过滤</ZTitle>
+    <DemoBlock title="filterable" :source="FilterableDemoSource">
+      <template #desc><ZCode code="filterable" /> 启用后触发器变输入框,实时过滤选项。</template>
+      <FilterableDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">多选</ZTitle>
+    <DemoBlock title="multiple" :source="MultipleDemoSource">
+      <template #desc><ZCode code="multiple" /> 多选模式,value 为数组,选项前显示勾选态。</template>
+      <MultipleDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">禁用选项</ZTitle>
+    <DemoBlock title="option.disabled" :source="DisabledOptionDemoSource">
+      <template #desc>单个选项 <ZCode code="disabled: true" /> 不可选。</template>
+      <DisabledOptionDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">远程搜索</ZTitle>
+    <DemoBlock title="filterable + 异步加载" :source="RemoteDemoSource">
+      <template #desc>结合 <ZCode code="filterable" /> 与异步 options 实现远程搜索。</template>
+      <RemoteDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

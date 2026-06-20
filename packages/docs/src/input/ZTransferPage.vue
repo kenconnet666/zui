@@ -25,7 +25,10 @@ const itemRows = [
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用（不可转移）。' },
 ]
 
-const emitsRows = [{ name: 'update:targetKeys', args: 'string[]', desc: '右侧 keys 变更。' }]
+const emitsRows = [
+  { name: 'update:targetKeys', args: 'string[]', desc: '右侧 keys 变更（v-model）。' },
+  { name: 'change', args: 'string[]', desc: '右侧 key 列表变化，payload 同 update:targetKeys。' },
+]
 </script>
 
 <template>

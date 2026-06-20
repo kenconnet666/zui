@@ -75,7 +75,7 @@ import ShapeDemoSource from './ZAvatar/ShapeDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '2.5',
-          desc: 'px 倍数（1 单位 = 16px，默认 2.5 = 40px）。width / height / fontSize 等比缩。参考档位：1.5 / 2 / 2.5 / 3 / 4。',
+          desc: 'px 倍数（1 单位 = 16px）。默认 2.5 = 40px，头像直径（width + height 镜像保证正方形）。参考档位：1.5(24px) / 2(32px) / 2.5(40px) / 3(48px) / 4(64px)。',
         },
         {
           name: 'square',

@@ -73,7 +73,7 @@ import ClosableDemoSource from './ZTag/ClosableDemo.vue?raw'
           name: 'size',
           type: 'number',
           default: '0.875',
-          desc: 'px 倍数（1 单位 = 16px）。padding / borderRadius / fontSize 等比缩放。',
+          desc: 'px 倍数（1 单位 = 16px）。默认 0.875 = 14px，字号（font-size）。padding / borderRadius 等比缩放。',
         },
         {
           name: 'closable',

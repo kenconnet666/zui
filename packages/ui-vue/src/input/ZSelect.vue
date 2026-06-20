@@ -65,8 +65,13 @@ export interface ZSelectProps {
 }
 
 export interface ZSelectEmits {
-  /** 选中值变化(支持 `v-model:value`)。v0.2(2026-05-25)删除了等价的 `change`。 */
+  /** 选中值变化(支持 `v-model:value`)。 */
   (e: 'update:value', value: ZSelectValue | ZSelectValue[] | null): void
+  /**
+   * 值提交：单选与 `update:value` 同步触发(payload 同值)；
+   * 多选每次 toggle 选项后触发，payload 为当前已选数组。
+   */
+  (e: 'change', value: ZSelectValue | ZSelectValue[] | null): void
 }
 </script>
 
@@ -78,7 +83,7 @@ import { useZLocale } from '../provider/locale/useZLocale'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyInputSize } from '../_internal/input-size'
 import { BuiltinIcons, ZIcon } from '../gene'
-import { usePopper, useEscapeStack } from '../_hooks'
+import { usePopper, useEscapeStack, useZId } from '../_hooks'
 import { sizePx } from '../_internal/sizing'
 import { onClickOutside } from '@vueuse/core'
 import ZVirtualList from '../display/ZVirtualList.vue'
@@ -143,6 +148,7 @@ const triggerRef = ref<HTMLElement | null>(null)
 const dropdownRef = ref<HTMLElement | null>(null)
 const open = ref(false)
 const search = ref('')
+const listboxId = useZId('zui-select-listbox')
 
 useEscapeStack(
   () => {
@@ -343,9 +349,11 @@ function selectOption(opt: ZSelectOption): void {
     const cur = valueArray.value
     const next = cur.includes(opt.value) ? cur.filter(v => v !== opt.value) : [...cur, opt.value]
     emit('update:value', next)
+    emit('change', next)
     return
   }
   emit('update:value', opt.value)
+  emit('change', opt.value)
   open.value = false
   search.value = ''
 }
@@ -354,6 +362,7 @@ function onClear(e: Event): void {
   e.stopPropagation()
   const empty = props.multiple ? [] : null
   emit('update:value', empty)
+  emit('change', empty)
 }
 
 function onFilterInput(e: Event): void {
@@ -406,7 +415,9 @@ defineExpose({ rootRef })
     :class="[triggerClass, sxTriggerAttrs.class]"
     :style="sxTriggerAttrs.style"
     role="combobox"
+    aria-haspopup="listbox"
     :aria-expanded="open"
+    :aria-controls="open ? listboxId : undefined"
     :aria-disabled="disabled"
     :aria-multiselectable="multiple"
     v-bind="sxTriggerAttrs.attrs"
@@ -444,6 +455,7 @@ defineExpose({ rootRef })
     <div
       v-if="open"
       :ref="bindDropdown"
+      :id="listboxId"
       :class="[dropdownClass, sxDropdownAttrs.class]"
       :style="[floatingStyles, sxDropdownAttrs.style]"
       role="listbox"

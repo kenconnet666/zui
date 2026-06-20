@@ -58,6 +58,12 @@ export interface ZInputOTPEmits {
   (e: 'update:value', v: string): void
   /** 所有位填满时触发。 */
   (e: 'complete', v: string): void
+  /** 任意格变更时触发，payload 为当前字符串（与 `update:value` 同步）。 */
+  (e: 'change', v: string): void
+  /** 任意格聚焦时触发。 */
+  (e: 'focus', event: FocusEvent): void
+  /** 任意格失焦时触发。 */
+  (e: 'blur', event: FocusEvent): void
 }
 </script>
 
@@ -113,6 +119,7 @@ const chars = computed<string[]>(() => {
 function emitValue(newChars: string[]): void {
   const next = newChars.join('')
   emit('update:value', next)
+  emit('change', next)
   if (next.length === (props.length ?? 6) && newChars.every(c => c !== '')) {
     emit('complete', next)
   }
@@ -268,6 +275,8 @@ const boxClass = computed(() =>
       @keydown="(e) => onKeydown(e, i)"
       @input="(e) => onInput(e, i)"
       @paste="(e) => onPaste(e, i)"
+      @focus="(e) => emit('focus', e)"
+      @blur="(e) => emit('blur', e)"
     />
   </div>
 </template>

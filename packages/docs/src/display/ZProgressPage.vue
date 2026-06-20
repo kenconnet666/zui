@@ -17,8 +17,8 @@ const propsRows = [
   {
     name: 'size',
     type: 'number',
-    default: '线: 0.5 / 圆: 7.5',
-    desc: 'px 倍数（1 单位 = 16px）。line 为 rail 高度（0.5 = 8px）；circle 为容器直径（7.5 = 120px）。',
+    default: 'line: 0.5 / circle: 7.5',
+    desc: 'px 倍数（1 单位 = 16px）。line 模式：默认 0.5 = 8px，轨道高度（rail height）。circle 模式：默认 7.5 = 120px，容器直径（width + height）。',
   },
   { name: 'color', type: '(c: Chain) => void', default: '_primary', desc: '进度颜色 factory。' },
   {

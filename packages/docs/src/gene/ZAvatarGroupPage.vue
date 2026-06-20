@@ -8,7 +8,7 @@ import BasicDemoSource from './ZAvatarGroup/BasicDemo.vue?raw'
 const propsRows = [
   { name: 'items', type: 'ZAvatarGroupItem[]', default: '—（必传）', desc: '头像数据(src / text / alt)。' },
   { name: 'max', type: 'number', default: '—', desc: '最多显示个数，其余折叠为 +N(默认全显)。' },
-  { name: 'size', type: 'number', default: '2.5', desc: '统一尺寸(px 倍数，1 = 16px，2.5 = 40px)。' },
+  { name: 'size', type: 'number', default: '2.5', desc: 'px 倍数（1 单位 = 16px）。默认 2.5 = 40px，头像直径（透传至每个 ZAvatar 的 width / height）。' },
   { name: 'overlap', type: 'number', default: '0.3', desc: '相邻重叠比例(占 size 的比例)。' },
   { name: 'square', type: 'boolean', default: 'false', desc: '方形(默认圆形)。' },
   { name: 'color', type: '(c: ColorCarrier) => void', default: '—', desc: '+N 余量头像背景色。' },

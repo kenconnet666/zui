@@ -27,6 +27,9 @@ const propsRows = [
 const emitsRows = [
   { name: 'update:value', args: 'string', desc: '任意格变更时触发（v-model:value）。' },
   { name: 'complete', args: 'string', desc: '所有位填满时触发，payload 为完整字符串。' },
+  { name: 'change', args: 'string', desc: '任意格变更时触发，payload 为当前字符串（与 update:value 同步）。' },
+  { name: 'focus', args: 'FocusEvent', desc: '任意格聚焦时触发。' },
+  { name: 'blur', args: 'FocusEvent', desc: '任意格失焦时触发。' },
 ]
 
 const sizeRows = [

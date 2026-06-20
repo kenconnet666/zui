@@ -23,12 +23,15 @@ const propsRows = [
     name: 'size',
     type: 'number',
     default: '1.5',
-    desc: '星星尺寸 px 倍数（1 单位 = 16px，默认 1.5 = 24px）。',
+    desc: 'px 倍数（1 单位 = 16px）。默认 1.5 = 24px，每颗星的宽度与高度（始终正方形，等比缩放）。',
   },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 
-const emitsRows = [{ name: 'update:value', args: 'number', desc: '评分值变更。' }]
+const emitsRows = [
+  { name: 'update:value', args: 'number', desc: '评分值变更（v-model:value）。' },
+  { name: 'change', args: 'number', desc: '值提交，与 update:value 同步触发，payload 类型相同。' },
+]
 </script>
 
 <template>

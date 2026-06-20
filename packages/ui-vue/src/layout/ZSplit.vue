@@ -9,6 +9,8 @@
  * - `disabled?: boolean`
  *
  * slot `first` / `second`(分别填两栏内容)。
+ *
+ * **a11y**:分隔条 `role="separator"` + `tabindex=0` + 方向键(横向 ←/→、纵向 ↑/↓)调整占比 + `aria-valuenow/min/max`。
  */
 import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -86,6 +88,24 @@ function onPointerUp(): void {
   window.removeEventListener('pointerup', onPointerUp)
 }
 
+// a11y:键盘方向键调整占比(每步 2%)。横向分隔用 ←/→,纵向用 ↑/↓。
+function onKeydown(e: KeyboardEvent): void {
+  if (props.disabled) return
+  const step = 0.02
+  let next: number
+  if (props.direction === 'horizontal') {
+    if (e.key === 'ArrowLeft') next = props.ratio - step
+    else if (e.key === 'ArrowRight') next = props.ratio + step
+    else return
+  } else {
+    if (e.key === 'ArrowUp') next = props.ratio - step
+    else if (e.key === 'ArrowDown') next = props.ratio + step
+    else return
+  }
+  e.preventDefault()
+  emit('update:ratio', clamp(next))
+}
+
 onScopeDispose(() => {
   window.removeEventListener('pointermove', onPointerMove)
   window.removeEventListener('pointerup', onPointerUp)
@@ -155,9 +175,14 @@ const dividerClass = computed(() =>
     </div>
     <div
       :class="dividerClass"
-      @pointerdown="onPointerDown"
       role="separator"
+      :tabindex="disabled ? -1 : 0"
       :aria-orientation="direction === 'vertical' ? 'horizontal' : 'vertical'"
+      :aria-valuenow="Math.round(ratio * 100)"
+      :aria-valuemin="Math.round(min * 100)"
+      :aria-valuemax="Math.round(max * 100)"
+      @pointerdown="onPointerDown"
+      @keydown="onKeydown"
     />
     <div :class="secondClass">
       <slot name="second" />

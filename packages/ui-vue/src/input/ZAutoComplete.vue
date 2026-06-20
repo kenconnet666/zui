@@ -41,6 +41,12 @@ export interface ZAutoCompleteProps {
 export interface ZAutoCompleteEmits {
   (e: 'update:value', value: string): void
   (e: 'select', value: string): void
+  /** 输入值变更时触发（与 `update:value` 同步），选中建议项时也触发。 */
+  (e: 'change', value: string): void
+  /** input 聚焦时触发。 */
+  (e: 'focus', event: FocusEvent): void
+  /** input 失焦时触发。 */
+  (e: 'blur', event: FocusEvent): void
 }
 </script>
 
@@ -50,7 +56,7 @@ import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyInputSize } from '../_internal/input-size'
-import { usePopper, useEscapeStack } from '../_hooks'
+import { usePopper, useEscapeStack, useZId } from '../_hooks'
 import { sizePx } from '../_internal/sizing'
 import ZVirtualList from '../display/ZVirtualList.vue'
 
@@ -100,6 +106,7 @@ const theme = useZTheme()
 const inputRef = ref<HTMLInputElement | null>(null)
 const dropdownRef = ref<HTMLElement | null>(null)
 const open = ref(false)
+const listboxId = useZId('zui-autocomplete-listbox')
 
 const filtered = computed(() => {
   const v = props.value ?? ''
@@ -194,14 +201,20 @@ const optionClass = computed(() =>
 function onInput(e: Event): void {
   const t = e.target as HTMLInputElement
   emit('update:value', t.value)
+  emit('change', t.value)
   open.value = true
 }
-function onFocus(): void {
+function onFocus(e: FocusEvent): void {
   if (!props.disabled) open.value = true
+  emit('focus', e)
+}
+function onBlur(e: FocusEvent): void {
+  emit('blur', e)
 }
 function onSelect(opt: string): void {
   emit('update:value', opt)
   emit('select', opt)
+  emit('change', opt)
   open.value = false
 }
 
@@ -223,16 +236,20 @@ defineExpose({ rootRef })
     :placeholder="placeholder"
     :disabled="disabled"
     role="combobox"
+    aria-haspopup="listbox"
     :aria-expanded="showDropdown"
+    :aria-controls="showDropdown ? listboxId : undefined"
     aria-autocomplete="list"
     @input="onInput"
     @focus="onFocus"
+    @blur="onBlur"
   />
 
   <Teleport to="body">
     <div
       v-if="showDropdown"
       ref="dropdownRef"
+      :id="listboxId"
       :class="dropdownClass"
       :style="floatingStyles"
       role="listbox"

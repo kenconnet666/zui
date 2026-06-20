@@ -17,7 +17,7 @@
  * - fadeActiveClass / fadeBoundaryClass —— 仅 Modal 有 Transition
  * - sxXxx attrs 提取（各组件自己持有各自 sx prop）
  */
-import { computed, h, onScopeDispose, ref, watch, type Ref } from 'vue'
+import { computed, h, nextTick, onScopeDispose, ref, watch, type Ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import type { ResolvedTheme } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
@@ -184,6 +184,51 @@ export function useOverlay(
     rootRef.value = node
     applyUserRef(sxMaskRef?.(), node)
   }
+
+  // ─── focus trap + 焦点归还(a11y) ────────────────────────────────────────────
+  // 模态打开时把焦点移入覆层并用 Tab 环绕锁定;关闭后归还到打开前聚焦的元素(通常是触发按钮)。
+  let prevFocused: HTMLElement | null = null
+  function getFocusables(): HTMLElement[] {
+    const root = rootRef.value
+    if (!root) return []
+    return Array.from(
+      root.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
+    ).filter(el => el.offsetParent !== null)
+  }
+  function onTrapKeydown(e: KeyboardEvent): void {
+    if (e.key !== 'Tab') return
+    const f = getFocusables()
+    if (f.length === 0) return
+    const first = f[0]!
+    const last = f[f.length - 1]!
+    const active = document.activeElement
+    if (e.shiftKey && active === first) {
+      e.preventDefault()
+      last.focus()
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault()
+      first.focus()
+    }
+  }
+  watch(visibleRef, v => {
+    if (typeof document === 'undefined') return
+    if (v) {
+      prevFocused = document.activeElement as HTMLElement | null
+      void nextTick(() => {
+        getFocusables()[0]?.focus()
+      })
+      document.addEventListener('keydown', onTrapKeydown, true)
+    } else {
+      document.removeEventListener('keydown', onTrapKeydown, true)
+      prevFocused?.focus?.()
+      prevFocused = null
+    }
+  })
+  onScopeDispose(() => {
+    document.removeEventListener('keydown', onTrapKeydown, true)
+  })
 
   // ─── 事件处理 ────────────────────────────────────────────────────────────────
   function onCloseClick(): void {

@@ -10,7 +10,7 @@ const propsRows = [
   { name: 'options', type: 'string[]', default: '—', desc: '建议选项数组（必传）。' },
   { name: 'placeholder', type: 'string', default: '—', desc: '占位文字。' },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px）。' },
+  { name: 'size', type: 'number', default: '1', desc: 'px 倍数（1 单位 = 16px）。默认 1 = 16px 字号，padding/height 等比缩放（默认高度 32px，内边距 6px/12px）。' },
   { name: 'height', type: 'number', default: 'size*2', desc: '高度 px 倍数（1 单位 = 16px）。' },
   {
     name: 'filter',
@@ -24,8 +24,11 @@ const propsRows = [
 ]
 
 const emitsRows = [
-  { name: 'update:value', args: 'string', desc: '输入值变更。' },
+  { name: 'update:value', args: 'string', desc: '输入值变更（v-model:value）。' },
   { name: 'select', args: 'string', desc: '点击选中建议项。' },
+  { name: 'change', args: 'string', desc: '输入或选中建议项时触发，payload 为新值（与 update:value 同步）。' },
+  { name: 'focus', args: 'FocusEvent', desc: 'input 聚焦时触发。' },
+  { name: 'blur', args: 'FocusEvent', desc: 'input 失焦时触发。' },
 ]
 
 const exposeRows = [

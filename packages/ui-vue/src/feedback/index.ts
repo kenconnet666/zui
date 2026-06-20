@@ -31,6 +31,14 @@ export {
   type CreateNotificationApiOptions,
 } from './notificationApi'
 
+export {
+  createDialogApi,
+  type ZDialogApi,
+  type ZDialogOptions,
+  type ZDialogKind,
+  type CreateDialogApiOptions,
+} from './dialogApi'
+
 export { default as ZLoadingBar } from './ZLoadingBar.vue'
 export type { ZLoadingBarProps } from './ZLoadingBar.vue'
 

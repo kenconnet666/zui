@@ -34,6 +34,8 @@ export interface ZTransferProps {
 
 export interface ZTransferEmits {
   (e: 'update:targetKeys', keys: string[]): void
+  /** 右侧 key 列表变化(与 `update:targetKeys` 同值,便于不用 v-model 的消费方)。 */
+  (e: 'change', keys: string[]): void
 }
 </script>
 
@@ -98,6 +100,7 @@ const rightItems = computed(() => props.dataSource.filter(it => props.targetKeys
 function moveRight(): void {
   const next = [...props.targetKeys, ...leftChecked.value]
   emit('update:targetKeys', next)
+  emit('change', next)
   leftChecked.value = []
 }
 
@@ -105,6 +108,7 @@ function moveLeft(): void {
   const checkedKeys = rightChecked.value
   const next = props.targetKeys.filter(k => !checkedKeys.includes(k))
   emit('update:targetKeys', next)
+  emit('change', next)
   rightChecked.value = []
 }
 

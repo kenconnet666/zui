@@ -11,7 +11,7 @@ const propsRows = [
     name: 'size',
     type: 'number',
     default: '2.5',
-    desc: 'rail 宽度 px 倍数（1 单位 = 16px，高度自动按 0.6 比例计算）。',
+    desc: 'px 倍数（1 单位 = 16px）。默认 2.5 = 40px，控制 rail 轨道宽度；高度自动按 0.6 比例计算（默认 24px），thumb 位置等比联动。',
   },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },
   { name: 'loading', type: 'boolean', default: 'false', desc: 'loading 状态（异步切换时使用）。' },
@@ -20,7 +20,10 @@ const propsRows = [
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 
-const emitsRows = [{ name: 'update:value', args: 'boolean', desc: '开关状态变更。' }]
+const emitsRows = [
+  { name: 'update:value', args: 'boolean', desc: '开关状态变更（v-model:value）。' },
+  { name: 'change', args: 'boolean', desc: '值提交，与 update:value 同步触发，payload 类型相同。' },
+]
 </script>
 
 <template>

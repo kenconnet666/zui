@@ -34,6 +34,12 @@ export interface ZMentionProps {
 
 export interface ZMentionEmits {
   (e: 'update:value', value: string): void
+  /** 文本内容变化(与 `update:value` 同值,便于不用 v-model 的消费方)。 */
+  (e: 'change', value: string): void
+  /** textarea 获得焦点。 */
+  (e: 'focus', event: FocusEvent): void
+  /** textarea 失去焦点。 */
+  (e: 'blur', event: FocusEvent): void
   (e: 'select', mention: string): void
 }
 </script>
@@ -127,6 +133,7 @@ function findPrefix(text: string, caret: number): number {
 function onInput(e: Event): void {
   const t = e.target as HTMLTextAreaElement
   emit('update:value', t.value)
+  emit('change', t.value)
   const pos = findPrefix(t.value, t.selectionStart)
   lastPrefixPos.value = pos
   showDropdown.value = pos >= 0
@@ -230,6 +237,8 @@ defineExpose({ rootRef })
       :placeholder="placeholder"
       :disabled="disabled"
       @input="onInput"
+      @focus="emit('focus', $event)"
+      @blur="emit('blur', $event)"
     />
     <div v-if="showDropdown && filtered.length > 0" :class="dropdownClass" role="listbox">
       <ZVirtualList

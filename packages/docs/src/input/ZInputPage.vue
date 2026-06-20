@@ -16,7 +16,7 @@ import DisabledDemoSource from './ZInput/DisabledDemo.vue?raw'
 const propsRows = [
   { name: 'value', type: 'string | number', default: '—', desc: '绑定值（v-model:value）。' },
   { name: 'type', type: 'string', default: "'text'", desc: 'HTML input type。' },
-  { name: 'size', type: 'number', default: '1', desc: '字号 px 倍数（1 单位 = 16px），影响高度、内边距等。' },
+  { name: 'size', type: 'number', default: '1', desc: 'px 倍数（1 单位 = 16px）。默认 1 = 16px 字号，padding/height 等比缩放（默认高度 32px，内边距 6px/12px）。' },
   { name: 'height', type: 'number', default: 'size*2', desc: '高度 px 倍数（1 单位 = 16px）。' },
   { name: 'placeholder', type: 'string', default: '—', desc: '占位文字。' },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },

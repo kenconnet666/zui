@@ -20,8 +20,10 @@ export interface ZDynamicTagsProps {
 }
 
 export interface ZDynamicTagsEmits {
-  /** 标签列表变化(支持 `v-model:value`)。v0.2 删除等价的 `change`。 */
+  /** 标签列表变化(支持 `v-model:value`)。 */
   (e: 'update:value', value: string[]): void
+  /** 标签列表提交变化(添加或删除),payload 同 `update:value`。 */
+  (e: 'change', value: string[]): void
 }
 </script>
 
@@ -74,6 +76,7 @@ function commitInput(): void {
   }
   const next = [...props.value, v]
   emit('update:value', next)
+  emit('change', next)
   inputValue.value = ''
   editing.value = false
 }
@@ -82,6 +85,7 @@ function removeTag(tag: string): void {
   if (props.disabled) return
   const next = props.value.filter(t => t !== tag)
   emit('update:value', next)
+  emit('change', next)
 }
 
 function onKey(e: KeyboardEvent): void {
