@@ -241,7 +241,7 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
             <div :class="itemRowClass(leftChecked.includes(item.key), !!item.disabled)">
               <ZCheckbox
                 :checked="leftChecked.includes(item.key)"
-                :disabled="item.disabled"
+                :disabled="!!item.disabled"
                 :label="item.label"
                 @update:checked="(v: boolean) => { if (v !== leftChecked.includes(item.key)) toggleLeft(item.key, !!item.disabled) }"
                 @click.stop
@@ -288,7 +288,7 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
             <div :class="itemRowClass(rightChecked.includes(item.key), !!item.disabled)">
               <ZCheckbox
                 :checked="rightChecked.includes(item.key)"
-                :disabled="item.disabled"
+                :disabled="!!item.disabled"
                 :label="item.label"
                 @update:checked="(v: boolean) => { if (v !== rightChecked.includes(item.key)) toggleRight(item.key, !!item.disabled) }"
                 @click.stop
