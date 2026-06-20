@@ -111,11 +111,13 @@ const displayText = computed(() => {
   const hours = Math.floor((ms % 86400000) / 3600000)
   const mins = Math.floor((ms % 3600000) / 60000)
   const secs = Math.floor((ms % 60000) / 1000)
+  const millis = Math.floor(ms % 1000)
   return props.format
     .replace('{d}', String(days))
     .replace('{h}', pad(hours))
     .replace('{m}', pad(mins))
     .replace('{s}', pad(secs))
+    .replace('{ms}', String(millis).padStart(3, '0'))
 })
 
 const rootClass = computed(() =>

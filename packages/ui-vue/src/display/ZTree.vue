@@ -127,7 +127,7 @@ const nodeRowClass = (node: ZTreeNode, depth: number): string => {
     s.paddingRight._small
     s.borderRadius._tiny
     if (isSelected) {
-      s.backgroundColor._primary.alpha(8)
+      s.backgroundColor._primary.alpha(16)
       s.color._primary
       s.fontWeight._medium
     }
@@ -164,6 +164,16 @@ const arrowSpacerClass = computed(() =>
 )
 
 const rightIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronRight }))
+
+/** label 文字截断 —— 防止深层缩进后溢出。 */
+const labelSpanClass = computed(() =>
+  icss(theme.value, s => {
+    s.overflow.hidden
+    s.textOverflow.ellipsis
+    s.whiteSpace.nowrap
+    s.minWidth.px(0)
+  }),
+)
 
 interface FlatNode {
   node: ZTreeNode
@@ -217,7 +227,7 @@ function onNodeClick(node: ZTreeNode): void {
             <component :is="rightIcon" />
           </span>
           <span v-else :class="arrowSpacerClass" />
-          <span>{{ item.node.label }}</span>
+          <span :class="labelSpanClass">{{ item.node.label }}</span>
         </div>
       </template>
     </ZVirtualList>

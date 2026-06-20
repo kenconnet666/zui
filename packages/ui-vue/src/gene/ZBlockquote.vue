@@ -28,6 +28,11 @@ export interface ZBlockquoteProps {
    * 2026-05-24 B7:数值尺寸 prop 改 `number`。
    */
   size?: number
+  /**
+   * 是否斜体 —— 默认 `true`(引用场景保持 italic)。
+   * 用于非引用场景(如提示块)时可传 `false` 关闭斜体。
+   */
+  italic?: boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 </script>
@@ -57,6 +62,7 @@ import { sizePx } from '../_internal/sizing'
  */
 const props = withDefaults(defineProps<ZBlockquoteProps>(), {
   size: 1,
+  italic: true,
   // border-left 颜色默认 `_primary`(可被 user factory 覆盖)
   color: (c: Chain<ZuiSchema>['color']) => {
     c._primary
@@ -73,7 +79,7 @@ const rootClass = computed(() =>
     s.color._text
     s.backgroundColor._bgMuted
     s.borderRadius._tiny
-    s.fontStyle('italic')
+    s.fontStyle(props.italic ? 'italic' : 'normal')
     s.lineHeight._relaxed
     s.fontSize.px(sizePx(size))
     s.paddingTop.px(sizePx(size * 0.5))

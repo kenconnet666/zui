@@ -71,7 +71,12 @@ onScopeDispose(() => {
 
 const formatted = computed(() => {
   let v = current.value
-  if (props.precision !== undefined) v = Number(v.toFixed(props.precision))
+  if (props.precision !== undefined) {
+    v = Number(v.toFixed(props.precision))
+  } else {
+    // precision 未传时视为整数动画，Math.round 消除浮点噪声(如 9526.9999999)
+    v = Math.round(v)
+  }
   const [intPart, decPart] = String(v).split('.')
   const intFmt = intPart!.replace(/\B(?=(\d{3})+(?!\d))/g, props.separator)
   return decPart !== undefined ? `${intFmt}.${decPart}` : intFmt

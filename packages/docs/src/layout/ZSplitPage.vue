@@ -94,6 +94,11 @@ import MinMaxDemoSource from './ZSplit/MinMaxDemo.vue?raw'
           type: '(value: number) => void',
           desc: 'v-model:ratio 对应的 emit，拖拽时持续触发。',
         },
+        {
+          name: 'dragend',
+          type: '(value: number) => void',
+          desc: '拖拽释放时触发一次，参数为最终 ratio（0~1）。',
+        },
       ]"
     />
   </section>

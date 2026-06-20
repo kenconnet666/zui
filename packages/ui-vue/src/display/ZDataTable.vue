@@ -125,6 +125,7 @@ import { computed, h, ref, useSlots, type Slots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
+import { BuiltinIcons, ZIcon } from '../gene'
 import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
 
 /**
@@ -381,7 +382,7 @@ const rowClass = (row: T, index: number) =>
       s.cursor.pointer
     }
     s._hover(h2 => {
-      h2.backgroundColor._textSecondary.alpha(6)
+      h2.backgroundColor._primary.alpha(4)
     })
   })
 
@@ -512,7 +513,15 @@ const isEmpty = computed(() => sortedRows.value.length === 0)
           <template v-else>{{ renderHeaderContent(col) }}</template>
         </span>
         <span v-if="col.sortable" :class="sortIconClass">
-          {{ sort?.key === col.key ? (sort.order === 'asc' ? '↑' : '↓') : '⇕' }}
+          <ZIcon
+            v-if="sort?.key === col.key && sort.order === 'asc'"
+            :component="BuiltinIcons.chevronUp"
+          />
+          <ZIcon
+            v-else-if="sort?.key === col.key && sort.order === 'desc'"
+            :component="BuiltinIcons.chevronDown"
+          />
+          <ZIcon v-else :component="BuiltinIcons.sortNeutral" />
         </span>
       </div>
     </div>

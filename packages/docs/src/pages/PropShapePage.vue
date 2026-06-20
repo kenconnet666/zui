@@ -109,6 +109,30 @@ const tabooRows = [
   { bad: 'export type ZXxxVariant = ...(独立 alias)', good: '内联到 props interface(Type V)' },
   { bad: '组件内 SIZE_MAP: Record<size, css-value>', good: '直接 factory + chain token access' },
 ]
+
+const vmodelColumns = [
+  { key: 'comp', label: '组件', mono: true, width: '140px' },
+  { key: 'name', label: 'v-model 键', mono: true, width: '150px' },
+  { key: 'reason', label: '为什么不叫 value' },
+]
+const vmodelRows = [
+  {
+    comp: 'ZCheckbox',
+    name: 'checked',
+    reason:
+      'checkbox 的 value 是放进 CheckboxGroup 时的选项标识;勾选布尔态走 checked,避免与 group 选项 value 冲突。Ant / Element / Naive 同。',
+  },
+  {
+    comp: 'ZTransfer',
+    name: 'targetKeys',
+    reason: '穿梭框的「值」是右栏 key 数组,targetKeys 自解释(对齐 Ant Transfer)。',
+  },
+  {
+    comp: 'ZUpload',
+    name: 'fileList',
+    reason: '上传的「值」是文件列表,fileList 自解释(对齐 Ant / Naive Upload)。',
+  },
+]
 </script>
 
 <template>
@@ -320,6 +344,17 @@ const buttonVariants = defineVariants(theme, {
     <ZTitle :level="2">Type N —— 真二态 / 原生 / 第三方</ZTitle>
     <ZParagraph> 下列字段<strong>保留原类型</strong>,不要为了"风格统一"硬塞进 factory: </ZParagraph>
     <ApiTable :columns="typeNColumns" :rows="typeNRows" />
+
+    <ZTitle :level="2">v-model / emit 命名约定</ZTitle>
+    <ZParagraph>
+      <strong>单一标量值</strong>的输入控件统一用 <ZCode code="value" /> +
+      <ZCode code="update:value" />;并统一补 <ZCode code="change" />(值提交)与
+      <ZCode code="focus" /> / <ZCode code="blur" />(有单一可聚焦元素时),让
+      <ZCode code="ZForm" /> 能统一收集。<strong>值形态有领域语义</strong>且生态(Ant Design)已有
+      约定俗成命名的,沿用领域名 —— 这是<strong>有原则的一致性</strong>,不是不一致(强行统一会让部分
+      API 更差,如 checkbox 的 value 会与 group 选项 key 冲突):
+    </ZParagraph>
+    <ApiTable :columns="vmodelColumns" :rows="vmodelRows" />
 
     <ZTitle :level="2">主题 token 引用</ZTitle>
     <ZParagraph>

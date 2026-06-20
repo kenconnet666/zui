@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZMenu/BasicDemo.vue'
 import BasicDemoSource from './ZMenu/BasicDemo.vue?raw'
+import CollapsedDemo from './ZMenu/CollapsedDemo.vue'
+import CollapsedDemoSource from './ZMenu/CollapsedDemo.vue?raw'
 
 const propsRows = [
   {
@@ -65,6 +67,15 @@ const emitsRows = [
         切换水平模式。
       </template>
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">折叠模式</ZTitle>
+    <DemoBlock title="collapsed — 收起为图标模式" :source="CollapsedDemoSource">
+      <template #desc>
+        <ZCode code=":collapsed='true'" /> 隐藏文字和子菜单箭头，仅显示图标，适用于侧边栏收缩场景。
+        需配合 <ZCode code="vertical=true" /> + <ZCode code="inline=true" /> 使用。
+      </template>
+      <CollapsedDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

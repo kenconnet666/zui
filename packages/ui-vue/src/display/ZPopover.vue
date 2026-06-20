@@ -196,10 +196,24 @@ const titleClass = computed(() =>
     s.fontWeight._semibold
     s.fontSize._middle
     s.color._text
+    s.paddingBottom._tiny
+    s.borderBottomWidth._thin
+    s.borderBottomStyle.solid
+    s.borderBottomColor._border
     s.marginBottom._tiny
     applySx(s, props.sxTitle)
   }),
 )
+
+/** Popover fade 过渡 —— opacity 0 ↔ 1，持续时间 _tiny。 */
+const fadeActiveClass = computed(() =>
+  icss(theme.value, s => {
+    s.transitionProperty._opacity
+    s.transitionDuration._tiny
+    s.transitionTimingFunction._out
+  }),
+)
+const fadeBoundaryClass = computed(() => icss(theme.value, s => s.opacity._none))
 const sxTitleAttrs = computed(() => extractSxAttrs(props.sxTitle))
 
 /**
@@ -234,26 +248,33 @@ function bindFloating(el: unknown): void {
   </span>
 
   <Teleport to="body">
-    <div
-      v-if="actualVisible"
-      :ref="bindFloating"
-      :class="[popperClass, sxContentAttrs.class]"
-      :style="[floatingStyles, sxContentAttrs.style]"
-      role="dialog"
-      :aria-labelledby="title || $slots.title ? titleId : undefined"
-      v-bind="sxContentAttrs.attrs"
+    <Transition
+      :enter-from-class="fadeBoundaryClass"
+      :enter-active-class="fadeActiveClass"
+      :leave-active-class="fadeActiveClass"
+      :leave-to-class="fadeBoundaryClass"
     >
       <div
-        v-if="title || $slots.title"
-        :ref="sxTitleAttrs.ref"
-        :id="title || $slots.title ? titleId : undefined"
-        :class="[titleClass, sxTitleAttrs.class]"
-        :style="sxTitleAttrs.style"
-        v-bind="sxTitleAttrs.attrs"
+        v-if="actualVisible"
+        :ref="bindFloating"
+        :class="[popperClass, sxContentAttrs.class]"
+        :style="[floatingStyles, sxContentAttrs.style]"
+        role="dialog"
+        :aria-labelledby="title || $slots.title ? titleId : undefined"
+        v-bind="sxContentAttrs.attrs"
       >
-        <slot name="title">{{ title }}</slot>
+        <div
+          v-if="title || $slots.title"
+          :ref="sxTitleAttrs.ref"
+          :id="title || $slots.title ? titleId : undefined"
+          :class="[titleClass, sxTitleAttrs.class]"
+          :style="sxTitleAttrs.style"
+          v-bind="sxTitleAttrs.attrs"
+        >
+          <slot name="title">{{ title }}</slot>
+        </div>
+        <slot name="content" />
       </div>
-      <slot name="content" />
-    </div>
+    </Transition>
   </Teleport>
 </template>

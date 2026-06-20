@@ -104,9 +104,12 @@ const actualVisible = computed(() => {
   return innerVisible.value
 })
 
+/** floating-ui offset(px)，对应 _tiny = 4px，使菜单与 trigger 保持 4px 间距。 */
+const POPPER_OFFSET = 4
+
 const { floatingStyles } = usePopper(triggerRef, menuRef, {
   placement: computed(() => props.placement),
-  offset: 4,
+  offset: POPPER_OFFSET,
 })
 
 function setVisible(v: boolean): void {

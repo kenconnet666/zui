@@ -213,6 +213,16 @@ const triggerWrapClass = computed(() =>
 )
 const sxTriggerAttrs = computed(() => extractSxAttrs(props.sxTrigger))
 
+/** Tooltip fade 过渡 —— opacity 0 ↔ 1，持续时间 _tiny。 */
+const fadeActiveClass = computed(() =>
+  icss(theme.value, s => {
+    s.transitionProperty._opacity
+    s.transitionDuration._tiny
+    s.transitionTimingFunction._out
+  }),
+)
+const fadeBoundaryClass = computed(() => icss(theme.value, s => s.opacity._none))
+
 /**
  * trigger 元素 ref 合并器 —— 同时写入内部 `triggerRef`(usePopper)与
  * 用户传入的 `sxTrigger.ref`(string / function / Ref 对象,VNodeRef 形式)。
@@ -246,16 +256,23 @@ function bindFloating(el: unknown): void {
   </span>
 
   <Teleport to="body">
-    <div
-      v-if="actualVisible"
-      :id="tooltipId"
-      :ref="bindFloating"
-      :class="[tooltipClass, sxContentAttrs.class]"
-      :style="[floatingStyles, sxContentAttrs.style]"
-      role="tooltip"
-      v-bind="{ ...sxContentAttrs.attrs, ...contentHandlers }"
+    <Transition
+      :enter-from-class="fadeBoundaryClass"
+      :enter-active-class="fadeActiveClass"
+      :leave-active-class="fadeActiveClass"
+      :leave-to-class="fadeBoundaryClass"
     >
-      <slot name="content">{{ content }}</slot>
-    </div>
+      <div
+        v-if="actualVisible"
+        :id="tooltipId"
+        :ref="bindFloating"
+        :class="[tooltipClass, sxContentAttrs.class]"
+        :style="[floatingStyles, sxContentAttrs.style]"
+        role="tooltip"
+        v-bind="{ ...sxContentAttrs.attrs, ...contentHandlers }"
+      >
+        <slot name="content">{{ content }}</slot>
+      </div>
+    </Transition>
   </Teleport>
 </template>

@@ -37,9 +37,17 @@ const fileRows = [
 ]
 
 const emitsRows = [
-  { name: 'update:fileList', args: 'ZUploadedFile[]', desc: '文件列表变更。' },
-  { name: 'change', args: 'File[]', desc: '新增文件选择时触发（实际上传逻辑由调用方处理）。' },
-  { name: 'remove', args: 'ZUploadedFile', desc: '移除文件时触发。' },
+  {
+    name: 'update:fileList',
+    args: 'ZUploadedFile[]',
+    desc: 'v-model:fileList 绑定更新；payload 为包含 uid / name / size / status 等字段的 ZUploadedFile 数组，可用于渲染文件列表、读取上传状态。',
+  },
+  {
+    name: 'change',
+    args: 'File[]',
+    desc: '每次新增文件时触发（包括点击选择和拖拽）；payload 为浏览器原生 File 对象数组，适合直接传给 FormData / fetch 执行实际上传。注意：change 不含 status/uid 等扩展字段，与 update:fileList 的 ZUploadedFile[] 类型不对称——前者是原始 File，后者是组件封装后的状态对象。',
+  },
+  { name: 'remove', args: 'ZUploadedFile', desc: '移除文件时触发，payload 为被删除的 ZUploadedFile。' },
 ]
 
 const slotsRows = [

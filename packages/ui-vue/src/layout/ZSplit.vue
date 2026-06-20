@@ -35,6 +35,8 @@ export interface ZSplitProps {
 export interface ZSplitEmits {
   /** 第一栏占比变化(支持 `v-model:ratio`)。 */
   (e: 'update:ratio', value: number): void
+  /** 拖拽结束时触发，payload 为最终 ratio。 */
+  (e: 'dragend', value: number): void
 }
 </script>
 
@@ -67,6 +69,8 @@ function onPointerDown(e: PointerEvent): void {
   if (props.disabled) return
   e.preventDefault()
   dragging.value = true
+  // 拖拽期间禁止选中文字，避免拖拽手势触发浏览器文本选择
+  document.body.style.userSelect = 'none'
   ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
   window.addEventListener('pointermove', onPointerMove)
   window.addEventListener('pointerup', onPointerUp)
@@ -84,8 +88,12 @@ function onPointerMove(e: PointerEvent): void {
 
 function onPointerUp(): void {
   dragging.value = false
+  // 拖拽结束恢复文字选中
+  document.body.style.userSelect = ''
   window.removeEventListener('pointermove', onPointerMove)
   window.removeEventListener('pointerup', onPointerUp)
+  // 触发 dragend，携带最终 ratio
+  emit('dragend', props.ratio)
 }
 
 // a11y:键盘方向键调整占比(每步 2%)。横向分隔用 ←/→,纵向用 ↑/↓。
@@ -160,10 +168,21 @@ const dividerClass = computed(() =>
       s.cursor(props.disabled ? 'default' : 'row-resize')
     }
     if (!props.disabled) {
+      // 拖拽中持续高亮（不依赖 hover），优先级高于 hover 样式
+      if (dragging.value) {
+        s.backgroundColor._primary
+      }
       s._hover(h => {
         h.backgroundColor._primary
       })
     }
+    // focus-ring：键盘导航可见性
+    s._focusVisible(f => {
+      f.outlineWidth._middle
+      f.outlineStyle.solid
+      f.outlineColor._focusRing.alpha(40)
+      f.outlineOffset.px(1)
+    })
   }),
 )
 </script>
@@ -178,9 +197,9 @@ const dividerClass = computed(() =>
       role="separator"
       :tabindex="disabled ? -1 : 0"
       :aria-orientation="direction === 'vertical' ? 'horizontal' : 'vertical'"
-      :aria-valuenow="Math.round(ratio * 100)"
-      :aria-valuemin="Math.round(min * 100)"
-      :aria-valuemax="Math.round(max * 100)"
+      :aria-valuenow="Math.round((ratio ?? 0.5) * 100)"
+      :aria-valuemin="Math.round((min ?? 0.1) * 100)"
+      :aria-valuemax="Math.round((max ?? 0.9) * 100)"
       @pointerdown="onPointerDown"
       @keydown="onKeydown"
     />

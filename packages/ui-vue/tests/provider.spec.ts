@@ -236,11 +236,13 @@ describe('ZBox — 底层 box 能力(css + tag)', () => {
     expect(css).toContain('#abc123')
   })
 
-  it('css 不传 → 不挂 className(干净 wrapper)', () => {
+  it('css 不传 → 仍挂基础字体 className(根节点应用主题 _sans)', () => {
     const w = mount(ZBox, { slots: { default: () => 'x' } })
-    const cls = w.classes()
-    // 没传 css 时,classList 应为空(或不含 css-* emotion class)
-    expect(cls.filter(c => c.startsWith('css-')).length).toBe(0)
+    // ZBox 根始终应用基础字体(_sans,中文优先 PingFang / 微软雅黑),故有一个 emotion class
+    const cls = w.classes().find(c => c.startsWith('css-'))
+    expect(cls).toBeDefined()
+    const css = getInjectedCss().toLowerCase()
+    expect(css).toContain('font-family')
   })
 })
 

@@ -41,7 +41,7 @@ export interface ZAvatarProps {
 </script>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
@@ -77,6 +77,14 @@ const props = withDefaults(defineProps<ZAvatarProps>(), {
 const theme = useZTheme()
 
 const imgFailed = ref(false)
+
+// src 变化时重置失败态，避免残留上次加载失败的状态
+watch(
+  () => props.src,
+  () => {
+    imgFailed.value = false
+  },
+)
 
 const showImage = computed(() => !!props.src && !imgFailed.value)
 const showText = computed(() => !showImage.value && !!props.text)

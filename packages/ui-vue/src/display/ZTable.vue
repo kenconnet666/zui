@@ -351,8 +351,8 @@ function sortIconFor(col: ZTableColumn<T>) {
   if (isActive && props.sortState.order === 'desc') {
     return h(ZIcon, { component: BuiltinIcons.chevronDown })
   }
-  // 未激活:显示双向箭头(用 chevronDown 占位)
-  return h(ZIcon, { component: BuiltinIcons.chevronDown })
+  // 未激活:显示中立双向箭头（⇕ 语义，非单向 chevronDown）
+  return h(ZIcon, { component: BuiltinIcons.sortNeutral })
 }
 
 const totalColspan = computed(() => props.columns.length + (props.selectable ? 1 : 0))

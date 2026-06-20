@@ -186,6 +186,8 @@ const navBtnClass = computed(() =>
     s.padding._tiny
     s.color._text
     s.borderRadius._tiny
+    s.transitionProperty._colors
+    s.transitionDuration._tiny
     s._hover(h2 => {
       h2.backgroundColor._bgMuted
     })
@@ -195,7 +197,7 @@ const navBtnClass = computed(() =>
 const gridClass = computed(() =>
   icss(theme.value, s => {
     s.display.grid
-    s.gridTemplateColumns('repeat(7, 32px)')
+    s.gridTemplateColumns(`repeat(7, ${sizePx(2)}px)`)
     s.gap._tiny
     s.marginTop._tiny
   }),
@@ -224,6 +226,8 @@ const dayClass = (d: { key: string; outOfMonth: boolean }): string => {
     s.cursor.pointer
     s.borderStyle.none
     s.backgroundColor.transparent
+    s.transitionProperty._colors
+    s.transitionDuration._tiny
     if (d.outOfMonth) s.color._textSecondary
     else s.color._text
     if (isSelected) {
@@ -235,6 +239,7 @@ const dayClass = (d: { key: string; outOfMonth: boolean }): string => {
       s.outlineStyle.solid
       s.outlineColor.currentColor
       s.color._primary
+      s.fontWeight._semibold
     } else {
       s._hover(h2 => {
         h2.backgroundColor._bgMuted

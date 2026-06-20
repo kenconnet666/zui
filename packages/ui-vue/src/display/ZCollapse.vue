@@ -27,7 +27,7 @@ export interface ZCollapseProps {
 }
 
 export interface ZCollapseEmits {
-  (e: 'update:value', value: string | string[]): void
+  (e: 'update:value', value: string | string[] | null): void
 }
 </script>
 
@@ -62,7 +62,7 @@ function isExpanded(key: string): boolean {
 function toggle(item: ZCollapseItem): void {
   if (item.disabled) return
   if (props.accordion) {
-    emit('update:value', isExpanded(item.key) ? '' : item.key)
+    emit('update:value', isExpanded(item.key) ? null : item.key)
   } else {
     const cur = expandedList.value
     const next = cur.includes(item.key) ? cur.filter(k => k !== item.key) : [...cur, item.key]

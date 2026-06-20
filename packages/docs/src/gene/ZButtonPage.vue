@@ -29,16 +29,17 @@ import CssDemoSource from './ZButton/CssDemo.vue?raw'
   <section>
     <ZTitle :level="1">ZButton 按钮</ZTitle>
     <ZParagraph>
-      Material 风按钮,<strong>5 种 variant</strong> + <strong>chain factory color</strong> +
+      Material 风按钮,<strong>7 种 variant</strong> + <strong>chain factory color</strong> +
       <strong>px 倍数等比缩放 size</strong>。启用 ripple 波纹效果, hover / active / focus-visible
       三态自动接入 Material state layer。
     </ZParagraph>
 
     <ZTitle :level="2">变体 (variant)</ZTitle>
-    <DemoBlock title="5 种 variant" :source="VariantsDemoSource">
+    <DemoBlock title="7 种 variant" :source="VariantsDemoSource">
       <template #desc>
-        <code>filled</code> 默认 / <code>outlined</code> 描边 / <code>text</code> 文字 /
-        <code>ghost</code> 半透明 / <code>link</code> 链接。
+        <code>filled</code> 实心 / <code>outlined</code> 描边 / <code>dashed</code> 虚线描边 /
+        <code>secondary</code> 半透明底 / <code>text</code> 文字 /
+        <code>ghost</code> 全透明底 / <code>link</code> 链接。
       </template>
       <VariantsDemo />
     </DemoBlock>
@@ -104,9 +105,21 @@ import CssDemoSource from './ZButton/CssDemo.vue?raw'
       :rows="[
         {
           name: 'variant',
-          type: `'filled' | 'outlined' | 'text' | 'ghost' | 'link'`,
+          type: `'filled' | 'outlined' | 'dashed' | 'secondary' | 'text' | 'ghost' | 'link'`,
           default: `'filled'`,
-          desc: '按钮外观变体。filled=实心, outlined=描边, text=文字, ghost=半透明, link=内联链接。',
+          desc: '按钮外观变体。filled=实心, outlined=描边, dashed=虚线描边, secondary=半透明底, text=文字, ghost=全透明底, link=内联链接。',
+        },
+        {
+          name: 'shape',
+          type: `'default' | 'round' | 'circle' | 'square'`,
+          default: `'default'`,
+          desc: '按钮形状。default=默认圆角, round=全圆角胶囊, circle=圆形(等宽高), square=方形(无圆角)。',
+        },
+        {
+          name: 'tag',
+          type: 'string',
+          default: `'button'`,
+          desc: '多态根元素标签。改为 a 标签后 disabled 走 aria-disabled + tabIndex=-1。',
         },
         {
           name: 'color',

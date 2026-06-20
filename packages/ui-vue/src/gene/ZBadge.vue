@@ -35,6 +35,8 @@ export interface ZBadgeProps {
   size?: number
   color?: ((c: Chain<ZuiSchema>['color']) => void) | undefined
   offset?: [number, number]
+  /** dot 模式下的 aria-label（默认 `'有新通知'`）。 */
+  ariaLabel?: string
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 </script>
@@ -73,6 +75,7 @@ const props = withDefaults(defineProps<ZBadgeProps>(), {
   max: 99,
   showZero: false,
   size: 0.75,
+  ariaLabel: '有新通知',
   // 徽标背景默认 `_danger`(角标常用红色)
   color: (c: Chain<ZuiSchema>['color']) => {
     c._danger
@@ -121,6 +124,8 @@ const badgeClass = computed(() =>
     s.color._bg
     // color factory(默认 `_danger`,从 withDefaults 提供)桥接到 backgroundColor carrier
     s.backgroundColor(props.color)
+    s.transitionProperty._default
+    s.transitionDuration._small
 
     if (props.dot) {
       s.width.px(sizePx(size * 0.667))
@@ -155,7 +160,7 @@ const badgeClass = computed(() =>
 <template>
   <span :class="wrapperClass">
     <slot />
-    <span v-if="shouldShow" :class="badgeClass" :aria-label="dot ? '有新通知' : (displayText || undefined)">{{
+    <span v-if="shouldShow" :class="badgeClass" :aria-label="dot ? ariaLabel : (displayText || undefined)">{{
       displayText
     }}</span>
   </span>

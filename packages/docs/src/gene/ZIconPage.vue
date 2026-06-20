@@ -143,7 +143,7 @@ import CssDemoSource from './ZIcon/CssDemo.vue?raw'
       :rows="[
         {
           name: 'default',
-          desc: '图标内容（slot 模式）。与 :component prop 二选一，同时传入时 :component 优先。',
+          desc: '图标内容（slot 模式）。与 :component prop 二选一，同时传入时 default slot 优先（component prop 作为 slot 缺省内容，slot 有内容时不渲染）。',
         },
       ]"
     />

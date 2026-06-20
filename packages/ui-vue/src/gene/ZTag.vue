@@ -148,6 +148,8 @@ const closeBtnClass = computed(() =>
     s.padding.px(0)
     s.color.currentColor
     s.opacity._strong
+    s.transitionProperty._opacity
+    s.transitionDuration._small
     s._hover(h2 => {
       h2.opacity._full
     })

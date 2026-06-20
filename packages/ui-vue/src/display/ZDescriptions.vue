@@ -114,7 +114,7 @@ const gridClass = computed(() =>
     s.display.grid
     s.gridTemplateColumns(`repeat(${props.column}, minmax(0, 1fr))`)
     if (props.bordered) {
-      s.borderTopWidth.px(1)
+      s.borderTopWidth._thin
       s.borderTopStyle.solid
       s.borderTopColor._border
     }
@@ -146,6 +146,39 @@ const valueClass = computed(() =>
     }
   }),
 )
+
+/**
+ * 最右列 value 格子专用 class —— 去掉右边框，避免容器外侧出现多余竖线。
+ * 仅 bordered 时有效。
+ */
+const valueLastColClass = computed(() =>
+  icss(theme.value, s => {
+    s.color._text
+    s.padding.px(sizePx((props.size ?? 1) * 0.5))
+  }),
+)
+
+/**
+ * 计算每个 item 的 value 是否处于该行最右列（used in template）。
+ *
+ * 逐项追踪已占用列数，超出 column 则换行计算。
+ * label 占 1 格，value 占 `span ?? 1` 格（但 gridColumn span 是 span*2-1，
+ * 因为每列分 label+value 两格；这里我们按"几个 item 一行"来算，
+ * 所以只算 item 位置而非 DOM 格子数）。
+ */
+const isLastColPerItem = computed<boolean[]>(() => {
+  const col = props.column
+  const result: boolean[] = []
+  let pos = 0 // 当前行已占 item 数（不计 span，这里简化：每个 item 占 1 列逻辑位置）
+  for (let i = 0; i < props.items.length; i++) {
+    const span = props.items[i]!.span ?? 1
+    pos += span
+    const isLast = pos >= col || i === props.items.length - 1
+    result.push(isLast)
+    if (pos >= col) pos = 0
+  }
+  return result
+})
 </script>
 
 <template>
@@ -157,7 +190,7 @@ const valueClass = computed(() =>
       <template v-for="(item, i) in items" :key="i">
         <div :class="labelClass">{{ item.label }}</div>
         <div
-          :class="valueClass"
+          :class="bordered && isLastColPerItem[i] ? valueLastColClass : valueClass"
           :style="item.span && item.span > 1 ? { gridColumn: `span ${item.span * 2 - 1}` } : {}"
         >
           {{ item.value }}

@@ -81,7 +81,7 @@ import VerticalDemoSource from './ZDivider/VerticalDemo.vue?raw'
           name: 'thickness',
           type: 'string | number',
           default: `'1px'`,
-          desc: `string → CSS 长度（如 '2px'）；number → px 倍数（如 0.125 = 2px）。`,
+          desc: `string → CSS 长度（如 '2px'）；number → px 倍数（1 单位 = 16px，如 0.125 = 2px）。细线建议直接传字符串如 '2px'，number 语义为倍数对分割线粗细较反直觉。`,
         },
         { name: 'tag', type: 'string', default: `'div'`, desc: '根元素 tag。' },
         { name: 'css', type: '(s: Chain) => void', default: '—', desc: '兜底 CSS factory。' },

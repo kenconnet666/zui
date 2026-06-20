@@ -4,6 +4,8 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZList/BasicDemo.vue'
 import BasicDemoSource from './ZList/BasicDemo.vue?raw'
+import EmptyDemo from './ZList/EmptyDemo.vue'
+import EmptyDemoSource from './ZList/EmptyDemo.vue?raw'
 
 const propsRows = [
   { name: 'items', type: 'T[]', default: '—', desc: '数据数组（必传）。' },
@@ -53,6 +55,8 @@ const exposeRows = [
   { name: 'scrollToIndex', type: '(i, align?) => void', desc: '滚动到指定项索引。' },
   { name: 'scrollToOffset', type: '(px: number) => void', desc: '滚动到指定像素偏移。' },
   { name: 'getScroll', type: '() => { offset, total, viewport }', desc: '获取当前滚动状态。' },
+  { name: 'getItemOffset', type: '(i: number) => number', desc: '获取第 i 项的像素偏移（top 值）。' },
+  { name: 'getItemSize', type: '(i: number) => number', desc: '获取第 i 项的像素高度（autoMeasure 后为实测值）。' },
 ]
 </script>
 
@@ -68,6 +72,11 @@ const exposeRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="简单列表 / 虚拟滚动 50 项" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">空状态</ZTitle>
+    <DemoBlock title="emptyText / #empty slot" :source="EmptyDemoSource">
+      <EmptyDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

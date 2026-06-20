@@ -33,10 +33,15 @@ const placeholderWidth = ref(0)
 function onScroll(): void {
   if (!placeholderRef.value) return
   const rect = placeholderRef.value.getBoundingClientRect()
+  // 根据 scrollTarget 类型决定取哪里的滚动量:
+  //   window → window.scrollY（文档级滚动）
+  //   自定义 Element 容器 → Element.scrollTop（容器内滚动）
+  const scrollTop =
+    scrollTarget === window ? window.scrollY : (scrollTarget as Element).scrollTop
   // 占位元素本身在固定状态下不会动,我们改用 wrapper:这里 placeholderRef 是 wrapper
-  // 真正测量:wrapper 在文档流中的 top
-  const docTop = rect.top + window.scrollY
-  const shouldFix = window.scrollY + props.offsetTop >= docTop
+  // 真正测量:wrapper 在文档流中的 top（相对 scrollTarget 容器顶部）
+  const docTop = rect.top + scrollTop
+  const shouldFix = scrollTop + props.offsetTop >= docTop
   if (shouldFix && !fixed.value) {
     placeholderHeight.value = placeholderRef.value.offsetHeight
     placeholderWidth.value = placeholderRef.value.offsetWidth

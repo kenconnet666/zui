@@ -96,6 +96,12 @@ const DEFAULT_LINE_HEIGHT_UNITS = 0.5
 const DEFAULT_CIRCLE_DIAMETER_UNITS = 7.5
 /** SVG viewBox 像素基准(用于 stroke-dasharray / 几何计算,逻辑值,跟 CSS 尺寸解耦)。 */
 const SVG_VIEWBOX_BASE = 100
+/**
+ * circle 模式 SVG stroke 过渡字符串。
+ * 300ms 对应 duration._middle；SVG stroke 属性不是 CSS class，无法走 icss token，
+ * 在模板内以内联 style 字符串形式使用，此为唯一合理方案。
+ */
+const CIRCLE_STROKE_TRANSITION = 'transition: stroke-dashoffset 300ms ease'
 
 const trackClass = computed(() =>
   icss(theme.value, s => {
@@ -184,6 +190,7 @@ const fillColor = computed<string>(() =>
     v-if="type === 'line'"
     :class="trackClass"
     role="progressbar"
+    aria-label="进度"
     :aria-valuenow="clampedValue"
     aria-valuemin="0"
     aria-valuemax="100"
@@ -198,6 +205,7 @@ const fillColor = computed<string>(() =>
     v-else
     :class="circleRootClass"
     role="progressbar"
+    aria-label="进度"
     :aria-valuenow="clampedValue"
     aria-valuemin="0"
     aria-valuemax="100"
@@ -215,7 +223,7 @@ const fillColor = computed<string>(() =>
         :stroke-dasharray="circumference"
         :stroke-dashoffset="dashOffset"
         transform="rotate(-90 50 50)"
-        style="transition: stroke-dashoffset 300ms ease"
+        :style="CIRCLE_STROKE_TRANSITION"
       />
     </svg>
     <span v-if="showText" :class="circleTextClass">{{ clampedValue }}%</span>

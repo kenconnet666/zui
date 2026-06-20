@@ -72,7 +72,7 @@ import { sizePx } from '../_internal/sizing'
  *   │     level=4 → sizePx(1.25)= 20px    │
  *   │     level=5 → sizePx(1.125)= 18px   │
  *   │     level=6 → sizePx(1)   = 16px    │
- *   │   line-height: 1.25(标题偏紧)       │   font-weight: 700/600 跟 level
+ *   │   line-height: _tight(=1.25,标题偏紧)│   font-weight: 700/600 跟 level
  *   │   margin: 0(重置浏览器默认)         │
  *   └──────────────────────────────────────┘
  *
@@ -111,9 +111,6 @@ const LEVEL_FONT_WEIGHT: Record<ZTitleLevel, number> = {
   6: 600,
 }
 
-/** level → 默认 lineHeight(标题不该太松,1.25 比正文 1.5 紧)。 */
-const LEVEL_LINE_HEIGHT = 1.25
-
 const effectiveTag = computed(() => props.tag ?? `h${props.level}`)
 
 const className = computed(() =>
@@ -121,7 +118,8 @@ const className = computed(() =>
     // 组件级默认(放最前,后续 applyTypographyBase 若 props 传了同名维度会覆盖)
     s.fontSize.px(sizePx(LEVEL_FONT_SIZE[props.level]))
     s.fontWeight(LEVEL_FONT_WEIGHT[props.level])
-    s.lineHeight(LEVEL_LINE_HEIGHT)
+    // lineHeight._tight = 1.25（标题偏紧，比正文 normal 1.5 更紧凑）
+    s.lineHeight._tight
     s.margin.px(0) // 重置浏览器默认 h{N} margin,块级布局由父容器掌控
 
     applyTypographyBase(s, props)

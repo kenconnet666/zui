@@ -15,7 +15,7 @@ import { ZMarquee, ZSpace, ZText } from '@kenconnet666/zui-vue'
     >
     <ZMarquee
       direction="right"
-      :duration="20"
+      :duration="20000"
       :css="
         s => {
           s.borderRadius._small
@@ -37,7 +37,7 @@ import { ZMarquee, ZSpace, ZText } from '@kenconnet666/zui-vue'
       >悬停暂停(pauseOnHover)</ZText
     >
     <ZMarquee
-      :duration="10"
+      :duration="10000"
       :pause-on-hover="true"
       :css="
         s => {

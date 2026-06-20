@@ -50,7 +50,8 @@ const rootClass = computed(() =>
 const imgClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineFlex
-    s.color._border
+    // 用三级文本色代替边框色：图标作为内容元素，语义上应跟随文本色，而非边框色
+    s.color._textTertiary
     s.width.px(sizePx(props.size))
     s.height.px(sizePx(props.size))
   }),
@@ -65,7 +66,7 @@ const defaultSvg = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" s
 </script>
 
 <template>
-  <div :class="rootClass" role="status">
+  <div :class="rootClass" role="status" :aria-label="description || '暂无数据'">
     <span :class="imgClass">
       <slot name="image">
         <component v-if="image" :is="image" />

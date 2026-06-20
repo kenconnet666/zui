@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { ZTitle, ZParagraph, ZCode } from '@kenconnet666/zui-vue'
+import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
+
+import BasicDemo from './ZCodeCard/BasicDemo.vue'
+import BasicDemoSource from './ZCodeCard/BasicDemo.vue?raw'
+
+import ExpandedDemo from './ZCodeCard/ExpandedDemo.vue'
+import ExpandedDemoSource from './ZCodeCard/ExpandedDemo.vue?raw'
 </script>
 
 <template>
@@ -12,6 +19,28 @@ import ApiTable from '../components/ApiTable.vue'
       和<strong>源代码文本</strong>（<ZCode code="?raw" /> import 传
       <ZCode code="source" /> prop）， 源码与演示零漂移。
     </ZParagraph>
+
+    <ZTitle :level="2">演示</ZTitle>
+    <DemoBlock title="基础用法" :source="BasicDemoSource">
+      <template #desc>
+        同一 <ZCode code=".vue" /> 文件同时用作运行组件与 <ZCode code="?raw" />
+        源码；标题通过 <ZCode code="title" /> prop 传入。
+      </template>
+      <BasicDemo />
+    </DemoBlock>
+
+    <DemoBlock
+      title="defaultExpanded + showImports + desc slot"
+      :source="ExpandedDemoSource"
+    >
+      <template #desc>
+        <ZCode code=":default-expanded='true'" /> 令代码区默认展开；<ZCode
+          code=":show-imports='true'"
+        />
+        保留 import 行；<ZCode code="#desc" /> slot 在 header 下方展示说明文字。
+      </template>
+      <ExpandedDemo />
+    </DemoBlock>
 
     <ZTitle :level="2">使用方式</ZTitle>
     <ZCode

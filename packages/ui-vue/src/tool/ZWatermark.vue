@@ -49,7 +49,9 @@ const watermarkDataUrl = computed(() => {
   if (!ctx) return ''
   ctx.translate(canvas.width / 2, canvas.height / 2)
   ctx.rotate((props.rotate * Math.PI) / 180)
-  ctx.font = `${fontSize}px sans-serif`
+  // 字体跟随主题 fonts.sans(兜底 sans-serif)
+  const themeSans: string = theme.value.fonts?.['sans'] ?? 'sans-serif'
+  ctx.font = `${fontSize}px ${themeSans}`
   // 默认色跟随主题 _text 10% alpha(亮/暗自适应);用户显式传 color 则优先
   ctx.fillStyle = props.color ?? resolveColor(theme.value, c => c._text.alpha(10), 'rgba(0,0,0,0.10)')
   ctx.textAlign = 'center'

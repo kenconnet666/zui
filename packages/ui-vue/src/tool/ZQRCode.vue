@@ -114,6 +114,8 @@ const imgClass = computed(() =>
 
 <template>
   <div :class="wrapClass">
-    <img :src="qrSrc" :alt="`QR code for ${value}`" :class="imgClass" />
+    <img v-if="qrSrc" :src="qrSrc" :alt="`QR code for ${value}`" :class="imgClass" />
+    <!-- value 为空时不渲染损坏图标，改用空占位 -->
+    <div v-else :class="imgClass" aria-label="无内容" />
   </div>
 </template>

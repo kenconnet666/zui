@@ -26,7 +26,7 @@ const propsRows = [
     desc: '轮播数据数组，通过 #default slot scope { item, index } 渲染。',
   },
   { name: 'current', type: 'number', default: '0', desc: '当前 index（v-model:current）。' },
-  { name: 'autoplay', type: 'boolean', default: 'false', desc: '自动播放。' },
+  { name: 'autoplay', type: 'boolean', default: 'false', desc: '自动播放。注意：当前不支持 hover 暂停（pauseOnHover），鼠标悬停不会停止轮播。' },
   { name: 'interval', type: 'number', default: '3000', desc: '自动播放间隔 ms。' },
   { name: 'showDots', type: 'boolean', default: 'true', desc: '底部指示点。' },
   { name: 'showArrows', type: 'boolean', default: 'true', desc: '左右箭头。' },

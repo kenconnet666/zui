@@ -78,6 +78,12 @@ import BlockDemoSource from './ZSegmented/BlockDemo.vue?raw'
           default: 'false',
           desc: '整体禁用（所有选项不可点击）。',
         },
+        {
+          name: 'ariaLabel',
+          type: 'string',
+          default: '\'分段控制\'',
+          desc: '根元素 aria-label，屏幕阅读器标识。',
+        },
         { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
       ]"
     />

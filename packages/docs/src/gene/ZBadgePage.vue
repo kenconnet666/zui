@@ -92,6 +92,12 @@ import MaxDemoSource from './ZBadge/MaxDemo.vue?raw'
           desc: '[x, y] 偏移 px（有 slot 时生效）。',
         },
         {
+          name: 'ariaLabel',
+          type: 'string',
+          default: '\'有新通知\'',
+          desc: 'dot 模式下徽标的 aria-label（dot=false 时自动用 displayText）。',
+        },
+        {
           name: 'css',
           type: '(s: Chain) => void',
           default: '—',

@@ -23,9 +23,13 @@ const propsRows = [
   {
     name: 'sortState',
     type: 'ZTableSortState',
-    default: '—',
-    desc: '当前排序状态（v-model:sortState）。',
+    default: '{ column: null, order: null }',
+    desc: '当前排序状态（v-model:sortState）。默认无激活列、无排序方向。',
   },
+  { name: 'sxHead', type: 'SxObject', default: '—', desc: '覆盖 <thead> 区域样式及属性。' },
+  { name: 'sxBody', type: 'SxObject', default: '—', desc: '覆盖 <tbody> 区域样式及属性。' },
+  { name: 'sxRow', type: 'SxObject', default: '—', desc: '覆盖每一 <tr> 行样式及属性。' },
+  { name: 'sxCell', type: 'SxObject', default: '—', desc: '覆盖每一 <th>/<td> 单元格样式及属性。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 

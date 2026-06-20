@@ -43,6 +43,11 @@ const exposeRows = [
       多行文本输入框，<ZCode code="autosize" /> 可自动跟随内容高度增长，
       <ZCode code="maxRows" /> 限制最大行数，<ZCode code="showCount" /> 显示字数统计。
     </ZParagraph>
+    <ZParagraph>
+      注意：ZTextarea 不提供 <ZCode code="clearable" /> 和 <ZCode code="pressEnter" />
+      prop（与 ZInput 不对称，属设计取舍）——ZTextarea 专注多行编辑，Enter 保留换行语义；
+      如需清除按钮或回车提交，请改用 <ZCode code="ZInput" />。
+    </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="固定行数 / 自动高度 / 禁用" :source="BasicDemoSource">

@@ -20,7 +20,12 @@ const propsRows = [
     desc: '容器高度（垂直方向）。px 倍数（1 单位 = 16px）或 CSS 字面字符串。',
   },
   { name: 'width', type: 'number | string', default: '—', desc: '容器宽度（水平方向）。' },
-  { name: 'direction', type: "'vertical'|'horizontal'", default: "'vertical'", desc: '滚动方向。' },
+  {
+    name: 'direction',
+    type: "'vertical'|'horizontal'",
+    default: "'vertical'",
+    desc: '滚动方向。水平方向（horizontal）需传 width 而非 height 来指定容器尺寸。',
+  },
   { name: 'keyField', type: 'string', default: "'id'", desc: '取项 key 字段名，缺失回退 index。' },
   { name: 'overscan', type: 'number', default: '5', desc: '两端各预渲染的缓冲项数。' },
   {
@@ -38,7 +43,11 @@ const propsRows = [
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根容器 CSS 兜底。' },
 ]
 
-const slotsRows = [{ name: 'default', desc: 'scope: { item: T, index: number }，渲染每个虚拟项。' }]
+const slotsRows = [
+  { name: 'default', desc: 'scope: { item: T, index: number }，渲染每个虚拟项。' },
+  { name: 'header', desc: '渲染在虚拟列表顶部（在可滚动内容之外，随容器滚动）。' },
+  { name: 'footer', desc: '渲染在虚拟列表底部（在可滚动内容之外，随容器滚动）。' },
+]
 
 const emitsRows = [
   { name: 'scroll', args: 'offset: number', desc: '每次滚动时触发。' },

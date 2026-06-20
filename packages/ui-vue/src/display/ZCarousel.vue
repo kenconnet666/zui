@@ -167,6 +167,7 @@ const arrowClass = (side: 'left' | 'right'): string =>
     s.zIndex._small
     s._hover(h2 => {
       h2.boxShadow._middle
+      h2.backgroundColor._bgMuted
     })
   })
 
@@ -195,8 +196,9 @@ const dotClass = (active: boolean): string =>
     if (active) {
       s.backgroundColor._bg
       s.width.px(sizePx(1.25))
+      s.transitionTimingFunction('cubic-bezier(0.4,0,0.2,1)')
     } else {
-      s.backgroundColor._bg.alpha(50)
+      s.backgroundColor._text.alpha(30)
     }
   })
 

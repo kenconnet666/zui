@@ -6,7 +6,6 @@ import { ZWatermark, ZText } from '@kenconnet666/zui-vue'
   <ZWatermark
     content="机密 · CONFIDENTIAL"
     :font-size="14"
-    color="rgba(0,0,0,0.12)"
     :gap="40"
     :rotate="-30"
     :css="

@@ -4,6 +4,10 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZDrawer/BasicDemo.vue'
 import BasicDemoSource from './ZDrawer/BasicDemo.vue?raw'
+import PlacementDemo from './ZDrawer/PlacementDemo.vue'
+import PlacementDemoSource from './ZDrawer/PlacementDemo.vue?raw'
+import FootDemo from './ZDrawer/FootDemo.vue'
+import FootDemoSource from './ZDrawer/FootDemo.vue?raw'
 
 const propsRows = [
   { name: 'visible', type: 'boolean', default: 'false', desc: '是否显示（v-model:visible）。' },
@@ -53,6 +57,23 @@ const exposeRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="右侧抽屉 / 底部抽屉" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">四方向</ZTitle>
+    <DemoBlock title="left / top / right / bottom" :source="PlacementDemoSource">
+      <template #desc>
+        一个 <ZCode code="placement" /> 变量驱动四个方向，避免维护多个 <ZCode code="ref" />。
+      </template>
+      <PlacementDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">底部操作栏 + 自定义宽度</ZTitle>
+    <DemoBlock title="#foot slot + :size 自定义尺寸" :source="FootDemoSource">
+      <template #desc>
+        <ZCode code="#foot" /> slot 内放取消/确定按钮；<ZCode code=":size='28'" /> 表示
+        28 × 16 = 448 px 宽度。
+      </template>
+      <FootDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

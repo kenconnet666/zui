@@ -132,6 +132,8 @@ const rootClass = computed(() =>
 const headerClass = computed(() =>
   icss(theme.value, s => {
     s.padding.px(sizePx((props.size ?? 1) * 0.625))
+    s.backgroundColor._bgMuted
+    s.color._text
     s.fontWeight._semibold
     s.borderBottomWidth._thin
     s.borderBottomStyle.solid

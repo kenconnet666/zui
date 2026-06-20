@@ -32,6 +32,7 @@ import {
   RefreshOutlined,
   RemoveOutlined,
   SearchOutlined,
+  UnfoldMoreOutlined,
   WarningOutlined,
 } from '@vicons/material'
 
@@ -76,6 +77,8 @@ export const BuiltinIcons = {
   add: AddOutlined,
   /** 移除 ──── 减少 / 删除一项 */
   remove: RemoveOutlined,
+  /** 排序中立 ──── 表格可排序列的未激活状态（双向箭头 ⇕） */
+  sortNeutral: UnfoldMoreOutlined,
 } as const
 
 /** `BuiltinIcons` 的 key union ── 类型层面可用作 prop 约束。 */

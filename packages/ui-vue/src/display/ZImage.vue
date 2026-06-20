@@ -98,6 +98,10 @@ const imgClass = computed(() =>
     else s.objectFit.cover
     if (props.width !== undefined) s.width(dim(props.width))
     if (props.height !== undefined) s.height(dim(props.height))
+    // 图片加载过渡：loaded 前 opacity 0，loaded 后渐显（_small ≈ 150ms）
+    s.opacity(status.value === 'loaded' ? 1 : 0)
+    s.transitionProperty._opacity
+    s.transitionDuration._small
   }),
 )
 

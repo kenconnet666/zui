@@ -153,7 +153,8 @@ const linkClass = (item: ZAnchorItem, active: boolean): string =>
     if (active) {
       s.color(activeColorFactory.value)
       s.fontWeight._medium
-      s.marginLeft.px(-9)
+      // -(padding-left _small 8px + border 1px) = -(sizePx(0.5) + 1)，使指示条与轨道左边对齐
+      s.marginLeft.px(-(sizePx(0.5) + 1))
       s.borderLeftWidth._middle
       s.borderLeftStyle.solid
       s.borderLeftColor.currentColor

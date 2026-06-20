@@ -289,6 +289,20 @@ const buttonClass = computed(() =>
   }),
 )
 
+const descClass = computed(() =>
+  icss(theme.value, s => {
+    s.paddingTop._small
+    s.paddingBottom._small
+    s.paddingLeft._middle
+    s.paddingRight._middle
+    s.fontSize._small
+    s.color._textSecondary
+    s.borderBottomWidth._thin
+    s.borderBottomStyle.solid
+    s.borderBottomColor._border
+  }),
+)
+
 const previewClass = computed(() =>
   icss(theme.value, s => {
     s.padding._middle
@@ -370,6 +384,10 @@ watch(
       </div>
     </div>
 
+    <div v-if="$slots.desc" :class="descClass">
+      <slot name="desc" />
+    </div>
+
     <div :class="previewClass">
       <slot />
     </div>
@@ -386,7 +404,7 @@ watch(
           :inline="false"
           :lang="lang ?? 'vue'"
           :themes="{ light: globalCodeTheme, dark: globalCodeTheme }"
-          color-scheme="light"
+          color-scheme="auto"
         />
       </div>
     </Transition>

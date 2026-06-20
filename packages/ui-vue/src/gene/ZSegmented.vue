@@ -30,6 +30,8 @@ export interface ZSegmentedProps {
   height?: number
   block?: boolean
   disabled?: boolean
+  /** 根元素 aria-label（默认 `'分段控制'`）。 */
+  ariaLabel?: string
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 
@@ -70,6 +72,7 @@ const props = withDefaults(defineProps<ZSegmentedProps>(), {
   size: 1,
   block: false,
   disabled: false,
+  ariaLabel: '分段控制',
 })
 
 const emit = defineEmits<ZSegmentedEmits>()
@@ -109,7 +112,7 @@ const itemClass = (opt: ZSegmentedOption): string => {
     s.paddingLeft.px(sizePx(size * 1))
     s.paddingRight.px(sizePx(size * 1))
     s.gap.px(sizePx(size * 0.5))
-    s.transitionProperty._colors
+    s.transitionProperty._default
     s.transitionDuration._small
     if (props.block) s.flexGrow(1)
     if (isActive) {
@@ -141,7 +144,7 @@ function select(opt: ZSegmentedOption): void {
 </script>
 
 <template>
-  <div :class="rootClass" role="radiogroup" aria-label="分段控制">
+  <div :class="rootClass" role="radiogroup" :aria-label="ariaLabel">
     <button
       v-for="opt in options"
       :key="String(opt.value)"

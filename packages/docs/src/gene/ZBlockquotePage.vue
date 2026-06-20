@@ -14,7 +14,7 @@ import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
   <section>
     <ZTitle :level="1">ZBlockquote 引用</ZTitle>
     <ZParagraph>
-      块引用组件，视觉效果：左侧强调色边条 + 中性背景 + 斜体文字。
+      块引用组件，视觉效果：左侧强调色边条 + 中性背景 + 斜体文字（可通过 <ZCode code="italic" /> 关闭）。
       <ZCode code="color" /> factory 仅作用于左侧 border 颜色，文字始终使用
       <ZCode code="_text" /> token， 不随 color 变化。<ZCode code="size" /> 是 px 倍数（1 单位 = 16px），padding /
       border-left-width / fontSize 等比缩放。
@@ -59,6 +59,12 @@ import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
           default: '1',
           desc: 'px 倍数（1 单位 = 16px）。padding-y = size*8px，padding-x = size*12px，border-left-width = size*4px。',
         },
+        {
+          name: 'italic',
+          type: 'boolean',
+          default: 'true',
+          desc: '是否斜体。默认 true（引用场景）；非引用场景（提示块等）可传 false 关闭斜体。',
+        },
         { name: 'css', type: '(s: Chain) => void', default: '—', desc: '兜底 CSS factory。' },
       ]"
     />
@@ -83,7 +89,7 @@ import ColorDemoSource from './ZBlockquote/ColorDemo.vue?raw'
   border-left:      size * 4px         /* size=1 → 4px 强调边条 */
   background:       _bgMuted
   color:            _text（固定，不随 color factory 变化）
-  font-style:       italic
+  font-style:       italic（italic=false 时为 normal）
   line-height:      _relaxed`"
     />
   </section>

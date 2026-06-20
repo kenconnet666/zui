@@ -34,6 +34,8 @@ import type { ZuiSchema } from '../provider/theme'
 export interface ZCopyButtonProps {
   /** 要复制的文本(必传)。 */
   text: string
+  /** 禁用状态，禁用时按钮不可点击、不触发复制。默认 `false`。 */
+  disabled?: boolean
   /**
    * 整体尺寸 px 倍数(默认 `1`,1 单位 = 16px)。
    *
@@ -109,6 +111,7 @@ import { sizePx } from '../_internal/sizing'
  */
 const props = withDefaults(defineProps<ZCopyButtonProps>(), {
   size: 1,
+  disabled: false,
   copiedLabel: '已复制',
   duration: 1500,
   toast: true,
@@ -133,6 +136,7 @@ function getMsgApi(): ZMessageApi {
 }
 
 async function handleClick(): Promise<void> {
+  if (props.disabled) return
   const text = props.text
   let success = false
   try {
@@ -205,7 +209,13 @@ const rootClass = computed(() =>
 </script>
 
 <template>
-  <button type="button" :class="rootClass" :aria-label="displayText" @click="handleClick">
+  <button
+    type="button"
+    :class="rootClass"
+    :aria-label="displayText"
+    :disabled="disabled"
+    @click="handleClick"
+  >
     <ZIcon :component="iconComponent" :size="resolvedIconSize" />
     <span v-if="label !== undefined">{{ displayText }}</span>
   </button>
