@@ -8,6 +8,9 @@ import LevelDemoSource from './ZTitle/LevelDemo.vue?raw'
 
 import CustomDemo from './ZTitle/CustomDemo.vue'
 import CustomDemoSource from './ZTitle/CustomDemo.vue?raw'
+
+import StyleDemo from './ZTitle/StyleDemo.vue'
+import StyleDemoSource from './ZTitle/StyleDemo.vue?raw'
 </script>
 
 <template>
@@ -36,6 +39,15 @@ import CustomDemoSource from './ZTitle/CustomDemo.vue?raw'
         等与 ZText 完全一致。
       </template>
       <CustomDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">维度样式覆盖</ZTitle>
+    <DemoBlock title="weight / italic / underline / ellipsis 在标题上的效果" :source="StyleDemoSource">
+      <template #desc>
+        继承自 ZText 的维度在 ZTitle 上同样生效：<ZCode code="weight" /> 可覆盖 level 默认字重；
+        <ZCode code="italic" /> / <ZCode code="underline" /> / <ZCode code="ellipsis" /> 零参数布尔 prop 同样有效。
+      </template>
+      <StyleDemo />
     </DemoBlock>
 
     <ZTitle :level="2">level → 默认字号映射</ZTitle>

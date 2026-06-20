@@ -20,6 +20,9 @@ import SpinDemoSource from './ZIcon/SpinDemo.vue?raw'
 
 import CssDemo from './ZIcon/CssDemo.vue'
 import CssDemoSource from './ZIcon/CssDemo.vue?raw'
+
+import DepthDemo from './ZIcon/DepthDemo.vue'
+import DepthDemoSource from './ZIcon/DepthDemo.vue?raw'
 </script>
 
 <template>
@@ -68,6 +71,17 @@ import CssDemoSource from './ZIcon/CssDemo.vue?raw'
         <code>linear</code> 自动加上。需要自定义 easing / 反向旋转走 <code>:css</code>。
       </template>
       <SpinDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">透明度 (depth)</ZTitle>
+    <DemoBlock title="depth factory — opacity carrier" :source="DepthDemoSource">
+      <template #desc>
+        <code>depth</code> 接 <code>opacity</code> carrier，用 schema token 或字面量控制透明度。
+        6 个档位：<code>_faint(5%)</code> / <code>_dim(25%)</code> / <code>_half(50%)</code>
+        / <code>_strong(75%)</code> / <code>_solid(95%)</code> / <code>_full(100%)</code>，
+        也可字面量 <code>o =&gt; o(0.3)</code>。
+      </template>
+      <DepthDemo />
     </DemoBlock>
 
     <ZTitle :level="2">css 兜底</ZTitle>

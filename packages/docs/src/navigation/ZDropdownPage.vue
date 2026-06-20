@@ -5,6 +5,12 @@ import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZDropdown/BasicDemo.vue'
 import BasicDemoSource from './ZDropdown/BasicDemo.vue?raw'
 
+import PlacementDemo from './ZDropdown/PlacementDemo.vue'
+import PlacementDemoSource from './ZDropdown/PlacementDemo.vue?raw'
+
+import ControlledDemo from './ZDropdown/ControlledDemo.vue'
+import ControlledDemoSource from './ZDropdown/ControlledDemo.vue?raw'
+
 const propsRows = [
   { name: 'items', type: 'ZDropdownItem[]', default: '—（必传）', desc: '菜单项数组。' },
   { name: 'trigger', type: "'click' | 'hover' | 'manual'", default: "'click'", desc: '触发方式。' },
@@ -50,6 +56,24 @@ const slotsRows = [{ name: 'default', desc: '触发元素（通常是按钮）�
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="点击触发 / 悬停触发 / danger 项" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">定位方向</ZTitle>
+    <DemoBlock title="placement 各方向对比" :source="PlacementDemoSource">
+      <template #desc>
+        <ZCode code="placement" /> 接受 Floating-UI 的 <ZCode code="Placement" /> 类型，
+        支持 top / bottom / left / right 及 -start / -end 变体，共 12 个方向（点击各按钮触发菜单）。
+      </template>
+      <PlacementDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">受控模式</ZTitle>
+    <DemoBlock title="trigger=manual + v-model:visible 外部控制" :source="ControlledDemoSource">
+      <template #desc>
+        <ZCode code="trigger='manual'" /> 时组件不响应点击 / hover 事件，完全交由
+        <ZCode code="v-model:visible" /> 外部控制显示状态，适合程序化操作场景。
+      </template>
+      <ControlledDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

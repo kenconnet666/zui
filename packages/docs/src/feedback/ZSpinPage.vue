@@ -10,6 +10,8 @@ import WrapDemo from './ZSpin/WrapDemo.vue'
 import WrapDemoSource from './ZSpin/WrapDemo.vue?raw'
 import InlineDemo from './ZSpin/InlineDemo.vue'
 import InlineDemoSource from './ZSpin/InlineDemo.vue?raw'
+import IndicatorDemo from './ZSpin/IndicatorDemo.vue'
+import IndicatorDemoSource from './ZSpin/IndicatorDemo.vue?raw'
 </script>
 
 <template>
@@ -52,6 +54,15 @@ import InlineDemoSource from './ZSpin/InlineDemo.vue?raw'
         行内提示。
       </template>
       <InlineDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义 indicator (#indicator slot)</ZTitle>
+    <DemoBlock title="#indicator slot — 替换默认旋转图标" :source="IndicatorDemoSource">
+      <template #desc>
+        <code>#indicator</code> slot 可替换默认旋转图标。包裹模式和纯 indicator 模式均支持。
+        示例展示不同颜色、速度、方向（反向旋转）以及在包裹模式下使用自定义 indicator。
+      </template>
+      <IndicatorDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

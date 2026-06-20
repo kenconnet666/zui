@@ -23,6 +23,9 @@ import IconDemoSource from './ZButton/IconDemo.vue?raw'
 
 import CssDemo from './ZButton/CssDemo.vue'
 import CssDemoSource from './ZButton/CssDemo.vue?raw'
+
+import ShapeDemo from './ZButton/ShapeDemo.vue'
+import ShapeDemoSource from './ZButton/ShapeDemo.vue?raw'
 </script>
 
 <template>
@@ -82,6 +85,16 @@ import CssDemoSource from './ZButton/CssDemo.vue?raw'
         inline-flex 内容)。loading 态会临时占据 prefix 位置。
       </template>
       <IconDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">形状 (shape)</ZTitle>
+    <DemoBlock title="4 种 shape：default / round / circle / square" :source="ShapeDemoSource">
+      <template #desc>
+        <code>default</code> 默认圆角 / <code>round</code> 全圆角胶囊 /
+        <code>circle</code> 等宽高圆形（适合纯图标）/ <code>square</code> 等宽高方形（无圆角，适合纯图标）。
+        circle 与 square 会自动清除横向 padding 并锁定 width = height。
+      </template>
+      <ShapeDemo />
     </DemoBlock>
 
     <ZTitle :level="2">兜底:css factory</ZTitle>

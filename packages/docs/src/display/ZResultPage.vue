@@ -10,6 +10,8 @@ import ErrorDemo from './ZResult/ErrorDemo.vue'
 import ErrorDemoSource from './ZResult/ErrorDemo.vue?raw'
 import CustomIconDemo from './ZResult/CustomIconDemo.vue'
 import CustomIconDemoSource from './ZResult/CustomIconDemo.vue?raw'
+import IconSlotDemo from './ZResult/IconSlotDemo.vue'
+import IconSlotDemoSource from './ZResult/IconSlotDemo.vue?raw'
 
 const propsRows = [
   { name: 'title', type: 'string', default: '—', desc: '结果标题。' },
@@ -59,6 +61,15 @@ const slotsRows = [
         <code>icon</code> prop 传任意 Vue 组件覆盖默认图标，字体大小已经在 ZResult 内部锁为 64px。
       </template>
       <CustomIconDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">#icon slot 自定义图标区</ZTitle>
+    <DemoBlock title="#icon slot — 比 icon prop 更灵活" :source="IconSlotDemoSource">
+      <template #desc>
+        <code>#icon</code> slot 优先级高于 <code>icon</code> prop，可放置任意内容（组合图标、
+        自定义 SVG、emoji 等）。示例展示双图标叠加的徽标效果。
+      </template>
+      <IconSlotDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

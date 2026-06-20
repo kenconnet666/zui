@@ -8,6 +8,9 @@ import BasicDemoSource from './ZText/BasicDemo.vue?raw'
 
 import StateDemo from './ZText/StateDemo.vue'
 import StateDemoSource from './ZText/StateDemo.vue?raw'
+
+import DimensionDemo from './ZText/DimensionDemo.vue'
+import DimensionDemoSource from './ZText/DimensionDemo.vue?raw'
 </script>
 
 <template>
@@ -39,6 +42,15 @@ import StateDemoSource from './ZText/StateDemo.vue?raw'
         <ZCode code="number" /> = 多行截断（<ZCode code="-webkit-line-clamp" />）。
       </template>
       <StateDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">排版维度</ZTitle>
+    <DemoBlock title="weight / depth / italic / underline / strikethrough / mono" :source="DimensionDemoSource">
+      <template #desc>
+        <ZCode code="weight" /> 接 fontWeight carrier（thin–black 共 9 阶）；<ZCode code="depth" /> 接
+        opacity carrier 控制透明度；斜体 / 下划线 / 删除线 / 等宽均为零参数布尔 prop。
+      </template>
+      <DimensionDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

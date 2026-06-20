@@ -5,6 +5,9 @@ import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZSteps/BasicDemo.vue'
 import BasicDemoSource from './ZSteps/BasicDemo.vue?raw'
 
+import SizeDemo from './ZSteps/SizeDemo.vue'
+import SizeDemoSource from './ZSteps/SizeDemo.vue?raw'
+
 const propsRows = [
   { name: 'items', type: 'ZStepItem[]', default: '—（必传）', desc: '步骤项数组。' },
   { name: 'current', type: 'number', default: '0', desc: '当前激活步骤（0-based）。' },
@@ -43,6 +46,15 @@ const itemRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="水平 / 垂直 / 错误态 / 动态切换" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">指示器尺寸</ZTitle>
+    <DemoBlock title="size 1 / 2 / 3 对比（+ 垂直布局）" :source="SizeDemoSource">
+      <template #desc>
+        <ZCode code="size" /> 是 px 倍数（1 单位 = 16px，默认 2 = 32px），控制步骤指示器直径。
+        水平与垂直布局均支持自定义 size。
+      </template>
+      <SizeDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

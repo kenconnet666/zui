@@ -5,6 +5,9 @@ import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZTabs/BasicDemo.vue'
 import BasicDemoSource from './ZTabs/BasicDemo.vue?raw'
 
+import SizeDemo from './ZTabs/SizeDemo.vue'
+import SizeDemoSource from './ZTabs/SizeDemo.vue?raw'
+
 const propsRows = [
   { name: 'tabs', type: 'ZTabItem[]', default: '—（必传）', desc: 'Tab 项数组。' },
   { name: 'value', type: 'string', default: '—', desc: '当前激活 tab name（v-model:value）。' },
@@ -53,6 +56,15 @@ const exposeRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="line / card / segment / 可关闭+新增" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">禁用状态</ZTitle>
+    <DemoBlock title="单项禁用 / 整体禁用（disabled）" :source="SizeDemoSource">
+      <template #desc>
+        <ZCode code="disabled" /> 设在 <ZCode code="ZTabItem" /> 上禁用单项；设在 <ZCode code="ZTabs" />
+        上整体禁用（所有 tab 不可点击）。三种 type 均支持。
+      </template>
+      <SizeDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

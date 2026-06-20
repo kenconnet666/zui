@@ -12,6 +12,8 @@ import NestedDemo from './ZModal/NestedDemo.vue'
 import NestedDemoSource from './ZModal/NestedDemo.vue?raw'
 import DialogApiDemo from './ZModal/DialogApiDemo.vue'
 import DialogApiDemoSource from './ZModal/DialogApiDemo.vue?raw'
+import WidthDemo from './ZModal/WidthDemo.vue'
+import WidthDemoSource from './ZModal/WidthDemo.vue?raw'
 
 const propsRows = [
   { name: 'visible', type: 'boolean', default: 'false', desc: '是否显示（v-model:visible）。' },
@@ -81,6 +83,15 @@ const exposeRows = [
     <DemoBlock title="多层 Modal 与 useEscapeStack" :source="NestedDemoSource">
       <template #desc> 多层弹窗共享 ESC 栈,按 ESC 仅关闭最顶层;z-index 自动叠加。 </template>
       <NestedDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义宽度 (width)</ZTitle>
+    <DemoBlock title="width prop — px 倍数（1 单位 = 16px）" :source="WidthDemoSource">
+      <template #desc>
+        <code>width</code> 为 <strong>px 倍数</strong>，20 = 320px / 30 = 480px（默认）/ 40 = 640px / 50 = 800px。
+        非标准尺寸（百分比 / vh）走 <ZCode code=":css='s => s.width.pct(80)'" />。
+      </template>
+      <WidthDemo />
     </DemoBlock>
 
     <ZTitle :level="2">命令式 createDialogApi</ZTitle>
