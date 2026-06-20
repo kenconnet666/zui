@@ -74,6 +74,7 @@ import { computed, ref, useSlots, type Slots } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
+import ZEmpty from './ZEmpty.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
@@ -152,15 +153,6 @@ const footerClass = computed(() =>
   }),
 )
 
-const emptyClass = computed(() =>
-  icss(theme.value, s => {
-    s.padding._large
-    s.color._textSecondary
-    s.fontSize._small
-    s.textAlign.center
-  }),
-)
-
 const vlRef = ref<ZVirtualListExpose | null>(null)
 const rootRef = ref<HTMLElement | null>(null)
 
@@ -206,9 +198,7 @@ function onUpdate(start: number, end: number): void {
         <slot :item="item" :index="index" :size="itemPx" />
       </template>
       <template #empty>
-        <div :class="emptyClass">
-          <slot name="empty">{{ emptyText }}</slot>
-        </div>
+        <slot name="empty"><ZEmpty compact :description="emptyText" /></slot>
       </template>
     </ZVirtualList>
 

@@ -16,6 +16,11 @@ export interface ZEmptyProps {
   image?: Component
   /** 图标尺寸 px 倍数(1 单位 = 16px),默认 4(= 64px)。 */
   size?: number
+  /**
+   * 紧凑模式:**隐藏占位图标** + 收紧 padding,只居中显示描述文字。用于下拉浮层 /
+   * 穿梭框面板等小容器空态(默认 64px 图标在这些场景过大)。默认 `false`。
+   */
+  compact?: boolean
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
 }
 </script>
@@ -29,6 +34,7 @@ import { sizePx } from '../_internal/sizing'
 const props = withDefaults(defineProps<ZEmptyProps>(), {
   description: '暂无数据',
   size: 4,
+  compact: false,
 })
 
 const theme = useZTheme()
@@ -40,7 +46,11 @@ const rootClass = computed(() =>
     s.alignItems.center
     s.justifyContent.center
     s.gap._small
-    s.padding._large
+    if (props.compact) {
+      s.padding._small
+    } else {
+      s.padding._large
+    }
     s.color._textSecondary
     s.fontSize._small
     props.css?.(s)
@@ -67,7 +77,7 @@ const defaultSvg = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" s
 
 <template>
   <div :class="rootClass" role="status" :aria-label="description || '暂无数据'">
-    <span :class="imgClass">
+    <span v-if="!compact" :class="imgClass">
       <slot name="image">
         <component v-if="image" :is="image" />
         <span v-else v-html="defaultSvg" />

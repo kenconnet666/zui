@@ -81,13 +81,15 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useZLocale } from '../provider/locale/useZLocale'
 import { applySx, extractSxAttrs } from '../_internal/sx'
-import { applyInputSize } from '../_internal/input-size'
+import { applyInputSize, applyInputSizeNoHeight } from '../_internal/input-size'
 import { BuiltinIcons, ZIcon } from '../gene'
 import { usePopper, useEscapeStack, useZId } from '../_hooks'
 import { sizePx } from '../_internal/sizing'
 import { onClickOutside } from '@vueuse/core'
 import ZVirtualList from '../display/ZVirtualList.vue'
 import ZCheckbox from './ZCheckbox.vue'
+import ZEmpty from '../display/ZEmpty.vue'
+import ZTag from '../gene/ZTag.vue'
 import { themeColorScheme } from '../_internal/colorScheme'
 import { applyUserRef } from '../_internal/merge-ref'
 
@@ -201,13 +203,21 @@ const triggerClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineFlex
     s.alignItems.center
+    s.flexWrap.wrap
     s.gap._tiny
     s.borderWidth._thin
     s.borderStyle.solid
     s.borderColor._border
     s.backgroundColor._bg
     s.color._text
-    applyInputSize(s, props.size, props.height)
+    if (props.multiple) {
+      // 多选:chips 换行撑高,用 min-height 代替固定 height
+      applyInputSizeNoHeight(s, props.size)
+      const minH = props.height ?? (props.size ?? 1) * 2
+      s.minHeight.px(sizePx(minH))
+    } else {
+      applyInputSize(s, props.size, props.height)
+    }
     s.cursor.pointer
     s.minWidth.px(sizePx(8))
     s.transitionProperty._colors
@@ -379,12 +389,32 @@ watch(
   },
 )
 
-const emptyClass = computed(() =>
+/**
+ * 根据值查找对应 label(找不到则回退为 String(v))。
+ * 供 multiple chip 模式渲染标签文本。
+ */
+function labelOf(v: ZSelectValue): string {
+  return props.options.find(o => o.value === v)?.label ?? String(v)
+}
+
+/**
+ * 从多选数组中移除某值,emit update:value + change。
+ * 复用 selectOption 中 toggle 移除路径逻辑(filter)。
+ */
+function deselectValue(v: ZSelectValue): void {
+  const next = valueArray.value.filter(item => item !== v)
+  emit('update:value', next)
+  emit('change', next)
+}
+
+/** chips 容器:flex wrap,让已选标签换行,中间留 gap。 */
+const chipsWrapClass = computed(() =>
   icss(theme.value, s => {
-    s.padding._small
-    s.color._textSecondary
-    s.fontSize._small
-    s.textAlign.center
+    s.display.inlineFlex
+    s.flexWrap.wrap
+    s.alignItems.center
+    s.gap._tiny
+    s.flexGrow(1)
   }),
 )
 
@@ -424,19 +454,50 @@ defineExpose({ rootRef })
     v-bind="sxTriggerAttrs.attrs"
     @click="toggleOpen"
   >
-    <input
-      v-if="filterable && open"
-      :class="triggerInputClass"
-      :value="search"
-      :placeholder="placeholder ?? selectedLabel"
-      aria-label="过滤选项"
-      autofocus
-      @input="onFilterInput"
-      @click.stop
-    />
-    <span v-else :class="triggerTextClass">
-      {{ selectedLabel || placeholder }}
-    </span>
+    <!-- multiple 模式:chips 容器,已选项逐个显示为可删 ZTag chip -->
+    <template v-if="multiple">
+      <div :class="chipsWrapClass">
+        <ZTag
+          v-for="v in valueArray"
+          :key="String(v)"
+          closable
+          :size="0.875"
+          @close="deselectValue(v)"
+        >{{ labelOf(v) }}</ZTag>
+        <!-- filterable 时 input 放在 chips 之后,保持过滤能力 -->
+        <input
+          v-if="filterable && open"
+          :class="triggerInputClass"
+          :value="search"
+          placeholder=""
+          aria-label="过滤选项"
+          autofocus
+          @input="onFilterInput"
+          @click.stop
+        />
+        <!-- 无已选时显示 placeholder -->
+        <span
+          v-else-if="valueArray.length === 0 && !open"
+          :class="triggerTextClass"
+        >{{ placeholder }}</span>
+      </div>
+    </template>
+    <!-- 单选模式:input(filterable 打开中) 或 文本 span -->
+    <template v-else>
+      <input
+        v-if="filterable && open"
+        :class="triggerInputClass"
+        :value="search"
+        :placeholder="placeholder ?? selectedLabel"
+        aria-label="过滤选项"
+        autofocus
+        @input="onFilterInput"
+        @click.stop
+      />
+      <span v-else :class="triggerTextClass">
+        {{ selectedLabel || placeholder }}
+      </span>
+    </template>
     <button
       v-if="showClear"
       type="button"
@@ -462,8 +523,8 @@ defineExpose({ rootRef })
       role="listbox"
       v-bind="sxDropdownAttrs.attrs"
     >
-      <div v-if="filteredOptions.length === 0" :class="emptyClass">
-        {{ selectLocale.noOptions }}
+      <div v-if="filteredOptions.length === 0">
+        <ZEmpty compact :description="selectLocale.noOptions" />
       </div>
       <ZVirtualList
         v-else

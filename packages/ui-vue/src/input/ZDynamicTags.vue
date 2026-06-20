@@ -32,6 +32,7 @@ import { computed, h, nextTick, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import ZTag from '../gene/ZTag.vue'
 import { sizePx } from '../_internal/sizing'
 
 const props = withDefaults(defineProps<ZDynamicTagsProps>(), {
@@ -108,39 +109,6 @@ const rootClass = computed(() =>
   }),
 )
 
-const tagClass = computed(() =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.gap._tiny
-    s.paddingLeft._small
-    s.paddingRight._tiny
-    s.paddingTop.px(sizePx(0.125))
-    s.paddingBottom.px(sizePx(0.125))
-    s.fontSize._small
-    s.borderRadius._tiny
-    s.backgroundColor._textSecondary.alpha(12)
-    s.color._text
-  }),
-)
-
-const removeBtnClass = computed(() =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.justifyContent.center
-    s.cursor.pointer
-    s.backgroundColor.transparent
-    s.borderStyle.none
-    s.padding.px(0)
-    s.color._textSecondary
-    s.fontSize._tiny
-    s._hover(h => {
-      h.color._danger
-    })
-  }),
-)
-
 const addBtnClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineFlex
@@ -188,24 +156,18 @@ const inputClass = computed(() =>
   }),
 )
 
-const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
 const addIcon = computed(() => h(ZIcon, { component: BuiltinIcons.add }))
 </script>
 
 <template>
   <div :class="rootClass" role="group">
-    <span v-for="tag in value" :key="tag" :class="tagClass">
-      {{ tag }}
-      <button
-        v-if="!disabled"
-        type="button"
-        :class="removeBtnClass"
-        :aria-label="`删除 ${tag}`"
-        @click="removeTag(tag)"
-      >
-        <component :is="closeIcon" />
-      </button>
-    </span>
+    <ZTag
+      v-for="tag in value"
+      :key="tag"
+      :closable="!disabled"
+      :size="0.875"
+      @close="removeTag(tag)"
+    >{{ tag }}</ZTag>
 
     <input
       v-if="editing"

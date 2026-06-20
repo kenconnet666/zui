@@ -86,6 +86,7 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
 import { sizePx } from '../_internal/sizing'
 import ZCheckbox from '../input/ZCheckbox.vue'
+import ZEmpty from './ZEmpty.vue'
 
 /**
  * 盒子模型(纯 px,1 单位 = 16px):
@@ -327,15 +328,6 @@ const sortIconClass = (active: boolean): string =>
     s.opacity(active ? 1 : 0.6)
   })
 
-const emptyClass = computed(() =>
-  icss(theme.value, s => {
-    s.padding._large
-    s.color._textSecondary
-    s.fontSize._small
-    s.textAlign.center
-  }),
-)
-
 function ariaSort(col: ZTableColumn<T>): 'ascending' | 'descending' | 'none' | undefined {
   if (!col.sortable) return undefined
   if (props.sortState.column !== col.key) return 'none'
@@ -401,7 +393,7 @@ const totalColspan = computed(() => props.columns.length + (props.selectable ? 1
       v-bind="sxBodyAttrs.attrs"
     >
       <tr v-if="sortedData.length === 0">
-        <td :colspan="totalColspan" :class="emptyClass">{{ emptyText }}</td>
+        <td :colspan="totalColspan"><ZEmpty :description="emptyText" /></td>
       </tr>
       <tr
         v-for="(row, idx) in sortedData"

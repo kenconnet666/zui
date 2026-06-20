@@ -46,6 +46,7 @@ import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZVirtualList from '../display/ZVirtualList.vue'
 import ZCheckbox from './ZCheckbox.vue'
+import ZEmpty from '../display/ZEmpty.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
@@ -211,14 +212,6 @@ const arrowBtnClass = (enabled: boolean): string =>
     if (!enabled) s.opacity._dim
   })
 
-const emptyClass = computed(() =>
-  icss(theme.value, s => {
-    s.padding._small
-    s.textAlign.center
-    s.color._textSecondary
-    s.fontSize._small
-  }),
-)
 
 const rightIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronRight }))
 const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }))
@@ -229,7 +222,7 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
     <div :class="panelClass">
       <div :class="panelHeadClass">{{ titlesRef[0] }} ({{ leftItems.length }})</div>
       <div :class="listClass">
-        <div v-if="leftItems.length === 0" :class="emptyClass">无数据</div>
+        <div v-if="leftItems.length === 0"><ZEmpty compact description="无数据" /></div>
         <ZVirtualList
           v-else
           :items="leftItems"
@@ -276,7 +269,7 @@ const leftIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronLeft }
     <div :class="panelClass">
       <div :class="panelHeadClass">{{ titlesRef[1] }} ({{ rightItems.length }})</div>
       <div :class="listClass">
-        <div v-if="rightItems.length === 0" :class="emptyClass">无数据</div>
+        <div v-if="rightItems.length === 0"><ZEmpty compact description="无数据" /></div>
         <ZVirtualList
           v-else
           :items="rightItems"

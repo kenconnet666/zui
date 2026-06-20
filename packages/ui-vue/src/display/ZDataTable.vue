@@ -128,6 +128,8 @@ import { sizePx } from '../_internal/sizing'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZCheckbox from '../input/ZCheckbox.vue'
 import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
+import ZEmpty from './ZEmpty.vue'
+import ZSpin from '../feedback/ZSpin.vue'
 
 /**
  * 盒子模型(纯 px,1 单位 = 16px):
@@ -156,7 +158,7 @@ import ZVirtualList, { type ZVirtualListExpose } from './ZVirtualList.vue'
  *   │                                                              │
  *   │   ┌────────────────────────────────────────────────────────┐ │
  *   │   │ loading 遮罩(absolute fill,bg _bg.alpha(60))         │ │   z-index _modal
- *   │   │ #loading slot 或默认 ZSpin                              │ │
+ *   │   │ #loading slot 默认内容:ZSpin(纯 indicator)           │ │
  *   │   └────────────────────────────────────────────────────────┘ │
  *   └──────────────────────────────────────────────────────────────┘
  *
@@ -529,7 +531,7 @@ const isEmpty = computed(() => sortedRows.value.length === 0)
 
     <!-- body -->
     <div v-if="isEmpty" :class="emptyClass">
-      <slot name="empty">{{ emptyText }}</slot>
+      <slot name="empty"><ZEmpty :description="emptyText" /></slot>
     </div>
     <ZVirtualList
       v-else
@@ -574,7 +576,7 @@ const isEmpty = computed(() => sortedRows.value.length === 0)
 
     <!-- loading 遮罩 -->
     <div v-if="loading" :class="loadingMaskClass" role="status" aria-busy="true">
-      <slot name="loading">加载中...</slot>
+      <slot name="loading"><ZSpin /></slot>
     </div>
   </div>
 </template>

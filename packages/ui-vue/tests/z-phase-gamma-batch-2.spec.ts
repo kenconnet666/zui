@@ -193,7 +193,10 @@ describe('ZDynamicTags', () => {
       },
     })
     const w = mount(Host)
-    const removeBtn = w.find('button[aria-label="删除 x"]')
+    // ZTag 的关闭按钮 aria-label 为 "关闭";找第一个 tag(值 "x")对应的关闭按钮
+    const tagSpans = w.findAll('span[class]')
+    const xTag = tagSpans.find(s => s.text().startsWith('x'))!
+    const removeBtn = xTag.find('button[aria-label="关闭"]')
     await removeBtn.trigger('click')
     expect(value.value).toEqual(['y'])
   })
