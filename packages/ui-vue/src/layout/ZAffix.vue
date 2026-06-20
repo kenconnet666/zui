@@ -49,7 +49,10 @@ function onScroll(): void {
 // 缓存解析后的 scroll 目标,确保 add/removeEventListener 作用于同一对象(target 工厂可能每次返回新引用,否则解绑失败→监听泄漏)
 let scrollTarget: Element | Window | null = null
 onMounted(() => {
-  scrollTarget = props.target?.() ?? window
+  // 防御:target 工厂可能返回非 Element(如误传 Vue ref 对象)→ 回退到 window,避免崩溃
+  const t = props.target?.()
+  scrollTarget =
+    t && typeof (t as Element).addEventListener === 'function' ? (t as Element | Window) : window
   scrollTarget.addEventListener('scroll', onScroll, { passive: true })
   onScroll()
 })

@@ -186,11 +186,15 @@ const boxStyle = computed<Record<string, string>>(() => ({
   'color-scheme': themeColorScheme(mergedTheme.value),
 }))
 
-// ─── css factory → emotion className(用合并后的 theme,跟子组件一致) ───
-const className = computed<string | undefined>(() => {
-  if (!props.css) return undefined
-  return icss(mergedTheme.value, props.css)
-})
+// ─── 根节点基础字体 + css factory → emotion className(用合并后的 theme,跟子组件一致) ───
+// 根节点应用主题 `_sans`(中文优先 PingFang / 微软雅黑 UI),整棵 ZBox 子树继承默认字体;
+// 用户 css factory 叠加其后,可覆盖。
+const className = computed<string>(() =>
+  icss(mergedTheme.value, s => {
+    s.fontFamily._sans
+    props.css?.(s)
+  }),
+)
 
 defineExpose({
   theme: mergedTheme,

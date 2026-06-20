@@ -10,6 +10,8 @@ import CustomFooterDemo from './ZModal/CustomFooterDemo.vue'
 import CustomFooterDemoSource from './ZModal/CustomFooterDemo.vue?raw'
 import NestedDemo from './ZModal/NestedDemo.vue'
 import NestedDemoSource from './ZModal/NestedDemo.vue?raw'
+import DialogApiDemo from './ZModal/DialogApiDemo.vue'
+import DialogApiDemoSource from './ZModal/DialogApiDemo.vue?raw'
 
 const propsRows = [
   { name: 'visible', type: 'boolean', default: 'false', desc: '是否显示（v-model:visible）。' },
@@ -79,6 +81,18 @@ const exposeRows = [
     <DemoBlock title="多层 Modal 与 useEscapeStack" :source="NestedDemoSource">
       <template #desc> 多层弹窗共享 ESC 栈,按 ESC 仅关闭最顶层;z-index 自动叠加。 </template>
       <NestedDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">命令式 createDialogApi</ZTitle>
+    <ZParagraph>
+      不想用 <ZCode code="v-model:visible" /> 管理状态时,用 <ZCode code="createDialogApi()" /> 以
+      <strong>Promise</strong> 方式弹确认 / 提示框(对齐 <ZCode code="createMessageApi" /> /
+      <ZCode code="createNotificationApi" /> 工厂模式)。<ZCode code="confirm" /> 双按钮 resolve
+      <ZCode code="boolean" />(确定=true);<ZCode code="info/success/warning/error" />
+      单"确定"按钮。任意关闭方式(取消 / 遮罩 / ESC)均 resolve。
+    </ZParagraph>
+    <DemoBlock title="dialog.confirm / info / success(Promise)" :source="DialogApiDemoSource">
+      <DialogApiDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

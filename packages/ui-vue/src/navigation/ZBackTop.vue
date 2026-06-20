@@ -102,7 +102,10 @@ function scrollToTop(): void {
 }
 
 onMounted(() => {
-  scrollTarget = props.target?.() ?? window
+  // 防御:target 工厂可能返回非 Element(如误传 Vue ref 对象)→ 回退到 window,避免崩溃
+  const t = props.target?.()
+  scrollTarget =
+    t && typeof (t as Element).addEventListener === 'function' ? (t as Element | Window) : window
   scrollTarget.addEventListener('scroll', onScroll, { passive: true })
   onScroll()
 })
