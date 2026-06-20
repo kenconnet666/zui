@@ -38,7 +38,7 @@ import { computed, h, ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { usePopper, useEscapeStack } from '../_hooks'
+import { usePopper, useEscapeStack, useZId } from '../_hooks'
 import { BuiltinIcons, ZIcon } from '../gene'
 import { sizePx } from '../_internal/sizing'
 
@@ -85,6 +85,9 @@ const props = withDefaults(defineProps<ZPopconfirmProps>(), {
 const emit = defineEmits<ZPopconfirmEmits>()
 
 const theme = useZTheme()
+
+/** popconfirm 标题 id，用于 aria-labelledby（非模态，不加 aria-modal）。 */
+const titleId = useZId('popconfirm-title')
 
 const triggerRef = ref<HTMLElement | null>(null)
 const floatingRef = ref<HTMLElement | null>(null)
@@ -246,13 +249,14 @@ const warningIcon = computed(() => h(ZIcon, { component: BuiltinIcons.warning })
       :class="popperClass"
       :style="floatingStyles"
       role="dialog"
+      :aria-labelledby="title ? titleId : undefined"
     >
       <div :class="headRowClass">
         <span :class="iconClass">
           <component :is="warningIcon" />
         </span>
         <div>
-          <div v-if="title" :class="titleClass">{{ title }}</div>
+          <div v-if="title" :id="titleId" :class="titleClass">{{ title }}</div>
           <div v-if="description" :class="descClass">{{ description }}</div>
         </div>
       </div>

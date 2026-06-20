@@ -206,7 +206,8 @@ const sbThumbClass = computed(() =>
     s._prop('right', '0')
     s.borderRadius.px(sizePx(0.1875))
     s._prop('background', thumbColors.value.normal)
-    s._prop('transition', 'background 120ms')
+    s.transitionProperty._colors
+    s.transitionDuration._small
     s._selector('&:hover', h => {
       h._prop('background', thumbColors.value.hover)
     })
@@ -231,6 +232,9 @@ function getKey(item: T, index: number): string | number {
   if (item != null && typeof item === 'object') {
     const k = (item as Record<string, unknown>)[props.keyField]
     if (typeof k === 'string' || typeof k === 'number') return k
+  } else if (typeof item === 'string' || typeof item === 'number') {
+    // 原始类型数组(string[] / number[]):用项本身作 key,避免回退到不稳定的 index
+    return item
   }
   return index
 }

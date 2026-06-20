@@ -80,23 +80,26 @@ function tick(): void {
   }
 }
 
+function startTimer(): void {
+  // 始终先清理旧 timer,避免重复 setInterval 叠加;按当前 precision 决定刷新间隔
+  if (timer) clearInterval(timer)
+  const interval = props.precision === 'ms' ? 50 : 1000
+  timer = setInterval(tick, interval)
+}
+
+// value 变化:重置 finished 并按新目标重启;precision 变化:按新精度重启刷新间隔
 watch(
-  () => props.value,
+  () => [props.value, props.precision],
   () => {
     finished = false
-    // 若上一轮已归零 clear 了 timer,目标改为未来时间时需重启 interval
-    if (!timer) {
-      const interval = props.precision === 'ms' ? 50 : 1000
-      timer = setInterval(tick, interval)
-    }
+    startTimer()
     tick()
   },
 )
 
 onMounted(() => {
   tick()
-  const interval = props.precision === 'ms' ? 50 : 1000
-  timer = setInterval(tick, interval)
+  startTimer()
 })
 onScopeDispose(() => {
   if (timer) clearInterval(timer)

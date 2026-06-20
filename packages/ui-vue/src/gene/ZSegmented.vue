@@ -141,7 +141,7 @@ function select(opt: ZSegmentedOption): void {
 </script>
 
 <template>
-  <div :class="rootClass" role="radiogroup">
+  <div :class="rootClass" role="radiogroup" aria-label="分段控制">
     <button
       v-for="opt in options"
       :key="String(opt.value)"

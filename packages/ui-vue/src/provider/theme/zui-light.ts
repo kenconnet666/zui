@@ -35,6 +35,7 @@ export const zuiLight = new Theme<ZuiSchema>({
     info: '#0288d1', // M2 Light Blue 700
     text: '#212121', // M2 grey-900
     textSecondary: '#616161', // M2 grey-700
+    textTertiary: '#9e9e9e', // M2 grey-500 —— 三级文本(占位符 / 时间戳 / 弱提示 / 禁用文字)
     bg: '#ffffff',
     bgMuted: '#f5f5f5', // M2 grey-100
     border: '#e0e0e0', // M2 grey-300

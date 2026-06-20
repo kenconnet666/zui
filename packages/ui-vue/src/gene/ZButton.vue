@@ -106,9 +106,11 @@ const btnRef = ref<HTMLElement | null>(null)
 
 const isClickDisabled = computed(() => props.disabled || props.loading)
 
+// ripple 走 `currentColor`(继承按钮前景色):filled 取反色文字 `_bg`、其它 variant 取
+// 主色/用户色,亮/暗主题与各 variant 自动适配,透明度由 useRipple 的 `.zui-ripple` 基础 opacity 控制。
+// (原先写死 `rgba(255,255,255,0.35)` 白波纹在 text/outlined/ghost 等浅底上几乎不可见)
 useRipple(btnRef as Parameters<typeof useRipple>[0], {
   disabled: computed(() => !props.ripple || isClickDisabled.value),
-  color: 'rgba(255, 255, 255, 0.35)',
 })
 
 const buttonClass = computed(() =>

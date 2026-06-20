@@ -47,7 +47,7 @@ export interface ZTourEmits {
 import { computed, ref, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { useEscapeStack } from '../_hooks'
+import { useEscapeStack, useZId } from '../_hooks'
 import { sizePx } from '../_internal/sizing'
 
 /**
@@ -152,6 +152,9 @@ function skip(): void {
 
 const isLast = computed(() => currentRef.value >= props.steps.length - 1)
 
+/** 每个 tour 实例的标题 id，用于 aria-labelledby。 */
+const titleId = useZId('tour-title')
+
 // mask:用 4 个矩形挖出 target 区域(避免 box-shadow 范围限制)
 const maskTopStyle = computed(() => {
   const r = targetRect.value
@@ -211,8 +214,8 @@ const cardClass = computed(() =>
     s.borderColor._border
     s.boxShadow._huge
     s.padding._middle
-    s.minWidth.px(sizePx(props.minWidth ?? 15))
-    s.maxWidth.px(sizePx(props.maxWidth ?? 22.5))
+    s.minWidth.px(sizePx(props.minWidth))
+    s.maxWidth.px(sizePx(props.maxWidth))
     props.css?.(s)
   }),
 )
@@ -288,8 +291,15 @@ const btnClass = (primary: boolean): string =>
       <div :class="maskClass" :style="maskLeftStyle" @click="close" />
       <div :class="maskClass" :style="maskRightStyle" @click="close" />
 
-      <div ref="cardRef" :class="cardClass" :style="cardStyle" role="dialog" aria-modal="true">
-        <div :class="titleClass">{{ currentStep.title }}</div>
+      <div
+        ref="cardRef"
+        :class="cardClass"
+        :style="cardStyle"
+        role="dialog"
+        aria-modal="true"
+        :aria-labelledby="currentStep.title ? titleId : undefined"
+      >
+        <div :id="titleId" :class="titleClass">{{ currentStep.title }}</div>
         <div v-if="currentStep.description" :class="descClass">{{ currentStep.description }}</div>
         <div :class="footerClass">
           <span :class="stepIndicatorClass"> {{ currentRef + 1 }} / {{ steps.length }} </span>

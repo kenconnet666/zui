@@ -124,7 +124,7 @@ function onError(evt: Event): void {
 </script>
 
 <template>
-  <span :class="rootClass">
+  <span :class="rootClass" :aria-busy="status === 'loading' ? 'true' : undefined">
     <template v-if="showFallback">
       <img :src="fallback" :alt="alt" :class="imgClass" />
     </template>

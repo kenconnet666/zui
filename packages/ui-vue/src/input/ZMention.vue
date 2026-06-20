@@ -40,6 +40,7 @@ export interface ZMentionEmits {
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applyInputSizeNoHeight } from '../_internal/input-size'
@@ -212,6 +213,10 @@ const optionClass = computed(() =>
 )
 
 const rootRef = ref<HTMLDivElement | null>(null)
+// 点击组件外部关闭候选下拉(原先点外部浮层残留)
+onClickOutside(rootRef, () => {
+  showDropdown.value = false
+})
 defineExpose({ rootRef })
 </script>
 
@@ -231,7 +236,6 @@ defineExpose({ rootRef })
         :items="filtered"
         :item-size="optionSize ?? 2"
         :height="dropdownListHeight"
-        key-field="value"
       >
         <template #default="{ item: opt }">
           <div :class="optionClass" role="option" @click="pickMention(opt)">

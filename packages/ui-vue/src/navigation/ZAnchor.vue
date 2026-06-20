@@ -132,12 +132,14 @@ const rootClass = computed(() =>
   }),
 )
 
-/** active 高亮色 token(carrier 桥接;color factory 用户覆盖优先)。 */
-const activeColorFactory =
-  props.color ??
-  ((c: Chain<ZuiSchema>['color']) => {
-    c._primary
-  })
+/** active 高亮色 token(carrier 桥接;color factory 用户覆盖优先)。computed 以跟随 `color` prop 动态变更。 */
+const activeColorFactory = computed<(c: Chain<ZuiSchema>['color']) => void>(
+  () =>
+    props.color ??
+    ((c: Chain<ZuiSchema>['color']) => {
+      c._primary
+    }),
+)
 
 const linkClass = (item: ZAnchorItem, active: boolean): string =>
   icss(theme.value, s => {
@@ -149,7 +151,7 @@ const linkClass = (item: ZAnchorItem, active: boolean): string =>
     s.textDecorationLine.none
     s.paddingLeft.px(sizePx(extraIndent))
     if (active) {
-      s.color(activeColorFactory)
+      s.color(activeColorFactory.value)
       s.fontWeight._medium
       s.marginLeft.px(-9)
       s.borderLeftWidth._middle
@@ -160,7 +162,7 @@ const linkClass = (item: ZAnchorItem, active: boolean): string =>
       s.color._textSecondary
     }
     s._hover(h => {
-      h.color(activeColorFactory)
+      h.color(activeColorFactory.value)
     })
   })
 </script>

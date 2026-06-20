@@ -5,7 +5,7 @@
  * **API**:
  * - `content: string` —— 水印文字
  * - `fontSize?: number` —— 默认 14
- * - `color?: string` —— 默认 `rgba(0,0,0,0.10)`
+ * - `color?: string` —— 默认跟随主题 `_text` 10% alpha(亮/暗自适应;暗色背景下不再不可见)
  * - `gap?: number` —— 水印间距 px,默认 100
  * - `rotate?: number` —— 旋转角度 deg,默认 -22
  *
@@ -28,10 +28,10 @@ export interface ZWatermarkProps {
 import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { resolveColor } from '../_internal/color-bridge'
 
 const props = withDefaults(defineProps<ZWatermarkProps>(), {
   fontSize: 14,
-  color: 'rgba(0, 0, 0, 0.10)',
   gap: 100,
   rotate: -22,
 })
@@ -50,7 +50,8 @@ const watermarkDataUrl = computed(() => {
   ctx.translate(canvas.width / 2, canvas.height / 2)
   ctx.rotate((props.rotate * Math.PI) / 180)
   ctx.font = `${fontSize}px sans-serif`
-  ctx.fillStyle = props.color
+  // 默认色跟随主题 _text 10% alpha(亮/暗自适应);用户显式传 color 则优先
+  ctx.fillStyle = props.color ?? resolveColor(theme.value, c => c._text.alpha(10), 'rgba(0,0,0,0.10)')
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   ctx.fillText(props.content, 0, 0)

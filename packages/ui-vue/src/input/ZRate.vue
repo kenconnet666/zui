@@ -120,6 +120,25 @@ const starClass = computed(() =>
   }),
 )
 
+/** star button reset：清除浏览器默认 button 样式 */
+const starResetClass = computed(() =>
+  icss(theme.value, s => {
+    s.backgroundColor.transparent
+    s.borderStyle.none
+    s.padding.px(0)
+  }),
+)
+
+/** SVG 层：position absolute / inset 0 / opacity 1 / color inherit */
+const svgLayerClass = computed(() =>
+  icss(theme.value, s => {
+    s.position.absolute
+    s.inset.px(0)
+    s.opacity(1)
+    s.color.currentColor
+  }),
+)
+
 const filledStarClass = (filledRatio: number): string =>
   icss(theme.value, s => {
     s.position.absolute
@@ -162,14 +181,13 @@ const starSvg = `<svg viewBox="0 0 24 24" fill="currentColor" width="100%" heigh
       v-for="i in count"
       :key="i"
       type="button"
-      :class="starClass"
       role="radio"
-      :aria-checked="value === i"
+      :aria-checked="(value ?? 0) >= i ? 'true' : 'false'"
       :disabled="disabled"
-      style="background: transparent; border: none; padding: 0"
+      :class="[starClass, starResetClass]"
       @click="onClick(i - 1, $event)"
     >
-      <span v-html="starSvg" style="position: absolute; inset: 0; opacity: 1; color: inherit" />
+      <span v-html="starSvg" :class="svgLayerClass" />
       <span
         v-if="starFilledRatio(i - 1) > 0"
         :class="filledStarClass(starFilledRatio(i - 1))"

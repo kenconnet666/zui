@@ -321,9 +321,12 @@ defineExpose({ rootRef })
     :ref="bindRoot"
     :class="triggerClass"
     role="combobox"
+    :tabindex="disabled ? -1 : 0"
     :aria-expanded="open"
     :aria-disabled="disabled"
     @click="toggleOpen"
+    @keydown.enter.prevent="toggleOpen"
+    @keydown.space.prevent="toggleOpen"
   >
     <span :class="triggerTextClass">{{ displayText || effectivePlaceholder }}</span>
     <span :class="arrowClass">

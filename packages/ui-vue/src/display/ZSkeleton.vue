@@ -52,7 +52,7 @@ import { sizePx } from '../_internal/sizing'
  *   │              └──────────────────────────────┘    │
  *   └──────────────────────────────────────────────────┘
  *
- * animated=true → 给所有骨架元素叠 shimmer 渐变背景动画(1.4s 循环)。
+ * animated=true → 给所有骨架元素叠 opacity 脉冲动画(1.5s 循环,主题无关)。
  */
 const props = withDefaults(defineProps<ZSkeletonProps>(), {
   loading: true,
@@ -64,15 +64,17 @@ const props = withDefaults(defineProps<ZSkeletonProps>(), {
 
 const theme = useZTheme()
 
-const SHIMMER_STYLE_ID = 'zui-skeleton-shimmer'
-// 全局注入 keyframes(一次性)
-if (typeof document !== 'undefined' && !document.getElementById(SHIMMER_STYLE_ID)) {
+const PULSE_STYLE_ID = 'zui-skeleton-pulse'
+// 全局注入 keyframes(一次性)。**用 opacity 脉冲而非写死颜色的高光 sweep** ——
+// 骨架块底色走 `_bgMuted` token,opacity 脉冲在亮/暗主题下都正确(原先 `rgba(255,255,255,0.4)`
+// 高光在暗色背景上过亮,且完全绕过主题)。
+if (typeof document !== 'undefined' && !document.getElementById(PULSE_STYLE_ID)) {
   const style = document.createElement('style')
-  style.id = SHIMMER_STYLE_ID
+  style.id = PULSE_STYLE_ID
   style.textContent = `
-@keyframes zui-skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+@keyframes zui-skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
 }
 `
   document.head.appendChild(style)
@@ -94,7 +96,7 @@ const avatarClass = computed(() =>
     s.borderRadius._full
     s.backgroundColor._bgMuted
     s.flexShrink(0)
-    if (props.animated) applyShimmer(s)
+    if (props.animated) applyPulse(s)
   }),
 )
 
@@ -114,7 +116,7 @@ const titleBarClass = computed(() =>
     s.borderRadius._tiny
     s.backgroundColor._bgMuted
     s.marginBottom._tiny
-    if (props.animated) applyShimmer(s)
+    if (props.animated) applyPulse(s)
   }),
 )
 
@@ -124,15 +126,11 @@ const rowClass = (isLast: boolean): string =>
     s.width.pct(isLast ? 60 : 100)
     s.borderRadius._tiny
     s.backgroundColor._bgMuted
-    if (props.animated) applyShimmer(s)
+    if (props.animated) applyPulse(s)
   })
 
-function applyShimmer(s: Chain<ZuiSchema>): void {
-  s.backgroundImage(
-    'linear-gradient(90deg, rgba(0,0,0,0) 25%, rgba(255,255,255,0.4) 50%, rgba(0,0,0,0) 75%)',
-  )
-  s.backgroundSize('200% 100%')
-  s.animation('zui-skeleton-shimmer 1.4s ease-in-out infinite')
+function applyPulse(s: Chain<ZuiSchema>): void {
+  s.animation('zui-skeleton-pulse 1.5s ease-in-out infinite')
 }
 </script>
 

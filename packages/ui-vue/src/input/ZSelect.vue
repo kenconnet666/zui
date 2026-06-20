@@ -417,6 +417,7 @@ defineExpose({ rootRef })
       :class="triggerInputClass"
       :value="search"
       :placeholder="placeholder ?? selectedLabel"
+      aria-label="过滤选项"
       autofocus
       @input="onFilterInput"
       @click.stop

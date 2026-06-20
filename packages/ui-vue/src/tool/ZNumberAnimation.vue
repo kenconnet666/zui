@@ -89,5 +89,5 @@ const rootClass = computed(() =>
 </script>
 
 <template>
-  <span :class="rootClass">{{ formatted }}</span>
+  <span :class="rootClass" aria-live="polite" aria-atomic="true">{{ formatted }}</span>
 </template>

@@ -13,8 +13,8 @@ const propsRows = [
   {
     name: 'color',
     type: 'string',
-    default: "'rgba(0,0,0,0.10)'",
-    desc: '水印颜色（CSS 颜色字符串，建议低透明度）。',
+    default: '主题 _text 10%',
+    desc: '水印颜色（CSS 颜色字符串）。缺省跟随主题 _text 10% alpha，亮/暗自适应；建议低透明度。',
   },
   { name: 'gap', type: 'number', default: '100', desc: '水印图案间距（px）。' },
   { name: 'rotate', type: 'number', default: '-22', desc: '旋转角度（deg）。' },

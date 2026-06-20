@@ -24,7 +24,10 @@
 import { onScopeDispose, watch, type Ref } from 'vue'
 
 export interface UseRippleOptions {
-  /** ripple 颜色,默认 `'currentColor'` + 半透明(`rgba(255,255,255,0.35)`)。 */
+  /**
+   * ripple 颜色,默认 `'currentColor'` —— 继承宿主元素 `color`,自动适配按钮 variant 与亮/暗主题。
+   * 透明度由 `.zui-ripple` 基础 `opacity`(0.35)统一控制,故传 token 实色即可,不必自带 alpha。
+   */
   color?: string
   /** 动画时长 ms,默认 `400`(Material 推荐 350~450)。 */
   duration?: number
@@ -44,6 +47,7 @@ const RIPPLE_KEYFRAMES = `
   position: absolute;
   border-radius: 50%;
   transform: scale(0);
+  opacity: 0.35;
   pointer-events: none;
   animation-name: zui-ripple-scale;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -75,7 +79,7 @@ export function useRipple(
   targetRef: Readonly<Ref<HTMLElement | null | undefined>>,
   opts: UseRippleOptions = {},
 ): void {
-  const color = opts.color ?? 'rgba(255, 255, 255, 0.35)'
+  const color = opts.color ?? 'currentColor'
   const duration = opts.duration ?? 400
 
   function onPointerDown(e: PointerEvent): void {

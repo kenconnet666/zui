@@ -155,7 +155,7 @@ const badgeClass = computed(() =>
 <template>
   <span :class="wrapperClass">
     <slot />
-    <span v-if="shouldShow" :class="badgeClass" :aria-label="displayText || undefined">{{
+    <span v-if="shouldShow" :class="badgeClass" :aria-label="dot ? '有新通知' : (displayText || undefined)">{{
       displayText
     }}</span>
   </span>

@@ -241,7 +241,6 @@ defineExpose({ rootRef })
         :items="filtered"
         :item-size="optionSize ?? 2"
         :height="dropdownListHeight"
-        key-field="value"
       >
         <template #default="{ item: opt }">
           <div :class="optionClass" role="option" @click="onSelect(opt)">

@@ -11,8 +11,8 @@ const propsRows = [
   {
     name: 'value',
     type: 'string',
-    default: "'#000000'",
-    desc: '颜色值 #rrggbb 格式（v-model:value）。',
+    default: '—',
+    desc: '颜色值 #rrggbb 格式（v-model:value）。未传时无受控默认值（色块透明）。',
   },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },
   { name: 'showText', type: 'boolean', default: 'true', desc: '显示色值文字。' },

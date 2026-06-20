@@ -1,13 +1,13 @@
 <script lang="ts">
 /**
- * `ZQRCode` —— 二维码(基于 `@vueuse/integrations/useQRCode` 生成 base64 data URL,内置 `<img>` 渲染)。
+ * `ZQRCode` —— 二维码(基于 `qrcode` 生成 base64 data URL,内置 `<img>` 渲染)。
  *
  * **API**:
  * - `value: string` —— 二维码内容
  * - `pixelSize?: number` —— 尺寸 px(默认 160)。**故意不叫 `size`** —— zui 全栈 `size`
  *   是 px 倍数(响应式),但 QR 编码本身基于像素栅格,固定 px 才能保证码字清晰。
- * - `color?: string` —— 前景色,默认 `#000`
- * - `bgColor?: string` —— 背景色,默认 `#fff`
+ * - `color?: string` —— 前景色(码点),默认跟随主题 `_text`(暗色自动反相)
+ * - `bgColor?: string` —— 背景色,默认跟随主题 `_bg`
  * - `margin?: number` —— 边距 px,默认 4
  *
  * **依赖**:`qrcode`(`@vueuse/integrations` 同套依赖),业务方需 `pnpm add qrcode`(zui-vue peerDep)
@@ -31,10 +31,11 @@ export interface ZQRCodeProps {
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { useQRCode } from '@vueuse/integrations/useQRCode'
+import { computed, ref, watchEffect } from 'vue'
+import QRCode from 'qrcode'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
+import { getThemeColor } from '../_internal/color-bridge'
 
 /**
  * 盒子模型(px,固定像素尺寸):
@@ -48,7 +49,7 @@ import { useZTheme } from '../provider'
  *   │  ┌────────────────┐  │
  *   │  │  <img> QR data │  │   img: width 100% / height 100% / display block
  *   │  │   100% × 100%  │  │
- *   │  │   useQRCode    │  │   useQRCode @vueuse/integrations 生成 data URL
+ *   │  │   qrcode gen   │  │   qrcode.toDataURL + watchEffect 响应式生成 data URL
  *   │  └────────────────┘  │
  *   └──────────────────────┘
  *
@@ -56,31 +57,47 @@ import { useZTheme } from '../provider'
  */
 const props = withDefaults(defineProps<ZQRCodeProps>(), {
   pixelSize: 160,
-  color: '#000000',
-  bgColor: '#ffffff',
   margin: 4,
 })
 
 const theme = useZTheme()
 
-const qrOptions = computed(() => ({
-  width: props.pixelSize,
-  margin: props.margin,
-  color: {
-    dark: props.color,
-    light: props.bgColor,
-  },
-}))
+// 默认前景/背景跟随主题(_text / _bg);暗色主题下二维码自动反相(浅码点 + 深底),
+// 与所在 surface 一致。显式传 color / bgColor 时优先(如需固定黑白保证旧扫码器兼容)。
+const fgColor = computed(() => props.color ?? getThemeColor(theme.value, 'text', '#000000'))
+const bgFill = computed(() => props.bgColor ?? getThemeColor(theme.value, 'bg', '#ffffff'))
 
-// useQRCode 不接 ref options;每次 compute 时调一次,自动响应 props 变化
-const qrSrc = computed(() => useQRCode(props.value, qrOptions.value).value)
+// 用 qrcode 直接生成 data URL + watchEffect 响应 value / 尺寸 / 颜色变化。
+// ⚠️ 原先在 computed 里调用 `useQRCode` 组合式 —— 其内部异步 ref 更新会反复让该 computed 失效,
+// 造成无限重渲染、页面卡死。改为把异步结果写入独立 `qrSrc` ref(watchEffect 不读取它),杜绝自激环。
+const qrSrc = ref('')
+watchEffect(() => {
+  const text = props.value
+  const opts = {
+    width: props.pixelSize,
+    margin: props.margin,
+    color: { dark: fgColor.value, light: bgFill.value },
+  }
+  if (!text) {
+    qrSrc.value = ''
+    return
+  }
+  QRCode.toDataURL(text, opts).then(
+    url => {
+      qrSrc.value = url
+    },
+    () => {
+      qrSrc.value = ''
+    },
+  )
+})
 
 const wrapClass = computed(() =>
   icss(theme.value, s => {
     s.display.inlineBlock
     s.width.px(props.pixelSize)
     s.height.px(props.pixelSize)
-    s.backgroundColor(props.bgColor)
+    s.backgroundColor(bgFill.value)
     s.borderRadius._tiny
     props.css?.(s)
   }),

@@ -79,7 +79,7 @@ function avatarCss(index: number): (s: Chain<ZuiSchema>) => void {
 </script>
 
 <template>
-  <div :class="rootClass" role="group">
+  <div :class="rootClass" role="group" :aria-label="`头像组，共 ${items.length} 个`">
     <ZAvatar
       v-for="(it, i) in visible"
       :key="i"

@@ -79,8 +79,11 @@ const props = withDefaults(defineProps<ZBackTopProps>(), {
 const theme = useZTheme()
 const visible = ref(false)
 
+/** 挂载时捕获一次目标元素，确保 addEventListener / removeEventListener 指向同一对象。 */
+let scrollTarget: Element | Window | null = null
+
 function getScrollTop(): number {
-  const t = props.target?.() ?? window
+  const t = scrollTarget ?? window
   if (t === window) return window.pageYOffset || document.documentElement.scrollTop
   return (t as Element).scrollTop
 }
@@ -90,7 +93,7 @@ function onScroll(): void {
 }
 
 function scrollToTop(): void {
-  const t = props.target?.() ?? window
+  const t = scrollTarget ?? window
   if (t === window) {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   } else {
@@ -99,13 +102,13 @@ function scrollToTop(): void {
 }
 
 onMounted(() => {
-  const t = props.target?.() ?? window
-  t.addEventListener('scroll', onScroll, { passive: true })
+  scrollTarget = props.target?.() ?? window
+  scrollTarget.addEventListener('scroll', onScroll, { passive: true })
   onScroll()
 })
 onScopeDispose(() => {
-  const t = props.target?.() ?? window
-  t.removeEventListener('scroll', onScroll)
+  scrollTarget?.removeEventListener('scroll', onScroll)
+  scrollTarget = null
 })
 
 const btnClass = computed(() =>

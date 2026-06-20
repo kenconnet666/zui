@@ -65,6 +65,7 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useOverlay } from '../_hooks/useOverlay'
+import { useZId } from '../_hooks'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { sizePx } from '../_internal/sizing'
 
@@ -116,6 +117,9 @@ const props = withDefaults(defineProps<ZModalProps>(), {
 const emit = defineEmits<ZModalEmits>()
 
 const theme = useZTheme()
+
+/** 对话框标题 id，用于 aria-labelledby。 */
+const titleId = useZId('modal-title')
 
 const sxMaskAttrs = computed(() => extractSxAttrs(props.sxMask))
 const sxDialogAttrs = computed(() => extractSxAttrs(props.sxDialog))
@@ -244,6 +248,7 @@ defineExpose({ rootRef })
           :style="sxDialogAttrs.style"
           role="dialog"
           aria-modal="true"
+          :aria-labelledby="title || $slots.head ? titleId : undefined"
           v-bind="sxDialogAttrs.attrs"
         >
           <div
@@ -253,7 +258,7 @@ defineExpose({ rootRef })
             :style="sxHeadAttrs.style"
             v-bind="sxHeadAttrs.attrs"
           >
-            <div>
+            <div :id="title || $slots.head ? titleId : undefined">
               <slot name="head">{{ title }}</slot>
             </div>
             <button

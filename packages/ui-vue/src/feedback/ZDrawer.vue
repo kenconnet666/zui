@@ -59,6 +59,7 @@ import { computed } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { useOverlay } from '../_hooks/useOverlay'
+import { useZId } from '../_hooks'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { sizePx } from '../_internal/sizing'
 
@@ -108,6 +109,9 @@ const props = withDefaults(defineProps<ZDrawerProps>(), {
 const emit = defineEmits<ZDrawerEmits>()
 
 const theme = useZTheme()
+
+/** 抽屉标题 id，用于 aria-labelledby。 */
+const titleId = useZId('drawer-title')
 
 const sxMaskAttrs = computed(() => extractSxAttrs(props.sxMask))
 const sxDrawerAttrs = computed(() => extractSxAttrs(props.sxDrawer))
@@ -233,6 +237,7 @@ defineExpose({ rootRef })
       :style="sxDrawerAttrs.style"
       role="dialog"
       aria-modal="true"
+      :aria-labelledby="title || $slots.head ? titleId : undefined"
       v-bind="sxDrawerAttrs.attrs"
     >
       <div
@@ -242,7 +247,7 @@ defineExpose({ rootRef })
         :style="sxHeadAttrs.style"
         v-bind="sxHeadAttrs.attrs"
       >
-        <div>
+        <div :id="title || $slots.head ? titleId : undefined">
           <slot name="head">{{ title }}</slot>
         </div>
         <button

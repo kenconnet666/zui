@@ -109,12 +109,14 @@ function clamp(v: number): number {
 function inc(): void {
   if (props.disabled || props.readonly) return
   const next = clamp((props.value ?? 0) + props.step)
+  if (next === props.value) return // 已在边界,值未变则不触发事件
   emit('update:value', next)
   emit('change', next)
 }
 function dec(): void {
   if (props.disabled || props.readonly) return
   const next = clamp((props.value ?? 0) - props.step)
+  if (next === props.value) return // 已在边界,值未变则不触发事件
   emit('update:value', next)
   emit('change', next)
 }
@@ -126,7 +128,11 @@ function onInput(e: Event): void {
     return
   }
   const num = Number(target.value)
-  if (Number.isNaN(num)) return
+  if (Number.isNaN(num)) {
+    // 非法输入:回滚 DOM 到当前合法显示值,避免受控 input 与 model 永久脱钩
+    target.value = displayValue.value
+    return
+  }
   emit('update:value', clamp(num))
 }
 function onBlur(e: FocusEvent): void {

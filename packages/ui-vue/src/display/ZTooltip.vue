@@ -43,7 +43,7 @@ export interface ZTooltipEmits {
 </script>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
+import { computed, onScopeDispose, ref, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
@@ -114,6 +114,9 @@ function clearTimer(): void {
     timer = null
   }
 }
+
+// 组件卸载时清掉 pending 的 enter/leave 定时器,避免回调写已卸载组件的 ref
+onScopeDispose(clearTimer)
 
 function show(): void {
   if (props.disabled || props.trigger === 'manual') return

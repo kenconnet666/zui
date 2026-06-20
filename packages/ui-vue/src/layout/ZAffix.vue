@@ -46,14 +46,16 @@ function onScroll(): void {
   }
 }
 
+// 缓存解析后的 scroll 目标,确保 add/removeEventListener 作用于同一对象(target 工厂可能每次返回新引用,否则解绑失败→监听泄漏)
+let scrollTarget: Element | Window | null = null
 onMounted(() => {
-  const t = props.target?.() ?? window
-  t.addEventListener('scroll', onScroll, { passive: true })
+  scrollTarget = props.target?.() ?? window
+  scrollTarget.addEventListener('scroll', onScroll, { passive: true })
   onScroll()
 })
 onScopeDispose(() => {
-  const t = props.target?.() ?? window
-  t.removeEventListener('scroll', onScroll)
+  scrollTarget?.removeEventListener('scroll', onScroll)
+  scrollTarget = null
 })
 
 const wrapperClass = computed(() =>

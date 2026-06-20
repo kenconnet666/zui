@@ -15,8 +15,18 @@ const propsRows = [
     default: '160',
     desc: '图片尺寸（px）。使用像素单位保证二维码清晰度。',
   },
-  { name: 'color', type: 'string', default: "'#000000'", desc: '前景色（CSS 颜色字符串）。' },
-  { name: 'bgColor', type: 'string', default: "'#ffffff'", desc: '背景色（CSS 颜色字符串）。' },
+  {
+    name: 'color',
+    type: 'string',
+    default: '主题 _text',
+    desc: '前景色（码点）。缺省跟随主题 _text，暗色自动反相；显式传入则优先。',
+  },
+  {
+    name: 'bgColor',
+    type: 'string',
+    default: '主题 _bg',
+    desc: '背景色。缺省跟随主题 _bg；显式传入则优先。',
+  },
   { name: 'margin', type: 'number', default: '4', desc: '二维码内边距（px）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
@@ -26,7 +36,7 @@ const propsRows = [
   <section>
     <ZTitle :level="1">ZQRCode 二维码</ZTitle>
     <ZParagraph>
-      基于 <ZCode code="@vueuse/integrations/useQRCode" /> 生成二维码图片。 使用
+      基于 <ZCode code="qrcode" /> 生成二维码图片。 使用
       <ZCode code="pixelSize" />（像素单位）而非 px 倍数，保证二维码栅格清晰度，
       支持前景色、背景色和边距自定义。
     </ZParagraph>

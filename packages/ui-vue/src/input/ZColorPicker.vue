@@ -28,7 +28,6 @@ import { useZTheme } from '../provider'
 import { sizePx } from '../_internal/sizing'
 
 const props = withDefaults(defineProps<ZColorPickerProps>(), {
-  value: '#000000',
   disabled: false,
   showText: true,
 })
@@ -113,7 +112,7 @@ function onChange(e: Event): void {
 
 <template>
   <label :class="wrapperClass">
-    <span :class="swatchClass" :style="{ backgroundColor: value }" />
+    <span :class="swatchClass" :style="{ backgroundColor: value ?? 'transparent' }" />
     <input
       type="color"
       :value="value"

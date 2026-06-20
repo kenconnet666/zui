@@ -22,7 +22,7 @@ export interface ZCalendarEmits {
 </script>
 
 <script lang="ts" setup>
-import { computed, h, ref } from 'vue'
+import { computed, h, ref, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
@@ -85,6 +85,14 @@ function nextMonth(): void {
   if (m > 11) cursor.value = { year: cursor.value.year + 1, month: 0 }
   else cursor.value = { ...cursor.value, month: m }
 }
+
+// 受控:外部 v-model:value 跳转到其它月份的日期时,同步视图显示的年月
+watch(
+  () => props.value,
+  v => {
+    cursor.value = parseCursor(v)
+  },
+)
 
 const WEEKDAY_LABELS_SUN = ['日', '一', '二', '三', '四', '五', '六']
 const WEEKDAY_LABELS_MON = ['一', '二', '三', '四', '五', '六', '日']

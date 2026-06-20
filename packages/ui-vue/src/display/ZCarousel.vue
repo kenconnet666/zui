@@ -205,7 +205,7 @@ const rightIcon = computed(() => h(ZIcon, { component: BuiltinIcons.chevronRight
 </script>
 
 <template>
-  <div :class="rootClass" role="region" aria-label="carousel">
+  <div :class="rootClass" role="region" aria-roledescription="carousel" aria-label="carousel">
     <div :class="trackClass">
       <div v-for="(item, idx) in items" :key="idx" :class="slideClass">
         <slot :item="item" :index="idx" />

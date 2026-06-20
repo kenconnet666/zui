@@ -67,7 +67,7 @@ export interface UserBordersExt {}
 export interface UserTransitionPropertyExt {}
 
 /**
- * 12 个语义色 token —— light / dark 取同 key 不同 shade。
+ * 13 个语义色 token —— light / dark 取同 key 不同 shade。
  *
  * **不含 `*Hover` 变体**:hover 态由 chain `color2k` modifier 在使用处派生,
  * 避免每个语义色都要复制一份 `xxxHover`(不对称 + 维护成本)。
@@ -100,6 +100,7 @@ export type SemanticColorTokens =
   | 'info'
   | 'text'
   | 'textSecondary'
+  | 'textTertiary'
   | 'bg'
   | 'bgMuted'
   | 'border'

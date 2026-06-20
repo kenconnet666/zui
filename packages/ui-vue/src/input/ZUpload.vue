@@ -286,8 +286,11 @@ const uploadIcon = computed(() => h(ZIcon, { component: BuiltinIcons.add }))
       <div
         :class="dropZoneClass"
         role="button"
+        :tabindex="disabled ? -1 : 0"
         :aria-disabled="disabled"
         @click="openPicker"
+        @keydown.enter.prevent="openPicker"
+        @keydown.space.prevent="openPicker"
         @drop="onDrop"
         @dragover="onDragOver"
         @dragleave="onDragLeave"

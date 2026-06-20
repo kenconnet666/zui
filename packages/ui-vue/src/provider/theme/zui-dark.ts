@@ -28,6 +28,7 @@ export const zuiDark = new Theme<ZuiSchema>({
     info: '#4fc3f7', // Light Blue 300
     text: '#e0e0e0', // grey-300
     textSecondary: '#9e9e9e', // grey-500
+    textTertiary: '#757575', // grey-600 —— 三级文本(暗背景下更收敛)
     bg: '#121212', // M3 dark surface
     bgMuted: '#1e1e1e', // M3 surface +1
     border: '#424242', // grey-800

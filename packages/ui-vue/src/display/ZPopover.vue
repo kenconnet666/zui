@@ -49,7 +49,7 @@ import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
-import { usePopper, useEscapeStack } from '../_hooks'
+import { usePopper, useEscapeStack, useZId } from '../_hooks'
 import { sizePx } from '../_internal/sizing'
 import { applyUserRef } from '../_internal/merge-ref'
 
@@ -94,6 +94,9 @@ const props = withDefaults(defineProps<ZPopoverProps>(), {
 const emit = defineEmits<ZPopoverEmits>()
 
 const theme = useZTheme()
+
+/** popover 标题 id，用于 aria-labelledby（非模态，不加 aria-modal）。 */
+const titleId = useZId('popover-title')
 
 const triggerRef = ref<HTMLElement | null>(null)
 const floatingRef = ref<HTMLElement | null>(null)
@@ -237,11 +240,13 @@ function bindFloating(el: unknown): void {
       :class="[popperClass, sxContentAttrs.class]"
       :style="[floatingStyles, sxContentAttrs.style]"
       role="dialog"
+      :aria-labelledby="title || $slots.title ? titleId : undefined"
       v-bind="sxContentAttrs.attrs"
     >
       <div
         v-if="title || $slots.title"
         :ref="sxTitleAttrs.ref"
+        :id="title || $slots.title ? titleId : undefined"
         :class="[titleClass, sxTitleAttrs.class]"
         :style="sxTitleAttrs.style"
         v-bind="sxTitleAttrs.attrs"
