@@ -55,37 +55,33 @@ import { computed, ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
-import { applyInputSize } from '../_internal/input-size'
 import { usePopper, useEscapeStack, useZId } from '../_hooks'
 import { sizePx } from '../_internal/sizing'
 import ZVirtualList from '../display/ZVirtualList.vue'
+import ZInput from './ZInput.vue'
 
 /**
  * 盒子模型(px,1 单位 = 16px;number 是 px 倍数,默认 1 单位=16px):
  *
  *   ┌──────────────────────────────────────────────────┐
- *   │ <input>                                          │
+ *   │ <ZInput> (wrapper div)                           │
  *   │   font-size: sizePx(size)                        │   默认 size=1(16px)
  *   │   height: sizePx(height)                         │   默认 height=size*2=32px
- *   │   padding-y: sizePx(size*0.375)                  │   = 6px
- *   │   padding-x: sizePx(size*0.75)                   │   = 12px
- *   │   border-radius: sizePx(size*0.25)               │   = 4px
- *   │   border _thin solid _border  bg _bg color _text │   width: 100% / outline none
+ *   │   border / bg / color 由 ZInput 处理             │   width: 100% / outline none
  *   │   disabled: opacity _dim / bg _bgMuted           │
  *   └──────────────────────────────────────────────────┘
- *           │ floating-ui 定位(offset 4)
+ *           │ floating-ui 定位(offset 4,锚点=ZInput wrapper div)
  *           ▼
  *   ┌──────────────────────────────────────────────────┐
- *   │ dropdown(Teleport body,仅有过滤项时显示)     │   min-width: 128px
- *   │   min-width: 128px  max-height: 240px           │   max-height: 240px
+ *   │ dropdown(Teleport body,仅有过滤项时显示)         │   min-width: 128px
+ *   │   min-width: 128px  max-height: 240px            │   max-height: 240px
  *   │   pad _tiny  border _thin _border  boxShadow _middle│   overflow-y auto
  *   │   flex column                                    │
  *   │  ┌──────────────────────────────────────────┐   │   option:
  *   │  │ option string                            │   │     pad _tiny pad-x _small
  *   │  │   pad _tiny pad-x _small  fontSize _middle│  │     hover: bg _primary.alpha(8)
- *   │  │   hover: bg _primary.alpha(8)            │   │
  *   │  └──────────────────────────────────────────┘   │
- *   │  (循环 filtered options)                        │
+ *   │  (循环 filtered options)                         │
  *   └──────────────────────────────────────────────────┘
  *
  * 用户改 size 数字 → input 所有 px 维度等比缩放(dropdown 固定 spacing token)。
@@ -103,7 +99,8 @@ const emit = defineEmits<ZAutoCompleteEmits>()
 
 const theme = useZTheme()
 
-const inputRef = ref<HTMLInputElement | null>(null)
+/** ZInput 组件实例引用,expose { rootRef, inputRef } */
+const ziRef = ref<{ rootRef: HTMLElement | null; inputRef: HTMLInputElement | null } | null>(null)
 const dropdownRef = ref<HTMLElement | null>(null)
 const open = ref(false)
 const listboxId = useZId('zui-autocomplete-listbox')
@@ -116,7 +113,10 @@ const filtered = computed(() => {
 
 const showDropdown = computed(() => open.value && !props.disabled && filtered.value.length > 0)
 
-const { floatingStyles } = usePopper(inputRef, dropdownRef, {
+/** 锚点:ZInput 的 wrapper div(rootRef),类型放宽为 HTMLElement */
+const anchorRef = computed<HTMLElement | null>(() => ziRef.value?.rootRef ?? null)
+
+const { floatingStyles } = usePopper(anchorRef, dropdownRef, {
   placement: 'bottom-start',
   offset: 4,
 })
@@ -128,39 +128,12 @@ useEscapeStack(
   { enabled: open },
 )
 
-onClickOutside(inputRef, (e: Event) => {
+/** onClickOutside 目标:ZInput wrapper div */
+onClickOutside(anchorRef, (e: Event) => {
   if (!open.value) return
   if (dropdownRef.value && e.target && dropdownRef.value.contains(e.target as Node)) return
   open.value = false
 })
-
-const inputClass = computed(() =>
-  icss(theme.value, s => {
-    s.borderWidth._thin
-    s.borderStyle.solid
-    s.borderColor._border
-    s.backgroundColor._bg
-    s.color._text
-    applyInputSize(s, props.size, props.height)
-    s.width.pct(100)
-    s.outline('none')
-    s.transitionProperty._colors
-    s.transitionDuration._small
-    if (props.disabled) {
-      s.opacity._dim
-      s.cursor.notAllowed
-      s.backgroundColor._bgMuted
-    } else {
-      s._hover(h => {
-        h.borderColor._primary
-      })
-      s._focus(f => {
-        f.borderColor._primary
-      })
-    }
-    props.css?.(s)
-  }),
-)
 
 const dropdownClass = computed(() =>
   icss(theme.value, s => {
@@ -198,10 +171,30 @@ const optionClass = computed(() =>
   }),
 )
 
-function onInput(e: Event): void {
-  const t = e.target as HTMLInputElement
-  emit('update:value', t.value)
-  emit('change', t.value)
+/**
+ * 键盘导航处理 —— 具名函数保证引用稳定。
+ * 目前仅 Escape 由 useEscapeStack 统一接管;此处可扩展 ArrowUp/Down/Enter。
+ */
+function onKeydown(_e: KeyboardEvent): void {
+  // Escape 由 useEscapeStack 处理,此处留钩供后续扩展
+}
+
+/**
+ * combobox ARIA 属性 + 键盘事件,整体打包透传给 ZInput 的 inputAttrs。
+ * ZInput 会将其 v-bind 到内层真实 `<input>` 上。
+ */
+const comboboxAttrs = computed(() => ({
+  role: 'combobox',
+  'aria-haspopup': 'listbox',
+  'aria-expanded': showDropdown.value,
+  'aria-controls': showDropdown.value ? listboxId : undefined,
+  'aria-autocomplete': 'list',
+  onKeydown,
+}))
+
+function onUpdateValue(v: string): void {
+  emit('update:value', v)
+  emit('change', v)
   open.value = true
 }
 function onFocus(e: FocusEvent): void {
@@ -216,31 +209,29 @@ function onSelect(opt: string): void {
   emit('select', opt)
   emit('change', opt)
   open.value = false
+  // 选中后回焦内层 input
+  ziRef.value?.inputRef?.focus()
 }
 
-const rootRef = ref<HTMLInputElement | null>(null)
-function bindRoot(el: unknown): void {
-  const node = (el as HTMLInputElement | null) ?? null
-  rootRef.value = node
-  inputRef.value = node
-}
-defineExpose({ rootRef })
+/** expose:透出 ZInput 的 rootRef(wrapper div),供父组件 ref 使用 */
+defineExpose({
+  get rootRef() {
+    return ziRef.value?.rootRef ?? null
+  },
+})
 </script>
 
 <template>
-  <input
-    :ref="bindRoot"
-    :class="inputClass"
-    type="text"
+  <ZInput
+    ref="ziRef"
     :value="value"
     :placeholder="placeholder"
     :disabled="disabled"
-    role="combobox"
-    aria-haspopup="listbox"
-    :aria-expanded="showDropdown"
-    :aria-controls="showDropdown ? listboxId : undefined"
-    aria-autocomplete="list"
-    @input="onInput"
+    :size="size"
+    :height="height"
+    :css="css"
+    :input-attrs="comboboxAttrs"
+    @update:value="onUpdateValue"
     @focus="onFocus"
     @blur="onBlur"
   />

@@ -71,6 +71,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
 import { BuiltinIcons, ZIcon } from '../gene'
+import ZButton from '../gene/ZButton.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
@@ -166,27 +167,6 @@ const bodyClass = computed(() =>
 )
 const sxBodyAttrs = computed(() => extractSxAttrs(props.sxBody))
 
-const closeClass = computed(() =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.justifyContent.center
-    s.flexShrink(0)
-    s.cursor.pointer
-    s.backgroundColor.transparent
-    s.borderStyle.none
-    s.padding._tiny
-    s.fontSize._middle
-    s.color._textSecondary
-    s.borderRadius._tiny
-    s._hover(h2 => {
-      h2.backgroundColor._textSecondary.alpha(8)
-    })
-    applySx(s, props.sxClose)
-  }),
-)
-const sxCloseAttrs = computed(() => extractSxAttrs(props.sxClose))
-
 function onCloseClick(e: MouseEvent): void {
   emit('close', e)
 }
@@ -226,17 +206,17 @@ const closeIconNode = computed(() => h(ZIcon, { component: BuiltinIcons.close })
       <slot />
     </div>
 
-    <button
+    <ZButton
       v-if="closable"
-      type="button"
-      :ref="sxCloseAttrs.ref"
-      :class="[closeClass, sxCloseAttrs.class]"
-      :style="sxCloseAttrs.style"
+      variant="ghost"
+      shape="circle"
+      :size="0.875"
+      :ripple="false"
+      :sx="sxClose"
       aria-label="关闭"
-      v-bind="sxCloseAttrs.attrs"
       @click="onCloseClick"
     >
       <component :is="closeIconNode" />
-    </button>
+    </ZButton>
   </component>
 </template>

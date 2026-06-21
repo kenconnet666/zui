@@ -23,7 +23,7 @@ import type { ZuiSchema } from '../provider/theme'
 import type { SxObject } from '../_internal/sx'
 
 export interface ZInputProps {
-  value?: string | number
+  value?: string | number | undefined
   type?: string
   /**
    * 字号尺寸 —— `number`(px 倍数,1 单位 = 16px,默认 1)。
@@ -36,14 +36,20 @@ export interface ZInputProps {
    */
   size?: number
   /** 高度 —— `number`(px 倍数,1 单位 = 16px,可选,默认 `size * 2`)。 */
-  height?: number
+  height?: number | undefined
   disabled?: boolean
   readonly?: boolean
-  placeholder?: string
+  placeholder?: string | undefined
   clearable?: boolean
   showCount?: boolean
   maxlength?: number
   autofocus?: boolean
+  /**
+   * 透传到内层 `<input>` 的额外属性 / DOM 事件监听(优先级高于 `sxInput.attrs`)。
+   * 供复用方(如 `ZAutoComplete`)注入 combobox ARIA 与 `onKeydown` 等键盘处理,例:
+   * `:input-attrs="{ role: 'combobox', 'aria-expanded': open, onKeydown }"`。
+   */
+  inputAttrs?: Record<string, unknown>
 
   sxInput?: SxObject
   sxPrefix?: SxObject
@@ -245,7 +251,7 @@ function bindInput(el: unknown): void {
   inputRef.value = node
   applyUserRef(sxInputAttrs.value.ref, node)
 }
-defineExpose({ rootRef })
+defineExpose({ rootRef, inputRef })
 </script>
 
 <template>
@@ -271,7 +277,7 @@ defineExpose({ rootRef })
       :readonly="readonly"
       :maxlength="maxlength"
       :autofocus="autofocus"
-      v-bind="sxInputAttrs.attrs"
+      v-bind="{ ...sxInputAttrs.attrs, ...inputAttrs }"
       @input="onInput"
       @change="onChange"
       @focus="onFocus"

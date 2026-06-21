@@ -21,6 +21,7 @@
  * - `loading` / `disabled` / `block`(满宽)
  * - `prefixIcon` / `suffixIcon` slot
  * - `ripple`(boolean,默认 `true`)—— 启用 Material 波纹
+ * - `sx` —— 根元素 sx 覆盖(class/style/attrs/ref/css)
  * - `sxIcon` / `sxRipple`
  */
 import type { Chain } from '@kenconnet666/zui-core'
@@ -66,6 +67,8 @@ export interface ZButtonProps {
   /** HTML type 属性(默认 `'button'`,tag 非 button 时忽略)。 */
   type?: 'button' | 'submit' | 'reset'
 
+  /** 根元素 sx 覆盖(class/style/attrs/ref/css)。 */
+  sx?: SxObject | undefined
   sxIcon?: SxObject
   sxRipple?: SxObject
   css?: ((s: Chain<ZuiSchema>) => void) | undefined
@@ -81,6 +84,7 @@ import { computed, h, ref } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { applySx, extractSxAttrs } from '../_internal/sx'
+import { applyUserRef } from '../_internal/merge-ref'
 import { applyAsBg } from '../_internal/color-bridge'
 import { useRipple } from '../_hooks'
 import { BuiltinIcons } from './icons'
@@ -298,8 +302,11 @@ const buttonClass = computed(() =>
     }
 
     props.css?.(s)
+    applySx(s, props.sx)
   }),
 )
+
+const sxAttrs = computed(() => extractSxAttrs(props.sx))
 
 const iconClass = computed(() =>
   icss(theme.value, s => {
@@ -333,13 +340,15 @@ const isNativeButton = computed(() => props.tag === 'button')
 <template>
   <component
     :is="tag"
-    ref="btnRef"
+    :ref="(el: unknown) => { btnRef = el as HTMLElement | null; applyUserRef(sxAttrs.ref, el) }"
     :type="isNativeButton ? type : undefined"
     :disabled="isNativeButton ? isClickDisabled : undefined"
     :aria-disabled="isClickDisabled || undefined"
     :aria-busy="loading || undefined"
     :tabindex="!isNativeButton && isClickDisabled ? -1 : undefined"
-    :class="buttonClass"
+    :class="[buttonClass, sxAttrs.class]"
+    :style="sxAttrs.style"
+    v-bind="sxAttrs.attrs"
     @click="onClick"
   >
     <span

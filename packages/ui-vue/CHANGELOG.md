@@ -138,6 +138,8 @@ canvas 字体字符串改读 `zuiLight.fonts.sans`（theme token），与 `fonts
 - **加载 → `ZSpin`**：`ZDataTable` loading 遮罩从手写 `'加载中...'` 纯文字改为 `ZSpin`（真旋转 indicator + `role="status"`），遮罩定位 / 半透明样式保留。
 - **标签 → `ZTag`**：`ZSelect`（multiple）已选项从逗号拼接文本升级为可删除 `ZTag` chips（`flex-wrap` + `min-height`）；`ZDynamicTags` 手写 `<span>+<button>` 标签改为 `ZTag`（`closable`，净减约 40 行）。
 - **按钮 → `ZButton`**：`ZPopconfirm` 确定/取消、`ZTour` 上一步/跳过/下一步、`ZUpload` 选择文件、`ZModal` / `ZDrawer` 关闭按钮原先各自手写 `<button>` + 样式 class，改为复用 `ZButton`（`filled` / `outlined` / `text` / `ghost`+`circle` 等 variant）；删除各自的 `btnClass` 与 `useOverlay` 里共享的 `closeBtnClass` 生成逻辑，顺带补齐 ZTour 按钮原先缺失的 hover / active 动效。专用交互件（ZTabs / ZPagination / ZSegmented / ZCarousel / ZSwitch / ZRate 等带 `role` 语义者）保持手写。
+- **输入框 → `ZInput`**：`ZAutoComplete` 原先裸 `<input>` + 自写输入框样式改为复用 `ZInput`（删 ~25 行 `inputClass`）。为支持其 combobox 语义，`ZInput` 新增 `inputAttrs`（透传 ARIA / `onKeydown` 等到内层 `<input>`，优先级高于 `sxInput.attrs`）并 expose `inputRef`。
+- **ZAlert 关闭按钮 → `ZButton`**：`ZAlert` 关闭按钮改用 `<ZButton variant="ghost" shape="circle">`。为此 `ZButton` 新增根元素 `sx` prop（`SxObject` 透传 class / style / attrs / ref，其中 ref 经 `applyUserRef` 与内部 `btnRef` 合并，不破坏 ripple）。
 
 > 经核实，表格 `selection='single'` 本就以行点击 + 背景高亮表达选中、无手写 radio，故不引入 `ZRadio`（避免无谓的新 UI）。
 
