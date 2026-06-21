@@ -4,6 +4,13 @@ import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import dts from 'vite-plugin-dts'
+import { fileURLToPath, URL } from 'node:url'
+
+// 仅用于 vitest：把 @kenconnet666/zui-core 解析到 core 源码，
+// 改 core/src 后 ui-vue 测试即时生效，无需先 build core。
+// 注意：不能放到顶层 resolve.alias，否则 build 时会绕过下面的 external、
+// 把 core 源码打进发布产物。test.alias 只在测试运行时附加，构建不受影响。
+const coreSrc = fileURLToPath(new URL('../core/src/index.ts', import.meta.url))
 
 /**
  * ui-vue 打包配置 —— 参考 core 的 preserveModules 风格：
@@ -67,5 +74,8 @@ export default defineConfig({
   test: {
     environment: 'happy-dom',
     include: ['tests/**/*.spec.ts'],
+    alias: {
+      '@kenconnet666/zui-core': coreSrc,
+    },
   },
 })
