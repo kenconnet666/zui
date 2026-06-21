@@ -2,13 +2,12 @@
 /**
  * `ZButton` —— Material 风按钮。
  *
- * **7 种 variant**:
+ * **6 种 variant**:
  * - `filled`(默认)—— 实心按钮(primary 背景 + 反色文字)
  * - `outlined` —— 描边(透明背景 + primary 边框 + primary 文字)
  * - `dashed` —— 虚线描边(同 outlined 但 border-style: dashed)
  * - `secondary` —— 半透明色底(primary.alpha(12) 恒定背景)
- * - `text` —— 文字按钮(无背景无边框)
- * - `ghost` —— 全透明背景(hover 时出现 primary.alpha(8))
+ * - `ghost` —— 透明背景文字按钮(hover/按下出现 currentColor 叠层 8%/12%,无边框无底色,兼容任意 color)
  * - `link` —— 内联链接样式(下划线 + primary 色)
  *
  * **4 种 shape**: `default` / `round` / `circle` / `square`
@@ -33,7 +32,6 @@ export type ZButtonVariant =
   | 'outlined'
   | 'dashed'
   | 'secondary'
-  | 'text'
   | 'ghost'
   | 'link'
 export type ZButtonShape = 'default' | 'round' | 'circle' | 'square'
@@ -189,10 +187,10 @@ const buttonClass = computed(() =>
         s.backgroundColor.transparent
         if (!hasUserColor) {
           s._hover(h2 => {
-            h2.backgroundColor._primary.alpha(8)
+            h2.backgroundColor._selectedBg
           })
           s._active(a => {
-            a.backgroundColor._primary.alpha(12)
+            a.backgroundColor._pressedBg
           })
         }
         break
@@ -203,10 +201,10 @@ const buttonClass = computed(() =>
         s.backgroundColor.transparent
         if (!hasUserColor) {
           s._hover(h2 => {
-            h2.backgroundColor._primary.alpha(8)
+            h2.backgroundColor._selectedBg
           })
           s._active(a => {
-            a.backgroundColor._primary.alpha(12)
+            a.backgroundColor._pressedBg
           })
         }
         break
@@ -237,18 +235,6 @@ const buttonClass = computed(() =>
             b.opacity(0.22)
           })
         })
-        break
-
-      case 'text':
-        s.backgroundColor.transparent
-        if (!hasUserColor) {
-          s._hover(h2 => {
-            h2.backgroundColor._primary.alpha(8)
-          })
-          s._active(a => {
-            a.backgroundColor._primary.alpha(12)
-          })
-        }
         break
 
       case 'ghost':

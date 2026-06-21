@@ -193,7 +193,7 @@ function go(path: string): void {
     <ZFlex :gap="g => g.px(12)" :wrap="w => w.wrap" :css="s => s.marginTop.px(24)">
       <ZButton @click="go('/guide/quick-start')">快速开始</ZButton>
       <ZButton variant="outlined" @click="go('/guide/core')">了解 Core</ZButton>
-      <ZButton variant="text" @click="go('/guide/theme')">主题与 Token</ZButton>
+      <ZButton variant="ghost" @click="go('/guide/theme')">主题与 Token</ZButton>
     </ZFlex>
 
     <ZTitle :level="2">

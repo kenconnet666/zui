@@ -230,21 +230,15 @@ const fileRowClass = computed(() =>
   }),
 )
 
-const removeBtnClass = computed(() =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.justifyContent.center
-    s.cursor.pointer
-    s.backgroundColor.transparent
-    s.borderStyle.none
-    s.padding._tiny
-    s.color._textSecondary
-    s._hover(h2 => {
-      h2.color._danger
-    })
-  }),
-)
+// 移除按钮(复用 ZButton ghost circle):中性灰 + hover 变 danger 红(危险操作提示)。
+const removeBtnColor = (c: Chain<ZuiSchema>['color']): void => {
+  c._textSecondary
+}
+const removeBtnCss = (s: Chain<ZuiSchema>): void => {
+  s._hover(h2 => {
+    h2.color._danger
+  })
+}
 
 const closeIcon = computed(() => h(ZIcon, { component: BuiltinIcons.close }))
 const uploadIcon = computed(() => h(ZIcon, { component: BuiltinIcons.add }))
@@ -294,9 +288,18 @@ const uploadIcon = computed(() => h(ZIcon, { component: BuiltinIcons.add }))
       <div v-for="f in internalList" :key="f.uid" :class="fileRowClass">
         <span :class="fileNameClass">{{ f.name }}</span>
         <span :class="fileSizeClass">{{ formatSize(f.size) }}</span>
-        <button type="button" :class="removeBtnClass" aria-label="移除" @click="removeFile(f)">
+        <ZButton
+          variant="ghost"
+          shape="circle"
+          :color="removeBtnColor"
+          :size="0.875"
+          :ripple="false"
+          :css="removeBtnCss"
+          aria-label="移除"
+          @click="removeFile(f)"
+        >
           <component :is="closeIcon" />
-        </button>
+        </ZButton>
       </div>
     </div>
   </div>

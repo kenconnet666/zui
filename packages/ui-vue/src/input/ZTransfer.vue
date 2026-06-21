@@ -179,11 +179,11 @@ const itemRowClass = (checked: boolean, disabled: boolean): string =>
     s.paddingRight._small
     s.borderRadius._tiny
     s.cursor(disabled ? 'not-allowed' : 'pointer')
-    if (checked) s.backgroundColor._primary.alpha(8)
+    if (checked) s.backgroundColor._selectedBg
     if (disabled) s.opacity._dim
     else
       s._hover(h2 => {
-        if (!checked) h2.backgroundColor._textSecondary.alpha(8)
+        if (!checked) h2.backgroundColor._bgHover
       })
   })
 

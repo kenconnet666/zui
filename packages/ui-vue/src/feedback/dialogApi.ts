@@ -102,7 +102,7 @@ export function createDialogApi(opts: CreateDialogApiOptions = {}): ZDialogApi {
                 const btns: VNode[] = []
                 if (item.kind === 'confirm') {
                   btns.push(
-                    h(ZButton, { variant: 'text', onClick: () => item.settle(false) }, () =>
+                    h(ZButton, { variant: 'ghost', onClick: () => item.settle(false) }, () =>
                       item.cancelText ?? '取消',
                     ),
                   )

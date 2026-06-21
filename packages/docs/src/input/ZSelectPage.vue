@@ -12,6 +12,12 @@ import DisabledOptionDemo from './ZSelect/DisabledOptionDemo.vue'
 import DisabledOptionDemoSource from './ZSelect/DisabledOptionDemo.vue?raw'
 import RemoteDemo from './ZSelect/RemoteDemo.vue'
 import RemoteDemoSource from './ZSelect/RemoteDemo.vue?raw'
+import ClearableDemo from './ZSelect/ClearableDemo.vue'
+import ClearableDemoSource from './ZSelect/ClearableDemo.vue?raw'
+import SizeDemo from './ZSelect/SizeDemo.vue'
+import SizeDemoSource from './ZSelect/SizeDemo.vue?raw'
+import SxDemo from './ZSelect/SxDemo.vue'
+import SxDemoSource from './ZSelect/SxDemo.vue?raw'
 
 const propsRows = [
   {
@@ -23,14 +29,17 @@ const propsRows = [
   { name: 'options', type: 'ZSelectOption[]', default: '—', desc: '选项列表（必传）。' },
   { name: 'placeholder', type: 'string', default: '—', desc: '未选时占位文字。' },
   { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用。' },
-  { name: 'clearable', type: 'boolean', default: 'false', desc: '显示清空按钮。' },
+  { name: 'clearable', type: 'boolean', default: 'false', desc: '显示清空按钮（有值时）。' },
   { name: 'filterable', type: 'boolean', default: 'false', desc: '启用搜索过滤。' },
   { name: 'multiple', type: 'boolean', default: 'false', desc: '多选模式。' },
   { name: 'size', type: 'number', default: '1', desc: 'px 倍数（1 单位 = 16px）。默认 1 = 16px 字号，padding/height 等比缩放（默认高度 32px，内边距 6px/12px）。' },
   { name: 'height', type: 'number', default: 'size*2', desc: '触发器高度 px 倍数（1 单位 = 16px）。' },
   { name: 'optionSize', type: 'number', default: '2', desc: '下拉项行高 px 倍数（1 单位 = 16px）。' },
   { name: 'dropdownMaxHeight', type: 'number', default: '15', desc: '下拉框最大高度 px 倍数（1 单位 = 16px）。' },
-  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
+  { name: 'sxTrigger', type: 'SxObject', default: '—', desc: '触发器元素深度定制（css / class / style / attrs）。' },
+  { name: 'sxDropdown', type: 'SxObject', default: '—', desc: '下拉浮层深度定制。' },
+  { name: 'sxOption', type: 'SxObject', default: '—', desc: '每个选项行深度定制。' },
+  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底（与 sxTrigger 等价的快捷方式）。' },
 ]
 
 const optionRows = [
@@ -90,6 +99,33 @@ const exposeRows = [
     <DemoBlock title="filterable + 异步加载" :source="RemoteDemoSource">
       <template #desc>结合 <ZCode code="filterable" /> 与异步 options 实现远程搜索。</template>
       <RemoteDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">可清空与 change 事件</ZTitle>
+    <DemoBlock title="clearable + change" :source="ClearableDemoSource">
+      <template #desc>
+        <ZCode code="clearable" /> 有值时显示清空按钮，点击后 value 置 <ZCode code="null" />（单选）
+        或 <ZCode code="[]" />（多选）并触发 <ZCode code="change" />。
+      </template>
+      <ClearableDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">尺寸</ZTitle>
+    <DemoBlock title="size / optionSize / dropdownMaxHeight" :source="SizeDemoSource">
+      <template #desc>
+        <ZCode code="size" /> 控制触发器整体缩放；<ZCode code="optionSize" /> 设置选项行高；
+        <ZCode code="dropdownMaxHeight" /> 封顶浮层高度（超出滚动）。
+      </template>
+      <SizeDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">sx 深度定制</ZTitle>
+    <DemoBlock title="sxTrigger / sxDropdown / sxOption" :source="SxDemoSource">
+      <template #desc>
+        <ZCode code="sxTrigger" /> 定制触发器，<ZCode code="sxDropdown" /> 定制浮层，
+        <ZCode code="sxOption" /> 定制每行选项。
+      </template>
+      <SxDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

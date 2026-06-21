@@ -41,6 +41,15 @@ export const zuiLight = new Theme<ZuiSchema>({
     border: '#e0e0e0', // M2 grey-300
     focusRing: '#1976d2', // 同 primary;实际使用走 .alpha(40)
     overlayBg: '#000000', // 实际使用走 .alpha(50) → rgba(0,0,0,0.5)
+    // ── 交互态叠层(M3 state layer):收口散落的 hover/选中/按下派生,组件直接 s.backgroundColor._bgHover 等 ──
+    bgHover: 'rgba(0, 0, 0, 0.04)', // 中性 hover 底(列表/菜单/行):纯黑 4% 叠层,叠任意底色都自然不偏色
+    selectedBg: 'rgba(25, 118, 210, 0.08)', // 选中/激活底 = primary @ 8%(品牌感;改 primary 时同步这两个值)
+    pressedBg: 'rgba(25, 118, 210, 0.12)', // 按下瞬态底 = primary @ 12%
+    // ── 层次叠层:斑马纹/数据行 hover/遮罩/加载蒙层 ──
+    stripeBg: 'rgba(0, 0, 0, 0.02)', // 斑马纹奇行底:纯黑 2% 极淡(统一原 ZTable 50%/ZDataTable 40% 不一致)
+    rowHoverBg: 'rgba(25, 118, 210, 0.04)', // 数据行 hover = primary @ 4%(比列表项更淡,避免与选中行混淆)
+    overlayMask: 'rgba(0, 0, 0, 0.5)', // Modal/Drawer/Tour 遮罩 = 黑 50%
+    loadingOverlay: 'rgba(255, 255, 255, 0.6)', // 加载蒙层 = bg 白 @ 60%(盖住内容呈"不可点")
   },
   // 5 阶 spacing:4/8/16/24/32px
   spacing: {

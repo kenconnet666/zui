@@ -277,7 +277,7 @@ const buttonClass = computed(() =>
     s.transitionProperty.all
     s.transitionDuration._tiny
     s._selector('&:hover', h => {
-      h.backgroundColor._textSecondary.alpha(8)
+      h.backgroundColor._bgHover
       h.color._text
     })
     s._selector('&:focus-visible', h => {

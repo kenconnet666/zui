@@ -18,7 +18,7 @@ import {
       <template #prefixIcon><ZIcon :component="Upload" /></template>
       上传
     </ZButton>
-    <ZButton variant="text" :color="c => c._danger">
+    <ZButton variant="ghost" :color="c => c._danger">
       <template #prefixIcon><ZIcon :component="Trash" /></template>
       删除
     </ZButton>

@@ -135,7 +135,7 @@ const nodeRowClass = (node: ZTreeNode, depth: number): string => {
       s.opacity._dim
     } else {
       s._hover(h2 => {
-        if (!isSelected) h2.backgroundColor._textSecondary.alpha(8)
+        if (!isSelected) h2.backgroundColor._bgHover
       })
     }
   })

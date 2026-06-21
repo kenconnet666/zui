@@ -30,7 +30,7 @@ import { ZButtonGroup, ZButton, ZFlex } from '@kenconnet666/zui-vue'
     <!-- 间隔模式(attached=false) -->
     <ZButtonGroup :attached="false" :gap="0.5">
       <ZButton variant="filled">保存</ZButton>
-      <ZButton variant="text">取消</ZButton>
+      <ZButton variant="ghost">取消</ZButton>
     </ZButtonGroup>
   </ZFlex>
 </template>

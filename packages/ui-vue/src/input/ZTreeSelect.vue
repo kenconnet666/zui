@@ -54,6 +54,7 @@ import { usePopper, useEscapeStack } from '../_hooks'
 import { useZLocale } from '../provider/locale/useZLocale'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZTree from '../display/ZTree.vue'
+import ZButton from '../gene/ZButton.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
@@ -228,21 +229,15 @@ const arrowClass = computed(() =>
   }),
 )
 
-const clearBtnClass = computed(() =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.justifyContent.center
-    s.cursor.pointer
-    s.backgroundColor.transparent
-    s.borderStyle.none
-    s.padding.px(0)
-    s.color._textSecondary
-    s._hover(h2 => {
-      h2.color._text
-    })
-  }),
-)
+// clear 按钮(复用 ZButton ghost circle):中性灰 + hover 加深(同 ZInput)。
+const clearBtnColor = (c: Chain<ZuiSchema>['color']): void => {
+  c._textSecondary
+}
+const clearBtnCss = (s: Chain<ZuiSchema>): void => {
+  s._hover(h2 => {
+    h2.color._text
+  })
+}
 
 const showClear = computed(() => props.clearable && !props.disabled && props.value !== null)
 
@@ -271,16 +266,21 @@ defineExpose({ rootRef })
     @keydown.space.prevent="toggleOpen"
   >
     <span :class="textClass">{{ selectedLabel || effectivePlaceholder }}</span>
-    <button
+    <ZButton
       v-if="showClear"
-      type="button"
-      :class="clearBtnClass"
+      variant="ghost"
+      shape="circle"
+      :color="clearBtnColor"
+      :size="size ?? 1"
+      :height="(size ?? 1) * 1.5"
+      :ripple="false"
+      :css="clearBtnCss"
       aria-label="清空"
       tabindex="-1"
       @click.stop="onClear"
     >
       <component :is="closeIcon" />
-    </button>
+    </ZButton>
     <span :class="arrowClass">
       <component :is="downIcon" />
     </span>

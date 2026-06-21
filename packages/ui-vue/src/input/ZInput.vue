@@ -77,6 +77,7 @@ import { applySx, extractSxAttrs } from '../_internal/sx'
 import { applyInputSize } from '../_internal/input-size'
 import { applyUserRef } from '../_internal/merge-ref'
 import { BuiltinIcons, ZIcon } from '../gene'
+import ZButton from '../gene/ZButton.vue'
 
 /**
  * 盒子模型(px,1 单位 = 16px;number 是 px 倍数,默认 1 单位=16px):
@@ -180,23 +181,15 @@ const affixClass = computed(() =>
   }),
 )
 
-const clearBtnClass = computed(() =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.justifyContent.center
-    s.cursor.pointer
-    s.backgroundColor.transparent
-    s.borderStyle.none
-    s.padding.px(0)
-    s.color._textSecondary
-    s._hover(h2 => {
-      h2.color._text
-    })
-    applySx(s, props.sxClear)
-  }),
-)
-const sxClearAttrs = computed(() => extractSxAttrs(props.sxClear))
+// clear 按钮(复用 ZButton ghost circle):中性灰 + hover 加深;sxClear 整体经 ZButton 的 sx 透传。
+const clearBtnColor = (c: Chain<ZuiSchema>['color']): void => {
+  c._textSecondary
+}
+const clearBtnCss = (s: Chain<ZuiSchema>): void => {
+  s._hover(h2 => {
+    h2.color._text
+  })
+}
 
 const countClass = computed(() =>
   icss(theme.value, s => {
@@ -285,19 +278,22 @@ defineExpose({ rootRef, inputRef })
       @keydown="onKeydown"
     />
 
-    <button
+    <ZButton
       v-if="showClear"
-      type="button"
-      :ref="sxClearAttrs.ref"
-      :class="[clearBtnClass, sxClearAttrs.class]"
-      :style="sxClearAttrs.style"
+      variant="ghost"
+      shape="circle"
+      :color="clearBtnColor"
+      :size="size"
+      :height="size * 1.5"
+      :ripple="false"
+      :css="clearBtnCss"
+      :sx="sxClear"
       aria-label="清空"
       tabindex="-1"
-      v-bind="sxClearAttrs.attrs"
       @click="onClear"
     >
       <component :is="clearIconNode" />
-    </button>
+    </ZButton>
 
     <span v-if="showCounter" :class="countClass">
       {{ innerValue.length }}<template v-if="maxlength">/{{ maxlength }}</template>

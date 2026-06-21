@@ -151,7 +151,7 @@ const maskClass = computed(() =>
   icss(theme.value, s => {
     s.position.fixed
     s.inset.px(0)
-    s.backgroundColor._overlayBg.alpha(50)
+    s.backgroundColor._overlayMask
     s.zIndex._modal
     applySx(s, props.sxMask)
   }),

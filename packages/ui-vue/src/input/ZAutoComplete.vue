@@ -166,7 +166,7 @@ const optionClass = computed(() =>
     s.fontSize._middle
     s.color._text
     s._hover(h => {
-      h.backgroundColor._textSecondary.alpha(8)
+      h.backgroundColor._bgHover
     })
   }),
 )

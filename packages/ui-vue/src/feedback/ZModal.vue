@@ -162,7 +162,7 @@ const maskClass = computed(() =>
     s.display.flex
     s.justifyContent.center
     s.alignItems(props.centered ? 'center' : 'flex-start')
-    s.backgroundColor._overlayBg.alpha(50)
+    s.backgroundColor._overlayMask
     if (props.zIndex !== undefined) s.zIndex(props.zIndex)
     else s.zIndex._modal
     applySx(s, props.sxMask)

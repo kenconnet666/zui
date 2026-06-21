@@ -34,6 +34,15 @@ export const zuiDark = new Theme<ZuiSchema>({
     border: '#424242', // grey-800
     focusRing: '#90caf9', // 同 primary
     overlayBg: '#000000',
+    // ── 交互态叠层(M3 state layer,暗色档位):hover 用白色叠层,选中/按下用暗色 primary 叠层 ──
+    bgHover: 'rgba(255, 255, 255, 0.08)', // 中性 hover 底:暗背景上用白色 8% 叠层
+    selectedBg: 'rgba(144, 202, 249, 0.14)', // 选中底 = dark primary @ 14%(暗底需略强才看得清)
+    pressedBg: 'rgba(144, 202, 249, 0.20)', // 按下底 = dark primary @ 20%
+    // ── 层次叠层(暗色档位)──
+    stripeBg: 'rgba(255, 255, 255, 0.03)', // 斑马纹:白 3%
+    rowHoverBg: 'rgba(144, 202, 249, 0.06)', // 数据行 hover = dark primary @ 6%
+    overlayMask: 'rgba(0, 0, 0, 0.5)', // 遮罩同 light(半透明黑)
+    loadingOverlay: 'rgba(18, 18, 18, 0.6)', // 加载蒙层 = dark bg(#121212) @ 60%
   },
   spacing: zuiLight.schema.spacing,
   radius: zuiLight.schema.radius,

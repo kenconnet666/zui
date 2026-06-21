@@ -121,7 +121,7 @@ const overlayClass = computed(() =>
     s.alignItems.center
     s.justifyContent.center
     s.gap._tiny
-    s.backgroundColor._bg.alpha(60)
+    s.backgroundColor._loadingOverlay
     s.color._primary
     s.zIndex._small
     applySx(s, props.sxOverlay)

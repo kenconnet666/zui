@@ -139,11 +139,11 @@ const itemClass = (item: ZMenuItem, isActive: boolean, depth: number): string =>
     s.width.pct(100)
     if (isActive) {
       s.color._primary
-      s.backgroundColor._primary.alpha(8)
+      s.backgroundColor._selectedBg
       s.fontWeight._medium
     }
     s._hover(h2 => {
-      if (!item.disabled && !isActive) h2.backgroundColor._textSecondary.alpha(8)
+      if (!item.disabled && !isActive) h2.backgroundColor._bgHover
     })
     if (item.disabled || props.disabled) {
       s.opacity._dim

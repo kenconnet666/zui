@@ -6,6 +6,10 @@ import BasicDemo from './ZMenu/BasicDemo.vue'
 import BasicDemoSource from './ZMenu/BasicDemo.vue?raw'
 import CollapsedDemo from './ZMenu/CollapsedDemo.vue'
 import CollapsedDemoSource from './ZMenu/CollapsedDemo.vue?raw'
+import DisabledDemo from './ZMenu/DisabledDemo.vue'
+import DisabledDemoSource from './ZMenu/DisabledDemo.vue?raw'
+import SxDemo from './ZMenu/SxDemo.vue'
+import SxDemoSource from './ZMenu/SxDemo.vue?raw'
 
 const propsRows = [
   {
@@ -45,9 +49,15 @@ const itemRows = [
   { name: 'children', type: 'ZMenuItem[]', default: '—', desc: '子菜单项。' },
 ]
 
+const sxRows = [
+  { name: 'sxItem', type: 'SxObject', default: '—', desc: '每个菜单项按钮的 sx 定制（css / style / class / ref / attrs）。' },
+  { name: 'sxSubmenu', type: 'SxObject', default: '—', desc: '子菜单容器（ul）的 sx 定制。' },
+  { name: 'sxLabel', type: 'SxObject', default: '—', desc: '菜单项文字 span 的 sx 定制。' },
+]
+
 const emitsRows = [
   { name: 'update:value', type: '(key: string) => void', desc: 'v-model 更新事件。' },
-  { name: 'select', type: '(key: string) => void', desc: '点击菜单项时触发。' },
+  { name: 'select', type: '(key: string) => void', desc: '点击叶子菜单项时触发。' },
 ]
 </script>
 
@@ -78,6 +88,24 @@ const emitsRows = [
       <CollapsedDemo />
     </DemoBlock>
 
+    <ZTitle :level="2">禁用状态</ZTitle>
+    <DemoBlock title="单项 disabled / 整体 disabled + select 事件" :source="DisabledDemoSource">
+      <template #desc>
+        <ZCode code="item.disabled=true" /> 仅禁用单项；<ZCode code=":disabled='true'" />
+        整体禁用所有菜单项（含非 disabled 项）。单项点击后 <ZCode code="select" /> 事件有输出。
+      </template>
+      <DisabledDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义样式（sxItem / sxSubmenu / sxLabel）</ZTitle>
+    <DemoBlock title="sxItem 圆角 + sxLabel 加粗 + sxSubmenu 左边框" :source="SxDemoSource">
+      <template #desc>
+        三个 <ZCode code="sx*" /> prop 分别定制菜单项按钮、文字 span、子菜单容器，
+        可传 <ZCode code="{ css: s => { ... } }" /> 使用 Chain 语法。
+      </template>
+      <SxDemo />
+    </DemoBlock>
+
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
@@ -87,6 +115,17 @@ const emitsRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="propsRows"
+    />
+
+    <ZTitle :level="2">Sx Props</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '160px' },
+        { key: 'default', label: '默认值', mono: true, width: '80px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="sxRows"
     />
 
     <ZTitle :level="2">ZMenuItem 字段</ZTitle>

@@ -14,6 +14,14 @@ import DialogApiDemo from './ZModal/DialogApiDemo.vue'
 import DialogApiDemoSource from './ZModal/DialogApiDemo.vue?raw'
 import WidthDemo from './ZModal/WidthDemo.vue'
 import WidthDemoSource from './ZModal/WidthDemo.vue?raw'
+import CenteredDemo from './ZModal/CenteredDemo.vue'
+import CenteredDemoSource from './ZModal/CenteredDemo.vue?raw'
+import EventsDemo from './ZModal/EventsDemo.vue'
+import EventsDemoSource from './ZModal/EventsDemo.vue?raw'
+import HeadSlotDemo from './ZModal/HeadSlotDemo.vue'
+import HeadSlotDemoSource from './ZModal/HeadSlotDemo.vue?raw'
+import SxDemo from './ZModal/SxDemo.vue'
+import SxDemoSource from './ZModal/SxDemo.vue?raw'
 
 const propsRows = [
   { name: 'visible', type: 'boolean', default: 'false', desc: '是否显示（v-model:visible）。' },
@@ -24,19 +32,24 @@ const propsRows = [
     default: '30',
     desc: '对话框宽度 px 倍数（1 单位 = 16px，默认 30 = 480px）。',
   },
-  { name: 'centered', type: 'boolean', default: 'true', desc: '垂直居中。' },
+  { name: 'centered', type: 'boolean', default: 'true', desc: '垂直居中；false 时对话框顶部对齐（marginTop _huge）。' },
   { name: 'closable', type: 'boolean', default: 'true', desc: '头部显示关闭按钮。' },
   { name: 'maskClosable', type: 'boolean', default: 'true', desc: '点击遮罩关闭。' },
-  { name: 'to', type: 'string | HTMLElement', default: "'body'", desc: 'Teleport target。' },
-  { name: 'zIndex', type: 'number', default: '—', desc: '自定义 z-index（dialog = zIndex + 1）。' },
-  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
+  { name: 'to', type: 'string | HTMLElement', default: "'body'", desc: 'Teleport target，挂载位置。' },
+  { name: 'zIndex', type: 'number', default: '—', desc: '自定义 z-index（mask = zIndex，dialog = zIndex + 1）。' },
+  { name: 'sxMask', type: 'SxObject', default: '—', desc: '遮罩层 sx 样式定制。' },
+  { name: 'sxDialog', type: 'SxObject', default: '—', desc: '对话框容器 sx 样式定制。' },
+  { name: 'sxHead', type: 'SxObject', default: '—', desc: '头部区域 sx 样式定制。' },
+  { name: 'sxBody', type: 'SxObject', default: '—', desc: '正文区域 sx 样式定制。' },
+  { name: 'sxFoot', type: 'SxObject', default: '—', desc: '底栏区域 sx 样式定制。' },
+  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '对话框容器 CSS 兜底（非标准尺寸走这里）。' },
 ]
 
 const slotsRows = [
   { name: 'default', desc: '对话框主体内容（body）。' },
   { name: 'head', desc: '自定义头部（完全替换标题行）。' },
   { name: 'foot', desc: '底部按钮区域。' },
-  { name: 'closeIcon', desc: '自定义关闭图标。' },
+  { name: 'closeIcon', desc: '自定义关闭图标（替换默认 SVG，按钮外壳保留）。' },
 ]
 
 const emitsRows = [
@@ -92,6 +105,45 @@ const exposeRows = [
         非标准尺寸（百分比 / vh）走 <ZCode code=":css='s => s.width.pct(80)'" />。
       </template>
       <WidthDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">居中 vs 顶部对齐 (centered)</ZTitle>
+    <DemoBlock title="centered=true（默认）/ centered=false 顶部对齐" :source="CenteredDemoSource">
+      <template #desc>
+        <ZCode code="centered=true" />（默认）：对话框垂直居中于视口。
+        <ZCode code="centered=false" />：对话框顶部对齐，marginTop 走 <ZCode code="_huge" /> spacing token，
+        适合内容较长、需要从顶部向下浏览的场景。
+      </template>
+      <CenteredDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">事件监听 (close / mask-click)</ZTitle>
+    <DemoBlock title="@close + @mask-click 事件" :source="EventsDemoSource">
+      <template #desc>
+        <ZCode code="@close" /> 在关闭按钮点击或 ESC 键触发时发出；
+        <ZCode code="@mask-click" /> 在用户点击遮罩时发出（无论 maskClosable 是否为 true）。
+      </template>
+      <EventsDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义头部 (#head / #closeIcon slot)</ZTitle>
+    <DemoBlock title="#head slot 替换标题 / #closeIcon slot 替换图标" :source="HeadSlotDemoSource">
+      <template #desc>
+        <ZCode code="#head" /> slot 完全替换标题区域，可放状态标签、图标等。
+        <ZCode code="#closeIcon" /> slot 仅替换关闭按钮内部图标，外层按钮不变。
+        两者可单独或同时使用。
+      </template>
+      <HeadSlotDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">sx 深度定制</ZTitle>
+    <DemoBlock title="sxMask / sxDialog / sxHead / sxBody / sxFoot" :source="SxDemoSource">
+      <template #desc>
+        五个 <ZCode code="sx*" /> prop 分别注入到遮罩、对话框容器、头部、正文、底栏，
+        支持 <ZCode code="style" /> / <ZCode code="class" /> / HTML attrs 三种形式，
+        无需覆盖全局样式即可深度定制。
+      </template>
+      <SxDemo />
     </DemoBlock>
 
     <ZTitle :level="2">命令式 createDialogApi</ZTitle>

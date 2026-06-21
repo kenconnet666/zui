@@ -33,6 +33,7 @@ import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
 import ZTag from '../gene/ZTag.vue'
+import ZButton from '../gene/ZButton.vue'
 import { sizePx } from '../_internal/sizing'
 
 const props = withDefaults(defineProps<ZDynamicTagsProps>(), {
@@ -109,34 +110,23 @@ const rootClass = computed(() =>
   }),
 )
 
-const addBtnClass = computed(() =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.gap._tiny
-    s.paddingLeft._small
-    s.paddingRight._small
-    s.paddingTop.px(sizePx(0.125))
-    s.paddingBottom.px(sizePx(0.125))
-    s.fontSize._small
-    s.borderRadius._tiny
-    s.borderWidth._thin
-    s.borderStyle.dashed
-    s.borderColor._border
-    s.backgroundColor.transparent
-    s.color._textSecondary
-    s.cursor.pointer
-    if (props.disabled) {
-      s.opacity._dim
-      s.cursor.notAllowed
-    } else {
-      s._hover(h => {
-        h.color._primary
-        h.borderColor._primary
-      })
-    }
-  }),
-)
+// 添加按钮(复用 ZButton dashed):默认中性灰,css 压扁高度对齐 ZTag 行内高度 + hover 变 primary。
+// (disabled 态由 canAdd 控制不渲染,无需 disabled 样式分支)
+const addBtnColor = (c: Chain<ZuiSchema>['color']): void => {
+  c._textSecondary
+}
+const addBtnCss = (s: Chain<ZuiSchema>): void => {
+  s.height.auto
+  s.paddingTop.px(sizePx(0.125))
+  s.paddingBottom.px(sizePx(0.125))
+  s.paddingLeft._small
+  s.paddingRight._small
+  s.borderRadius._tiny
+  s._hover(h => {
+    h.color._primary
+    h.borderColor._primary
+  })
+}
 
 const inputClass = computed(() =>
   icss(theme.value, s => {
@@ -179,9 +169,17 @@ const addIcon = computed(() => h(ZIcon, { component: BuiltinIcons.add }))
       @blur="commitInput"
       @keydown="onKey"
     />
-    <button v-else-if="canAdd" type="button" :class="addBtnClass" @click="startEdit">
+    <ZButton
+      v-else-if="canAdd"
+      variant="dashed"
+      :size="0.875"
+      :color="addBtnColor"
+      :ripple="false"
+      :css="addBtnCss"
+      @click="startEdit"
+    >
       <component :is="addIcon" />
       <span>{{ placeholder }}</span>
-    </button>
+    </ZButton>
   </div>
 </template>

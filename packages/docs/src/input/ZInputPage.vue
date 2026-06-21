@@ -12,6 +12,12 @@ import ClearableCountDemo from './ZInput/ClearableCountDemo.vue'
 import ClearableCountDemoSource from './ZInput/ClearableCountDemo.vue?raw'
 import DisabledDemo from './ZInput/DisabledDemo.vue'
 import DisabledDemoSource from './ZInput/DisabledDemo.vue?raw'
+import EventsDemo from './ZInput/EventsDemo.vue'
+import EventsDemoSource from './ZInput/EventsDemo.vue?raw'
+import SxDemo from './ZInput/SxDemo.vue'
+import SxDemoSource from './ZInput/SxDemo.vue?raw'
+import InputAttrsDemo from './ZInput/InputAttrsDemo.vue'
+import InputAttrsDemoSource from './ZInput/InputAttrsDemo.vue?raw'
 
 const propsRows = [
   { name: 'value', type: 'string | number', default: '—', desc: '绑定值（v-model:value）。' },
@@ -25,6 +31,11 @@ const propsRows = [
   { name: 'showCount', type: 'boolean', default: 'false', desc: '显示字数（配合 maxlength）。' },
   { name: 'maxlength', type: 'number', default: '—', desc: 'HTML maxlength。' },
   { name: 'autofocus', type: 'boolean', default: 'false', desc: '自动聚焦。' },
+  { name: 'inputAttrs', type: 'Record<string, unknown>', default: '—', desc: '透传到内层 <input> 的额外属性（autocomplete / inputmode / aria-* 等）。' },
+  { name: 'sxInput', type: 'SxObject', default: '—', desc: '内层 <input> 元素定制（css / class / style / attrs）。' },
+  { name: 'sxPrefix', type: 'SxObject', default: '—', desc: '前缀 span 定制。' },
+  { name: 'sxSuffix', type: 'SxObject', default: '—', desc: '后缀 span 定制。' },
+  { name: 'sxClear', type: 'SxObject', default: '—', desc: '清空按钮定制（透传给 ZButton sx）。' },
   { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
 ]
 
@@ -35,7 +46,7 @@ const slotsRows = [
 
 const emitsRows = [
   { name: 'update:value', args: 'string', desc: '值变更。' },
-  { name: 'change', args: 'string, Event', desc: 'blur 或 Enter 确认时。' },
+  { name: 'change', args: 'string, Event', desc: 'blur 或 Enter 确认时触发。' },
   { name: 'focus', args: 'FocusEvent', desc: '聚焦。' },
   { name: 'blur', args: 'FocusEvent', desc: '失焦。' },
   { name: 'clear', args: '—', desc: '点击清空按钮。' },
@@ -44,6 +55,7 @@ const emitsRows = [
 
 const exposeRows = [
   { name: 'rootRef', type: 'Ref<HTMLDivElement | null>', desc: '根 wrapper 元素引用。' },
+  { name: 'inputRef', type: 'Ref<HTMLInputElement | null>', desc: '内层 input 元素引用（可调用 .focus()）。' },
 ]
 </script>
 
@@ -53,7 +65,8 @@ const exposeRows = [
     <ZParagraph>
       文本输入框，支持 <ZCode code="type" /> 切换输入类型，<ZCode code="clearable" /> 一键清空，
       <ZCode code="showCount" /> 显示字数，<ZCode code="prefix" /> / <ZCode code="suffix" /> slot
-      前后附加内容。
+      前后附加内容，<ZCode code="inputAttrs" /> 透传原生属性，<ZCode code="sxInput" /> /
+      <ZCode code="sxPrefix" /> / <ZCode code="sxSuffix" /> / <ZCode code="sxClear" /> 深度定制各子元素。
     </ZParagraph>
 
     <ZTitle :level="2">基础用法</ZTitle>
@@ -79,6 +92,30 @@ const exposeRows = [
     <ZTitle :level="2">只读与禁用</ZTitle>
     <DemoBlock title="readonly / disabled" :source="DisabledDemoSource">
       <DisabledDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">事件演示</ZTitle>
+    <DemoBlock title="focus / blur / change / clear / pressEnter" :source="EventsDemoSource">
+      <template #desc>六个事件实时回显：聚焦/失焦/输入确认/清空/回车均有日志。</template>
+      <EventsDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">sx 深度定制</ZTitle>
+    <DemoBlock title="sxInput / sxPrefix / sxSuffix / sxClear" :source="SxDemoSource">
+      <template #desc>
+        通过 <ZCode code="sxInput" /> 定制内层 input，<ZCode code="sxClear" /> 定制清空按钮颜色。
+        前缀/后缀图标颜色直接在 slot 内用 <ZCode code=":css" /> 定制。
+      </template>
+      <SxDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">inputAttrs 透传</ZTitle>
+    <DemoBlock title="inputAttrs（autocomplete / inputmode）" :source="InputAttrsDemoSource">
+      <template #desc>
+        <ZCode code="inputAttrs" /> 将任意属性透传到内层 <ZCode code="&lt;input&gt;" />，
+        可注入 <ZCode code="autocomplete" />、<ZCode code="inputmode" />、<ZCode code="aria-*" /> 等。
+      </template>
+      <InputAttrsDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

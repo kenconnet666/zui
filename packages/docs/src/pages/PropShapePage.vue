@@ -314,7 +314,7 @@ const cls = computed(() => icss(theme.value, (s) => {
    * - ghost:轻透明背景
    * - link:链接样式(下划线)
    */
-  variant?: 'filled' | 'outlined' | 'text' | 'ghost' | 'link'
+  variant?: 'filled' | 'outlined' | 'ghost' | 'link'
 }
 
 // 实现:defineVariants 把 variant 映射到不同 chain factory

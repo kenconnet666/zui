@@ -299,7 +299,7 @@ const optionClass = (opt: ZSelectOption): string =>
     s.overflow.hidden
     s.textOverflow.ellipsis
     if (isOptionSelected(opt)) {
-      s.backgroundColor._primary.alpha(8)
+      s.backgroundColor._selectedBg
       s.color._primary
     }
     if (opt.disabled) {
@@ -307,7 +307,7 @@ const optionClass = (opt: ZSelectOption): string =>
       s.cursor.notAllowed
     } else {
       s._hover(h2 => {
-        h2.backgroundColor._textSecondary.alpha(8)
+        h2.backgroundColor._bgHover
       })
     }
     applySx(s, props.sxOption)

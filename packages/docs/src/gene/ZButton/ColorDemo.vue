@@ -15,7 +15,7 @@ import { ZButton, ZFlex } from '@kenconnet666/zui-vue'
       <ZButton variant="outlined" :color="c => c._primary">Primary</ZButton>
       <ZButton variant="outlined" :color="c => c._success">Success</ZButton>
       <ZButton variant="outlined" :color="c => c._danger">Danger</ZButton>
-      <ZButton variant="text" :color="c => c._primary">Text Primary</ZButton>
+      <ZButton variant="ghost" :color="c => c._primary">Text Primary</ZButton>
       <ZButton variant="link" :color="c => c._danger">Link Danger</ZButton>
     </ZFlex>
     <ZFlex :gap="g => g.px(8)" :wrap="w => w.wrap">

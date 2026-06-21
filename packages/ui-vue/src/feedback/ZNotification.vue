@@ -49,6 +49,7 @@ import { computed, h, onMounted, onUnmounted, watch } from 'vue'
 import { icss } from '@kenconnet666/zui-core'
 import { useZTheme } from '../provider'
 import { BuiltinIcons, ZIcon } from '../gene'
+import ZButton from '../gene/ZButton.vue'
 import { sizePx } from '../_internal/sizing'
 
 /**
@@ -144,23 +145,17 @@ const descClass = computed(() =>
   }),
 )
 
-const closeBtnClass = computed(() =>
-  icss(theme.value, s => {
-    s.display.inlineFlex
-    s.alignItems.center
-    s.justifyContent.center
-    s.cursor.pointer
-    s.backgroundColor.transparent
-    s.borderStyle.none
-    s.padding.px(0)
-    s.color._textSecondary
-    s.flexShrink(0)
-    s.marginLeft._small
-    s._hover(h2 => {
-      h2.color._text
-    })
-  }),
-)
+// close 按钮(复用 ZButton ghost circle):中性灰 textSecondary + hover 加深为 text;
+// flexShrink(0) 防止在 flex 行内被标题挤压。
+const closeBtnColor = (c: Chain<ZuiSchema>['color']): void => {
+  c._textSecondary
+}
+const closeBtnCss = (s: Chain<ZuiSchema>): void => {
+  s.flexShrink(0)
+  s._hover(h2 => {
+    h2.color._text
+  })
+}
 
 // timers —— 不放在 reactive(Map 在 Vue reactivity 中有边界问题);仅闭包变量
 const timers = new Map<ZNotificationItem['id'], ReturnType<typeof setTimeout>>()
@@ -253,15 +248,19 @@ const slideBoundaryClass = computed(() =>
             <div :class="titleClass">{{ item.title }}</div>
             <div v-if="item.description" :class="descClass">{{ item.description }}</div>
           </div>
-          <button
+          <ZButton
             v-if="item.closable !== false"
-            type="button"
-            :class="closeBtnClass"
+            variant="ghost"
+            shape="circle"
+            :color="closeBtnColor"
+            :size="0.875"
+            :ripple="false"
+            :css="closeBtnCss"
             aria-label="关闭"
             @click="emit('close', item.id)"
           >
             <component :is="closeIcon" />
-          </button>
+          </ZButton>
         </div>
       </TransitionGroup>
     </div>

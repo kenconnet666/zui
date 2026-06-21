@@ -190,7 +190,7 @@ const rootClass = computed(() =>
     if (props.color) s.color(props.color)
     else s.color._textSecondary
     s._selector('&:hover', h => {
-      h.backgroundColor._textSecondary.alpha(8)
+      h.backgroundColor._bgHover
       if (!props.color) h.color._text
     })
     s._selector('&:focus-visible', f => {

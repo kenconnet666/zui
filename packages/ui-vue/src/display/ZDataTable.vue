@@ -354,7 +354,7 @@ const headerCellClass = (col: ZDataTableColumn<T>) =>
       s.cursor.pointer
       s.userSelect.none
       s._hover(h2 => {
-        h2.backgroundColor._textSecondary.alpha(8)
+        h2.backgroundColor._bgHover
       })
     }
   })
@@ -376,16 +376,16 @@ const rowClass = (row: T, index: number) =>
     s.borderBottomStyle.solid
     s.borderBottomColor._border
     if (props.stripe && index % 2 === 1) {
-      s.backgroundColor._bgMuted.alpha(40)
+      s.backgroundColor._stripeBg
     }
     if (isSelected(row, index)) {
-      s.backgroundColor._primary.alpha(8)
+      s.backgroundColor._selectedBg
     }
     if (props.selection !== 'none') {
       s.cursor.pointer
     }
     s._hover(h2 => {
-      h2.backgroundColor._primary.alpha(4)
+      h2.backgroundColor._rowHoverBg
     })
   })
 
@@ -405,7 +405,7 @@ const loadingMaskClass = computed(() =>
     s.display.flex
     s.alignItems.center
     s.justifyContent.center
-    s.backgroundColor._bg.alpha(60)
+    s.backgroundColor._loadingOverlay
     s.zIndex._modal
   }),
 )

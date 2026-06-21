@@ -92,6 +92,7 @@ export interface UserTransitionPropertyExt {}
  * })
  * ```
  */
+// 20 个语义色 token(13 基础 + 3 交互态叠层 + 4 层次叠层)。
 export type SemanticColorTokens =
   | 'primary'
   | 'danger'
@@ -106,6 +107,17 @@ export type SemanticColorTokens =
   | 'border'
   | 'focusRing'
   | 'overlayBg'
+  // ── 交互态叠层 token(2026-06 新增,M3 state layer 模式)──
+  // 把散落在 ~20 处组件的 `_textSecondary.alpha(8)` / `_primary.alpha(8/12)` 派生收口成语义 token,
+  // 统一 hover/选中/按下的视觉档位,且支持业务侧整体精调。组件直接 `s.backgroundColor._bgHover` 等。
+  | 'bgHover'
+  | 'selectedBg'
+  | 'pressedBg'
+  // ── 层次叠层 token ── 斑马纹/数据行 hover/遮罩/加载蒙层,同样把散落派生收口成语义 token
+  | 'stripeBg'
+  | 'rowHoverBg'
+  | 'overlayMask'
+  | 'loadingOverlay'
 
 /** 5 阶 size scale key（spacing/fontSize/shadow/blur/breakpoint 共享）。 */
 export type Size5Keys = 'tiny' | 'small' | 'middle' | 'large' | 'huge'

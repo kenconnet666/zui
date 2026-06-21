@@ -282,13 +282,13 @@ const optionClass = (opt: ZCascaderOption, isActive: boolean): string =>
     s.fontSize._middle
     s.cursor(opt.disabled ? 'not-allowed' : 'pointer')
     if (isActive) {
-      s.backgroundColor._primary.alpha(8)
+      s.backgroundColor._selectedBg
       s.color._primary
     } else {
       s.color._text
       if (!opt.disabled) {
         s._hover(h2 => {
-          h2.backgroundColor._textSecondary.alpha(8)
+          h2.backgroundColor._bgHover
         })
       }
     }

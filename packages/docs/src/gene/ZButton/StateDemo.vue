@@ -7,7 +7,7 @@ import { ZButton, ZFlex } from '@kenconnet666/zui-vue'
     <ZFlex :gap="g => g.px(8)" :wrap="w => w.wrap">
       <ZButton disabled>Disabled</ZButton>
       <ZButton variant="outlined" disabled>Disabled</ZButton>
-      <ZButton variant="text" disabled>Disabled</ZButton>
+      <ZButton variant="ghost" disabled>Disabled</ZButton>
     </ZFlex>
     <ZFlex :gap="g => g.px(8)" :wrap="w => w.wrap">
       <ZButton loading>Loading</ZButton>

@@ -8,6 +8,12 @@ import BasicDemoSource from './ZSteps/BasicDemo.vue?raw'
 import SizeDemo from './ZSteps/SizeDemo.vue'
 import SizeDemoSource from './ZSteps/SizeDemo.vue?raw'
 
+import CurrentColorDemo from './ZSteps/CurrentColorDemo.vue'
+import CurrentColorDemoSource from './ZSteps/CurrentColorDemo.vue?raw'
+
+import VerticalDemo from './ZSteps/VerticalDemo.vue'
+import VerticalDemoSource from './ZSteps/VerticalDemo.vue?raw'
+
 const propsRows = [
   { name: 'items', type: 'ZStepItem[]', default: '—（必传）', desc: '步骤项数组。' },
   { name: 'current', type: 'number', default: '0', desc: '当前激活步骤（0-based）。' },
@@ -55,6 +61,26 @@ const itemRows = [
         水平与垂直布局均支持自定义 size。
       </template>
       <SizeDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义步骤色（currentColor）</ZTitle>
+    <DemoBlock title="currentColor factory：_primary / _warning / _success" :source="CurrentColorDemoSource">
+      <template #desc>
+        <ZCode code=":current-color='c => c._warning'" /> 将当前步指示器改为警告色；
+        <ZCode code="errored=true" /> 时该 prop 被忽略，固定走 <ZCode code="_danger" />。
+        已完成步骤始终固定 <ZCode code="_success" />。
+      </template>
+      <CurrentColorDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">垂直布局 + 错误态</ZTitle>
+    <DemoBlock title="vertical=true + errored=true 交互演示" :source="VerticalDemoSource">
+      <template #desc>
+        <ZCode code=":vertical='true'" /> 切换为纵向排列；
+        <ZCode code=":errored='true'" /> 将当前步标为错误态（_danger + 关闭图标）。
+        可动态切换 current 和 errored。
+      </template>
+      <VerticalDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

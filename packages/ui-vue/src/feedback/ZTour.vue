@@ -186,7 +186,7 @@ const maskRightStyle = computed(() => {
 const maskClass = computed(() =>
   icss(theme.value, s => {
     s.position.fixed
-    s.backgroundColor._overlayBg.alpha(50)
+    s.backgroundColor._overlayMask
     s.zIndex._modal
     s.pointerEvents.auto
   }),
@@ -283,7 +283,7 @@ const btnGroupClass = computed(() =>
             <ZButton v-if="currentRef > 0" variant="outlined" :size="0.875" @click="prev">
               上一步
             </ZButton>
-            <ZButton v-if="!isLast" variant="text" :size="0.875" @click="skip">
+            <ZButton v-if="!isLast" variant="ghost" :size="0.875" @click="skip">
               跳过
             </ZButton>
             <ZButton variant="filled" :size="0.875" @click="next">

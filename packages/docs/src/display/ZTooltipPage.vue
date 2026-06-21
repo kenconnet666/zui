@@ -18,6 +18,12 @@ import ControlledDemoSource from './ZTooltip/ControlledDemo.vue?raw'
 import DisabledDemo from './ZTooltip/DisabledDemo.vue'
 import DisabledDemoSource from './ZTooltip/DisabledDemo.vue?raw'
 
+import FocusTriggerDemo from './ZTooltip/FocusTriggerDemo.vue'
+import FocusTriggerDemoSource from './ZTooltip/FocusTriggerDemo.vue?raw'
+
+import SxCustomDemo from './ZTooltip/SxCustomDemo.vue'
+import SxCustomDemoSource from './ZTooltip/SxCustomDemo.vue?raw'
+
 const propsRows = [
   { name: 'content', type: 'string', default: '—', desc: '提示文字（#content slot 优先级更高）。' },
   {
@@ -106,6 +112,26 @@ const emitsRows = [{ name: 'update:visible', args: 'boolean', desc: '显示状�
         限制弹层最大宽度（px 倍数），超出内容自动折行。
       </template>
       <DisabledDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">focus 触发方式</ZTitle>
+    <DemoBlock title="trigger='focus' 聚焦弹出" :source="FocusTriggerDemoSource">
+      <template #desc>
+        <ZCode code="trigger='focus'" /> 模式下，聚焦到 default slot 内的可聚焦元素（如 input）时弹出 tooltip，
+        失焦时收回，配合 <ZCode code="delay" /> 可控制延迟。
+      </template>
+      <FocusTriggerDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">sxTrigger / sxContent / css 定制</ZTitle>
+    <DemoBlock title="三层 sx 精细化覆盖" :source="SxCustomDemoSource">
+      <template #desc>
+        <ZCode code="sxTrigger.css" /> 覆盖触发器包裹层样式；
+        <ZCode code="sxContent.css" /> 覆盖弹层样式（背景色、字色等）；
+        <ZCode code="css" /> 作为最终兜底，在内置样式之后应用。
+        <ZCode code="maxWidth" /> 控制弹层最大宽度（px 倍数）。
+      </template>
+      <SxCustomDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

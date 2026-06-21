@@ -26,22 +26,28 @@ import CssDemoSource from './ZButton/CssDemo.vue?raw'
 
 import ShapeDemo from './ZButton/ShapeDemo.vue'
 import ShapeDemoSource from './ZButton/ShapeDemo.vue?raw'
+
+import TagTypeRippleDemo from './ZButton/TagTypeRippleDemo.vue'
+import TagTypeRippleDemoSource from './ZButton/TagTypeRippleDemo.vue?raw'
+
+import HeightSxRippleDemo from './ZButton/HeightSxRippleDemo.vue'
+import HeightSxRippleDemoSource from './ZButton/HeightSxRippleDemo.vue?raw'
 </script>
 
 <template>
   <section>
     <ZTitle :level="1">ZButton 按钮</ZTitle>
     <ZParagraph>
-      Material 风按钮,<strong>7 种 variant</strong> + <strong>chain factory color</strong> +
+      Material 风按钮,<strong>6 种 variant</strong> + <strong>chain factory color</strong> +
       <strong>px 倍数等比缩放 size</strong>。启用 ripple 波纹效果, hover / active / focus-visible
       三态自动接入 Material state layer。
     </ZParagraph>
 
     <ZTitle :level="2">变体 (variant)</ZTitle>
-    <DemoBlock title="7 种 variant" :source="VariantsDemoSource">
+    <DemoBlock title="6 种 variant" :source="VariantsDemoSource">
       <template #desc>
         <code>filled</code> 实心 / <code>outlined</code> 描边 / <code>dashed</code> 虚线描边 /
-        <code>secondary</code> 半透明底 / <code>text</code> 文字 /
+        <code>secondary</code> 半透明底 /
         <code>ghost</code> 全透明底 / <code>link</code> 链接。
       </template>
       <VariantsDemo />
@@ -106,6 +112,26 @@ import ShapeDemoSource from './ZButton/ShapeDemo.vue?raw'
       <CssDemo />
     </DemoBlock>
 
+    <ZTitle :level="2">tag / type / ripple / click+loading</ZTitle>
+    <DemoBlock title="多态根元素 / HTML type / 波纹开关 / 点击 loading 交互" :source="TagTypeRippleDemoSource">
+      <template #desc>
+        <code>tag</code> 改变根元素（<code>a</code>/<code>div</code>/…），<code>a</code> 标签的 disabled 走 aria-disabled；
+        <code>type</code> 透传 <code>submit</code>/<code>reset</code> 到原生 button；
+        <code>:ripple="false"</code> 关闭波纹；
+        <code>@click</code> 配合 <code>loading</code> 实现异步提交交互。
+      </template>
+      <TagTypeRippleDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">height 独立高度 / sxRipple</ZTitle>
+    <DemoBlock title="height 单独覆盖 / sxRipple 波纹层定制" :source="HeightSxRippleDemoSource">
+      <template #desc>
+        <code>height</code>（px 倍数）可独立于 <code>size</code> 单独控制按钮高度；
+        <code>sxRipple</code> 覆盖波纹层样式（点击可见颜色效果）。
+      </template>
+      <HeightSxRippleDemo />
+    </DemoBlock>
+
     <!-- ─── API ─── -->
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
@@ -118,9 +144,9 @@ import ShapeDemoSource from './ZButton/ShapeDemo.vue?raw'
       :rows="[
         {
           name: 'variant',
-          type: `'filled' | 'outlined' | 'dashed' | 'secondary' | 'text' | 'ghost' | 'link'`,
+          type: `'filled' | 'outlined' | 'dashed' | 'secondary' | 'ghost' | 'link'`,
           default: `'filled'`,
-          desc: '按钮外观变体。filled=实心, outlined=描边, dashed=虚线描边, secondary=半透明底, text=文字, ghost=全透明底, link=内联链接。',
+          desc: '按钮外观变体。filled=实心, outlined=描边, dashed=虚线描边, secondary=半透明底, ghost=全透明底, link=内联链接。',
         },
         {
           name: 'shape',

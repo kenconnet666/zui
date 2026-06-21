@@ -46,11 +46,6 @@ describe('ZButton — variant', () => {
     expect(css).toMatch(/background-color:transparent/)
   })
 
-  it('text → 透明背景 + hover state layer', () => {
-    mount(ZButton, { props: { variant: 'text' }, slots: { default: () => 'x' } })
-    expect(getInjectedCss()).toMatch(/background-color:transparent/)
-  })
-
   it('ghost → 半透明 primary 背景', () => {
     mount(ZButton, { props: { variant: 'ghost' }, slots: { default: () => 'x' } })
     expect(getInjectedCss()).toMatch(/rgba\(/)

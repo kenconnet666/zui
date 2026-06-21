@@ -10,6 +10,8 @@ import HoverableDemo from './ZCard/HoverableDemo.vue'
 import HoverableDemoSource from './ZCard/HoverableDemo.vue?raw'
 import SxNodesDemo from './ZCard/SxNodesDemo.vue'
 import SxNodesDemoSource from './ZCard/SxNodesDemo.vue?raw'
+import TagMinimalDemo from './ZCard/TagMinimalDemo.vue'
+import TagMinimalDemoSource from './ZCard/TagMinimalDemo.vue?raw'
 
 const propsRows = [
   {
@@ -29,9 +31,10 @@ const propsRows = [
 
 const slotsRows = [
   { name: 'default', desc: '卡片主体内容（body）。' },
-  { name: 'header', desc: '自定义头部，完全替换 title prop 渲染。' },
+  { name: 'header', desc: '自定义头部，完全替换 title prop 渲染（推荐）。' },
+  { name: 'head', desc: '#header 的旧别名，当前版本兼容，下版本将删除，请迁移到 #header。' },
   { name: 'extra', desc: '头部右侧操作区（与 title 并排）。' },
-  { name: 'foot', desc: '卡片底部内容（有内容时自动渲染底部）。' },
+  { name: 'foot', desc: '卡片底部内容（有内容时自动渲染底部分割线 + 区域）。' },
 ]
 </script>
 
@@ -75,6 +78,19 @@ const slotsRows = [
         <code>sxFoot</code> 分别精细化覆盖三个节点的样式。
       </template>
       <SxNodesDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">tag 属性 / 极简无头部 / #header 与 #head 差异</ZTitle>
+    <DemoBlock
+      title="tag 多态根元素 / 无 header 纯 body / #header vs #head 别名"
+      :source="TagMinimalDemoSource"
+    >
+      <template #desc>
+        <ZCode code="tag" /> 更改根元素标签（默认 <code>div</code>，可改 <code>article</code> / <code>section</code> 等）；
+        不传 title / 不用 #header 时只渲染 body，无顶部分割线；
+        <ZCode code="#header" /> 是推荐的头部 slot，<ZCode code="#head" /> 是旧别名（下版本将删除）。
+      </template>
+      <TagMinimalDemo />
     </DemoBlock>
 
     <ZTitle :level="2">Props</ZTitle>

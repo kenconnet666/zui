@@ -270,10 +270,10 @@ const rowClass = (idx: number, selected: boolean): string =>
     s.borderTopWidth._thin
     s.borderTopStyle.solid
     s.borderTopColor._border
-    if (selected) s.backgroundColor._primary.alpha(8)
-    else if (props.striped && idx % 2 === 1) s.backgroundColor._bgMuted.alpha(50)
+    if (selected) s.backgroundColor._selectedBg
+    else if (props.striped && idx % 2 === 1) s.backgroundColor._stripeBg
     s._hover(h2 => {
-      if (!selected) h2.backgroundColor._primary.alpha(4)
+      if (!selected) h2.backgroundColor._rowHoverBg
     })
     applySx(s, props.sxRow)
   })

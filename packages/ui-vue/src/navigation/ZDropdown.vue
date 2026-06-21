@@ -209,7 +209,7 @@ const itemClass = (item: ZDropdownItem): string =>
       s.cursor.notAllowed
     } else {
       s._hover(h2 => {
-        h2.backgroundColor._textSecondary.alpha(8)
+        h2.backgroundColor._bgHover
       })
     }
     applySx(s, props.sxItem)

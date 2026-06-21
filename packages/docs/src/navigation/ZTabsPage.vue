@@ -8,6 +8,12 @@ import BasicDemoSource from './ZTabs/BasicDemo.vue?raw'
 import SizeDemo from './ZTabs/SizeDemo.vue'
 import SizeDemoSource from './ZTabs/SizeDemo.vue?raw'
 
+import EventsDemo from './ZTabs/EventsDemo.vue'
+import EventsDemoSource from './ZTabs/EventsDemo.vue?raw'
+
+import SxDemo from './ZTabs/SxDemo.vue'
+import SxDemoSource from './ZTabs/SxDemo.vue?raw'
+
 const propsRows = [
   { name: 'tabs', type: 'ZTabItem[]', default: '—（必传）', desc: 'Tab 项数组。' },
   { name: 'value', type: 'string', default: '—', desc: '当前激活 tab name（v-model:value）。' },
@@ -35,6 +41,12 @@ const emitsRows = [
   { name: 'change', type: '(name: string) => void', desc: '切换 tab 时触发。' },
   { name: 'add', type: '() => void', desc: '点击新增按钮时触发。' },
   { name: 'close', type: '(name: string) => void', desc: '点击关闭按钮时触发。' },
+]
+
+const sxRows = [
+  { name: 'sxList', type: 'SxObject', default: '—', desc: 'tab 头容器（div[role=tablist]）的 sx 定制。' },
+  { name: 'sxTab', type: 'SxObject', default: '—', desc: '每个 tab 按钮的 sx 定制。' },
+  { name: 'sxPanel', type: 'SxObject', default: '—', desc: '面板内容区（div[role=tabpanel]）的 sx 定制。' },
 ]
 
 const slotsRows = [{ name: 'default', desc: '面板内容区域。slot props: { activeName: string }。' }]
@@ -67,6 +79,24 @@ const exposeRows = [
       <SizeDemo />
     </DemoBlock>
 
+    <ZTitle :level="2">事件（change / add / close）</ZTitle>
+    <DemoBlock title="change / add / close 事件记录" :source="EventsDemoSource">
+      <template #desc>
+        切换 tab 触发 <ZCode code="change" />；点击 + 按钮触发 <ZCode code="add" />；
+        点击 × 按钮触发 <ZCode code="close(name)" />（需自行从 tabs 数组中移除）。
+      </template>
+      <EventsDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义样式（sxList / sxTab / sxPanel）</ZTitle>
+    <DemoBlock title="sxList 背景 + sxTab 圆角 + sxPanel 内边距" :source="SxDemoSource">
+      <template #desc>
+        三个 <ZCode code="sx*" /> prop 分别定制 tab 头容器、单个 tab 按钮、面板内容区，
+        均接受 <ZCode code="{ css: s => { ... } }" /> Chain 语法。
+      </template>
+      <SxDemo />
+    </DemoBlock>
+
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
@@ -97,6 +127,17 @@ const exposeRows = [
         { key: 'desc', label: '说明' },
       ]"
       :rows="emitsRows"
+    />
+
+    <ZTitle :level="2">Sx Props</ZTitle>
+    <ApiTable
+      :columns="[
+        { key: 'name', label: '属性', mono: true, width: '120px' },
+        { key: 'type', label: '类型', mono: true, width: '160px' },
+        { key: 'default', label: '默认值', mono: true, width: '80px' },
+        { key: 'desc', label: '说明' },
+      ]"
+      :rows="sxRows"
     />
 
     <ZTitle :level="2">Slots</ZTitle>

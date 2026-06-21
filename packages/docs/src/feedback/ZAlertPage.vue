@@ -12,6 +12,10 @@ import NoIconDemo from './ZAlert/NoIconDemo.vue'
 import NoIconDemoSource from './ZAlert/NoIconDemo.vue?raw'
 import SxAndSlotDemo from './ZAlert/SxAndSlotDemo.vue'
 import SxAndSlotDemoSource from './ZAlert/SxAndSlotDemo.vue?raw'
+import SlotDemo from './ZAlert/SlotDemo.vue'
+import SlotDemoSource from './ZAlert/SlotDemo.vue?raw'
+import SxIconCloseDemo from './ZAlert/SxIconCloseDemo.vue'
+import SxIconCloseDemoSource from './ZAlert/SxIconCloseDemo.vue?raw'
 </script>
 
 <template>
@@ -60,6 +64,27 @@ import SxAndSlotDemoSource from './ZAlert/SxAndSlotDemo.vue?raw'
       <SxAndSlotDemo />
     </DemoBlock>
 
+    <ZTitle :level="2">具名插槽（#icon / #title / #description）</ZTitle>
+    <DemoBlock title="#icon / #title / #description 三个具名插槽" :source="SlotDemoSource">
+      <template #desc>
+        <ZCode code="#icon" /> 覆盖左侧内置图标；
+        <ZCode code="#title" /> / <ZCode code="#description" /> 支持任意富文本内容，
+        优先级高于同名 prop。
+      </template>
+      <SlotDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">sxIcon / sxClose / tag 定制</ZTitle>
+    <DemoBlock title="sxIcon 图标区 / sxClose 关闭按钮 / tag 根元素 / @close 事件" :source="SxIconCloseDemoSource">
+      <template #desc>
+        <ZCode code="sxIcon" /> 覆盖左侧图标容器样式（字号、对齐等）；
+        <ZCode code="sxClose" /> 覆盖右侧关闭按钮样式（需 <ZCode code="closable=true" />）；
+        <ZCode code="tag" /> 改变根元素标签；
+        <ZCode code="@close" /> 事件配合 <ZCode code="v-if" /> 控制显隐。
+      </template>
+      <SxIconCloseDemo />
+    </DemoBlock>
+
     <ZTitle :level="2">Props</ZTitle>
     <ApiTable
       :columns="[
@@ -91,6 +116,9 @@ import SxAndSlotDemoSource from './ZAlert/SxAndSlotDemo.vue?raw'
         { name: 'showIcon', type: 'boolean', default: 'true', desc: '是否显示左侧图标。' },
         { name: 'closable', type: 'boolean', default: 'false', desc: '是否显示右侧关闭按钮。' },
         { name: 'tag', type: 'string', default: `'div'`, desc: '根元素 tag。' },
+        { name: 'sxIcon', type: 'SxObject', default: '—', desc: '左侧图标容器 sx 覆盖（字号、对齐等）。' },
+        { name: 'sxBody', type: 'SxObject', default: '—', desc: '主体（title + description + default）容器 sx 覆盖。' },
+        { name: 'sxClose', type: 'SxObject', default: '—', desc: '右侧关闭按钮 sx 覆盖（需 closable=true）。' },
         { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根元素 CSS 兜底。' },
       ]"
     />

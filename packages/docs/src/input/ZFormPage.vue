@@ -4,6 +4,14 @@ import DemoBlock from '../components/DemoBlock.vue'
 import ApiTable from '../components/ApiTable.vue'
 import BasicDemo from './ZForm/BasicDemo.vue'
 import BasicDemoSource from './ZForm/BasicDemo.vue?raw'
+import LabelPlacementDemo from './ZForm/LabelPlacementDemo.vue'
+import LabelPlacementDemoSource from './ZForm/LabelPlacementDemo.vue?raw'
+import ValidateTriggerDemo from './ZForm/ValidateTriggerDemo.vue'
+import ValidateTriggerDemoSource from './ZForm/ValidateTriggerDemo.vue?raw'
+import DisabledDemo from './ZForm/DisabledDemo.vue'
+import DisabledDemoSource from './ZForm/DisabledDemo.vue?raw'
+import CustomSlotDemo from './ZForm/CustomSlotDemo.vue'
+import CustomSlotDemoSource from './ZForm/CustomSlotDemo.vue?raw'
 
 const formPropsRows = [
   {
@@ -59,7 +67,11 @@ const itemPropsRows = [
     default: '—',
     desc: '覆盖 Form 级触发时机。',
   },
-  { name: 'labelWidth', type: 'string | number', default: '—', desc: 'left 模式下 label 宽度。' },
+  { name: 'labelWidth', type: 'string | number', default: '—', desc: 'left 模式下 label 宽度（px 数值或 CSS 字符串）。' },
+  { name: 'sxLabel', type: 'SxObject', default: '—', desc: 'label 节点 sx 配置（css 工厂 + class/style/ref/attrs）。' },
+  { name: 'sxControl', type: 'SxObject', default: '—', desc: '控件包裹节点 sx 配置。' },
+  { name: 'sxError', type: 'SxObject', default: '—', desc: '错误信息节点 sx 配置。' },
+  { name: 'css', type: '(s: Chain) => void', default: '—', desc: '根节点 CSS 兜底。' },
 ]
 
 const itemSlotsRows = [
@@ -83,6 +95,32 @@ const itemSlotsRows = [
     <ZTitle :level="2">基础用法</ZTitle>
     <DemoBlock title="必填校验 / 格式校验 / 提交重置" :source="BasicDemoSource">
       <BasicDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">标签位置</ZTitle>
+    <DemoBlock title="labelPlacement：left（默认）/ top" :source="LabelPlacementDemoSource">
+      <LabelPlacementDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">校验触发时机</ZTitle>
+    <DemoBlock
+      title="validateTrigger：change / blur / submit"
+      :source="ValidateTriggerDemoSource"
+    >
+      <ValidateTriggerDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">整表禁用</ZTitle>
+    <DemoBlock title="disabled：整表禁用，子控件同步禁用" :source="DisabledDemoSource">
+      <DisabledDemo />
+    </DemoBlock>
+
+    <ZTitle :level="2">自定义插槽与 sx 节点覆盖</ZTitle>
+    <DemoBlock
+      title="#label 自定义标签 / #error 自定义错误 / sxLabel / sxError / sxControl"
+      :source="CustomSlotDemoSource"
+    >
+      <CustomSlotDemo />
     </DemoBlock>
 
     <ZTitle :level="2">ZForm Props</ZTitle>

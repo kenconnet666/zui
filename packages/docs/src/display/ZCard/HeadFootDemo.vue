@@ -26,7 +26,7 @@ import { ZCard, ZSpace, ZButton, ZTag, ZText } from '@kenconnet666/zui-vue'
           }
         "
       >
-        <ZButton variant="text" :size="0.875">忽略</ZButton>
+        <ZButton variant="ghost" :size="0.875">忽略</ZButton>
         <ZButton :size="0.875">查看详情</ZButton>
       </ZSpace>
     </template>

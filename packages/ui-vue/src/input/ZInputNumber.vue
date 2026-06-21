@@ -201,7 +201,7 @@ const btnClass = computed(() =>
     s.borderRadius._tiny
     s._hover(h2 => {
       h2.color._primary
-      h2.backgroundColor._primary.alpha(8)
+      h2.backgroundColor._selectedBg
     })
     if (props.disabled) {
       s.cursor.notAllowed
