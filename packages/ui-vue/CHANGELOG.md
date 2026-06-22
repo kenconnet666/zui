@@ -1,5 +1,25 @@
 # @kenconnet666/zui-vue
 
+## 0.10.1
+
+### Patch Changes
+
+- fix(types): 修复 6 处 `exactOptionalPropertyTypes` 类型错误
+
+  这些错误由 `vite-plugin-dts` 在生成 `.d.ts` 时报出（0.10.0 build 时存在但未阻断打包，故 0.10.0 带瑕疵发布）：
+  - **ZInput**：清空按钮 `:size` / `:height` 传给 ZButton 时 `size` 可能 `undefined` → `?? 1` 兜底；`size` prop 类型补 `| undefined`（与 `height` 一致），修复 ZAutoComplete 透传。
+  - **ZUpload**：选择文件按钮 `:disabled` → `?? false` 兜底。
+  - **ZEmpty**：`description` prop 补 `| undefined`，修复 ZDataTable / ZTable / ZList 透传 `emptyText`（`withDefaults` 仍兜底 "暂无数据"）。
+
+## 0.10.0
+
+### Minor Changes
+
+- 7a8bdb1: 主题交互态 token 化 + 复用收口 + ZButton 精简
+  - **feat(theme)**: 新增 7 个交互态/层次叠层语义 token —— `bgHover` / `selectedBg` / `pressedBg`（hover / 选中 / 按下底色）+ `stripeBg` / `rowHoverBg` / `overlayMask` / `loadingOverlay`（斑马纹 / 数据行 hover / 遮罩 / 加载蒙层）。收口约 16 个组件中 33 处散落的 `.alpha()` 派生，交互态视觉可在主题层集中精调（改一个 token 全库统一）。
+  - **refactor(ui-vue)**: 复杂组件复用基础组件 —— ZNotification / ZUpload / ZInput / ZTreeSelect 的关闭/清空按钮、ZDynamicTags 添加按钮收口到 ZButton（ghost / dashed）。
+  - **BREAKING(ZButton)**: 移除 `text` variant（与 `ghost` 视觉重复，`ghost` 为其超集且传 `color` 时仍有 hover 反馈）。迁移：`variant="text"` → `variant="ghost"`。
+
 ## 0.9.0 (2026-06-20)
 
 ### BREAKING
@@ -19,13 +39,13 @@
 
 移除以下自创响应式逻辑单位 API，对齐 Element Plus / Naive UI 纯 px 模式：
 
-| 移除 API | 说明 |
-| --- | --- |
-| `ZIemPreset`（含 `default`/`large`/`compact`/`fixed`/`em`/`rem` 预设） | 不再有 iem 预设常量 |
-| `<ZBox :iem>` prop | ZBox 不再注入 `--zui-iem` CSS var |
-| `useZIem(): Ref<number>` | 移除 hook |
-| `Z_IEM_PX_KEY` provide key | 移除 |
-| `--zui-iem` CSS 自定义属性 | 不再生成 |
+| 移除 API                                                               | 说明                              |
+| ---------------------------------------------------------------------- | --------------------------------- |
+| `ZIemPreset`（含 `default`/`large`/`compact`/`fixed`/`em`/`rem` 预设） | 不再有 iem 预设常量               |
+| `<ZBox :iem>` prop                                                     | ZBox 不再注入 `--zui-iem` CSS var |
+| `useZIem(): Ref<number>`                                               | 移除 hook                         |
+| `Z_IEM_PX_KEY` provide key                                             | 移除                              |
+| `--zui-iem` CSS 自定义属性                                             | 不再生成                          |
 
 **当前真实状态**：所有数值尺寸 prop（`size` / `itemSize` / `height` 等）均为"基准倍数"，1 单位 = 固定 16px（`sizePx(n) = n × 16`，见 `_internal/sizing.ts`）。布局与 JS 计算皆使用确定像素，不随 Provider 动态变化。
 

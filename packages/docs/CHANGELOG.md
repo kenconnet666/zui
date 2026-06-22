@@ -1,5 +1,19 @@
 # @kenconnet666/docs
 
+## 0.8.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @kenconnet666/zui-vue@0.10.1
+
+## 0.8.2
+
+### Patch Changes
+
+- Updated dependencies [7a8bdb1]
+  - @kenconnet666/zui-vue@0.10.0
+
 ## 0.0.2
 
 ### Patch Changes

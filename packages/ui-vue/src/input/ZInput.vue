@@ -34,7 +34,7 @@ export interface ZInputProps {
    * padding-y = sizePx(size*0.375) = 6px,padding-x = sizePx(size*0.75) = 12px,
    * border-radius = sizePx(size*0.25) = 4px。
    */
-  size?: number
+  size?: number | undefined
   /** 高度 —— `number`(px 倍数,1 单位 = 16px,可选,默认 `size * 2`)。 */
   height?: number | undefined
   disabled?: boolean
@@ -283,8 +283,8 @@ defineExpose({ rootRef, inputRef })
       variant="ghost"
       shape="circle"
       :color="clearBtnColor"
-      :size="size"
-      :height="size * 1.5"
+      :size="size ?? 1"
+      :height="(size ?? 1) * 1.5"
       :ripple="false"
       :css="clearBtnCss"
       :sx="sxClear"

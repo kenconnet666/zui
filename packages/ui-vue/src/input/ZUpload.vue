@@ -276,7 +276,7 @@ const uploadIcon = computed(() => h(ZIcon, { component: BuiltinIcons.add }))
       </div>
     </template>
     <template v-else>
-      <ZButton variant="outlined" :disabled="disabled" @click="openPicker">
+      <ZButton variant="outlined" :disabled="disabled ?? false" @click="openPicker">
         <template #prefixIcon>
           <component :is="uploadIcon" />
         </template>

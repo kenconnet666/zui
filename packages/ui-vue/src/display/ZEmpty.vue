@@ -12,7 +12,7 @@ import type { Chain } from '@kenconnet666/zui-core'
 import type { ZuiSchema } from '../provider/theme'
 
 export interface ZEmptyProps {
-  description?: string
+  description?: string | undefined
   image?: Component
   /** 图标尺寸 px 倍数(1 单位 = 16px),默认 4(= 64px)。 */
   size?: number
