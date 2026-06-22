@@ -37,7 +37,7 @@ export interface ZInputProps {
   size?: number | undefined
   /** 高度 —— `number`(px 倍数,1 单位 = 16px,可选,默认 `size * 2`)。 */
   height?: number | undefined
-  disabled?: boolean
+  disabled?: boolean | undefined
   readonly?: boolean
   placeholder?: string | undefined
   clearable?: boolean
