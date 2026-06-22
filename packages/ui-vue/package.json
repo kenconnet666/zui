@@ -1,6 +1,6 @@
 {
   "name": "@kenconnet666/zui-vue",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "description": "Vue 3 components & helpers built on @kenconnet666/zui-core. ZBox for nested theme / componentTokens / locale / timezone, plus headless composables.",
   "type": "module",
   "main": "./dist/index.js",
