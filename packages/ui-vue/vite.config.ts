@@ -74,6 +74,11 @@ export default defineConfig({
   test: {
     environment: 'happy-dom',
     include: ['tests/**/*.spec.ts'],
+    // 组件树外调用 useZTheme 会 fallback 到 zuiLight(theme 值正确,断言不受影响),
+    // 抑制其噪音警告即可,无需逐测试包 <ZBox>(省去 setupFiles 的 provide 开销)。
+    onConsoleLog(log: string): false | void {
+      if (log.includes('[zui-vue/useZTheme]') || log.includes('[zui-vue/ZBox]')) return false
+    },
     alias: {
       '@kenconnet666/zui-core': coreSrc,
     },
