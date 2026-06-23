@@ -15,10 +15,21 @@
  *
  * 同时导出两个工厂共用的语义 color / icon 映射，避免重复定义。
  */
-import { createApp, reactive, type App, type Component } from 'vue'
+import {
+  createApp,
+  getCurrentInstance,
+  inject,
+  markRaw,
+  reactive,
+  ref,
+  type App,
+  type Component,
+} from 'vue'
 import type { Chain } from '@kenconnet666/zui-core'
 import { BuiltinIcons } from '../gene/icons'
 import type { ZuiSchema } from '../provider/theme'
+import { zuiLight } from '../provider/theme'
+import { Z_THEME_KEY, Z_LOCALE_KEY, Z_DATE_KEY } from '../provider/keys'
 
 // ─── 共享语义映射 ────────────────────────────────────────────────────────────
 
@@ -51,12 +62,14 @@ export const TOAST_SEMANTIC_COLOR: Record<
 }
 
 /** 语义类型 → BuiltinIcon Component。 */
+// markRaw:icon component 会存进 reactive(items),不标记则被 Vue reactive 代理,
+// 触发 "Component was made a reactive object" 警告。markRaw 让其保持原始 component。
 export const TOAST_SEMANTIC_ICON: Record<ToastSemanticType, Component> = {
-  info: BuiltinIcons.info,
-  success: BuiltinIcons.success,
-  warning: BuiltinIcons.warning,
-  danger: BuiltinIcons.error,
-  loading: BuiltinIcons.refresh,
+  info: markRaw(BuiltinIcons.info),
+  success: markRaw(BuiltinIcons.success),
+  warning: markRaw(BuiltinIcons.warning),
+  danger: markRaw(BuiltinIcons.error),
+  loading: markRaw(BuiltinIcons.refresh),
 }
 
 // ─── 共享生命周期底层 ─────────────────────────────────────────────────────────
@@ -121,12 +134,23 @@ export function createToastApiBase<TItem extends { id: string | number }>(
   let app: App<Element> | null = null
   let host: HTMLDivElement | null = null
 
+  // 命令式 toast 用独立 createApp 挂到 body,脱离 <ZBox> provider 树。
+  // 在工厂调用处(通常组件 setup 内)捕获当前 theme/locale/date 注入独立 app,
+  // 使 toast 跟随主题切换 + 不触发 useZTheme 回落警告;setup 外调用则 theme 兜底 zuiLight。
+  const inSetup = !!getCurrentInstance()
+  const theme = (inSetup ? inject(Z_THEME_KEY, null) : null) ?? ref(zuiLight.resolve())
+  const locale = inSetup ? inject(Z_LOCALE_KEY, null) : null
+  const date = inSetup ? inject(Z_DATE_KEY, null) : null
+
   function ensureMounted(): void {
     if (app || typeof document === 'undefined') return
     host = document.createElement('div')
     host.setAttribute(options.hostAttr, '')
     ;(options.appendTo ?? document.body).appendChild(host)
     app = options.createVueApp(items, close)
+    app.provide(Z_THEME_KEY, theme)
+    if (locale) app.provide(Z_LOCALE_KEY, locale)
+    if (date) app.provide(Z_DATE_KEY, date)
     app.mount(host)
   }
 

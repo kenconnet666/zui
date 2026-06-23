@@ -1,0 +1,25 @@
+{
+  "name": "@kenconnet666/zui-admin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "zadmin 管理后台前端（Vite SPA，对接 zadmin Spring Boot 后端）。",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "type-check": "vue-tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@kenconnet666/zui-core": "workspace:*",
+    "@kenconnet666/zui-vue": "workspace:*",
+    "axios": "^1.7.9",
+    "vue": "^3.5.32",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.6",
+    "vite": "^8.0.8"
+  }
+}

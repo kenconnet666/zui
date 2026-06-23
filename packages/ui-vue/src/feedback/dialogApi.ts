@@ -12,15 +12,27 @@
  * ```
  *
  * **生命周期**:首次调用任意方法时懒挂载一个 host 到 `appendTo`(默认 `document.body`);
- * 内部渲染 `ZModal`,关闭动画结束后移除条目。脱离 `<ZBox>` 注入树时主题走 `useZTheme` 的 `zuiLight` 兜底
- * (与 message / notification 一致)。
+ * 内部渲染 `ZModal`,关闭动画结束后移除条目。工厂调用处(组件 setup 内)自动继承当前 `<ZBox>`
+ * 的 theme/locale/date,对话框跟随主题切换;setup 外调用则 theme 兜底 `zuiLight`(与 message / notification 一致)。
  *
  * **关闭语义**:点确定 → resolve(`true`);点取消 / 点遮罩 / ESC / 右上角关闭 → resolve(`false`)。
  * `info/success/warning/error` 只有一个"确定"按钮,任何关闭方式均 resolve(`true`)。
  */
-import { createApp, h, nextTick, reactive, type App, type VNode } from 'vue'
+import {
+  createApp,
+  getCurrentInstance,
+  h,
+  inject,
+  nextTick,
+  reactive,
+  ref,
+  type App,
+  type VNode,
+} from 'vue'
 import ZModal from './ZModal.vue'
 import { ZButton } from '../gene'
+import { Z_THEME_KEY, Z_LOCALE_KEY, Z_DATE_KEY } from '../provider/keys'
+import { zuiLight } from '../provider/theme'
 
 /** 对话框类型:`confirm` 双按钮(确定/取消);其余为单"确定"按钮的提示框。 */
 export type ZDialogKind = 'confirm' | 'info' | 'success' | 'warning' | 'error'
@@ -76,6 +88,13 @@ export function createDialogApi(opts: CreateDialogApiOptions = {}): ZDialogApi {
   let app: App<Element> | null = null
   let host: HTMLDivElement | null = null
 
+  // 独立 createApp 挂到 body 脱离 <ZBox>,捕获调用处 theme/locale/date 注入,
+  // 使对话框跟随主题 + 不触发 useZTheme 警告;setup 外调用则 theme 兜底 zuiLight。
+  const inSetup = !!getCurrentInstance()
+  const theme = (inSetup ? inject(Z_THEME_KEY, null) : null) ?? ref(zuiLight.resolve())
+  const locale = inSetup ? inject(Z_LOCALE_KEY, null) : null
+  const date = inSetup ? inject(Z_DATE_KEY, null) : null
+
   function ensureMounted(): void {
     if (app || typeof document === 'undefined') return
     host = document.createElement('div')
@@ -116,6 +135,9 @@ export function createDialogApi(opts: CreateDialogApiOptions = {}): ZDialogApi {
           ),
         ),
     })
+    app.provide(Z_THEME_KEY, theme)
+    if (locale) app.provide(Z_LOCALE_KEY, locale)
+    if (date) app.provide(Z_DATE_KEY, date)
     app.mount(host)
   }
 

@@ -9,7 +9,8 @@
  *
  * **生命周期**:
  * - 第一次调用任意方法时懒挂载到 `appendTo`（默认 `document.body`）
- * - 主题:目前用 `zuiLight` 兜底(脱离 `<ZBox>` 注入树。后续 phase 接 `themeRef` 参数)
+ * - 主题:工厂调用处(组件 setup 内)自动继承当前 `<ZBox>` 的 theme/locale/date,
+ *   命令式消息跟随主题切换;setup 外调用则 theme 兜底 `zuiLight`。
  */
 import { createApp } from 'vue'
 import ZMessage from './ZMessage.vue'
