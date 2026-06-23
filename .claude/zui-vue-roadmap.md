@@ -1,3 +1,5 @@
+> ⚠️ **ARCHIVED（已归档，仅留作历史）** —— Stage 1–9（Phase α/β/γ/δ）均已完成或决议关闭，本路线图不再作为前向指导。当前组件与设计的权威参考见 `.claude/skills/zui.md` 及 `.claude/decisions/` 下仍生效的决策文档。
+
 # zui-vue 组件库实现路线图
 
 > **用途**:供后续 Claude session(尤其定时任务)读取并按序推进 zui-vue 重构与组件实现。
