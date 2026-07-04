@@ -55,9 +55,3 @@ jobs:
       # ──────── docs 站点构建守护 ────────
       - name: Build docs
         run: pnpm --filter @kenconnet666/docs build
-
-      - name: Build examples
-        run: |
-          pnpm --filter @kenconnet666/example-vanilla-button exec vite build
-          pnpm --filter @kenconnet666/example-vue-button exec vite build
-          pnpm --filter @kenconnet666/example-react-button exec vite build

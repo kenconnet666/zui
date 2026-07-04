@@ -19,7 +19,7 @@
 ## 验证铁律（每次必跑）
 
 - **每改一个文件** → `mcp__idea__get_file_problems(filePath, errorsOnly=true)`
-- **改对外类型** → 必须 `pnpm build`（否则 dist 与 src 不同步，IDEA / examples 读到旧签名）
+- **改对外类型** → 必须 `pnpm build`（否则 dist 与 src 不同步，IDEA 读到旧签名）
 - **改 `ENHANCED_PROPS` / `csstype`** → `node scripts/generate-properties.mjs` + `test -- parity`
 - **push 前** → type-check + test + build 全跑
 

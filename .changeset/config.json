@@ -7,9 +7,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": [
-    "@kenconnet666/example-vanilla-button",
-    "@kenconnet666/example-vue-button",
-    "@kenconnet666/example-react-button"
-  ]
+  "ignore": []
 }

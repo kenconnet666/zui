@@ -56,7 +56,6 @@ zui/
 │   │   │   └── responsive.ts
 │   │   ├── tests/                           # 31 套 / 572 测试（删 variants 后）
 │   │   ├── bench/
-│   │   ├── examples/                        # vanilla-button / vue-button / react-button
 │   │   └── CHANGELOG.md
 │   ├── ui-vue/                              # @kenconnet666/zui-vue（0.8.3，90+ 组件）
 │   │   ├── src/
@@ -285,7 +284,7 @@ JetBrains MCP 内嵌 Node 没把 pnpm 放进 PATH，直接 PowerShell 调用会�
 `.github/workflows/ci.yml` 在 push main / PR 时跑：
 
 - generator drift 检查（`generate-properties.mjs` → `git diff --exit-code properties.generated.ts`）
-- type-check + test + build core + build 3 examples
+- type-check + test + build core
 
 ---
 
@@ -318,7 +317,7 @@ JetBrains MCP 内嵌 Node 没把 pnpm 放进 PATH，直接 PowerShell 调用会�
 
 **症状**：改对外类型 → commit + push → 用户 IDEA 仍报错。  
 **原因**：dist/index.d.ts 是上次 build 产物；IDEA 通过 node_modules symlink 读旧签名。  
-**防范**：**每次改对外类型后必须** `pnpm build`；examples 的 tsconfig 加 `paths` 直指 src。
+**防范**：**每次改对外类型后必须** `pnpm build`。
 
 ### 8.2 ★ Proxy `bind` 到 receiver 不是 target
 
@@ -832,7 +831,6 @@ packages/ui-vue/src/
 | `@vue/tsconfig`                 | `^0.9.1`  |
 | `@vue/eslint-config-typescript` | `^14.7.0` |
 | `eslint-plugin-vue`             | `~10.9.0` |
-| `svelte-language-server`        | `^0.18.0` |
 | `typescript-language-server`    | `^5.2.0`  |
 | `@vitejs/plugin-vue`            | `^6.0.6`  |
 | `@vitejs/plugin-vue-jsx`        | `^5.1.5`  |
@@ -1172,11 +1170,6 @@ pnpm --filter @kenconnet666/zui-core bench           # 性能基线
 # ─── 改 ENHANCED_PROPS / generator 后 ───
 node scripts/generate-properties.mjs
 pnpm --filter @kenconnet666/zui-core test -- parity
-
-# ─── examples 调试 ───
-pnpm --filter @kenconnet666/example-vanilla-button dev
-pnpm --filter @kenconnet666/example-vue-button dev
-pnpm --filter @kenconnet666/example-react-button dev
 
 # ─── docs 演示站 ───
 pnpm --filter @kenconnet666/docs dev           # vite dev server，默认 :5174（hash 路由）
